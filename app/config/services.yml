@@ -3,6 +3,13 @@
 parameters:
     #parameter_name: value
 
+
+    paprec_divisions:
+        - DI
+        - CHANTIER
+        - D3EE
+        - 5FLUX
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -33,3 +40,8 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }

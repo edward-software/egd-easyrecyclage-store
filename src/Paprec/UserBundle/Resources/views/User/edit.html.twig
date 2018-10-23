@@ -15,7 +15,7 @@
 
   <div class="form-box row">
 
-    <form id="userUserForm" action="" method="post" {{ form_enctype(form) }}>
+    <form id="userUserForm" action="" method="post">
 
       <div class="col-md-12">
         <h4 class="form-sub-title"><i class="fa fa-list"></i> {{ 'User.User.Edit'|trans }} #{{ user.id }}
@@ -106,6 +106,14 @@
                   <div class="form-content checkbox-list">
                     {{ form_widget(form.roles, {'attr': {'class': ''}}) }}
                     {{ form_errors(form.roles) }}
+                  </div>
+                </div>
+
+                <div class="form-item">
+                  <div class="form-label">{{ 'User.User.Divisions'|trans }}</div>
+                  <div class="form-content checkbox-list">
+                    {{ form_widget(form.divisions, {'attr': {'class': ''}}) }}
+                    {{ form_errors(form.divisions) }}
                   </div>
                 </div>
 

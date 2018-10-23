@@ -17,3 +17,7 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    paprec_email_sender: digital@eggers-conseil.com
+    paprec_email_call: digital@eggers-conseil.com
+    paprec_email_other_services: digital@eggers-conseil.com

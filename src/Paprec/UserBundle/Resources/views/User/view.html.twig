@@ -116,6 +116,15 @@
               </div>
 
               <div class="view-item">
+                <div class="view-label">{{ 'User.User.Divisions'|trans }}</div>
+                <div class="view-content">
+                  {% for division in user.divisions %}
+                      {{ division|trans }}<br>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="view-item">
                 <div class="view-label">{{ 'User.User.Enabled'|trans }}</div>
                 <div class="view-content">
                   {% if user.enabled == 1 %}Oui{% else %}Non{% endif %}

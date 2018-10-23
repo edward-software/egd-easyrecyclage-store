@@ -53,7 +53,8 @@ class UserController extends Controller
 
         $queryBuilder->select(array('u'))
             ->from('PaprecUserBundle:User', 'u')
-            ->where('u.deleted IS NULL');
+            ->where('u.deleted IS NULL')
+        ;
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
             if (substr($search['value'], 0, 1) == '#') {
@@ -171,6 +172,10 @@ class UserController extends Controller
      */
     public function viewAction(Request $request, User $user)
     {
+        if($user->getDeleted() !== null) {
+            throw new NotFoundHttpException();
+        }
+
         return $this->render('PaprecUserBundle:User:view.html.twig', array(
             'user' => $user
         ));
@@ -190,8 +195,14 @@ class UserController extends Controller
             $roles[$role] = $role;
         }
 
+        $divisions = array();
+        foreach($this->getParameter('paprec_divisions') as $division) {
+            $divisions[$division] = $division;
+        }
+
         $form = $this->createForm(UserType::class, $user, array(
-            'roles' => $roles
+            'roles' => $roles,
+            'divisions' => $divisions
         ));
 
         $form->handleRequest($request);
@@ -222,14 +233,23 @@ class UserController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
+        if($user->getDeleted() !== null) {
+            throw new NotFoundHttpException();
+        }
 
         $roles = array();
         foreach($this->getParameter('security.role_hierarchy.roles') as $role => $children) {
             $roles[$role] = $role;
         }
 
+        $divisions = array();
+        foreach($this->getParameter('paprec_divisions') as $division) {
+            $divisions[$division] = $division;
+        }
+
         $form = $this->createForm(UserType::class, $user, array(
-            'roles' => $roles
+            'roles' => $roles,
+            'divisions' => $divisions
         ));
 
         $form->handleRequest($request);
