@@ -1,141 +1,136 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-  {{ 'User.User.Add'|trans }}
+    {{ 'User.User.Add'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
 {% endblock %}
 
 {% block content_title %}
-  {{ 'User.User.Users'|trans }}
+    {{ 'User.User.Users'|trans }}
 {% endblock %}
 
 {% block main_content %}
 
-  <div class="form-box row">
-
     <form id="userUserForm" action="" method="post">
 
-      <div class="col-md-12">
-        <h4 class="form-sub-title"><i class="fa fa-list"></i> {{ 'User.User.Add'|trans }}
+        <div class="col-md-7">
+            <!-- BOX -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fa fa-user-plus"></i> {{ 'User.User.Add'|trans }}
+                        <div class="float-right">
+                            <a href="javascript:void(0);" class="btn btn-success user-user-save-button"><i
+                                        class="fa fa-check"></i> {{ 'User.User.Save'|trans }}</a>
+                            <a href="javascript:void(0);" class="btn btn-danger user-user-cancel-button"><i
+                                        class="fa fa-close"></i> {{ 'User.User.Cancel'|trans }}</a>
+                        </div>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ 'User.User.Informations'|trans }}</h3>
+                        </div>
+                        <div class="panel-body">
 
-          <div class="form-tools pull-right">
+                            <div class="form-group">
+                                <div class="form-label">{{ 'User.User.Company-name'|trans }}</div>
+                                <div class="form-content">
+                                    {{ form_widget(form.companyName, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.companyName) }}
+                                </div>
+                            </div>
 
-            <a href="javascript:void(0);" class="btn btn-success user-user-save-button"><i
-                      class="fa fa-check"></i> {{ 'User.User.Save'|trans }}</a>
-            <a href="javascript:void(0);" class="btn btn-danger user-user-cancel-button"><i
-                      class="fa fa-close"></i> {{ 'User.User.Cancel'|trans }}</a>
+                            <div class="form-group">
+                                <div class="form-label">{{ 'User.User.Username'|trans }}</div>
+                                <div class="form-content">
+                                    {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.username) }}
+                                </div>
+                            </div>
 
-          </div>
-        </h4>
+                            <div class="form-group">
+                                <div class="form-label">{{ 'User.User.First-name'|trans }}</div>
+                                <div class="form-content">
+                                    {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.firstName) }}
+                                </div>
+                            </div>
 
-        <div class="row">
-          <div class="col-md-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">{{ 'User.User.Informations'|trans }}</h3>
-              </div>
-              <div class="panel-body">
+                            <div class="form-group">
+                                <div class="form-label">{{ 'User.User.Last-name'|trans }}</div>
+                                <div class="form-content">
+                                    {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.lastName) }}
+                                </div>
+                            </div>
 
-                <div class="form-item">
-                  <div class="form-label">{{ 'User.User.Company-name'|trans }}</div>
-                  <div class="form-content">
-                    {{ form_widget(form.companyName, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.companyName) }}
-                  </div>
+                            <div class="form-group">
+                                <div class="form-label">{{ 'User.User.Email'|trans }}</div>
+                                <div class="form-content">
+                                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.email) }}
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    {{ form_errors(form.plainPassword.first) }}
+                                    {{ form_label(form.plainPassword.first) }}
+                                    {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    {{ form_errors(form.plainPassword.second) }}
+                                    {{ form_label(form.plainPassword.second) }}
+                                    {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-label">{{ 'User.User.Enabled'|trans }}</div>
+                                <div class="form-content">
+                                    {{ form_widget(form.enabled) }}
+                                    {{ form_errors(form.enabled) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-label form-check-label">{{ 'User.User.Roles'|trans }}</div>
+                                <div class="form-check form-check-inline">
+                                    {{ form_widget(form.roles) }}
+                                    {{ form_errors(form.roles) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-label">{{ 'User.User.Divisions'|trans }}</div>
+                                <div class="form-content checkbox-list">
+                                    {{ form_widget(form.divisions) }}
+                                    {{ form_errors(form.divisions) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-item">
-                  <div class="form-label">{{ 'User.User.Username'|trans }}</div>
-                  <div class="form-content">
-                    {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.username) }}
-                  </div>
+                <div class="card-footer">
+                    <div class="float-right">
+                        <a href="javascript:void(0);" class="btn btn-success user-user-save-button"><i
+                                    class="fa fa-check"></i> {{ 'User.User.Save'|trans }}</a>
+                        <a href="javascript:void(0);" class="btn btn-danger user-user-cancel-button"><i
+                                    class="fa fa-close"></i> {{ 'User.User.Cancel'|trans }}</a>
+                    </div>
                 </div>
-
-                <div class="form-item">
-                  <div class="form-label">{{ 'User.User.First-name'|trans }}</div>
-                  <div class="form-content">
-                    {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.firstName) }}
-                  </div>
-                </div>
-
-                <div class="form-item">
-                  <div class="form-label">{{ 'User.User.Last-name'|trans }}</div>
-                  <div class="form-content">
-                    {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.lastName) }}
-                  </div>
-                </div>
-
-                <div class="form-item">
-                  <div class="form-label">{{ 'User.User.Email'|trans }}</div>
-                  <div class="form-content">
-                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.email) }}
-                  </div>
-                </div>
-
-                <div class="form-item">
-                  <div class="form-label">{{ 'User.User.Password'|trans }}</div>
-                  <div class="form-content">
-                    {{ form_widget(form.plainPassword) }}
-                    {{ form_errors(form.plainPassword) }}
-                  </div>
-                </div>
-
-                <div class="form-item">
-                  <div class="form-label">{{ 'User.User.Enabled'|trans }}</div>
-                  <div class="form-content">
-                    {{ form_widget(form.enabled, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.enabled) }}
-                  </div>
-                </div>
-
-                <div class="form-item">
-                  <div class="form-label">{{ 'User.User.Roles'|trans }}</div>
-                  <div class="form-content checkbox-list">
-                    {{ form_widget(form.roles, {'attr': {'class': ''}}) }}
-                    {{ form_errors(form.roles) }}
-                  </div>
-                </div>
-
-                <div class="form-item">
-                  <div class="form-label">{{ 'User.User.Divisions'|trans }}</div>
-                  <div class="form-content checkbox-list">
-                    {{ form_widget(form.divisions, {'attr': {'class': ''}}) }}
-                    {{ form_errors(form.divisions) }}
-                  </div>
-                </div>
-
-              </div>
             </div>
 
-          </div>
-
         </div>
-
-        <div class="row">
-          <div class="col-md-12">
-
-            <div class="form-tools pull-right">
-
-              <a href="javascript:void(0);" class="btn btn-success user-user-save-button"><i
-                        class="fa fa-check"></i> {{ 'User.User.Save'|trans }}</a>
-              <a href="javascript:void(0);" class="btn btn-danger user-user-cancel-button"><i
-                        class="fa fa-close"></i> {{ 'User.User.Cancel'|trans }}</a>
-
-            </div>
-          </div>
-        </div>
-
-      </div>
-      {{ form_rest(form) }}
+        {{ form_rest(form) }}
 
     </form>
-  </div>
+    </div>
 
 
 
@@ -143,28 +138,28 @@
 
 {% block javascripts %}
 
-  <script>
-    $(function () {
+    <script>
+        $(function () {
 
-      $('.user-user-save-button').on('click', function () {
+            $('.user-user-save-button').on('click', function () {
 
-        $('#userUserForm').submit();
+                $('#userUserForm').submit();
 
-      });
+            });
 
 
-      $('.user-user-cancel-button').on('click', function () {
+            $('.user-user-cancel-button').on('click', function () {
 
-        var url = "{{ path("paprec_user_user_index") }}";
+                var url = "{{ path("paprec_user_user_index") }}";
 
-        bootbox.confirm("{{ 'User.User.Confirm-cancel'|trans }}", function (result) {
-          if (result === true) {
-            $(location).attr('href', url);
-          }
+                bootbox.confirm("{{ 'User.User.Confirm-cancel'|trans }}", function (result) {
+                    if (result === true) {
+                        $(location).attr('href', url);
+                    }
+                });
+
+            });
+
         });
-
-      });
-
-    });
-  </script>
+    </script>
 {% endblock %}

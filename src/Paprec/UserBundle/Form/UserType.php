@@ -45,8 +45,8 @@ class UserType extends AbstractType
             ))
             ->add('enabled', ChoiceType::class, array(
                 "choices" => array(
-                    0 => 'No',
-                    1 => 'Yes'
+                    'No' => 0,
+                    'Yes' => 1
                 ),
                 "expanded" => true
             ))

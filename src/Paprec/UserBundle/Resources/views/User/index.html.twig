@@ -1,243 +1,246 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-  {{ 'User.User.List'|trans }}
+    {{ 'User.User.List'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
-  <link rel="stylesheet" type="text/css"
-        href="{{ asset('/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
-  <link rel="stylesheet" type="text/css"
-        href="{{ asset('/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
-  <link rel="stylesheet" type="text/css"
-        href="{{ asset('/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}">
 {% endblock %}
 
 {% block content_title %}
-  {{ 'User.User.Users'|trans }}
+    {{ 'User.User.Users'|trans }}
 {% endblock %}
 
 {% block main_content %}
 
-  <div class="row">
+    <div class="row">
 
-    {% for flashMessage in app.session.flashbag.get('error') %}
-      <div class="alert alert-danger">{{ ('User.User.Error.' ~ flashMessage.msg)|trans }} : {{ flashMessage.var }}</div>
-    {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger">{{ ('User.User.Error.' ~ flashMessage.msg)|trans }}
+                : {{ flashMessage.var }}</div>
+        {% endfor %}
 
-    {% for flashMessage in app.session.flashbag.get('success') %}
-      <div class="alert alert-success">{{ ('User.User.Success.' ~ flashMessage.msg)|trans }}
-        : {{ flashMessage.var }}</div>
-    {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ ('User.User.Success.' ~ flashMessage.msg)|trans }}
+                : {{ flashMessage.var }}</div>
+        {% endfor %}
 
-    <div class="col-md-12">
-      <!-- BOX -->
-      <div class="box border primary">
-        <div class="box-title">
-          <h4>
-            <i class="fa fa-list"></i> {{ 'User.User.List'|trans }}
-            <a href="{{ path('paprec_user_user_add') }}" class="btn btn-default pull-right">
-              <i class="fa fa-plus"></i> {{ 'User.User.Add'|trans }}
-            </a>
-            <a href="{{ path('paprec_user_user_export') }}" class="btn btn-primary pull-right">
-              <i class="fa fa-file-excel-o"></i> {{ 'User.User.Export'|trans }}
-            </a>
-          </h4>
+        <div class="col-md-12">
+            <!-- BOX -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fa fa-users"></i> {{ 'User.User.List'|trans }}
+                        <div class="float-right">
+                            <a href="{{ path('paprec_user_user_add') }}" class="btn btn-outline-primary">
+                                <i class="fa fa-plus"></i> {{ 'User.User.Add'|trans }}
+                            </a>
+                            <a href="{{ path('paprec_user_user_export') }}" class="btn btn-primary ">
+                                <i class="fa fa-file-excel"></i> {{ 'User.User.Export'|trans }}
+                            </a>
+                        </div>
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <table id="userListDatatable" class="table table-striped table-bordered table-hover"
+                           cellpadding="0" cellspacing="0" border="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{{ 'User.User.Username'|trans }}</th>
+                            <th>{{ 'User.User.Last-name'|trans }}</th>
+                            <th>{{ 'User.User.First-name'|trans }}</th>
+                            <th>{{ 'User.User.Email'|trans }}</th>
+                            <th>{{ 'User.User.Enabled'|trans }}</th>
+                            <th>{{ 'User.User.Date-crea'|trans }}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <!-- /BOX -->
         </div>
-
-        <div class="box-body">
-          <table id="userListDatatable" class="datatable table table-striped table-bordered table-hover"
-                 cellpadding="0" cellspacing="0" border="0" width="100%">
-            <thead>
-            <tr>
-              <th>#</th>
-              <th>{{ 'User.User.Username'|trans }}</th>
-              <th>{{ 'User.User.Last-name'|trans }}</th>
-              <th>{{ 'User.User.First-name'|trans }}</th>
-              <th>{{ 'User.User.Email'|trans }}</th>
-              <th>{{ 'User.User.Enabled'|trans }}</th>
-              <th>{{ 'User.User.Date-crea'|trans }}</th>
-              <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-
-        </div>
-      </div>
-      <!-- /BOX -->
     </div>
-  </div>
 
 
 {% endblock %}
 
 {% block javascripts %}
 
-  <!-- DATA TABLES JS -->
-  <script type="text/javascript"
-          src="{{ asset('/assets/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-  <script type="text/javascript"
-          src="{{ asset('/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-  <script type="text/javascript"
-          src="{{ asset('/assets/vendor/datatables.net-select/js/dataTables.select.min.js') }}"></script>
-  <script type="text/javascript"
-          src="{{ asset('/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
-  <script type="text/javascript"
-          src="{{ asset('/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
+    <!-- DATA TABLES JS -->
+    <script type="text/javascript"
+            src="{{ asset('/assets/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('/assets/vendor/datatables.net-select/js/dataTables.select.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
 
-  <script>
-      $(function () {
+    <script>
+        $(function () {
 
-          var userList = $('#userListDatatable').DataTable({
-              "language": {
-                  "lengthMenu": "{{ 'General.Datatable.Records-per-page'|trans }}",
-                  "zeroRecords": "{{ 'General.Datatable.Nothing-found'|trans }}",
-                  "info": "{{ 'General.Datatable.Showing-page'|trans }}",
-                  "infoEmpty": "{{ 'General.Datatable.No-records-available'|trans }}",
-                  "search": "{{ 'General.Datatable.Search'|trans }}:",
-                  "sProcessing": "{{ 'General.Datatable.Loading'|trans }}",
-                  "paginate": {
-                      "previous": "{{ 'General.Datatable.Previous'|trans }}",
-                      "next": "{{ 'General.Datatable.Next'|trans }}",
-                  }
-              },
-              dom: 'Bflrtip',
-              buttons: [
-                  {
-                      text: '{{ 'User.User.Send-access'|trans }}',
-                      action: function (e, dt) {
-                          if (dt.rows({selected: true}).count() > 0) {
-                              var rowIds = [];
-                              $.each(dt.rows({selected: true}).data(), function () {
-                                  rowIds.push(this.id);
-                              });
-                              var url = "{{ path("paprec_user_user_sendAccessMany", {ids: '0000'}) }}".replace('0000', rowIds.join(','));
+            var userList = $('#userListDatatable').DataTable({
+                "language": {
+                    "lengthMenu": "{{ 'General.Datatable.Records-per-page'|trans }}",
+                    "zeroRecords": "{{ 'General.Datatable.Nothing-found'|trans }}",
+                    "info": "{{ 'General.Datatable.Showing-page'|trans }}",
+                    "infoEmpty": "{{ 'General.Datatable.No-records-available'|trans }}",
+                    "search": "{{ 'General.Datatable.Search'|trans }}:",
+                    "sProcessing": "{{ 'General.Datatable.Loading'|trans }}",
+                    "paginate": {
+                        "previous": "{{ 'General.Datatable.Previous'|trans }}",
+                        "next": "{{ 'General.Datatable.Next'|trans }}",
+                    }
+                },
+                dom: 'Bflrtip',
+                buttons: [
+                    {
+                        text: '{{ 'User.User.Send-access'|trans }}',
+                        action: function (e, dt) {
+                            if (dt.rows({selected: true}).count() > 0) {
+                                var rowIds = [];
+                                $.each(dt.rows({selected: true}).data(), function () {
+                                    rowIds.push(this.id);
+                                });
+                                var url = "{{ path("paprec_user_user_sendAccessMany", {ids: '0000'}) }}".replace('0000', rowIds.join(','));
 
-                              bootbox.confirm("{{ 'User.User.Confirm-send-access'|trans }}", function (result) {
-                                  if (result === true) {
-                                      $(location).attr('href', url);
-                                  }
-                              });
-                          }
-                      }
-                  },
-                  {
-                      text: '{{ 'General.Remove'|trans }}',
-                      action: function (e, dt) {
-                          if (dt.rows({selected: true}).count() > 0) {
-                              var rowIds = [];
-                              $.each(dt.rows({selected: true}).data(), function () {
-                                  rowIds.push(this.id);
-                              });
-                              var url = "{{ path("paprec_user_user_removeMany", {ids: '0000'}) }}".replace('0000', rowIds.join(','));
+                                bootbox.confirm("{{ 'User.User.Confirm-send-access'|trans }}", function (result) {
+                                    if (result === true) {
+                                        $(location).attr('href', url);
+                                    }
+                                });
+                            }
+                        }
+                    },
+                    {
+                        text: '{{ 'General.Remove'|trans }}',
+                        action: function (e, dt) {
+                            if (dt.rows({selected: true}).count() > 0) {
+                                var rowIds = [];
+                                $.each(dt.rows({selected: true}).data(), function () {
+                                    rowIds.push(this.id);
+                                });
+                                var url = "{{ path("paprec_user_user_removeMany", {ids: '0000'}) }}".replace('0000', rowIds.join(','));
 
-                              bootbox.confirm("{{ 'General.Confirm-remove'|trans }}", function (result) {
-                                  if (result === true) {
-                                      $(location).attr('href', url);
-                                  }
-                              });
-                          }
-                      }
-                  }
-              ],
-              "select": true,
-              "processing": true,
-              "serverSide": true,
-              "lengthMenu": [[50, 100, 200, 500], [50, 100, 200, 500]],
-              "ajax": "{{ path('paprec_user_user_loadList') }}",
-              "columns": [
-                  {"data": "id"},
-                  {"data": "username"},
-                  {"data": "lastName"},
-                  {"data": "firstName"},
-                  {"data": "email"},
-                  {"data": "enabled"},
-                  {"data": "dateCreation"},
-                  {"data": "id", "width": "10%", "bSortable": false}
-              ],
-              "rowCallback": function (row, data, displayIndex) {
-              },
-              "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                                bootbox.confirm("{{ 'General.Confirm-remove'|trans }}", function (result) {
+                                    if (result === true) {
+                                        $(location).attr('href', url);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                ],
+                "select": true,
+                "processing": true,
+                "serverSide": true,
+                "lengthMenu": [[50, 100, 200, 500], [50, 100, 200, 500]],
+                "ajax": "{{ path('paprec_user_user_loadList') }}",
+                "columns": [
+                    {"data": "id"},
+                    {"data": "username"},
+                    {"data": "lastName"},
+                    {"data": "firstName"},
+                    {"data": "email"},
+                    {"data": "enabled"},
+                    {"data": "dateCreation"},
+                    {"data": "id", "width": "10%", "bSortable": false}
+                ],
+                "rowCallback": function (row, data, displayIndex) {
+                },
+                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 
-                  if (aData['enabled'] == true) {
-                      $(nRow).find(':first-child').next().next().next().next().next().html('{{ 'General.Yes'|trans }}');
-                  }
-                  else {
-                      $(nRow).find(':first-child').next().next().next().next().next().html('{{ 'General.No'|trans }}');
-                  }
+                    if (aData['enabled'] == true) {
+                        $(nRow).find(':first-child').next().next().next().next().next().html('{{ 'General.Yes'|trans }}');
+                    }
+                    else {
+                        $(nRow).find(':first-child').next().next().next().next().next().html('{{ 'General.No'|trans }}');
+                    }
 
-                  viewUrl = "{{ path('paprec_user_user_view', {id: '0000'}) }}".replace('0000', aData['id']);
-                  editUrl = "{{ path('paprec_user_user_edit', {id: '0000'}) }}".replace('0000', aData['id']);
+                    viewUrl = "{{ path('paprec_user_user_view', {id: '0000'}) }}".replace('0000', aData['id']);
+                    editUrl = "{{ path('paprec_user_user_edit', {id: '0000'}) }}".replace('0000', aData['id']);
 
-                  $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-default btn-xs"><i class="fa fa-edit"></i></a>');
+                    $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-default btn-xs"><i class="fa fa-edit"></i></a>');
 
-              },
-              "fnDrawCallback": function (oSettings) {
+                },
+                "fnDrawCallback": function (oSettings) {
 
-                  {#if (userList.data().length > 0) {#}
+                    {#if (userList.data().length > 0) {#}
 
-                      {#$.contextMenu({#}
-                          {#selector: '#user-list-datatable tbody tr',#}
-                          {#events: {#}
-                              {#show: function () {#}
-                                  {#userList.row('#' + this.prop('id')).select();#}
-                              {#}#}
-                          {#},#}
-                          {#callback: function (key, options) {#}
-                              {#var userIds = new Array();#}
-                              {#$('#user-list-datatable tbody tr.selected').each(function () {#}
-                                  {#userIds.push($(this).attr('id').replace('row_', ''));#}
-                              {#});#}
+                    {#$.contextMenu({#}
+                    {#selector: '#user-list-datatable tbody tr',#}
+                    {#events: {#}
+                    {#show: function () {#}
+                    {#userList.row('#' + this.prop('id')).select();#}
+                    {#}#}
+                    {#},#}
+                    {#callback: function (key, options) {#}
+                    {#var userIds = new Array();#}
+                    {#$('#user-list-datatable tbody tr.selected').each(function () {#}
+                    {#userIds.push($(this).attr('id').replace('row_', ''));#}
+                    {#});#}
 
-                              {#if (key == 'add') {#}
-                                {#url = "{{ path('paprec_user_user_add') }}";#}
-                                {#$(location).attr('href', url);#}
-                              {#}#}
-                              {#else if (key == 'view') {#}
-                                  {#url = "{{ path('paprec_user_user_view', {id: '0000'}) }}".replace('0000', userIds[0]);#}
-                                  {#$(location).attr('href', url);#}
-                              {#}#}
-                              {#else if (key == 'edit') {#}
-                                  {#url = "{{ path('paprec_user_user_edit', {id: '0000'}) }}".replace('0000', userIds[0]);#}
-                                  {#$(location).attr('href', url);#}
-                              {#}#}
-                              {#else if (key == 'remove') {#}
-                                  {#bootbox.confirm("{{ 'User.User.Confirm-remove'|trans }}", function (result) {#}
-                                      {#if (result === true) {#}
-                                          {#url = "{{ path('paprec_user_user_remove', {id: '0000'}) }}".replace('0000', userIds[0]);#}
-                                          {#$(location).attr('href', url);#}
-                                      {#}#}
-                                  {#});#}
-                              {#}#}
-                              {#else if (key == 'sendAccess') {#}
-                                  {#bootbox.confirm("{{ 'User.User.Confirm-send-access'|trans }}", function (result) {#}
-                                      {#if (result === true) {#}
-                                          {#url = "{{ path('paprec_user_user_sendAccess', {id: '0000'}) }}".replace('0000', userIds[0]);#}
-                                          {#$(location).attr('href', url);#}
-                                      {#}#}
-                                  {#});#}
-                              {#}#}
+                    {#if (key == 'add') {#}
+                    {#url = "{{ path('paprec_user_user_add') }}";#}
+                    {#$(location).attr('href', url);#}
+                    {#}#}
+                    {#else if (key == 'view') {#}
+                    {#url = "{{ path('paprec_user_user_view', {id: '0000'}) }}".replace('0000', userIds[0]);#}
+                    {#$(location).attr('href', url);#}
+                    {#}#}
+                    {#else if (key == 'edit') {#}
+                    {#url = "{{ path('paprec_user_user_edit', {id: '0000'}) }}".replace('0000', userIds[0]);#}
+                    {#$(location).attr('href', url);#}
+                    {#}#}
+                    {#else if (key == 'remove') {#}
+                    {#bootbox.confirm("{{ 'User.User.Confirm-remove'|trans }}", function (result) {#}
+                    {#if (result === true) {#}
+                    {#url = "{{ path('paprec_user_user_remove', {id: '0000'}) }}".replace('0000', userIds[0]);#}
+                    {#$(location).attr('href', url);#}
+                    {#}#}
+                    {#});#}
+                    {#}#}
+                    {#else if (key == 'sendAccess') {#}
+                    {#bootbox.confirm("{{ 'User.User.Confirm-send-access'|trans }}", function (result) {#}
+                    {#if (result === true) {#}
+                    {#url = "{{ path('paprec_user_user_sendAccess', {id: '0000'}) }}".replace('0000', userIds[0]);#}
+                    {#$(location).attr('href', url);#}
+                    {#}#}
+                    {#});#}
+                    {#}#}
 
-                          {#},#}
-                          {#items: {#}
-                              {#"view": {name: "{{ 'User.User.View'|trans }}", icon: "fa-search"},#}
-                              {#"edit": {name: "{{ 'User.User.Edit'|trans }}", icon: "edit"},#}
-                              {#"sendAccess": {name: "{{ 'User.User.Send-access'|trans }}", icon: "fa-enveloppe"},#}
-                              {#"sep1": "---------",#}
-                              {#"remove": {name: "{{ 'User.User.Remove'|trans }}", icon: "delete"}#}
-                          {#}#}
-                      {#});#}
-                  {#}#}
-              }
-          });
+                    {#},#}
+                    {#items: {#}
+                    {#"view": {name: "{{ 'User.User.View'|trans }}", icon: "fa-search"},#}
+                    {#"edit": {name: "{{ 'User.User.Edit'|trans }}", icon: "edit"},#}
+                    {#"sendAccess": {name: "{{ 'User.User.Send-access'|trans }}", icon: "fa-enveloppe"},#}
+                    {#"sep1": "---------",#}
+                    {#"remove": {name: "{{ 'User.User.Remove'|trans }}", icon: "delete"}#}
+                    {#}#}
+                    {#});#}
+                    {#}#}
+                }
+            });
 
-          $('#user-list-datatable tbody').on('dblclick', 'tr', function (event) {
-              url = "{{ path('paprec_user_user_view', {id: '0000'}) }}".replace('0000', $(this).attr('id').replace('row_', ''));
-              $(location).attr('href', url);
-          });
+            $('#user-list-datatable tbody').on('dblclick', 'tr', function (event) {
+                url = "{{ path('paprec_user_user_view', {id: '0000'}) }}".replace('0000', $(this).attr('id').replace('row_', ''));
+                $(location).attr('href', url);
+            });
 
-      });
-  </script>
+        });
+    </script>
 {% endblock %}
