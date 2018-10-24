@@ -16,19 +16,22 @@
 {% endblock %}
 
 {% block main_content %}
-<div class="view-box row">
 
-    {% for flashMessage in app.session.flashbag.get('errors') %}
-        <div class="alert alert-danger">{{ ('User.User.Error.' ~ flashMessage)|trans }}</div>
-    {% endfor %}
-
-    {% for flashMessage in app.session.flashbag.get('success') %}
-        <div class="alert alert-success">{{ ('User.User.Success.' ~ flashMessage)|trans }}</div>
-    {% endfor %}
 
 
     <div class="col-md-7">
-        <!-- BOX -->
+        <!-- FLASH MESSAGE -->
+        <div class="view-box">
+
+            {% for flashMessage in app.session.flashbag.get('errors') %}
+                <div class="alert alert-danger">{{ ('User.User.Error.' ~ flashMessage)|trans }}</div>
+            {% endfor %}
+
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">{{ ('User.User.Success.' ~ flashMessage)|trans }}</div>
+            {% endfor %}
+        </div>
+        <!-- CARD -->
         <div class="card">
             <div class="card-header">
                 <h4>
@@ -50,8 +53,10 @@
             <div class="card-body">
 
                 <div class="col-md-12">
-                    <h1 class="view-title">{{ user.username }}
-                    </h1>
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label">{{ 'User.User.Username'|trans }}</label>
+                        <label class="col-form-label">{{ user.username }}</label>
+                    </div>
 
                     <div class="row">
 
@@ -62,39 +67,39 @@
                                 </div>
                                 <div class="panel-body">
 
-                                    <div class="view-item">
-                                        <div class="view-label">{{ 'User.User.Company-name'|trans }}</div>
-                                        <div class="view-label">
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label">{{ 'User.User.Company-name'|trans }}</label>
+                                        <label class="col-form-label">
                                             {{ user.companyName }}
-                                        </div>
+                                        </label>
                                     </div>
 
-                                    <div class="view-item">
-                                        <div class="view-label">{{ 'User.User.Username'|trans }}</div>
-                                        <div class="view-content">
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label">{{ 'User.User.Username'|trans }}</label>
+                                        <label class="col-form-label">
                                             {{ user.username }}
-                                        </div>
+                                        </label>
                                     </div>
 
-                                    <div class="view-item">
-                                        <div class="view-label">{{ 'User.User.First-name'|trans }}</div>
-                                        <div class="view-content">
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label">{{ 'User.User.First-name'|trans }}</label>
+                                        <label class="col-form-label">
                                             {{ user.firstName }}
-                                        </div>
+                                        </label>
                                     </div>
 
-                                    <div class="view-item">
-                                        <div class="view-label">{{ 'User.User.Last-name'|trans }}</div>
-                                        <div class="view-content">
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label">{{ 'User.User.Last-name'|trans }}</label>
+                                        <label class="col-form-label">
                                             {{ user.lastName }}
-                                        </div>
+                                        </label>
                                     </div>
 
-                                    <div class="view-item">
-                                        <div class="view-label">{{ 'User.User.Email'|trans }}</div>
-                                        <div class="view-content">
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label">{{ 'User.User.Email'|trans }}</label>
+                                        <label class="col-form-label">
                                             {{ user.email }}
-                                        </div>
+                                        </label>
                                     </div>
 
                                 </div>
@@ -108,34 +113,32 @@
                                 </div>
                                 <div class="panel-body">
 
-                                    <div class="view-item">
-                                        <div class="view-label">{{ 'User.User.Roles'|trans }}</div>
-                                        <div class="view-content">
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label">{{ 'User.User.Roles'|trans }}</label>
+                                        <label class="col-form-label">
                                             {% for role in user.roles %}
                                                 {% if role != 'ROLE_USER' %}
                                                     {{ role|trans }}<br>
                                                 {% endif %}
                                             {% endfor %}
-                                        </div>
+                                        </label>
                                     </div>
 
-                                    <div class="view-item">
-                                        <div class="view-label">{{ 'User.User.Divisions'|trans }}</div>
-                                        <div class="view-content">
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label">{{ 'User.User.Divisions'|trans }}</label>
+                                        <label class="col-form-label">
                                             {% for division in user.divisions %}
                                                 {{ division|trans }}<br>
                                             {% endfor %}
-                                        </div>
+                                        </label>
                                     </div>
 
-                                    <div class="view-item">
-                                        <div class="view-label">{{ 'User.User.Enabled'|trans }}</div>
-                                        <div class="view-content">
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label">{{ 'User.User.Enabled'|trans }}</label>
+                                        <label class="col-form-label">
                                             {% if user.enabled == 1 %}Oui{% else %}Non{% endif %}
-                                        </div>
+                                        </label>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -151,18 +154,18 @@
                                 </div>
                                 <div class="panel-body">
 
-                                    <div class="view-item">
-                                        <div class="view-label">{{ 'User.User.Date-creation'|trans }}</div>
-                                        <div class="view-content">
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label">{{ 'User.User.Date-creation'|trans }}</label>
+                                        <label class="col-form-label">
                                             {{ user.dateCreation|localizeddate('short', 'medium', app.request.locale) }}
-                                        </div>
+                                        </label>
                                     </div>
 
-                                    <div class="view-item">
-                                        <div class="view-label">{{ 'User.User.Date-update'|trans }}</div>
-                                        <div class="view-content">
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label">{{ 'User.User.Date-update'|trans }}</label>
+                                        <label class="col-form-label">
                                             {{ user.dateUpdate is empty ? "" : user.dateUpdate|localizeddate('short', 'medium', app.request.locale) }}
-                                        </div>
+                                        </label>
                                     </div>
 
                                 </div>
@@ -178,19 +181,10 @@
             </div>
         </div>
     </div>
-</div>
 
     {% endblock %}
 
     {% block javascripts %}
-
-        <!-- DATA TABLES JS -->
-        <script type="text/javascript"
-                src="{{ asset('/assets/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-        <script type="text/javascript"
-                src="{{ asset('/assets/vendor/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
-        <script type="text/javascript"
-                src="{{ asset('/assets/vendor/datatables.net-select/js/dataTables.select.min.js') }}"></script>
 
         <script>
             $(function () {
@@ -218,92 +212,6 @@
                     });
 
                 });
-
-                var userList = $('#user-list-datatable').DataTable({
-                    "language": {
-                        "lengthMenu": "{{ 'General.Datatable.Records-per-page'|trans }}",
-                        "zeroRecords": "{{ 'General.Datatable.Nothing-found'|trans }}",
-                        "info": "{{ 'General.Datatable.Showing-page'|trans }}",
-                        "infoEmpty": "{{ 'General.Datatable.No-records-available'|trans }}",
-                        "search": "{{ 'General.Datatable.Search'|trans }}:",
-                        "sProcessing": "{{ 'General.Datatable.Loading'|trans }}",
-                        "paginate": {
-                            "previous": "{{ 'General.Datatable.Previous'|trans }}",
-                            "next": "{{ 'General.Datatable.Next'|trans }}",
-                        }
-                    },
-                    "select": true,
-                    "processing": true,
-                    "serverSide": true,
-                    "lengthMenu": [[50, 100, 200, 500], [50, 100, 200, 500]],
-                    "ajax": "{{ path('paprec_user_user_loadList', {'userId': user.id}) }}",
-                    "columns": [
-                        {"data": "id"},
-                        {"data": "dateCreation"},
-                        {"data": "status"},
-                        {"data": "number"},
-                        {"data": "username"},
-                        {"data": "totalPrice", className: "moneyValue"},
-                        {"data": "nbProduct"}
-                    ],
-                    "rowCallback": function (row, data, displayIndex) {
-                    },
-                    "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-
-                        $(nRow).find(':last-child').prev().html(parseFloat(aData['totalPrice']).toFixed(2));
-
-
-                    },
-                    "fnDrawCallback": function (oSettings) {
-
-                        if (userList.data().length > 0) {
-
-                            $.contextMenu({
-                                selector: '#user-list-datatable tbody tr',
-                                events: {
-                                    show: function () {
-                                        userList.row('#' + this.prop('id')).select();
-                                    }
-                                },
-                                callback: function (key, options) {
-                                    var userIds = new Array();
-                                    $('#user-list-datatable tbody tr.selected').each(function () {
-                                        userIds.push($(this).attr('id').replace('row_', ''));
-                                    });
-
-                                    if (key == 'add') {
-                                        {#url = "{{ path('paprec_user_user_add') }}";#}
-                                        {#$(location).attr('href', url);#}
-                                    }
-                                    else if (key == 'view') {
-                                        url = "{{ path('paprec_user_user_view', {id: '0000'}) }}".replace('0000', userIds[0]);
-                                        $(location).attr('href', url);
-                                    }
-                                    else if (key == 'edit') {
-                                        url = "{{ path('paprec_user_user_edit', {id: '0000'}) }}".replace('0000', userIds[0]);
-                                        $(location).attr('href', url);
-                                    }
-                                    else if (key == 'remove') {
-                                        bootbox.confirm("{{ 'User.User.Confirm-remove'|trans }}", function (result) {
-                                            if (result === true) {
-                                                url = "{{ path('paprec_user_user_remove', {id: '0000'}) }}".replace('0000', userIds[0]);
-                                                $(location).attr('href', url);
-                                            }
-                                        });
-                                    }
-
-                                },
-                                items: {
-                                    "view": {name: "{{ 'User.User.View'|trans }}", icon: "fa-search"},
-                                    "edit": {name: "{{ 'User.User.Edit'|trans }}", icon: "edit"},
-                                    "sep1": "---------",
-                                    "remove": {name: "{{ 'User.User.Remove'|trans }}", icon: "delete"}
-                                }
-                            });
-                        }
-                    }
-                });
-
             });
         </script>
     {% endblock %}

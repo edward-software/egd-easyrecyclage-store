@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new \Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new Goondi\ToolsBundle\GoondiToolsBundle(),
             new Paprec\HomeBundle\PaprecHomeBundle(),
             new Paprec\UserBundle\PaprecUserBundle(),

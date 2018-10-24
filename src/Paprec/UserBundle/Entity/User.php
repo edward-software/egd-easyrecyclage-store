@@ -4,6 +4,7 @@ namespace Paprec\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -24,6 +25,29 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     */
+    protected $username;
+
+    /**
+     * Plain password. Used for model validation. Must not be persisted.
+     * @Assert\NotBlank()
+     * @var string
+     */
+    protected $plainPassword;
+
+
+    /**
+     *  @var string
+     *  @Assert\Email(
+     *      message = "The email '{{ value }}' is not a valid email.",
+     *      checkMX = true
+     * )
+     */
+    protected $email;
 
     /**
      * @var \DateTime
@@ -73,7 +97,6 @@ class User extends BaseUser
      * @ORM\Column(name="divisions", type="simple_array", nullable=true)
      */
     private $divisions;
-
 
 
     public function __construct()

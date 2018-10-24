@@ -36,10 +36,13 @@
                     <div class="panel panel-default">
                         <div class="row">
                             <div class="col-md-6">
-                                <h1 class="form-title">
-                                    {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.username) }}
-                                </h1>
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'User.User.Username'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.username) }}
+                                    </div>
+                                </div>
                                 <h3 class="panel-title">{{ 'User.User.Informations'|trans }}</h3>
                             </div>
                         </div>
@@ -81,17 +84,15 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    {{ form_errors(form.plainPassword.first) }}
-                                                    {{ form_label(form.plainPassword.first) }}
-                                                    {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    {{ form_errors(form.plainPassword.second) }}
-                                                    {{ form_label(form.plainPassword.second) }}
-                                                    {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
-                                                </div>
+                                            <div class="form-group ">
+                                                {{ form_label(form.plainPassword.first) }}
+                                                {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.plainPassword.first) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_label(form.plainPassword.second) }}
+                                                {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.plainPassword.second) }}
                                             </div>
 
                                         </div>
