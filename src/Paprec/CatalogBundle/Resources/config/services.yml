@@ -1,0 +1,8 @@
+services:
+#    catalog.example:
+#        class: PaprecCatalogBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+parameters:
+
+  paprec_catalog.category.picto_path: "%kernel.root_dir%/../web/uploads/pictos"

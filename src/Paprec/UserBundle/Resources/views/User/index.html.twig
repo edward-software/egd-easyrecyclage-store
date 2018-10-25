@@ -176,7 +176,7 @@
                     viewUrl = "{{ path('paprec_user_user_view', {id: '0000'}) }}".replace('0000', aData['id']);
                     editUrl = "{{ path('paprec_user_user_edit', {id: '0000'}) }}".replace('0000', aData['id']);
 
-                    $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-default btn-xs"><i class="fa fa-edit"></i></a>');
+                    $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>');
 
                 },
                 "fnDrawCallback": function (oSettings) {

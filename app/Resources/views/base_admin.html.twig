@@ -46,30 +46,32 @@
                 {#{% endif %}#}
 
 
-                {#{% if is_granted('ROLE_ADMIN') %}#}
-                {#<li class="dropdown{% if app.request.get('_route')|slice(0, 'paprec_catalog'|length) == 'paprec_catalog' %} active{% endif %}">#}
-                {#<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'Catalog.Bundle-name'|trans }} <span class="caret"></span></a>#}
-                {#<ul class="dropdown-menu">#}
-                {#<li class="{% if app.request.get('_route')|slice(0, 'paprec_catalog_product'|length) == 'paprec_catalog_product' %} active{% endif %}"><a href="{{ path('paprec_catalog_product_index') }}">{{ 'Catalog.Product.Products'|trans }}</a></li>#}
-                {#<li class="{% if app.request.get('_route')|slice(0, 'paprec_catalog_bundle'|length) == 'paprec_catalog_bundle' %} active{% endif %}"><a href="{{ path('paprec_catalog_bundle_index') }}">{{ 'Catalog.Bundle.Bundles'|trans }}</a></li>#}
-                {#<li class="{% if app.request.get('_route')|slice(0, 'paprec_catalog_sizeRange'|length) == 'paprec_catalog_sizeRange' %} active{% endif %}"><a href="{{ path('paprec_catalog_sizeRange_index') }}">{{ 'Catalog.SizeRange.SizeRanges'|trans }}</a></li>#}
-                {#<li class="{% if app.request.get('_route')|slice(0, 'paprec_catalog_postalCode'|length) == 'paprec_catalog_postalCode' %} active{% endif %}"><a href="{{ path('paprec_catalog_postalCode_index') }}">{{ 'Catalog.PostalCode.PostalCodes'|trans }}</a></li>#}
-                {#<li class="{% if app.request.get('_route')|slice(0, 'paprec_catalog_service'|length) == 'paprec_catalog_service' %} active{% endif %}"><a href="{{ path('paprec_catalog_service_index') }}">{{ 'Catalog.Service.Services'|trans }}</a></li>#}
-                {#</ul>#}
-                {#</li>#}
-                {#{% endif %}#}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item dropdown{% if app.request.get('_route')|slice(0, 'paprec_catalog'|length) == 'paprec_catalog' %} active{% endif %}">
+                        <a href="#" class="dropdown-toggle nav-link" id="navbarDropdownCatalog" data-toggle="dropdown"
+                           role="button" aria-haspopup="true" aria-expanded="false">{{ 'Catalog.Bundle-name'|trans }}
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownCatalog">
+                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_catefory'|length) == 'paprec_catalog_category' %} active{% endif %}"
+                                href="{{ path('paprec_catalog_category_index') }}">{{ 'Catalog.Category.Categories'|trans }}</a>
+                        </div>
+                    </li>
+                {% endif %}
 
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item dropdown{% if app.request.get('_route')|slice(0, 'paprec_user'|length) == 'paprec_user' %} active{% endif %}">
                         <a href="#" class="dropdown-toggle nav-link" id="navbarDropdownUser" data-toggle="dropdown"
-                           role="button" aria-haspopup="true" aria-expanded="false">{{ 'User.Bundle-name'|trans }} <span
-                                    class="caret"></span></a>
+                           role="button" aria-haspopup="true" aria-expanded="false">{{ 'User.Bundle-name'|trans }}
+                            <span class="caret"></span>
+                        </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownUser">
                             <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_user_user'|length) == 'paprec_user_user' %} active{% endif %}"
                                href="{{ path('paprec_user_user_index') }}">{{ 'User.User.Users'|trans }}</a>
                         </div>
                     </li>
                 {% endif %}
+
 
                 {#{% if is_granted('ROLE_ADMIN') %}#}
                 {#<li class="dropdown{% if app.request.get('_route')|slice(0, 'paprec_home_ticket'|length) == 'paprec_home_ticket' %} active{% endif %}">#}

@@ -1,0 +1,32 @@
+Catalog:
+
+    Bundle-name:                    Gestion Catalogue
+    Category:
+        Categories:                 Catégories
+        List:                       Liste des catégories
+        Date-creation:              Date de création
+        Date-crea:                  Date de créa.
+        Date-update:                Date de mise à jour
+        Name:                       Nom
+        Position:                   Position
+        Picto:                      Picto
+        Description:                Description
+        Informations:               Informations
+        System-informations:        Informations système
+        Enabled:                    Activé
+        Enable:                     Activer
+        Disable:                    Désactiver
+        Division:                   Division
+        Export:                     Exporter les catégories
+        View:                       Visualiser la catégorie
+        Edit:                       Modifier la catégorie
+        Remove:                     Supprimer la catégorie
+        Add:                        Ajouter une catégorie
+        Save:                       Enregistrer
+        Cancel:                     Annuler
+        Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+        Confirm-remove:             Etes-vous sûr de vouloir supprimer cette catégorie ?
+        Success:
+          accessHasBeenSent:    Les accès ont été correctement envoyés
+        Error:
+          accessCannotBeSent:   Les accès n'ont pu être envoyés

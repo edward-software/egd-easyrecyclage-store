@@ -1,6 +1,6 @@
 <?php
 
-namespace Paprec\HomeBundle\Repository;
+namespace Paprec\CatalogBundle\Repository;
 
 /**
  * CategoryRepository

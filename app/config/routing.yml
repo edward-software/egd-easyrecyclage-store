@@ -1,3 +1,8 @@
+catalog:
+    resource: "@PaprecCatalogBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 
 
 fos_user_security_login:
@@ -21,3 +26,8 @@ paprec_user:
     resource: "@PaprecUserBundle/Controller/"
     type:     annotation
     prefix:   /admin/user
+
+paprec_catalog:
+    resource: "@PaprecCatalogBundle/Controller/"
+    type:     annotation
+    prefix:   /admin/catalog

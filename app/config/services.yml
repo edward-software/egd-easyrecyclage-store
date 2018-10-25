@@ -7,7 +7,7 @@ parameters:
     paprec_divisions:
         - DI
         - CHANTIER
-        - D3EE
+        - D3E
         - 5FLUX
 
 services:
