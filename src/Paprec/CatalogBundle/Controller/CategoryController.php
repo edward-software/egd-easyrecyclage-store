@@ -55,8 +55,7 @@ class CategoryController extends Controller
 
         $queryBuilder->select(array('c'))
             ->from('PaprecCatalogBundle:Category', 'c')
-            ->where('c.deleted IS NULL')
-        ;
+            ->where('c.deleted IS NULL');
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
             if (substr($search['value'], 0, 1) == '#') {
@@ -107,7 +106,7 @@ class CategoryController extends Controller
 
         $phpExcelObject->getProperties()->setCreator("Paprec Easy Recyclage")
             ->setLastModifiedBy("Paprec Easy Recyclage")
-            ->setTitle("Paprec Easy Recyclage - Utilisateurs")
+            ->setTitle("Paprec Easy Recyclage - Catégories")
             ->setSubject("Extraction");
 
         $phpExcelObject->setActiveSheetIndex(0)
@@ -123,22 +122,22 @@ class CategoryController extends Controller
         $phpExcelObject->setActiveSheetIndex(0);
 
         $i = 2;
-        foreach($categories as $category) {
+        foreach ($categories as $category) {
 
             $phpExcelObject->setActiveSheetIndex(0)
-                ->setCellValue('A'.$i, $category->getId())
-                ->setCellValue('B'.$i, $category->getName())
-                ->setCellValue('C'.$i, $category->getDescription())
-                ->setCellValue('D'.$i, $category->getDivision())
-                ->setCellValue('E'.$i, $category->getPosition())
-                ->setCellValue('F'.$i, $category->getEnabled())
-                ->setCellValue('G'.$i, $category->getDateCreation()->format('Y-m-d'));
+                ->setCellValue('A' . $i, $category->getId())
+                ->setCellValue('B' . $i, $category->getName())
+                ->setCellValue('C' . $i, $category->getDescription())
+                ->setCellValue('D' . $i, $category->getDivision())
+                ->setCellValue('E' . $i, $category->getPosition())
+                ->setCellValue('F' . $i, $category->getEnabled())
+                ->setCellValue('G' . $i, $category->getDateCreation()->format('Y-m-d'));
             $i++;
         }
 
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
 
-        $fileName = 'PaprecEasyRecyclage-Extraction-Categories-'.date('Y-m-d').'.xlsx';
+        $fileName = 'PaprecEasyRecyclage-Extraction-Categories-' . date('Y-m-d') . '.xlsx';
 
         // create the response
         $response = $this->container->get('phpexcel')->createStreamedResponse($writer);
@@ -162,7 +161,7 @@ class CategoryController extends Controller
      */
     public function viewAction(Request $request, Category $category)
     {
-        if($category->getDeleted() !== null) {
+        if ($category->getDeleted() !== null) {
             throw new NotFoundHttpException();
         }
 
@@ -172,7 +171,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/category/add", name="paprec_catalog_catergory_add")
+     * @Route("/category/add", name="paprec_catalog_category_add")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function addAction(Request $request)
@@ -181,7 +180,7 @@ class CategoryController extends Controller
         $category = new Category();
 
         $divisions = array();
-        foreach($this->getParameter('paprec_divisions') as $division) {
+        foreach ($this->getParameter('paprec_divisions') as $division) {
             $divisions[$division] = $division;
         }
 
@@ -195,7 +194,7 @@ class CategoryController extends Controller
             $category = $form->getData();
             $category->setDateCreation(new \DateTime);
 
-            if($category->getPicto() instanceof UploadedFile) {
+            if ($category->getPicto() instanceof UploadedFile) {
                 /**
                  * On place le picto uploadé dans le dossier web/uploads
                  * et on sauvegarde le nom du fichier dans la colonne 'picto" de la catégorie
@@ -222,6 +221,7 @@ class CategoryController extends Controller
             'form' => $form->createView()
         ));
     }
+
     /**
      * @Route("/category/enableMany/{ids}", name="paprec_catalog_category_enableMany")
      * @Security("has_role('ROLE_ADMIN')")
@@ -230,16 +230,16 @@ class CategoryController extends Controller
     {
         $ids = $request->get('ids');
 
-        if(! $ids) {
+        if (!$ids) {
             throw new NotFoundHttpException();
         }
         $em = $this->getDoctrine()->getManager();
 
         $ids = explode(',', $ids);
 
-        if(is_array($ids) && count($ids)) {
+        if (is_array($ids) && count($ids)) {
             $categories = $em->getRepository('PaprecCatalogBundle:Category')->findById($ids);
-            foreach ($categories as $category){
+            foreach ($categories as $category) {
                 $category->setEnabled(true);
                 $category->setDateUpdate(new \DateTime);
             }
@@ -257,12 +257,12 @@ class CategoryController extends Controller
      */
     public function editAction(Request $request, Category $category)
     {
-        if($category->getDeleted() !== null) {
+        if ($category->getDeleted() !== null) {
             throw new NotFoundHttpException();
         }
 
         $divisions = array();
-        foreach($this->getParameter('paprec_divisions') as $division) {
+        foreach ($this->getParameter('paprec_divisions') as $division) {
             $divisions[$division] = $division;
         }
 
@@ -270,26 +270,28 @@ class CategoryController extends Controller
             'division' => $divisions
         ));
 
+        $currentPicto =$category->getPicto();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $category = $form->getData();
             $category->setDateUpdate(new \DateTime);
+            $newPicto = $category->getPicto();
 
-            if($category->getPicto() instanceof UploadedFile) {
+            if ($newPicto instanceof UploadedFile) {
                 /**
-                 * On place le picto uploadé dans le dossier web/uploads
+                 * On place le picto uploadé dans le dossier web/uploads SI il y en a
                  * et on sauvegarde le nom du fichier dans la colonne 'picto' de la catégorie
                  */
-                $picto = $category->getPicto();
-                $pictoFileName = md5(uniqid()) . '.' . $picto->guessExtension();
+                $pictoFileName = md5(uniqid()) . '.' . $newPicto->guessExtension();
 
-                $picto->move($this->getParameter('paprec_catalog.category.picto_path'), $pictoFileName);
+                $newPicto->move($this->getParameter('paprec_catalog.category.picto_path'), $pictoFileName);
 
                 $category->setPicto($pictoFileName);
+            } else {
+                $category->setPicto($currentPicto);
             }
-            
+
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
@@ -328,7 +330,7 @@ class CategoryController extends Controller
     {
         $ids = $request->get('ids');
 
-        if(! $ids) {
+        if (!$ids) {
             throw new NotFoundHttpException();
         }
 
@@ -336,9 +338,9 @@ class CategoryController extends Controller
 
         $ids = explode(',', $ids);
 
-        if(is_array($ids) && count($ids)) {
+        if (is_array($ids) && count($ids)) {
             $categories = $em->getRepository('PaprecCatalogBundle:Category')->findById($ids);
-            foreach ($categories as $category){
+            foreach ($categories as $category) {
                 $category->setDeleted(new \DateTime);
                 $category->setEnabled(false);
             }

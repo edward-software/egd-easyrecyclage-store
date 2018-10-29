@@ -1,0 +1,99 @@
+{% extends "::base_admin.html.twig" %}
+
+{% block title %}
+    {{ 'Catalog.Argument.Add'|trans }}
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block content_title %}
+    {{ 'Catalog.Argument.Categories'|trans }}
+{% endblock %}
+
+{% block main_content %}
+
+    <form id="catalogArgumentForm" action="" method="post" enctype="multipart/form-data">
+
+        <div class="col-md-7">
+            <!-- BOX -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fa fa-plus"></i> {{ 'Catalog.Argument.Add'|trans }}
+                        <div class="float-right">
+                            <a href="javascript:void(0);" class="btn btn-success catalog-argument-save-button"><i
+                                        class="fa fa-check"></i> {{ 'Catalog.Argument.Save'|trans }}</a>
+                            <a href="javascript:void(0);" class="btn btn-danger catalog-argument-cancel-button"><i
+                                        class="fa fa-close"></i> {{ 'Catalog.Argument.Cancel'|trans }}</a>
+                        </div>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Catalog.Argument.Informations'|trans }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-item mb-2">
+                                <div class="form-label">{{ 'Catalog.Argument.Picto'|trans }}</div>
+                                <div class="form-content">
+                                    {{ form_widget(form.picto) }}
+                                    {{ form_errors(form.picto) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-label">{{ 'Catalog.Argument.Description'|trans }}</div>
+                                <div class="form-content">
+                                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.description) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="float-right">
+                        <a href="javascript:void(0);" class="btn btn-success catalog-argument-save-button"><i
+                                    class="fa fa-check"></i> {{ 'Catalog.Argument.Save'|trans }}</a>
+                        <a href="javascript:void(0);" class="btn btn-danger catalog-argument-cancel-button"><i
+                                    class="fa fa-close"></i> {{ 'Catalog.Argument.Cancel'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_rest(form) }}
+    </form>
+    </div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        $(function () {
+
+            $('.catalog-argument-save-button').on('click', function () {
+                $('#catalogArgumentForm').submit();
+            });
+
+
+            $('.catalog-argument-cancel-button').on('click', function () {
+
+                var url = "{{ path("paprec_catalog_argument_index") }}";
+
+                bootbox.confirm("{{ 'Catalog.Argument.Confirm-cancel'|trans }}", function (result) {
+                    if (result === true) {
+                        $(location).attr('href', url);
+                    }
+                });
+
+            });
+
+        });
+    </script>
+{% endblock %}

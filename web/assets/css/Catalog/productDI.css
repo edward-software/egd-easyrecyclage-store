@@ -1,0 +1,10 @@
+.carousel-item img {
+    max-height: 400px;
+    width: auto;
+}
+
+.carousel-caption {
+    background-color: #007bff;
+    opacity: 0.6;
+
+}

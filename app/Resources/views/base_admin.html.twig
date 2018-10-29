@@ -53,8 +53,15 @@
                             <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownCatalog">
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_catefory'|length) == 'paprec_catalog_category' %} active{% endif %}"
+                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_productDI'|length) == 'paprec_catalog_productDI' %} active{% endif %}"
+                               href="{{ path('paprec_catalog_productDI_index') }}">{{ 'Catalog.ProductDI.ProductsDI'|trans }}</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_category'|length) == 'paprec_catalog_category' %} active{% endif %}"
                                 href="{{ path('paprec_catalog_category_index') }}">{{ 'Catalog.Category.Categories'|trans }}</a>
+                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_argument'|length) == 'paprec_catalog_argument' %} active{% endif %}"
+                               href="{{ path('paprec_catalog_argument_index') }}">{{ 'Catalog.Argument.Arguments'|trans }}</a>
+                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_postalCode'|length) == 'paprec_catalog_postalCode' %} active{% endif %}"
+                               href="{{ path('paprec_catalog_postalCode_index') }}">{{ 'Catalog.PostalCode.PostalCodes'|trans }}</a>
                         </div>
                     </li>
                 {% endif %}

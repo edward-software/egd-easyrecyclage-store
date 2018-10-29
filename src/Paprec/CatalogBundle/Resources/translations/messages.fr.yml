@@ -26,7 +26,78 @@ Catalog:
         Cancel:                     Annuler
         Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
         Confirm-remove:             Etes-vous sûr de vouloir supprimer cette catégorie ?
-        Success:
-          accessHasBeenSent:    Les accès ont été correctement envoyés
-        Error:
-          accessCannotBeSent:   Les accès n'ont pu être envoyés
+
+    Argument:
+        Arguments:                  Arguments
+        List:                       Liste des arguments
+        Date-creation:              Date de création
+        Date-crea:                  Date de créa.
+        Date-update:                Date de mise à jour
+        Description:                Texte
+        Picto:                      Picto
+        Informations:               Informations
+        System-informations:        Informations système
+        Export:                     Exporter les arguments
+        View:                       Visualiser l'argument
+        Edit:                       Modifier l'argument
+        Remove:                     Supprimer l'argument
+        Add:                        Ajouter un argument
+        Save:                       Enregistrer
+        Cancel:                     Annuler
+        Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+        Confirm-remove:             Etes-vous sûr de vouloir supprimer cet argument ?
+
+    PostalCode:
+
+        PostalCodes:                Code postaux
+        Name:                       Code postal
+        Date-crea:                  Date de créa.
+        Date-creation:              Date de création
+        Date-update:                Date de mise à jour
+        Informations:               Informations
+        System-informations:        Informations système
+        List:                       Liste des codes postaux
+        Add:                        Ajouter un code postal
+        Export:                     Exporter les codes postaux
+        Code:                       Code
+        Division:                   Division
+        Rate:                       Coefficient
+        View:                       Visualiser le code postal
+        Edit:                       Modifier le code postal
+        Remove:                     Supprimer le code postal
+        Save:                       Enregistrer
+        Cancel:                     Annuler
+        Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+        Confirm-remove:             Etes-vous sûr de vouloir supprimer ce code postal ?
+
+    ProductDI:
+
+        ProductsDI:                 Produits DI
+        Date-crea:                  Date de créa.
+        Date-creation:              Date de création
+        Date-update:                Date de mise à jour
+        Informations:               Informations
+        System-informations:        Informations système
+        Name:                       Nom
+        Description:                Description
+        Capacity:                   Volume
+        CapacityUnit:               Unité
+        Dimensions:                 Dimensions
+        UnitPrice:                  Prix unitaire
+        Reference:                  Lien description
+        IsDisplayed:                Affiché
+        Arguments:                  Arguments
+        Categories:                 Catégories
+        Picto:                      Picto
+        Pictures:                   Photos
+        AvailablePostalCodes:       Dispo géographique
+        List:                       Liste des produits DI
+        Add:                        Ajouter un produit
+        Export:                     Exporter les produits
+        View:                       Visualiser le produit DI
+        Edit:                       Modifier le produit DI
+        Remove:                     Supprimer le produit
+        Save:                       Enregistrer
+        Cancel:                     Annuler
+        Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+        Confirm-remove:             Etes-vous sûr de vouloir supprimer ce produit ?

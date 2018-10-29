@@ -2,6 +2,7 @@
 
 namespace Paprec\CatalogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -89,11 +90,21 @@ class Category
      */
     private $description;
 
+    /**************************************************************************************************
+     * RELATIONS
+     **************************************************************************************************/
+
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductDICategory", mappedBy="category",  cascade={"all"})
+     */
+    private $productDICategories;
 
 
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
+        $this->productDICategories = new ArrayCollection();
+
     }
 
 
@@ -105,54 +116,6 @@ class Category
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set libelle.
-     *
-     * @param string $libelle
-     *
-     * @return Category
-     */
-    public function setLibelle($libelle)
-    {
-        $this->libelle = $libelle;
-
-        return $this;
-    }
-
-    /**
-     * Get libelle.
-     *
-     * @return string
-     */
-    public function getLibelle()
-    {
-        return $this->libelle;
-    }
-
-    /**
-     * Set divisions.
-     *
-     * @param array|null $divisions
-     *
-     * @return Category
-     */
-    public function setDivisions($divisions = null)
-    {
-        $this->divisions = $divisions;
-
-        return $this;
-    }
-
-    /**
-     * Get divisions.
-     *
-     * @return array|null
-     */
-    public function getDivisions()
-    {
-        return $this->divisions;
     }
 
     /**
@@ -369,5 +332,46 @@ class Category
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Add productDICategory.
+     *
+     * @param \Paprec\CatalogBundle\Entity\ProductDICategory $productDICategory
+     *
+     * @return Category
+     */
+    public function addProductDICategory(\Paprec\CatalogBundle\Entity\ProductDICategory $productDICategory)
+    {
+        $this->productDICategories[] = $productDICategory;
+
+        return $this;
+    }
+
+    /**
+     * Remove productDICategory.
+     *
+     * @param \Paprec\CatalogBundle\Entity\ProductDICategory $productDICategory
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductDICategory(\Paprec\CatalogBundle\Entity\ProductDICategory $productDICategory)
+    {
+        return $this->productDICategories->removeElement($productDICategory);
+    }
+
+    /**
+     * Get productDICategories.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductDICategories()
+    {
+        return $this->productDICategories;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

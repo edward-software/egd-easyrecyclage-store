@@ -6,3 +6,7 @@ services:
 parameters:
 
   paprec_catalog.category.picto_path: "%kernel.root_dir%/../web/uploads/pictos"
+  paprec_catalog.argument.picto_path: "%kernel.root_dir%/../web/uploads/pictos"
+  paprec_catalog.productDI.picto_path: "%kernel.root_dir%/../web/uploads/pictos"
+
+

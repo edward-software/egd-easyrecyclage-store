@@ -13,7 +13,7 @@
 
 {% block main_content %}
 
-    <form id="userUserForm" action="" method="post" enctype="multipart/form-data">
+    <form id="catalogCategoryForm" action="" method="post" enctype="multipart/form-data">
 
         <div class="col-md-7">
             <!-- BOX -->
@@ -93,9 +93,9 @@
             <div class="card-footer">
                 <div class="float-right">
                     <a href="javascript:void(0);" class="btn btn-success catalog-category-save-button"><i
-                                class="fa fa-check"></i> {{ 'User.User.Save'|trans }}</a>
+                                class="fa fa-check"></i> {{ 'Catalog.Category.Save'|trans }}</a>
                     <a href="javascript:void(0);" class="btn btn-danger catalog-category-cancel-button"><i
-                                class="fa fa-close"></i> {{ 'User.User.Cancel'|trans }}</a>
+                                class="fa fa-close"></i> {{ 'Catalog.Category.Cancel'|trans }}</a>
                 </div>
             </div>
         </div>
@@ -113,7 +113,7 @@
 
             $('.catalog-category-save-button').on('click', function () {
 
-                $('#userUserForm').submit();
+                $('#catalogCategoryForm').submit();
 
             });
 
