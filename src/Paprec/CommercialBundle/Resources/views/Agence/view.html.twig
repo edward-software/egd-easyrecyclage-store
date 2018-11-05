@@ -1,0 +1,153 @@
+{% extends "::base_admin.html.twig" %}
+
+{% block title %}
+    {{ 'Commercial.Agence.View'|trans }}
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('/assets/vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('/assets/vendor/datatables.net-select-bs/css/select.bootstrap.min.css') }}">
+{% endblock %}
+
+{% block content_title %}
+    {{ 'Commercial.Agence.Agences'|trans }}
+{% endblock %}
+
+{% block main_content %}
+
+
+    <div class="col-md-12">
+        <!-- CARD -->
+        <div class="card">
+            <div class="card-header">
+                <h4>
+                    <i class="fa fa-folder"></i> {{ 'Commercial.Agence.View'|trans }}
+                    <div class="float-right">
+                        <a href="{{ path("paprec_commercial_agence_edit", {id: agence.id}) }}"
+                           class="btn btn-warning"><i
+                                    class="fa fa-edit"></i> {{ 'Commercial.Agence.Edit'|trans }}</a>
+                        <a id="userUserRemoveButton" href="javascript:void(0);" class="btn btn-danger"><i
+                                    class="fa fa-trash"></i> {{ 'Commercial.Agence.Remove'|trans }}</a>
+                    </div>
+                </h4>
+                <div class="view-tools float-left">
+                    <a href="{{ path('paprec_commercial_agence_index') }}" class="btn btn-default"><i
+                                class="fa fa-chevron-left"></i> {{ 'Commercial.Agence.List'|trans }}</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="col-md-7">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Commercial.Agence.Informations'|trans }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.Agence.Name'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {{ agence.name }}
+                                </label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.Agence.Address'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {{ agence.address }}
+                                </label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.Agence.PostalCode'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {{ agence.postalCode }}
+                                </label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.Agence.City'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {{ agence.city }}
+                                </label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.Agence.Phone'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {{ agence.phone }}
+                                </label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.Agence.Latitude'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {{ agence.latitude }}
+                                </label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.Agence.Longitude'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {{ agence.longitude }}
+                                </label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.Agence.Divisions'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {% for division in agence.divisions %}
+                                        {{ division|trans }}<br>
+                                    {% endfor %}
+                                </label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.Agence.IsDisplayed'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {% if agence.isDisplayed == 1 %}Oui{% else %}Non{% endif %}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Commercial.Agence.System-informations'|trans }}</h5>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.Agence.Date-creation'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {{ agence.dateCreation|localizeddate('short', 'medium', app.request.locale) }}
+                                </label>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.Agence.Date-update'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {{ agence.dateUpdate is empty ? "" : agence.dateUpdate|localizeddate('short', 'medium', app.request.locale) }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+        {% block javascripts %}
+
+            <script>
+                $(function () {
+
+                    $('#userUserRemoveButton').on('click', function () {
+
+                        var url = "{{ path("paprec_commercial_agence_remove", {id: agence.id}) }}";
+
+                        bootbox.confirm("{{ 'Commercial.Agence.Confirm-remove'|trans }}", function (result) {
+                            if (result === true) {
+                                $(location).attr('href', url);
+                            }
+                        });
+
+                    });
+                });
+            </script>
+        {% endblock %}

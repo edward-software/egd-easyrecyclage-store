@@ -8,14 +8,14 @@
 {% endblock %}
 
 {% block content_title %}
-    {{ 'Catalog.ProductDI.ProductsDI'|trans }}
+    {{ 'Catalog.ProductDI.ProductDIs'|trans }}
 {% endblock %}
 
 {% block main_content %}
 
     <form id="catalogProductDIForm" action="" method="post" enctype="multipart/form-data">
 
-        <div class="col-md-7">
+        <div class="col-md-12">
             <!-- BOX -->
             <div class="card">
                 <div class="card-header">
@@ -32,29 +32,12 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    <div class="col-md-12">
+                    <div class="col-md-7">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title">{{ 'Catalog.ProductDI.Informations'|trans }}</h5>
                             </div>
                             <div class="card-body">
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <div class="form-label">{{ 'Catalog.ProductDI.Picto'|trans }}</div>
-                                        <div class="form-content">
-                                            {{ form_widget(form.picto) }}
-                                            {{ form_errors(form.picto) }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <div class="form-label">{{ 'Catalog.ProductDI.Pictures'|trans }}</div>
-                                        <div class="form-content">
-                                            {{ form_widget(form.pictures) }}
-                                            {{ form_errors(form.pictures) }}
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="form-group">
                                     <div class="form-label">{{ 'Catalog.ProductDI.Name'|trans }}</div>
                                     <div class="form-content">

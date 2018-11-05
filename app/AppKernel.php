@@ -22,7 +22,8 @@ class AppKernel extends Kernel
             new Goondi\ToolsBundle\GoondiToolsBundle(),
             new Paprec\HomeBundle\PaprecHomeBundle(),
             new Paprec\UserBundle\PaprecUserBundle(),
-            new Paprec\CatalogBundle\PaprecCatalogBundle()
+            new Paprec\CatalogBundle\PaprecCatalogBundle(),
+            new Paprec\CommercialBundle\PaprecCommercialBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

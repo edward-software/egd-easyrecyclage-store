@@ -2,11 +2,15 @@
 
 namespace Paprec\CatalogBundle\Controller;
 
+use Paprec\CatalogBundle\Entity\Picture;
 use Paprec\CatalogBundle\Entity\ProductDI;
-use Paprec\CatalogBundle\Entity\ProductDICategory;
+use Paprec\CatalogBundle\Form\PictureProductType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -97,7 +101,7 @@ class ProductDIController extends Controller
             ->from('PaprecCatalogBundle:ProductDI', 'p')
             ->where('p.deleted IS NULL');
 
-        $productsDI = $queryBuilder->getQuery()->getResult();
+        $ProductDIs = $queryBuilder->getQuery()->getResult();
 
         $phpExcelObject->getProperties()->setCreator("Paprec Easy Recyclage")
             ->setLastModifiedBy("Paprec Easy Recyclage")
@@ -121,7 +125,7 @@ class ProductDIController extends Controller
         $phpExcelObject->setActiveSheetIndex(0);
 
         $i = 2;
-        foreach ($productsDI as $productDI) {
+        foreach ($ProductDIs as $productDI) {
 
             $phpExcelObject->setActiveSheetIndex(0)
                 ->setCellValue('A' . $i, $productDI->getId())
@@ -161,14 +165,30 @@ class ProductDIController extends Controller
      * @Route("/productDI/view/{id}",  name="paprec_catalog_productDI_view")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function viewAction(Request $request, ProductDI $product)
+    public function viewAction(Request $request, ProductDI $productDI)
     {
-        if ($product->getDeleted() !== null) {
+        if ($productDI->getDeleted() !== null) {
             throw new NotFoundHttpException();
         }
+        foreach($this->getParameter('paprec_types_picture') as $type) {
+            $types[$type] = $type;
+        }
+
+        $picture = new Picture();
+
+        $formAddPicture = $this->createForm(PictureProductType::class, $picture, array(
+            'types' => $types
+        ));
+
+        $formEditPicture = $this->createForm(PictureProductType::class, $picture, array(
+            'types' => $types
+        ));
+
 
         return $this->render('PaprecCatalogBundle:ProductDI:view.html.twig', array(
-            'productDI' => $product
+            'productDI' => $productDI,
+            'formAddPicture' => $formAddPicture->createView(),
+            'formEditPicture' => $formEditPicture->createView()
         ));
     }
 
@@ -187,29 +207,6 @@ class ProductDIController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $productDI = $form->getData();
             $productDI->setDateCreation(new \DateTime);
-
-            if ($productDI->getPicto() instanceof UploadedFile) {
-                /**
-                 * On place le picto uploadé dans le dossier web/uploads
-                 * et on sauvegarde le nom du fichier dans la colonne 'picto" de le produit DI
-                 */
-                $picto = $productDI->getPicto();
-                $pictoFileName = md5(uniqid()) . '.' . $picto->guessExtension();
-
-                $picto->move($this->getParameter('paprec_catalog.productDI.picto_path'), $pictoFileName);
-
-                $productDI->setPicto($pictoFileName);
-            }
-
-            $pictureAdded = array();
-            foreach ($productDI->getPictures() as $picture) {
-                if ($picture instanceof UploadedFile) {
-                    $pictureFileName = md5(uniqid()) . '.' . $picture->guessExtension();
-                    $picture->move($this->getParameter('paprec_catalog.productDI.picto_path'), $pictureFileName);
-                    $pictureAdded[] = $pictureFileName;
-                }
-            }
-            $productDI->setPictures($pictureAdded);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($productDI);
@@ -232,14 +229,12 @@ class ProductDIController extends Controller
      */
     public function editAction(Request $request, ProductDI $productDI)
     {
-        if($productDI->getDeleted() !== null) {
+        if ($productDI->getDeleted() !== null) {
             throw new NotFoundHttpException();
         }
 
         $form = $this->createForm(ProductDIType::class, $productDI);
 
-        $currentPicto = $productDI->getPicto();
-        $currentPictures = $productDI->getPictures();
         /**
          * On récupère les productDICategories présents avant la modif. Il faut les supprimer sinon on a un doublon
          */
@@ -251,55 +246,13 @@ class ProductDIController extends Controller
 
             $productDI = $form->getData();
             $productDI->setDateUpdate(new \DateTime);
-            $newPicto = $productDI->getPicto();
-
-            if ($newPicto instanceof UploadedFile) {
-                /**
-                 * Si un nouveau pcito est sélectionné
-                 * On place le picto uploadé dans le dossier web/uploads
-                 * et on sauvegarde le nom du fichier dans la colonne 'picto' de la catégorie
-                 */
-                $pictoFileName = md5(uniqid()) . '.' . $newPicto->guessExtension();
-
-                $newPicto->move($this->getParameter('paprec_catalog.category.picto_path'), $pictoFileName);
-
-                $productDI->setPicto($pictoFileName);
-            } else {
-                /**
-                 * Si pas de picto sélectionné, on remet le picto existant
-                 */
-                $productDI->setPicto($currentPicto);
-            }
-
-            if (!is_null($productDI->getPictures()) && !empty($productDI->getPictures())) {
-                /**
-                 * Si des photos ont été sélectionnées
-                 * On place les photos uploadés dans le dossier web/uploads
-                 * Et on sauvegarde tous les noms de fichier des photos dans la colonne 'pictures'
-                 */
-                $pictureAdded = array();
-                foreach ($productDI->getPictures() as $picture) {
-                    if ($picture instanceof UploadedFile) {
-                        $pictureFileName = md5(uniqid()) . '.' . $picture->guessExtension();
-                        $picture->move($this->getParameter('paprec_catalog.productDI.picto_path'), $pictureFileName);
-                        $pictureAdded[] = $pictureFileName;
-                    }
-                }
-                $productDI->setPictures($pictureAdded);
-            } else {
-                /**
-                 * Si pas de photo sélectionné, on remet les photos d'avant
-                 */
-                $productDI->setPictures($currentPictures);
-            }
 
             $em = $this->getDoctrine()->getManager();
 
             /**
-             * On supprime les anciennes relations productsDICategories
+             * On supprime les anciennes relations ProductDIsCategories
              */
-            foreach($currentPCs as $pC)
-            {
+            foreach ($currentPCs as $pC) {
                 $em->remove($pC);
             }
 
@@ -322,6 +275,14 @@ class ProductDIController extends Controller
     public function removeAction(Request $request, ProductDI $productDI)
     {
         $em = $this->getDoctrine()->getManager();
+
+        /*
+         * Suppression des images
+         */
+        foreach ($productDI->getPictures() as $picture) {
+            $this->removeFile($this->getParameter('paprec_catalog.product.di.picto_path') . '/' . $picture->getPath());
+            $productDI->removePicture($picture);
+        }
 
         $productDI->setDeleted(new \DateTime);
         $productDI->setIsDisplayed(false);
@@ -347,8 +308,13 @@ class ProductDIController extends Controller
         $ids = explode(',', $ids);
 
         if (is_array($ids) && count($ids)) {
-            $productsDI = $em->getRepository('PaprecCatalogBundle:ProductDI')->findById($ids);
-            foreach ($productsDI as $productDI) {
+            $ProductDIs = $em->getRepository('PaprecCatalogBundle:ProductDI')->findById($ids);
+            foreach ($ProductDIs as $productDI) {
+                foreach ($productDI->getPictures() as $picture) {
+                    $this->removeFile($this->getParameter('paprec_catalog.product.di.picto_path') . '/' . $picture->getPath());
+                    $productDI->removePicture($picture);
+                }
+
                 $productDI->setDeleted(new \DateTime);
                 $productDI->setIsDisplayed(false);
             }
@@ -356,5 +322,194 @@ class ProductDIController extends Controller
         }
 
         return $this->redirectToRoute('paprec_catalog_productDI_index');
+    }
+
+    /**
+     * Supprimme un fichier du sytème de fichiers
+     *
+     * @param $path
+     */
+    public function removeFile($path)
+    {
+        $fs = new Filesystem();
+        try {
+            $fs->remove($path);
+        } catch (IOException $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * @Route("/productDI/addPicture/{id}/{type}", name="paprec_catalog_productDI_addPicture")
+     * @Method("POST")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function addPictureAction(Request $request, ProductDI $productDI) {
+
+        $picture = new Picture();
+        foreach($this->getParameter('paprec_types_picture') as $type) {
+            $types[$type] = $type;
+        }
+
+        $form = $this->createForm(PictureProductType::class, $picture, array(
+            'types' => $types
+        ));
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $form->handleRequest($request);
+        if($form->isValid())
+        {
+            $productDI->setDateUpdate(new \DateTime());
+            $picture =  $form->getData();
+
+            if ($picture->getPath() instanceof UploadedFile) {
+                $pic = $picture->getPath();
+                $pictoFileName = md5(uniqid()) . '.' . $pic->guessExtension();
+
+                $pic->move($this->getParameter('paprec_catalog.product.di.picto_path'), $pictoFileName);
+
+                $picture->setPath($pictoFileName);
+                $picture->setType($request->get('type'));
+                $picture->setProductDI($productDI);
+                $productDI->addPicture($picture);
+                $em->flush();
+            }
+
+            return $this->redirectToRoute('paprec_catalog_productDI_view', array(
+                'id' => $productDI->getId()
+            ));
+        }
+        return $this->render('PaprecCatalogBundle:ProductDI:view.html.twig', array(
+            'productDI' => $productDI,
+            'formAddPicture' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Route("/productDI/editPicture/{id}/{pictureID}", name="paprec_catalog_productDI_editPicture")
+     * @Method("POST")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function editPictureAction(Request $request, ProductDI $productDI) {
+
+        $em = $this->getDoctrine()->getManager();
+        $pictureID = $request->get('pictureID');
+        $picture = $em->getRepository('PaprecCatalogBundle:Picture')->find($pictureID);
+        $oldPath = $picture->getPath();
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        foreach($this->getParameter('paprec_types_picture') as $type) {
+            $types[$type] = $type;
+        }
+
+        $form = $this->createForm(PictureProductType::class, $picture, array(
+            'types' => $types
+        ));
+
+
+        $form->handleRequest($request);
+        if($form->isValid())
+        {
+            $productDI->setDateUpdate(new \DateTime());
+            $picture =  $form->getData();
+
+            if ($picture->getPath() instanceof UploadedFile) {
+                $pic = $picture->getPath();
+                $pictoFileName = md5(uniqid()) . '.' . $pic->guessExtension();
+
+                $pic->move($this->getParameter('paprec_catalog.product.di.picto_path'), $pictoFileName);
+
+                $picture->setPath($pictoFileName);
+                $this->removeFile($this->getParameter('paprec_catalog.product.di.picto_path') . '/' . $oldPath);
+                $em->flush();
+            }
+
+            return $this->redirectToRoute('paprec_catalog_productDI_view', array(
+                'id' => $productDI->getId()
+            ));
+        }
+        return $this->render('PaprecCatalogBundle:ProductDI:view.html.twig', array(
+            'productDI' => $productDI,
+            'formEditPicture' => $form->createView()
+        ));
+    }
+
+
+    /**
+     * @Route("/productDI/removePicture/{id}/{pictureID}", name="paprec_catalog_productDI_removePicture")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function removePictureAction(Request $request, ProductDI $productDI)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $pictureID = $request->get('pictureID');
+
+        $pictures = $productDI->getPictures();
+        foreach($pictures as $picture) {
+            if ($picture->getId() == $pictureID) {
+                $productDI->setDateUpdate(new \DateTime());
+                $this->removeFile($this->getParameter('paprec_catalog.product.di.picto_path') . '/' . $picture->getPath());
+                $em->remove($picture);
+                continue;
+            }
+        }
+        $em->flush();
+
+        return $this->redirectToRoute('paprec_catalog_productDI_view', array(
+            'id' => $productDI->getId()
+        ));
+    }
+
+    /**
+ * @Route("/productDI/setPilotePicture/{id}/{pictureID}", name="paprec_catalog_productDI_setPilotePicture")
+ * @Security("has_role('ROLE_ADMIN')")
+ */
+    public function setPilotPictureAction(Request $request, ProductDI $productDI)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $pictureID = $request->get('pictureID');
+        $pictures = $productDI->getPictures();
+        foreach($pictures as $picture) {
+            if ($picture->getId() == $pictureID) {
+                $productDI->setDateUpdate(new \DateTime());
+                $picture->setType('PilotPicture');
+                continue;
+            }
+        }
+        $em->flush();
+
+        return $this->redirectToRoute('paprec_catalog_productDI_view', array(
+            'id' => $productDI->getId()
+        ));
+    }
+
+    /**
+     * @Route("/productDI/setPicture/{id}/{pictureID}", name="paprec_catalog_productDI_setPicture")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function setPictureAction(Request $request, ProductDI $productDI)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $pictureID = $request->get('pictureID');
+        $pictures = $productDI->getPictures();
+        foreach($pictures as $picture) {
+            if ($picture->getId() == $pictureID) {
+                $productDI->setDateUpdate(new \DateTime());
+                $picture->setType('Picture');
+                continue;
+            }
+        }
+        $em->flush();
+
+        return $this->redirectToRoute('paprec_catalog_productDI_view', array(
+            'id' => $productDI->getId()
+        ));
     }
 }

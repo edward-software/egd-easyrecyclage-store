@@ -238,7 +238,7 @@
                 }
             });
 
-            $('#user-list-datatable tbody').on('dblclick', 'tr', function (event) {
+            $('#userListDatatable tbody').on('dblclick', 'tr', function (event) {
                 url = "{{ path('paprec_user_user_view', {id: '0000'}) }}".replace('0000', $(this).attr('id').replace('row_', ''));
                 $(location).attr('href', url);
             });

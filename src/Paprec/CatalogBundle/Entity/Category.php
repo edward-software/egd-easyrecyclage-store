@@ -99,12 +99,16 @@ class Category
      */
     private $productDICategories;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductChantierCategory", mappedBy="category",  cascade={"all"})
+     */
+    private $productChantierCategories;
+
 
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
         $this->productDICategories = new ArrayCollection();
-
     }
 
 
@@ -370,6 +374,45 @@ class Category
         return $this->productDICategories;
     }
 
+    /**
+     * Add productChantierCategory.
+     *
+     * @param \Paprec\CatalogBundle\Entity\ProductChantierCategory $productChantierCategory
+     *
+     * @return Category
+     */
+    public function addProductChantierCategory(\Paprec\CatalogBundle\Entity\ProductChantierCategory $productChantierCategory)
+    {
+        $this->productChantierCategories[] = $productChantierCategory;
+
+        return $this;
+    }
+
+    /**
+     * Remove productChantierCategory.
+     *
+     * @param \Paprec\CatalogBundle\Entity\ProductChantierCategory $productChantierCategory
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductChantierCategory(\Paprec\CatalogBundle\Entity\ProductChantierCategory $productChantierCategory)
+    {
+        return $this->productChantierCategories->removeElement($productChantierCategory);
+    }
+
+    /**
+     * Get productChantierCategories.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductChantierCategories()
+    {
+        return $this->productChantierCategories;
+    }
+
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->name;

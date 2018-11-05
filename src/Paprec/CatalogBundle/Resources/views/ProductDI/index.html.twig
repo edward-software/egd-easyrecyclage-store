@@ -1,7 +1,7 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-    {{ 'Catalog.ProductDI.ProductsDI'|trans }}
+    {{ 'Catalog.ProductDI.ProductDIs'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block content_title %}
-    {{ 'Catalog.ProductDI.ProductsDI'|trans }}
+    {{ 'Catalog.ProductDI.ProductDIs'|trans }}
 {% endblock %}
 
 {% block main_content %}
@@ -130,13 +130,6 @@
                 "rowCallback": function (row, data, displayIndex) {
                 },
                 "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-
-                    if (aData['enabled'] == true) {
-                        $(nRow).find(':first-child').next().next().next().next().next().html('{{ 'General.Yes'|trans }}');
-                    }
-                    else {
-                        $(nRow).find(':first-child').next().next().next().next().next().html('{{ 'General.No'|trans }}');
-                    }
 
                     viewUrl = "{{ path('paprec_catalog_productDI_view', {id: '0000'}) }}".replace('0000', aData['id']);
                     editUrl = "{{ path('paprec_catalog_productDI_edit', {id: '0000'}) }}".replace('0000', aData['id']);

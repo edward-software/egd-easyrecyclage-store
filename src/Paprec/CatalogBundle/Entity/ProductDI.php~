@@ -2,6 +2,7 @@
 
 namespace Paprec\CatalogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -54,11 +55,6 @@ class ProductDI
     private $name;
 
     /**
-     * @ORM\Column(name="picto", type="string", nullable=true)
-     */
-    private $picto;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="description", type="text")
@@ -71,6 +67,7 @@ class ProductDI
      * Le volume du produit
      * @ORM\Column(name="capacity", type="float")
      * @Assert\NotBlank()
+     * @Assert\Type(type="float")
      */
     private $capacity;
 
@@ -98,14 +95,10 @@ class ProductDI
     private $reference;
 
     /**
-     * @ORM\Column(name="pictures", type="array", nullable=true)
-     */
-    private $pictures;
-
-    /**
      * @var boolean
      *
      * @ORM\Column(name="isDisplayed", type="boolean")
+     * @Assert\NotBlank()
      */
     private $isDisplayed;
 
@@ -114,6 +107,7 @@ class ProductDI
      *
      * @ORM\Column(name="unitPrice", type="float")
      * @Assert\NotBlank()
+     * @Assert\Type(type="float")
      */
     private $unitPrice;
 
@@ -123,9 +117,11 @@ class ProductDI
      */
     private $availablePostalCodes;
 
-    /**************************************************************************************************
-     * RELATIONS
-     **************************************************************************************************/
+    /**
+     * #################################
+     *              Relations
+     * #################################
+     */
 
     /**
      * @ORM\ManyToMany(targetEntity="Paprec\CatalogBundle\Entity\Argument", inversedBy="productDIs")
@@ -133,9 +129,65 @@ class ProductDI
     private $arguments;
 
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductDICategory", mappedBy="productDI")
+     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\Picture", mappedBy="productDI", cascade={"all"})
+     */
+    private $pictures;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductDICategory", mappedBy="productDI", cascade={"all"})
      */
     private $productDICategories;
+
+    private $categories;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->dateCreation = new \DateTime();
+        $this->arguments = new ArrayCollection();
+        $this->productDICategories = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
+    }
+
+
+    /**
+     * ######################################
+     * getters et setters des attributs hors doctrine
+     * ######################################
+     */
+    public function getCategories()
+    {
+        $categories = new ArrayCollection();
+
+        foreach ($this->productDICategories as $productDICategory) {
+            $categories[] = $productDICategory->getCategory();
+        }
+
+        return $categories;
+    }
+
+    // Important
+    public function setCategories($categories)
+    {
+        foreach ($categories as $category) {
+            $pC = new ProductDICategory();
+
+            $pC->setProductDI($this);
+            $pC->setCategory($category);
+
+            $this->addProductDICategory($pC);
+        }
+
+    }
+
+
+    /**
+     * ##########################################
+     */
 
     /**
      * Get id.
@@ -170,31 +222,7 @@ class ProductDI
     {
         return $this->name;
     }
-
-    /**
-     * Set picto.
-     *
-     * @param string|null $picto
-     *
-     * @return ProductDI
-     */
-    public function setPicto($picto = null)
-    {
-        $this->picto = $picto;
-
-        return $this;
-    }
-
-    /**
-     * Get picto.
-     *
-     * @return string|null
-     */
-    public function getPicto()
-    {
-        return $this->picto;
-    }
-
+    
     /**
      * Set description.
      *
@@ -459,40 +487,6 @@ class ProductDI
     {
         return $this->isDisplayed;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->dateCreation = new \DateTime();
-        $this->arguments = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->productDICategories = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-
-    /**
-     * Set pictures.
-     *
-     * @param array|null $pictures
-     *
-     * @return ProductDI
-     */
-    public function setPictures($pictures = null)
-    {
-        $this->pictures = $pictures;
-
-        return $this;
-    }
-
-    /**
-     * Get pictures.
-     *
-     * @return array|null
-     */
-    public function getPictures()
-    {
-        return $this->pictures;
-    }
 
     /**
      * Add productDICategory.
@@ -564,5 +558,113 @@ class ProductDI
     public function getArguments()
     {
         return $this->arguments;
+    }
+
+    /**
+     * Add picture.
+     *
+     * @param \Paprec\CatalogBundle\Entity\Picture $picture
+     *
+     * @return ProductDI
+     */
+    public function addPicture(\Paprec\CatalogBundle\Entity\Picture $picture)
+    {
+        $this->pictures[] = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Remove picture.
+     *
+     * @param \Paprec\CatalogBundle\Entity\Picture $picture
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removePicture(\Paprec\CatalogBundle\Entity\Picture $picture)
+    {
+        return $this->pictures->removeElement($picture);
+    }
+
+    /**
+     * Get pictures.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPictures()
+    {
+        return $this->pictures;
+    }
+
+    /**
+     * Add picto.
+     *
+     * @param \Paprec\CatalogBundle\Entity\Picture $picto
+     *
+     * @return ProductDI
+     */
+    public function addPicto(\Paprec\CatalogBundle\Entity\Picture $picto)
+    {
+        $this->pictos[] = $picto;
+
+        return $this;
+    }
+
+    /**
+     * Remove picto.
+     *
+     * @param \Paprec\CatalogBundle\Entity\Picture $picto
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removePicto(\Paprec\CatalogBundle\Entity\Picture $picto)
+    {
+        return $this->pictos->removeElement($picto);
+    }
+
+    /**
+     * Get pictos.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPictos()
+    {
+        return $this->pictos;
+    }
+
+    /**
+     * Add picturesPilote.
+     *
+     * @param \Paprec\CatalogBundle\Entity\Picture $picturesPilote
+     *
+     * @return ProductDI
+     */
+    public function addPicturesPilote(\Paprec\CatalogBundle\Entity\Picture $picturesPilote)
+    {
+        $this->picturesPilote[] = $picturesPilote;
+
+        return $this;
+    }
+
+    /**
+     * Remove picturesPilote.
+     *
+     * @param \Paprec\CatalogBundle\Entity\Picture $picturesPilote
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removePicturesPilote(\Paprec\CatalogBundle\Entity\Picture $picturesPilote)
+    {
+        return $this->picturesPilote->removeElement($picturesPilote);
+    }
+
+    /**
+     * Get picturesPilote.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPicturesPilote()
+    {
+        return $this->picturesPilote;
     }
 }

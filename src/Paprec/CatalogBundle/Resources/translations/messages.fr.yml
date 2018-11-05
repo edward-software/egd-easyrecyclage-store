@@ -70,9 +70,16 @@ Catalog:
         Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
         Confirm-remove:             Etes-vous sûr de vouloir supprimer ce code postal ?
 
+    Picture:
+        Path:                       Choisir photo
+        Type:                       Type de la photo
+        AddPilotPicture:            Ajouter une photo principale
+        AddPicto:                   Ajouter un picto
+        AddPicture:                 Ajouter une photo secondaire
+
     ProductDI:
 
-        ProductsDI:                 Produits DI
+        ProductDIs:                 Produits DI
         Date-crea:                  Date de créa.
         Date-creation:              Date de création
         Date-update:                Date de mise à jour
@@ -90,6 +97,10 @@ Catalog:
         Categories:                 Catégories
         Picto:                      Picto
         Pictures:                   Photos
+        PilotPicture:               Photo principale
+        NewPicture:                 Nouvelle photo
+        SetSecondaryPicture:        Photo secondaire
+        EditPicture:                Modificiation de photo
         AvailablePostalCodes:       Dispo géographique
         List:                       Liste des produits DI
         Add:                        Ajouter un produit
@@ -101,3 +112,80 @@ Catalog:
         Cancel:                     Annuler
         Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
         Confirm-remove:             Etes-vous sûr de vouloir supprimer ce produit ?
+        Confirm-remove-picture:     Etes-vous sûr de vouloir supprimer cette photo ?
+        Confirm-set_pilote:         Etes-vous sûr de vouloir définir cette photo comme photo principale ?
+        Confirm-set_picture:        Etes-vous sûr de vouloir définir cette photo comme photo secondaire ?
+
+
+    ProductChantier:
+
+      ProductChantiers:           Produits Chantier
+      Date-crea:                  Date de créa.
+      Date-creation:              Date de création
+      Date-update:                Date de mise à jour
+      Informations:               Informations
+      System-informations:        Informations système
+      Name:                       Nom
+      Description:                Description
+      Capacity:                   Volume
+      CapacityUnit:               Unité
+      Dimensions:                 Dimensions
+      UnitPrice:                  Prix unitaire
+      Reference:                  Lien description
+      IsDisplayed:                Affiché
+      IsPayableOnline:            Payable en ligne
+      Arguments:                  Arguments
+      Categories:                 Catégories
+      Picto:                      Picto
+      Pictures:                   Photos
+      PilotPicture:               Photo principale
+      NewPicture:                 Nouvelle photo
+      SetSecondaryPicture:        Photo secondaire
+      EditPicture:                Modificiation de photo
+      AvailablePostalCodes:       Dispo géographique
+      List:                       Liste des produits Chantier
+      Add:                        Ajouter un produit
+      Export:                     Exporter les produits
+      View:                       Visualiser le produit Chantier
+      Edit:                       Modifier le produit Chantier
+      Remove:                     Supprimer le produit
+      Save:                       Enregistrer
+      Cancel:                     Annuler
+      Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+      Confirm-remove:             Etes-vous sûr de vouloir supprimer ce produit ?
+      Confirm-remove-picture:     Etes-vous sûr de vouloir supprimer cette photo ?
+      Confirm-set_pilote:         Etes-vous sûr de vouloir définir cette photo comme photo principale ?
+      Confirm-set_picture:        Etes-vous sûr de vouloir définir cette photo comme photo secondaire ?
+
+    ProductD3E:
+
+      ProductD3Es:                Produits D3E
+      Date-crea:                  Date de créa.
+      Date-creation:              Date de création
+      Date-update:                Date de mise à jour
+      Informations:               Informations
+      System-informations:        Informations système
+      Name:                       Nom
+      Description:                Description
+      Reference:                  Lien description
+      CoefHandling:               Coef. de manunention
+      CoefSerialNumberStmt:       Coef. de relevé de n° de série
+      CoefDestruction:            Coef. de destruction par broyage
+      Position:                   Position
+      IsDisplayed:                Affiché
+      IsPayableOnline:            Payable en ligne
+      AvailablePostalCodes:       Dispo géographique
+      Picto:                      Picto
+      Pictures:                   Photos
+      EditPicto:                  Modificiation du picto
+      List:                       Liste des produits D3E
+      Add:                        Ajouter un produit
+      Export:                     Exporter les produits
+      View:                       Visualiser le produit D3E
+      Edit:                       Modifier le produit D3E
+      Remove:                     Supprimer le produit
+      Save:                       Enregistrer
+      Cancel:                     Annuler
+      Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+      Confirm-remove:             Etes-vous sûr de vouloir supprimer ce produit ?
+      Confirm-remove-picture:     Etes-vous sûr de vouloir supprimer cette photo ?

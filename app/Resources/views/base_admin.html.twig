@@ -54,7 +54,11 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownCatalog">
                             <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_productDI'|length) == 'paprec_catalog_productDI' %} active{% endif %}"
-                               href="{{ path('paprec_catalog_productDI_index') }}">{{ 'Catalog.ProductDI.ProductsDI'|trans }}</a>
+                               href="{{ path('paprec_catalog_productDI_index') }}">{{ 'Catalog.ProductDI.ProductDIs'|trans }}</a>
+                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_productChantier'|length) == 'paprec_catalog_productChantier' %} active{% endif %}"
+                               href="{{ path('paprec_catalog_productChantier_index') }}">{{ 'Catalog.ProductChantier.ProductChantiers'|trans }}</a>
+                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_productD3E'|length) == 'paprec_catalog_productD3E' %} active{% endif %}"
+                               href="{{ path('paprec_catalog_productD3E_index') }}">{{ 'Catalog.ProductD3E.ProductD3Es'|trans }}</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_category'|length) == 'paprec_catalog_category' %} active{% endif %}"
                                 href="{{ path('paprec_catalog_category_index') }}">{{ 'Catalog.Category.Categories'|trans }}</a>
@@ -62,6 +66,19 @@
                                href="{{ path('paprec_catalog_argument_index') }}">{{ 'Catalog.Argument.Arguments'|trans }}</a>
                             <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_postalCode'|length) == 'paprec_catalog_postalCode' %} active{% endif %}"
                                href="{{ path('paprec_catalog_postalCode_index') }}">{{ 'Catalog.PostalCode.PostalCodes'|trans }}</a>
+                        </div>
+                    </li>
+                {% endif %}
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item dropdown{% if app.request.get('_route')|slice(0, 'paprec_commercial'|length) == 'paprec_commercial' %} active{% endif %}">
+                        <a href="#" class="dropdown-toggle nav-link" id="navbarDropdownCommercial" data-toggle="dropdown"
+                           role="button" aria-haspopup="true" aria-expanded="false">{{ 'Commercial.Bundle-name'|trans }}
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownCommercial">
+                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_agence'|length) == 'paprec_commercial_agence' %} active{% endif %}"
+                               href="{{ path('paprec_commercial_agence_index') }}">{{ 'Commercial.Agence.Agences'|trans }}</a>
                         </div>
                     </li>
                 {% endif %}
@@ -126,6 +143,7 @@
     </div>
 
 </div>
+<script src="{{ asset('/assets/vendor/popper.js/dist/umd/popper.min.js') }}"></script>
 <script src="{{ asset('/assets/vendor/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('/assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('/assets/vendor/bootbox.js/bootbox.js') }}"></script>

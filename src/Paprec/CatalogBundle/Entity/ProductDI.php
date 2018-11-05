@@ -55,11 +55,6 @@ class ProductDI
     private $name;
 
     /**
-     * @ORM\Column(name="picto", type="string", nullable=true)
-     */
-    private $picto;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="description", type="text")
@@ -100,14 +95,10 @@ class ProductDI
     private $reference;
 
     /**
-     * @ORM\Column(name="pictures", type="array", nullable=true)
-     */
-    private $pictures;
-
-    /**
      * @var boolean
      *
      * @ORM\Column(name="isDisplayed", type="boolean")
+     * @Assert\NotBlank()
      */
     private $isDisplayed;
 
@@ -126,14 +117,22 @@ class ProductDI
      */
     private $availablePostalCodes;
 
-    /**************************************************************************************************
-     * RELATIONS
-     **************************************************************************************************/
+    /**
+     * #################################
+     *              Relations
+     * #################################
+     */
 
     /**
      * @ORM\ManyToMany(targetEntity="Paprec\CatalogBundle\Entity\Argument", inversedBy="productDIs")
      */
     private $arguments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\Picture", mappedBy="productDI", cascade={"all"})
+     */
+    private $pictures;
+
 
     /**
      * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductDICategory", mappedBy="productDI", cascade={"all"})
@@ -151,10 +150,15 @@ class ProductDI
         $this->arguments = new ArrayCollection();
         $this->productDICategories = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 
 
-    // Important
+    /**
+     * ######################################
+     * getters et setters des attributs hors doctrine
+     * ######################################
+     */
     public function getCategories()
     {
         $categories = new ArrayCollection();
@@ -180,6 +184,10 @@ class ProductDI
 
     }
 
+
+    /**
+     * ##########################################
+     */
 
     /**
      * Get id.
@@ -213,30 +221,6 @@ class ProductDI
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set picto.
-     *
-     * @param string|null $picto
-     *
-     * @return ProductDI
-     */
-    public function setPicto($picto = null)
-    {
-        $this->picto = $picto;
-
-        return $this;
-    }
-
-    /**
-     * Get picto.
-     *
-     * @return string|null
-     */
-    public function getPicto()
-    {
-        return $this->picto;
     }
 
     /**
@@ -504,31 +488,6 @@ class ProductDI
         return $this->isDisplayed;
     }
 
-
-    /**
-     * Set pictures.
-     *
-     * @param array|null $pictures
-     *
-     * @return ProductDI
-     */
-    public function setPictures($pictures = null)
-    {
-        $this->pictures = $pictures;
-
-        return $this;
-    }
-
-    /**
-     * Get pictures.
-     *
-     * @return array|null
-     */
-    public function getPictures()
-    {
-        return $this->pictures;
-    }
-
     /**
      * Add productDICategory.
      *
@@ -600,4 +559,71 @@ class ProductDI
     {
         return $this->arguments;
     }
+
+    /**
+     * Add picture.
+     *
+     * @param \Paprec\CatalogBundle\Entity\Picture $picture
+     *
+     * @return ProductDI
+     */
+    public function addPicture(\Paprec\CatalogBundle\Entity\Picture $picture)
+    {
+        $this->pictures[] = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Remove picture.
+     *
+     * @param \Paprec\CatalogBundle\Entity\Picture $picture
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removePicture(\Paprec\CatalogBundle\Entity\Picture $picture)
+    {
+        return $this->pictures->removeElement($picture);
+    }
+
+    /**
+     * Get pictures.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPictures()
+    {
+        return $this->pictures;
+    }
+
+    public function getPilotPictures() {
+        $pilotPictures = array();
+        foreach($this->pictures as $picture) {
+            if($picture->getType() == 'PilotPicture') {
+                $pilotPictures[] = $picture;
+            }
+        }
+        return $pilotPictures;
+    }
+
+    public function getPictos() {
+        $pictos = array();
+        foreach($this->pictures as $picture) {
+            if($picture->getType() == 'Picto') {
+                $pictos[] = $picture;
+            }
+        }
+        return $pictos;
+    }
+
+    public function getPicturesPictures() {
+        $pictures = array();
+        foreach($this->pictures as $picture) {
+            if($picture->getType() == 'Picture') {
+                $pictures[] = $picture;
+            }
+        }
+        return $pictures;
+    }
+
 }

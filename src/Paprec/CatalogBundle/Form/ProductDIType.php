@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping\Entity;
 use Paprec\CatalogBundle\Entity\Argument;
 use Paprec\CatalogBundle\Entity\Category;
 use Paprec\CatalogBundle\Entity\ProductDICategory;
+use Paprec\CatalogBundle\Repository\ArgumentRepository;
 use Paprec\CatalogBundle\Repository\CategoryRepository;
 use Paprec\CatalogBundle\Repository\ProductDICategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -14,6 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,38 +28,28 @@ class ProductDIType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('picto', FileType::class, array(
-                "required" => true,
-                'data_class' => null,
-                'attr' => array(
-                    'accept' => 'image/*'
-                )
-            ))
             ->add('description', TextareaType::class)
             ->add('capacity')
             ->add('capacityUnit')
             ->add('dimensions', TextareaType::class)
             ->add('reference')
-            ->add('pictures', FileType::class, array(
-                'multiple' => true,
-                'data_class' => null,
-                'attr' => array(
-                    'accept' => 'image/*'
-                )
-            ))
             ->add('isDisplayed', ChoiceType::class, array(
                 "choices" => array(
                     'Non' => 0,
                     'Oui' => 1
                 ),
-                "expanded" => true
+                "expanded" => true,
             ))
             ->add('unitPrice')
             ->add('availablePostalCodes')
             ->add('arguments', EntityType::class, array(
                 'class' => Argument::class,
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => true,
+                'query_builder' => function (ArgumentRepository $er) {
+                    return $er->createQueryBuilder('a')
+                        ->where('a.deleted IS NULL');
+                }
             ))
             ->add('categories', EntityType::class, array(
                 'class' => Category::class,

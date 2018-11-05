@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -314,6 +316,8 @@ class CategoryController extends Controller
     public function removeAction(Request $request, Category $category)
     {
         $em = $this->getDoctrine()->getManager();
+        $this->removeFile($this->getParameter('paprec_catalog.category.picto_path') . '/' . $category->getPicto());
+        $category->setPicto();
 
         $category->setDeleted(new \DateTime);
         $category->setEnabled(false);
@@ -341,6 +345,8 @@ class CategoryController extends Controller
         if (is_array($ids) && count($ids)) {
             $categories = $em->getRepository('PaprecCatalogBundle:Category')->findById($ids);
             foreach ($categories as $category) {
+                $this->removeFile($this->getParameter('paprec_catalog.category.picto_path') . '/' . $category->getPicto());
+                $category->setPicto();
                 $category->setDeleted(new \DateTime);
                 $category->setEnabled(false);
             }
@@ -348,6 +354,21 @@ class CategoryController extends Controller
         }
 
         return $this->redirectToRoute('paprec_catalog_category_index');
+    }
+
+    /**
+     * Supprimme un fichier du sytème de fichiers
+     *
+     * @param $path
+     */
+    public function removeFile($path)
+    {
+        $fs = new Filesystem();
+        try {
+            $fs->remove($path);
+        } catch (IOException $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
 }

@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -251,6 +253,8 @@ class ArgumentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $this->removeFile($this->getParameter('paprec_catalog.category.picto_path') . '/' . $argument->getPicto());
+        $argument->setPicto();
         $argument->setDeleted(new \DateTime());
         $em->flush();
 
@@ -276,6 +280,8 @@ class ArgumentController extends Controller
         if(is_array($ids) && count($ids)) {
             $arguments = $em->getRepository('PaprecCatalogBundle:Argument')->findById($ids);
             foreach ($arguments as $argument){
+                $this->removeFile($this->getParameter('paprec_catalog.category.picto_path') . '/' . $argument->getPicto());
+                $argument->setPicto();
                 $argument->setDeleted(new \DateTime);
             }
             $em->flush();
@@ -284,4 +290,18 @@ class ArgumentController extends Controller
         return $this->redirectToRoute('paprec_catalog_argument_index');
     }
 
+    /**
+     * Supprimme un fichier du sytème de fichiers
+     *
+     * @param $path
+     */
+    public function removeFile($path)
+    {
+        $fs = new Filesystem();
+        try {
+            $fs->remove($path);
+        } catch (IOException $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
 }

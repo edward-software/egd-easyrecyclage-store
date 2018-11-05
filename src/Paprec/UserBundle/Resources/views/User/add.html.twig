@@ -15,7 +15,7 @@
 
     <form id="userUserForm" action="" method="post">
 
-        <div class="col-md-7">
+        <div class="col-md-12">
             <!-- BOX -->
             <div class="card">
                 <div class="card-header">
@@ -30,87 +30,89 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">{{ 'User.User.Informations'|trans }}</h5>
-                        </div>
-                        <div class="card-body">
-
-                            <div class="form-group">
-                                <div class="form-label">{{ 'User.User.Company-name'|trans }}</div>
-                                <div class="form-content">
-                                    {{ form_widget(form.companyName, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.companyName) }}
-                                </div>
+                    <div class="col-md-7">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">{{ 'User.User.Informations'|trans }}</h5>
                             </div>
+                            <div class="card-body">
 
-                            <div class="form-group">
-                                <div class="form-label">{{ 'User.User.Username'|trans }}</div>
-                                <div class="form-content">
-                                    {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.username) }}
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'User.User.Company-name'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.companyName, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.companyName) }}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="form-label">{{ 'User.User.First-name'|trans }}</div>
-                                <div class="form-content">
-                                    {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.firstName) }}
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'User.User.Username'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.username) }}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="form-label">{{ 'User.User.Last-name'|trans }}</div>
-                                <div class="form-content">
-                                    {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.lastName) }}
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'User.User.First-name'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.firstName) }}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="form-label">{{ 'User.User.Email'|trans }}</div>
-                                <div class="form-content">
-                                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.email) }}
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'User.User.Last-name'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.lastName) }}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    {{ form_label(form.plainPassword.first) }}
-                                    {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.plainPassword.first) }}
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'User.User.Email'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.email) }}
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    {{ form_label(form.plainPassword.second) }}
-                                    {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.plainPassword.second) }}
 
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        {{ form_label(form.plainPassword.first) }}
+                                        {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.plainPassword.first) }}
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        {{ form_label(form.plainPassword.second) }}
+                                        {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.plainPassword.second) }}
+
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="form-label">{{ 'User.User.Enabled'|trans }}</div>
-                                <div class="form-content">
-                                    {{ form_widget(form.enabled) }}
-                                    {{ form_errors(form.enabled) }}
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'User.User.Enabled'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.enabled) }}
+                                        {{ form_errors(form.enabled) }}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="form-label form-check-label">{{ 'User.User.Roles'|trans }}</div>
-                                <div class="form-check form-check-inline">
-                                    {{ form_widget(form.roles) }}
-                                    {{ form_errors(form.roles) }}
+                                <div class="form-group">
+                                    <div class="form-label form-check-label">{{ 'User.User.Roles'|trans }}</div>
+                                    <div class="form-check form-check-inline">
+                                        {{ form_widget(form.roles) }}
+                                        {{ form_errors(form.roles) }}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="form-label">{{ 'User.User.Divisions'|trans }}</div>
-                                <div class="form-content checkbox-list">
-                                    {{ form_widget(form.divisions) }}
-                                    {{ form_errors(form.divisions) }}
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'User.User.Divisions'|trans }}</div>
+                                    <div class="form-content checkbox-list">
+                                        {{ form_widget(form.divisions) }}
+                                        {{ form_errors(form.divisions) }}
+                                    </div>
                                 </div>
                             </div>
                         </div>

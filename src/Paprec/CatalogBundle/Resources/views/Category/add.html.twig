@@ -15,7 +15,7 @@
 
     <form id="catalogCategoryForm" action="" method="post" enctype="multipart/form-data">
 
-        <div class="col-md-7">
+        <div class="col-md-12">
             <!-- BOX -->
             <div class="card">
                 <div class="card-header">
@@ -30,55 +30,57 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">{{ 'Catalog.Category.Informations'|trans }}</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-item mb-2">
-                                <div class="form-label">{{ 'Catalog.Category.Picto'|trans }}</div>
-                                <div class="form-content">
-                                    {{ form_widget(form.picto) }}
-                                    {{ form_errors(form.picto) }}
-                                </div>
+                    <div class="col-md-7">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">{{ 'Catalog.Category.Informations'|trans }}</h5>
                             </div>
-                            <div class="form-group">
-                                <div class="form-label">{{ 'Catalog.Category.Name'|trans }}</div>
-                                <div class="form-content">
-                                    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.name) }}
+                            <div class="card-body">
+                                <div class="form-item mb-2">
+                                    <div class="form-label">{{ 'Catalog.Category.Picto'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.picto) }}
+                                        {{ form_errors(form.picto) }}
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'Catalog.Category.Name'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.name) }}
+                                    </div>
+                                </div>
 
-                            <div class="form-group">
-                                <div class="form-label">{{ 'Catalog.Category.Description'|trans }}</div>
-                                <div class="form-content">
-                                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.description) }}
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'Catalog.Category.Description'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.description) }}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="form-label">{{ 'Catalog.Category.Enabled'|trans }}</div>
-                                <div class="form-content">
-                                    {{ form_widget(form.enabled) }}
-                                    {{ form_errors(form.enabled) }}
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'Catalog.Category.Enabled'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.enabled) }}
+                                        {{ form_errors(form.enabled) }}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="form-label">{{ 'Catalog.Category.Division'|trans }}</div>
-                                <div class="form-content checkbox-list">
-                                    {{ form_widget(form.division) }}
-                                    {{ form_errors(form.division) }}
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'Catalog.Category.Division'|trans }}</div>
+                                    <div class="form-content checkbox-list">
+                                        {{ form_widget(form.division) }}
+                                        {{ form_errors(form.division) }}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="form-label">{{ 'Catalog.Category.Position'|trans }}</div>
-                                <div class="form-content">
-                                    {{ form_widget(form.position, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.position) }}
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'Catalog.Category.Position'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.position, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.position) }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +113,7 @@
         $(function () {
 
             $('.catalog-category-save-button').on('click', function () {
-                 $('#catalogCategoryForm').submit();
+                $('#catalogCategoryForm').submit();
             });
 
 

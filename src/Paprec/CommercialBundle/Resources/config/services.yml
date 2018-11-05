@@ -1,0 +1,4 @@
+services:
+#    paprec_commercial.example:
+#        class: Paprec\CommercialBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

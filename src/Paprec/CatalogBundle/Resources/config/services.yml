@@ -7,6 +7,13 @@ parameters:
 
   paprec_catalog.category.picto_path: "%kernel.root_dir%/../web/uploads/pictos"
   paprec_catalog.argument.picto_path: "%kernel.root_dir%/../web/uploads/pictos"
-  paprec_catalog.productDI.picto_path: "%kernel.root_dir%/../web/uploads/pictos"
+  paprec_catalog.product.di.picto_path: "%kernel.root_dir%/../web/uploads/pictos"
+  paprec_catalog.product.chantier.picto_path: "%kernel.root_dir%/../web/uploads/pictos"
+  paprec_catalog.product.d3e.picto_path: "%kernel.root_dir%/../web/uploads/pictos"
+
+  paprec_types_picture:
+    - Picto
+    - Picture
+    - PilotPicture
 
 

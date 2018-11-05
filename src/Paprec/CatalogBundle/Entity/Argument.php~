@@ -5,6 +5,7 @@ namespace Paprec\CatalogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Argument
  *
@@ -65,8 +66,12 @@ class Argument
     /**
      * @ORM\ManyToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductDI", mappedBy="arguments", cascade={"persist"})
      */
-    private $productsDI;
+    private $productDIs;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductChantier", mappedBy="arguments", cascade={"persist"})
+     */
+    private $productChantiers;
 
 
     public function __construct()
@@ -207,44 +212,82 @@ class Argument
     }
 
     /**
-     * Add productsDI.
+     * Add productDI.
      *
-     * @param \Paprec\CatalogBundle\Entity\ProductDI $productsDI
+     * @param \Paprec\CatalogBundle\Entity\ProductDI $productDI
      *
      * @return Argument
      */
-    public function addProductsDI(\Paprec\CatalogBundle\Entity\ProductDI $productsDI)
+    public function addProductDI(\Paprec\CatalogBundle\Entity\ProductDI $productDI)
     {
-        $this->productsDI[] = $productsDI;
+        $this->productDIs[] = $productDI;
 
         return $this;
     }
 
     /**
-     * Remove productsDI.
+     * Remove productDI.
      *
-     * @param \Paprec\CatalogBundle\Entity\ProductDI $productsDI
+     * @param \Paprec\CatalogBundle\Entity\ProductDI $productDI
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeProductsDI(\Paprec\CatalogBundle\Entity\ProductDI $productsDI)
+    public function removeProductDI(\Paprec\CatalogBundle\Entity\ProductDI $productDI)
     {
-        return $this->productsDI->removeElement($productsDI);
+        return $this->productDIs->removeElement($productDI);
     }
 
     /**
-     * Get productsDI.
+     * Get productDIs.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getProductsDI()
+    public function getProductDIs()
     {
-        return $this->productsDI;
+        return $this->productDIs;
     }
 
+    /**
+     * Add productChantier.
+     *
+     * @param \Paprec\CatalogBundle\Entity\ProductChantier $productChantier
+     *
+     * @return Argument
+     */
+    public function addProductChantier(\Paprec\CatalogBundle\Entity\ProductChantier $productChantier)
+    {
+        $this->productChantiers[] = $productChantier;
+
+        return $this;
+    }
+
+    /**
+     * Remove productChantier.
+     *
+     * @param \Paprec\CatalogBundle\Entity\ProductChantier $productChantier
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductChantier(\Paprec\CatalogBundle\Entity\ProductChantier $productChantier)
+    {
+        return $this->productChantiers->removeElement($productChantier);
+    }
+
+    /**
+     * Get productChantiers.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductChantiers()
+    {
+        return $this->productChantiers;
+    }
+
+    /**
+     * @return string
+     */
     public function __toString()
     {
-        // TODO: Implement __toString() method.
         return $this->description;
     }
 }

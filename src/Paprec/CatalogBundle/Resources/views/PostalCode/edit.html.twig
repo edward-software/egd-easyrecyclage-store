@@ -13,70 +13,70 @@
 
 {% block main_content %}
 
-  <form id="catalogPostalCodeForm" action="" method="post" enctype="multipart/form-data">
+    <form id="catalogPostalCodeForm" action="" method="post" enctype="multipart/form-data">
 
-    <div class="col-md-7">
-      <!-- BOX -->
-      <div class="card">
-        <div class="card-header">
-          <h4>
-            <i class="fa fa-pencil-alt"></i> {{ 'Catalog.PostalCode.Edit'|trans }} #{{ postalCode.id }}
-
-            <div class="float-right">
-
-              <a href="javascript:void(0);" class="btn btn-success catalog-postalCode-save-button"><i
-                        class="fa fa-check"></i> {{ 'Catalog.PostalCode.Save'|trans }}</a>
-              <a href="javascript:void(0);" class="btn btn-danger catalog-postalCode-cancel-button"><i
-                        class="fa fa-close"></i> {{ 'Catalog.PostalCode.Cancel'|trans }}</a>
-            </div>
-          </h4>
-        </div>
-        <div class="card-body">
-          <div class="col-md-12">
+        <div class="col-md-12">
+            <!-- BOX -->
             <div class="card">
-              <div class="card-header">
-                <h5 class="card-title">{{ 'Catalog.PostalCode.Informations'|trans }}</h5>
-              </div>
-              <div class="card-body">
-                <div class="form-group">
-                  <div class="form-label">{{ 'Catalog.PostalCode.Code'|trans }}</div>
-                  <div class="form-content">
-                      {{ form_widget(form.code, {'attr': {'class': 'form-control'}}) }}
-                      {{ form_errors(form.code) }}
-                  </div>
-                </div>
+                <div class="card-header">
+                    <h4>
+                        <i class="fa fa-pencil-alt"></i> {{ 'Catalog.PostalCode.Edit'|trans }} #{{ postalCode.id }}
 
-                <div class="form-group">
-                  <div class="form-label">{{ 'Catalog.Category.Division'|trans }}</div>
-                  <div class="form-content checkbox-list">
-                      {{ form_widget(form.division) }}
-                      {{ form_errors(form.division) }}
-                  </div>
-                </div>
+                        <div class="float-right">
 
-                <div class="form-group">
-                  <div class="form-label">{{ 'Catalog.PostalCode.Rate'|trans }}</div>
-                  <div class="form-content">
-                      {{ form_widget(form.rate, {'attr': {'class': 'form-control'}}) }}
-                      {{ form_errors(form.rate) }}
-                  </div>
+                            <a href="javascript:void(0);" class="btn btn-success catalog-postalCode-save-button"><i
+                                        class="fa fa-check"></i> {{ 'Catalog.PostalCode.Save'|trans }}</a>
+                            <a href="javascript:void(0);" class="btn btn-danger catalog-postalCode-cancel-button"><i
+                                        class="fa fa-close"></i> {{ 'Catalog.PostalCode.Cancel'|trans }}</a>
+                        </div>
+                    </h4>
                 </div>
-              </div>
+                <div class="card-body">
+                    <div class="col-md-7">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">{{ 'Catalog.PostalCode.Informations'|trans }}</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'Catalog.PostalCode.Code'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.code, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.code) }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'Catalog.Category.Division'|trans }}</div>
+                                    <div class="form-content checkbox-list">
+                                        {{ form_widget(form.division) }}
+                                        {{ form_errors(form.division) }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'Catalog.PostalCode.Rate'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.rate, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.rate) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{ form_rest(form) }}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="float-right">
+                        <a href="javascript:void(0);" class="btn btn-success catalog-postalCode-save-button"><i
+                                    class="fa fa-check"></i> {{ 'Catalog.PostalCode.Save'|trans }}</a>
+                        <a href="javascript:void(0);" class="btn btn-danger catalog-postalCode-cancel-button"><i
+                                    class="fa fa-close"></i> {{ 'Catalog.PostalCode.Cancel'|trans }}</a>
+                    </div>
+                </div>
             </div>
-              {{ form_rest(form) }}
-          </div>
         </div>
-        <div class="card-footer">
-          <div class="float-right">
-            <a href="javascript:void(0);" class="btn btn-success catalog-postalCode-save-button"><i
-                      class="fa fa-check"></i> {{ 'Catalog.PostalCode.Save'|trans }}</a>
-            <a href="javascript:void(0);" class="btn btn-danger catalog-postalCode-cancel-button"><i
-                      class="fa fa-close"></i> {{ 'Catalog.PostalCode.Cancel'|trans }}</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
+    </form>
 
 
 
@@ -84,28 +84,28 @@
 
 {% block javascripts %}
 
-  <script>
-      $(function () {
+    <script>
+        $(function () {
 
-          $('.catalog-postalCode-save-button').on('click', function () {
+            $('.catalog-postalCode-save-button').on('click', function () {
 
-              $('#catalogPostalCodeForm').submit();
+                $('#catalogPostalCodeForm').submit();
 
-          });
+            });
 
 
-          $('.catalog-postalCode-cancel-button').on('click', function () {
+            $('.catalog-postalCode-cancel-button').on('click', function () {
 
-              var url = "{{ path("paprec_catalog_postalCode_view", {id: postalCode.id}) }}";
+                var url = "{{ path("paprec_catalog_postalCode_view", {id: postalCode.id}) }}";
 
-              bootbox.confirm("{{ 'Catalog.PostalCode.Confirm-cancel'|trans }}", function (result) {
-                  if (result === true) {
-                      $(location).attr('href', url);
-                  }
-              });
+                bootbox.confirm("{{ 'Catalog.PostalCode.Confirm-cancel'|trans }}", function (result) {
+                    if (result === true) {
+                        $(location).attr('href', url);
+                    }
+                });
 
-          });
+            });
 
-      });
-  </script>
+        });
+    </script>
 {% endblock %}

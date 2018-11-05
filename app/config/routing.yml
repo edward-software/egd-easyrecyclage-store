@@ -1,8 +1,13 @@
-catalog:
-    resource: "@PaprecCatalogBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
+#commercial:
+#    resource: "@PaprecCommercialBundle/Controller/"
+#    type:     annotation
+#    prefix:   /
+#
+#catalog:
+#    resource: "@PaprecCatalogBundle/Controller/"
+#    type:     annotation
+#    prefix:   /
+#
 
 
 fos_user_security_login:
@@ -31,3 +36,8 @@ paprec_catalog:
     resource: "@PaprecCatalogBundle/Controller/"
     type:     annotation
     prefix:   /admin/catalog
+
+paprec_commercial:
+    resource: "@PaprecCommercialBundle/Controller/"
+    type:     annotation
+    prefix:   /admin/commercial
