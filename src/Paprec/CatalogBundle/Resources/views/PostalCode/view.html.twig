@@ -28,7 +28,7 @@
                         <a href="{{ path("paprec_catalog_postalCode_edit", {id: postalCode.id}) }}"
                            class="btn btn-warning"><i
                                     class="fa fa-edit"></i> {{ 'Catalog.PostalCode.Edit'|trans }}</a>
-                        <a id="userUserRemoveButton" href="javascript:void(0);" class="btn btn-danger"><i
+                        <a id="catalogPostalCodeRemoveButton" href="javascript:void(0);" class="btn btn-danger"><i
                                     class="fa fa-trash"></i> {{ 'Catalog.PostalCode.Remove'|trans }}</a>
                     </div>
                 </h4>
@@ -76,7 +76,7 @@
             <script>
                 $(function () {
 
-                    $('#userUserRemoveButton').on('click', function () {
+                    $('#catalogPostalCodeRemoveButton').on('click', function () {
 
                         var url = "{{ path("paprec_catalog_postalCode_remove", {id: postalCode.id}) }}";
 

@@ -1,0 +1,200 @@
+{% extends "::base_admin.html.twig" %}
+
+{% block title %}
+    {{ 'Catalog.GrilleTarifD3E.View'|trans }}
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
+    {#<link rel="stylesheet" type="text/css"#}
+    {#href="{{ asset('/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">#}
+    {#<link rel="stylesheet" type="text/css"#}
+    {#href="{{ asset('/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}">#}
+{% endblock %}
+
+{% block content_title %}
+    {{ 'Catalog.GrilleTarifD3E.GrilleTarifD3Es'|trans }}
+{% endblock %}
+
+{% block main_content %}
+
+
+    <div class="col-md-12">
+        <!-- CARD -->
+        <div class="card">
+            <div class="card-header">
+                <h4>
+                    <i class="fa fa-folder"></i> {{ 'Catalog.GrilleTarifD3E.View'|trans }}
+                    <div class="float-right">
+                        <a href="{{ path("paprec_catalog_grilleTarifD3E_edit", {id: grilleTarifD3E.id}) }}"
+                           class="btn btn-warning"><i
+                                    class="fa fa-edit"></i> {{ 'Catalog.GrilleTarifD3E.Edit'|trans }}</a>
+                        <a id="catalogGrilleTarifD3ERemoveButton" href="javascript:void(0);" class="btn btn-danger"><i
+                                    class="fa fa-trash"></i> {{ 'Catalog.GrilleTarifD3E.Remove'|trans }}</a>
+                    </div>
+                </h4>
+                <div class="view-tools float-left">
+                    <a href="{{ path('paprec_catalog_grilleTarifD3E_index') }}" class="btn btn-default"><i
+                                class="fa fa-chevron-left"></i> {{ 'Catalog.GrilleTarifD3E.List'|trans }}</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="col-md-7">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Catalog.GrilleTarifD3E.Informations'|trans }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Catalog.GrilleTarifD3E.Name'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {{ grilleTarifD3E.name }}
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-7 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Catalog.GrilleTarifD3E.System-informations'|trans }}</h5>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Catalog.GrilleTarifD3E.Date-creation'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {{ grilleTarifD3E.dateCreation|localizeddate('short', 'medium', app.request.locale) }}
+                                </label>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Catalog.GrilleTarifD3E.Date-update'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {{ grilleTarifD3E.dateUpdate is empty ? "" : grilleTarifD3E.dateUpdate|localizeddate('short', 'medium', app.request.locale) }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Catalog.GrilleTarifLigneD3E.GrilleTarifLigneD3Es'|trans }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <table id="grilleTarifLigneD3EsDatatable"
+                                   class="table table-striped table-bordered table-hover w-100"
+                                   cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{ 'Catalog.GrilleTarifLigneD3E.PostalCodes'|trans }}</th>
+                                    <th>{{ 'Catalog.GrilleTarifLigneD3E.Agence'|trans }}</th>
+                                    <th>{{ 'Catalog.GrilleTarifLigneD3E.MinQuantity'|trans }}</th>
+                                    <th>{{ 'Catalog.GrilleTarifLigneD3E.MaxQuantity'|trans }}</th>
+                                    <th>{{ 'Catalog.GrilleTarifLigneD3E.Price'|trans }}</th>
+                                    <th></th>
+                                </tr>
+                                <form name="formAddGrilleTarifLigneD3E" id="formAddGrilleTarifLigneD3E"
+                                      action="{{ path("paprec_catalog_grilleTarifD3E_addLigne", {id: grilleTarifD3E.id}) }}"
+                                      method="post">
+
+                                    <tr>
+                                        <th></th>
+                                        <th>{{ form_widget(addLigneForm.postalCodes, {'attr': {'class': 'form-control'}}) }}</th>
+                                        <th>{{ form_widget(addLigneForm.agence, {'attr': {'class': 'form-control'}}) }}</th>
+                                        <th>{{ form_widget(addLigneForm.minQuantity, {'attr': {'class': 'form-control'}}) }}</th>
+                                        <th>{{ form_widget(addLigneForm.maxQuantity, {'attr': {'class': 'form-control'}}) }}</th>
+                                        <th>{{ form_widget(addLigneForm.price, {'attr': {'class': 'form-control'}}) }}</th>
+                                        <th class="text-center">
+                                            <a href="javascript:void(0);"
+                                               class="btn btn-success catalogGrilleTarifD3ESaveButton"><i
+                                                        class="fa fa-check"></i> {{ 'Catalog.GrilleTarifD3E.Save'|trans }}
+                                            </a>
+                                        </th>
+                                    </tr>
+                                    {{ form_rest(addLigneForm) }}
+                                </form>
+                                </thead>
+                                <tbody>
+
+
+                                {% for grilleTarifLigneD3E in grilleTarifD3E.grilleTarifLigneD3Es %}
+                                    <tr>
+                                        <td>{{ grilleTarifLigneD3E.id }}</td>
+                                        <td>{{ grilleTarifLigneD3E.postalCodes }}</td>
+                                        <td>{{ grilleTarifLigneD3E.agence }}</td>
+                                        <td>{{ grilleTarifLigneD3E.minQuantity }}</td>
+                                        <td>{{ grilleTarifLigneD3E.maxQuantity }}</td>
+                                        <td>{{ grilleTarifLigneD3E.price }}</td>
+                                        <td class="text-center">
+                                            <a href="javascript:void(0);"
+                                               class="btn btn-danger btn-sm"
+                                               onclick="removeLigne({{ grilleTarifLigneD3E.id }})">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+        {% block javascripts %}
+
+            <!-- DATA TABLES JS -->
+            <script type="text/javascript"
+                    src="{{ asset('/assets/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+            <script type="text/javascript"
+                    src="{{ asset('/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+
+            <script>
+
+                $(function () {
+
+                    $('.catalogGrilleTarifD3ESaveButton').on('click', function () {
+                        $('#formAddGrilleTarifLigneD3E').submit();
+                    });
+
+                    $('#catalogGrilleTarifD3ERemoveButton').on('click', function () {
+
+                        var url = "{{ path("paprec_catalog_grilleTarifD3E_remove", {id: grilleTarifD3E.id}) }}";
+
+                        bootbox.confirm("{{ 'Catalog.GrilleTarifD3E.Confirm-remove'|trans }}", function (result) {
+                            if (result === true) {
+                                $(location).attr('href', url);
+                            }
+                        });
+
+                    });
+                });
+
+                // On transforme le tableau des lignes de la grille en une DataTable
+                $(document).ready(function () {
+                    var grilleTarifLigneD3EsTable = $('#grilleTarifLigneD3EsDatatable').DataTable({
+                        "bSortCellsTop": true
+                    });
+                    $(grilleTarifLigneD3EsTable.table().container()).removeClass('form-inline');
+                });
+
+                function removeLigne(id) {
+                    bootbox.confirm("{{ 'Catalog.GrilleTarifLigneD3E.Confirm-remove'|trans }}", function (result) {
+                        if (result === true) {
+                            var url = "{{ path("paprec_catalog_grilleTarifD3E_removeLigne", {id: grilleTarifD3E.id, ligneID: 'ligneTmp'}) }}";
+                            url = url.replace('ligneTmp', id);
+                            $(location).attr('href', url);
+                        }
+                    });
+                }
+            </script>
+        {% endblock %}

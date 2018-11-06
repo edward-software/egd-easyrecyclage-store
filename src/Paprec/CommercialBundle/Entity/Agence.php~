@@ -117,6 +117,14 @@ class Agence
      */
     private $isDisplayed;
 
+    /** #########################
+     *
+     *  RELATIONS
+     * ########################## */
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E", mappedBy="agence", cascade={"all"})
+     */
+    private $grilleTarifLigneD3Es;
 
     public function __construct()
     {

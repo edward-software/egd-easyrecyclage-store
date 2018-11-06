@@ -59,7 +59,7 @@ Catalog:
         List:                       Liste des codes postaux
         Add:                        Ajouter un code postal
         Export:                     Exporter les codes postaux
-        Code:                       Code
+        Code:                       Code Postal
         Division:                   Division
         Rate:                       Coefficient
         View:                       Visualiser le code postal
@@ -172,6 +172,7 @@ Catalog:
       CoefSerialNumberStmt:       Coef. de relevé de n° de série
       CoefDestruction:            Coef. de destruction par broyage
       Position:                   Position
+      GrilleTarifD3E:             Grille tarifaire
       IsDisplayed:                Affiché
       IsPayableOnline:            Payable en ligne
       AvailablePostalCodes:       Dispo géographique
@@ -189,3 +190,31 @@ Catalog:
       Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
       Confirm-remove:             Etes-vous sûr de vouloir supprimer ce produit ?
       Confirm-remove-picture:     Etes-vous sûr de vouloir supprimer cette photo ?
+
+    GrilleTarifD3E:
+      GrilleTarifD3Es:            Grilles tarifaires D3E
+      List:                       Liste des grilles tarifaires D3E
+      Date-creation:              Date de création
+      Date-crea:                  Date de créa.
+      Date-update:                Date de mise à jour
+      Name:                       Nom
+      Informations:               Informations
+      System-informations:        Informations système
+      Export:                     Exporter les grilles
+      View:                       Visualiser la grille
+      Edit:                       Modifier la grille
+      Remove:                     Supprimer la grille
+      Add:                        Ajouter une grille
+      Save:                       Enregistrer
+      Cancel:                     Annuler
+      Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+      Confirm-remove:             Etes-vous sûr de vouloir supprimer cette grille ?
+
+    GrilleTarifLigneD3E:
+      GrilleTarifLigneD3Es:       Lignes de la grille tarifaire
+      PostalCodes:                Codes postaux
+      Agence:                     Agence
+      MinQuantity:                Quantité min.
+      MaxQuantity:                Quantité max.
+      Price:                      Prix
+      Confirm-remove:             Etes-vous sûr de vouloir supprimer cette ligne ?

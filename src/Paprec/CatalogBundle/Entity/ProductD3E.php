@@ -138,7 +138,7 @@ class ProductD3E
     private $pictos;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\GrilleTarifD3E", inversedBy="productD3Es")
+     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\GrilleTarifD3E", inversedBy="productD3Es", cascade={"all"})
      */
     private $grilleTarifD3E;
 

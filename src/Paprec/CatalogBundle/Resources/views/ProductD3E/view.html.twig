@@ -47,63 +47,71 @@
                             #}
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.ProductD3E.Name'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.Name'|trans }}</label>
+                                    <label class="col-form-label col-md-7">
                                         {{ productD3E.name }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.ProductD3E.Description'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.Description'|trans }}</label>
+                                    <label class="col-form-label col-md-7">
                                         {{ productD3E.description }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.ProductD3E.Description'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.CoefHandling'|trans }}</label>
+                                    <label class="col-form-label col-md-7">
                                         {{ productD3E.coefHandling }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.ProductD3E.Description'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.CoefSerialNumberStmt'|trans }}</label>
+                                    <label class="col-form-label col-md-7">
                                         {{ productD3E.coefSerialNumberStmt }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.ProductD3E.Description'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.CoefDestruction'|trans }}</label>
+                                    <label class="col-form-label col-md-7">
                                         {{ productD3E.coefDestruction }}
                                     </label>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.ProductD3E.Reference'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.Reference'|trans }}</label>
+                                    <label class="col-form-label col-md-7">
                                         {{ productD3E.reference }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.ProductD3E.AvailablePostalCodes'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.AvailablePostalCodes'|trans }}</label>
+                                    <label class="col-form-label col-md-7">
                                         {{ productD3E.availablePostalCodes }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.ProductD3E.Position'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.Position'|trans }}</label>
+                                    <label class="col-form-label col-md-7">
                                         {{ productD3E.position }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.ProductD3E.IsDisplayed'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.GrilleTarifD3E'|trans }}</label>
+                                    <label class="col-form-label col-md-7">
+                                        {% if productD3E.grilleTarifD3E and productD3E.grilleTarifD3E.deleted is null %}
+                                            <a href="{{ path('paprec_catalog_grilleTarifD3E_view', {id: productD3E.grilleTarifD3E.id}) }}">{{ productD3E.grilleTarifD3E }}</a>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.IsPayableOnline'|trans }}</label>
+                                    <label class="col-form-label col-md-7">
                                         {% if productD3E.isPayableOnline == 1 %}Oui{% else %}Non{% endif %}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.ProductD3E.IsDisplayed'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.IsDisplayed'|trans }}</label>
+                                    <label class="col-form-label col-md-7">
                                         {% if productD3E.isDisplayed == 1 %}Oui{% else %}Non{% endif %}
                                     </label>
                                 </div>
@@ -326,7 +334,7 @@
                     case 'Picto':
                         type = "{{ 'Catalog.ProductD3E.Picto'|trans }}";
                         break;
-                    {#case 'PilotPicture':#}
+                        {#case 'PilotPicture':#}
                         {#type = "{{ 'Catalog.ProductD3E.PilotPicture'|trans }}";#}
                         {#break;#}
                     default:

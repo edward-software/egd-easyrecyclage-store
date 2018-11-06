@@ -4,6 +4,7 @@ namespace Paprec\CatalogBundle\Form;
 
 use Paprec\CatalogBundle\Entity\Argument;
 use Paprec\CatalogBundle\Entity\Category;
+use Paprec\CatalogBundle\Repository\ArgumentRepository;
 use Paprec\CatalogBundle\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -46,7 +47,11 @@ class ProductChantierType extends AbstractType
             ->add('arguments', EntityType::class, array(
                 'class' => Argument::class,
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => true,
+                'query_builder' => function (ArgumentRepository $er) {
+                    return $er->createQueryBuilder('a')
+                        ->where('a.deleted IS NULL');
+                }
             ))
             ->add('categories', EntityType::class, array(
                 'class' => Category::class,

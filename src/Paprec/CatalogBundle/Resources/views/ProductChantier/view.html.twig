@@ -92,7 +92,9 @@
                                     <label class="col-md-4 col-form-label">{{ 'Catalog.ProductChantier.Arguments'|trans }}</label>
                                     <label class="col-form-label col-md-8">
                                         {% for argument in productChantier.arguments %}
-                                            <a href="{{ path('paprec_catalog_argument_view', {id: argument.id}) }}">{{ argument }}</a>
+                                            {% if argument.deleted is null %}
+                                                <a href="{{ path('paprec_catalog_argument_view', {id: argument.id}) }}">{{ argument }}</a>
+                                            {% endif %}
                                         {% endfor %}
                                     </label>
                                 </div>
@@ -100,7 +102,9 @@
                                     <label class="col-md-4 col-form-label">{{ 'Catalog.ProductChantier.Categories'|trans }}</label>
                                     <label class="col-form-label col-md-8">
                                         {% for productChantierCategory in productChantier.productChantierCategories %}
-                                            <a href="{{ path('paprec_catalog_category_view', {id: productChantierCategory.category.id}) }}">{{ productChantierCategory.category }}</a>
+                                            {% if productDICategory.category.deleted is null %}
+                                                <a href="{{ path('paprec_catalog_category_view', {id: productChantierCategory.category.id}) }}">{{ productChantierCategory.category }}</a>
+                                            {% endif %}
                                         {% endfor %}
                                     </label>
                                 </div>

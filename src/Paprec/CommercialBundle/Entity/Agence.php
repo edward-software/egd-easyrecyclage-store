@@ -117,12 +117,24 @@ class Agence
      */
     private $isDisplayed;
 
+    /** #########################
+     *
+     *  RELATIONS
+     * ########################## */
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E", mappedBy="agence", cascade={"all"})
+     */
+    private $grilleTarifLigneD3Es;
 
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
     }
 
+    public function __toString()
+    {
+     return $this->getName();
+    }
 
     /**
      * Get id.
@@ -420,5 +432,41 @@ class Agence
     public function getDivisions()
     {
         return $this->divisions;
+    }
+
+    /**
+     * Add grilleTarifLigneD3E.
+     *
+     * @param \Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E $grilleTarifLigneD3E
+     *
+     * @return Agence
+     */
+    public function addGrilleTarifLigneD3E(\Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E $grilleTarifLigneD3E)
+    {
+        $this->grilleTarifLigneD3Es[] = $grilleTarifLigneD3E;
+
+        return $this;
+    }
+
+    /**
+     * Remove grilleTarifLigneD3E.
+     *
+     * @param \Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E $grilleTarifLigneD3E
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeGrilleTarifLigneD3E(\Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E $grilleTarifLigneD3E)
+    {
+        return $this->grilleTarifLigneD3Es->removeElement($grilleTarifLigneD3E);
+    }
+
+    /**
+     * Get grilleTarifLigneD3Es.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGrilleTarifLigneD3Es()
+    {
+        return $this->grilleTarifLigneD3Es;
     }
 }

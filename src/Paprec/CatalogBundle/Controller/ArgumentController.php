@@ -199,7 +199,7 @@ class ArgumentController extends Controller
     }
 
     /**
-     * @Route("/argument/edit{id}",  name="paprec_catalog_argument_edit")
+     * @Route("/argument/edit/{id}",  name="paprec_catalog_argument_edit")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function editAction(Request $request, Argument $argument)
@@ -256,6 +256,12 @@ class ArgumentController extends Controller
         $this->removeFile($this->getParameter('paprec_catalog.category.picto_path') . '/' . $argument->getPicto());
         $argument->setPicto();
         $argument->setDeleted(new \DateTime());
+        foreach($argument->getProductChantiers() as $productChantier) {
+            $argument->removeProductChantier($productChantier);
+        }
+        foreach($argument->getProductDIs() as $productDI) {
+            $argument->removeProductChantier($productDI);
+        }
         $em->flush();
 
         return $this->redirectToRoute('paprec_catalog_argument_index');

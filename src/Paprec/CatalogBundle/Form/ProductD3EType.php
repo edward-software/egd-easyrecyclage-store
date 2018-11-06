@@ -2,6 +2,9 @@
 
 namespace Paprec\CatalogBundle\Form;
 
+use Paprec\CatalogBundle\Entity\GrilleTarifD3E;
+use Paprec\CatalogBundle\Repository\GrilleTarifD3ERepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -37,8 +40,20 @@ class ProductD3EType extends AbstractType
                     'Oui' => 1
                 ),
                 "expanded" => true
+            ))
+            ->add('grilleTarifD3E', EntityType::class, array(
+                'class' => GrilleTarifD3E::class,
+                'multiple' => false,
+                'expanded' => false,
+                'choice_label' => 'name',
+                'query_builder' => function (GrilleTarifD3ERepository $er) {
+                    return $er->createQueryBuilder('g')
+                        ->where('g.deleted IS NULL');
+                }
             ));
-    }/**
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)

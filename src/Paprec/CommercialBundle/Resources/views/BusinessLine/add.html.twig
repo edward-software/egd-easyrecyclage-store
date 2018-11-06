@@ -1,0 +1,101 @@
+{% extends "::base_admin.html.twig" %}
+
+{% block title %}
+    {{ 'Commercial.BusinessLine.Add'|trans }}
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block content_title %}
+    {{ 'Commercial.BusinessLine.BusinessLines'|trans }}
+{% endblock %}
+
+{% block main_content %}
+
+    <form id="commercialBusinessLineForm" action="" method="post" enctype="multipart/form-data">
+
+        <div class="col-md-12">
+            <!-- BOX -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fa fa-plus"></i> {{ 'Commercial.BusinessLine.Add'|trans }}
+                        <div class="float-right">
+                            <a href="javascript:void(0);" class="btn btn-success commercial-businessLine-save-button"><i
+                                        class="fa fa-check"></i> {{ 'Commercial.BusinessLine.Save'|trans }}</a>
+                            <a href="javascript:void(0);" class="btn btn-danger commercial-businessLine-cancel-button"><i
+                                        class="fa fa-close"></i> {{ 'Commercial.BusinessLine.Cancel'|trans }}</a>
+                        </div>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-7">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">{{ 'Commercial.BusinessLine.Informations'|trans }}</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'Commercial.BusinessLine.Name'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.name) }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'Commercial.BusinessLine.Division'|trans }}</div>
+                                    <div class="form-content checkbox-list">
+                                        {{ form_widget(form.division, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.division) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="float-right">
+                        <a href="javascript:void(0);" class="btn btn-success commercial-businessLine-save-button"><i
+                                    class="fa fa-check"></i> {{ 'Commercial.BusinessLine.Save'|trans }}</a>
+                        <a href="javascript:void(0);" class="btn btn-danger commercial-businessLine-cancel-button"><i
+                                    class="fa fa-close"></i> {{ 'Commercial.BusinessLine.Cancel'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_rest(form) }}
+    </form>
+    </div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        $(function () {
+
+            $('.commercial-businessLine-save-button').on('click', function () {
+                $('#commercialBusinessLineForm').submit();
+            });
+
+
+            $('.commercial-businessLine-cancel-button').on('click', function () {
+
+                var url = "{{ path("paprec_commercial_businessLine_index") }}";
+
+                bootbox.confirm("{{ 'Commercial.BusinessLine.Confirm-cancel'|trans }}", function (result) {
+                    if (result === true) {
+                        $(location).attr('href', url);
+                    }
+                });
+
+            });
+
+        });
+    </script>
+{% endblock %}

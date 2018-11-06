@@ -59,6 +59,8 @@
                                href="{{ path('paprec_catalog_productChantier_index') }}">{{ 'Catalog.ProductChantier.ProductChantiers'|trans }}</a>
                             <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_productD3E'|length) == 'paprec_catalog_productD3E' %} active{% endif %}"
                                href="{{ path('paprec_catalog_productD3E_index') }}">{{ 'Catalog.ProductD3E.ProductD3Es'|trans }}</a>
+                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_grilleTarifD3E'|length) == 'paprec_catalog_grilleTarifD3E' %} active{% endif %}"
+                               href="{{ path('paprec_catalog_grilleTarifD3E_index') }}">{{ 'Catalog.GrilleTarifD3E.GrilleTarifD3Es'|trans }}</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_category'|length) == 'paprec_catalog_category' %} active{% endif %}"
                                 href="{{ path('paprec_catalog_category_index') }}">{{ 'Catalog.Category.Categories'|trans }}</a>
@@ -79,6 +81,8 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownCommercial">
                             <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_agence'|length) == 'paprec_commercial_agence' %} active{% endif %}"
                                href="{{ path('paprec_commercial_agence_index') }}">{{ 'Commercial.Agence.Agences'|trans }}</a>
+                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_businessLine'|length) == 'paprec_commercial_businessLine' %} active{% endif %}"
+                               href="{{ path('paprec_commercial_businessLine_index') }}">{{ 'Commercial.BusinessLine.BusinessLines'|trans }}</a>
                         </div>
                     </li>
                 {% endif %}

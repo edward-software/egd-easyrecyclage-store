@@ -27,7 +27,7 @@
                     <div class="float-right">
                         <a href="{{ path("paprec_catalog_category_edit", {id: category.id}) }}" class="btn btn-warning"><i
                         class="fa fa-edit"></i> {{ 'Catalog.Category.Edit'|trans }}</a>
-                        <a id="userUserRemoveButton" href="javascript:void(0);" class="btn btn-danger"><i
+                        <a id="catalogCategoryRemoveButton" href="javascript:void(0);" class="btn btn-danger"><i
                                     class="fa fa-trash"></i> {{ 'Catalog.Category.Remove'|trans }}</a>
                     </div>
                 </h4>
@@ -116,7 +116,7 @@
             <script>
                 $(function () {
 
-                    $('#userUserRemoveButton').on('click', function () {
+                    $('#catalogCategoryRemoveButton').on('click', function () {
 
                         var url = "{{ path("paprec_catalog_category_remove", {id: category.id}) }}";
 

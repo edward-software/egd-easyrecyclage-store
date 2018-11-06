@@ -92,7 +92,9 @@
                                     <label class="col-md-4 col-form-label">{{ 'Catalog.ProductDI.Arguments'|trans }}</label>
                                     <label class="col-form-label col-md-8">
                                         {% for argument in productDI.arguments %}
-                                            <a href="{{ path('paprec_catalog_argument_view', {id: argument.id}) }}">{{ argument }}</a>
+                                            {% if argument.deleted is null %}
+                                                <a href="{{ path('paprec_catalog_argument_view', {id: argument.id}) }}">{{ argument }}</a>
+                                            {% endif %}
                                         {% endfor %}
                                     </label>
                                 </div>
@@ -100,7 +102,9 @@
                                     <label class="col-md-4 col-form-label">{{ 'Catalog.ProductDI.Categories'|trans }}</label>
                                     <label class="col-form-label col-md-8">
                                         {% for productDICategory in productDI.productDICategories %}
-                                            <a href="{{ path('paprec_catalog_category_view', {id: productDICategory.category.id}) }}">{{ productDICategory.category }}</a>
+                                            {% if productDICategory.category.deleted is null %}
+                                                <a href="{{ path('paprec_catalog_category_view', {id: productDICategory.category.id}) }}">{{ productDICategory.category }}</a>
+                                            {% endif %}
                                         {% endfor %}
                                     </label>
                                 </div>

@@ -28,7 +28,7 @@
                         <a href="{{ path("paprec_commercial_agence_edit", {id: agence.id}) }}"
                            class="btn btn-warning"><i
                                     class="fa fa-edit"></i> {{ 'Commercial.Agence.Edit'|trans }}</a>
-                        <a id="userUserRemoveButton" href="javascript:void(0);" class="btn btn-danger"><i
+                        <a id="commercialAgenceRemoveButton" href="javascript:void(0);" class="btn btn-danger"><i
                                     class="fa fa-trash"></i> {{ 'Commercial.Agence.Remove'|trans }}</a>
                     </div>
                 </h4>
@@ -137,7 +137,7 @@
             <script>
                 $(function () {
 
-                    $('#userUserRemoveButton').on('click', function () {
+                    $('#commercialAgenceRemoveButton').on('click', function () {
 
                         var url = "{{ path("paprec_commercial_agence_remove", {id: agence.id}) }}";
 
