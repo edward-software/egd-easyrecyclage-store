@@ -8,13 +8,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
-
 /**
  * Category
  *
  * @ORM\Table(name="categories")
  * @ORM\Entity(repositoryClass="Paprec\CatalogBundle\Repository\CategoryRepository")
- * @UniqueEntity("name")
  */
 class Category
 {
@@ -373,6 +371,55 @@ class Category
     {
         return $this->productDICategories;
     }
+
+    /** ##############
+     * Récupération des ProductCategories ordonnés par position
+     *
+     * ########### */
+
+    /**
+     * récupération des productDiCategories triés par ordre croissant de position
+     */
+    public function getProductDICategoriesOrdered()
+    {
+        $productDICategoriesToOrdered = $this->getProductDICategories()->getValues();
+        usort($productDICategoriesToOrdered, array($this, 'compare'));
+        $orderedItems = array();
+        foreach ($productDICategoriesToOrdered as $orderedItem) {
+            array_push($orderedItems, $orderedItem);
+        }
+        return $orderedItems;
+    }
+
+    /**
+     * récupération des productChantierCategories triés par ordre croissant de position
+     */
+    public function getProductChantierCategoriesOrdered()
+    {
+        $productChantierCategoriesToOrdered = $this->getProductChantierCategories()->getValues();
+        usort($productChantierCategoriesToOrdered, array($this, 'compare'));
+        $orderedItems = array();
+        foreach ($productChantierCategoriesToOrdered as $orderedItem) {
+            array_push($orderedItems, $orderedItem);
+        }
+        return $orderedItems;
+    }
+
+    /**
+     * Fonction de tri d'un tableau
+     */
+    private function compare(ProductDICategory $a, ProductDICategory $b)
+    {
+        if ($a->getPosition() == $b->getPosition()) {
+            return 0;
+        }
+        return ($a->getPosition() < $b->getPosition()) ? -1 : 1;
+    }
+
+    /** ##############
+     * FIN récupération des ProductCategories ordonnés par position
+     * ########### */
+
 
     /**
      * Add productChantierCategory.

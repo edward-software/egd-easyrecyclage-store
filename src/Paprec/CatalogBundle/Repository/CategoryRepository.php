@@ -10,4 +10,6 @@ namespace Paprec\CatalogBundle\Repository;
  */
 class CategoryRepository extends \Doctrine\ORM\EntityRepository
 {
+
+
 }

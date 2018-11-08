@@ -4,6 +4,8 @@ Catalog:
     Category:
         Categories:                 Catégories
         List:                       Liste des catégories
+        ListDIs:                    Catégories de la division DI
+        ListChantiers:              Catégories de la division Chantier
         Date-creation:              Date de création
         Date-crea:                  Date de créa.
         Date-update:                Date de mise à jour
@@ -26,6 +28,8 @@ Catalog:
         Cancel:                     Annuler
         Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
         Confirm-remove:             Etes-vous sûr de vouloir supprimer cette catégorie ?
+        Confirm-remove-pc:          Etes-vous sur de vouloir détacher le produit de cette catégorie ?
+        SortProductDI:              Position des produits dans la catégorie
 
     Argument:
         Arguments:                  Arguments

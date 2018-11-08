@@ -58,7 +58,8 @@ class ProductDIType extends AbstractType
                 'choice_label' => 'name',
                 'query_builder' => function (CategoryRepository $er) {
                     return $er->createQueryBuilder('c')
-                        ->where('c.deleted IS NULL');
+                        ->where('c.deleted IS NULL')
+                        ->where('c.division LIKE \'%DI%\'');
                 }
             ));
     }

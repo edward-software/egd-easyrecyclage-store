@@ -102,7 +102,7 @@
                                     <label class="col-md-4 col-form-label">{{ 'Catalog.ProductChantier.Categories'|trans }}</label>
                                     <label class="col-form-label col-md-8">
                                         {% for productChantierCategory in productChantier.productChantierCategories %}
-                                            {% if productDICategory.category.deleted is null %}
+                                            {% if productChantierCategory.category.deleted is null %}
                                                 <a href="{{ path('paprec_catalog_category_view', {id: productChantierCategory.category.id}) }}">{{ productChantierCategory.category }}</a>
                                             {% endif %}
                                         {% endfor %}

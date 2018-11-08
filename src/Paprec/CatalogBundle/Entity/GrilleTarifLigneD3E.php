@@ -43,7 +43,6 @@ class GrilleTarifLigneD3E
      * @var int
      *
      * @ORM\Column(name="maxQuantity", type="integer")
-     * @Assert\NotBlank()
      */
     private $maxQuantity;
 

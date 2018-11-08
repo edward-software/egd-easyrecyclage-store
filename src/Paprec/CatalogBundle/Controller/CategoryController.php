@@ -4,6 +4,8 @@ namespace Paprec\CatalogBundle\Controller;
 
 use Goondi\ToolsBundle\Services\Logger;
 use Paprec\CatalogBundle\Entity\Category;
+use Paprec\CatalogBundle\Entity\ProductChantierCategory;
+use Paprec\CatalogBundle\Entity\ProductDICategory;
 use Paprec\CatalogBundle\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -31,7 +33,8 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/category/loadList", name="paprec_catalog_category_loadList")
+     * LoadList modifiée pour passer en parametre le type de Catégorie que l'on veut (DI ou CHANTIER)
+     * @Route("/category/loadList/{typeCategory}", name="paprec_catalog_category_loadList")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function loadListAction(Request $request)
@@ -44,6 +47,8 @@ class CategoryController extends Controller
         $orders = $request->get('order');
         $search = $request->get('search');
         $columns = $request->get('columns');
+        // Récupération du type de catégorie souhaité (DI ou CHANTIER)
+        $typeCategory = $request->get('typeCategory');
 
         $cols['id'] = array('label' => 'id', 'id' => 'c.id', 'method' => array('getId'));
         $cols['name'] = array('label' => 'name', 'id' => 'c.name', 'method' => array('getName'));
@@ -57,7 +62,8 @@ class CategoryController extends Controller
 
         $queryBuilder->select(array('c'))
             ->from('PaprecCatalogBundle:Category', 'c')
-            ->where('c.deleted IS NULL');
+            ->where('c.deleted IS NULL')
+            ->where('c.division LIKE \'%' . $typeCategory . '%\''); // Récupération des catégories du type voulu
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
             if (substr($search['value'], 0, 1) == '#') {
@@ -272,7 +278,7 @@ class CategoryController extends Controller
             'division' => $divisions
         ));
 
-        $currentPicto =$category->getPicto();
+        $currentPicto = $category->getPicto();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -371,4 +377,128 @@ class CategoryController extends Controller
         }
     }
 
+    /**
+     * On met à jour les positions des ProductDICategories en fonction de l'ordre du JQuery Sortable
+     * @Route("/category/{id}/moveProductDICategory", name="paprec_catalog_category_moveProductDICategory")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function moveProductDICategoryAction(Request $request, Category $category)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repoProductDICategory = $em->getRepository(ProductDICategory::class);
+
+        $productDICategoryItemIds = $request->get('productDICategoryItemIds');
+        try {
+            if (is_array($productDICategoryItemIds) && count($productDICategoryItemIds)) {
+                foreach ($productDICategoryItemIds as $position => $itemId) {
+                    $productDICategory = $repoProductDICategory->find($itemId);
+                    $productDICategory->setPosition($position);
+                }
+                $em->flush();
+            }
+        } catch (Exception $e) {
+            return new JsonResponse(array(
+                'status' => 500,
+                'resultMessage' => $e->getMessage()
+            ));
+        }
+        return new JsonResponse(array(
+            'status' => 200
+        ));
+    }
+
+    /**
+     * On met à jour les positions des ProductChantierCategories en fonction de l'ordre du JQuery Sortable
+     * @Route("/category/{id}/moveProductChantierCategory", name="paprec_catalog_category_moveProductChantierCategory")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function moveProductChantierCategoryAction(Request $request, Category $category)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repoProductChantierCategory = $em->getRepository(ProductChantierCategory::class);
+
+        $productChantierCategoryItemIds = $request->get('productChantierCategoryItemIds');
+        try {
+            if (is_array($productChantierCategoryItemIds) && count($productChantierCategoryItemIds)) {
+                foreach ($productChantierCategoryItemIds as $position => $itemId) {
+                    $productChantierCategory = $repoProductChantierCategory->find($itemId);
+                    $productChantierCategory->setPosition($position);
+                }
+                $em->flush();
+            }
+        } catch (Exception $e) {
+            return new JsonResponse(array(
+                'status' => 500,
+                'resultMessage' => $e->getMessage()
+            ));
+        }
+        return new JsonResponse(array(
+            'status' => 200
+        ));
+    }
+
+    /**
+     * @Route("/category/{id}/removeProductChantierCategory/{productChantierCategoryId}", name="paprec_catalog_category_removeProductChantierCategory")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function removeProductChantierCategory(Request $request, Category $category, ProductChantierCategory $productChantierCategoryId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($productChantierCategoryId);
+        $em->flush();
+
+        return $this->redirectToRoute('paprec_catalog_category_view', array(
+            'id' => $category->getId()
+        ));
+    }
+
+    /**
+     * @Route("/category/{id}/removeProductDICategory/{productDICategoryId}", name="paprec_catalog_category_removeProductDICategory")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function removeProductDICategory(Request $request, Category $category, ProductDICategory $productDICategoryId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($productDICategoryId);
+        $em->flush();
+
+
+        return $this->redirectToRoute('paprec_catalog_category_view', array(
+            'id' => $category->getId()
+        ));
+    }
+
+    /**
+     * Fonction appelée lorsque l'on réordonne les catégories dans 'index'
+     * On reçoit en param un tableau [position => categoryID]
+     * @Route("/category/orderCategories", name="paprec_catalog_category_orderCategories")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function orderCategories(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repoCategory = $em->getRepository(Category::class);
+
+        //On récupère les catégories dont la position a changé
+        $changedCategories = $request->get('IdPositionCategories');
+        try {
+            if (is_array($changedCategories) && count($changedCategories)) {
+
+                foreach ($changedCategories as $position => $categoryId) {
+                    $category = $repoCategory->find($categoryId);
+                    $category->setPosition($position+1);
+                }
+                $em->flush();
+            }
+        } catch (Exception $e) {
+            return new JsonResponse(array(
+                'status' => 500,
+                'resultMessage' => $e->getMessage()
+            ));
+        }
+
+        return new JsonResponse(array(
+            'status' => 202
+        ));
+    }
 }

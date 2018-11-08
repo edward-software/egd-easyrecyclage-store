@@ -280,6 +280,9 @@ class GrilleTarifD3EController extends Controller
         if ($addLigneForm->isValid()) {
             $grilleTarifLigneD3E = $addLigneForm->getData();
             $grilleTarifLigneD3E->setGrilleTarifD3E($grilleTarifD3E);
+            if ($grilleTarifLigneD3E->getMaxQuantity() == null) {
+                $grilleTarifLigneD3E->setMaxQuantity($grilleTarifLigneD3E->getMinQuantity());
+            }
             $grilleTarifD3E->addGrilleTarifLigneD3E($grilleTarifLigneD3E);
             $em->flush();
 

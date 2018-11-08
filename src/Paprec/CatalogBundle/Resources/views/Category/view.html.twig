@@ -5,10 +5,7 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css"
-          href="{{ asset('/assets/vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css"
-          href="{{ asset('/assets/vendor/datatables.net-select-bs/css/select.bootstrap.min.css') }}">
+
 {% endblock %}
 
 {% block content_title %}
@@ -26,7 +23,7 @@
                     <i class="fa fa-folder"></i> {{ 'Catalog.Category.View'|trans }}
                     <div class="float-right">
                         <a href="{{ path("paprec_catalog_category_edit", {id: category.id}) }}" class="btn btn-warning"><i
-                        class="fa fa-edit"></i> {{ 'Catalog.Category.Edit'|trans }}</a>
+                                    class="fa fa-edit"></i> {{ 'Catalog.Category.Edit'|trans }}</a>
                         <a id="catalogCategoryRemoveButton" href="javascript:void(0);" class="btn btn-danger"><i
                                     class="fa fa-trash"></i> {{ 'Catalog.Category.Remove'|trans }}</a>
                     </div>
@@ -37,72 +34,134 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="col-md-7">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">{{ 'Catalog.Category.Informations'|trans }}</h5>
-                        </div>
-                        <div class="card-body row">
-                            <div class="col-md-8">
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.Category.Name'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
-                                        {{ category.name }}
-                                    </label>
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">{{ 'Catalog.Category.Informations'|trans }}</h5>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.Category.Description'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
-                                        {{ category.description }}
-                                    </label>
+                                <div class="card-body row">
+                                    <div class="col-md-8">
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Catalog.Category.Name'|trans }}</label>
+                                            <label class="col-form-label col-md-8">
+                                                {{ category.name }}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Catalog.Category.Description'|trans }}</label>
+                                            <label class="col-form-label col-md-8">
+                                                {{ category.description }}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Catalog.Category.Enabled'|trans }}</label>
+                                            <label class="col-form-label col-md-8">
+                                                {% if category.enabled == 1 %}Oui{% else %}Non{% endif %}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Catalog.Category.Division'|trans }}</label>
+                                            <label class="col-form-label col-md-8">
+                                                {{ category.division }}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Catalog.Category.Position'|trans }}</label>
+                                            <label class="col-form-label col-md-8">
+                                                {{ category.position }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="text-align:center; vertical-align: middle;">
+                                        {% if category.picto %}
+                                            <img class="" src="{{ asset('/uploads/pictos/' ~ category.picto) }}" alt=""
+                                                 style="max-width: 50%; height: auto;">
+                                        {% endif %}
+                                    </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.Category.Enabled'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
-                                        {% if category.enabled == 1 %}Oui{% else %}Non{% endif %}
-                                    </label>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.Category.Division'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
-                                        {{ category.division }}
-                                    </label>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.Category.Position'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
-                                        {{ category.position }}
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="text-align:center; vertical-align: middle;">
-                                <img class="" src="{{ asset('/uploads/pictos/' ~ category.picto) }}" alt="" style="max-width: 50%; height: auto;">
+
                             </div>
                         </div>
 
+                        <div class="col-md-12 mt-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">{{ 'Catalog.Category.System-informations'|trans }}</h5>
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label">{{ 'Catalog.Category.Date-creation'|trans }}</label>
+                                        <label class="col-form-label col-md-8">
+                                            {{ category.dateCreation|localizeddate('short', 'medium', app.request.locale) }}
+                                        </label>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label">{{ 'Catalog.Category.Date-update'|trans }}</label>
+                                        <label class="col-form-label col-md-8">
+                                            {{ category.dateUpdate is empty ? "" : category.dateUpdate|localizeddate('short', 'medium', app.request.locale) }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-7 mt-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">{{ 'Catalog.Category.System-informations'|trans }}</h5>
-                        </div>
-                        <div class="card-body">
-
-                            <div class="form-group row">
-                                <label class="col-md-4 col-form-label">{{ 'Catalog.Category.Date-creation'|trans }}</label>
-                                <label class="col-form-label col-md-8">
-                                    {{ category.dateCreation|localizeddate('short', 'medium', app.request.locale) }}
-                                </label>
+                    <div class="col-md-5">
+                        {% if category.productDICategories is not empty %}
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">{{ 'Catalog.Category.SortProductDI'|trans }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul id="productDICategoryListContent">
+                                        {% for productDICategory in category.productDICategoriesOrdered %}
+                                            <li class="list-group-item"
+                                                id="productDICategoryItem_{{ productDICategory.id }}">
+                                                {{ productDICategory.productDI.name }}
+                                                <div class="float-right">
+                                                    <a href="{{ path("paprec_catalog_productDI_view", {id: productDICategory.productDI.id}) }}"
+                                                       class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></a>
+                                                    <a href="{{ path("paprec_catalog_productDI_edit", {id: productDICategory.productDI.id}) }}"
+                                                       class="mx-1 btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                                    <a href="javascript:void(0);"
+                                                       onclick="removeProductDICategory({{ category.id }}, {{ productDICategory.id }})"
+                                                       class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
                             </div>
-
-                            <div class="form-group row">
-                                <label class="col-md-4 col-form-label">{{ 'Catalog.Category.Date-update'|trans }}</label>
-                                <label class="col-form-label col-md-8">
-                                    {{ category.dateUpdate is empty ? "" : category.dateUpdate|localizeddate('short', 'medium', app.request.locale) }}
-                                </label>
+                        {% endif %}
+                        {% if category.productChantierCategories is not empty %}
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title"></h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul id="productChantierCategoryListContent">
+                                        {% for productChantierCategory in category.productChantierCategoriesOrdered %}
+                                            <li class="list-group-item"
+                                                id="productChantierCategoryItem_{{ productChantierCategory.id }}">
+                                                {{ productChantierCategory.productChantier.name }}
+                                                <div class="float-right">
+                                                    <a href="{{ path("paprec_catalog_productChantier_view", {id: productChantierCategory.productChantier.id}) }}"
+                                                       class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></a>
+                                                    <a href="{{ path("paprec_catalog_productChantier_edit", {id: productChantierCategory.productChantier.id}) }}"
+                                                       class="mx-1 btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                                    <a href="javascript:void(0);"
+                                                       onclick="removeProductChantierCategory({{ category.id }}, {{ productChantierCategory.id }})"
+                                                       class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -112,7 +171,7 @@
 {% endblock %}
 
         {% block javascripts %}
-
+            <script src={{ asset('/assets/vendor/jquery-ui/jquery-ui.min.js') }}></script>
             <script>
                 $(function () {
 
@@ -127,6 +186,78 @@
                         });
 
                     });
+
+                    // Product DI
+                    $("#productDICategoryListContent").sortable({
+                        placeholder: "list-group-item active",
+                        update: function (event, ui) {
+                            moveProductDICategory($(this));
+                        }
+                    }).disableSelection();
+
+                    // Product Chantier
+                    $("#productChantierCategoryListContent").sortable({
+                        placeholder: "list-group-item active",
+                        update: function (event, ui) {
+                            moveProductChantierCategory($(this));
+                        }
+                    }).disableSelection();
                 });
+
+                function removeProductDICategory(id, productDICategoryId) {
+                    var url = "{{ path('paprec_catalog_category_removeProductDICategory', {id: 'categoryId', productDICategoryId: 'productDICategoryId'}) }}"
+                    bootbox.confirm("{{ 'Catalog.Category.Confirm-remove-pc'|trans }}", function (result) {
+                        if (result === true) {
+                            url = url.replace('categoryId', id);
+                            url = url.replace('productDICategoryId', productDICategoryId);
+                            $(location).attr('href', url);
+                        }
+                    });
+                }
+
+
+                function removeProductChantierCategory(id, productChantierCategoryId) {
+                    var url = "{{ path('paprec_catalog_category_removeProductChantierCategory', {id: 'categoryId', productChantierCategoryId: 'productChantierCategoryId'}) }}"
+                    bootbox.confirm("{{ 'Catalog.Category.Confirm-remove-pc'|trans }}", function (result) {
+                        if (result === true) {
+                            url = url.replace('categoryId', id);
+                            url = url.replace('productChantierCategoryId', productChantierCategoryId);
+                            $(location).attr('href', url);
+                        }
+                    });
+                }
+
+
+                function moveProductDICategory(productDICategoryListContent) {
+
+                    var productDICategoryItems = [];
+                    productDICategoryListContent.sortable("toArray").forEach(function (item) {
+                        productDICategoryItems.push(item.replace('productDICategoryItem_', ''));
+                    });
+
+                    $.ajax({
+                        'url': '{{ path('paprec_catalog_category_moveProductDICategory', {id: category.id}) }}',
+                        'method': 'post',
+                        'data': {
+                            productDICategoryItemIds: productDICategoryItems
+                        }
+                    })
+                }
+
+                function moveProductChantierCategory(productChantierCategoryListContent) {
+
+                    var productChantierCategoryItems = [];
+                    productChantierCategoryListContent.sortable("toArray").forEach(function (item) {
+                        productChantierCategoryItems.push(item.replace('productChantierCategoryItem_', ''));
+                    });
+
+                    $.ajax({
+                        'url': '{{ path('paprec_catalog_category_moveProductChantierCategory', {id: category.id}) }}',
+                        'method': 'post',
+                        'data': {
+                            productChantierCategoryItemIds: productChantierCategoryItems
+                        }
+                    })
+                }
             </script>
         {% endblock %}
