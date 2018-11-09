@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="http://wordpress.eggers-digital.com/wp-content/themes/paprec/style.css?ver=1.0">
+    <link rel="stylesheet" href="http://wordpress.eggers-digital.com/wp-content/themes/paprec/css/styles.css?te=fesg">
+</head>
+<body class="home page-template-default page page-id-2 logged-in page-d-exemple tunnel" cz-shortcut-listen="true">
+
+<header class="header">
+    <div class="header__shortlinks">
+        <div class="wrapper">
+            <nav role="navigation">
+                <ul>
+                    <li><a href="#">Le blog</a></li>
+                    <li class="header__contactlink"><a href="#"><span>Contactez</span>nous</a></li>
+                    <li class="header__storelink"><a href="#"><span>Trouvez</span>votre agence</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <div class="header__menu">
+            <a class="header__cta">Recyclez<br>vos déchets</a>
+            <ul>
+                <li><a href="#">Notre savoir-faire</a></li>
+                <li><a href="#">Nos filières</a></li>
+                <li><a href="#">Études de cas</a></li>
+            </ul>
+        </div>
+        <a href="http://wordpress.eggers-digital.com" class="header__logo">
+        </a>
+    </div>
+</header>
+
+<main role="main">
+    <div class="breadcrumb">
+        <div class="wrapper">
+            <a href="#">Accueil</a> > <a href="#">Recyclez vos déchets</a>
+            <h2>Votre solution <span>EasyRecyclage</span> personalisée</h2>
+        </div>
+    </div>
+
+    <!-- section -->
+    <section>
+        <div class="wrapper">
+            <div class="sidebar">
+                <div class="recap passed">
+                    <div class="recap__step">
+                        <span class="recap__stepNumber">01</span>Mon besoin
+                    </div>
+                </div>
+
+                <div class="recap passed">
+                    <div class="recap__step">
+                        <span class="recap__stepNumber">02</span>Mes coordonnées
+                    </div>
+
+                </div>
+
+                <div class="recap active">
+                    <div class="recap__step">
+                        <span class="recap__stepNumber">03</span>Mon offre
+                    </div>
+
+                </div>
+            </div>
+            <form action="#" class="main">
+                <div class="step">
+                    <div class="step__left">
+                        <div class="step__title">Je me situe</div>
+                    </div>
+                    <div class="step__right">
+                        <input class="input" type="text" id="localisation">
+                    </div>
+
+                    <div class="step__agency">
+                        <div class="left">2</div>
+                        <div class="middle">
+                            <span>Agences</span>
+                            sont à moins de 50km
+                        </div>
+                        <div class="right"></div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step__left">
+                        <div class="step__title">Je recycle</div>
+                    </div>
+                    <div class="step__right">
+                        <select class="input" id="trashType">
+                            <option value="test"></option>
+                        </select>
+                        <br>
+                        <input type="radio" id="ponctuel" name="frequency">
+                        <label for="ponctuel">Ponctuel</label>
+
+                        <input type="radio" id="regulier" name="frequency">
+                        <label for="regulier">Régulier</label>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step__left">
+                        <div class="step__title">Je suis</div>
+                    </div>
+                    <div class="step__right step__right--small">
+                        <input class="input input--full step--marginfield" type="text" placeholder="Raison sociale">
+                        <select name="test" id="test" class="input input--full" required="">
+                            <option value="" disabled="" selected="" hidden="">Sélectionnez votre secteur d’activité
+                            </option>
+                        </select>
+                        <input type="radio" id="mr" name="gender">
+                        <label for="mr">Monsieur</label>
+
+                        <input type="radio" id="mme" name="gender">
+                        <label for="mme">Madame</label>
+                        <div class="clearfix step--marginfield"></div>
+
+                        <input class="input input--mid step--marginfield" type="text" placeholder="Nom">
+                        <input class="input input--mid step--marginfield" type="text" placeholder="Prénom">
+                        <input class="input input--full step--marginfield" type="text" placeholder="E-mail">
+                        <input class="input input--full step--marginfield" type="text"
+                               placeholder="Numéro de téléphone">
+                        <input class="input input--full step--marginfield" type="text"
+                               placeholder="Fonction (facultatif)">
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="step">
+                    <div class="step__left">
+                        <div class="step__title">Mon besoin</div>
+                    </div>
+                    <div class="step__right step__right--small">
+                        <textarea class="input input--full input--bordered" name="" id="" cols="30" rows="10"
+                                  placeholder="Votre besoin"></textarea>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="step">
+                    <div class="notice">Afin de mieux appréhender votre demande, vous pouvez si vous le souhaitez nous
+                        fournir des photos (.jpg, .png, .tiff)
+                        ou autres fichiers (.pdf, .doc, .xls)
+                    </div>
+
+                    <label for="file" class="button button--bordered">TÉLÉCHARGER DES PIÈCES JOINTES OU DES PHOTOS</label>
+                    <input type="file" id="file" class="input-file" multiple>
+                    <div class="clearfix"></div>
+
+                    <input class="button button--green" type="submit" value="ENVOYER VOTRE BESOIN">
+                </div>
+            </form>
+        </div>
+
+
+        <div class="clearfix"></div>
+    </section>
+    <!-- /section -->
+</main>
+
+<!-- footer -->
+<footer class="footer" role="contentinfo">
+    <div class="wrapper">
+        <div class="footer__infos">
+            <img src="http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/logo-group.png"
+                 alt="Paprec Group">
+            <span>PAPREC GROUP</span>
+            Présent sur l'ensemble des filières existantes, le groupe est N°1 du recyclage des plastiques, du papier, du
+            carton, des déchets du bâtiment ainsi que du tri de la collecte sélective des ménages. Il est N°2 du
+            recyclage des déchets d'équipements électriques et électroniques, N°3 pour les déchets verts, le bois, la
+            biomasse et les déchets industriels banals. Grâce à l’arrivée de Coved, le groupe est désormais le troisième
+            acteur français du traitement des déchets et le numéro un du recyclage.
+        </div>
+
+        <div class="footer__mid">
+            <div>
+                <div class="footer__links">
+                    <h3>Trouvez votre solution pour recyclez vos déchets</h3>
+                    <ul>
+                        <li><a href="#">Solutions entreprise &amp; déchets non dangereux</a></li>
+                        <li><a href="#">Solutions entreprise &amp; déchets de chantier</a></li>
+                        <li><a href="#">Solutions entreprise &amp; déchets électriques et électroniques</a></li>
+                        <li><a href="#">Solutions entreprise &amp; déchets 5 flux</a></li>
+                        <li><a href="#">Solutions grand compte</a></li>
+                        <li><a href="#">Solutions collectivité</a></li>
+                        <li><a href="#">Solutions particulier</a></li>
+                    </ul>
+                </div>
+                <div class="footer__links">
+                    <h3>Trouvez votre agence Paprec</h3>
+                    <ul>
+                        <li><a href="#">Agences d’Île-de-France</a></li>
+                        <li><a href="#">Agences du Nord, Normandie, Centre et Est</a></li>
+                        <li><a href="#">Agences du Grand Ouest</a></li>
+                        <li><a href="#">Agences d’Auvergne, Méditerranée et Rhône-Alpes</a></li>
+                        <li><a href="#">Agences du Sud-Ouest</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="footer__links">
+                    <h3>Tout savoir sur les prestations</h3>
+                    <ul>
+                        <li><a href="#">Guide de quantités de déchets</a></li>
+                        <li><a href="#">Conditions d’accès et de livraison</a></li>
+                        <li><a href="#">Moyens de paiement</a></li>
+                        <li><a href="#">Conditions générales de ventes</a></li>
+                        <li><a href="#">Conditions générales d’utilisation</a></li>
+                        <li><a href="#">F.A.Q.</a></li>
+                    </ul>
+                </div>
+                <div class="footer__links">
+                    <h3>Trouvez votre spécialiste recyclage</h3>
+                    <ul>
+                        <li><a href="#">Agences de papiers, cartons, déchets industriels et de bureaux</a></li>
+                        <li><a href="#">Agences de plastiques</a></li>
+                        <li><a href="#">Agences d’équipements électriques et électroniques</a></li>
+                        <li><a href="#">Agences de ferrailles, métaux et VHU</a></li>
+                        <li><a href="#">Agences de chantiers</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="footer__copyright">EasyRecyclage est une marque de Paprec Group • V.3 © 2018 - Tous droits
+                résevrés
+            </div>
+        </div>
+
+        <div class="footer__social">
+            <ul>
+                <li><a href="#">Contactez-nous</a></li>
+                <li><a href="#">Mentions légales</a></li>
+                <li><a href="#">Suivez-nous</a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</footer>
+<!-- /footer -->
+</body>
+</html>
