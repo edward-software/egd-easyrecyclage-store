@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="http://wordpress.eggers-digital.com/wp-content/themes/paprec/style.css?ver=1.0">
     <link rel="stylesheet" href="http://wordpress.eggers-digital.com/wp-content/themes/paprec/css/styles.css?te=fesg">
 </head>
-<body class="home page-template-default page page-id-2 logged-in page-d-exemple tunnel" cz-shortcut-listen="true">
+<body class="home page-template-default page page-id-2 logged-in page-d-exemple tunnel tunnel--purple" cz-shortcut-listen="true">
 
 <header class="header">
     <div class="header__shortlinks">
@@ -68,8 +68,34 @@
                     </div>
                     <div class="recap__title">Mes prestations</div>
                     <div class="recap__cart">
-                        Aucune prestation
-                        ajoutée
+                        <div class="recap__item">
+                            <div class="quantity">x 1</div>
+                            <div class="title">Borne • 5m²</div>
+                            <div class="delete"></div>
+                            <div class="info">Papier • Ponctuel</div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="recap__item">
+                            <div class="quantity">x 1</div>
+                            <div class="title">Borne • 15m²</div>
+                            <div class="delete"></div>
+                            <div class="info">DIB • Ponctuel</div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="recap__price">
+                            <div class="left">
+                                Forfait
+                                <br>
+                                recyclage*
+                            </div>
+                            <div class="right">
+                                à partir de
+                                <br>
+                                <span>150€</span> HT
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
                     </div>
                     <div class="recap__info">
                         *comprend la mise à disposition du
@@ -89,7 +115,31 @@
                     <div class="recap__step">
                         <span class="recap__stepNumber">03</span>Mon offre
                     </div>
+                </div>
 
+                <div class="guide">
+                    <div class="guide__title">
+                        EASYRECYCLAGE,
+                        <br>
+                        C’EST SIMPLE ET RAPIDE
+                    </div>
+                    <div class="guide__step">
+                        Sélectionnez
+                        <br>
+                        vos déchets
+                    </div>
+                    <div class="guide__step">
+                        Validez
+                        <br>
+                        votre devis
+                    </div>
+                    <div class="guide__step">
+                        Triez vos déchets,
+                        <br>
+                        nous les collectons
+                        <br>
+                        et les valorisons
+                    </div>
                 </div>
             </div>
             <form action="#" class="main">
@@ -137,11 +187,11 @@
                     </div>
                     <div class="step__right">
                         <div class="first-row">
-                            <div class="checkboxPicto active" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Papier.svg)"></div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Carton.svg)"></div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Plastiques.svg)"></div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Palettes.svg)"></div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/encombrants.svg)"></div>
+                            <div class="checkboxPicto active" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Papier.svg)">Papiers</div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Carton.svg)">Cartons</div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Plastiques.svg)">Plastiques</div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Palettes.svg)">Pallettes</div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/encombrants.svg)">Encombrants</div>
                         </div>
                         <div class="infoproduct">
                             <div class="left">
@@ -152,6 +202,7 @@
                                 <img src="https://via.placeholder.com/60x60" class="thumb" alt="#">
                             </div>
                             <div class="right">
+                                <div class="infoproduct__close"></div>
                                 <div class="infoproduct__title">
                                     Bac
                                 </div>
@@ -185,8 +236,10 @@
                                     Encombrement au sol (mm) : 2430 x 1715
                                 </div>
 
-
-
+                                <div class="infoproduct__qtytitle">Quantité</div>
+                                <select name="" id="" class="infoproduct__qty">
+                                    <option value="1">1</option>
+                                </select>
                                 <div class="button button--lightgreen">Ajouter au devis</div>
 
                             </div>
@@ -195,8 +248,8 @@
                         <div class="clearfix"></div>
 
                         <div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/DIB.svg)"></div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Bois.svg)"></div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/DIB.svg)">DIB</div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Bois.svg)">Bois</div>
                         </div>
 
                         <div class="clearfix"></div>
@@ -210,20 +263,23 @@
                         </div>
                     </div>
                     <div class="step__right">
+                        <div class="step__wrappertop open">Papier</div>
+
                         <div class="first-row">
-                            <div class="checkboxPicto selected" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/PictoCaissePalette.svg)"></div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Bac.svg)"></div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Bac.svg)"></div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Picto_Benne_S.svg)"></div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/PictoBenne_L.svg)"></div>
+                            <div class="checkboxPicto selected" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/PictoCaissePalette.svg)">Caisse palette<br>660L</div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Bac.svg)">Bac<br>770L</div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Bac.svg)">Bac<br>1000L</div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Picto_Benne_S.svg)">Benne<br>10m²</div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/PictoBenne_L.svg)">Benne<br>20m²</div>
                         </div>
                         <div class="clearfix"></div>
 
                         <div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/PictoBenne_XL.svg)"></div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/PictoBenne_XL.svg)">Benne<br>30m²</div>
                         </div>
 
                         <div class="clearfix"></div>
+                        <div class="step__wrappertop">DIB</div>
                     </div>
 
                     <div class="button button--grey">Contactez-nous</div>
