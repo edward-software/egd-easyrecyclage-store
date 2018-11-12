@@ -19,6 +19,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        # Par-feu du Backoffice
         admin:
             pattern: ^/admin/
             form_login:
@@ -32,6 +33,7 @@ security:
                 target: fos_user_security_login
             anonymous: true
 
+        # Par-feu du FrontOffice
         main:
             pattern: ^/
             form_login:
