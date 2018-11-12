@@ -221,4 +221,5 @@ Catalog:
       MinQuantity:                Quantité min.
       MaxQuantity:                Quantité max.
       Price:                      Prix
+      Edit:                       Modifier la ligne
       Confirm-remove:             Etes-vous sûr de vouloir supprimer cette ligne ?

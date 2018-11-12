@@ -124,12 +124,14 @@
                                             {{ form_errors(addLigneForm.price) }}
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <div class="form-label"></div>
-                                        <a href="javascript:void(0);"
-                                           class="btn btn-success catalogGrilleTarifD3ESaveButton"><i
-                                                    class="fa fa-check"></i> {{ 'Catalog.GrilleTarifD3E.Save'|trans }}
-                                        </a>
+                                    <div class="form-group col-md-2 align-bottom">
+                                        <div class="form-label" style="visibility: hidden;">.</div>
+                                        <div class="form-content align-bottom">
+                                            <a href="javascript:void(0);"
+                                               class="btn btn-success catalogGrilleTarifD3ESaveButton"><i
+                                                        class="fa fa-check"></i> {{ 'Catalog.GrilleTarifD3E.Save'|trans }}
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                                 {{ form_rest(addLigneForm) }}
@@ -159,7 +161,14 @@
                                         <td>{{ grilleTarifLigneD3E.price }}</td>
                                         <td class="text-center">
                                             <a href="javascript:void(0);"
-                                               class="btn btn-danger btn-sm"
+                                               class="btn btn-warning btn-sm mx-1"
+                                               data-target="#editLigneModal"
+                                               data-toggle="modal"
+                                               data-id="{{ grilleTarifLigneD3E.id }}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a href="javascript:void(0);"
+                                               class="btn btn-danger btn-sm catalogGrilleTarifLigneD3EEditButton"
                                                onclick="removeLigne({{ grilleTarifLigneD3E.id }})">
                                                 <i class="fa fa-trash"></i>
                                             </a>
@@ -168,6 +177,74 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
+                            <div class="modal fade" id="editLigneModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="Edit Ligne" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <form id="formEditGrilleTarifLigneD3E" name="formEditGrilleTarifLigneD3E"
+                                              action=""
+                                              method="post" enctype="multipart/form-data">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editLigneModalTitle">
+                                                    {{ 'Catalog.GrilleTarifLigneD3E.Edit'|trans }}
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.PostalCodes'|trans }}</div>
+                                                    <div class="form-content">
+                                                        {{ form_widget(editLigneForm.postalCodes, {'attr': {'class': 'form-control'}}) }}
+                                                        {{ form_errors(editLigneForm.postalCodes) }}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.Agence'|trans }}</div>
+                                                    <div class="form-content">
+                                                        {{ form_widget(editLigneForm.agence, {'attr': {'class': 'form-control'}}) }}
+                                                        {{ form_errors(editLigneForm.agence) }}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.MinQuantity'|trans }}</div>
+                                                    <div class="form-content">
+                                                        {{ form_widget(editLigneForm.minQuantity, {'attr': {'class': 'form-control'}}) }}
+                                                        {{ form_errors(editLigneForm.minQuantity) }}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.MaxQuantity'|trans }}</div>
+                                                    <div class="form-content">
+                                                        {{ form_widget(editLigneForm.maxQuantity, {'attr': {'class': 'form-control'}}) }}
+                                                        {{ form_errors(editLigneForm.maxQuantity) }}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.Price'|trans }}</div>
+                                                    <div class="form-content">
+                                                        {{ form_widget(editLigneForm.price, {'attr': {'class': 'form-control'}}) }}
+                                                        {{ form_errors(editLigneForm.price) }}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">
+                                                    {{ 'General.Cancel'|trans }}
+                                                </button>
+                                                <a href="javascript:void(0);"
+                                                   class="btn btn-success catalogGrilleTarifD3EEditSaveButton"><i
+                                                            class="fa fa-check"></i> {{ 'Catalog.GrilleTarifD3E.Save'|trans }}
+                                                </a></div>
+                                            {{ form_rest(editLigneForm) }}
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -203,6 +280,18 @@
                             }
                         });
 
+                    });
+
+                    // Au chargement de la modal d'edit d'une ligne
+                    // On modifie  l'url d'action pour passer en paramètre l'id de la ligne à éditer
+                    $('#editLigneModal').on('show.bs.modal', function (e) {
+                        var ligneID = $(e.relatedTarget).data('id');
+                        var actionUrl = "{{ path("paprec_catalog_grilleTarifD3E_editLigne", {id: grilleTarifD3E.id, ligneID: 'ligneTmp'}) }}";
+                        actionUrl = actionUrl.replace('ligneTmp', ligneID);
+                        document.formEditGrilleTarifLigneD3E.action = actionUrl;
+                    });
+                    $('.catalogGrilleTarifD3EEditSaveButton').on('click', function () {
+                        $('#formEditGrilleTarifLigneD3E').submit();
                     });
                 });
 

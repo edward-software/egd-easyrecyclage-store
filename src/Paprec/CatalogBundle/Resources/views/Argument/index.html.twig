@@ -91,7 +91,7 @@
                         "next": "{{ 'General.Datatable.Next'|trans }}",
                     }
                 },
-                dom: 'B<"ml-2">f<"ml-auto">lrti<"ml-auto">p',
+                dom: 'Bflrt' + '<"row"<"col-sm-4"i><"col-sm-8"p>>',
                 buttons: [
                     {
                         text: '{{ 'General.Remove'|trans }}',
@@ -115,7 +115,7 @@
                 "select": true,
                 "processing": true,
                 "serverSide": true,
-                "lengthMenu": [[50, 100, 200, 500], [50, 100, 200, 500]],
+                "lengthMenu": [[5, 10, 20, 50], [5, 10, 20, 50]],
                 "ajax": "{{ path('paprec_catalog_argument_loadList') }}",
                 "columns": [
                     {"data": "id"},

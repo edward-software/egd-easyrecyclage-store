@@ -8,7 +8,6 @@ parameters:
         - DI
         - CHANTIER
         - D3E
-        - 5FLUX
 
 services:
     # default configuration for services in *this* file
