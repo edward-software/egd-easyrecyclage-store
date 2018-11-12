@@ -2,11 +2,13 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: twig.yml }
     - { resource: "@GoondiToolsBundle/Resources/config/services.yml" }
     - { resource: "@PaprecHomeBundle/Resources/config/services.yml" }
     - { resource: "@PaprecUserBundle/Resources/config/services.yml" }
     - { resource: "@PaprecCatalogBundle/Resources/config/services.yml" }
     - { resource: "@PaprecCommercialBundle/Resources/config/services.yml" }
+    - { resource: "@PaprecPublicBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -39,10 +41,6 @@ framework:
     templating:
         engines: ['twig']
 
-# Twig Configuration
-twig:
-    debug: '%kernel.debug%'
-    strict_variables: '%kernel.debug%'
 
 # Doctrine Configuration
 doctrine:
