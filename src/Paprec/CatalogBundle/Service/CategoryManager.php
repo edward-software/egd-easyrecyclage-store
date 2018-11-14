@@ -28,6 +28,26 @@ class CategoryManager
         $this->container = $container;
     }
 
+    public function get($category) {
+        $id = $category;
+        if ($category instanceof Category) {
+            $id = $category->getId();
+        }
+        try {
+
+            $category = $this->em->getRepository('PaprecCatalogBundle:Category')->find($id);
+
+            if ($category === null) {
+                throw new EntityNotFoundException('categoryNotFound');
+            }
+
+            return $category;
+
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
 
     /**
      * Jointure sur ProductDICategory comme ça on est sur de renvoyer uniquement les catégories qui ont des produits

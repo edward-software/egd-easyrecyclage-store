@@ -27,6 +27,26 @@ class ProductDIManager
         $this->container = $container;
     }
 
+    public function get($productDI){
+        $id = $productDI;
+        if ($productDI instanceof ProductDI) {
+            $id = $productDI->getId();
+        }
+        try {
+
+            $productDI = $this->em->getRepository('PaprecCatalogBundle:ProductDI')->find($id);
+
+            if ($productDI === null) {
+                throw new EntityNotFoundException('productDINotFound');
+            }
+
+            return $productDI;
+
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
     public function getByCategory($categoryId)
     {
         try {

@@ -14,6 +14,8 @@ use Doctrine\ORM\EntityNotFoundException;
 use \Exception;
 use Paprec\PublicBundle\Entity\Cart;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+
 
 class CartManager
 {
@@ -83,6 +85,8 @@ class CartManager
     }
 
     /**
+     * Ajoute une displayedCategory au simple_array displayedCategories du cart si elle n'est pas déjà existante
+     * La supprime si elle existe déjà
      * @param $id
      * @param $categoryId
      * @return null|object|Cart
@@ -104,14 +108,23 @@ class CartManager
         return $cart;
     }
 
+    /**
+     * Ajoute un displayedProduct à l'array dispplayedProducts du cart si il n'est pas déjà existant
+     * avec comme clé, l'id de la catégorie
+     * La supprime si elle existe déjà
+     * @param $id
+     * @param $categoryId
+     * @param $productId
+     * @return null|object|Cart
+     * @throws Exception
+     */
     public function addOrRemoveDisplayedProduct($id, $categoryId, $productId)
     {
         $cart = $this->get($id);
         $dProducts = $cart->getDisplayedProducts();
 
         if ($dProducts && in_array($productId, $dProducts)) {
-            $index = array_search($productId, $dProducts);
-            array_splice($dProducts, $index, 1);
+            unset($dProducts[$categoryId]);
         } else {
             $dProducts[$categoryId] = $productId;
         }
@@ -119,5 +132,83 @@ class CartManager
         $this->em->persist($cart);
         $this->em->flush();
         return $cart;
+    }
+
+    /**
+     * @param $id
+     * @param $categoryId
+     * @param $productId
+     * @param $quantity
+     * @return mixed
+     * @throws Exception
+     */
+    public function addContent($id, $categoryId, $productId, $quantity)
+    {
+        $cart = $this->get($id);
+        $content = $cart->getContent();
+        $product = ['cId' => $categoryId, 'pId' => $productId, 'qtty' => $quantity];
+        $content[] = $product;
+        $cart->setContent($content);
+        $this->em->persist($cart);
+        $this->em->flush();
+        return $cart;
+    }
+
+    /**
+     * Supprime un produit
+     * @param $id
+     * @param $categoryId
+     * @param $productId
+     * @return null|object|Cart
+     * @throws Exception
+     */
+    public function removeContent($id, $categoryId, $productId)
+    {
+        $cart = $this->get($id);
+        $productCategories = $cart->getContent();
+        foreach ($productCategories as $key => $productCategory) {
+            if ($productCategory['cId'] == $categoryId && $productCategory['pId'] == $productId) {
+                unset($productCategories[$key]);
+            }
+        }
+        $cart->setContent($productCategories);
+        $this->em->persist($cart);
+        $this->em->flush();
+        return $cart;
+    }
+
+    /**
+     * Fonction qui renvoie un tableau permettant d'afficher tous les produits dans le Cart dans la partie "Mon besoin"
+     * ainsi que la somme du prix du Cart
+     * @param $id
+     * @return array
+     * @throws Exception
+     */
+    public function loadCart($id)
+    {
+        $cart = $this->get($id);
+        $productDIManager = $this->container->get('paprec_catalog.product_di_manager');
+        $categoryManager = $this->container->get('paprec_catalog.category_manager');
+
+
+        // on récupère les products ajoutés au cart
+        $productsCategories = $cart->getContent();
+        $loadedCart = array();
+        if ($productsCategories && count($productsCategories)) {
+            foreach ($productsCategories as $productsCategory) {
+                $productDI = $productDIManager->get($productsCategory['pId']);
+                $categoryName = $categoryManager->get($productsCategory['cId'])->getName();
+                $loadedCart[$productsCategory['pId'] . '_' . $productsCategory['cId']] = ['qtty' => $productsCategory['qtty'], 'pName' => $productDI->getName(), 'pCapacity' => $productDI->getCapacity() . $productDI->getCapacityUnit(), 'cName' => $categoryName, 'frequency' => $cart->getFrequency()];
+            }
+        }
+        // On trie par ordre croissant sur les clés, donc par les id des produits
+        // ainsi les mêmes produits dans 2 catégories différentes
+        ksort($loadedCart);
+        $loadedCart['sum'] = $this->calculateAmount();
+        return $loadedCart;
+    }
+
+    private function calculateAmount() {
+        return 100;
     }
 }

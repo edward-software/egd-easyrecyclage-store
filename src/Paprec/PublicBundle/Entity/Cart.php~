@@ -75,7 +75,7 @@ class Cart
     /**
      * @var array|null
      *
-     * @ORM\Column(name="content", type="json_array", nullable=true)
+     * @ORM\Column(name="content", type="json", nullable=true)
      */
     private $content;
 
@@ -83,7 +83,7 @@ class Cart
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
-        $this->displayedCategories = new ArrayCollection();
+        $this->setDisplayedProducts = array();
 
     }
 
@@ -239,28 +239,27 @@ class Cart
         return $this->displayedCategories;
     }
 
-
     /**
-     * Set content.
+     * Set displayedProducts.
      *
-     * @param array|null $content
+     * @param array|null $displayedProducts
      *
      * @return Cart
      */
-    public function setContent($content = null)
+    public function setDisplayedProducts($displayedProducts = null)
     {
-        $this->content = $content;
+        $this->displayedProducts = $displayedProducts;
 
         return $this;
     }
 
     /**
-     * Get content.
+     * Get displayedProducts.
      *
      * @return array|null
      */
-    public function getContent()
+    public function getDisplayedProducts()
     {
-        return $this->content;
+        return $this->displayedProducts;
     }
 }
