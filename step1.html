@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="http://wordpress.eggers-digital.com/wp-content/themes/paprec/style.css?ver=1.0">
     <link rel="stylesheet" href="http://wordpress.eggers-digital.com/wp-content/themes/paprec/css/styles.css?te=fesg">
 </head>
-<body class="home page-template-default page page-id-2 logged-in page-d-exemple tunnel tunnel--purple" cz-shortcut-listen="true">
+<body class="home page-template-default page page-id-2 logged-in page-d-exemple tunnel tunnel--orange" cz-shortcut-listen="true">
 
 <header class="header">
     <div class="header__shortlinks">
@@ -169,14 +169,20 @@
                             <option value="test"></option>
                         </select>
                         <br>
-                        <input type="radio" id="ponctuel" name="frequency">
+                        <input class="input__radio" type="radio" id="ponctuel" name="frequency">
                         <label for="ponctuel">Ponctuel</label>
 
-                        <input type="radio" id="regulier" name="frequency">
+                        <input class="input__radio" type="radio" id="regulier" name="frequency">
                         <label for="regulier">Régulier</label>
                         <div class="clearfix"></div>
                     </div>
                 </div>
+                <div>
+                    <div class="step__tab">Je commande en ligne en 3 minutes</div>
+                    <div class="step__tab active">Je demande un devis</div>
+                    <div class="clearfix"></div>
+                </div>
+
                 <div class="step">
                     <div class="step__left">
                         <div class="step__title">
@@ -187,11 +193,38 @@
                     </div>
                     <div class="step__right">
                         <div class="first-row">
-                            <div class="checkboxPicto active" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Papier.svg)">Papiers</div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Papier.svg)">Papiers</div>
                             <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Carton.svg)">Cartons</div>
                             <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Plastiques.svg)">Plastiques</div>
                             <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Palettes.svg)">Pallettes</div>
                             <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/encombrants.svg)">Encombrants</div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/DIB.svg)">DIB</div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Bois.svg)">Bois</div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+
+                </div>
+                <div class="step">
+                    <div class="step__left">
+                        <div class="step__title">
+                            Mes contenants
+                        </div>
+                    </div>
+                    <div class="step__right">
+                        <div class="step__wrappertop open">Papier <span>1 contenant séléctionné</span></div>
+
+                        <div class="first-row">
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/PictoCaissePalette.svg)"><span class="number">2</span>Caisse palette<br>660L</div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Bac.svg)">Bac<br>770L</div>
+                            <div class="checkboxPicto active" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Bac.svg)">Bac<br>1000L</div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Picto_Benne_S.svg)">Benne<br>10m²</div>
+                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/PictoBenne_L.svg)">Benne<br>20m²</div>
                         </div>
                         <div class="infoproduct">
                             <div class="left">
@@ -244,33 +277,6 @@
 
                             </div>
                             <div class="clearfix"></div>
-                        </div>
-                        <div class="clearfix"></div>
-
-                        <div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/DIB.svg)">DIB</div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Bois.svg)">Bois</div>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-
-                </div>
-                <div class="step">
-                    <div class="step__left">
-                        <div class="step__title">
-                            Mes contenants
-                        </div>
-                    </div>
-                    <div class="step__right">
-                        <div class="step__wrappertop open">Papier</div>
-
-                        <div class="first-row">
-                            <div class="checkboxPicto selected" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/PictoCaissePalette.svg)">Caisse palette<br>660L</div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Bac.svg)">Bac<br>770L</div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Bac.svg)">Bac<br>1000L</div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Picto_Benne_S.svg)">Benne<br>10m²</div>
-                            <div class="checkboxPicto" style="background-image: url(http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/PictoBenne_L.svg)">Benne<br>20m²</div>
                         </div>
                         <div class="clearfix"></div>
 
