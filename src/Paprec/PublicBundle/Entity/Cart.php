@@ -63,7 +63,14 @@ class Cart
      *
      * @ORM\Column(name="displayedCategories", type="simple_array", nullable=true)
      */
-     private $displayedCategories;
+    private $displayedCategories;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="displayedProducts", type="array", nullable=true)
+     */
+    private $displayedProducts;
 
     /**
      * @var array|null
@@ -230,6 +237,30 @@ class Cart
     public function getDisplayedCategories()
     {
         return $this->displayedCategories;
+    }
+
+    /**
+     * Set displayedProducts.
+     *
+     * @param array|null $displayedProducts
+     *
+     * @return Cart
+     */
+    public function setDisplayedProducts($displayedProducts = null)
+    {
+        $this->displayedProducts = $displayedProducts;
+
+        return $this;
+    }
+
+    /**
+     * Get displayedProducts.
+     *
+     * @return array|null
+     */
+    public function getDisplayedProducts()
+    {
+        return $this->displayedProducts;
     }
 
 

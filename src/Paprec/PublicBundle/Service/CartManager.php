@@ -91,11 +91,6 @@ class CartManager
     public function addOrRemoveDisplayedCategory($id, $categoryId)
     {
         $cart = $this->get($id);
-        try {
-            $category = $this->em->getRepository('PaprecCatalogBundle:Category')->find($categoryId);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
-        }
         $dCategories = $cart->getDisplayedCategories();
 
         if (in_array($categoryId, $dCategories)) {
@@ -105,6 +100,23 @@ class CartManager
             $dCategories[] = $categoryId;
         }
         $cart->setDisplayedCategories($dCategories);
+        $this->em->flush();
+        return $cart;
+    }
+
+    public function addOrRemoveDisplayedProduct($id, $categoryId, $productId)
+    {
+        $cart = $this->get($id);
+        $dProducts = $cart->getDisplayedProducts();
+
+        if ($dProducts && in_array($productId, $dProducts)) {
+            $index = array_search($productId, $dProducts);
+            array_splice($dProducts, $index, 1);
+        } else {
+            $dProducts[$categoryId] = $productId;
+        }
+        $cart->setDisplayedProducts($dProducts);
+        $this->em->persist($cart);
         $this->em->flush();
         return $cart;
     }

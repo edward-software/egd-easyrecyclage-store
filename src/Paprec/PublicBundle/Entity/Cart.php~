@@ -63,7 +63,14 @@ class Cart
      *
      * @ORM\Column(name="displayedCategories", type="simple_array", nullable=true)
      */
-     private $displayedCategories;
+    private $displayedCategories;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="displayedProducts", type="array", nullable=true)
+     */
+    private $displayedProducts;
 
     /**
      * @var array|null
@@ -206,6 +213,30 @@ class Cart
     public function getFrequency()
     {
         return $this->frequency;
+    }
+
+    /**
+     * Set displayedCategories.
+     *
+     * @param array|null $displayedCategories
+     *
+     * @return Cart
+     */
+    public function setDisplayedCategories($displayedCategories = null)
+    {
+        $this->displayedCategories = $displayedCategories;
+
+        return $this;
+    }
+
+    /**
+     * Get displayedCategories.
+     *
+     * @return array|null
+     */
+    public function getDisplayedCategories()
+    {
+        return $this->displayedCategories;
     }
 
 

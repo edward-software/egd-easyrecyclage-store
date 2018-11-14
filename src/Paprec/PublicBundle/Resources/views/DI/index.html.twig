@@ -120,7 +120,7 @@
                     <div class="step__right">
                         <div class="first-row">
                             {% for category in categories %}
-                                <div class="checkboxPicto categoryCheckboxPicto" id="checkboxPicto_{{ category.id }}"
+                                <div class="checkboxPicto categoryCheckboxPicto" id="categoryCheckboxPicto_{{ category.id }}"
                                      style="background-image: url({{ asset('/uploads/pictos/' ~ category.picto) }})">
                                     {{ category.name }}
                                 </div>
@@ -147,7 +147,8 @@
                                     {% for key, products in productsCategories %}
                                         {% if key == category.id %}
                                             {% for product in products %}
-                                                <div class="checkboxPicto productCheckboxPicto"
+                                                <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts %}  active {% endif %}"
+                                                     id="productCheckboxPicto_{{ product.id }}_{{ category.id }}"
                                                      style="background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }})">
                                                     {{ product.name }}
                                                 </div>
@@ -238,10 +239,25 @@
 
             // Au clic sur une catégorie, on l'ajoute où on la supprime des displayedCategories du cart
             $('.categoryCheckboxPicto').click(function () {
-                categoryId = (this.id).replace('checkboxPicto_', '');
+                categoryId = (this.id).replace('categoryCheckboxPicto_', '');
                 url = "{{ path('paprec_public_DI_subscription_addDisplayedCategory', {cartUuid: cart.id, categoryId: 'categoryTmp'}) }}".replace('categoryTmp', categoryId);
                 $(location).attr('href', url);
-            })
+            });
+
+            // Au clic sur une catégorie, on l'ajoute où on la supprime des displayedCategories du cart
+            $('.productCheckboxPicto').click(function () {
+                {% autoescape'js' %}
+                //on récupère la fin de l'id contenant : productId_categoryId et on met chaque id dans une case d'un tableau
+                productCategory = (this.id).replace('productCheckboxPicto_', '').split('_', 2);
+                productId = productCategory[0];
+                categoryId = productCategory[1];
+                url = "{{ path('paprec_public_DI_subscription_addDisplayedProduct', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
+                    .replace('categoryTmp', categoryId)
+                    .replace('productTmp', productId);
+                $(location).attr('href', url);
+                {% endautoescape %}
+
+            });
 
             // Au clic sur une catégorie, on l'ajoute où on la supprime des displayedCategories du cart
             $('.step__wrappertop').click(function () {
@@ -250,7 +266,7 @@
                 } else {
                     $('.step__wrappertop').addClass('open');
                 }
-            })
+            });
         });
     </script>
 

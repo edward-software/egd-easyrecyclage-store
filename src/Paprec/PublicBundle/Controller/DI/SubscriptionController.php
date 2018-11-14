@@ -61,5 +61,21 @@ class SubscriptionController extends Controller
         ));
     }
 
+    /**
+     * Ajoute au cart un displayedProduct avec en key => value( categoryId => productId)
+     * @Route("/addDisplayedProductAction/{cartUuid}/{categoryId}/{productId}", name="paprec_public_DI_subscription_addDisplayedProduct")
+     * @throws \Exception
+     */
+    public function addDisplayedProductAction(Request $request, $cartUuid, $categoryId, $productId) {
+        $cartManager = $this->get('paprec.cart_manager');
+
+        // On ajoute ou on supprime la catégorie sélecionnée au tableau des catégories affichées
+        $cart = $cartManager->addOrRemoveDisplayedProduct($cartUuid, $categoryId, $productId);
+
+        return $this->redirectToRoute('paprec_public_DI_subscription_step1', array(
+            'cartUuid' => $cart->getId()
+        ));
+    }
+
 
 }
