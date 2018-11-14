@@ -42,7 +42,7 @@ class AgenceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\Agence',
+            'data_class' => 'Paprec\CommercialBundle\Entity\Agency',
             'divisions' => null
         ));
     }

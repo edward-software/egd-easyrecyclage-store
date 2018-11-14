@@ -23,29 +23,6 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav w-100">
 
-                {#{% if is_granted('ROLE_ADMIN') %}#}
-                {#<li class="dropdown{% if app.request.get('_route')|slice(0, 'paprec_offer'|length) == 'paprec_offer' %} active{% endif %}">#}
-                {#<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'Offer.Bundle-name'|trans }} <span class="caret"></span></a>#}
-                {#<ul class="dropdown-menu">#}
-                {#<li class="{% if app.request.get('_route')|slice(0, 'paprec_offer_customer'|length) == 'paprec_offer_customer' %} active{% endif %}"><a href="{{ path('paprec_offer_customer_index') }}">{{ 'Offer.Customer.Customers'|trans }}</a></li>#}
-                {#<li class="{% if app.request.get('_route')|slice(0, 'paprec_offer_offer'|length) == 'paprec_offer_offer' %} active{% endif %}"><a href="{{ path('paprec_offer_offer_index') }}">{{ 'Offer.Offer.Offers'|trans }}</a></li>#}
-                {#<li class="{% if app.request.get('_route')|slice(0, 'paprec_offer_call'|length) == 'paprec_offer_call' %} active{% endif %}"><a href="{{ path('paprec_offer_call_index') }}">{{ 'Offer.Offer.Calls'|trans }}</a></li>#}
-                {#<li class="{% if app.request.get('_route')|slice(0, 'paprec_offer_followUp'|length) == 'paprec_offer_followUp' %} active{% endif %}"><a href="{{ path('paprec_offer_followUp_index') }}">{{ 'Offer.FollowUp.FollowUps'|trans }}</a></li>#}
-                {#<li class="{% if app.request.get('_route')|slice(0, 'paprec_offer_stat'|length) == 'paprec_offer_stat' %} active{% endif %}"><a href="{{ path('paprec_offer_stats_index') }}">{{ 'Offer.Stat.Stats'|trans }}</a></li>#}
-                {#<li class="{% if app.request.get('_route')|slice(0, 'paprec_offer_secureDestruction'|length) == 'paprec_offer_secureDestruction' %} active{% endif %}"><a href="{{ path('paprec_offer_secureDestruction_index') }}">{{ 'Offer.SecureDestruction.SecureDestructions'|trans }}</a></li>#}
-                {#</ul>#}
-                {#</li>#}
-                {#{% endif %}#}
-
-                {#{% if is_granted('ROLE_ADMIN') == false and (is_granted('ROLE_PARTNER') or is_granted('ROLE_SELLER')) %}#}
-
-                {#<li class="{% if app.request.get('_route')|slice(0, 'paprec_offer_customer'|length) == 'paprec_offer_customer' %} active{% endif %}"><a href="{{ path('paprec_offer_customer_index') }}">{{ 'Offer.Customer.Customers'|trans }}</a></li>#}
-                {#<li class="{% if app.request.get('_route')|slice(0, 'paprec_offer_offer'|length) == 'paprec_offer_offer' %} active{% endif %}"><a href="{{ path('paprec_offer_offer_index') }}">{{ 'Offer.Offer.Offers'|trans }}</a></li>#}
-                {#<li class="{% if app.request.get('_route')|slice(0, 'paprec_offer_followUp'|length) == 'paprec_offer_followUp' %} active{% endif %}"><a href="{{ path('paprec_offer_followUp_index') }}">{{ 'Offer.FollowUp.FollowUps'|trans }}</a></li>#}
-
-                {#{% endif %}#}
-
-
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item dropdown{% if app.request.get('_route')|slice(0, 'paprec_catalog'|length) == 'paprec_catalog' %} active{% endif %}">
                         <a href="#" class="dropdown-toggle nav-link" id="navbarDropdownCatalog" data-toggle="dropdown"
@@ -80,7 +57,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownCommercial">
                             <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_agence'|length) == 'paprec_commercial_agence' %} active{% endif %}"
-                               href="{{ path('paprec_commercial_agence_index') }}">{{ 'Commercial.Agence.Agences'|trans }}</a>
+                               href="{{ path('paprec_commercial_agence_index') }}">{{ 'Commercial.Agency.Agencies'|trans }}</a>
                             <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_businessLine'|length) == 'paprec_commercial_businessLine' %} active{% endif %}"
                                href="{{ path('paprec_commercial_businessLine_index') }}">{{ 'Commercial.BusinessLine.BusinessLines'|trans }}</a>
                         </div>
@@ -99,31 +76,6 @@
                         </div>
                     </li>
                 {% endif %}
-
-
-                {#{% if is_granted('ROLE_ADMIN') %}#}
-                {#<li class="dropdown{% if app.request.get('_route')|slice(0, 'paprec_home_ticket'|length) == 'paprec_home_ticket' %} active{% endif %}">#}
-                {#<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'Home.Bundle-name'|trans }} <span class="caret"></span></a>#}
-                {#<ul class="dropdown-menu">#}
-                {#<li class="{% if app.request.get('_route')|slice(0, 'paprec_home_ticket'|length) == 'paprec_home_ticket' %} active{% endif %}"><a href="{{ path('paprec_home_ticket_index') }}">{{ 'Home.Ticket.Tickets'|trans }}</a></li>#}
-                {#</ul>#}
-                {#</li>#}
-                {#{% endif %}#}
-
-                {#</ul>#}
-                {#<ul class="nav navbar-nav pull-right">#}
-                {#<li class="pull-right dropdown">#}
-                {#<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"#}
-                {#aria-expanded="false">{{ app.user.username }} <span class="caret"></span></a>#}
-                {#<ul class="dropdown-menu">#}
-                {#<li><a href="{{ path('paprec_user_user_editMyProfile') }}"><i#}
-                {#class="fa fa-user"></i> {{ 'General.Menu.My-profile'|trans }}</a></li>#}
-                {#<li><a href="{{ path('fos_user_security_logout') }}"><i#}
-                {#class="fa fa-power-off"></i> {{ 'General.Menu.Logout'|trans }}</a></li>#}
-                {#</ul>#}
-
-                {#</li>#}
-                {#</ul>#}
 
                 <li class="nav-item dropdown ml-auto">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdmin" data-toggle="dropdown"

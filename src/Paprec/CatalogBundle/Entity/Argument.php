@@ -65,11 +65,13 @@ class Argument
 
     /**
      * @ORM\ManyToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductDI", mappedBy="arguments", cascade={"persist"})
+     * @ORM\JoinTable(name="productDIs_arguments")
      */
     private $productDIs;
 
     /**
      * @ORM\ManyToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductChantier", mappedBy="arguments", cascade={"persist"})
+     * @ORM\JoinTable(name="productChantiers_arguments")
      */
     private $productChantiers;
 

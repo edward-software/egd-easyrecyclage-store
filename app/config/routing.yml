@@ -50,4 +50,4 @@ paprec_commercial:
 paprec_public:
     resource: "@PaprecPublicBundle/Controller/"
     type:     annotation
-    prefix:   /devis/
+    prefix:   /devis

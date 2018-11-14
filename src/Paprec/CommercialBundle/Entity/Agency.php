@@ -7,12 +7,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * Agence
+ * Agency
  *
- * @ORM\Table(name="agences")
+ * @ORM\Table(name="agencies")
  * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\AgenceRepository")
  */
-class Agence
+class Agency
 {
     /**
      * @var int
@@ -122,7 +122,7 @@ class Agence
      *  RELATIONS
      * ########################## */
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E", mappedBy="agence", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E", mappedBy="agency", cascade={"all"})
      */
     private $grilleTarifLigneD3Es;
 
@@ -151,7 +151,7 @@ class Agence
      *
      * @param string $name
      *
-     * @return Agence
+     * @return Agency
      */
     public function setName($name)
     {
@@ -175,7 +175,7 @@ class Agence
      *
      * @param string $address
      *
-     * @return Agence
+     * @return Agency
      */
     public function setAddress($address)
     {
@@ -199,7 +199,7 @@ class Agence
      *
      * @param string $postalCode
      *
-     * @return Agence
+     * @return Agency
      */
     public function setPostalCode($postalCode)
     {
@@ -223,7 +223,7 @@ class Agence
      *
      * @param string $city
      *
-     * @return Agence
+     * @return Agency
      */
     public function setCity($city)
     {
@@ -247,7 +247,7 @@ class Agence
      *
      * @param string $phone
      *
-     * @return Agence
+     * @return Agency
      */
     public function setPhone($phone)
     {
@@ -271,7 +271,7 @@ class Agence
      *
      * @param float $latitude
      *
-     * @return Agence
+     * @return Agency
      */
     public function setLatitude($latitude)
     {
@@ -295,7 +295,7 @@ class Agence
      *
      * @param float $longitude
      *
-     * @return Agence
+     * @return Agency
      */
     public function setLongitude($longitude)
     {
@@ -319,7 +319,7 @@ class Agence
      *
      * @param bool $isDisplayed
      *
-     * @return Agence
+     * @return Agency
      */
     public function setIsDisplayed($isDisplayed)
     {
@@ -343,7 +343,7 @@ class Agence
      *
      * @param \DateTime $dateCreation
      *
-     * @return Agence
+     * @return Agency
      */
     public function setDateCreation($dateCreation)
     {
@@ -367,7 +367,7 @@ class Agence
      *
      * @param \DateTime|null $dateUpdate
      *
-     * @return Agence
+     * @return Agency
      */
     public function setDateUpdate($dateUpdate = null)
     {
@@ -391,7 +391,7 @@ class Agence
      *
      * @param \DateTime|null $deleted
      *
-     * @return Agence
+     * @return Agency
      */
     public function setDeleted($deleted = null)
     {
@@ -415,7 +415,7 @@ class Agence
      *
      * @param array|null $divisions
      *
-     * @return Agence
+     * @return Agency
      */
     public function setDivisions($divisions = null)
     {
@@ -439,7 +439,7 @@ class Agence
      *
      * @param \Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E $grilleTarifLigneD3E
      *
-     * @return Agence
+     * @return Agency
      */
     public function addGrilleTarifLigneD3E(\Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E $grilleTarifLigneD3E)
     {

@@ -1,14 +1,14 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-    {{ 'Commercial.Agence.Add'|trans }}
+    {{ 'Commercial.Agency.Add'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'Commercial.Agence.Agences'|trans }}
+    {{ 'Commercial.Agency.Agencies'|trans }}
 {% endblock %}
 
 {% block main_content %}
@@ -20,12 +20,12 @@
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <i class="fa fa-plus"></i> {{ 'Commercial.Agence.Add'|trans }}
+                        <i class="fa fa-plus"></i> {{ 'Commercial.Agency.Add'|trans }}
                         <div class="float-right">
-                            <a href="javascript:void(0);" class="btn btn-success commercial-agence-save-button"><i
-                                        class="fa fa-check"></i> {{ 'Commercial.Agence.Save'|trans }}</a>
-                            <a href="javascript:void(0);" class="btn btn-danger commercial-agence-cancel-button"><i
-                                        class="fa fa-close"></i> {{ 'Commercial.Agence.Cancel'|trans }}</a>
+                            <a href="javascript:void(0);" class="btn btn-success commercial-agency-save-button"><i
+                                        class="fa fa-check"></i> {{ 'Commercial.Agency.Save'|trans }}</a>
+                            <a href="javascript:void(0);" class="btn btn-danger commercial-agency-cancel-button"><i
+                                        class="fa fa-close"></i> {{ 'Commercial.Agency.Cancel'|trans }}</a>
                         </div>
                     </h4>
                 </div>
@@ -33,18 +33,18 @@
                     <div class="col-md-7">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">{{ 'Commercial.Agence.Informations'|trans }}</h5>
+                                <h5 class="card-title">{{ 'Commercial.Agency.Informations'|trans }}</h5>
                             </div>
                             <div class="card-body">
                                 <div class="form-item mb-2">
-                                    <div class="form-label">{{ 'Commercial.Agence.Name'|trans }}</div>
+                                    <div class="form-label">{{ 'Commercial.Agency.Name'|trans }}</div>
                                     <div class="form-content">
                                         {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
                                         {{ form_errors(form.name) }}
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="form-label">{{ 'Commercial.Agence.Address'|trans }}</div>
+                                    <div class="form-label">{{ 'Commercial.Agency.Address'|trans }}</div>
                                     <div class="form-content">
                                         {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
                                         {{ form_errors(form.address) }}
@@ -52,7 +52,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="form-label">{{ 'Commercial.Agence.PostalCode'|trans }}</div>
+                                    <div class="form-label">{{ 'Commercial.Agency.PostalCode'|trans }}</div>
                                     <div class="form-content">
                                         {{ form_widget(form.postalCode, {'attr': {'class': 'form-control'}}) }}
                                         {{ form_errors(form.postalCode) }}
@@ -60,28 +60,28 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="form-label">{{ 'Commercial.Agence.City'|trans }}</div>
+                                    <div class="form-label">{{ 'Commercial.Agency.City'|trans }}</div>
                                     <div class="form-content">
                                         {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
                                         {{ form_errors(form.city) }}
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="form-label">{{ 'Commercial.Agence.Phone'|trans }}</div>
+                                    <div class="form-label">{{ 'Commercial.Agency.Phone'|trans }}</div>
                                     <div class="form-content">
                                         {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
                                         {{ form_errors(form.phone) }}
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="form-label">{{ 'Commercial.Agence.Latitude'|trans }}</div>
+                                    <div class="form-label">{{ 'Commercial.Agency.Latitude'|trans }}</div>
                                     <div class="form-content">
                                         {{ form_widget(form.latitude, {'attr': {'class': 'form-control'}}) }}
                                         {{ form_errors(form.latitude) }}
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="form-label">{{ 'Commercial.Agence.Longitude'|trans }}</div>
+                                    <div class="form-label">{{ 'Commercial.Agency.Longitude'|trans }}</div>
                                     <div class="form-content">
                                         {{ form_widget(form.longitude, {'attr': {'class': 'form-control'}}) }}
                                         {{ form_errors(form.longitude) }}
@@ -89,14 +89,14 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="form-label">{{ 'Commercial.Agence.Divisions'|trans }}</div>
+                                    <div class="form-label">{{ 'Commercial.Agency.Divisions'|trans }}</div>
                                     <div class="form-content checkbox-list">
                                         {{ form_widget(form.divisions, {'attr': {'class': 'form-control'}}) }}
                                         {{ form_errors(form.divisions) }}
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="form-label">{{ 'Commercial.Agence.IsDisplayed'|trans }}</div>
+                                    <div class="form-label">{{ 'Commercial.Agency.IsDisplayed'|trans }}</div>
                                     <div class="form-content checkbox-list">
                                         {{ form_widget(form.isDisplayed, {'attr': {'class': 'form-control'}}) }}
                                         {{ form_errors(form.isDisplayed) }}
@@ -110,10 +110,10 @@
 
                 <div class="card-footer">
                     <div class="float-right">
-                        <a href="javascript:void(0);" class="btn btn-success commercial-agence-save-button"><i
-                                    class="fa fa-check"></i> {{ 'Commercial.Agence.Save'|trans }}</a>
-                        <a href="javascript:void(0);" class="btn btn-danger commercial-agence-cancel-button"><i
-                                    class="fa fa-close"></i> {{ 'Commercial.Agence.Cancel'|trans }}</a>
+                        <a href="javascript:void(0);" class="btn btn-success commercial-agency-save-button"><i
+                                    class="fa fa-check"></i> {{ 'Commercial.Agency.Save'|trans }}</a>
+                        <a href="javascript:void(0);" class="btn btn-danger commercial-agency-cancel-button"><i
+                                    class="fa fa-close"></i> {{ 'Commercial.Agency.Cancel'|trans }}</a>
                     </div>
                 </div>
             </div>
@@ -133,16 +133,16 @@
     <script>
         $(function () {
 
-            $('.commercial-agence-save-button').on('click', function () {
+            $('.commercial-agency-save-button').on('click', function () {
                 $('#commercialAgenceForm').submit();
             });
 
 
-            $('.commercial-agence-cancel-button').on('click', function () {
+            $('.commercial-agency-cancel-button').on('click', function () {
 
                 var url = "{{ path("paprec_commercial_agence_index") }}";
 
-                bootbox.confirm("{{ 'Commercial.Agence.Confirm-cancel'|trans }}", function (result) {
+                bootbox.confirm("{{ 'Commercial.Agency.Confirm-cancel'|trans }}", function (result) {
                     if (result === true) {
                         $(location).attr('href', url);
                     }

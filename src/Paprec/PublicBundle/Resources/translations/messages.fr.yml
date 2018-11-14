@@ -1,0 +1,16 @@
+Public:
+
+  Bundle-name:                    Gestion devis
+  CancelSubscription:             En modifiant cette valeur, vous allez perdre votre devis en cours. Etes-vous sûr de vouloir continuer ?
+  Home:
+    Location:                     Je me situe
+    Recycle:                      Je recycle
+
+  Cart:
+    Prestations:                  Mes prestations
+    NoPrestation:                 Aucune prestation ajoutée
+    ContactDetails:               Mes coordonnées
+    Offer:                        Mon offre
+    Ponctal:                      Ponctuel
+    Regular:                      Régulier
+    ChooseTrash:                  Sélectionnez vos déchets

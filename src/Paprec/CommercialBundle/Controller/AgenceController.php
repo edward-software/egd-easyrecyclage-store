@@ -2,7 +2,7 @@
 
 namespace Paprec\CommercialBundle\Controller;
 
-use Paprec\CommercialBundle\Entity\Agence;
+use Paprec\CommercialBundle\Entity\Agency;
 use Paprec\CommercialBundle\Form\AgenceType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -17,16 +17,16 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AgenceController extends Controller
 {
     /**
-     * @Route("/agence", name="paprec_commercial_agence_index")
+     * @Route("/agency", name="paprec_commercial_agence_index")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function indexAction()
     {
-        return $this->render('PaprecCommercialBundle:Agence:index.html.twig');
+        return $this->render('PaprecCommercialBundle:Agency:index.html.twig');
     }
 
     /**
-     * @Route("/agence/loadList", name="paprec_commercial_agence_loadList")
+     * @Route("/agency/loadList", name="paprec_commercial_agence_loadList")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function loadListAction(Request $request)
@@ -50,7 +50,7 @@ class AgenceController extends Controller
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
 
         $queryBuilder->select(array('a'))
-            ->from('PaprecCommercialBundle:Agence', 'a')
+            ->from('PaprecCommercialBundle:Agency', 'a')
             ->where('a.deleted IS NULL');
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
@@ -81,7 +81,7 @@ class AgenceController extends Controller
     }
 
     /**
-     * @Route("/agence/export", name="paprec_commercial_agence_export")
+     * @Route("/agency/export", name="paprec_commercial_agence_export")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function exportAction(Request $request)
@@ -94,14 +94,14 @@ class AgenceController extends Controller
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
 
         $queryBuilder->select(array('a'))
-            ->from('PaprecCommercialBundle:Agence', 'a')
+            ->from('PaprecCommercialBundle:Agency', 'a')
             ->where('a.deleted IS NULL');
 
         $agences = $queryBuilder->getQuery()->getResult();
 
         $phpExcelObject->getProperties()->setCreator("Paprec Easy Recyclage")
             ->setLastModifiedBy("Paprec Easy Recyclage")
-            ->setTitle("Paprec Easy Recyclage - Agences")
+            ->setTitle("Paprec Easy Recyclage - Agencies")
             ->setSubject("Extraction");
 
         $phpExcelObject->setActiveSheetIndex(0)
@@ -116,7 +116,7 @@ class AgenceController extends Controller
             ->setCellValue('I1', 'Statut d\'affichage')
             ->setCellValue('J1', 'Date Création');
 
-        $phpExcelObject->getActiveSheet()->setTitle('Agences');
+        $phpExcelObject->getActiveSheet()->setTitle('Agencies');
         $phpExcelObject->setActiveSheetIndex(0);
 
         $i = 2;
@@ -138,7 +138,7 @@ class AgenceController extends Controller
 
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
 
-        $fileName = 'PaprecEasyRecyclage-Extraction-Agences-' . date('Y-m-d') . '.xlsx';
+        $fileName = 'PaprecEasyRecyclage-Extraction-Agencies-' . date('Y-m-d') . '.xlsx';
 
         // create the response
         $response = $this->container->get('phpexcel')->createStreamedResponse($writer);
@@ -157,28 +157,28 @@ class AgenceController extends Controller
     }
 
     /**
-     * @Route("/agence/view/{id}", name="paprec_commercial_agence_view")
+     * @Route("/agency/view/{id}", name="paprec_commercial_agence_view")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function viewAction(Request $request, Agence $agence)
+    public function viewAction(Request $request, Agency $agence)
     {
         if ($agence->getDeleted() !== null) {
             throw new NotFoundHttpException();
         }
 
-        return $this->render('PaprecCommercialBundle:Agence:view.html.twig', array(
-            'agence' => $agence
+        return $this->render('PaprecCommercialBundle:Agency:view.html.twig', array(
+            'agency' => $agence
         ));
     }
 
     /**
-     * @Route("/agence/add", name="paprec_commercial_agence_add")
+     * @Route("/agency/add", name="paprec_commercial_agence_add")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function addAction(Request $request)
     {
 
-        $agence = new Agence();
+        $agence = new Agency();
 
         $divisions = array();
         foreach ($this->getParameter('paprec_divisions') as $division) {
@@ -205,16 +205,16 @@ class AgenceController extends Controller
 
         }
 
-        return $this->render('PaprecCommercialBundle:Agence:add.html.twig', array(
+        return $this->render('PaprecCommercialBundle:Agency:add.html.twig', array(
             'form' => $form->createView()
         ));
     }
 
     /**
-     * @Route("/agence/edit/{id}", name="paprec_commercial_agence_edit")
+     * @Route("/agency/edit/{id}", name="paprec_commercial_agence_edit")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editAction(Request $request, Agence $agence)
+    public function editAction(Request $request, Agency $agence)
     {
         if ($agence->getDeleted() !== null) {
             throw new NotFoundHttpException();
@@ -244,17 +244,17 @@ class AgenceController extends Controller
 
         }
 
-        return $this->render('PaprecCommercialBundle:Agence:edit.html.twig', array(
+        return $this->render('PaprecCommercialBundle:Agency:edit.html.twig', array(
             'form' => $form->createView(),
-            'agence' => $agence
+            'agency' => $agence
         ));
     }
 
     /**
-     * @Route("/agence/remove/{id}", name="paprec_commercial_agence_remove")
+     * @Route("/agency/remove/{id}", name="paprec_commercial_agence_remove")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function removeAction(Request $request, Agence $agence)
+    public function removeAction(Request $request, Agency $agence)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -266,7 +266,7 @@ class AgenceController extends Controller
     }
 
     /**
-     * @Route("/agence/removeMany/{ids}", name="paprec_commercial_agence_removeMany")
+     * @Route("/agency/removeMany/{ids}", name="paprec_commercial_agence_removeMany")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function removeManyAction(Request $request)
@@ -282,7 +282,7 @@ class AgenceController extends Controller
         $ids = explode(',', $ids);
 
         if (is_array($ids) && count($ids)) {
-            $agences = $em->getRepository('PaprecCommercialBundle:Agence')->findById($ids);
+            $agences = $em->getRepository('PaprecCommercialBundle:Agency')->findById($ids);
             foreach ($agences as $agence) {
                 $agence->setDeleted(new \DateTime);
                 $agence->setIsDisplayed(false);

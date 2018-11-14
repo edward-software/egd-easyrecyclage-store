@@ -1,0 +1,158 @@
+{% extends "::base_public.html.twig" %}
+
+{#{% block title %}#}
+
+{#{% endblock %}#}
+
+{#{% block stylesheets %}#}
+
+{#{% endblock %}#}
+
+{% block main_content %}
+    <section>
+        <div class="wrapper">
+            <div class="sidebar">
+                <div class="recap active">
+                    <div class="recap__step">
+                        <span class="recap__stepNumber">01</span>Mon besoin
+                    </div>
+                </div>
+
+                <div class="recap">
+                    <div class="recap__step">
+                        <span class="recap__stepNumber">02</span>Mes coordonnées
+                    </div>
+
+                </div>
+
+                <div class="recap">
+                    <div class="recap__step">
+                        <span class="recap__stepNumber">03</span>Mon offre
+                    </div>
+
+                </div>
+            </div>
+
+            <form action="#" class="main">
+                <div class="step">
+                    <div class="step__left">
+                        <div class="step__title">{{ 'Public.Home.Location'|trans }}</div>
+                    </div>
+                    <div class="step__right">
+                        <input class="input" type="text" list="locationDatalist" id="locationSelect" autocomplete="off">
+                        <datalist id="locationDatalist">
+                            <option data-vicopo="#locationSelect">
+                                <a data-vicopo-code-postal> </a>&nbsp;<a data-vicopo-ville></a></option>
+                            </option>
+                        </datalist>
+                    </div>
+                    {% if step != 'l' %}
+                        <div class="step__agency">
+                            <div class="left">2</div>
+                            <div class="middle">
+                                <span>Agences</span>
+                                sont à moins de 50km
+                            </div>
+                            <div class="right"></div>
+                        </div>
+                    {% endif %}
+                </div>
+                {% if step != 'l' %}
+
+                    <div class="step">
+                        <div class="step__left">
+                            <div class="step__title">{{ 'Public.Home.Recycle'|trans }}</div>
+                        </div>
+                        <div class="step__right">
+                            <select class="input" id="divisionSelect">
+                                <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
+                                {% for division in divisions %}
+                                    <option value="{{ division }}">{{ division }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if step == 'f' %}
+                                <br>
+                                <div id="frequencyRadioBox">
+                                    <input type="radio" id="ponctualRadio" name="frequencyRadio" value="ponctual">
+                                    <label for="ponctualRadio">{{ 'Public.Cart.Ponctal'|trans }}</label>
+
+                                    <input type="radio" id="regularRadio" name="frequencyRadio" value="regular">
+                                    <label for="regularRadio">{{ 'Public.Cart.Regular'|trans }}</label>
+                                </div>
+                                <div class="clearfix"></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
+
+            </form>
+        </div>
+
+        <div class="clearfix"></div>
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript"
+            src="https://vicopo.selfbuild.fr/api.min.js"></script>
+    <script>
+        $(function () {
+
+            {# Quand on sélectionne une division dans le select, on recharge en envoyant la location #}
+            $("#locationSelect").on('input', function () {
+                var val = this.value;
+                if ($('#locationDatalist option').filter(function () {
+                    return this.value.toUpperCase() === val.toUpperCase();
+                }).length) {
+                    {% autoescape'js' %}
+                    url = "{{ path('paprec_public_home_index', {l: 'locationTmp', d: ''}) }}".replace('locationTmp', val);
+                    {% endautoescape %}
+                    $(location).attr('href', url);
+                }
+            });
+
+            {# Quand on sélectionne une division dans le select, on recharge en envoyant la location et la division #}
+            $("#divisionSelect").on('change', function () {
+                locationVal = $("#locationSelect").val();
+                console.log(locationVal);
+                {% autoescape'js' %}
+                url = "{{ path('paprec_public_home_index', {l: 'locationTmp', d: 'divisionTmp', f: '' }) }}".replace('divisionTmp', this.value).replace('locationTmp', locationVal);
+                {% endautoescape %}
+
+                $(location).attr('href', url);
+            });
+
+            {# Quand on sélectionne une frequence dans les radioButtons, on recharge la page en envoyant la location, division, frequence#}
+            {# cela na nous faire naviguer vers le SubscriptionController de la division choisie #}
+            $('#frequencyRadioBox').change(function () {
+                frequency = $("input[name='frequencyRadio']:checked").val();
+                locationVal = $("#locationSelect").val();
+                divisionVal = $("#divisionSelect").val();
+                {% autoescape'js' %}
+                url = "{{ path('paprec_public_home_index', {l: 'locationTmp', d: 'divisionTmp', f: 'frequencyTmp' }) }}"
+                    .replace('divisionTmp', divisionVal)
+                    .replace('locationTmp', locationVal)
+                    .replace('frequencyTmp', frequency);
+                {% endautoescape %}
+                $(location).attr('href', url);
+
+            });
+
+            $(document).ready(function () {
+                var urlParams = new URLSearchParams(location.search);
+                if (urlParams.has('l')) {
+                    $("#locationSelect").val(urlParams.get('l'));
+                }
+                if (urlParams.has('d')) {
+                    $("#divisionSelect").val(urlParams.get('d'));
+                }
+                if (urlParams.has('f') && urlParams.get('f') !== '') {
+                    $("input[name='frequencyRadio']").filter('[value=' + urlParams.get('f') + ']').prop('checked', true);
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

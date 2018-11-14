@@ -65,7 +65,6 @@ class Category
     /**
      * @var string
      * @ORM\Column(name="position", type="integer")
-     * @Assert\NotBlank()
      */
     private $position;
 
@@ -107,6 +106,7 @@ class Category
     {
         $this->dateCreation = new \DateTime();
         $this->productDICategories = new ArrayCollection();
+        $this->setPosition(1000);
     }
 
 

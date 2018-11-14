@@ -1,49 +1,49 @@
 Commercial:
 
-    Bundle-name:                    Gestion Commerciale
-    Agence:
-        Agences:                    Agences
-        List:                       Liste des agences
-        Date-creation:              Date de création
-        Date-crea:                  Date de créa.
-        Date-update:                Date de mise à jour
-        Name:                       Nom
-        Divisions:                  Divisions
-        Address:                    Adresse
-        PostalCode:                 Code postal
-        City:                       Ville
-        Phone:                      Téléphone
-        Longitude:                  Longitude
-        Latitude:                   Latitude
-        IsDisplayed:                Statut d'affichage
-        Informations:               Informations
-        System-informations:        Informations système
-        Export:                     Exporter les agences
-        View:                       Visualiser l'agence
-        Edit:                       Modifier l'agence
-        Remove:                     Supprimer l'agence
-        Add:                        Ajouter une agence
-        Save:                       Enregistrer
-        Cancel:                     Annuler
-        Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
-        Confirm-remove:             Etes-vous sûr de vouloir supprimer cette agence ?
+  Bundle-name:                    Gestion Commerciale
+  Agency:
+    Agencies:                   Agences
+    List:                       Liste des agencies
+    Date-creation:              Date de création
+    Date-crea:                  Date de créa.
+    Date-update:                Date de mise à jour
+    Name:                       Nom
+    Divisions:                  Divisions
+    Address:                    Adresse
+    PostalCode:                 Code postal
+    City:                       Ville
+    Phone:                      Téléphone
+    Longitude:                  Longitude
+    Latitude:                   Latitude
+    IsDisplayed:                Statut d'affichage
+    Informations:               Informations
+    System-informations:        Informations système
+    Export:                     Exporter les agences
+    View:                       Visualiser l'agence
+    Edit:                       Modifier l'agence
+    Remove:                     Supprimer l'agence
+    Add:                        Ajouter une agence
+    Save:                       Enregistrer
+    Cancel:                     Annuler
+    Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+    Confirm-remove:             Etes-vous sûr de vouloir supprimer cette agence ?
 
-    BusinessLine:
-        BusinessLines:              Secteurs d'activités
-        List:                       Liste des secteurs d'activités
-        Date-creation:              Date de création
-        Date-crea:                  Date de créa.
-        Date-update:                Date de mise à jour
-        Name:                       Nom
-        Division:                   Division
-        Informations:               Informations
-        System-informations:        Informations système
-        Export:                     Exporter les secteurs d'activités
-        View:                       Visualiser le secteur d'activité
-        Edit:                       Modifier le secteur d'activité
-        Remove:                     Supprimer le secteur d'activité
-        Add:                        Ajouter un secteur d'activité
-        Save:                       Enregistrer
-        Cancel:                     Annuler
-        Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
-        Confirm-remove:             Etes-vous sûr de vouloir supprimer ce secteur d'activité ?
+  BusinessLine:
+    BusinessLines:              Secteurs d'activités
+    List:                       Liste des secteurs d'activités
+    Date-creation:              Date de création
+    Date-crea:                  Date de créa.
+    Date-update:                Date de mise à jour
+    Name:                       Nom
+    Division:                   Division
+    Informations:               Informations
+    System-informations:        Informations système
+    Export:                     Exporter les secteurs d'activités
+    View:                       Visualiser le secteur d'activité
+    Edit:                       Modifier le secteur d'activité
+    Remove:                     Supprimer le secteur d'activité
+    Add:                        Ajouter un secteur d'activité
+    Save:                       Enregistrer
+    Cancel:                     Annuler
+    Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+    Confirm-remove:             Etes-vous sûr de vouloir supprimer ce secteur d'activité ?

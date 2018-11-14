@@ -217,7 +217,7 @@ Catalog:
     GrilleTarifLigneD3E:
       GrilleTarifLigneD3Es:       Lignes de la grille tarifaire
       PostalCodes:                Codes postaux
-      Agence:                     Agence
+      Agency:                     Agency
       MinQuantity:                Quantité min.
       MaxQuantity:                Quantité max.
       Price:                      Prix

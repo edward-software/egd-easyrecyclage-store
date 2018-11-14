@@ -2,7 +2,7 @@
 
 namespace Paprec\CatalogBundle\Form;
 
-use Paprec\CommercialBundle\Entity\Agence;
+use Paprec\CommercialBundle\Entity\Agency;
 use Paprec\CommercialBundle\Repository\AgenceRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -20,8 +20,8 @@ class GrilleTarifLigneD3EType extends AbstractType
     {
         $builder
             ->add('postalCodes')
-            ->add('agence', EntityType::class, array(
-                'class' => Agence::class,
+            ->add('agency', EntityType::class, array(
+                'class' => Agency::class,
                 'multiple' => false,
                 'expanded' => false,
                 'choice_label' => 'name',

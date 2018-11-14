@@ -38,9 +38,6 @@ class CategoryType extends AbstractType
                 "choices" => $options['division'],
                 "expanded" => true,
                 "multiple" => false
-            ))
-            ->add('position', TextType::class, array(
-                "required" => true
             ));
     }
 

@@ -2,3 +2,8 @@ services:
 #    paprec_public.example:
 #        class: PaprecPublicBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+  _defaults: { public: true }
+
+  paprec.cart_manager:
+    class: Paprec\PublicBundle\Service\CartManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
