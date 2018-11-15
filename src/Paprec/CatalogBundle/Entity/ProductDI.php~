@@ -142,6 +142,11 @@ class ProductDI
     private $categories;
 
     /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrderLine", mappedBy="productDI", cascade={"all"})
+     */
+    private $productDIOrderLines;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -222,7 +227,7 @@ class ProductDI
     {
         return $this->name;
     }
-    
+
     /**
      * Set description.
      *
@@ -596,75 +601,73 @@ class ProductDI
         return $this->pictures;
     }
 
-    /**
-     * Add picto.
-     *
-     * @param \Paprec\CatalogBundle\Entity\Picture $picto
-     *
-     * @return ProductDI
-     */
-    public function addPicto(\Paprec\CatalogBundle\Entity\Picture $picto)
+    public function getPilotPictures()
     {
-        $this->pictos[] = $picto;
-
-        return $this;
+        $pilotPictures = array();
+        foreach ($this->pictures as $picture) {
+            if ($picture->getType() == 'PilotPicture') {
+                $pilotPictures[] = $picture;
+            }
+        }
+        return $pilotPictures;
     }
 
-    /**
-     * Remove picto.
-     *
-     * @param \Paprec\CatalogBundle\Entity\Picture $picto
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removePicto(\Paprec\CatalogBundle\Entity\Picture $picto)
-    {
-        return $this->pictos->removeElement($picto);
-    }
-
-    /**
-     * Get pictos.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
     public function getPictos()
     {
-        return $this->pictos;
+        $pictos = array();
+        foreach ($this->pictures as $picture) {
+            if ($picture->getType() == 'Picto') {
+                $pictos[] = $picture;
+            }
+        }
+        return $pictos;
     }
 
+    public function getPicturesPictures()
+    {
+        $pictures = array();
+        foreach ($this->pictures as $picture) {
+            if ($picture->getType() == 'Picture') {
+                $pictures[] = $picture;
+            }
+        }
+        return $pictures;
+    }
+
+
     /**
-     * Add picturesPilote.
+     * Add productDIOrderLine.
      *
-     * @param \Paprec\CatalogBundle\Entity\Picture $picturesPilote
+     * @param \Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine
      *
      * @return ProductDI
      */
-    public function addPicturesPilote(\Paprec\CatalogBundle\Entity\Picture $picturesPilote)
+    public function addProductDIOrderLine(\Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine)
     {
-        $this->picturesPilote[] = $picturesPilote;
+        $this->productDIOrderLines[] = $productDIOrderLine;
 
         return $this;
     }
 
     /**
-     * Remove picturesPilote.
+     * Remove productDIOrderLine.
      *
-     * @param \Paprec\CatalogBundle\Entity\Picture $picturesPilote
+     * @param \Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removePicturesPilote(\Paprec\CatalogBundle\Entity\Picture $picturesPilote)
+    public function removeProductDIOrderLine(\Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine)
     {
-        return $this->picturesPilote->removeElement($picturesPilote);
+        return $this->productDIOrderLines->removeElement($productDIOrderLine);
     }
 
     /**
-     * Get picturesPilote.
+     * Get productDIOrderLines.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPicturesPilote()
+    public function getProductDIOrderLines()
     {
-        return $this->picturesPilote;
+        return $this->productDIOrderLines;
     }
 }

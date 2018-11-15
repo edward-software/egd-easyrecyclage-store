@@ -1,0 +1,86 @@
+{% extends "::base_public.html.twig" %}
+
+{#{% block title %}#}
+
+{#{% endblock %}#}
+
+{#{% block stylesheets %}#}
+
+{#{% endblock %}#}
+
+{% block main_content %}
+    <!-- section -->
+    <section>
+        <div class="wrapper">
+            <div class="sidebar">
+                <div class="recap passed">
+                    <div class="recap__step">
+                        <span class="recap__stepNumber">01</span>Mon besoin
+                    </div>
+                </div>
+
+                <div class="recap active">
+                    <div class="recap__step">
+                        <span class="recap__stepNumber">02</span>Mes coordonnées
+                    </div>
+
+                </div>
+
+                <div class="recap">
+                    <div class="recap__step">
+                        <span class="recap__stepNumber">03</span>Mon offre
+                    </div>
+
+                </div>
+            </div>
+            <form action="#" class="main">
+                <div class="step">
+                    <div class="step__left">
+                        <div class="step__title">Je suis</div>
+                    </div>
+                    <div class="step__right step__right--small">
+                        <input class="input input--full step--marginfield" type="text" placeholder="Raison sociale">
+                        <select name="test" id="test" class="input input--full" required>
+                            <option value="" disabled selected hidden>Sélectionnez votre secteur d’activité</option>
+                        </select>
+                        <input class="input__radio" type="radio" id="mr" name="gender">
+                        <label for="mr">Monsieur</label>
+
+                        <input class="input__radio" type="radio" id="mme" name="gender">
+                        <label for="mme">Madame</label>
+                        <div class="clearfix step--marginfield"></div>
+
+                        <input class="input input--mid step--marginfield" type="text" placeholder="Nom">
+                        <input class="input input--mid step--marginfield" type="text" placeholder="Prénom">
+                        <input class="input input--full step--marginfield" type="text" placeholder="E-mail">
+                        <input class="input input--full step--marginfield" type="text" placeholder="Adresse">
+                        <input class="input input--zip step--marginfield" type="text" placeholder="Code Post.">
+                        <input class="input input--city step--marginfield" type="text" placeholder="Ville">
+                        <input class="input input--full step--marginfield" type="text"
+                               placeholder="Numéro de téléphone">
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="notice">Un besoin <span>plus complexe</span> ? Vous souhaitez nous en parler ?</div>
+                    <div class="clearfix"></div>
+                    <div class="step__left">
+                        <a href="{{ path('paprec_public_DI_subscription_step1', {cartUuid: cart.id}) }}" class="back">Retour</a>
+                    </div>
+                    <div class="step__right">
+                        <a href="#" class="button margint10 button--grey">Contactez-nous</a>
+                        <a href="#" class="button margint10 button--grey">Être rappelé</a>
+                        <a href="{{ path('paprec_public_DI_subscription_step3', {cartUuid: cart.id}) }}"
+                           class="button margint10 button--green">Accéder à votre offre</a>
+                    </div>
+                </div>
+            </form>
+
+            <div class="clearfix"></div>
+    </section>
+    <!-- /section -->
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

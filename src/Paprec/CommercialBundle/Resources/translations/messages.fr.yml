@@ -47,3 +47,41 @@ Commercial:
     Cancel:                     Annuler
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
     Confirm-remove:             Etes-vous sûr de vouloir supprimer ce secteur d'activité ?
+
+  ProductDIOrder:
+    ProductDIOrders:            Devis DI
+    List:                       Liste des devis DI
+    Date-creation:              Date de création
+    Date-crea:                  Date de créa.
+    Date-update:                Date de mise à jour
+    BusinessName:               Raison sociale
+    BusinessLine:               Secteur d'activité
+    Civility:                   Civilité
+    LastName:                   Nom
+    FirstName:                  Prénom
+    Email:                      Email
+    Address:                    Adresse
+    PostalCode:                 Code postal
+    City:                       Ville
+    Phone:                      Téléphone
+    OrderStatus:                Statut
+    TotalAmount:                Montant total
+    GeneratedTurnover:          CA généré
+    Agency:                     Agence
+    Summarize:                  Résumé du besoin
+    Frequency:                  Pontuel / Régulier
+    Tonnage:                    Tonnage
+    KookaburaNumber:            N° contrat Kookabura
+    UserInCharge:               Commercial en charge
+    Informations:               Informations
+    System-informations:        Informations système
+    Export:                     Exporter les devis DI
+    View:                       Visualiser le devis DI
+    Edit:                       Modifier le devis DI
+    Remove:                     Supprimer le devis DI
+    Add:                        Ajouter un devis DI
+    Save:                       Enregistrer
+    Cancel:                     Annuler
+    Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+    Confirm-remove:             Etes-vous sûr de vouloir supprimer ce devis DI ?
+

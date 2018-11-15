@@ -39,7 +39,9 @@
                         <div class="step__title">{{ 'Public.Home.Location'|trans }}</div>
                     </div>
                     <div class="step__right">
-                        <input class="input" type="text" list="locationDatalist" id="locationSelect" autocomplete="off">
+                        <input class="input" type="text" list="locationDatalist" id="locationSelect"
+                               data-url="{{ path('paprec_public_home_index', {l: 'locationTmp', d: '' }) }}"
+                               autocomplete="off">
                         <datalist id="locationDatalist">
                             <option data-vicopo="#locationSelect">
                                 <a data-vicopo-code-postal> </a>&nbsp;<a data-vicopo-ville></a></option>
@@ -64,7 +66,8 @@
                             <div class="step__title">{{ 'Public.Home.Recycle'|trans }}</div>
                         </div>
                         <div class="step__right">
-                            <select class="input" id="divisionSelect">
+                            <select class="input" id="divisionSelect"
+                                    data-url="{{ path('paprec_public_home_index', {l: 'locationTmp', d: 'divisionTmp', f: '' }) }}">
                                 <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
                                 {% for division in divisions %}
                                     <option value="{{ division }}">{{ division }}</option>
@@ -72,11 +75,14 @@
                             </select>
                             {% if step == 'f' %}
                                 <br>
-                                <div id="frequencyRadioBox">
-                                    <input type="radio" id="ponctualRadio" name="frequencyRadio" value="ponctual">
+                                <div id="frequencyRadioBox"
+                                     data-url="{{ path('paprec_public_home_index', {l: 'locationTmp', d: 'divisionTmp', f: 'frequencyTmp' }) }}">
+                                    <input class="input__radio" type="radio" id="ponctualRadio" name="frequencyRadio"
+                                           value="ponctual">
                                     <label for="ponctualRadio">{{ 'Public.Cart.Ponctal'|trans }}</label>
 
-                                    <input type="radio" id="regularRadio" name="frequencyRadio" value="regular">
+                                    <input class="input__radio" type="radio" id="regularRadio" name="frequencyRadio"
+                                           value="regular">
                                     <label for="regularRadio">{{ 'Public.Cart.Regular'|trans }}</label>
                                 </div>
                                 <div class="clearfix"></div>
@@ -107,7 +113,7 @@
                     return this.value.toUpperCase() === val.toUpperCase();
                 }).length) {
                     {% autoescape'js' %}
-                    url = "{{ path('paprec_public_home_index', {l: 'locationTmp', d: ''}) }}".replace('locationTmp', val);
+                    url = $(this).data('url').replace('locationTmp', val);
                     {% endautoescape %}
                     $(location).attr('href', url);
                 }
@@ -118,7 +124,7 @@
                 locationVal = $("#locationSelect").val();
                 console.log(locationVal);
                 {% autoescape'js' %}
-                url = "{{ path('paprec_public_home_index', {l: 'locationTmp', d: 'divisionTmp', f: '' }) }}".replace('divisionTmp', this.value).replace('locationTmp', locationVal);
+                url = $(this).data('url').replace('divisionTmp', this.value).replace('locationTmp', locationVal);
                 {% endautoescape %}
 
                 $(location).attr('href', url);
@@ -131,7 +137,7 @@
                 locationVal = $("#locationSelect").val();
                 divisionVal = $("#divisionSelect").val();
                 {% autoescape'js' %}
-                url = "{{ path('paprec_public_home_index', {l: 'locationTmp', d: 'divisionTmp', f: 'frequencyTmp' }) }}"
+                url = $(this).data('url')
                     .replace('divisionTmp', divisionVal)
                     .replace('locationTmp', locationVal)
                     .replace('frequencyTmp', frequency);

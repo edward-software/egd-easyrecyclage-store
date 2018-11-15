@@ -126,8 +126,11 @@ class CartManager
         if ($dProducts && in_array($productId, $dProducts) && array_key_exists($categoryId, $dProducts)) {
             unset($dProducts[$categoryId]);
         } else {
+            $dProducts = array();
             $dProducts[$categoryId] = $productId;
         }
+
+
         $cart->setDisplayedProducts($dProducts);
         $this->em->persist($cart);
         $this->em->flush();
@@ -147,6 +150,11 @@ class CartManager
         $cart = $this->get($id);
         $content = $cart->getContent();
         $product = ['cId' => $categoryId, 'pId' => $productId, 'qtty' => $quantity];
+        foreach ($content as $key => $value) {
+            if ($value['cId'] == $categoryId && $value['pId'] == $productId) {
+                unset($content[$key]);
+            }
+        }
         $content[] = $product;
         $cart->setContent($content);
         $this->em->persist($cart);

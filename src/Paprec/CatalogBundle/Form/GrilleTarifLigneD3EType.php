@@ -3,7 +3,7 @@
 namespace Paprec\CatalogBundle\Form;
 
 use Paprec\CommercialBundle\Entity\Agency;
-use Paprec\CommercialBundle\Repository\AgenceRepository;
+use Paprec\CommercialBundle\Repository\AgencyRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -25,7 +25,7 @@ class GrilleTarifLigneD3EType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
                 'choice_label' => 'name',
-                'query_builder' => function (AgenceRepository $er) {
+                'query_builder' => function (AgencyRepository $er) {
                     return $er->createQueryBuilder('a')
                         ->where('a.deleted IS NULL')
                         ->where('a.divisions LIKE \'%D3E%\'');

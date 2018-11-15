@@ -46,10 +46,47 @@ class SubscriptionController extends Controller
     }
 
     /**
+     * @Route("/step2/{cartUuid}", name="paprec_public_DI_subscription_step2")
+     */
+    public function step2Action(Request $request, $cartUuid)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+        $categoryManager = $this->get('paprec_catalog.category_manager');
+        $productDICategoryManager = $this->get('paprec_catalog.product_di_manager');
+
+
+        $cart = $cartManager->get($cartUuid);
+        return $this->render('@PaprecPublic/DI/contactDetails.html.twig', array(
+            'cart' => $cart
+        ));
+    }
+
+    /**
+     * @Route("/step3/{cartUuid}", name="paprec_public_DI_subscription_step3")
+     */
+    public function step3Action(Request $request, $cartUuid)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+        $categoryManager = $this->get('paprec_catalog.category_manager');
+        $productDICategoryManager = $this->get('paprec_catalog.product_di_manager');
+
+
+        $cart = $cartManager->get($cartUuid);
+        return $this->render('@PaprecPublic/DI/offerDetails.html.twig', array(
+            'cart' => $cart
+        ));
+    }
+
+
+
+
+
+    /**
      * @Route("/addDisplayedCategory/{cartUuid}/{categoryId}", name="paprec_public_DI_subscription_addDisplayedCategory")
      * @throws \Exception
      */
-    public function addDisplayedCategoryAction(Request $request, $cartUuid, $categoryId) {
+    public function addDisplayedCategoryAction(Request $request, $cartUuid, $categoryId)
+    {
         $cartManager = $this->get('paprec.cart_manager');
 
         // On ajoute ou on supprime la catégorie sélecionnée au tableau des displayedCategories du Cart
@@ -65,7 +102,8 @@ class SubscriptionController extends Controller
      * @Route("/addOrRemoveDisplayedProduct/{cartUuid}/{categoryId}/{productId}", name="paprec_public_DI_subscription_addOrRemoveDisplayedProduct")
      * @throws \Exception
      */
-    public function addOrRemoveDisplayedProductAction(Request $request, $cartUuid, $categoryId, $productId) {
+    public function addOrRemoveDisplayedProductAction(Request $request, $cartUuid, $categoryId, $productId)
+    {
         $cartManager = $this->get('paprec.cart_manager');
 
         // On ajoute ou on supprime le produit sélecionné au tableau des displayedCategories du Cart
@@ -81,7 +119,8 @@ class SubscriptionController extends Controller
      * @Route("/addContent/{cartUuid}/{categoryId}/{productId}/{quantity}", name="paprec_public_DI_subscription_addContent")
      * @throws \Exception
      */
-    public function addContentAction(Request $request, $cartUuid, $categoryId, $productId, $quantity) {
+    public function addContentAction(Request $request, $cartUuid, $categoryId, $productId, $quantity)
+    {
         $cartManager = $this->get('paprec.cart_manager');
 
         // On ajoute ou on supprime le produit sélecionné au tableau des displayedCategories du Cart
@@ -95,19 +134,22 @@ class SubscriptionController extends Controller
      * @Route("/removeContent/{cartUuid}/{categoryId}/{productId}", name="paprec_public_DI_subscription_removeContent")
      * @throws \Exception
      */
-    public function removeContentAction(Request $request, $cartUuid, $categoryId, $productId) {
+    public function removeContentAction(Request $request, $cartUuid, $categoryId, $productId)
+    {
         $cartManager = $this->get('paprec.cart_manager');
 
         // On ajoute ou on supprime le produit sélecionné au tableau des displayedCategories du Cart
         $cart = $cartManager->removeContent($cartUuid, $categoryId, $productId);
 
-        return new JsonResponse('200');
+        return new JsonResponse($cart->getContent());
     }
 
     /**
+     * Retourne le twig du cart avec les produits dans celui-ci ainsi que le montant total
      * @Route("/loadCart/{cartUuid}", name="paprec_public_DI_subscription_loadCart", condition="request.isXmlHttpRequest()")
      */
-    public function loadCartAction(Request $request, $cartUuid) {
+    public function loadCartAction(Request $request, $cartUuid)
+    {
         $cartManager = $this->get('paprec.cart_manager');
 
         // On récupère les informations du cart à afficher ainsi que le calcul de la somme du Cart

@@ -142,6 +142,11 @@ class ProductDI
     private $categories;
 
     /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrderLine", mappedBy="productDI", cascade={"all"})
+     */
+    private $productDIOrderLines;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -596,34 +601,73 @@ class ProductDI
         return $this->pictures;
     }
 
-    public function getPilotPictures() {
+    public function getPilotPictures()
+    {
         $pilotPictures = array();
-        foreach($this->pictures as $picture) {
-            if($picture->getType() == 'PilotPicture') {
+        foreach ($this->pictures as $picture) {
+            if ($picture->getType() == 'PilotPicture') {
                 $pilotPictures[] = $picture;
             }
         }
         return $pilotPictures;
     }
 
-    public function getPictos() {
+    public function getPictos()
+    {
         $pictos = array();
-        foreach($this->pictures as $picture) {
-            if($picture->getType() == 'Picto') {
+        foreach ($this->pictures as $picture) {
+            if ($picture->getType() == 'Picto') {
                 $pictos[] = $picture;
             }
         }
         return $pictos;
     }
 
-    public function getPicturesPictures() {
+    public function getPicturesPictures()
+    {
         $pictures = array();
-        foreach($this->pictures as $picture) {
-            if($picture->getType() == 'Picture') {
+        foreach ($this->pictures as $picture) {
+            if ($picture->getType() == 'Picture') {
                 $pictures[] = $picture;
             }
         }
         return $pictures;
     }
 
+
+    /**
+     * Add productDIOrderLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine
+     *
+     * @return ProductDI
+     */
+    public function addProductDIOrderLine(\Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine)
+    {
+        $this->productDIOrderLines[] = $productDIOrderLine;
+
+        return $this;
+    }
+
+    /**
+     * Remove productDIOrderLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductDIOrderLine(\Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine)
+    {
+        return $this->productDIOrderLines->removeElement($productDIOrderLine);
+    }
+
+    /**
+     * Get productDIOrderLines.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductDIOrderLines()
+    {
+        return $this->productDIOrderLines;
+    }
 }

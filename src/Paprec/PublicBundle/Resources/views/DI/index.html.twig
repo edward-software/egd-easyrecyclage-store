@@ -66,7 +66,9 @@
                         <div class="step__title">{{ 'Public.Home.Location'|trans }}</div>
                     </div>
                     <div class="step__right">
-                        <input class="input" type="text" list="locationDatalist" id="locationSelect" autocomplete="off"
+                        <input class="input" type="text" list="locationDatalist"
+                               id="locationSelect" autocomplete="off"
+                               data-url="{{ path('paprec_public_home_index', {l: 'locationTmp', d: '' }) }}"
                                value="{{ cart.location }}">
                         <datalist id="locationDatalist">
                             <option data-vicopo="#locationSelect">
@@ -88,7 +90,8 @@
                         <div class="step__title">{{ 'Public.Home.Recycle'|trans }}</div>
                     </div>
                     <div class="step__right">
-                        <select class="input" id="divisionSelect">
+                        <select class="input" id="divisionSelect"
+                                data-url="{{ path('paprec_public_home_index', {l: 'locationTmp', d: 'divisionTmp', f: '' }) }}">
                             <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
                             {% for division in divisions %}
                                 {% if division == cart.division %}
@@ -99,19 +102,22 @@
                             {% endfor %}
                         </select>
                         <br>
-                        <div id="frequencyRadioBox">
-                            <input type="radio" id="ponctualRadio" name="frequencyRadio" value="ponctual">
+                        <div id="frequencyRadioBox"
+                             data-url="{{ path('paprec_public_home_index', {l: 'locationTmp', d: 'divisionTmp', f: 'frequencyTmp' }) }}">
+                            <input class="input__radio" type="radio" id="ponctualRadio" name="frequencyRadio"
+                                   value="ponctual" checked>
                             <label for="ponctualRadio">{{ 'Public.Cart.Ponctal'|trans }}</label>
 
-                            <input type="radio" id="regularRadio" name="frequencyRadio" value="regular">
+                            <input class="input__radio" type="radio" id="regularRadio" name="frequencyRadio"
+                                   value="regular">
                             <label for="regularRadio">{{ 'Public.Cart.Regular'|trans }}</label>
                         </div>
                         <div class="clearfix"></div>
                     </div>
                 </div>
-                <!-- FIN step 1 (Location, division et frequency -->
+                <!-- FIN step 0 (Location, division et frequency -->
 
-                <!-- DEBUT step 2 categories et products -->
+                <!-- DEBUT step  categories et products -->
                 <div class="step">
                     <div class="step__left">
                         <div class="step__title">
@@ -125,6 +131,7 @@
                             {% for category in categories %}
                                 <div class="checkboxPicto categoryCheckboxPicto"
                                      id="categoryCheckboxPicto_{{ category.id }}"
+                                     data-url="{{ path('paprec_public_DI_subscription_addDisplayedCategory', {cartUuid: cart.id, categoryId: 'categoryTmp'}) }}"
                                      style="background-image: url({{ asset('/uploads/pictos/' ~ category.picto) }})">
                                     {{ category.name }}
                                 </div>
@@ -134,7 +141,7 @@
                     </div>
 
                 </div>
-                <!-- FIN step 2 categories et products -->
+                <!-- FIN step categories et products -->
                 <!-- DEBUT affichage des contenants -->
                 {% if cart.displayedCategories %}
                     <div class="step">
@@ -148,8 +155,22 @@
                                 {# pour chaque catégorie, si elle fait partie des displayedCategories
                                 alors lui ouvre son step_wrapper #}
                                 {% if category.id in cart.displayedCategories %}
+                                    {% set countProductsInCategory = 0 %}
+                                    {% for items in cart.content %}
+                                        {% if items['cId'] == category.id %}
+                                            {% set countProductsInCategory = countProductsInCategory + 1 %}
+                                        {% endif %}
+                                    {% endfor %}
                                     <div class="step__wrappertop open"
-                                         id="productsWrapper_{{ category.id }}">{{ category.name }}</div>
+                                         id="productsWrapper_{{ category.id }}">
+                                        {{ category.name }}
+                                        {% if countProductsInCategory > 1 %}
+                                            <span>{{ countProductsInCategory }} contenants séléctionnés</span>
+                                        {% endif %}
+                                        {% if countProductsInCategory ==     1 %}
+                                            <span>{{ countProductsInCategory }} contenant séléctionné</span>
+                                        {% endif %}
+                                    </div>
                                     {% for key, products in productsCategories %}
                                         {# pour chaque productCategory (categoryId => Products[],
                                          on affiche le tableau de produits si ils font partie de la catégorie courante #}
@@ -168,6 +189,13 @@
                                                      id="productCheckboxPicto_{{ product.id }}_{{ category.id }}"
                                                      style="{% if product.pictos %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
                                                     {{ product.name }}
+                                                    <br>{{ product.capacity }}{{ product.capacityUnit }}
+                                                    {% for items in cart.content %}
+                                                        {% if items['cId'] == category.id and items['pId'] == product.id %}
+                                                            <span class="number">{{ items['qtty'] }}</span>
+                                                        {% endif %}
+                                                    {% endfor %}
+
                                                 </div>
                                                 {% set cpt = cpt + 1 %}
 
@@ -190,6 +218,7 @@
                                                             </div>
                                                             <div class="right">
                                                                 <div class="infoproduct__close"
+                                                                     data-url="{{ path('paprec_public_DI_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
                                                                      id="infoProductClose_{{ displayedProduct.id }}_{{ category.id }}"></div>
                                                                 <div class="infoproduct__title">
                                                                     {{ displayedProduct.name }}
@@ -203,7 +232,8 @@
                                                                     {% endfor %}
                                                                     Facilite le pré-tri
                                                                     <br>
-                                                                    Facilité de <pose></pose>
+                                                                    Facilité de
+                                                                    <pose></pose>
                                                                     <br>
                                                                     et d’enlèvement
                                                                 </div>
@@ -221,12 +251,25 @@
                                                                     {{ displayedProduct.dimensions }}
                                                                 </div>
 
+                                                                {% set qtty = '' %}
+                                                                {% for items in cart.content %}
+                                                                    {% if items['cId'] == category.id and items['pId'] == displayedProduct.id %}
+                                                                        {% set qtty = items['qtty'] %}
+                                                                    {% endif %}
+                                                                {% endfor %}
                                                                 <div class="infoproduct__qtytitle">{{ 'Public.Cart.Qtty'|trans }}</div>
+
                                                                 <select name=""
                                                                         id="quantityProducSelect_{{ displayedProduct.id }}_{{ category.id }}"
                                                                         class="infoproduct__qty">
                                                                     {% for i in 1..10 %}
-                                                                        <option value="{{ i }}">{{ i }}</option>
+                                                                        {% if i == qtty %}
+                                                                            <option value="{{ i }}"
+                                                                                    selected="selected">{{ i }}</option>
+                                                                        {% else %}
+                                                                            <option value="{{ i }}">{{ i }}</option>
+
+                                                                        {% endif %}
                                                                     {% endfor %}
                                                                 </select>
                                                                 <div class="button button--lightgreen addToCartSubmitButton"
@@ -250,7 +293,9 @@
 
                             <div class="button button--grey">Contactez-nous</div>
                             <div class="button button--grey">Etre rappelé</div>
-                            <div class="button button--green">Valider votre besoin</div>
+                            <a href="{{ path('paprec_public_DI_subscription_step2', {cartUuid: cart.id}) }}"
+                               class="button button--green">Valider votre besoin
+                            </a>
                         </div>
 
                     </div>
@@ -271,6 +316,8 @@
     <script>
         $(function () {
 
+            var addOrRemoveDisplayedProdutUrl = "/addOrRemoveDisplayedProduct/{cartUuid}/{categoryId}/{productId}";
+
             reloadCart();
             loadedPage();
 
@@ -278,14 +325,13 @@
             // On recharge la page en envoyant la "location" quand la location est égale à un des autocomplete proposé
             // c-a-d quand on a choisi une "location" dans la datalist en gros
             $("#locationSelect").on('input', function () {
-
                 var val = this.value;
                 if ($('#locationDatalist option').filter(function () {
                     return this.value.toUpperCase() === val.toUpperCase();
                 }).length) {
                     alert('Perte des données TODO Modal');
                     {% autoescape'js' %}
-                    url = "{{ path('paprec_public_home_index', {l: 'locationTmp', d: ''}) }}".replace('locationTmp', val);
+                    url = $(this).data('url').replace('locationTmp', val);
                     {% endautoescape %}
                     $(location).attr('href', url);
                 }
@@ -296,7 +342,7 @@
                 alert('Perte des données TODO Modal');
                 locationVal = $("#locationSelect").val();
                 {% autoescape'js' %}
-                url = "{{ path('paprec_public_home_index', {l: 'locationTmp', d: 'divisionTmp', f: '' }) }}".replace('divisionTmp', this.value).replace('locationTmp', locationVal);
+                url = $(this).data('url').replace('divisionTmp', this.value).replace('locationTmp', locationVal);
                 {% endautoescape %}
 
                 $(location).attr('href', url);
@@ -311,7 +357,7 @@
                 locationVal = $("#locationSelect").val();
                 divisionVal = $("#divisionSelect").val();
                 {% autoescape'js' %}
-                url = "{{ path('paprec_public_home_index', {l: 'locationTmp', d: 'divisionTmp', f: 'frequencyTmp' }) }}"
+                url = $(this).data('url')
                     .replace('divisionTmp', divisionVal)
                     .replace('locationTmp', locationVal)
                     .replace('frequencyTmp', frequency);
@@ -321,17 +367,15 @@
             });
 
             // Au chargement, on applique au body la couleur de la division DI
-            // On coche aussi la fréquence précedemment choisie
-            // La location et la division sont eux directement définis dans le twif avec 'value='
             function loadedPage() {
                 $('body').addClass('tunnel--green');
-                $('[value={{ cart.frequency }}]').attr('checked', true);
+
             }
 
             // Au clic sur une catégorie, on l'ajoute où on la supprime des displayedCategories du cart
             $('.categoryCheckboxPicto').click(function () {
                 categoryId = (this.id).replace('categoryCheckboxPicto_', '');
-                url = "{{ path('paprec_public_DI_subscription_addDisplayedCategory', {cartUuid: cart.id, categoryId: 'categoryTmp'}) }}".replace('categoryTmp', categoryId);
+                url = $(this).data('url').replace('categoryTmp', categoryId);
                 $(location).attr('href', url);
             });
 
@@ -383,6 +427,8 @@
                         .replace('productTmp', productId)
                         .replace('quantityTmp', qtty),
                     success: function (response) {
+                        // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
+                        // addOrRemoveDisplayedProduct(productId, categoryId);
                         reloadCart();
                     },
                     error: function (errorThrown) {
@@ -401,14 +447,14 @@
                         // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
                         var htmlToDisplay = response.trim();
                         $("#loadedCartPanel").html(htmlToDisplay);
-
-                        // On ajoute un listener sur les "x" dans la liste des produtis dans le Cart
-                        $(".buttonDeleteProduct").click(function() {
+                        // On ajoute un listener sur les "x" dans la liste des produits dans le Cart
+                        $(".buttonDeleteProduct").click(function () {
                             productCategory = (this.id).replace('buttonDeleteProduct_', '').split('_', 2);
                             productId = productCategory[0];
                             categoryId = productCategory[1];
                             $.ajax({
                                 type: "GET",
+                                dataType: "json",
                                 url: "{{ path('paprec_public_DI_subscription_removeContent', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
                                     .replace('categoryTmp', categoryId)
                                     .replace('productTmp', productId),

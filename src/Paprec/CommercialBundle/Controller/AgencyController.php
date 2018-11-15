@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class AgenceController extends Controller
+class AgencyController extends Controller
 {
     /**
      * @Route("/agency", name="paprec_commercial_agence_index")

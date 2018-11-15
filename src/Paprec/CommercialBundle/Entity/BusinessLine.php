@@ -61,6 +61,11 @@ class BusinessLine
     private $division;
 
     /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrder", mappedBy="businessLine")
+     */
+    private $productDIOrders;
+
+    /**
      * BusinessLine constructor.
      */
     public function __construct()
@@ -196,5 +201,41 @@ class BusinessLine
     public function getDivision()
     {
         return $this->division;
+    }
+
+    /**
+     * Add productDIOrder.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder
+     *
+     * @return BusinessLine
+     */
+    public function addProductDIOrder(\Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder)
+    {
+        $this->productDIOrders[] = $productDIOrder;
+
+        return $this;
+    }
+
+    /**
+     * Remove productDIOrder.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductDIOrder(\Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder)
+    {
+        return $this->productDIOrders->removeElement($productDIOrder);
+    }
+
+    /**
+     * Get productDIOrders.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductDIOrders()
+    {
+        return $this->productDIOrders;
     }
 }

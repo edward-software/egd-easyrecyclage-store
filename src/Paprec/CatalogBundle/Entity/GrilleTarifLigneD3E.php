@@ -62,7 +62,7 @@ class GrilleTarifLigneD3E
     /**
      * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agency", inversedBy="grilleTarifLigneD3Es")
      */
-    private $agence;
+    private $agency;
 
     /**
      * Get id.
@@ -201,9 +201,9 @@ class GrilleTarifLigneD3E
      *
      * @return GrilleTarifLigneD3E
      */
-    public function setAgence(\Paprec\CommercialBundle\Entity\Agency $agence = null)
+    public function setAgency(\Paprec\CommercialBundle\Entity\Agency $agency = null)
     {
-        $this->agency = $agence;
+        $this->agency = $agency;
 
         return $this;
     }
@@ -213,7 +213,7 @@ class GrilleTarifLigneD3E
      *
      * @return \Paprec\CommercialBundle\Entity\Agency|null
      */
-    public function getAgence()
+    public function getAgency()
     {
         return $this->agency;
     }
