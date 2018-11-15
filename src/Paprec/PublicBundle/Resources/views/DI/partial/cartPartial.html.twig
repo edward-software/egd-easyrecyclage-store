@@ -1,21 +1,26 @@
 <div class="recap__cart">
-    <div class="recap__title">Mes prestations</div>
+    {% if loadedCart and loadedCart is not empty %}
+
+        <div class="recap__title">Mes prestations</div>
 
 
-    {% for key,cartLine in loadedCart %}
-        {% if key != 'sum' %}
-            <div class="recap__item">
+        {% for key,cartLine in loadedCart %}
+            {% if key != 'sum' %}
+                <div class="recap__item">
 
-                <div class="quantity">x {{ cartLine['qtty'] }}</div>
-                <div class="title">{{ cartLine['pName'] }} • {{ cartLine['pCapacity'] }}</div>
-                <div class="delete buttonDeleteProduct" id="buttonDeleteProduct_{{ key }}"></div>
-                <div class="info">{{ cartLine['cName'] }}
-                    • {% if cartLine['frequency'] == 'ponctual' %}{{ 'Public.Cart.Ponctal'|trans }}{% else %}{{ 'Public.Cart.Regular'|trans }}{% endif %}
+                    <div class="quantity">x {{ cartLine['qtty'] }}</div>
+                    <div class="title">{{ cartLine['pName'] }} • {{ cartLine['pCapacity'] }}</div>
+                    <div class="delete buttonDeleteProduct" id="buttonDeleteProduct_{{ key }}"></div>
+                    <div class="info">{{ cartLine['cName'] }}
+                        • {% if cartLine['frequency'] == 'ponctual' %}{{ 'Public.Cart.Ponctal'|trans }}{% else %}{{ 'Public.Cart.Regular'|trans }}{% endif %}
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="clearfix"></div>
-            </div>
-        {% endif %}
-    {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {{ 'Public.Cart.NoProduct'|trans }}
+    {% endif %}
 
     <div class="recap__price">
         <div class="left">
@@ -26,7 +31,9 @@
         <div class="right">
             à partir de
             <br>
-            <span>{{ loadedCart['sum'] }}</span> HT
+            <span>
+                {% if loadedCart and loadedCart is not empty %}{{ loadedCart['sum'] }}{% else %}0{% endif %}
+            </span> HT
         </div>
         <div class="clearfix"></div>
     </div>

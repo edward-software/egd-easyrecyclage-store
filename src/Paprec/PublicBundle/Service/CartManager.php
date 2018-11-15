@@ -123,7 +123,7 @@ class CartManager
         $cart = $this->get($id);
         $dProducts = $cart->getDisplayedProducts();
 
-        if ($dProducts && in_array($productId, $dProducts)) {
+        if ($dProducts && in_array($productId, $dProducts) && array_key_exists($categoryId, $dProducts)) {
             unset($dProducts[$categoryId]);
         } else {
             $dProducts[$categoryId] = $productId;
@@ -200,6 +200,8 @@ class CartManager
                 $categoryName = $categoryManager->get($productsCategory['cId'])->getName();
                 $loadedCart[$productsCategory['pId'] . '_' . $productsCategory['cId']] = ['qtty' => $productsCategory['qtty'], 'pName' => $productDI->getName(), 'pCapacity' => $productDI->getCapacity() . $productDI->getCapacityUnit(), 'cName' => $categoryName, 'frequency' => $cart->getFrequency()];
             }
+        } else {
+            return $loadedCart;
         }
         // On trie par ordre croissant sur les clés, donc par les id des produits
         // ainsi les mêmes produits dans 2 catégories différentes
@@ -208,7 +210,8 @@ class CartManager
         return $loadedCart;
     }
 
-    private function calculateAmount() {
+    private function calculateAmount()
+    {
         return 100;
     }
 }

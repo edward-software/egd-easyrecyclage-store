@@ -198,9 +198,12 @@
                                                                     {{ displayedProduct.description }}
                                                                 </div>
                                                                 <div class="infoproduct__satisfaction">
+                                                                    {% for argument in displayedProduct.arguments %}
+                                                                        {{ argument.description }}
+                                                                    {% endfor %}
                                                                     Facilite le pré-tri
                                                                     <br>
-                                                                    Facilité de pose
+                                                                    Facilité de <pose></pose>
                                                                     <br>
                                                                     et d’enlèvement
                                                                 </div>
@@ -269,6 +272,7 @@
         $(function () {
 
             reloadCart();
+            loadedPage();
 
             // Fonction appelée à chaque input dans l'input Location
             // On recharge la page en envoyant la "location" quand la location est égale à un des autocomplete proposé
@@ -319,10 +323,10 @@
             // Au chargement, on applique au body la couleur de la division DI
             // On coche aussi la fréquence précedemment choisie
             // La location et la division sont eux directement définis dans le twif avec 'value='
-            $(document).ready(function () {
+            function loadedPage() {
                 $('body').addClass('tunnel--green');
                 $('[value={{ cart.frequency }}]').attr('checked', true);
-            });
+            }
 
             // Au clic sur une catégorie, on l'ajoute où on la supprime des displayedCategories du cart
             $('.categoryCheckboxPicto').click(function () {
@@ -387,6 +391,7 @@
                 });
             });
 
+            // Rechargement de l'HTML du Cart
             function reloadCart() {
                 $.ajax({
                     type: "GET",
