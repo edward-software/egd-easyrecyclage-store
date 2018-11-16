@@ -68,20 +68,28 @@ Commercial:
     TotalAmount:                Montant total
     GeneratedTurnover:          CA généré
     Agency:                     Agence
-    Summarize:                  Résumé du besoin
+    Summary:                  Résumé du besoin
     Frequency:                  Pontuel / Régulier
     Tonnage:                    Tonnage
     KookaburaNumber:            N° contrat Kookabura
     UserInCharge:               Commercial en charge
+    ProductsList:               Liste des produits
     Informations:               Informations
+    Informations-FO:            Informations Front Office
+    Informations-BO:            Informations Back Office
     System-informations:        Informations système
     Export:                     Exporter les devis DI
     View:                       Visualiser le devis DI
     Edit:                       Modifier le devis DI
     Remove:                     Supprimer le devis DI
     Add:                        Ajouter un devis DI
+    AddLine:                    Ajouter un produit
     Save:                       Enregistrer
     Cancel:                     Annuler
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
     Confirm-remove:             Etes-vous sûr de vouloir supprimer ce devis DI ?
 
+  ProductDIOrderLine:
+    ProductName:                Produit
+    UnitPrice:                  Prix unitaire
+    Quantity:                   Qté

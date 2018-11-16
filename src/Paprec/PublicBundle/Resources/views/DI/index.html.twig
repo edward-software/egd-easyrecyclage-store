@@ -429,13 +429,19 @@
                     success: function (response) {
                         // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
                         // addOrRemoveDisplayedProduct(productId, categoryId);
-                        reloadCart();
+                        removeBadge(productId, categoryId);
+                        $('#productCheckboxPicto_' +  productId + '_' + categoryId).prepend("<span class=\"number\">" + qtty + "<span");
+                        reloadCart()
                     },
                     error: function (errorThrown) {
                         console.log(errorThrown);
                     }
                 });
             });
+
+            function removeBadge(productId, categoryId) {
+                $('#productCheckboxPicto_' +  productId + '_' + categoryId).find('span.number').remove();
+            }
 
             // Rechargement de l'HTML du Cart
             function reloadCart() {
@@ -459,6 +465,7 @@
                                     .replace('categoryTmp', categoryId)
                                     .replace('productTmp', productId),
                                 success: function (response) {
+                                    removeBadge(productId, categoryId);
                                     reloadCart();
                                 },
                                 error: function (errorThrown) {

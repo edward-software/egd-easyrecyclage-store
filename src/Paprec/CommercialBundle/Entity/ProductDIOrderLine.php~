@@ -65,7 +65,7 @@ class ProductDIOrderLine
     /**
      * @var integer
      *
-     * @ORM\Column(name="quanity", type="integer")
+     * @ORM\Column(name="quantity", type="integer")
      * @Assert\NotBlank()
      */
     private $quantity;
@@ -83,7 +83,7 @@ class ProductDIOrderLine
 
     /**
      * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrder", inversedBy="productDIOrderLines")
-     * @ORM\JoinColumn(name="categoryId", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="productDIOrderId", referencedColumnName="id", nullable=false)
      */
     private $productDIOrder;
 

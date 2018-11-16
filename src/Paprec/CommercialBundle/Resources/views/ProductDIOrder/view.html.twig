@@ -5,10 +5,9 @@
 {% endblock %}
 
 {% block stylesheets %}
+
     <link rel="stylesheet" type="text/css"
-          href="{{ asset('/assets/vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css"
-          href="{{ asset('/assets/vendor/datatables.net-select-bs/css/select.bootstrap.min.css') }}">
+          href="{{ asset('/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
 {% endblock %}
 
 {% block content_title %}
@@ -36,7 +35,8 @@
                 <h4>
                     <i class="fa fa-productDIOrder"></i> {{ 'Commercial.ProductDIOrder.View'|trans }}
                     <div class="float-right">
-                        <a href="{{ path("paprec_commercial_productDIOrder_edit", {id: productDIOrder.id}) }}" class="btn btn-warning"><i
+                        <a href="{{ path("paprec_commercial_productDIOrder_edit", {id: productDIOrder.id}) }}"
+                           class="btn btn-warning"><i
                                     class="fa fa-edit"></i> {{ 'Commercial.ProductDIOrder.Edit'|trans }}</a>
                         <a id="commmecialProductDIOrderRemoveButton_" href="javascript:void(0);" class="btn btn-danger"><i
                                     class="fa fa-trash"></i> {{ 'Commercial.ProductDIOrder.Remove'|trans }}</a>
@@ -51,7 +51,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title">{{ 'Commercial.ProductDIOrder.Informations'|trans }}</h5>
+                            <h5 class="card-title">{{ 'Commercial.ProductDIOrder.Informations-FO'|trans }}</h5>
                         </div>
                         <div class="card-body row">
                             <div class="col-md-6">
@@ -64,7 +64,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.BusinessLine'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ productDIOrder.businessLine }}
+                                        <a href="{{path('paprec_commercial_businessLine_view', {id: productDIOrder.businessLine.id}) }}">{{ productDIOrder.businessLine.name }}</a>
                                     </label>
                                 </div>
                                 <div class="form-group row">
@@ -121,10 +121,127 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.OrderStatus'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ productDIOrder.offerStatus }}
+                                        {{ productDIOrder.orderStatus }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.TotalAmount'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productDIOrder.totalAmount }}
                                     </label>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Commercial.ProductDIOrder.Informations-BO'|trans }}</h5>
+                        </div>
+                        <div class="card-body row">
+                            <div class="col-md-6">
+
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.GeneratedTurnover'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productDIOrder.generatedTurnover }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.Agency'|trans }}</label>
+                                    <label class="col-form-label">
+                                        <a href="{{path('paprec_commercial_agence_view', {id: productDIOrder.agency.id}) }}">{{ productDIOrder.agency }}</a>
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.Summary'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productDIOrder.summary }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.Frequency'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productDIOrder.frequency }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.Tonnage'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productDIOrder.tonnage }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.KookaburaNumber'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productDIOrder.kookaburaNumber }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.UserInCharge'|trans }}</label>
+                                    <label class="col-form-label">
+                                        <a href="{{path('paprec_user_user_view', {id: productDIOrder.userInCharge.id}) }}">{{ productDIOrder.userInCharge }}</a>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>
+                                {{ 'Commercial.ProductDIOrder.ProductsList'|trans }}
+                                <div class="float-right">
+                                    {#<a href="{{ path('paprec_commercial_productDIOrder_add') }}" class="btn btn-outline-primary">#}
+                                    {#<i class="fa fa-plus"></i> {{ 'Commercial.ProductDIOrder.Add'|trans }}#}
+                                    {#</a>#}
+                                    <a href="#" class="btn btn-outline-primary">
+                                        <i class="fa fa-plus"></i> {{ 'Commercial.ProductDIOrder.AddLine'|trans }}
+                                    </a>
+                                </div>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <table id="productDIOrderLinesDatatable"
+                                   class="table table-striped table-bordered table-hover"
+                                   cellpadding="0" cellspacing="0" border="0">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{ 'Commercial.ProductDIOrderLine.ProductName'|trans }}</th>
+                                    <th>{{ 'Commercial.ProductDIOrderLine.UnitPrice'|trans }}</th>
+                                    <th>{{ 'Commercial.ProductDIOrderLine.Quantity'|trans }}</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for productDIOrderLine in productDIOrder.productDIOrderLines %}
+                                    <tr>
+                                        <td>{{ productDIOrderLine.id }}</td>
+                                        <td>{{ productDIOrderLine.productName }}</td>
+                                        <td>{{ productDIOrderLine.unitPrice }}</td>
+                                        <td>{{ productDIOrderLine.quantity }}</td>
+                                        <td class="text-center">
+                                            <a href="javascript:void(0);"
+                                               class="btn btn-warning btn-sm mx-1"
+                                               data-target="#editLigneModal"
+                                               data-toggle="modal"
+                                               data-id="{{ productDIOrderLine.id }}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a href="javascript:void(0);"
+                                               class="btn btn-danger btn-sm catalogProductDIOrderLineEditButton">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -158,7 +275,11 @@
 {% endblock %}
 
         {% block javascripts %}
-
+            <!-- DATA TABLES JS -->
+            <script type="text/javascript"
+                    src="{{ asset('/assets/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+            <script type="text/javascript"
+                    src="{{ asset('/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
             <script>
                 $(function () {
 
@@ -173,7 +294,25 @@
                         });
 
                     });
+                    {#var productDIOrderLinesTable = $('#productDIOrderLinesDatatable').DataTable({#}
+                        {#"language": {#}
+                            {#"lengthMenu": "{{ 'General.Datatable.Records-per-page'|trans }}",#}
+                            {#"zeroRecords": "{{ 'General.Datatable.Nothing-found'|trans }}",#}
+                            {#"info": "{{ 'General.Datatable.Showing-page'|trans }}",#}
+                            {#"infoEmpty": "{{ 'General.Datatable.No-records-available'|trans }}",#}
+                            {#"search": "{{ 'General.Datatable.Search'|trans }}:",#}
+                            {#"sProcessing": "{{ 'General.Datatable.Loading'|trans }}",#}
+                            {#"paginate": {#}
+                                {#"previous": "{{ 'General.Datatable.Previous'|trans }}",#}
+                                {#"next": "{{ 'General.Datatable.Next'|trans }}",#}
+                            {#}#}
 
+                        {#},#}
+                        {#"bSortCellsTop": true,#}
+                        {#dom: '<"ml-auto">lrti<"ml-auto">p',#}
+
+                    {#});#}
+                    {#$(productDIOrderLinesTable.table().container()).removeClass('form-inline');#}
                 });
             </script>
         {% endblock %}
