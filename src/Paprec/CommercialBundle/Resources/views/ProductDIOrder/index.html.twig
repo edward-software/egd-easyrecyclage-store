@@ -26,7 +26,8 @@
                     <h4>
                         <i class="fa fa-list"></i> {{ 'Commercial.ProductDIOrder.List'|trans }}
                         <div class="float-right">
-                            <a href="{{ path('paprec_commercial_productDIOrder_add') }}" class="btn btn-outline-primary">
+                            <a href="{{ path('paprec_commercial_productDIOrder_add') }}"
+                               class="btn btn-outline-primary">
                                 <i class="fa fa-plus"></i> {{ 'Commercial.ProductDIOrder.Add'|trans }}
                             </a>
                             <a href="{{ path('paprec_commercial_productDIOrder_export') }}" class="btn btn-primary ">
@@ -43,6 +44,8 @@
                         <tr>
                             <th>#</th>
                             <th>{{ 'Commercial.ProductDIOrder.BusinessName'|trans }}</th>
+                            <th>{{ 'Commercial.ProductDIOrder.TotalAmount'|trans }}</th>
+                            <th>{{ 'Commercial.ProductDIOrder.OrderStatus'|trans }}</th>
                             <th>{{ 'Commercial.ProductDIOrder.Date-crea'|trans }}</th>
                             <th></th>
                         </tr>
@@ -120,6 +123,8 @@
                 "columns": [
                     {"data": "id"},
                     {"data": "businessName"},
+                    {"data": "totalAmount"},
+                    {"data": "orderStatus"},
                     {"data": "dateCreation"},
                     {"data": "id", "width": "10%", "bSortable": false}
                 ],

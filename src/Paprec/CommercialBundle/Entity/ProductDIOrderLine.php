@@ -49,7 +49,6 @@ class ProductDIOrderLine
      * @var string
      *
      * @ORM\Column(name="productName", type="string", length=255)
-     * @Assert\NotBlank()
      */
     private $productName;
 
@@ -57,16 +56,21 @@ class ProductDIOrderLine
      * @var float
      *
      * @ORM\Column(name="unitPrice", type="float")
-     * @Assert\NotBlank()
-     * @Assert\Type(type="float")
      */
     private $unitPrice;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="totalAmount", type="float")
+     */
+    private $totalAmount;
+
 
     /**
      * @var integer
      *
      * @ORM\Column(name="quantity", type="integer")
-     * @Assert\NotBlank()
      */
     private $quantity;
 
@@ -297,5 +301,29 @@ class ProductDIOrderLine
     public function getProductDIOrder()
     {
         return $this->productDIOrder;
+    }
+
+    /**
+     * Set totalAmount.
+     *
+     * @param float $totalAmount
+     *
+     * @return ProductDIOrderLine
+     */
+    public function setTotalAmount($totalAmount)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return float
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Paprec\PublicBundle\Controller\DI;
 
+use Paprec\CommercialBundle\Entity\ProductDIOrder;
+use Paprec\CommercialBundle\Form\ProductDIOrderShortType;
 use Paprec\PublicBundle\Entity\Cart;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -51,13 +53,47 @@ class SubscriptionController extends Controller
     public function step2Action(Request $request, $cartUuid)
     {
         $cartManager = $this->get('paprec.cart_manager');
-        $categoryManager = $this->get('paprec_catalog.category_manager');
-        $productDICategoryManager = $this->get('paprec_catalog.product_di_manager');
-
+        $productDIOrderManager = $this->get('paprec_catalog.product_di_order_manager');
 
         $cart = $cartManager->get($cartUuid);
+
+        $postalCode = substr($cart->getLocation(),0, 5);
+        $city = substr($cart->getLocation(),5);
+
+        $productDIOrder = new ProductDIOrder();
+        $productDIOrder->setCity($city);
+        $productDIOrder->setPostalCode($postalCode);
+
+        $form = $this->createForm(ProductDIOrderShortType::class, $productDIOrder);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $productDIOrder = $form->getData();
+            $productDIOrder->setOrderStatus('Créé');
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($productDIOrder);
+            $em->flush();
+
+            // On récupère tous les produits ajoutés au Cart
+            foreach ($cart->getContent() as $item) {
+                $productDIOrderManager->addLineFromCart($productDIOrder, $item['pId'], $item['qtty']);
+            }
+
+
+
+            return $this->redirectToRoute('paprec_public_DI_subscription_step3', array(
+                'cartUuid' => $cart->getId()
+            ));
+
+        }
+
+
         return $this->render('@PaprecPublic/DI/contactDetails.html.twig', array(
-            'cart' => $cart
+            'cart' => $cart,
+            'form' => $form->createView()
         ));
     }
 

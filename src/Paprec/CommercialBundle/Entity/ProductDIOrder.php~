@@ -125,7 +125,6 @@ class ProductDIOrder
      * @var string
      *
      * @ORM\Column(name="orderStatus", type="string", length=255)
-     * @Assert\NotBlank()
      */
     private $orderStatus;
 
@@ -133,9 +132,7 @@ class ProductDIOrder
     /**
      * @var float
      *
-     * @ORM\Column(name="totalAmount", type="float")
-     * @Assert\NotBlank()
-     * @Assert\Type(type="float")
+     * @ORM\Column(name="totalAmount", type="float", nullable=true)
      */
     private $totalAmount;
 
@@ -143,7 +140,6 @@ class ProductDIOrder
      * @var float
      *
      * @ORM\Column(name="generatedTurnover", type="float", nullable=true)
-     * @Assert\Type(type="float")
      */
     private $generatedTurnover;
 
@@ -165,7 +161,6 @@ class ProductDIOrder
      * @var float
      *
      * @ORM\Column(name="tonnage", type="float", nullable=true)
-     * @Assert\Type(type="float")
      */
     private $tonnage;
 
@@ -768,5 +763,29 @@ class ProductDIOrder
     public function getBusinessLine()
     {
         return $this->businessLine;
+    }
+
+    /**
+     * Set orderStatus.
+     *
+     * @param string $orderStatus
+     *
+     * @return ProductDIOrder
+     */
+    public function setOrderStatus($orderStatus)
+    {
+        $this->orderStatus = $orderStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get orderStatus.
+     *
+     * @return string
+     */
+    public function getOrderStatus()
+    {
+        return $this->orderStatus;
     }
 }

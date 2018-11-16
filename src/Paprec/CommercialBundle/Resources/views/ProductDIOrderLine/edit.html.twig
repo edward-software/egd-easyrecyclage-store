@@ -1,0 +1,93 @@
+{% extends "::base_admin.html.twig" %}
+
+{% block title %}
+    {{ 'Catalog.GrilleTarifD3E.Add'|trans }}
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block content_title %}
+    {{ 'Catalog.GrilleTarifD3E.GrilleTarifD3Es'|trans }}
+{% endblock %}
+
+{% block main_content %}
+
+    <form id="catalogGrilleTarifD3EForm" action="" method="post" enctype="multipart/form-data">
+
+        <div class="col-md-12">
+            <!-- BOX -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fa fa-plus"></i> {{ 'Catalog.GrilleTarifD3E.Add'|trans }}
+                        <div class="float-right">
+                            <a href="javascript:void(0);" class="btn btn-success catalog-grilleTarifD3E-save-button"><i
+                                        class="fa fa-check"></i> {{ 'Catalog.GrilleTarifD3E.Save'|trans }}</a>
+                            <a href="javascript:void(0);" class="btn btn-danger catalog-grilleTarifD3E-cancel-button"><i
+                                        class="fa fa-close"></i> {{ 'Catalog.GrilleTarifD3E.Cancel'|trans }}</a>
+                        </div>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">{{ 'Commercial.ProductDIOrder.Informations'|trans }}</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="form-label">{{ 'Commercial.ProductDIOrderLine.Quantity'|trans }}</label>
+                                    <div class="form-content">
+                                        {{ form_widget(form.quantity, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.quantity) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="float-right">
+                        <a href="javascript:void(0);" class="btn btn-success catalog-grilleTarifD3E-save-button"><i
+                                    class="fa fa-check"></i> {{ 'Catalog.GrilleTarifD3E.Save'|trans }}</a>
+                        <a href="javascript:void(0);" class="btn btn-danger catalog-grilleTarifD3E-cancel-button"><i
+                                    class="fa fa-close"></i> {{ 'Catalog.GrilleTarifD3E.Cancel'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_rest(form) }}
+    </form>
+    </div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        $(function () {
+
+            $('.catalog-grilleTarifD3E-save-button').on('click', function () {
+                $('#catalogGrilleTarifD3EForm').submit();
+            });
+
+
+            $('.catalog-grilleTarifD3E-cancel-button').on('click', function () {
+
+                var url = "{{ path("paprec_catalog_productDI_view", { id: productDIOrder.id }) }}";
+
+                bootbox.confirm("{{ 'Commercial.ProductDIOrder.Confirm-cancel'|trans }}", function (result) {
+                    if (result === true) {
+                        $(location).attr('href', url);
+                    }
+                });
+
+            });
+
+        });
+    </script>
+{% endblock %}

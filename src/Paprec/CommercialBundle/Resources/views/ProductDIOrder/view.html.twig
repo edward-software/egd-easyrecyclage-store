@@ -64,7 +64,9 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.BusinessLine'|trans }}</label>
                                     <label class="col-form-label">
-                                        <a href="{{path('paprec_commercial_businessLine_view', {id: productDIOrder.businessLine.id}) }}">{{ productDIOrder.businessLine.name }}</a>
+                                        {% if productDIOrder.businessLine %}
+                                            <a href="{{ path('paprec_commercial_businessLine_view', {id: productDIOrder.businessLine.id}) }}">{{ productDIOrder.businessLine.name }}</a>
+                                        {% endif %}
                                     </label>
                                 </div>
                                 <div class="form-group row">
@@ -151,7 +153,9 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.Agency'|trans }}</label>
                                     <label class="col-form-label">
-                                        <a href="{{path('paprec_commercial_agence_view', {id: productDIOrder.agency.id}) }}">{{ productDIOrder.agency }}</a>
+                                        {% if productDIOrder.agency %}
+                                            <a href="{{ path('paprec_commercial_agence_view', {id: productDIOrder.agency.id}) }}">{{ productDIOrder.agency }}</a>
+                                        {% endif %}
                                     </label>
                                 </div>
                                 <div class="form-group row">
@@ -163,7 +167,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.Frequency'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ productDIOrder.frequency }}
+                                        {% if productDIOrder.frequency == 'regular' %}Régulier {% else %}Ponctuel{% endif %}
                                     </label>
                                 </div>
                             </div>
@@ -183,7 +187,9 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.UserInCharge'|trans }}</label>
                                     <label class="col-form-label">
-                                        <a href="{{path('paprec_user_user_view', {id: productDIOrder.userInCharge.id}) }}">{{ productDIOrder.userInCharge }}</a>
+                                        {% if productDIOrder.userInCharge %}
+                                            <a href="{{ path('paprec_user_user_view', {id: productDIOrder.userInCharge.id}) }}">{{ productDIOrder.userInCharge }}</a>
+                                        {% endif %}
                                     </label>
                                 </div>
                             </div>
@@ -196,10 +202,8 @@
                             <h5>
                                 {{ 'Commercial.ProductDIOrder.ProductsList'|trans }}
                                 <div class="float-right">
-                                    {#<a href="{{ path('paprec_commercial_productDIOrder_add') }}" class="btn btn-outline-primary">#}
-                                    {#<i class="fa fa-plus"></i> {{ 'Commercial.ProductDIOrder.Add'|trans }}#}
-                                    {#</a>#}
-                                    <a href="#" class="btn btn-outline-primary">
+
+                                    <a href="{{ path('paprec_commercial_productDIOrder_addLine', {id: productDIOrder.id}) }}" class="btn btn-outline-primary">
                                         <i class="fa fa-plus"></i> {{ 'Commercial.ProductDIOrder.AddLine'|trans }}
                                     </a>
                                 </div>
@@ -215,6 +219,8 @@
                                     <th>{{ 'Commercial.ProductDIOrderLine.ProductName'|trans }}</th>
                                     <th>{{ 'Commercial.ProductDIOrderLine.UnitPrice'|trans }}</th>
                                     <th>{{ 'Commercial.ProductDIOrderLine.Quantity'|trans }}</th>
+                                    <th>{{ 'Commercial.ProductDIOrderLine.TotalAmount'|trans }}</th>
+
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -225,16 +231,16 @@
                                         <td>{{ productDIOrderLine.productName }}</td>
                                         <td>{{ productDIOrderLine.unitPrice }}</td>
                                         <td>{{ productDIOrderLine.quantity }}</td>
+                                        <td>{{ productDIOrderLine.totalAmount }}</td>
                                         <td class="text-center">
-                                            <a href="javascript:void(0);"
+                                            <a href="{{ path('paprec_commercial_productDIOrder_editLine', {id: productDIOrder.id, orderLineId: productDIOrderLine.id}) }}"
                                                class="btn btn-warning btn-sm mx-1"
-                                               data-target="#editLigneModal"
-                                               data-toggle="modal"
                                                data-id="{{ productDIOrderLine.id }}">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a href="javascript:void(0);"
-                                               class="btn btn-danger btn-sm catalogProductDIOrderLineEditButton">
+                                            <a href="#"
+                                               class="btn btn-danger btn-sm catalogProductDIOrderLineRemoveButton"
+                                               data-id="{{ productDIOrderLine.id }}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </td>
@@ -294,25 +300,17 @@
                         });
 
                     });
-                    {#var productDIOrderLinesTable = $('#productDIOrderLinesDatatable').DataTable({#}
-                        {#"language": {#}
-                            {#"lengthMenu": "{{ 'General.Datatable.Records-per-page'|trans }}",#}
-                            {#"zeroRecords": "{{ 'General.Datatable.Nothing-found'|trans }}",#}
-                            {#"info": "{{ 'General.Datatable.Showing-page'|trans }}",#}
-                            {#"infoEmpty": "{{ 'General.Datatable.No-records-available'|trans }}",#}
-                            {#"search": "{{ 'General.Datatable.Search'|trans }}:",#}
-                            {#"sProcessing": "{{ 'General.Datatable.Loading'|trans }}",#}
-                            {#"paginate": {#}
-                                {#"previous": "{{ 'General.Datatable.Previous'|trans }}",#}
-                                {#"next": "{{ 'General.Datatable.Next'|trans }}",#}
-                            {#}#}
+                    $('.catalogProductDIOrderLineRemoveButton').on('click', function () {
+                        orderLineId = $(this).data('id');
+                        var url = "{{ path("paprec_commercial_productDIOrder_removeLine", {id: productDIOrder.id, orderLineId: 'orderLineIdTmp'}) }}".replace('orderLineIdTmp', orderLineId);
 
-                        {#},#}
-                        {#"bSortCellsTop": true,#}
-                        {#dom: '<"ml-auto">lrti<"ml-auto">p',#}
+                        bootbox.confirm("{{ 'Commercial.ProductDIOrderLine.Confirm-remove'|trans }}", function (result) {
+                            if (result === true) {
+                                $(location).attr('href', url);
+                            }
+                        });
+                    });
 
-                    {#});#}
-                    {#$(productDIOrderLinesTable.table().container()).removeClass('form-inline');#}
                 });
             </script>
         {% endblock %}

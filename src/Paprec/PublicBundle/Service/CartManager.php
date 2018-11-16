@@ -222,4 +222,5 @@ class CartManager
     {
         return 100;
     }
+
 }

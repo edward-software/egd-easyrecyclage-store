@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductDIOrderType extends AbstractType
+class ProductDIOrderShortType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -29,6 +29,8 @@ class ProductDIOrderType extends AbstractType
                 'class' => BusinessLine::class,
                 'multiple' => false,
                 'expanded' => false,
+                'placeholder' => 'Commercial.ProductDIOrder.BusinessLinePlaceholder',
+                'empty_data'  => null,
                 'choice_label' => 'name',
                 'query_builder' => function (BusinessLineRepository $er) {
                     return $er->createQueryBuilder('b')
@@ -37,8 +39,8 @@ class ProductDIOrderType extends AbstractType
             ))
             ->add('civility', ChoiceType::class, array(
                 'choices'  => array(
-                    'M' => 'M',
-                    'Mme' => 'Mme',
+                    'Monsieur' => 'M',
+                    'Madame' => 'Mme',
                 ),
                 'expanded' => true
             ))
@@ -50,55 +52,15 @@ class ProductDIOrderType extends AbstractType
             ->add('address', TextareaType::class)
             ->add('postalCode', TextType::class)
             ->add('city', TextType::class)
-            ->add('phone', TextType::class)
-            ->add('orderStatus', ChoiceType::class, array(
-                "choices" => $options['status'],
-            ))
-            ->add('totalAmount', TextType::class)
-            ->add('generatedTurnover', TextType::class)
-            ->add('summary', TextareaType::class)
-            ->add('frequency', ChoiceType::class, array(
-                'choices'  => array(
-                    'Régulier' => 'regular',
-                    'Ponctuel' => 'ponctual',
-                ),
-                'expanded' => true
-            ))
-            ->add('tonnage', TextType::class)
-            ->add('kookaburaNumber', TextType::class)
-            ->add('userInCharge', EntityType::class, array(
-                'class' => User::class,
-                'multiple' => false,
-                'expanded' => false,
-                'placeholder' => '',
-                'empty_data'  => null,
-                'choice_label' => 'username',
-                'query_builder' => function (UserRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->where('u.deleted IS NULL')
-                        ->where('u.enabled = 1');
-                }
-            ))
-            ->add('agency', EntityType::class, array(
-                'class' => Agency::class,
-                'multiple' => false,
-                'expanded' => false,
-                'placeholder' => '',
-                'empty_data'  => null,
-                'choice_label' => 'name',
-                'query_builder' => function (AgencyRepository $er) {
-                    return $er->createQueryBuilder('a')
-                        ->where('a.deleted IS NULL');
-                }
-            ));
+            ->add('phone', TextType::class);
+
     }/**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\ProductDIOrder',
-            'status' => null
+            'data_class' => 'Paprec\CommercialBundle\Entity\ProductDIOrder'
         ));
     }
 
