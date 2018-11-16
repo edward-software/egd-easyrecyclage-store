@@ -369,14 +369,6 @@ class ProductDIOrderController extends Controller
             $productDIOrderManager = $this->get('paprec_catalog.product_di_order_manager');
 
             $productDIOrderManager->editLine($productDIOrder, $productDIOrderLine);
-//            $em = $this->getDoctrine()->getManager();
-//            $total = $productDIOrderManager->calculateTotalLine($productDIOrder, $productDIOrderLine);
-//            $productDIOrderLine->setTotalAmount($total);
-//            $em->flush();
-//
-//            $total = $productDIOrderManager->calculateTotal($productDIOrder);
-//            $productDIOrder->setTotalAmount($total);
-//            $em->flush();
 
             return $this->redirectToRoute('paprec_commercial_productDIOrder_view', array(
                 'id' => $productDIOrder->getId()

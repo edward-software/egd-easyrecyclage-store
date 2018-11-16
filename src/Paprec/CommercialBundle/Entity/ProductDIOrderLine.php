@@ -52,6 +52,8 @@ class ProductDIOrderLine
      */
     private $productName;
 
+
+
     /**
      * @var float
      *

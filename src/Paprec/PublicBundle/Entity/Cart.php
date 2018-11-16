@@ -84,6 +84,7 @@ class Cart
     {
         $this->dateCreation = new \DateTime();
         $this->setDisplayedProducts = array();
+        $this->content = array();
 
     }
 

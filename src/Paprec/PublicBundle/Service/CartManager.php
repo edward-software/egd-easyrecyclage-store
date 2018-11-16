@@ -202,11 +202,13 @@ class CartManager
         // on récupère les products ajoutés au cart
         $productsCategories = $cart->getContent();
         $loadedCart = array();
+        $loadedCart['sum'] = 0;
         if ($productsCategories && count($productsCategories)) {
             foreach ($productsCategories as $productsCategory) {
                 $productDI = $productDIManager->get($productsCategory['pId']);
                 $categoryName = $categoryManager->get($productsCategory['cId'])->getName();
                 $loadedCart[$productsCategory['pId'] . '_' . $productsCategory['cId']] = ['qtty' => $productsCategory['qtty'], 'pName' => $productDI->getName(), 'pCapacity' => $productDI->getCapacity() . $productDI->getCapacityUnit(), 'cName' => $categoryName, 'frequency' => $cart->getFrequency()];
+                $loadedCart['sum'] += $productDI->getUnitPrice()*$productsCategory['qtty'];
             }
         } else {
             return $loadedCart;
@@ -214,7 +216,6 @@ class CartManager
         // On trie par ordre croissant sur les clés, donc par les id des produits
         // ainsi les mêmes produits dans 2 catégories différentes
         ksort($loadedCart);
-        $loadedCart['sum'] = $this->calculateAmount();
         return $loadedCart;
     }
 

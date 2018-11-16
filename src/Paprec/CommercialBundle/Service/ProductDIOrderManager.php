@@ -57,6 +57,7 @@ class ProductDIOrderManager
     public function addLine(ProductDIOrder $productDIOrder, ProductDIOrderLine $productDIOrderLine)
     {
         $productDIOrderLine->setProductDIOrder($productDIOrder);
+        $productDIOrder->addProductDIOrderLine($productDIOrderLine);
         $productDIOrderLine->setUnitPrice($productDIOrderLine->getProductDI()->getUnitPrice());
         $productDIOrderLine->setProductName($productDIOrderLine->getProductDI()->getName());
 
@@ -79,7 +80,6 @@ class ProductDIOrderManager
 
         $totalLine = $this->calculateTotalLine($productDIOrderLine);
         $productDIOrderLine->setTotalAmount($totalLine);
-        $this->em->persist($productDIOrderLine);
         $this->em->flush();
 
         $total = $this->calculateTotal($productDIOrder);

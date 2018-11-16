@@ -37,11 +37,11 @@
                 <div class="step">
                     <div class="step__sucess">
                         <div class="title">MERCI POUR VOTRE CONFIANCE !</div>
-                        <div class="content">Votre demande a bien été prise en compte par nos agencies et vous a été
+                        <div class="content">Votre demande a bien été prise en compte par nos agences et vous a été
                             envoyée par mail.
                         </div>
                     </div>
-                    <div class="bold">Monsieur Mathieu Petithuguenin,</div>
+                    <div class="bold">{% if productDIOrder.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productDIOrder.firstName }} {{ productDIOrder.lastName  }},</div>
 
                     <div class="recaptitle">Voici le récapitulatif de votre demande.</div>
                     <div class="greyrecap">
@@ -53,34 +53,25 @@
                         </div>
                         <div class="right">
                             À PARTIR DE
-                            <span>120€</span>
+                            <span>{{ productDIOrder.totalAmount }}€</span>
                         </div>
                     </div>
 
                     <div class="greennotice">
-                        L’agency en charge de votre demande vous recontactera sous 48h par e-mail ou téléphone afin de
+                        L’agence en charge de votre demande vous recontactera sous 48h par e-mail ou téléphone afin de
                         valider un devis.
                     </div>
-
+                    {% for productDIOrderLine in productDIOrder.productDIOrderLines %}
                     <div class="recapproduct">
                         <div class="wrapperimage">
-                            <img src="http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/PictoBenne_L.svg"
+                            <img src="{% if productDIOrderLine.productDI.pilotPictures %}{{ asset('/uploads/pictos/' ~ productDIOrderLine.productDI.pilotPictures[0].path) }}{% endif %}"
                                  alt="#">
                         </div>
-                        <div class="name">1 x BENNE 20M3</div>
+                        <div class="name">{{ productDIOrderLine.quantity }} x {{ productDIOrderLine.productDI.name }} {{ productDIOrderLine.productDI.capacity }}{{ productDIOrderLine.productDI.capacityUnit }}</div>
                         <div class="nameof">de DIB</div>
                         <div class="desc">Prestation ponctuelle</div>
                     </div>
-
-                    <div class="recapproduct">
-                        <div class="wrapperimage">
-                            <img src="http://wordpress.eggers-digital.com/wp-content/themes/paprec/img/temp/Bac.svg"
-                                 alt="#">
-                        </div>
-                        <div class="name">1 x BAC 1000L</div>
-                        <div class="nameof">de papiers</div>
-                        <div class="desc">Prestation ponctuelle</div>
-                    </div>
+                    {% endfor %}
 
                     <a href="#" class="backtohome button button--green">RETOUR À LA PAGE D’ACCUEIL</a>
 

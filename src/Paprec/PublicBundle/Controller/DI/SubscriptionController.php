@@ -57,8 +57,8 @@ class SubscriptionController extends Controller
 
         $cart = $cartManager->get($cartUuid);
 
-        $postalCode = substr($cart->getLocation(),0, 5);
-        $city = substr($cart->getLocation(),5);
+        $postalCode = substr($cart->getLocation(), 0, 5);
+        $city = substr($cart->getLocation(), 5);
 
         $productDIOrder = new ProductDIOrder();
         $productDIOrder->setCity($city);
@@ -72,6 +72,7 @@ class SubscriptionController extends Controller
 
             $productDIOrder = $form->getData();
             $productDIOrder->setOrderStatus('Créé');
+            $productDIOrder->setFrequency($cart->getFrequency());
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($productDIOrder);
@@ -83,9 +84,9 @@ class SubscriptionController extends Controller
             }
 
 
-
             return $this->redirectToRoute('paprec_public_DI_subscription_step3', array(
-                'cartUuid' => $cart->getId()
+                'cartUuid' => $cart->getId(),
+                'orderId' => $productDIOrder->getId()
             ));
 
         }
@@ -98,23 +99,20 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * @Route("/step3/{cartUuid}", name="paprec_public_DI_subscription_step3")
+     * @Route("/step3/{cartUuid}/{orderId}", name="paprec_public_DI_subscription_step3")
      */
-    public function step3Action(Request $request, $cartUuid)
+    public function step3Action(Request $request, $cartUuid, $orderId)
     {
         $cartManager = $this->get('paprec.cart_manager');
-        $categoryManager = $this->get('paprec_catalog.category_manager');
-        $productDICategoryManager = $this->get('paprec_catalog.product_di_manager');
+        $em = $this->getDoctrine()->getManager();
 
-
+        $productDIOrder = $em->getRepository('PaprecCommercialBundle:ProductDIOrder')->find($orderId);
         $cart = $cartManager->get($cartUuid);
+
         return $this->render('@PaprecPublic/DI/offerDetails.html.twig', array(
-            'cart' => $cart
+            'productDIOrder' => $productDIOrder
         ));
     }
-
-
-
 
 
     /**
