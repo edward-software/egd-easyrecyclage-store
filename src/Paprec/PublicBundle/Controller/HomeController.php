@@ -28,6 +28,7 @@ class HomeController extends Controller
          * step définie le prochain champ à afficher
          * Par défaut on est à la step l (location)
          * Quand l est définie on passe à l'étape d puis f
+         * si on choisit "Régulier", on passe en étape r
          */
         $step = "l";
         $divisions = $this->getParameter('paprec_divisions');
@@ -52,7 +53,7 @@ class HomeController extends Controller
                             'cartUuid' => $cart->getId()
                         ));
                     } else {
-
+                        $step = "r";
                     }
             }
         }

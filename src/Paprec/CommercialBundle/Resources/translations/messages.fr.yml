@@ -99,3 +99,42 @@ Commercial:
     TotalAmount:                Montant total
     Confirm-remove:             Etes-vous sûr de vouloir supprimer cette ligne du devis DI ?
 
+  OrderRequest:
+    OrderRequests:              Demandes de devis
+    List:                       Liste des demandes de devis
+    Date-creation:              Date de création
+    Date-crea:                  Date de créa.
+    Date-update:                Date de mise à jour
+    BusinessName:               Raison sociale
+    Civility:                   Civilité
+    LastName:                   Nom
+    FirstName:                  Prénom
+    Email:                      Email
+    Address:                    Adresse
+    PostalCode:                 Code postal
+    City:                       Ville
+    Phone:                      Téléphone
+    Need:                       Mon besoin
+    Division:                   Division
+    OrderStatus:                Statut
+    TotalAmount:                Montant total
+    GeneratedTurnover:          CA généré
+    Agency:                     Agence associée
+    Summary:                    Résumé du besoin
+    Frequency:                  Pontuel / Régulier
+    Tonnage:                    Tonnage
+    KookaburaNumber:            N° contrat Kookabura
+    UserInCharge:               Commercial en charge
+    Informations:               Informations
+    Informations-FO:            Informations Front Office
+    Informations-BO:            Informations Back Office
+    System-informations:        Informations système
+    Export:                     Exporter les demandes de devis
+    View:                       Visualiser la demande de devis
+    Edit:                       Modifier le demande de devis
+    Remove:                     Supprimer la demande de devis
+    Save:                       Enregistrer
+    Cancel:                     Annuler
+    Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+    Confirm-remove:             Etes-vous sûr de vouloir supprimer cette demande de devis ?
+

@@ -105,11 +105,11 @@
                         <div id="frequencyRadioBox"
                              data-url="{{ path('paprec_public_home_index', {l: 'locationTmp', d: 'divisionTmp', f: 'frequencyTmp' }) }}">
                             <input class="input__radio" type="radio" id="ponctualRadio" name="frequencyRadio"
-                                   value="ponctual" checked>
+                                   value="ponctual" {% if cart.frequency == 'ponctual' %}checked{% endif %}>
                             <label for="ponctualRadio">{{ 'Public.Cart.Ponctal'|trans }}</label>
 
                             <input class="input__radio" type="radio" id="regularRadio" name="frequencyRadio"
-                                   value="regular">
+                                   value="regular" {% if cart.frequency == 'regular' %}checked{% endif %}>
                             <label for="regularRadio">{{ 'Public.Cart.Regular'|trans }}</label>
                         </div>
                         <div class="clearfix"></div>

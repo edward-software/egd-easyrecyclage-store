@@ -129,7 +129,7 @@ class ProductDIOrderController extends Controller
             ->setCellValue('R1', 'Tonnage')
             ->setCellValue('S1', 'Date création');
 
-        $phpExcelObject->getActiveSheet()->setTitle('Secteurs d\'activités');
+        $phpExcelObject->getActiveSheet()->setTitle('Devis DI');
         $phpExcelObject->setActiveSheetIndex(0);
 
         $i = 2;

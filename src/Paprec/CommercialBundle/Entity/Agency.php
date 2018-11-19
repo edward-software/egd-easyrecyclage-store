@@ -132,6 +132,12 @@ class Agency
      */
     private $productDIOrders;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\OrderRequest", mappedBy="agency")
+     */
+    private $orderRequests;
+
+
 
     public function __construct()
     {
@@ -512,5 +518,41 @@ class Agency
     public function getProductDIOrders()
     {
         return $this->productDIOrders;
+    }
+
+    /**
+     * Add orderRequest.
+     *
+     * @param \Paprec\CommercialBundle\Entity\OrderRequest $orderRequest
+     *
+     * @return Agency
+     */
+    public function addOrderRequest(\Paprec\CommercialBundle\Entity\OrderRequest $orderRequest)
+    {
+        $this->orderRequests[] = $orderRequest;
+
+        return $this;
+    }
+
+    /**
+     * Remove orderRequest.
+     *
+     * @param \Paprec\CommercialBundle\Entity\OrderRequest $orderRequest
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeOrderRequest(\Paprec\CommercialBundle\Entity\OrderRequest $orderRequest)
+    {
+        return $this->orderRequests->removeElement($orderRequest);
+    }
+
+    /**
+     * Get orderRequests.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrderRequests()
+    {
+        return $this->orderRequests;
     }
 }

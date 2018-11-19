@@ -73,7 +73,7 @@
                                     <option value="{{ division }}">{{ division }}</option>
                                 {% endfor %}
                             </select>
-                            {% if step == 'f' %}
+                            {% if step == 'f' or step == 'r' %}
                                 <br>
                                 <div id="frequencyRadioBox"
                                      data-url="{{ path('paprec_public_home_index', {l: 'locationTmp', d: 'divisionTmp', f: 'frequencyTmp' }) }}">
@@ -86,7 +86,12 @@
                                     <label for="regularRadio">{{ 'Public.Cart.Regular'|trans }}</label>
                                 </div>
                                 <div class="clearfix"></div>
+                                {% if step == 'r' %}
+                                    <a class="button button--grey" href="#">{{ 'Public.Cart.NeedEstimation'|trans }}</a>
+                                    <a class="button button--grey" href="#">{{ 'Public.Cart.FillForm'|trans }}</a>
+                                {% endif %}
                             {% endif %}
+
                         </div>
                     </div>
                 {% endif %}

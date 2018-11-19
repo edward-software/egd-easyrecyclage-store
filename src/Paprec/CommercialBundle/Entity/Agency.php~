@@ -132,6 +132,12 @@ class Agency
      */
     private $productDIOrders;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\OrderRequest", mappedBy="agency")
+     */
+    private $orderRequests;
+
+
 
     public function __construct()
     {
