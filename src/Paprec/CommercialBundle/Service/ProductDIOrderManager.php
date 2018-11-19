@@ -58,7 +58,13 @@ class ProductDIOrderManager
     {
         $productDIOrderLine->setProductDIOrder($productDIOrder);
         $productDIOrder->addProductDIOrderLine($productDIOrderLine);
-        $productDIOrderLine->setUnitPrice($productDIOrderLine->getProductDI()->getUnitPrice());
+        $productDICategory = $this->em->getRepository('PaprecCatalogBundle:ProductDICategory')->findOneBy(
+            array(
+                'productDI' => $productDIOrderLine->getProductDI(),
+                'category' => $productDIOrderLine->getCategory()
+            )
+        );
+        $productDIOrderLine->setUnitPrice($productDICategory->getUnitPrice());
         $productDIOrderLine->setProductName($productDIOrderLine->getProductDI()->getName());
         $productDIOrderLine->setCategoryName($productDIOrderLine->getCategory()->getName());
 

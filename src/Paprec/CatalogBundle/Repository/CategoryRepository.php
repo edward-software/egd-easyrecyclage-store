@@ -10,6 +10,25 @@ namespace Paprec\CatalogBundle\Repository;
  */
 class CategoryRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function test1() {
+        $pcRepo = $this->_em->getRepository('PaprecCatalogBundle:ProductDICategory');
+        return $pcRepo->createQueryBuilder('pc')
+            ->select('pc.categoryId')
+            ->innerJoin('PaprecCatalogBundle:ProductDI', 'p',\Doctrine\ORM\Query\Expr\Join::WITH, 'pc.productId = p.id')
+            ->where('p.id = :productId');
+    }
 
+
+    public function test2($productId)
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin($this->test1(), 'pc', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.id = pc.categoryId')
+            ->where('c.division = \'DI\'')
+            ->andWhere('c.deleted is NULL')
+            ->andWhere('pc.categoryId is NULL')
+            ->distinct()
+            ->orderBy('c.name', 'ASC')
+            ->setParameter('productId', $productId);
+    }
 
 }

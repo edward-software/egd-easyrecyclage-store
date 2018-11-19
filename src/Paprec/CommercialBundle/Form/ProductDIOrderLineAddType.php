@@ -30,7 +30,7 @@ class ProductDIOrderLineAddType extends AbstractType
                 'class' => 'PaprecCatalogBundle:ProductDI',
                 'query_builder' => function (ProductDIRepository $er) {
                     return $er->createQueryBuilder('p')
-                        ->innerJoin('PaprecCatalogBundle:ProductDICategory', 'pc', \Doctrine\ORM\Query\Expr\Join::WITH, 'p.id = pc.category')
+                        ->leftJoin('PaprecCatalogBundle:ProductDICategory', 'pc', \Doctrine\ORM\Query\Expr\Join::WITH, 'p.id = pc.category')
                         ->distinct()
                         ->where('p.deleted is NULL')
                         ->orderBy('p.name', 'ASC');

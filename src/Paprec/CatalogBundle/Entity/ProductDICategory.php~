@@ -3,16 +3,16 @@
 namespace Paprec\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
- * ProductChantierCategory
+ * ProductDICategoryType
  *
- * @ORM\Table(name="productChantiers_categories")
- * @ORM\Entity(repositoryClass="Paprec\CatalogBundle\Repository\ProductChantierCategoryRepository")
+ * @ORM\Table(name="productDIs_categories")
+ * @ORM\Entity(repositoryClass="Paprec\CatalogBundle\Repository\ProductDICategoryRepository")
  */
-class ProductChantierCategory
+class ProductDICategory
 {
     /**
      * @var int
@@ -29,27 +29,29 @@ class ProductChantierCategory
      * @Assert\NotBlank()
      */
     private $position;
-    
+
     /**
      * @var float
      *
      * @ORM\Column(name="unitPrice", type="float")
      * @Assert\NotBlank()
+     * @Assert\Type(type="float")
      */
     private $unitPrice;
+
 
     /**************************************************************************************************
      * RELATIONS
      */
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\ProductChantier", inversedBy="productChantierCategories")
+     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\ProductDI", inversedBy="productDICategories")
      * @ORM\JoinColumn(name="productId", referencedColumnName="id", nullable=false)
      */
-    private $productChantier;
+    private $productDI;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\Category", inversedBy="productChantierCategories")
+     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\Category", inversedBy="productDICategories")
      * @ORM\JoinColumn(name="categoryId", referencedColumnName="id", nullable=false)
      */
     private $category;
@@ -75,7 +77,7 @@ class ProductChantierCategory
      *
      * @param int $position
      *
-     * @return ProductChantierCategory
+     * @return ProductDICategory
      */
     public function setPosition($position)
     {
@@ -95,27 +97,27 @@ class ProductChantierCategory
     }
 
     /**
-     * Set productChantier.
+     * Set productDI.
      *
-     * @param \Paprec\CatalogBundle\Entity\ProductChantier $productChantier
+     * @param \Paprec\CatalogBundle\Entity\ProductDI $productDI
      *
-     * @return ProductChantierCategory
+     * @return ProductDICategory
      */
-    public function setProductChantier(\Paprec\CatalogBundle\Entity\ProductChantier $productChantier)
+    public function setProductDI(\Paprec\CatalogBundle\Entity\ProductDI $productDI)
     {
-        $this->productChantier = $productChantier;
+        $this->productDI = $productDI;
 
         return $this;
     }
 
     /**
-     * Get productChantier.
+     * Get productDI.
      *
-     * @return \Paprec\CatalogBundle\Entity\ProductChantier
+     * @return \Paprec\CatalogBundle\Entity\ProductDI
      */
-    public function getProductChantier()
+    public function getProductDI()
     {
-        return $this->productChantier;
+        return $this->productDI;
     }
 
     /**
@@ -123,7 +125,7 @@ class ProductChantierCategory
      *
      * @param \Paprec\CatalogBundle\Entity\Category $category
      *
-     * @return ProductChantierCategory
+     * @return ProductDICategory
      */
     public function setCategory(\Paprec\CatalogBundle\Entity\Category $category)
     {
@@ -145,29 +147,5 @@ class ProductChantierCategory
     public function __toString()
     {
         return $this->category . ' ' . $this->position;
-    }
-
-    /**
-     * Set unitPrice.
-     *
-     * @param float $unitPrice
-     *
-     * @return ProductChantierCategory
-     */
-    public function setUnitPrice($unitPrice)
-    {
-        $this->unitPrice = $unitPrice;
-
-        return $this;
-    }
-
-    /**
-     * Get unitPrice.
-     *
-     * @return float
-     */
-    public function getUnitPrice()
-    {
-        return $this->unitPrice;
     }
 }

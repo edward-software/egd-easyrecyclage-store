@@ -206,9 +206,15 @@ class CartManager
         if ($productsCategories && count($productsCategories)) {
             foreach ($productsCategories as $productsCategory) {
                 $productDI = $productDIManager->get($productsCategory['pId']);
-                $categoryName = $categoryManager->get($productsCategory['cId'])->getName();
-                $loadedCart[$productsCategory['pId'] . '_' . $productsCategory['cId']] = ['qtty' => $productsCategory['qtty'], 'pName' => $productDI->getName(), 'pCapacity' => $productDI->getCapacity() . $productDI->getCapacityUnit(), 'cName' => $categoryName, 'frequency' => $cart->getFrequency()];
-                $loadedCart['sum'] += $productDI->getUnitPrice()*$productsCategory['qtty'];
+                $category = $categoryManager->get($productsCategory['cId']);
+                $loadedCart[$productsCategory['pId'] . '_' . $productsCategory['cId']] = ['qtty' => $productsCategory['qtty'], 'pName' => $productDI->getName(), 'pCapacity' => $productDI->getCapacity() . $productDI->getCapacityUnit(), 'cName' => $category->getName(), 'frequency' => $cart->getFrequency()];
+                $productDICategory = $this->em->getRepository('PaprecCatalogBundle:ProductDICategory')->findOneBy(
+                    array(
+                        'productDI' => $productDI,
+                        'category' => $category
+                    )
+                );
+                $loadedCart['sum'] += $productDICategory->getUnitPrice()*$productsCategory['qtty'];
             }
         } else {
             return $loadedCart;

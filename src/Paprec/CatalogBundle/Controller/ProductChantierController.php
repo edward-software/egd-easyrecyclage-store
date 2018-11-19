@@ -5,9 +5,13 @@ namespace Paprec\CatalogBundle\Controller;
 use Exception;
 use Paprec\CatalogBundle\Entity\Picture;
 use Paprec\CatalogBundle\Entity\ProductChantier;
+use Paprec\CatalogBundle\Entity\ProductChantierCategory;
 use Paprec\CatalogBundle\Form\PictureProductType;
+use Paprec\CatalogBundle\Form\ProductChantierCategoryAddType;
+use Paprec\CatalogBundle\Form\ProductChantierCategoryEditType;
 use Paprec\CatalogBundle\Form\ProductChantierType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -49,7 +53,6 @@ class ProductChantierController extends Controller
         $cols['name'] = array('label' => 'name', 'id' => 'p.name', 'method' => array('getName'));
         $cols['capacity'] = array('label' => 'capacity', 'id' => 'p.capacity', 'method' => array('getCapacity'));
         $cols['dimensions'] = array('label' => 'dimensions', 'id' => 'p.dimensions', 'method' => array('getDimensions'));
-        $cols['unitPrice'] = array('label' => 'unitPrice', 'id' => 'p.unitPrice', 'method' => array('getUnitPrice'));
 
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
 
@@ -67,8 +70,7 @@ class ProductChantierController extends Controller
                 $queryBuilder->andWhere($queryBuilder->expr()->orx(
                     $queryBuilder->expr()->like('p.name', '?1'),
                     $queryBuilder->expr()->like('p.capacity', '?1'),
-                    $queryBuilder->expr()->like('p.dimensions', '?1'),
-                    $queryBuilder->expr()->like('p.unitPrice', '?1')
+                    $queryBuilder->expr()->like('p.dimensions', '?1')
                 ))->setParameter(1, '%' . $search['value'] . '%');
             }
         }
@@ -513,6 +515,116 @@ class ProductChantierController extends Controller
                 continue;
             }
         }
+        $em->flush();
+
+        return $this->redirectToRoute('paprec_catalog_productChantier_view', array(
+            'id' => $productChantier->getId()
+        ));
+    }
+
+
+    /**
+     * @Route("/productChantier/{id}/addCategory", name="paprec_catalog_productChantier_addCategory")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function addCategoryAction(Request $request, ProductChantier $productChantier)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $productChantierCategoryRepo = $em->getRepository('PaprecCatalogBundle:ProductChantierCategory');
+
+        $submitForm = $request->get('submitForm');
+
+        if ($productChantier->getDeleted() !== null) {
+            throw new NotFoundHttpException();
+        }
+
+        $productChantierCategory = new ProductChantierCategory();
+
+        $form = $this->createForm(ProductChantierCategoryAddType::class, $productChantierCategory,
+            array(
+                'productId' => $productChantier->getId(),
+                'productChantierCategoryRepo' => $productChantierCategoryRepo
+            ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $productChantierCategory = $form->getData();
+            $productChantierCategory->setProductChantier($productChantier);
+            $productChantier->addProductChantierCategory($productChantierCategory);
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_catalog_productChantier_view', array(
+                'id' => $productChantier->getId()
+            ));
+
+        }
+
+        return $this->render('PaprecCatalogBundle:ProductChantierCategory:add.html.twig', array(
+            'form' => $form->createView(),
+            'productChantier' => $productChantier,
+        ));
+    }
+
+    /**
+     * @Route("/productChantier/{id}/editCategory/{productChantierCategoryId}", name="paprec_catalog_productChantier_editCategory")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @ParamConverter("productChantier", options={"id" = "id"})
+     * @ParamConverter("productChantierCategory", options={"id" = "productChantierCategoryId"})
+     */
+    public function editCategoryAction(Request $request, ProductChantier $productChantier, ProductChantierCategory $productChantierCategory)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if ($productChantier->getDeleted() !== null) {
+            throw new NotFoundHttpException();
+        }
+
+        if ($productChantierCategory->getProductChantier() !== $productChantier) {
+            throw new NotFoundHttpException();
+        }
+
+
+        $form = $this->createForm(ProductChantierCategoryEditType::class, $productChantierCategory);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $productChantierCategory = $form->getData();
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_catalog_productChantier_view', array(
+                'id' => $productChantier->getId()
+            ));
+        }
+
+        return $this->render('PaprecCatalogBundle:ProductChantierCategory:edit.html.twig', array(
+            'form' => $form->createView(),
+            'productChantier' => $productChantier,
+            'productChantierCategory' => $productChantierCategory
+        ));
+    }
+
+    /**
+     * @Route("/productChantier/{id}/removeCategory/{productChantierCategoryId}", name="paprec_catalog_productChantier_removeCategory")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @ParamConverter("productChantier", options={"id" = "id"})
+     * @ParamConverter("productChantierCategory", options={"id" = "productChantierCategoryId"})
+     */
+    public function removeLineAction(Request $request, ProductChantier $productChantier, ProductChantierCategory $productChantierCategory)
+    {
+        if ($productChantier->getDeleted() !== null) {
+            throw new NotFoundHttpException();
+        }
+
+        if ($productChantierCategory->getProductChantier() !== $productChantier) {
+            throw new NotFoundHttpException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($productChantierCategory);
         $em->flush();
 
         return $this->redirectToRoute('paprec_catalog_productChantier_view', array(

@@ -4,6 +4,8 @@ namespace Paprec\CommercialBundle\Controller;
 
 use Paprec\CommercialBundle\Entity\ProductDIOrder;
 use Paprec\CommercialBundle\Entity\ProductDIOrderLine;
+use Paprec\CommercialBundle\Form\ProductDICategoryAddType;
+use Paprec\CommercialBundle\Form\ProductDICategoryEditType;
 use Paprec\CommercialBundle\Form\ProductDIOrderLineAddType;
 use Paprec\CommercialBundle\Form\ProductDIOrderLineEditType;
 use Paprec\CommercialBundle\Form\ProductDIOrderType;
@@ -330,12 +332,7 @@ class ProductDIOrderController extends Controller
 
         $form->handleRequest($request);
 
-        print_r($form->isValid());
-        print_r($form->isSubmitted());
-        print_r($selectedProductId);
         if ($form->isSubmitted() && $form->isValid() && $submitForm) {
-            print_r('test');
-
             $productDIOrderManager = $this->get('paprec_catalog.product_di_order_manager');
 
             $productDIOrderLine = $form->getData();
@@ -353,15 +350,15 @@ class ProductDIOrderController extends Controller
         ));
     }
 
-        /**
-         * @Route("/productDIOrder/{id}/editLine/{orderLineId}", name="paprec_commercial_productDIOrder_editLine")
-         * @Security("has_role('ROLE_ADMIN')")
-         * @ParamConverter("productDIOrder", options={"id" = "id"})
-         * @ParamConverter("productDIOrderLine", options={"id" = "orderLineId"})
-         */
-        public function editLineAction(Request $request, ProductDIOrder $productDIOrder, ProductDIOrderLine $productDIOrderLine)
+    /**
+     * @Route("/productDIOrder/{id}/editLine/{orderLineId}", name="paprec_commercial_productDIOrder_editLine")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @ParamConverter("productDIOrder", options={"id" = "id"})
+     * @ParamConverter("productDIOrderLine", options={"id" = "orderLineId"})
+     */
+    public function editLineAction(Request $request, ProductDIOrder $productDIOrder, ProductDIOrderLine $productDIOrderLine)
     {
-        if($productDIOrder->getDeleted() !== null) {
+        if ($productDIOrder->getDeleted() !== null) {
             throw new NotFoundHttpException();
         }
 
@@ -399,7 +396,7 @@ class ProductDIOrderController extends Controller
      */
     public function removeLineAction(Request $request, ProductDIOrder $productDIOrder, ProductDIOrderLine $productDIOrderLine)
     {
-        if($productDIOrder->getDeleted() !== null) {
+        if ($productDIOrder->getDeleted() !== null) {
             throw new NotFoundHttpException();
         }
 

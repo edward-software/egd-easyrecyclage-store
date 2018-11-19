@@ -241,7 +241,7 @@
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a href="#"
-                                               class="btn btn-danger btn-sm catalogProductDIOrderLineRemoveButton"
+                                               class="btn btn-danger btn-sm commercialProductDIOrderLineRemoveButton"
                                                data-id="{{ productDIOrderLine.id }}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
@@ -302,7 +302,7 @@
                         });
 
                     });
-                    $('.catalogProductDIOrderLineRemoveButton').on('click', function () {
+                    $('.commercialProductDIOrderLineRemoveButton').on('click', function () {
                         orderLineId = $(this).data('id');
                         var url = "{{ path("paprec_commercial_productDIOrder_removeLine", {id: productDIOrder.id, orderLineId: 'orderLineIdTmp'}) }}".replace('orderLineIdTmp', orderLineId);
 
