@@ -60,13 +60,15 @@ class ProductDIOrderManager
         $productDIOrder->addProductDIOrderLine($productDIOrderLine);
         $productDIOrderLine->setUnitPrice($productDIOrderLine->getProductDI()->getUnitPrice());
         $productDIOrderLine->setProductName($productDIOrderLine->getProductDI()->getName());
+        $productDIOrderLine->setCategoryName($productDIOrderLine->getCategory()->getName());
 
 
         // On check s'il existe déjà une ligne pour ce produit, pour l'incrémenter
         $currentOrderLine = $this->em->getRepository('PaprecCommercialBundle:ProductDIOrderLine')->findOneBy(
             array(
                 'productDIOrder' => $productDIOrder,
-                'productDI' => $productDIOrderLine->getProductDI()
+                'productDI' => $productDIOrderLine->getProductDI(),
+                'category' => $productDIOrderLine->getCategory()
             )
         );
 
@@ -78,6 +80,7 @@ class ProductDIOrderManager
             $this->em->persist($productDIOrderLine);
         }
 
+        //On recalcule le montant total de la ligne ainsi que celui du devis complet
         $totalLine = $this->calculateTotalLine($productDIOrderLine);
         $productDIOrderLine->setTotalAmount($totalLine);
         $this->em->flush();
@@ -110,14 +113,19 @@ class ProductDIOrderManager
      * @param $qtty
      * @throws Exception
      */
-    public function addLineFromCart(ProductDIOrder $productDIOrder, $productId, $qtty)
+    public function addLineFromCart(ProductDIOrder $productDIOrder, $productId, $qtty, $categoryId)
     {
         $productDIManager = $this->container->get('paprec_catalog.product_di_manager');
+        $categoryManager = $this->container->get('paprec_catalog.category_manager');
+
         try {
             $productDI = $productDIManager->get($productId);
             $productDIOrderLine = new ProductDIOrderLine();
+            $category = $categoryManager->get($categoryId);
+
 
             $productDIOrderLine->setProductDI($productDI);
+            $productDIOrderLine->setCategory($category);
             $productDIOrderLine->setQuantity($qtty);
             $this->addLine($productDIOrder, $productDIOrderLine);
         } catch (Exception $e) {

@@ -93,6 +93,7 @@ Commercial:
 
   ProductDIOrderLine:
     ProductName:                Produit
+    CategoryName:               Catégorie
     UnitPrice:                  Prix unitaire
     Quantity:                   Quantité
     TotalAmount:                Montant total

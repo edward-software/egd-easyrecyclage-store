@@ -4,8 +4,8 @@ namespace Paprec\CommercialBundle\Controller;
 
 use Paprec\CommercialBundle\Entity\ProductDIOrder;
 use Paprec\CommercialBundle\Entity\ProductDIOrderLine;
-use Paprec\CommercialBundle\Form\ProductDIOrderLineAdd;
-use Paprec\CommercialBundle\Form\ProductDIOrderLineEdit;
+use Paprec\CommercialBundle\Form\ProductDIOrderLineAddType;
+use Paprec\CommercialBundle\Form\ProductDIOrderLineEditType;
 use Paprec\CommercialBundle\Form\ProductDIOrderType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -313,21 +313,30 @@ class ProductDIOrderController extends Controller
     public function addLineAction(Request $request, ProductDIOrder $productDIOrder)
     {
 
+        $em = $this->getDoctrine()->getManager();
+        $selectedProductId = $request->get('selectedProductId');
+        $submitForm = $request->get('submitForm');
+
         if ($productDIOrder->getDeleted() !== null) {
             throw new NotFoundHttpException();
         }
 
-
         $productDIOrderLine = new ProductDIOrderLine();
 
-        $form = $this->createForm(ProductDIOrderLineAdd::class, $productDIOrderLine);
+        $form = $this->createForm(ProductDIOrderLineAddType::class, $productDIOrderLine,
+            array(
+                'selectedProductId' => $selectedProductId
+            ));
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $productDIOrderManager = $this->get('paprec_catalog.product_di_order_manager');
+        print_r($form->isValid());
+        print_r($form->isSubmitted());
+        print_r($selectedProductId);
+        if ($form->isSubmitted() && $form->isValid() && $submitForm) {
+            print_r('test');
 
-            $em = $this->getDoctrine()->getManager();
+            $productDIOrderManager = $this->get('paprec_catalog.product_di_order_manager');
 
             $productDIOrderLine = $form->getData();
             $productDIOrderManager->addLine($productDIOrder, $productDIOrderLine);
@@ -361,7 +370,7 @@ class ProductDIOrderController extends Controller
         }
 
 
-        $form = $this->createForm(ProductDIOrderLineEdit::class, $productDIOrderLine);
+        $form = $this->createForm(ProductDIOrderLineEditType::class, $productDIOrderLine);
 
         $form->handleRequest($request);
 

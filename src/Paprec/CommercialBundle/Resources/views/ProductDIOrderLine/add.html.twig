@@ -14,13 +14,15 @@
 {% block main_content %}
 
     <form id="commercialProductDIOrderForm" action="" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="submitFormInput" name="submitForm" value="">
+        <input type="hidden" id="selectedProductInput" name="selectedProductId" value="">
 
         <div class="col-md-12">
             <!-- BOX -->
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <i class="fa fa-plus"></i> {{ 'Commercial.ProductDIOrder.Add'|trans }}
+                        <i class="fa fa-plus"></i> {{ 'Commercial.ProductDIOrder.AddLine'|trans }}
                         <div class="float-right">
                             <a href="javascript:void(0);" class="btn btn-success commercial-productDIOrderLine-save-button"><i
                                         class="fa fa-check"></i> {{ 'Commercial.ProductDIOrder.Save'|trans }}</a>
@@ -39,8 +41,15 @@
                                 <div class="form-group">
                                     <label class="form-label">{{ 'Commercial.ProductDIOrderLine.ProductName'|trans }}</label>
                                     <div class="form-content">
-                                        {{ form_widget(form.productDI, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_widget(form.productDI, {'attr': {'class': 'form-control select-product'}}) }}
                                         {{ form_errors(form.productDI) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">{{ 'Commercial.ProductDIOrderLine.CategoryName'|trans }}</label>
+                                    <div class="form-content">
+                                        {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.category) }}
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -77,8 +86,11 @@
 
     <script>
         $(function () {
+            $('#selectedProductInput').val($('.select-product').val());
+
 
             $('.commercial-productDIOrderLine-save-button').on('click', function () {
+                $('#submitFormInput').val(1);
                 $('#commercialProductDIOrderForm').submit();
             });
 
@@ -93,6 +105,15 @@
                     }
                 });
 
+            });
+
+            $('.select-product').on('change', function(){
+                $('#selectedProductInput').val($(this).val());
+                $('#submitFormInput').val('');
+                if($(this).val() != '')
+                {
+                    $('#commercialProductDIOrderForm').submit();
+                }
             });
 
         });

@@ -52,7 +52,12 @@ class ProductDIOrderLine
      */
     private $productName;
 
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="categoryName", type="string", length=255)
+     */
+    private $categoryName;
 
     /**
      * @var float
@@ -73,6 +78,7 @@ class ProductDIOrderLine
      * @var integer
      *
      * @ORM\Column(name="quantity", type="integer")
+     * @Assert\NotBlank()
      */
     private $quantity;
 
@@ -86,6 +92,13 @@ class ProductDIOrderLine
      * @ORM\JoinColumn(name="productId", referencedColumnName="id", nullable=false)
      */
     private $productDI;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\Category", inversedBy="productDIOrderLines")
+     * @ORM\JoinColumn(name="categoryId", referencedColumnName="id", nullable=false)
+     */
+    private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrder", inversedBy="productDIOrderLines")
@@ -327,5 +340,53 @@ class ProductDIOrderLine
     public function getTotalAmount()
     {
         return $this->totalAmount;
+    }
+
+    /**
+     * Set category.
+     *
+     * @param \Paprec\CatalogBundle\Entity\Category $category
+     *
+     * @return ProductDIOrderLine
+     */
+    public function setCategory(\Paprec\CatalogBundle\Entity\Category $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category.
+     *
+     * @return \Paprec\CatalogBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set categoryName.
+     *
+     * @param string $categoryName
+     *
+     * @return ProductDIOrderLine
+     */
+    public function setCategoryName($categoryName)
+    {
+        $this->categoryName = $categoryName;
+
+        return $this;
+    }
+
+    /**
+     * Get categoryName.
+     *
+     * @return string
+     */
+    public function getCategoryName()
+    {
+        return $this->categoryName;
     }
 }

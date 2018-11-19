@@ -102,6 +102,12 @@ class Category
     private $productChantierCategories;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrderLine", mappedBy="category", cascade={"all"})
+     */
+    private $productDIOrderLines;
+
+
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
@@ -463,5 +469,41 @@ class Category
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * Add productDIOrderLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine
+     *
+     * @return Category
+     */
+    public function addProductDIOrderLine(\Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine)
+    {
+        $this->productDIOrderLines[] = $productDIOrderLine;
+
+        return $this;
+    }
+
+    /**
+     * Remove productDIOrderLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductDIOrderLine(\Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine)
+    {
+        return $this->productDIOrderLines->removeElement($productDIOrderLine);
+    }
+
+    /**
+     * Get productDIOrderLines.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductDIOrderLines()
+    {
+        return $this->productDIOrderLines;
     }
 }

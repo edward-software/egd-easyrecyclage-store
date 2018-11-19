@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductDIOrderLineAdd extends AbstractType
+class ProductDIOrderLineEditType extends AbstractType
 {
 
     /**
@@ -21,18 +21,7 @@ class ProductDIOrderLineAdd extends AbstractType
         $builder
             ->add('quantity', TextType::class, array(
                 "required" => true
-            ))
-            ->add('productDI', EntityType::class, array(
-                    'class' => 'PaprecCatalogBundle:ProductDI',
-                    'query_builder' => function(ProductDIRepository $er) {
-                        return $er->createQueryBuilder('p')
-                            ->where('p.deleted is NULL')
-                            ->orderBy('p.name', 'ASC');
-                    },
-                    'choice_label' => 'name',
-                )
-            )
-        ;
+            ));
     }
 
     /**

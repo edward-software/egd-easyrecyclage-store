@@ -80,7 +80,7 @@ class SubscriptionController extends Controller
 
             // On récupère tous les produits ajoutés au Cart
             foreach ($cart->getContent() as $item) {
-                $productDIOrderManager->addLineFromCart($productDIOrder, $item['pId'], $item['qtty']);
+                $productDIOrderManager->addLineFromCart($productDIOrder, $item['pId'], $item['qtty'], $item['cId']);
             }
 
 
