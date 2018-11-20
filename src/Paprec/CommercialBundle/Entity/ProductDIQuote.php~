@@ -8,12 +8,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * ProductDIOrder
+ * ProductDIQuote
  *
- * @ORM\Table(name="productDIOrders")
- * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\ProductDIOrderRepository")
+ * @ORM\Table(name="productDIQuotes")
+ * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\ProductDIQuoteRepository")
  */
-class ProductDIOrder
+class ProductDIQuote
 {
     /**
      * @var int
@@ -131,9 +131,9 @@ class ProductDIOrder
     /**
      * @var string
      *
-     * @ORM\Column(name="orderStatus", type="string", length=255)
+     * @ORM\Column(name="quoteStatus", type="string", length=255)
      */
-    private $orderStatus;
+    private $quoteStatus;
 
 
     /**
@@ -188,36 +188,36 @@ class ProductDIOrder
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrderLine", mappedBy="productDIOrder", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuoteLine", mappedBy="productDIQuote", cascade={"all"})
      */
-    private $productDIOrderLines;
+    private $productDIQuoteLines;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\UserBundle\Entity\User", inversedBy="productDIOrders", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="Paprec\UserBundle\Entity\User", inversedBy="productDIQuotes", cascade={"all"})
      * @ORM\JoinColumn(name="userInChargeId", referencedColumnName="id", nullable=true)
      */
     private $userInCharge;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agency", inversedBy="productDIOrders")
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agency", inversedBy="productDIQuotes")
      * @ORM\JoinColumn(name="agencyId", referencedColumnName="id", nullable=true)
      */
     private $agency;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\BusinessLine", inversedBy="productDIOrders")
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\BusinessLine", inversedBy="productDIQuotes")
      * @ORM\JoinColumn(name="businessLineId", referencedColumnName="id", nullable=true)
      * @Assert\NotBlank()
      */
     private $businessLine;
 
     /**
-     * ProductDIOrder constructor.
+     * ProductDIQuote constructor.
      */
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
-        $this->productDIOrderLines = new ArrayCollection();
+        $this->productDIQuoteLines = new ArrayCollection();
     }
 
 
@@ -236,7 +236,7 @@ class ProductDIOrder
      *
      * @param \DateTime $dateCreation
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setDateCreation($dateCreation)
     {
@@ -260,7 +260,7 @@ class ProductDIOrder
      *
      * @param \DateTime|null $dateUpdate
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setDateUpdate($dateUpdate = null)
     {
@@ -284,7 +284,7 @@ class ProductDIOrder
      *
      * @param \DateTime|null $deleted
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setDeleted($deleted = null)
     {
@@ -308,7 +308,7 @@ class ProductDIOrder
      *
      * @param string $businessName
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setBusinessName($businessName)
     {
@@ -332,7 +332,7 @@ class ProductDIOrder
      *
      * @param string $civility
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setCivility($civility)
     {
@@ -356,7 +356,7 @@ class ProductDIOrder
      *
      * @param string $lastName
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setLastName($lastName)
     {
@@ -380,7 +380,7 @@ class ProductDIOrder
      *
      * @param string $firstName
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setFirstName($firstName)
     {
@@ -404,7 +404,7 @@ class ProductDIOrder
      *
      * @param string $email
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setEmail($email)
     {
@@ -428,7 +428,7 @@ class ProductDIOrder
      *
      * @param string $address
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setAddress($address)
     {
@@ -452,7 +452,7 @@ class ProductDIOrder
      *
      * @param string $postalCode
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setPostalCode($postalCode)
     {
@@ -476,7 +476,7 @@ class ProductDIOrder
      *
      * @param string $city
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setCity($city)
     {
@@ -500,7 +500,7 @@ class ProductDIOrder
      *
      * @param string $phone
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setPhone($phone)
     {
@@ -526,7 +526,7 @@ class ProductDIOrder
      *
      * @param float $totalAmount
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setTotalAmount($totalAmount)
     {
@@ -550,7 +550,7 @@ class ProductDIOrder
      *
      * @param float|null $generatedTurnover
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setGeneratedTurnover($generatedTurnover = null)
     {
@@ -574,7 +574,7 @@ class ProductDIOrder
      *
      * @param string|null $summary
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setSummary($summary = null)
     {
@@ -598,7 +598,7 @@ class ProductDIOrder
      *
      * @param string|null $frequency
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setFrequency($frequency = null)
     {
@@ -622,7 +622,7 @@ class ProductDIOrder
      *
      * @param float|null $tonnage
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setTonnage($tonnage = null)
     {
@@ -646,7 +646,7 @@ class ProductDIOrder
      *
      * @param int|null $kookaburaNumber
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setKookaburaNumber($kookaburaNumber = null)
     {
@@ -666,39 +666,39 @@ class ProductDIOrder
     }
 
     /**
-     * Add productDIOrderLine.
+     * Add productDIQuoteLine.
      *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
-    public function addProductDIOrderLine(\Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine)
+    public function addProductDIQuoteLine(\Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine)
     {
-        $this->productDIOrderLines[] = $productDIOrderLine;
+        $this->productDIQuoteLines[] = $productDIQuoteLine;
 
         return $this;
     }
 
     /**
-     * Remove productDIOrderLine.
+     * Remove productDIQuoteLine.
      *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeProductDIOrderLine(\Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine)
+    public function removeProductDIQuoteLine(\Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine)
     {
-        return $this->productDIOrderLines->removeElement($productDIOrderLine);
+        return $this->productDIQuoteLines->removeElement($productDIQuoteLine);
     }
 
     /**
-     * Get productDIOrderLines.
+     * Get productDIQuoteLines.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getProductDIOrderLines()
+    public function getProductDIQuoteLines()
     {
-        return $this->productDIOrderLines;
+        return $this->productDIQuoteLines;
     }
 
     /**
@@ -706,7 +706,7 @@ class ProductDIOrder
      *
      * @param \Paprec\UserBundle\Entity\User|null $userInCharge
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setUserInCharge(\Paprec\UserBundle\Entity\User $userInCharge = null)
     {
@@ -730,7 +730,7 @@ class ProductDIOrder
      *
      * @param \Paprec\CommercialBundle\Entity\Agency|null $agency
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setAgency(\Paprec\CommercialBundle\Entity\Agency $agency = null)
     {
@@ -754,7 +754,7 @@ class ProductDIOrder
      *
      * @param \Paprec\CommercialBundle\Entity\BusinessLine|null $businessLine
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setBusinessLine(\Paprec\CommercialBundle\Entity\BusinessLine $businessLine = null)
     {
@@ -774,27 +774,27 @@ class ProductDIOrder
     }
 
     /**
-     * Set orderStatus.
+     * Set quoteStatus.
      *
-     * @param string $orderStatus
+     * @param string $quoteStatus
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
-    public function setOrderStatus($orderStatus)
+    public function setQuoteStatus($quoteStatus)
     {
-        $this->orderStatus = $orderStatus;
+        $this->quoteStatus = $quoteStatus;
 
         return $this;
     }
 
     /**
-     * Get orderStatus.
+     * Get quoteStatus.
      *
      * @return string
      */
-    public function getOrderStatus()
+    public function getQuoteStatus()
     {
-        return $this->orderStatus;
+        return $this->quoteStatus;
     }
 
     /**
@@ -802,7 +802,7 @@ class ProductDIOrder
      *
      * @param string $function
      *
-     * @return ProductDIOrder
+     * @return ProductDIQuote
      */
     public function setFunction($function)
     {

@@ -36,7 +36,7 @@ class AgencyController extends Controller
         $filters = $request->get('filters');
         $pageSize = $request->get('length');
         $start = $request->get('start');
-        $orders = $request->get('order');
+        $quotes = $request->get('quote');
         $search = $request->get('search');
         $columns = $request->get('columns');
 
@@ -69,7 +69,7 @@ class AgencyController extends Controller
             }
         }
 
-        $datatable = $this->get('goondi_tools.datatable')->generateTable($cols, $queryBuilder, $pageSize, $start, $orders, $columns, $filters);
+        $datatable = $this->get('goondi_tools.datatable')->generateTable($cols, $queryBuilder, $pageSize, $start, $quotes, $columns, $filters);
 
         $return['recordsTotal'] = $datatable['recordsTotal'];
         $return['recordsFiltered'] = $datatable['recordsTotal'];

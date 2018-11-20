@@ -1,7 +1,7 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-    {{ 'Commercial.OrderRequest.View'|trans }}
+    {{ 'Commercial.QuoteRequest.View'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content_title %}
-    {{ 'Commercial.OrderRequest.Users'|trans }}
+    {{ 'Commercial.QuoteRequest.Users'|trans }}
 {% endblock %}
 
 {% block main_content %}
@@ -22,120 +22,120 @@
         <div class="view-box">
 
             {% for flashMessage in app.session.flashbag.get('errors') %}
-                <div class="alert alert-danger">{{ ('Commercial.OrderRequest.Error.' ~ flashMessage)|trans }}</div>
+                <div class="alert alert-danger">{{ ('Commercial.QuoteRequest.Error.' ~ flashMessage)|trans }}</div>
             {% endfor %}
 
             {% for flashMessage in app.session.flashbag.get('success') %}
-                <div class="alert alert-success">{{ ('Commercial.OrderRequest.Success.' ~ flashMessage)|trans }}</div>
+                <div class="alert alert-success">{{ ('Commercial.QuoteRequest.Success.' ~ flashMessage)|trans }}</div>
             {% endfor %}
         </div>
         <!-- CARD -->
         <div class="card">
             <div class="card-header">
                 <h4>
-                    <i class="fa fa-orderRequest"></i> {{ 'Commercial.OrderRequest.View'|trans }}
+                    <i class="fa fa-xs fa-quoteRequest"></i> {{ 'Commercial.QuoteRequest.View'|trans }}
                     <div class="float-right">
-                        <a href="{{ path("paprec_commercial_orderRequest_edit", {id: orderRequest.id}) }}"
+                        <a href="{{ path("paprec_commercial_quoteRequest_edit", {id: quoteRequest.id}) }}"
                            class="btn btn-sm btn-warning"><i
-                                    class="fa fa-edit"></i> {{ 'Commercial.OrderRequest.Edit'|trans }}</a>
-                        <a id="commmecialOrderRequestRemoveButton_" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
-                                    class="fa fa-trash"></i> {{ 'Commercial.OrderRequest.Remove'|trans }}</a>
+                                    class="fa fa-xs fa-edit"></i> {{ 'Commercial.QuoteRequest.Edit'|trans }}</a>
+                        <a id="commmecialQuoteRequestRemoveButton_" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
+                                    class="fa fa-xs fa-trash"></i> {{ 'Commercial.QuoteRequest.Remove'|trans }}</a>
                     </div>
                 </h4>
                 <div class="view-tools float-left">
-                    <a href="{{ path('paprec_commercial_orderRequest_index') }}" class="btn btn-sm btn-default"><i
-                                class="fa fa-chevron-left"></i> {{ 'Commercial.OrderRequest.List'|trans }}</a>
+                    <a href="{{ path('paprec_commercial_quoteRequest_index') }}" class="btn btn-sm btn-default"><i
+                                class="fa fa-xs fa-chevron-left"></i> {{ 'Commercial.QuoteRequest.List'|trans }}</a>
                 </div>
             </div>
             <div class="card-body">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title">{{ 'Commercial.OrderRequest.Informations-FO'|trans }}</h5>
+                            <h5 class="card-title">{{ 'Commercial.QuoteRequest.Informations-FO'|trans }}</h5>
                         </div>
                         <div class="card-body row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.BusinessName'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.BusinessName'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ orderRequest.businessName }}
+                                        {{ quoteRequest.businessName }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Civility'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Civility'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ orderRequest.civility }}
+                                        {{ quoteRequest.civility }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.LastName'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.LastName'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ orderRequest.lastName }}
+                                        {{ quoteRequest.lastName }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.FirstName'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.FirstName'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ orderRequest.firstName }}
+                                        {{ quoteRequest.firstName }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Email'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Email'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ orderRequest.email }}
+                                        {{ quoteRequest.email }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Phone'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Phone'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ orderRequest.phone }}
+                                        {{ quoteRequest.phone }}
                                     </label>
                                 </div>
                                 {#<div class="form-group row">#}
-                                    {#<label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.AttachedFiles'|trans }}</label>#}
+                                    {#<label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.AttachedFiles'|trans }}</label>#}
                                     {#<label class="col-form-label">#}
-                                        {#{{ orderRequest.att }}#}
+                                        {#{{ quoteRequest.att }}#}
                                     {#</label>#}
                                 {#</div>#}
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Function'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Function'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ orderRequest.function }}
+                                        {{ quoteRequest.function }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.OrderStatus'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.QuoteStatus'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ orderRequest.orderStatus }}
+                                        {{ quoteRequest.quoteStatus }}
                                     </label>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Division'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Division'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ orderRequest.division }}
+                                        {{ quoteRequest.division }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.PostalCode'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.PostalCode'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ orderRequest.postalCode }}
+                                        {{ quoteRequest.postalCode }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.AttachedFiles'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.AttachedFiles'|trans }}</label>
                                     <label class="col-form-label">
-                                        {% if orderRequest.attachedFiles %}
-                                            <a href="{{ path('paprec_commercial_orderRequest_downloadAttachedFiles', {id: orderRequest.id}) }}"><i class="fa fa-download fa-lg"></i></a>
+                                        {% if quoteRequest.attachedFiles %}
+                                            <a href="{{ path('paprec_commercial_quoteRequest_downloadAttachedFiles', {id: quoteRequest.id}) }}"><i class="fa fa-download"></i></a>
                                         {% endif %}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Need'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Need'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ orderRequest.need }}
+                                        {{ quoteRequest.need }}
                                     </label>
                                 </div>
                             </div>
@@ -145,64 +145,64 @@
                 <div class="col-md-12 mt-3">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title">{{ 'Commercial.OrderRequest.Informations-BO'|trans }}</h5>
+                            <h5 class="card-title">{{ 'Commercial.QuoteRequest.Informations-BO'|trans }}</h5>
                         </div>
                         <div class="card-body row">
                             <div class="col-md-6">
 
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.GeneratedTurnover'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.GeneratedTurnover'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ orderRequest.generatedTurnover }}
+                                        {{ quoteRequest.generatedTurnover }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Agency'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Agency'|trans }}</label>
                                     <label class="col-form-label">
-                                        {% if orderRequest.agency %}
-                                            <a href="{{ path('paprec_commercial_agence_view', {id: orderRequest.agency.id}) }}">{{ orderRequest.agency }}</a>
+                                        {% if quoteRequest.agency %}
+                                            <a href="{{ path('paprec_commercial_agence_view', {id: quoteRequest.agency.id}) }}">{{ quoteRequest.agency }}</a>
                                         {% endif %}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Summary'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Summary'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ orderRequest.summary }}
+                                        {{ quoteRequest.summary }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Frequency'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Frequency'|trans }}</label>
                                     <label class="col-form-label">
-                                        {% if orderRequest.frequency == 'regular' %}Régulier {% else %}Ponctuel{% endif %}
+                                        {% if quoteRequest.frequency == 'regular' %}Régulier {% else %}Ponctuel{% endif %}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Tonnage'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Tonnage'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ orderRequest.tonnage }}
+                                        {{ quoteRequest.tonnage }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.KookaburaNumber'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.KookaburaNumber'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ orderRequest.kookaburaNumber }}
+                                        {{ quoteRequest.kookaburaNumber }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.UserInCharge'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.UserInCharge'|trans }}</label>
                                     <label class="col-form-label">
-                                        {% if orderRequest.userInCharge %}
-                                            <a href="{{ path('paprec_user_user_view', {id: orderRequest.userInCharge.id}) }}">{{ orderRequest.userInCharge }}</a>
+                                        {% if quoteRequest.userInCharge %}
+                                            <a href="{{ path('paprec_user_user_view', {id: quoteRequest.userInCharge.id}) }}">{{ quoteRequest.userInCharge }}</a>
                                         {% endif %}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.AssociatedOrder'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.AssociatedQuote'|trans }}</label>
                                     <label class="col-form-label">
-                                        {% if orderRequest.associatedOrder %}
-                                        <a href="{{ path('paprec_commercial_orderRequest_downloadAssociatedOrder', {id: orderRequest.id}) }}"><i class="fa fa-download fa-lg"></i></a>
+                                        {% if quoteRequest.associatedQuote %}
+                                        <a href="{{ path('paprec_commercial_quoteRequest_downloadAssociatedQuote', {id: quoteRequest.id}) }}"><i class="fa fa-download"></i></a>
                                         {% endif %}
                                     </label>
                                 </div>
@@ -213,21 +213,21 @@
                 <div class="col-md-12 mt-3">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title">{{ 'Commercial.OrderRequest.System-informations'|trans }}</h5>
+                            <h5 class="card-title">{{ 'Commercial.QuoteRequest.System-informations'|trans }}</h5>
                         </div>
                         <div class="card-body">
 
                             <div class="form-group row">
-                                <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Date-creation'|trans }}</label>
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Date-creation'|trans }}</label>
                                 <label class="col-form-label">
-                                    {{ orderRequest.dateCreation|localizeddate('short', 'medium', app.request.locale) }}
+                                    {{ quoteRequest.dateCreation|localizeddate('short', 'medium', app.request.locale) }}
                                 </label>
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Date-update'|trans }}</label>
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Date-update'|trans }}</label>
                                 <label class="col-form-label">
-                                    {{ orderRequest.dateUpdate is empty ? "" : orderRequest.dateUpdate|localizeddate('short', 'medium', app.request.locale) }}
+                                    {{ quoteRequest.dateUpdate is empty ? "" : quoteRequest.dateUpdate|localizeddate('short', 'medium', app.request.locale) }}
                                 </label>
                             </div>
                         </div>
@@ -248,11 +248,11 @@
             <script>
                 $(function () {
 
-                    $('#commmecialOrderRequestRemoveButton_').on('click', function () {
+                    $('#commmecialQuoteRequestRemoveButton_').on('click', function () {
 
-                        var url = "{{ path("paprec_commercial_orderRequest_remove", {id: orderRequest.id}) }}";
+                        var url = "{{ path("paprec_commercial_quoteRequest_remove", {id: quoteRequest.id}) }}";
 
-                        bootbox.confirm("{{ 'Commercial.OrderRequest.Confirm-remove'|trans }}", function (result) {
+                        bootbox.confirm("{{ 'Commercial.QuoteRequest.Confirm-remove'|trans }}", function (result) {
                             if (result === true) {
                                 $(location).attr('href', url);
                             }

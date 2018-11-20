@@ -41,7 +41,7 @@
                             envoyée par mail.
                         </div>
                     </div>
-                    <div class="bold">{% if productDIOrder.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productDIOrder.firstName }} {{ productDIOrder.lastName  }},</div>
+                    <div class="bold">{% if productDIQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productDIQuote.firstName }} {{ productDIQuote.lastName  }},</div>
 
                     <div class="recaptitle">Voici le récapitulatif de votre demande.</div>
                     <div class="greyrecap">
@@ -53,7 +53,7 @@
                         </div>
                         <div class="right">
                             À PARTIR DE
-                            <span>{{ productDIOrder.totalAmount }}€</span>
+                            <span>{{ productDIQuote.totalAmount }}€</span>
                         </div>
                     </div>
 
@@ -61,15 +61,15 @@
                         L’agence en charge de votre demande vous recontactera sous 48h par e-mail ou téléphone afin de
                         valider un devis.
                     </div>
-                    {% for productDIOrderLine in productDIOrder.productDIOrderLines %}
+                    {% for productDIQuoteLine in productDIQuote.productDIQuoteLines %}
                     <div class="recapproduct">
                         <div class="wrapperimage">
-                            <img src="{% if productDIOrderLine.productDI.pilotPictures %}{{ asset('/uploads/pictos/' ~ productDIOrderLine.productDI.pilotPictures[0].path) }}{% endif %}"
+                            <img src="{% if productDIQuoteLine.productDI.pilotPictures %}{{ asset('/uploads/pictos/' ~ productDIQuoteLine.productDI.pilotPictures[0].path) }}{% endif %}"
                                  alt="#">
                         </div>
-                        <div class="name">{{ productDIOrderLine.quantity }} x {{ productDIOrderLine.productDI.name }} {{ productDIOrderLine.productDI.capacity }}{{ productDIOrderLine.productDI.capacityUnit }}</div>
-                        <div class="nameof">de {{ productDIOrderLine.categoryName }}</div>
-                        <div class="desc">Prestation {% if productDIOrder.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}</div>
+                        <div class="name">{{ productDIQuoteLine.quantity }} x {{ productDIQuoteLine.productDI.name }} {{ productDIQuoteLine.productDI.capacity }}{{ productDIQuoteLine.productDI.capacityUnit }}</div>
+                        <div class="nameof">de {{ productDIQuoteLine.categoryName }}</div>
+                        <div class="desc">Prestation {% if productDIQuote.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}</div>
                     </div>
                     {% endfor %}
 

@@ -2,8 +2,8 @@
 
 namespace Paprec\PublicBundle\Controller\DI;
 
-use Paprec\CommercialBundle\Entity\ProductDIOrder;
-use Paprec\CommercialBundle\Form\ProductDIOrderShortType;
+use Paprec\CommercialBundle\Entity\ProductDIQuote;
+use Paprec\CommercialBundle\Form\ProductDIQuoteShortType;
 use Paprec\PublicBundle\Entity\Cart;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -50,44 +50,45 @@ class SubscriptionController extends Controller
     /**
      * Etape du formulaire des informations contact
      * @Route("/step2/{cartUuid}", name="paprec_public_DI_subscription_step2")
+     * @throws \Exception
      */
     public function step2Action(Request $request, $cartUuid)
     {
         $cartManager = $this->get('paprec.cart_manager');
-        $productDIOrderManager = $this->get('paprec_catalog.product_di_order_manager');
+        $productDIQuoteManager = $this->get('paprec_catalog.product_di_quote_manager');
 
         $cart = $cartManager->get($cartUuid);
 
         $postalCode = substr($cart->getLocation(), 0, 5);
         $city = substr($cart->getLocation(), 5);
 
-        $productDIOrder = new ProductDIOrder();
-        $productDIOrder->setCity($city);
-        $productDIOrder->setPostalCode($postalCode);
+        $productDIQuote = new productDIQuote();
+        $productDIQuote->setCity($city);
+        $productDIQuote->setPostalCode($postalCode);
 
-        $form = $this->createForm(ProductDIOrderShortType::class, $productDIOrder);
+        $form = $this->createForm(productDIQuoteShortType::class, $productDIQuote);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $productDIOrder = $form->getData();
-            $productDIOrder->setOrderStatus('Créé');
-            $productDIOrder->setFrequency($cart->getFrequency());
+            $productDIQuote = $form->getData();
+            $productDIQuote->setQuoteStatus('Créé');
+            $productDIQuote->setFrequency($cart->getFrequency());
 
             $em = $this->getDoctrine()->getManager();
-            $em->persist($productDIOrder);
+            $em->persist($productDIQuote);
             $em->flush();
 
             // On récupère tous les produits ajoutés au Cart
             foreach ($cart->getContent() as $item) {
-                $productDIOrderManager->addLineFromCart($productDIOrder, $item['pId'], $item['qtty'], $item['cId']);
+                $productDIQuoteManager->addLineFromCart($productDIQuote, $item['pId'], $item['qtty'], $item['cId']);
             }
 
 
             return $this->redirectToRoute('paprec_public_DI_subscription_step3', array(
                 'cartUuid' => $cart->getId(),
-                'orderId' => $productDIOrder->getId()
+                'quoteId' => $productDIQuote->getId()
             ));
 
         }
@@ -100,18 +101,18 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * @Route("/step3/{cartUuid}/{orderId}", name="paprec_public_DI_subscription_step3")
+     * @Route("/step3/{cartUuid}/{quoteId}", name="paprec_public_DI_subscription_step3")
      */
-    public function step3Action(Request $request, $cartUuid, $orderId)
+    public function step3Action(Request $request, $cartUuid, $quoteId)
     {
         $cartManager = $this->get('paprec.cart_manager');
         $em = $this->getDoctrine()->getManager();
 
-        $productDIOrder = $em->getRepository('PaprecCommercialBundle:ProductDIOrder')->find($orderId);
+        $productDIQuote = $em->getRepository('PaprecCommercialBundle:ProductDIQuote')->find($quoteId);
         $cart = $cartManager->get($cartUuid);
 
         return $this->render('@PaprecPublic/DI/offerDetails.html.twig', array(
-            'productDIOrder' => $productDIOrder
+            'productDIQuote' => $productDIQuote
         ));
     }
 

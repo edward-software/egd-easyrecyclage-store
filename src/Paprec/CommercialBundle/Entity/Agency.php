@@ -128,21 +128,21 @@ class Agency
     private $grilleTarifLigneD3Es;
 
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrder", mappedBy="agency")
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuote", mappedBy="agency")
      */
-    private $productDIOrders;
+    private $productDIQuotes;
 
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\OrderRequest", mappedBy="agency")
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\QuoteRequest", mappedBy="agency")
      */
-    private $orderRequests;
+    private $quoteRequests;
 
 
 
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
-        $this->productDIOrders = new ArrayCollection();
+        $this->productDIQuotes = new ArrayCollection();
     }
 
     public function __toString()
@@ -485,74 +485,74 @@ class Agency
     }
 
     /**
-     * Add productDIOrder.
+     * Add productDIQuote.
      *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote
      *
      * @return Agency
      */
-    public function addProductDIOrder(\Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder)
+    public function addProductDIQuote(\Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote)
     {
-        $this->productDIOrders[] = $productDIOrder;
+        $this->productDIQuotes[] = $productDIQuote;
 
         return $this;
     }
 
     /**
-     * Remove productDIOrder.
+     * Remove productDIQuote.
      *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeProductDIOrder(\Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder)
+    public function removeProductDIQuote(\Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote)
     {
-        return $this->productDIOrders->removeElement($productDIOrder);
+        return $this->productDIQuotes->removeElement($productDIQuote);
     }
 
     /**
-     * Get productDIOrders.
+     * Get productDIQuotes.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getProductDIOrders()
+    public function getProductDIQuotes()
     {
-        return $this->productDIOrders;
+        return $this->productDIQuotes;
     }
 
     /**
-     * Add orderRequest.
+     * Add quoteRequest.
      *
-     * @param \Paprec\CommercialBundle\Entity\OrderRequest $orderRequest
+     * @param \Paprec\CommercialBundle\Entity\QuoteRequest $quoteRequest
      *
      * @return Agency
      */
-    public function addOrderRequest(\Paprec\CommercialBundle\Entity\OrderRequest $orderRequest)
+    public function addQuoteRequest(\Paprec\CommercialBundle\Entity\QuoteRequest $quoteRequest)
     {
-        $this->orderRequests[] = $orderRequest;
+        $this->quoteRequests[] = $quoteRequest;
 
         return $this;
     }
 
     /**
-     * Remove orderRequest.
+     * Remove quoteRequest.
      *
-     * @param \Paprec\CommercialBundle\Entity\OrderRequest $orderRequest
+     * @param \Paprec\CommercialBundle\Entity\QuoteRequest $quoteRequest
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeOrderRequest(\Paprec\CommercialBundle\Entity\OrderRequest $orderRequest)
+    public function removeQuoteRequest(\Paprec\CommercialBundle\Entity\QuoteRequest $quoteRequest)
     {
-        return $this->orderRequests->removeElement($orderRequest);
+        return $this->quoteRequests->removeElement($quoteRequest);
     }
 
     /**
-     * Get orderRequests.
+     * Get quoteRequests.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getOrderRequests()
+    public function getQuoteRequests()
     {
-        return $this->orderRequests;
+        return $this->quoteRequests;
     }
 }

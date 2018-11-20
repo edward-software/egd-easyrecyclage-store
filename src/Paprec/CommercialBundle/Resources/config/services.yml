@@ -3,15 +3,15 @@ services:
 #        class: Paprec\CommercialBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
 
-  paprec_catalog.product_di_order_manager:
-    class: Paprec\CommercialBundle\Service\ProductDIOrderManager
+  paprec_catalog.product_di_quote_manager:
+    class: Paprec\CommercialBundle\Service\ProductDIQuoteManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
 parameters:
-  paprec_commercial.order_request.files_path: "%kernel.root_dir%/../web/uploads/files"
+  paprec_commercial.quote_request.files_path: "%kernel.root_dir%/../web/uploads/files"
 
 
-  paprec_order_status:
+  paprec_quote_status:
   - Créé
   - En attente
   - Traité

@@ -44,7 +44,7 @@ class CategoryController extends Controller
         $filters = $request->get('filters');
         $pageSize = $request->get('length');
         $start = $request->get('start');
-        $orders = $request->get('order');
+        $quotes = $request->get('quote');
         $search = $request->get('search');
         $columns = $request->get('columns');
         // Récupération du type de catégorie souhaité (DI ou CHANTIER)
@@ -81,7 +81,7 @@ class CategoryController extends Controller
             }
         }
 
-        $datatable = $this->get('goondi_tools.datatable')->generateTable($cols, $queryBuilder, $pageSize, $start, $orders, $columns, $filters);
+        $datatable = $this->get('goondi_tools.datatable')->generateTable($cols, $queryBuilder, $pageSize, $start, $quotes, $columns, $filters);
 
         $return['recordsTotal'] = $datatable['recordsTotal'];
         $return['recordsFiltered'] = $datatable['recordsTotal'];
@@ -471,10 +471,10 @@ class CategoryController extends Controller
     /**
      * Fonction appelée lorsque l'on réordonne les catégories dans 'index'
      * On reçoit en param un tableau [position => categoryID]
-     * @Route("/category/orderCategories", name="paprec_catalog_category_orderCategories")
+     * @Route("/category/quoteCategories", name="paprec_catalog_category_quoteCategories")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function orderCategories(Request $request)
+    public function quoteCategories(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $repoCategory = $em->getRepository(Category::class);

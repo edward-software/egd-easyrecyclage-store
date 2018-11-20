@@ -2,17 +2,18 @@
 
 namespace Paprec\CommercialBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * OrderRequest
+ * ProductDIQuote
  *
- * @ORM\Table(name="orderRequests")
- * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\OrderRequestRepository")
+ * @ORM\Table(name="productDIQuotes")
+ * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\ProductDIQuoteRepository")
  */
-class OrderRequest
+class ProductDIQuote
 {
     /**
      * @var int
@@ -77,16 +78,47 @@ class OrderRequest
      */
     private $firstName;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="function", type="string", length=255)
+     */
+    private $function;
+
 
     /**
      * @var string
      * @ORM\Column(name="email", type="string", length=255)
      * @Assert\Email(
-     *      message = "The email '{{ value }}' is not a valid email.",
+     *      message = "Le format de l'email est invalide",
      *      checkMX = true
      * )
      */
     private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="text")
+     * @Assert\NotBlank()
+     */
+    private $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="postalCode", type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $postalCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $city;
 
     /**
      * @var string
@@ -99,33 +131,17 @@ class OrderRequest
     /**
      * @var string
      *
-     * @ORM\Column(name="function", type="string", length=255, nullable=true)
+     * @ORM\Column(name="quoteStatus", type="string", length=255)
      */
-    private $function;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="orderStatus", type="string", length=255)
-     */
-    private $orderStatus;
+    private $quoteStatus;
+
 
     /**
-     * "Mon besoin" rempli par l'utilisateur Front Office
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="need", type="text")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="totalAmount", type="float", nullable=true)
      */
-    private $need;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="attachedFiles", type="array", nullable=true)
-     */
-    private $attachedFiles;
-
+    private $totalAmount;
 
     /**
      * @var float
@@ -135,30 +151,6 @@ class OrderRequest
     private $generatedTurnover;
 
     /**
-     * @var array|null
-     *
-     * @ORM\Column(name="division", type="string")
-     */
-    private $division;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="postalCode", type="string", length=255)
-     */
-    private $postalCode;
-
-    /**
-     * Devis associé
-     * @var string
-     *
-     * @ORM\Column(name="associatedOrder", type="string", length=255, nullable=true)
-     * @Assert\File(mimeTypes={ "application/pdf" })
-     */
-    private $associatedOrder;
-
-    /**
-     * Résumé du besoin rempli par le commercial
      * @var string
      *
      * @ORM\Column(name="summary", type="text", nullable=true)
@@ -191,29 +183,43 @@ class OrderRequest
      *
      *  RELATIONS
      *
-    ########################### */
+     ########################### */
+
+
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\UserBundle\Entity\User", inversedBy="orderRequests", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuoteLine", mappedBy="productDIQuote", cascade={"all"})
+     */
+    private $productDIQuoteLines;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Paprec\UserBundle\Entity\User", inversedBy="productDIQuotes", cascade={"all"})
      * @ORM\JoinColumn(name="userInChargeId", referencedColumnName="id", nullable=true)
      */
     private $userInCharge;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agency", inversedBy="orderRequests")
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agency", inversedBy="productDIQuotes")
      * @ORM\JoinColumn(name="agencyId", referencedColumnName="id", nullable=true)
      */
     private $agency;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\BusinessLine", inversedBy="productDIQuotes")
+     * @ORM\JoinColumn(name="businessLineId", referencedColumnName="id", nullable=true)
+     * @Assert\NotBlank()
+     */
+    private $businessLine;
 
     /**
-     * OrderRequest constructor.
+     * ProductDIQuote constructor.
      */
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
-        $this->attachedFiles = array();
+        $this->productDIQuoteLines = new ArrayCollection();
     }
+
 
     /**
      * Get id.
@@ -230,7 +236,7 @@ class OrderRequest
      *
      * @param \DateTime $dateCreation
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setDateCreation($dateCreation)
     {
@@ -254,7 +260,7 @@ class OrderRequest
      *
      * @param \DateTime|null $dateUpdate
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setDateUpdate($dateUpdate = null)
     {
@@ -278,7 +284,7 @@ class OrderRequest
      *
      * @param \DateTime|null $deleted
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setDeleted($deleted = null)
     {
@@ -302,7 +308,7 @@ class OrderRequest
      *
      * @param string $businessName
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setBusinessName($businessName)
     {
@@ -326,7 +332,7 @@ class OrderRequest
      *
      * @param string $civility
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setCivility($civility)
     {
@@ -350,7 +356,7 @@ class OrderRequest
      *
      * @param string $lastName
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setLastName($lastName)
     {
@@ -374,7 +380,7 @@ class OrderRequest
      *
      * @param string $firstName
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setFirstName($firstName)
     {
@@ -398,7 +404,7 @@ class OrderRequest
      *
      * @param string $email
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setEmail($email)
     {
@@ -418,147 +424,27 @@ class OrderRequest
     }
 
     /**
-     * Set phone.
+     * Set address.
      *
-     * @param string $phone
+     * @param string $address
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
-    public function setPhone($phone)
+    public function setAddress($address)
     {
-        $this->phone = $phone;
+        $this->address = $address;
 
         return $this;
     }
 
     /**
-     * Get phone.
+     * Get address.
      *
      * @return string
      */
-    public function getPhone()
+    public function getAddress()
     {
-        return $this->phone;
-    }
-
-    /**
-     * Set orderStatus.
-     *
-     * @param string $orderStatus
-     *
-     * @return OrderRequest
-     */
-    public function setOrderStatus($orderStatus)
-    {
-        $this->orderStatus = $orderStatus;
-
-        return $this;
-    }
-
-    /**
-     * Get orderStatus.
-     *
-     * @return string
-     */
-    public function getOrderStatus()
-    {
-        return $this->orderStatus;
-    }
-
-    /**
-     * Set need.
-     *
-     * @param string $need
-     *
-     * @return OrderRequest
-     */
-    public function setNeed($need)
-    {
-        $this->need = $need;
-
-        return $this;
-    }
-
-    /**
-     * Get need.
-     *
-     * @return string
-     */
-    public function getNeed()
-    {
-        return $this->need;
-    }
-
-    /**
-     * Set attachedFiles.
-     *
-     * @param array|null $attachedFiles
-     *
-     * @return OrderRequest
-     */
-    public function setAttachedFiles($attachedFiles = null)
-    {
-        $this->attachedFiles = $attachedFiles;
-
-        return $this;
-    }
-
-    /**
-     * Get attachedFiles.
-     *
-     * @return array|null
-     */
-    public function getAttachedFiles()
-    {
-        return $this->attachedFiles;
-    }
-
-    /**
-     * Set generatedTurnover.
-     *
-     * @param float|null $generatedTurnover
-     *
-     * @return OrderRequest
-     */
-    public function setGeneratedTurnover($generatedTurnover = null)
-    {
-        $this->generatedTurnover = $generatedTurnover;
-
-        return $this;
-    }
-
-    /**
-     * Get generatedTurnover.
-     *
-     * @return float|null
-     */
-    public function getGeneratedTurnover()
-    {
-        return $this->generatedTurnover;
-    }
-
-    /**
-     * Set division.
-     *
-     * @param string|null $division
-     *
-     * @return OrderRequest
-     */
-    public function setDivision($division = null)
-    {
-        $this->division = $division;
-
-        return $this;
-    }
-
-    /**
-     * Get division.
-     *
-     * @return string|null
-     */
-    public function getDivision()
-    {
-        return $this->division;
+        return $this->address;
     }
 
     /**
@@ -566,7 +452,7 @@ class OrderRequest
      *
      * @param string $postalCode
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setPostalCode($postalCode)
     {
@@ -586,27 +472,101 @@ class OrderRequest
     }
 
     /**
-     * Set associatedOrder.
+     * Set city.
      *
-     * @param string|null $associatedOrder
+     * @param string $city
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
-    public function setAssociatedOrder($associatedOrder = null)
+    public function setCity($city)
     {
-        $this->associatedOrder = $associatedOrder;
+        $this->city = $city;
 
         return $this;
     }
 
     /**
-     * Get associatedOrder.
+     * Get city.
      *
-     * @return string|null
+     * @return string
      */
-    public function getAssociatedOrder()
+    public function getCity()
     {
-        return $this->associatedOrder;
+        return $this->city;
+    }
+
+    /**
+     * Set phone.
+     *
+     * @param string $phone
+     *
+     * @return ProductDIQuote
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone.
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+
+
+    /**
+     * Set totalAmount.
+     *
+     * @param float $totalAmount
+     *
+     * @return ProductDIQuote
+     */
+    public function setTotalAmount($totalAmount)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return float
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
+    }
+
+    /**
+     * Set generatedTurnover.
+     *
+     * @param float|null $generatedTurnover
+     *
+     * @return ProductDIQuote
+     */
+    public function setGeneratedTurnover($generatedTurnover = null)
+    {
+        $this->generatedTurnover = $generatedTurnover;
+
+        return $this;
+    }
+
+    /**
+     * Get generatedTurnover.
+     *
+     * @return float|null
+     */
+    public function getGeneratedTurnover()
+    {
+        return $this->generatedTurnover;
     }
 
     /**
@@ -614,7 +574,7 @@ class OrderRequest
      *
      * @param string|null $summary
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setSummary($summary = null)
     {
@@ -638,7 +598,7 @@ class OrderRequest
      *
      * @param string|null $frequency
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setFrequency($frequency = null)
     {
@@ -662,7 +622,7 @@ class OrderRequest
      *
      * @param float|null $tonnage
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setTonnage($tonnage = null)
     {
@@ -686,7 +646,7 @@ class OrderRequest
      *
      * @param int|null $kookaburaNumber
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setKookaburaNumber($kookaburaNumber = null)
     {
@@ -706,11 +666,47 @@ class OrderRequest
     }
 
     /**
+     * Add productDIQuoteLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine
+     *
+     * @return ProductDIQuote
+     */
+    public function addProductDIQuoteLine(\Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine)
+    {
+        $this->productDIQuoteLines[] = $productDIQuoteLine;
+
+        return $this;
+    }
+
+    /**
+     * Remove productDIQuoteLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductDIQuoteLine(\Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine)
+    {
+        return $this->productDIQuoteLines->removeElement($productDIQuoteLine);
+    }
+
+    /**
+     * Get productDIQuoteLines.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductDIQuoteLines()
+    {
+        return $this->productDIQuoteLines;
+    }
+
+    /**
      * Set userInCharge.
      *
      * @param \Paprec\UserBundle\Entity\User|null $userInCharge
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setUserInCharge(\Paprec\UserBundle\Entity\User $userInCharge = null)
     {
@@ -734,7 +730,7 @@ class OrderRequest
      *
      * @param \Paprec\CommercialBundle\Entity\Agency|null $agency
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setAgency(\Paprec\CommercialBundle\Entity\Agency $agency = null)
     {
@@ -754,11 +750,59 @@ class OrderRequest
     }
 
     /**
+     * Set businessLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\BusinessLine|null $businessLine
+     *
+     * @return ProductDIQuote
+     */
+    public function setBusinessLine(\Paprec\CommercialBundle\Entity\BusinessLine $businessLine = null)
+    {
+        $this->businessLine = $businessLine;
+
+        return $this;
+    }
+
+    /**
+     * Get businessLine.
+     *
+     * @return \Paprec\CommercialBundle\Entity\BusinessLine|null
+     */
+    public function getBusinessLine()
+    {
+        return $this->businessLine;
+    }
+
+    /**
+     * Set quoteStatus.
+     *
+     * @param string $quoteStatus
+     *
+     * @return ProductDIQuote
+     */
+    public function setQuoteStatus($quoteStatus)
+    {
+        $this->quoteStatus = $quoteStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get quoteStatus.
+     *
+     * @return string
+     */
+    public function getQuoteStatus()
+    {
+        return $this->quoteStatus;
+    }
+
+    /**
      * Set function.
      *
      * @param string $function
      *
-     * @return OrderRequest
+     * @return ProductDIQuote
      */
     public function setFunction($function)
     {

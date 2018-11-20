@@ -1,33 +1,33 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-    {{ 'Commercial.OrderRequest.Edit'|trans }}
+    {{ 'Commercial.QuoteRequest.Edit'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'Commercial.OrderRequest.OrderRequests'|trans }}
+    {{ 'Commercial.QuoteRequest.QuoteRequests'|trans }}
 {% endblock %}
 
 {% block main_content %}
 
-    <form id="commercialOrderRequestForm" action="" method="post" enctype="multipart/form-data">
+    <form id="commercialQuoteRequestForm" action="" method="post" enctype="multipart/form-data">
 
         <div class="col-md-12">
             <!-- BOX -->
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <i class="fa fa-pencil-alt"></i> {{ 'Commercial.OrderRequest.Edit'|trans }} #{{ orderRequest.id }}
+                        <i class="fa fa-xs fa-pencil-alt"></i> {{ 'Commercial.QuoteRequest.Edit'|trans }} #{{ quoteRequest.id }}
 
                         <div class="float-right">
 
-                            <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-orderRequest-save-button"><i
-                                        class="fa fa-check"></i> {{ 'Commercial.OrderRequest.Save'|trans }}</a>
-                            <a href="javascript:void(0);" class="btn btn-sm btn-danger commercial-orderRequest-cancel-button"><i
-                                        class="fa fa-close"></i> {{ 'Commercial.OrderRequest.Cancel'|trans }}</a>
+                            <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-quoteRequest-save-button"><i
+                                        class="fa fa-xs fa-check"></i> {{ 'Commercial.QuoteRequest.Save'|trans }}</a>
+                            <a href="javascript:void(0);" class="btn btn-sm btn-danger commercial-quoteRequest-cancel-button"><i
+                                        class="fa fa-xs fa-close"></i> {{ 'Commercial.QuoteRequest.Cancel'|trans }}</a>
                         </div>
                     </h4>
                 </div>
@@ -35,33 +35,33 @@
                     <div class="col-md-12 mt-3">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">{{ 'Commercial.OrderRequest.Informations-BO'|trans }}</h5>
+                                <h5 class="card-title">{{ 'Commercial.QuoteRequest.Informations-BO'|trans }}</h5>
                             </div>
                             <div class="card-body row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.OrderRequest.OrderStatus'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.QuoteRequest.QuoteStatus'|trans }}</label>
                                         <div class="form-content">
-                                            {{ form_widget(form.orderStatus, {'attr': {'class': 'form-control'}}) }}
-                                            {{ form_errors(form.orderStatus) }}
+                                            {{ form_widget(form.quoteStatus, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.quoteStatus) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.OrderRequest.GeneratedTurnover'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.QuoteRequest.GeneratedTurnover'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.generatedTurnover, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.generatedTurnover) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.OrderRequest.AssociatedOrder'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.QuoteRequest.AssociatedQuote'|trans }}</label>
                                         <div class="form-content">
-                                            {{ form_widget(form.associatedOrder, {'attr': {'class': 'form-control'}}) }}
-                                            {{ form_errors(form.associatedOrder) }}
+                                            {{ form_widget(form.associatedQuote) }}
+                                            {{ form_errors(form.associatedQuote) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.OrderRequest.Agency'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.QuoteRequest.Agency'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.agency, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.agency) }}
@@ -71,28 +71,28 @@
                                 <div class="col-md-6">
 
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.OrderRequest.Tonnage'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.QuoteRequest.Tonnage'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.tonnage, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.tonnage) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.OrderRequest.KookaburaNumber'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.QuoteRequest.KookaburaNumber'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.kookaburaNumber, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.kookaburaNumber) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.OrderRequest.UserInCharge'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.QuoteRequest.UserInCharge'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.userInCharge, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.userInCharge) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.OrderRequest.Summary'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.QuoteRequest.Summary'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.summary, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.summary) }}
@@ -105,10 +105,10 @@
                 </div>
                 <div class="card-footer">
                     <div class="float-right">
-                        <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-orderRequest-save-button"><i
-                                    class="fa fa-check"></i> {{ 'Commercial.OrderRequest.Save'|trans }}</a>
-                        <a href="javascript:void(0);" class="btn btn-sm btn-danger commercial-orderRequest-cancel-button"><i
-                                    class="fa fa-close"></i> {{ 'Commercial.OrderRequest.Cancel'|trans }}</a>
+                        <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-quoteRequest-save-button"><i
+                                    class="fa fa-xs fa-check"></i> {{ 'Commercial.QuoteRequest.Save'|trans }}</a>
+                        <a href="javascript:void(0);" class="btn btn-sm btn-danger commercial-quoteRequest-cancel-button"><i
+                                    class="fa fa-xs fa-close"></i> {{ 'Commercial.QuoteRequest.Cancel'|trans }}</a>
                     </div>
                 </div>
             </div>
@@ -125,18 +125,18 @@
     <script>
         $(function () {
 
-            $('.commercial-orderRequest-save-button').on('click', function () {
+            $('.commercial-quoteRequest-save-button').on('click', function () {
 
-                $('#commercialOrderRequestForm').submit();
+                $('#commercialQuoteRequestForm').submit();
 
             });
 
 
-            $('.commercial-orderRequest-cancel-button').on('click', function () {
+            $('.commercial-quoteRequest-cancel-button').on('click', function () {
 
-                var url = "{{ path("paprec_commercial_orderRequest_view", {id: orderRequest.id}) }}";
+                var url = "{{ path("paprec_commercial_quoteRequest_view", {id: quoteRequest.id}) }}";
 
-                bootbox.confirm("{{ 'Commercial.OrderRequest.Confirm-cancel'|trans }}", function (result) {
+                bootbox.confirm("{{ 'Commercial.QuoteRequest.Confirm-cancel'|trans }}", function (result) {
                     if (result === true) {
                         $(location).attr('href', url);
                     }

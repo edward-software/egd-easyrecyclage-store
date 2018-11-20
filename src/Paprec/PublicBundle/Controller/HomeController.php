@@ -2,8 +2,8 @@
 
 namespace Paprec\PublicBundle\Controller;
 
-use Paprec\CommercialBundle\Entity\OrderRequest;
-use Paprec\CommercialBundle\Form\OrderRequestShortType;
+use Paprec\CommercialBundle\Entity\QuoteRequest;
+use Paprec\CommercialBundle\Form\QuoteRequestShortType;
 use Paprec\PublicBundle\Entity\Cart;
 use Paprec\PublicBundle\Service\CartManager;
 
@@ -51,7 +51,7 @@ class HomeController extends Controller
 
             if ($cart->getFrequency() == 'regular') {
                 $step = "r";
-                return $this->render('@PaprecPublic/Home/index.html.twig', array(
+                return $this->render('@PaprecPublic/Shared/Home/index.html.twig', array(
                     'divisions' => $divisions,
                     'step' => $step,
                     'cart' => $cart
@@ -67,7 +67,7 @@ class HomeController extends Controller
 
         }
 
-        return $this->render('@PaprecPublic/Home/index.html.twig', array(
+        return $this->render('@PaprecPublic/Shared/Home/index.html.twig', array(
             'divisions' => $divisions,
             'step' => $step
         ));
@@ -86,21 +86,21 @@ class HomeController extends Controller
         $divisions = $this->getParameter('paprec_divisions');
         $cart = $cartManager->get($cartUuid);
 
-        $orderRequest = new OrderRequest();
-        $form = $this->createForm(OrderRequestShortType::class, $orderRequest);
+        $quoteRequest = new QuoteRequest();
+        $form = $this->createForm(QuoteRequestShortType::class, $quoteRequest);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $orderRequest = $form->getData();
-            $orderRequest->setOrderStatus('Créé');
-            $orderRequest->setFrequency($cart->getFrequency());
-            $orderRequest->setDivision($cart->getDivision());
-            $orderRequest->setPostalCode(substr($cart->getLocation(), 0, 5));
+            $quoteRequest = $form->getData();
+            $quoteRequest->setQuoteStatus('Créé');
+            $quoteRequest->setFrequency($cart->getFrequency());
+            $quoteRequest->setDivision($cart->getDivision());
+            $quoteRequest->setPostalCode(substr($cart->getLocation(), 0, 5));
 
             $files = array();
-            foreach ($orderRequest->getAttachedFiles() as $uploadedFile) {
+            foreach ($quoteRequest->getAttachedFiles() as $uploadedFile) {
                 if ($uploadedFile instanceof UploadedFile) {
                     /**
                      * On place le file uploadé dans le dossier web/files
@@ -108,18 +108,18 @@ class HomeController extends Controller
                      */
                     $uploadedFileName = md5(uniqid()) . '.' . $uploadedFile->guessExtension();
 
-                    $uploadedFile->move($this->getParameter('paprec_commercial.order_request.files_path'), $uploadedFileName);
+                    $uploadedFile->move($this->getParameter('paprec_commercial.quote_request.files_path'), $uploadedFileName);
                     $files[] = $uploadedFileName;
                 }
             }
-            $orderRequest->setAttachedFiles($files);
-            $em->persist($orderRequest);
+            $quoteRequest->setAttachedFiles($files);
+            $em->persist($quoteRequest);
             $em->flush();
 
 
             return $this->redirectToRoute('paprec_public_home_index');
         }
-        return $this->render('@PaprecPublic/Home/regularForm.html.twig', array(
+        return $this->render('@PaprecPublic/Shared/regularForm.html.twig', array(
             'form' => $form->createView(),
             'cart' => $cart,
             'divisions' => $divisions

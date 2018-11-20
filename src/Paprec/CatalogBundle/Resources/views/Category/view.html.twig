@@ -20,17 +20,17 @@
         <div class="card">
             <div class="card-header">
                 <h4>
-                    <i class="fa fa-folder"></i> {{ 'Catalog.Category.View'|trans }}
+                    <i class="fa fa-xs fa-folder"></i> {{ 'Catalog.Category.View'|trans }}
                     <div class="float-right">
                         <a href="{{ path("paprec_catalog_category_edit", {id: category.id}) }}" class="btn btn-sm btn-warning"><i
-                                    class="fa fa-edit"></i> {{ 'Catalog.Category.Edit'|trans }}</a>
+                                    class="fa fa-xs fa-edit"></i> {{ 'Catalog.Category.Edit'|trans }}</a>
                         <a id="catalogCategoryRemoveButton" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
-                                    class="fa fa-trash"></i> {{ 'Catalog.Category.Remove'|trans }}</a>
+                                    class="fa fa-xs fa-trash"></i> {{ 'Catalog.Category.Remove'|trans }}</a>
                     </div>
                 </h4>
                 <div class="view-tools float-left">
                     <a href="{{ path('paprec_catalog_category_index') }}" class="btn btn-sm btn-default"><i
-                                class="fa fa-chevron-left"></i> {{ 'Catalog.Category.List'|trans }}</a>
+                                class="fa fa-xs fa-chevron-left"></i> {{ 'Catalog.Category.List'|trans }}</a>
                 </div>
             </div>
             <div class="card-body">
@@ -117,18 +117,18 @@
                                 </div>
                                 <div class="card-body">
                                     <ul id="productDICategoryListContent">
-                                        {% for productDICategory in category.productDICategoriesOrdered %}
+                                        {% for productDICategory in category.productDICategoriesQuoteed %}
                                             <li class="list-group-item"
                                                 id="productDICategoryItem_{{ productDICategory.id }}">
                                                 {{ productDICategory.productDI.name }}
                                                 <div class="float-right">
                                                     <a href="{{ path("paprec_catalog_productDI_view", {id: productDICategory.productDI.id}) }}"
-                                                       class="btn btn-sm btn-sm btn-primary"><i class="fa fa-eye"></i></a>
+                                                       class="btn btn-sm btn-sm btn-primary"><i class="fa fa-xs fa-eye"></i></a>
                                                     <a href="{{ path("paprec_catalog_productDI_edit", {id: productDICategory.productDI.id}) }}"
-                                                       class="mx-1 btn btn-sm btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                                       class="mx-1 btn btn-sm btn-sm btn-warning"><i class="fa fa-xs fa-edit"></i></a>
                                                     <a href="javascript:void(0);"
                                                        onclick="removeProductDICategory({{ category.id }}, {{ productDICategory.id }})"
-                                                       class="btn btn-sm btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                                       class="btn btn-sm btn-sm btn-danger"><i class="fa fa-xs fa-trash"></i></a>
                                                 </div>
                                             </li>
                                         {% endfor %}
@@ -143,18 +143,18 @@
                                 </div>
                                 <div class="card-body">
                                     <ul id="productChantierCategoryListContent">
-                                        {% for productChantierCategory in category.productChantierCategoriesOrdered %}
+                                        {% for productChantierCategory in category.productChantierCategoriesQuoteed %}
                                             <li class="list-group-item"
                                                 id="productChantierCategoryItem_{{ productChantierCategory.id }}">
                                                 {{ productChantierCategory.productChantier.name }}
                                                 <div class="float-right">
                                                     <a href="{{ path("paprec_catalog_productChantier_view", {id: productChantierCategory.productChantier.id}) }}"
-                                                       class="btn btn-sm btn-sm btn-primary"><i class="fa fa-eye"></i></a>
+                                                       class="btn btn-sm btn-sm btn-primary"><i class="fa fa-xs fa-eye"></i></a>
                                                     <a href="{{ path("paprec_catalog_productChantier_edit", {id: productChantierCategory.productChantier.id}) }}"
-                                                       class="mx-1 btn btn-sm btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                                       class="mx-1 btn btn-sm btn-sm btn-warning"><i class="fa fa-xs fa-edit"></i></a>
                                                     <a href="javascript:void(0);"
                                                        onclick="removeProductChantierCategory({{ category.id }}, {{ productChantierCategory.id }})"
-                                                       class="btn btn-sm btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                                       class="btn btn-sm btn-sm btn-danger"><i class="fa fa-xs fa-trash"></i></a>
                                                 </div>
                                             </li>
                                         {% endfor %}

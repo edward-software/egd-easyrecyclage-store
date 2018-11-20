@@ -1,19 +1,19 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-    {{ 'Commercial.ProductDIOrder.Add'|trans }}
+    {{ 'Commercial.ProductDIQuote.Add'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'Commercial.ProductDIOrder.ProductDIOrders'|trans }}
+    {{ 'Commercial.ProductDIQuote.ProductDIQuotes'|trans }}
 {% endblock %}
 
 {% block main_content %}
 
-    <form id="commercialProductDIOrderForm" action="" method="post" enctype="multipart/form-data">
+    <form id="commercialProductDIQuoteForm" action="" method="post" enctype="multipart/form-data">
         <input type="hidden" id="submitFormInput" name="submitForm" value="">
         <input type="hidden" id="selectedProductInput" name="selectedProductId" value="">
 
@@ -22,12 +22,12 @@
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <i class="fa fa-plus"></i> {{ 'Commercial.ProductDIOrder.AddLine'|trans }}
+                        <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductDIQuote.AddLine'|trans }}
                         <div class="float-right">
-                            <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-productDIOrderLine-save-button"><i
-                                        class="fa fa-check"></i> {{ 'Commercial.ProductDIOrder.Save'|trans }}</a>
-                            <a href="javascript:void(0);" class="btn btn-sm btn-danger commercial-productDIOrderLine-cancel-button"><i
-                                        class="fa fa-close"></i> {{ 'Commercial.ProductDIOrder.Cancel'|trans }}</a>
+                            <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-productDIQuoteLine-save-button"><i
+                                        class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductDIQuote.Save'|trans }}</a>
+                            <a href="javascript:void(0);" class="btn btn-sm btn-danger commercial-productDIQuoteLine-cancel-button"><i
+                                        class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductDIQuote.Cancel'|trans }}</a>
                         </div>
                     </h4>
                 </div>
@@ -35,25 +35,25 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">{{ 'Commercial.ProductDIOrder.Informations'|trans }}</h5>
+                                <h5 class="card-title">{{ 'Commercial.ProductDIQuote.Informations'|trans }}</h5>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrderLine.ProductName'|trans }}</label>
+                                    <label class="form-label">{{ 'Commercial.ProductDIQuoteLine.ProductName'|trans }}</label>
                                     <div class="form-content">
                                         {{ form_widget(form.productDI, {'attr': {'class': 'form-control select-product'}}) }}
                                         {{ form_errors(form.productDI) }}
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrderLine.CategoryName'|trans }}</label>
+                                    <label class="form-label">{{ 'Commercial.ProductDIQuoteLine.CategoryName'|trans }}</label>
                                     <div class="form-content">
                                         {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
                                         {{ form_errors(form.category) }}
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrderLine.Quantity'|trans }}</label>
+                                    <label class="form-label">{{ 'Commercial.ProductDIQuoteLine.Quantity'|trans }}</label>
                                     <div class="form-content">
                                         {{ form_widget(form.quantity, {'attr': {'class': 'form-control'}}) }}
                                         {{ form_errors(form.quantity) }}
@@ -66,10 +66,10 @@
 
                 <div class="card-footer">
                     <div class="float-right">
-                        <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-productDIOrderLine-save-button"><i
-                                    class="fa fa-check"></i> {{ 'Commercial.ProductDIOrder.Save'|trans }}</a>
-                        <a href="javascript:void(0);" class="btn btn-sm btn-danger commercial-productDIOrderLine-cancel-button"><i
-                                    class="fa fa-close"></i> {{ 'Commercial.ProductDIOrder.Cancel'|trans }}</a>
+                        <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-productDIQuoteLine-save-button"><i
+                                    class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductDIQuote.Save'|trans }}</a>
+                        <a href="javascript:void(0);" class="btn btn-sm btn-danger commercial-productDIQuoteLine-cancel-button"><i
+                                    class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductDIQuote.Cancel'|trans }}</a>
                     </div>
                 </div>
             </div>
@@ -89,17 +89,17 @@
             $('#selectedProductInput').val($('.select-product').val());
 
 
-            $('.commercial-productDIOrderLine-save-button').on('click', function () {
+            $('.commercial-productDIQuoteLine-save-button').on('click', function () {
                 $('#submitFormInput').val(1);
-                $('#commercialProductDIOrderForm').submit();
+                $('#commercialProductDIQuoteForm').submit();
             });
 
 
-            $('.commercial-productDIOrderLine-cancel-button').on('click', function () {
+            $('.commercial-productDIQuoteLine-cancel-button').on('click', function () {
 
-                var url = "{{ path("paprec_commercial_productDIOrder_view", { id: productDIOrder.id }) }}";
+                var url = "{{ path("paprec_commercial_productDIQuote_view", { id: productDIQuote.id }) }}";
 
-                bootbox.confirm("{{ 'Commercial.ProductDIOrder.Confirm-cancel'|trans }}", function (result) {
+                bootbox.confirm("{{ 'Commercial.ProductDIQuote.Confirm-cancel'|trans }}", function (result) {
                     if (result === true) {
                         $(location).attr('href', url);
                     }
@@ -112,7 +112,7 @@
                 $('#submitFormInput').val('');
                 if($(this).val() != '')
                 {
-                    $('#commercialProductDIOrderForm').submit();
+                    $('#commercialProductDIQuoteForm').submit();
                 }
             });
 

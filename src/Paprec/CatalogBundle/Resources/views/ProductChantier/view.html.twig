@@ -21,18 +21,18 @@
         <div class="card">
             <div class="card-header">
                 <h4>
-                    <i class="fa fa-folder"></i> {{ 'Catalog.ProductChantier.View'|trans }}
+                    <i class="fa fa-xs fa-folder"></i> {{ 'Catalog.ProductChantier.View'|trans }}
                     <div class="float-right">
                         <a href="{{ path("paprec_catalog_productChantier_edit", {id: productChantier.id}) }}"
                            class="btn btn-sm btn-warning"><i
-                                    class="fa fa-edit"></i> {{ 'Catalog.ProductChantier.Edit'|trans }}</a>
+                                    class="fa fa-xs fa-edit"></i> {{ 'Catalog.ProductChantier.Edit'|trans }}</a>
                         <a id="catalogProductRemoveButton" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
-                                    class="fa fa-trash"></i> {{ 'Catalog.ProductChantier.Remove'|trans }}</a>
+                                    class="fa fa-xs fa-trash"></i> {{ 'Catalog.ProductChantier.Remove'|trans }}</a>
                     </div>
                 </h4>
                 <div class="view-tools float-left">
                     <a href="{{ path('paprec_catalog_productChantier_index') }}" class="btn btn-sm btn-default"><i
-                                class="fa fa-chevron-left"></i> {{ 'Catalog.ProductChantier.List'|trans }}</a>
+                                class="fa fa-xs fa-chevron-left"></i> {{ 'Catalog.ProductChantier.List'|trans }}</a>
                 </div>
             </div>
             <div class="card-body">
@@ -139,7 +139,7 @@
                                                                             type="button" id="{{ picture.id }}"
                                                                             data-toggle="dropdown" aria-haspopup="true"
                                                                             aria-expanded="false">
-                                                                        <i class="fa fa-cog"></i>
+                                                                        <i class="fa fa-xs fa-cog"></i>
                                                                     </button>
                                                                     <div class="dropdown-menu"
                                                                          aria-labelledby="{{ picture.id }}">
@@ -150,12 +150,12 @@
                                                                                 data-toggle="modal"
                                                                                 data-type="Picto"
                                                                                 data-id="{{ picture.id }}">
-                                                                            <i class="fa fa-pencil-alt"></i> {{ 'General.Edit'|trans }}
+                                                                            <i class="fa fa-xs fa-pencil-alt"></i> {{ 'General.Edit'|trans }}
                                                                         </button>
                                                                         <button onclick="removePicture(this)"
                                                                                 class="dropdown-item"
                                                                                 type="button">
-                                                                            <i class="fa fa-trash"></i> {{ 'General.Remove'|trans }}
+                                                                            <i class="fa fa-xs fa-trash"></i> {{ 'General.Remove'|trans }}
                                                                         </button>
                                                                     </div>
                                                                 </div>
@@ -169,12 +169,12 @@
                                                 {#
                                                     Card d'ajout d'une nouvelle photo Picto
                                                 #}
-                                                <div class="card card-sec bg-transparent border-0">
-                                                    <button class="card-img-top btn btn-sm btn-light h-100 bg-transparent border-0"
+                                                <div class="card card-sec bg-transparent bquote-0">
+                                                    <button class="card-img-top btn btn-sm btn-light h-100 bg-transparent bquote-0"
                                                             data-target="#uploadPictureModal" data-toggle="modal"
                                                             data-type="Picto"
                                                             id="openModalUploadPicture">
-                                                        <i class="fa fa-plus-circle fa-2x"></i>
+                                                        <i class="fa fa-xs fa-plus-circle fa-2x"></i>
                                                     </button>
                                                 </div>
                                             </div>
@@ -201,7 +201,7 @@
                                                                             type="button" id="{{ picture.id }}"
                                                                             data-toggle="dropdown" aria-haspopup="true"
                                                                             aria-expanded="false">
-                                                                        <i class="fa fa-cog"></i>
+                                                                        <i class="fa fa-xs fa-cog"></i>
                                                                     </button>
                                                                     <div class="dropdown-menu"
                                                                          aria-labelledby="{{ picture.id }}">
@@ -212,16 +212,16 @@
                                                                                 data-toggle="modal"
                                                                                 data-type="PilotPicture"
                                                                                 data-id="{{ picture.id }}">
-                                                                            <i class="fa fa-pencil-alt"></i> {{ 'General.Edit'|trans }}
+                                                                            <i class="fa fa-xs fa-pencil-alt"></i> {{ 'General.Edit'|trans }}
                                                                         </button>
                                                                         <button onclick="setPicture(this)"
                                                                                 class="dropdown-item" type="button">
-                                                                            <i class="fa fa-exchange-alt"></i> {{ 'Catalog.ProductChantier.SetSecondaryPicture'|trans }}
+                                                                            <i class="fa fa-xs fa-exchange-alt"></i> {{ 'Catalog.ProductChantier.SetSecondaryPicture'|trans }}
                                                                         </button>
                                                                         <button onclick="removePicture(this)"
                                                                                 class="dropdown-item"
                                                                                 type="button">
-                                                                            <i class="fa fa-trash"></i> {{ 'General.Remove'|trans }}
+                                                                            <i class="fa fa-xs fa-trash"></i> {{ 'General.Remove'|trans }}
                                                                         </button>
                                                                     </div>
                                                                 </div>
@@ -235,12 +235,12 @@
                                                 {#
                                                     Card d'ajout d'une nouvelle photo PilotPicture
                                                 #}
-                                                <div class="card card-sec bg-transparent border-0">
-                                                    <button class="card-img-top btn btn-sm btn-light h-100 bg-transparent border-0"
+                                                <div class="card card-sec bg-transparent bquote-0">
+                                                    <button class="card-img-top btn btn-sm btn-light h-100 bg-transparent bquote-0"
                                                             data-target="#uploadPictureModal" data-toggle="modal"
                                                             data-type="PilotPicture"
                                                             id="openModalUploadPicture">
-                                                        <i class="fa fa-plus-circle fa-2x"></i>
+                                                        <i class="fa fa-xs fa-plus-circle fa-2x"></i>
                                                     </button>
                                                 </div>
                                             </div>
@@ -267,7 +267,7 @@
                                                                             type="button" id="{{ picture.id }}"
                                                                             data-toggle="dropdown" aria-haspopup="true"
                                                                             aria-expanded="false">
-                                                                        <i class="fa fa-cog"></i>
+                                                                        <i class="fa fa-xs fa-cog"></i>
                                                                     </button>
                                                                     <div class="dropdown-menu"
                                                                          aria-labelledby="{{ picture.id }}">
@@ -278,16 +278,16 @@
                                                                                 data-toggle="modal"
                                                                                 data-type="Picture"
                                                                                 data-id="{{ picture.id }}">
-                                                                            <i class="fa fa-pencil-alt"></i> {{ 'General.Edit'|trans }}
+                                                                            <i class="fa fa-xs fa-pencil-alt"></i> {{ 'General.Edit'|trans }}
                                                                         </button>
                                                                         <button onclick="setPilotePicture(this)"
                                                                                 class="dropdown-item" type="button">
-                                                                            <i class="fa fa-exchange-alt"></i> {{ 'Catalog.ProductChantier.PilotPicture'|trans }}
+                                                                            <i class="fa fa-xs fa-exchange-alt"></i> {{ 'Catalog.ProductChantier.PilotPicture'|trans }}
                                                                         </button>
                                                                         <button onclick="removePicture(this)"
                                                                                 class="dropdown-item"
                                                                                 type="button">
-                                                                            <i class="fa fa-trash"></i> {{ 'General.Remove'|trans }}
+                                                                            <i class="fa fa-xs fa-trash"></i> {{ 'General.Remove'|trans }}
                                                                         </button>
                                                                     </div>
                                                                 </div>
@@ -301,12 +301,12 @@
                                                 {#
                                                     Card d'ajout d'une nouvelle photo Picture
                                                 #}
-                                                <div class="card card-sec bg-transparent border-0">
-                                                    <button class="card-img-top btn btn-sm btn-light h-100 bg-transparent border-0"
+                                                <div class="card card-sec bg-transparent bquote-0">
+                                                    <button class="card-img-top btn btn-sm btn-light h-100 bg-transparent bquote-0"
                                                             data-target="#uploadPictureModal" data-toggle="modal"
                                                             data-type="Picture"
                                                             id="openModalUploadPicture">
-                                                        <i class="fa fa-plus-circle fa-2x"></i>
+                                                        <i class="fa fa-xs fa-plus-circle fa-2x"></i>
                                                     </button>
                                                 </div>
                                             </div>
@@ -406,15 +406,15 @@
 
                                     <a href="{{ path('paprec_catalog_productChantier_addCategory', {id: productChantier.id}) }}"
                                        class="btn btn-sm btn-outline-primary">
-                                        <i class="fa fa-plus"></i> {{ 'Catalog.ProductChantier.AddCategory'|trans }}
+                                        <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductChantier.AddCategory'|trans }}
                                     </a>
                                 </div>
                             </h5>
                         </div>
                         <div class="card-body">
                             <table id="productChantierCategorysDatatable"
-                                   class="table table-striped table-bordered table-hover"
-                                   cellpadding="0" cellspacing="0" border="0">
+                                   class="table table-striped table-bquoteed table-hover"
+                                   cellpadding="0" cellspacing="0" bquote="0">
                                 <thead>
                                 <tr>
                                     <th>#</th>
@@ -433,12 +433,12 @@
                                             <a href="{{ path('paprec_catalog_productChantier_editCategory', {id: productChantier.id, productChantierCategoryId: productChantierCategory.id}) }}"
                                                class="btn btn-sm btn-warning btn-sm mx-1"
                                                data-id="{{ productChantierCategory.id }}">
-                                                <i class="fa fa-edit"></i>
+                                                <i class="fa fa-xs fa-edit"></i>
                                             </a>
                                             <a href="#"
                                                class="btn btn-sm btn-danger btn-sm catalogProductChantierCategoryRemoveButton"
                                                data-id="{{ productChantierCategory.id }}">
-                                                <i class="fa fa-trash"></i>
+                                                <i class="fa fa-xs fa-trash"></i>
                                             </a>
                                         </td>
                                     </tr>
