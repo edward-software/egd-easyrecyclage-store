@@ -14,7 +14,6 @@ use Doctrine\ORM\EntityNotFoundException;
 use \Exception;
 use Paprec\PublicBundle\Entity\Cart;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 
 class CartManager

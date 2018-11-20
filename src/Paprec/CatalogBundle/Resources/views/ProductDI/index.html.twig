@@ -43,7 +43,7 @@
                         <tr>
                             <th>#</th>
                             <th>{{ 'Catalog.ProductDI.Name'|trans }}</th>
-                            <th>{{ 'Catalog.ProductDI.Capacity'|trans }}</th>
+                            <th>{{ 'Catalog.ProductDI.Reference'|trans }}</th>
                             <th>{{ 'Catalog.ProductDI.Dimensions'|trans }}</th>
                             <th></th>
                         </tr>
@@ -122,9 +122,14 @@
                 "columns": [
                     {"data": "id"},
                     {"data": "name"},
-                    {"data": "capacity"},
+                    {"data": "reference"},
                     {"data": "dimensions"},
                     {"data": "id", "width": "10%", "bSortable": false}
+                ],
+                "columnDefs": [
+                    { "width": "200px", "targets": 1 },
+                    { "width": "200px", "targets": 2 }
+
                 ],
                 "rowCallback": function (row, data, displayIndex) {
                 },

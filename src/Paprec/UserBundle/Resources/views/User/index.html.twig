@@ -131,6 +131,7 @@
                     },
                     {
                         text: '{{ 'General.Remove'|trans }}',
+                        className: 'btn-sm',
                         action: function (e, dt) {
                             if (dt.rows({selected: true}).count() > 0) {
                                 var rowIds = [];

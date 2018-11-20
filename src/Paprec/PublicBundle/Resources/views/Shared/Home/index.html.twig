@@ -44,7 +44,7 @@
                                autocomplete="off">
                         <datalist id="locationDatalist">
                             <option data-vicopo="#locationSelect">
-                                <a data-vicopo-code-postal> </a>&nbsp;<a data-vicopo-ville></a></option>
+                                <a data-vicopo-code-postal> </a>&nbsp;<a data-vicopo-ville></a>
                             </option>
                         </datalist>
                     </div>
@@ -87,9 +87,14 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 {% if step == 'r' %}
-                                    <a class="button button--grey" href="{{ path('paprec_public_DI_subscription_step1', {cartUuid: cart.id}) }}">{{ 'Public.Cart.NeedEstimation'|trans }}</a>
-                                    <a class="button button--grey" href="{{ path('paprec_public_home_regularForm', {cartUuid: cart.id}) }}">{{ 'Public.Cart.FillForm'|trans }}</a>
+                                    {% if cart and cart.division == 'DI' %}
+                                        <a class="button button--grey"
+                                           href="{{ path('paprec_public_DI_subscription_step1', {cartUuid: cart.id}) }}">{{ 'Public.Cart.NeedEstimation'|trans }}</a>
+                                    {% endif %}
+                                    <a class="button button--grey"
+                                       href="{{ path('paprec_public_home_regularForm', {cartUuid: cart.id}) }}">{{ 'Public.Cart.FillForm'|trans }}</a>
                                 {% endif %}
+
                             {% endif %}
 
                         </div>

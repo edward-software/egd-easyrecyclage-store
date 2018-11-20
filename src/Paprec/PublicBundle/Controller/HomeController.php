@@ -25,6 +25,7 @@ class HomeController extends Controller
         $location = $request->get('l');
         $division = $request->get('d');
         $frequency = $request->get('f');
+
         $cartManager = $this->get('paprec.cart_manager');
 
         /**
@@ -43,14 +44,16 @@ class HomeController extends Controller
         }
         if (isset($location) && isset($division) && isset($frequency) && !empty($frequency)) {
 
-            /**
-             * On créé un Cart qui va porter les informations saisies et que l'on va passer aux SubscriptionControllers
-             */
+            // On créé un Cart qui va porter les informations saisies et que l'on va passer aux SubscriptionControllers
+
             $cart = $cartManager->add($location, $division, $frequency);
 
 
             if ($cart->getFrequency() == 'regular') {
                 $step = "r";
+                // Si  la personne choisi "Régulier", on lui créé quand même un Cart
+                // On renvoit ce Cart au twig, ainsi la personne peut "Remplir un formulaire" et abandonner le Cart
+                // Ou bien "d'estimer son besoin en 3 minutes" et on navigue vers la step1 en passant le Cart
                 return $this->render('@PaprecPublic/Shared/Home/index.html.twig', array(
                     'divisions' => $divisions,
                     'step' => $step,

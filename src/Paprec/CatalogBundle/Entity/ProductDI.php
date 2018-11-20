@@ -116,6 +116,10 @@ class ProductDI
 
     /**
      * @ORM\ManyToMany(targetEntity="Paprec\CatalogBundle\Entity\Argument", inversedBy="productDIs")
+     * @ORM\JoinTable(name="productDIs_arguments",
+     *      joinColumns={@ORM\JoinColumn(name="productDIId", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="argumentId", referencedColumnName="id")}
+     *     )
      */
     private $arguments;
 

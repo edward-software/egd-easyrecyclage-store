@@ -122,6 +122,10 @@ class ProductChantier
 
     /**
      * @ORM\ManyToMany(targetEntity="Paprec\CatalogBundle\Entity\Argument", inversedBy="productChantiers")
+     * @ORM\JoinTable(name="productChantiers_arguments",
+     *      joinColumns={@ORM\JoinColumn(name="productChantierId", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="arugmentId", referencedColumnName="id")}
+     *     )
      */
     private $arguments;
 

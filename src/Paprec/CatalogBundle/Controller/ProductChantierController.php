@@ -51,7 +51,7 @@ class ProductChantierController extends Controller
 
         $cols['id'] = array('label' => 'id', 'id' => 'p.id', 'method' => array('getId'));
         $cols['name'] = array('label' => 'name', 'id' => 'p.name', 'method' => array('getName'));
-        $cols['capacity'] = array('label' => 'capacity', 'id' => 'p.capacity', 'method' => array('getCapacity'));
+        $cols['reference'] = array('label' => 'reference', 'id' => 'p.reference', 'method' => array('getReference'));
         $cols['dimensions'] = array('label' => 'dimensions', 'id' => 'p.dimensions', 'method' => array('getDimensions'));
 
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
@@ -69,7 +69,7 @@ class ProductChantierController extends Controller
             } else {
                 $queryBuilder->andWhere($queryBuilder->expr()->orx(
                     $queryBuilder->expr()->like('p.name', '?1'),
-                    $queryBuilder->expr()->like('p.capacity', '?1'),
+                    $queryBuilder->expr()->like('p.reference', '?1'),
                     $queryBuilder->expr()->like('p.dimensions', '?1')
                 ))->setParameter(1, '%' . $search['value'] . '%');
             }

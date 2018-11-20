@@ -26,10 +26,12 @@
                     <h4>
                         <i class="fa fa-xs fa-list"></i> {{ 'Commercial.BusinessLine.List'|trans }}
                         <div class="float-right">
-                            <a href="{{ path('paprec_commercial_businessLine_add') }}" class="btn btn-sm btn-outline-primary">
+                            <a href="{{ path('paprec_commercial_businessLine_add') }}"
+                               class="btn btn-sm btn-outline-primary">
                                 <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.BusinessLine.Add'|trans }}
                             </a>
-                            <a href="{{ path('paprec_commercial_businessLine_export') }}" class="btn btn-sm btn-primary ">
+                            <a href="{{ path('paprec_commercial_businessLine_export') }}"
+                               class="btn btn-sm btn-primary ">
                                 <i class="fa fa-xs fa-file-excel"></i> {{ 'Commercial.BusinessLine.Export'|trans }}
                             </a>
                         </div>
@@ -125,6 +127,9 @@
                     {"data": "division"},
                     {"data": "dateCreation"},
                     {"data": "id", "width": "10%", "bSortable": false}
+                ],
+                columnDefs: [
+                    {"width": "220px", "targets": 1},
                 ],
                 "rowCallback": function (row, data, displayIndex) {
                 },
