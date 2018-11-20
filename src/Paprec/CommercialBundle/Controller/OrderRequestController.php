@@ -44,10 +44,12 @@ class OrderRequestController extends Controller
         $orders = $request->get('order');
         $search = $request->get('search');
         $columns = $request->get('columns');
+        // Récupération du type de catégorie souhaité (DI, CHANTIER, D3E)
+        $typeOrderRequest = $request->get('typeOrderRequest');
 
         $cols['id'] = array('label' => 'id', 'id' => 'o.id', 'method' => array('getId'));
         $cols['businessName'] = array('label' => 'businessName', 'id' => 'o.businessName', 'method' => array('getBusinessName'));
-        $cols['division'] = array('label' => 'division', 'id' => 'o.division', 'method' => array('getDivision'));
+        $cols['email'] = array('label' => 'email', 'id' => 'o.email', 'method' => array('getEmail'));
         $cols['orderStatus'] = array('label' => 'orderStatus', 'id' => 'o.orderStatus', 'method' => array('getOrderStatus'));
         $cols['dateCreation'] = array('label' => 'dateCreation', 'id' => 'o.dateCreation', 'method' => array('getDateCreation'), 'filter' => array(array('name' => 'format', 'args' => array('Y-m-d H:i:s'))));
 
@@ -56,7 +58,9 @@ class OrderRequestController extends Controller
 
         $queryBuilder->select(array('o'))
             ->from('PaprecCommercialBundle:OrderRequest', 'o')
-            ->where('o.deleted IS NULL');
+            ->where('o.deleted IS NULL')
+            ->where('o.division LIKE \'%' . $typeOrderRequest . '%\''); // Récupération des OrderRequests du type voulu
+
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
             if (substr($search['value'], 0, 1) == '#') {
@@ -66,7 +70,7 @@ class OrderRequestController extends Controller
             } else {
                 $queryBuilder->andWhere($queryBuilder->expr()->orx(
                     $queryBuilder->expr()->like('o.businessName', '?1'),
-                    $queryBuilder->expr()->like('o.division', '?1'),
+                    $queryBuilder->expr()->like('o.email', '?1'),
                     $queryBuilder->expr()->like('o.orderStatus', '?1'),
                     $queryBuilder->expr()->like('o.dateCreation', '?1')
                 ))->setParameter(1, '%' . $search['value'] . '%');

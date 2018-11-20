@@ -24,13 +24,13 @@
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <i class="fa fa-list"></i> {{ 'Commercial.BusinessLine.List'|trans }}
+                        <i class="fa fa-xs fa-list"></i> {{ 'Commercial.BusinessLine.List'|trans }}
                         <div class="float-right">
                             <a href="{{ path('paprec_commercial_businessLine_add') }}" class="btn btn-sm btn-outline-primary">
-                                <i class="fa fa-plus"></i> {{ 'Commercial.BusinessLine.Add'|trans }}
+                                <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.BusinessLine.Add'|trans }}
                             </a>
                             <a href="{{ path('paprec_commercial_businessLine_export') }}" class="btn btn-sm btn-primary ">
-                                <i class="fa fa-file-excel"></i> {{ 'Commercial.BusinessLine.Export'|trans }}
+                                <i class="fa fa-xs fa-file-excel"></i> {{ 'Commercial.BusinessLine.Export'|trans }}
                             </a>
                         </div>
                     </h4>
@@ -96,6 +96,7 @@
                 buttons: [
                     {
                         text: '{{ 'General.Remove'|trans }}',
+                        className: 'btn-sm',
                         action: function (e, dt) {
                             if (dt.rows({selected: true}).count() > 0) {
                                 var rowIds = [];
@@ -132,7 +133,7 @@
                     viewUrl = "{{ path('paprec_commercial_businessLine_view', {id: '0000'}) }}".replace('0000', aData['id']);
                     editUrl = "{{ path('paprec_commercial_businessLine_edit', {id: '0000'}) }}".replace('0000', aData['id']);
 
-                    $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-sm btn-primary btn-sm"><i class="fa fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-sm btn-warning btn-sm"><i class="fa fa-edit"></i></a>');
+                    $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-sm btn-primary btn-sm"><i class="fa fa-xs fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-sm btn-warning btn-sm"><i class="fa fa-xs fa-edit"></i></a>');
 
                 },
             });

@@ -33,18 +33,18 @@
         <div class="card">
             <div class="card-header">
                 <h4>
-                    <i class="fa fa-orderRequest"></i> {{ 'Commercial.OrderRequest.View'|trans }}
+                    <i class="fa fa-xs fa-orderRequest"></i> {{ 'Commercial.OrderRequest.View'|trans }}
                     <div class="float-right">
                         <a href="{{ path("paprec_commercial_orderRequest_edit", {id: orderRequest.id}) }}"
                            class="btn btn-sm btn-warning"><i
-                                    class="fa fa-edit"></i> {{ 'Commercial.OrderRequest.Edit'|trans }}</a>
+                                    class="fa fa-xs fa-edit"></i> {{ 'Commercial.OrderRequest.Edit'|trans }}</a>
                         <a id="commmecialOrderRequestRemoveButton_" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
-                                    class="fa fa-trash"></i> {{ 'Commercial.OrderRequest.Remove'|trans }}</a>
+                                    class="fa fa-xs fa-trash"></i> {{ 'Commercial.OrderRequest.Remove'|trans }}</a>
                     </div>
                 </h4>
                 <div class="view-tools float-left">
                     <a href="{{ path('paprec_commercial_orderRequest_index') }}" class="btn btn-sm btn-default"><i
-                                class="fa fa-chevron-left"></i> {{ 'Commercial.OrderRequest.List'|trans }}</a>
+                                class="fa fa-xs fa-chevron-left"></i> {{ 'Commercial.OrderRequest.List'|trans }}</a>
                 </div>
             </div>
             <div class="card-body">
@@ -128,7 +128,7 @@
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.AttachedFiles'|trans }}</label>
                                     <label class="col-form-label">
                                         {% if orderRequest.attachedFiles %}
-                                            <a href="{{ path('paprec_commercial_orderRequest_downloadAttachedFiles', {id: orderRequest.id}) }}"><i class="fa fa-download fa-lg"></i></a>
+                                            <a href="{{ path('paprec_commercial_orderRequest_downloadAttachedFiles', {id: orderRequest.id}) }}"><i class="fa fa-xs fa-download fa-lg"></i></a>
                                         {% endif %}
                                     </label>
                                 </div>
@@ -202,7 +202,7 @@
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.AssociatedOrder'|trans }}</label>
                                     <label class="col-form-label">
                                         {% if orderRequest.associatedOrder %}
-                                        <a href="{{ path('paprec_commercial_orderRequest_downloadAssociatedOrder', {id: orderRequest.id}) }}"><i class="fa fa-download fa-lg"></i></a>
+                                        <a href="{{ path('paprec_commercial_orderRequest_downloadAssociatedOrder', {id: orderRequest.id}) }}"><i class="fa fa-xs fa-download fa-lg"></i></a>
                                         {% endif %}
                                     </label>
                                 </div>

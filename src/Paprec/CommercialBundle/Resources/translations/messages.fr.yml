@@ -104,6 +104,9 @@ Commercial:
   OrderRequest:
     OrderRequests:              Demandes de devis
     List:                       Liste des demandes de devis
+    ListChantiers:              Division chantier
+    ListD3Es:                   Division D3Es
+    ListDIs:                    Division DI
     Date-creation:              Date de création
     Date-crea:                  Date de créa.
     Date-update:                Date de mise à jour

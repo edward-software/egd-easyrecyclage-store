@@ -36,13 +36,13 @@
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <i class="fa fa-users"></i> {{ 'User.User.List'|trans }}
+                        <i class="fa fa-xs fa-users"></i> {{ 'User.User.List'|trans }}
                         <div class="float-right">
                             <a href="{{ path('paprec_user_user_add') }}" class="btn btn-outline-primary">
-                                <i class="fa fa-plus"></i> {{ 'User.User.Add'|trans }}
+                                <i class="fa fa-xs fa-plus"></i> {{ 'User.User.Add'|trans }}
                             </a>
                             <a href="{{ path('paprec_user_user_export') }}" class="btn btn-primary ">
-                                <i class="fa fa-file-excel"></i> {{ 'User.User.Export'|trans }}
+                                <i class="fa fa-xs fa-file-excel"></i> {{ 'User.User.Export'|trans }}
                             </a>
                         </div>
                     </h4>
@@ -112,6 +112,7 @@
                 buttons: [
                     {
                         text: '{{ 'User.User.Send-access'|trans }}',
+                        className: 'btn-sm',
                         action: function (e, dt) {
                             if (dt.rows({selected: true}).count() > 0) {
                                 var rowIds = [];
@@ -176,7 +177,7 @@
                     viewUrl = "{{ path('paprec_user_user_view', {id: '0000'}) }}".replace('0000', aData['id']);
                     editUrl = "{{ path('paprec_user_user_edit', {id: '0000'}) }}".replace('0000', aData['id']);
 
-                    $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>');
+                    $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-primary btn-sm"><i class="fa fa-xs fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-warning btn-sm"><i class="fa fa-xs fa-edit"></i></a>');
 
                 },
                 "fnDrawCallback": function (oSettings) {
