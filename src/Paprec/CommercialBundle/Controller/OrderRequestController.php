@@ -2,13 +2,19 @@
 
 namespace Paprec\CommercialBundle\Controller;
 
+use Exception;
 use Paprec\CommercialBundle\Entity\OrderRequest;
 use Paprec\CommercialBundle\Form\OrderRequestEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -204,6 +210,19 @@ class OrderRequestController extends Controller
             $orderRequest = $form->getData();
             $orderRequest->setDateUpdate(new \DateTime());
 
+            if ($orderRequest->getAssociatedOrder() instanceof UploadedFile) {
+                /**
+                 * On place le picto uploadé dans le dossier web/uploads
+                 * et on sauvegarde le nom du fichier dans la colonne 'picto' de l'argument
+                 */
+                $associatedOrder = $orderRequest->getAssociatedOrder();
+                $associatedOrderFileName = md5(uniqid()) . '.' . $associatedOrder->guessExtension();
+
+                $associatedOrder->move($this->getParameter('paprec_commercial.order_request.files_path'), $associatedOrderFileName);
+
+                $orderRequest->setAssociatedOrder($associatedOrderFileName);
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
@@ -226,6 +245,15 @@ class OrderRequestController extends Controller
     public function removeAction(Request $request, OrderRequest $orderRequest)
     {
         $em = $this->getDoctrine()->getManager();
+
+        foreach ($orderRequest->getAttachedFiles() as $file) {
+            $this->removeFile($this->getParameter('paprec_commercial.order_request.files_path') . '/' . $file);
+            $orderRequest->setAttachedFiles();
+        }
+        if (!empty($orderRequest->getAssociatedOrder())) {
+            $this->removeFile($this->getParameter('paprec_commercial.order_request.files_path') . '/' . $file);
+            $orderRequest->setAssociatedOrder();
+        }
 
         $orderRequest->setDeleted(new \DateTime());
         $em->flush();
@@ -250,14 +278,72 @@ class OrderRequestController extends Controller
         $ids = explode(',', $ids);
 
         if (is_array($ids) && count($ids)) {
-            $productDIOrders = $em->getRepository('PaprecCommercialBundle:OrderRequest')->findById($ids);
-            foreach ($productDIOrders as $productDIOrder) {
-                $productDIOrder->setDeleted(new \DateTime);
+            $orderRequests = $em->getRepository('PaprecCommercialBundle:OrderRequest')->findById($ids);
+            foreach ($orderRequests as $orderRequest) {
+                foreach ($orderRequest->getAttachedFiles() as $file) {
+                    $this->removeFile($this->getParameter('paprec_commercial.order_request.files_path') . '/' . $file);
+                    $orderRequest->setAttachedFiles();
+                }
+                if (!empty($orderRequest->getAssociatedOrder())) {
+                    $this->removeFile($this->getParameter('paprec_commercial.order_request.files_path') . '/' . $file);
+                    $orderRequest->setAssociatedOrder();
+                }
+                $orderRequest->setDeleted(new \DateTime);
             }
             $em->flush();
         }
 
         return $this->redirectToRoute('paprec_commercial_orderRequest_index');
     }
-    
+
+
+    /**
+     * Supprimme un fichier du sytème de fichiers
+     *
+     * @param $path
+     */
+    public function removeFile($path)
+    {
+        $fs = new Filesystem();
+        try {
+            $fs->remove($path);
+        } catch (IOException $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * @Route("/orderRequest/{id}/downloadFile/{filename}", name="paprec_commercial_orderRequest_downloadFile")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function downloadFileAction(Request $request, $filename, OrderRequest $orderRequest)
+    {
+        $path = $this->getParameter('paprec_commercial.order_request.files_path');
+        $content = file_get_contents($path.'/'.$filename);
+        $extension = pathinfo($path.'/'.$filename, PATHINFO_EXTENSION);
+
+        $response = new Response();
+        $newFilename = "Demande-devis-".$orderRequest->getId().'-'.$orderRequest->getDivision() . '.' . $extension;
+
+        //set headers
+        $response->headers->set('Content-Type', 'mime/type');
+        $response->headers->set('Content-Disposition', 'attachment;filename="'.$newFilename);
+
+        $response->setContent($content);
+        return $response;
+//        $response = new BinaryFileResponse($path.''.$filename);
+//
+//        // adding headers
+//        $dispositionHeader = $response->headers->makeDisposition(
+//            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+//            $filename
+//        );
+//        $response->headers->set('Content-Type', 'mime/type');
+//        $response->headers->set('Pragma', 'public');
+//        $response->headers->set('Cache-Control', 'maxage=1');
+//        $response->headers->set('Content-Disposition', $dispositionHeader);
+
+       return $response;
+    }
+
 }

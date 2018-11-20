@@ -69,7 +69,7 @@
                         </div>
                         <div class="name">{{ productDIOrderLine.quantity }} x {{ productDIOrderLine.productDI.name }} {{ productDIOrderLine.productDI.capacity }}{{ productDIOrderLine.productDI.capacityUnit }}</div>
                         <div class="nameof">de {{ productDIOrderLine.categoryName }}</div>
-                        <div class="desc">Prestation ponctuelle</div>
+                        <div class="desc">Prestation {% if productDIOrder.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}</div>
                     </div>
                     {% endfor %}
 

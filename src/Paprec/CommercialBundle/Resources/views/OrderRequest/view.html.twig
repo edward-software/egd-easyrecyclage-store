@@ -91,20 +91,27 @@
                                         {{ orderRequest.phone }}
                                     </label>
                                 </div>
+                                {#<div class="form-group row">#}
+                                    {#<label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.AttachedFiles'|trans }}</label>#}
+                                    {#<label class="col-form-label">#}
+                                        {#{{ orderRequest.att }}#}
+                                    {#</label>#}
+                                {#</div>#}
                             </div>
                             <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Function'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.function }}
+                                    </label>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.OrderStatus'|trans }}</label>
                                     <label class="col-form-label">
                                         {{ orderRequest.orderStatus }}
                                     </label>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Need'|trans }}</label>
-                                    <label class="col-form-label">
-                                        {{ orderRequest.need }}
-                                    </label>
-                                </div>
+
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Division'|trans }}</label>
                                     <label class="col-form-label">
@@ -115,6 +122,12 @@
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.PostalCode'|trans }}</label>
                                     <label class="col-form-label">
                                         {{ orderRequest.postalCode }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Need'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.need }}
                                     </label>
                                 </div>
                             </div>
@@ -174,6 +187,14 @@
                                     <label class="col-form-label">
                                         {% if orderRequest.userInCharge %}
                                             <a href="{{ path('paprec_user_user_view', {id: orderRequest.userInCharge.id}) }}">{{ orderRequest.userInCharge }}</a>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.AssociatedOrder'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if orderRequest.associatedOrder %}
+                                        <a href="{{ path('paprec_commercial_orderRequest_downloadFile', {id: orderRequest.id, filename: orderRequest.associatedOrder}) }}"><i class="fa fa-download"></i></a>
                                         {% endif %}
                                     </label>
                                 </div>

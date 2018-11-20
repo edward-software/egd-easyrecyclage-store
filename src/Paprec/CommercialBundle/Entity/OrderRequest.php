@@ -99,6 +99,13 @@ class OrderRequest
     /**
      * @var string
      *
+     * @ORM\Column(name="function", type="string", length=255, nullable=true)
+     */
+    private $function;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="orderStatus", type="string", length=255)
      */
     private $orderStatus;
@@ -115,7 +122,7 @@ class OrderRequest
     /**
      * @var array
      *
-     * @ORM\Column(name="attachedFiles", type="simple_array", nullable=true)
+     * @ORM\Column(name="attachedFiles", type="array", nullable=true)
      */
     private $attachedFiles;
 
@@ -131,7 +138,6 @@ class OrderRequest
      * @var array|null
      *
      * @ORM\Column(name="division", type="string")
-     * @Assert\NotBlank()
      */
     private $division;
 
@@ -139,7 +145,6 @@ class OrderRequest
      * @var string
      *
      * @ORM\Column(name="postalCode", type="string", length=255)
-     * @Assert\NotBlank()
      */
     private $postalCode;
 
@@ -148,6 +153,7 @@ class OrderRequest
      * @var string
      *
      * @ORM\Column(name="associatedOrder", type="string", length=255, nullable=true)
+     * @Assert\File(mimeTypes={ "application/pdf" })
      */
     private $associatedOrder;
 
@@ -206,6 +212,7 @@ class OrderRequest
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
+        $this->attachedFiles = array();
     }
 
     /**
@@ -744,5 +751,29 @@ class OrderRequest
     public function getAgency()
     {
         return $this->agency;
+    }
+
+    /**
+     * Set function.
+     *
+     * @param string $function
+     *
+     * @return OrderRequest
+     */
+    public function setFunction($function)
+    {
+        $this->function = $function;
+
+        return $this;
+    }
+
+    /**
+     * Get function.
+     *
+     * @return string
+     */
+    public function getFunction()
+    {
+        return $this->function;
     }
 }

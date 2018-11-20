@@ -114,14 +114,20 @@ Commercial:
     PostalCode:                 Code postal
     City:                       Ville
     Phone:                      Téléphone
-    Need:                       Mon besoin
+    AttachedFiles:              Fichiers en PJ
+    PhonePlaceholder:           Numéro de téléphone
+    FunctionPlaceholder:        Fonction (facultatif)
+    Function:                   Fonction
+    Need:                       Le besoin
+    NeedPlaceholder:            Votre besoin
     Division:                   Division
     OrderStatus:                Statut
     TotalAmount:                Montant total
     GeneratedTurnover:          CA généré
+    AssociatedOrder:            Devis associé
     Agency:                     Agence associée
     Summary:                    Résumé du besoin
-    Frequency:                  Pontuel / Régulier
+    Frequency:                  Ponctuel / Régulier
     Tonnage:                    Tonnage
     KookaburaNumber:            N° contrat Kookabura
     UserInCharge:               Commercial en charge

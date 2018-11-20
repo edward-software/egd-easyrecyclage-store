@@ -30,7 +30,8 @@ class OrderRequestEditType extends AbstractType
             ))
             ->add('generatedTurnover', TextType::class)
             ->add('associatedOrder', FileType::class, array(
-                'multiple' => false
+                'multiple' => false,
+                'data_class' => null
             ))
             ->add('summary', TextareaType::class)
             ->add('tonnage', TextType::class)

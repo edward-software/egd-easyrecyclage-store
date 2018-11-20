@@ -87,8 +87,8 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 {% if step == 'r' %}
-                                    <a class="button button--grey" href="#">{{ 'Public.Cart.NeedEstimation'|trans }}</a>
-                                    <a class="button button--grey" href="#">{{ 'Public.Cart.FillForm'|trans }}</a>
+                                    <a class="button button--grey" href="{{ path('paprec_public_DI_subscription_step1', {cartUuid: cart.id}) }}">{{ 'Public.Cart.NeedEstimation'|trans }}</a>
+                                    <a class="button button--grey" href="{{ path('paprec_public_home_regularForm', {cartUuid: cart.id}) }}">{{ 'Public.Cart.FillForm'|trans }}</a>
                                 {% endif %}
                             {% endif %}
 

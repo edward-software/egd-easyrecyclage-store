@@ -11,12 +11,13 @@ use Paprec\UserBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductDIOrderShortType extends AbstractType
+class OrderRequestShortType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -25,20 +26,8 @@ class ProductDIOrderShortType extends AbstractType
     {
         $builder
             ->add('businessName')
-            ->add('businessLine', EntityType::class, array(
-                'class' => BusinessLine::class,
-                'multiple' => false,
-                'expanded' => false,
-                'placeholder' => 'Commercial.ProductDIOrder.BusinessLinePlaceholder',
-                'empty_data'  => null,
-                'choice_label' => 'name',
-                'query_builder' => function (BusinessLineRepository $er) {
-                    return $er->createQueryBuilder('b')
-                        ->where('b.deleted IS NULL');
-                }
-            ))
             ->add('civility', ChoiceType::class, array(
-                'choices'  => array(
+                'choices' => array(
                     'Monsieur' => 'M',
                     'Madame' => 'Mme',
                 ),
@@ -52,18 +41,24 @@ class ProductDIOrderShortType extends AbstractType
                 'required' => false
             ))
             ->add('email', TextType::class)
-            ->add('address', TextareaType::class)
-            ->add('postalCode', TextType::class)
-            ->add('city', TextType::class)
-            ->add('phone', TextType::class);
+            ->add('phone', TextType::class)
+            ->add('function', TextType::class)
+            ->add('need', TextareaType::class, array(
+                'attr' => array('cols' => '30', 'rows' => '10')
+            ))
+            ->add('attachedFiles', FileType::class, array(
+                'multiple' => true,
+                'data_class' => null
+            ));
+    }
 
-    }/**
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\ProductDIOrder'
+            'data_class' => 'Paprec\CommercialBundle\Entity\OrderRequest'
         ));
     }
 
@@ -72,7 +67,7 @@ class ProductDIOrderShortType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'paprec_commercialbundle_productdiorder';
+        return 'paprec_commercialbundle_orderrequest';
     }
 
 

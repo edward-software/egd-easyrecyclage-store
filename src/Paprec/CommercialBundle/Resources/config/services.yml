@@ -8,7 +8,7 @@ services:
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
 parameters:
-  #parameter_name: value
+  paprec_commercial.order_request.files_path: "%kernel.root_dir%/../web/uploads/files"
 
 
   paprec_order_status:

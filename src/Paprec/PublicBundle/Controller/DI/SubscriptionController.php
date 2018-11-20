@@ -48,6 +48,7 @@ class SubscriptionController extends Controller
     }
 
     /**
+     * Etape du formulaire des informations contact
      * @Route("/step2/{cartUuid}", name="paprec_public_DI_subscription_step2")
      */
     public function step2Action(Request $request, $cartUuid)
