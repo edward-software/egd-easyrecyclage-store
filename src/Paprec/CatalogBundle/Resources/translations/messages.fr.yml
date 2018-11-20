@@ -232,7 +232,7 @@ Catalog:
     GrilleTarifLigneD3E:
       GrilleTarifLigneD3Es:       Lignes de la grille tarifaire
       PostalCodes:                Codes postaux
-      Agency:                     Agency
+      Agency:                     Agence
       MinQuantity:                Quantité min.
       MaxQuantity:                Quantité max.
       Price:                      Prix
