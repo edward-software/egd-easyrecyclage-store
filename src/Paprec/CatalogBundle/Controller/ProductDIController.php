@@ -4,8 +4,13 @@ namespace Paprec\CatalogBundle\Controller;
 
 use Paprec\CatalogBundle\Entity\Picture;
 use Paprec\CatalogBundle\Entity\ProductDI;
+use Paprec\CatalogBundle\Entity\ProductDICategory;
 use Paprec\CatalogBundle\Form\PictureProductType;
+use Paprec\CatalogBundle\Form\ProductDICategoryAddType;
+use Paprec\CatalogBundle\Repository\ProductDICategoryRepository;
+use Paprec\CommercialBundle\Form\ProductDICategoryEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -48,7 +53,6 @@ class ProductDIController extends Controller
         $cols['name'] = array('label' => 'name', 'id' => 'p.name', 'method' => array('getName'));
         $cols['capacity'] = array('label' => 'capacity', 'id' => 'p.capacity', 'method' => array('getCapacity'));
         $cols['dimensions'] = array('label' => 'dimensions', 'id' => 'p.dimensions', 'method' => array('getDimensions'));
-        $cols['unitPrice'] = array('label' => 'unitPrice', 'id' => 'p.unitPrice', 'method' => array('getUnitPrice'));
 
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
 
@@ -66,8 +70,7 @@ class ProductDIController extends Controller
                 $queryBuilder->andWhere($queryBuilder->expr()->orx(
                     $queryBuilder->expr()->like('p.name', '?1'),
                     $queryBuilder->expr()->like('p.capacity', '?1'),
-                    $queryBuilder->expr()->like('p.dimensions', '?1'),
-                    $queryBuilder->expr()->like('p.unitPrice', '?1')
+                    $queryBuilder->expr()->like('p.dimensions', '?1')
                 ))->setParameter(1, '%' . $search['value'] . '%');
             }
         }
@@ -512,4 +515,115 @@ class ProductDIController extends Controller
             'id' => $productDI->getId()
         ));
     }
+
+
+    /**
+     * @Route("/productDI/{id}/addCategory", name="paprec_catalog_productDI_addCategory")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function addCategoryAction(Request $request, ProductDI $productDI)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $productDICategoryRepo = $em->getRepository('PaprecCatalogBundle:ProductDICategory');
+
+        $submitForm = $request->get('submitForm');
+
+        if ($productDI->getDeleted() !== null) {
+            throw new NotFoundHttpException();
+        }
+
+        $productDICategory = new ProductDICategory();
+
+        $form = $this->createForm(ProductDICategoryAddType::class, $productDICategory,
+            array(
+                'productId' => $productDI->getId(),
+                'productDICategoryRepo' => $productDICategoryRepo
+            ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $productDICategory = $form->getData();
+            $productDICategory->setProductDI($productDI);
+            $productDI->addProductDICategory($productDICategory);
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_catalog_productDI_view', array(
+                'id' => $productDI->getId()
+            ));
+
+        }
+
+        return $this->render('PaprecCatalogBundle:ProductDICategory:add.html.twig', array(
+            'form' => $form->createView(),
+            'productDI' => $productDI,
+        ));
+    }
+
+    /**
+     * @Route("/productDI/{id}/editCategory/{productDICategoryId}", name="paprec_catalog_productDI_editCategory")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @ParamConverter("productDI", options={"id" = "id"})
+     * @ParamConverter("productDICategory", options={"id" = "productDICategoryId"})
+     */
+    public function editCategoryAction(Request $request, ProductDI $productDI, ProductDICategory $productDICategory)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if ($productDI->getDeleted() !== null) {
+            throw new NotFoundHttpException();
+        }
+
+        if ($productDICategory->getProductDI() !== $productDI) {
+            throw new NotFoundHttpException();
+        }
+
+
+        $form = $this->createForm(\Paprec\CatalogBundle\Form\ProductDICategoryEditType::class, $productDICategory);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $productDICategory = $form->getData();
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_catalog_productDI_view', array(
+                'id' => $productDI->getId()
+            ));
+        }
+
+        return $this->render('PaprecCatalogBundle:ProductDICategory:edit.html.twig', array(
+            'form' => $form->createView(),
+            'productDI' => $productDI,
+            'productDICategory' => $productDICategory
+        ));
+    }
+
+    /**
+     * @Route("/productDI/{id}/removeCategory/{productDICategoryId}", name="paprec_catalog_productDI_removeCategory")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @ParamConverter("productDI", options={"id" = "id"})
+     * @ParamConverter("productDICategory", options={"id" = "productDICategoryId"})
+     */
+    public function removeLineAction(Request $request, ProductDI $productDI, ProductDICategory $productDICategory)
+    {
+        if ($productDI->getDeleted() !== null) {
+            throw new NotFoundHttpException();
+        }
+
+        if ($productDICategory->getProductDI() !== $productDI) {
+            throw new NotFoundHttpException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($productDICategory);
+        $em->flush();
+
+        return $this->redirectToRoute('paprec_catalog_productDI_view', array(
+            'id' => $productDI->getId()
+        ));
+    }
+
 }

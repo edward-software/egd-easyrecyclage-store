@@ -1,0 +1,149 @@
+{% extends "::base_admin.html.twig" %}
+
+{% block title %}
+    {{ 'Commercial.OrderRequest.Edit'|trans }}
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block content_title %}
+    {{ 'Commercial.OrderRequest.OrderRequests'|trans }}
+{% endblock %}
+
+{% block main_content %}
+
+    <form id="commercialOrderRequestForm" action="" method="post" enctype="multipart/form-data">
+
+        <div class="col-md-12">
+            <!-- BOX -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fa fa-pencil-alt"></i> {{ 'Commercial.OrderRequest.Edit'|trans }} #{{ orderRequest.id }}
+
+                        <div class="float-right">
+
+                            <a href="javascript:void(0);" class="btn btn-success commercial-orderRequest-save-button"><i
+                                        class="fa fa-check"></i> {{ 'Commercial.OrderRequest.Save'|trans }}</a>
+                            <a href="javascript:void(0);" class="btn btn-danger commercial-orderRequest-cancel-button"><i
+                                        class="fa fa-close"></i> {{ 'Commercial.OrderRequest.Cancel'|trans }}</a>
+                        </div>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12 mt-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">{{ 'Commercial.OrderRequest.Informations-BO'|trans }}</h5>
+                            </div>
+                            <div class="card-body row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.OrderRequest.OrderStatus'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.orderStatus, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.orderStatus) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.OrderRequest.GeneratedTurnover'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.generatedTurnover, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.generatedTurnover) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.OrderRequest.AssociatedOrder'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.associatedOrder, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.associatedOrder) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.OrderRequest.Agency'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.agency, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.agency) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.OrderRequest.Tonnage'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.tonnage, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.tonnage) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.OrderRequest.KookaburaNumber'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.kookaburaNumber, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.kookaburaNumber) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.OrderRequest.UserInCharge'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.userInCharge, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.userInCharge) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.OrderRequest.Summary'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.summary, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.summary) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="float-right">
+                        <a href="javascript:void(0);" class="btn btn-success commercial-orderRequest-save-button"><i
+                                    class="fa fa-check"></i> {{ 'Commercial.OrderRequest.Save'|trans }}</a>
+                        <a href="javascript:void(0);" class="btn btn-danger commercial-orderRequest-cancel-button"><i
+                                    class="fa fa-close"></i> {{ 'Commercial.OrderRequest.Cancel'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_rest(form) }}
+    </form>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        $(function () {
+
+            $('.commercial-orderRequest-save-button').on('click', function () {
+
+                $('#commercialOrderRequestForm').submit();
+
+            });
+
+
+            $('.commercial-orderRequest-cancel-button').on('click', function () {
+
+                var url = "{{ path("paprec_commercial_orderRequest_view", {id: orderRequest.id}) }}";
+
+                bootbox.confirm("{{ 'Commercial.OrderRequest.Confirm-cancel'|trans }}", function (result) {
+                    if (result === true) {
+                        $(location).attr('href', url);
+                    }
+                });
+
+            });
+
+        });
+    </script>
+{% endblock %}

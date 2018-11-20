@@ -33,31 +33,43 @@
 
                 </div>
             </div>
-            <form action="#" class="main">
+            <form id="contactDetailsForm" action="" method="post" class="main">
                 <div class="step">
                     <div class="step__left">
                         <div class="step__title">Je suis</div>
                     </div>
                     <div class="step__right step__right--small">
-                        <input class="input input--full step--marginfield" type="text" placeholder="Raison sociale">
-                        <select name="test" id="test" class="input input--full" required>
-                            <option value="" disabled selected hidden>Sélectionnez votre secteur d’activité</option>
-                        </select>
-                        <input class="input__radio" type="radio" id="mr" name="gender">
-                        <label for="mr">Monsieur</label>
+                        {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductDIOrder.BusinessName'|trans}}) }}
+                        {{ form_errors(form.businessName) }}
 
-                        <input class="input__radio" type="radio" id="mme" name="gender">
-                        <label for="mme">Madame</label>
+                        {{ form_widget(form.businessLine, {'attr': {'class': 'input input--full'}}) }}
+                        {{ form_errors(form.businessLine) }}
+
+                        {{ form_widget(form.civility, {'attr': {'class': 'input--radio'}}) }}
+                        {{ form_errors(form.civility) }}
+
                         <div class="clearfix step--marginfield"></div>
 
-                        <input class="input input--mid step--marginfield" type="text" placeholder="Nom">
-                        <input class="input input--mid step--marginfield" type="text" placeholder="Prénom">
-                        <input class="input input--full step--marginfield" type="text" placeholder="E-mail">
-                        <input class="input input--full step--marginfield" type="text" placeholder="Adresse">
-                        <input class="input input--zip step--marginfield" type="text" placeholder="Code Post.">
-                        <input class="input input--city step--marginfield" type="text" placeholder="Ville">
-                        <input class="input input--full step--marginfield" type="text"
-                               placeholder="Numéro de téléphone">
+                        {{ form_widget(form.lastName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.ProductDIOrder.LastName'|trans}}) }}
+                        {{ form_errors(form.lastName) }}
+                        {{ form_widget(form.firstName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.ProductDIOrder.FirstName'|trans}}) }}
+                        {{ form_errors(form.firstName) }}
+
+                        {{ form_widget(form.email, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductDIOrder.Email'|trans}}) }}
+                        {{ form_errors(form.email) }}
+
+                        {{ form_widget(form.address, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductDIOrder.Address'|trans}}) }}
+                        {{ form_errors(form.address) }}
+
+                        {{ form_widget(form.postalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.ProductDIOrder.PostalCode'|trans}}) }}
+                        {{ form_errors(form.postalCode) }}
+
+                        {{ form_widget(form.city, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.ProductDIOrder.City'|trans}}) }}
+                        {{ form_errors(form.city) }}
+
+                        {{ form_widget(form.phone, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductDIOrder.PhonePlaceholder'|trans}}) }}
+                        {{ form_errors(form.phone) }}
+
                         <div class="clearfix"></div>
                     </div>
                     <div class="clearfix"></div>
@@ -70,17 +82,28 @@
                     <div class="step__right">
                         <a href="#" class="button margint10 button--grey">Contactez-nous</a>
                         <a href="#" class="button margint10 button--grey">Être rappelé</a>
-                        <a href="{{ path('paprec_public_DI_subscription_step3', {cartUuid: cart.id}) }}"
+                        <a href="javascript:void(0);" id="contactDetailsFormSubmitButton"
                            class="button margint10 button--green">Accéder à votre offre</a>
                     </div>
                 </div>
+                {{ form_rest(form) }}
             </form>
 
             <div class="clearfix"></div>
+        </div>
     </section>
     <!-- /section -->
 {% endblock %}
 
 {% block javascripts %}
+    <script>
+        $(function () {
+
+            $('#contactDetailsFormSubmitButton').on('click', function () {
+                $('#contactDetailsForm').submit();
+            });
+        });
+    </script>
+
 
 {% endblock %}

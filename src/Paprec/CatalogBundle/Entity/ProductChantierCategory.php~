@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * ProductChantierCategory
  *
- * @ORM\Table(name="product_chantier_category")
+ * @ORM\Table(name="productChantiers_categories")
  * @ORM\Entity(repositoryClass="Paprec\CatalogBundle\Repository\ProductChantierCategoryRepository")
  */
 class ProductChantierCategory
@@ -29,7 +29,14 @@ class ProductChantierCategory
      * @Assert\NotBlank()
      */
     private $position;
-
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="unitPrice", type="float")
+     * @Assert\NotBlank()
+     */
+    private $unitPrice;
 
     /**************************************************************************************************
      * RELATIONS

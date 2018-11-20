@@ -101,14 +101,6 @@ class ProductChantier
      */
     private $isDisplayed;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="unitPrice", type="float")
-     * @Assert\NotBlank()
-     * @Assert\Type(type="float")
-     */
-    private $unitPrice;
 
     /**
      * @var text
@@ -316,30 +308,6 @@ class ProductChantier
     public function getReference()
     {
         return $this->reference;
-    }
-
-    /**
-     * Set unitPrice.
-     *
-     * @param float $unitPrice
-     *
-     * @return ProductChantier
-     */
-    public function setUnitPrice($unitPrice)
-    {
-        $this->unitPrice = $unitPrice;
-
-        return $this;
-    }
-
-    /**
-     * Get unitPrice.
-     *
-     * @return float
-     */
-    public function getUnitPrice()
-    {
-        return $this->unitPrice;
     }
 
     /**

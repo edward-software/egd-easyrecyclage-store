@@ -42,7 +42,6 @@ class ProductChantierType extends AbstractType
                 ),
                 "expanded" => true
             ))
-            ->add('unitPrice')
             ->add('availablePostalCodes')
             ->add('arguments', EntityType::class, array(
                 'class' => Argument::class,
@@ -51,18 +50,6 @@ class ProductChantierType extends AbstractType
                 'query_builder' => function (ArgumentRepository $er) {
                     return $er->createQueryBuilder('a')
                         ->where('a.deleted IS NULL');
-                }
-            ))
-            ->add('categories', EntityType::class, array(
-                'class' => Category::class,
-                'multiple' => true,
-                'expanded' => true,
-                'choice_label' => 'name',
-                'query_builder' => function (CategoryRepository $er) {
-                    return $er->createQueryBuilder('c')
-                        ->where('c.deleted IS NULL')
-                        ->where('c.division LIKE \'%Chantier%\'');
-
                 }
             ));
     }

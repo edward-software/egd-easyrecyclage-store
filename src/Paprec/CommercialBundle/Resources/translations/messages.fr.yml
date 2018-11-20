@@ -56,6 +56,7 @@ Commercial:
     Date-update:                Date de mise à jour
     BusinessName:               Raison sociale
     BusinessLine:               Secteur d'activité
+    BusinessLinePlaceholder:    Sélectionnez votre secteur d'activité
     Civility:                   Civilité
     LastName:                   Nom
     FirstName:                  Prénom
@@ -64,11 +65,12 @@ Commercial:
     PostalCode:                 Code postal
     City:                       Ville
     Phone:                      Téléphone
+    PhonePlaceholder:           Numéro de téléphone
     OrderStatus:                Statut
     TotalAmount:                Montant total
     GeneratedTurnover:          CA généré
-    Agency:                     Agence
-    Summary:                  Résumé du besoin
+    Agency:                     Agence associée
+    Summary:                    Résumé du besoin
     Frequency:                  Pontuel / Régulier
     Tonnage:                    Tonnage
     KookaburaNumber:            N° contrat Kookabura
@@ -91,5 +93,54 @@ Commercial:
 
   ProductDIOrderLine:
     ProductName:                Produit
+    CategoryName:               Catégorie
     UnitPrice:                  Prix unitaire
-    Quantity:                   Qté
+    Quantity:                   Quantité
+    TotalAmount:                Montant total
+    Confirm-remove:             Etes-vous sûr de vouloir supprimer cette ligne du devis DI ?
+
+  OrderRequest:
+    OrderRequests:              Demandes de devis
+    List:                       Liste des demandes de devis
+    Date-creation:              Date de création
+    Date-crea:                  Date de créa.
+    Date-update:                Date de mise à jour
+    BusinessName:               Raison sociale
+    Civility:                   Civilité
+    LastName:                   Nom
+    FirstName:                  Prénom
+    Email:                      Email
+    Address:                    Adresse
+    PostalCode:                 Code postal
+    City:                       Ville
+    Phone:                      Téléphone
+    AttachedFiles:              Fichiers en PJ
+    PhonePlaceholder:           Numéro de téléphone
+    FunctionPlaceholder:        Fonction (facultatif)
+    Function:                   Fonction
+    Need:                       Le besoin
+    NeedPlaceholder:            Votre besoin
+    Division:                   Division
+    OrderStatus:                Statut
+    TotalAmount:                Montant total
+    GeneratedTurnover:          CA généré
+    AssociatedOrder:            Devis associé
+    Agency:                     Agence associée
+    Summary:                    Résumé du besoin
+    Frequency:                  Ponctuel / Régulier
+    Tonnage:                    Tonnage
+    KookaburaNumber:            N° contrat Kookabura
+    UserInCharge:               Commercial en charge
+    Informations:               Informations
+    Informations-FO:            Informations Front Office
+    Informations-BO:            Informations Back Office
+    System-informations:        Informations système
+    Export:                     Exporter les demandes de devis
+    View:                       Visualiser la demande de devis
+    Edit:                       Modifier le demande de devis
+    Remove:                     Supprimer la demande de devis
+    Save:                       Enregistrer
+    Cancel:                     Annuler
+    Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+    Confirm-remove:             Etes-vous sûr de vouloir supprimer cette demande de devis ?
+

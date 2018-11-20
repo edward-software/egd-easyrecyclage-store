@@ -108,6 +108,10 @@ class User extends BaseUser
      */
     private $productDIOrders;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\OrderRequest", mappedBy="userInCharge")
+     */
+    private $orderRequests;
 
     public function __construct()
     {
@@ -330,5 +334,41 @@ class User extends BaseUser
     public function getProductDIOrders()
     {
         return $this->productDIOrders;
+    }
+
+    /**
+     * Add orderRequest.
+     *
+     * @param \Paprec\CommercialBundle\Entity\OrderRequest $orderRequest
+     *
+     * @return User
+     */
+    public function addOrderRequest(\Paprec\CommercialBundle\Entity\OrderRequest $orderRequest)
+    {
+        $this->orderRequests[] = $orderRequest;
+
+        return $this;
+    }
+
+    /**
+     * Remove orderRequest.
+     *
+     * @param \Paprec\CommercialBundle\Entity\OrderRequest $orderRequest
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeOrderRequest(\Paprec\CommercialBundle\Entity\OrderRequest $orderRequest)
+    {
+        return $this->orderRequests->removeElement($orderRequest);
+    }
+
+    /**
+     * Get orderRequests.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrderRequests()
+    {
+        return $this->orderRequests;
     }
 }

@@ -94,7 +94,6 @@ Catalog:
         Capacity:                   Volume
         CapacityUnit:               Unité
         Dimensions:                 Dimensions
-        UnitPrice:                  Prix unitaire
         Reference:                  Lien description
         IsDisplayed:                Affiché
         Arguments:                  Arguments
@@ -107,6 +106,8 @@ Catalog:
         EditPicture:                Modificiation de photo
         AvailablePostalCodes:       Dispo géographique
         List:                       Liste des produits DI
+        CategoriesList:             Liste des catégories
+        AddCategory:                Ajouter une catégorie
         Add:                        Ajouter un produit
         Export:                     Exporter les produits
         View:                       Visualiser le produit DI
@@ -119,6 +120,12 @@ Catalog:
         Confirm-remove-picture:     Etes-vous sûr de vouloir supprimer cette photo ?
         Confirm-set_pilote:         Etes-vous sûr de vouloir définir cette photo comme photo principale ?
         Confirm-set_picture:        Etes-vous sûr de vouloir définir cette photo comme photo secondaire ?
+
+    ProductDICategory:
+        UnitPrice:                  Prix unitaire
+        CategoryName:               Catégorie
+        Confirm-remove:             Etes-vous sûr de vouloir détacher ce produit de cette catégorie ?
+
 
 
     ProductChantier:
@@ -148,6 +155,8 @@ Catalog:
       EditPicture:                Modificiation de photo
       AvailablePostalCodes:       Dispo géographique
       List:                       Liste des produits Chantier
+      CategoriesList:             Liste des catégories
+      AddCategory:                Ajouter une catégorie
       Add:                        Ajouter un produit
       Export:                     Exporter les produits
       View:                       Visualiser le produit Chantier
@@ -160,6 +169,12 @@ Catalog:
       Confirm-remove-picture:     Etes-vous sûr de vouloir supprimer cette photo ?
       Confirm-set_pilote:         Etes-vous sûr de vouloir définir cette photo comme photo principale ?
       Confirm-set_picture:        Etes-vous sûr de vouloir définir cette photo comme photo secondaire ?
+
+
+    ProductChantierCategory:
+      UnitPrice:                  Prix unitaire
+      CategoryName:               Catégorie
+      Confirm-remove:             Etes-vous sûr de vouloir détacher ce produit de cette catégorie ?
 
     ProductD3E:
 

@@ -29,7 +29,14 @@ class ProductChantierCategory
      * @Assert\NotBlank()
      */
     private $position;
-
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="unitPrice", type="float")
+     * @Assert\NotBlank()
+     */
+    private $unitPrice;
 
     /**************************************************************************************************
      * RELATIONS
@@ -138,5 +145,29 @@ class ProductChantierCategory
     public function __toString()
     {
         return $this->category . ' ' . $this->position;
+    }
+
+    /**
+     * Set unitPrice.
+     *
+     * @param float $unitPrice
+     *
+     * @return ProductChantierCategory
+     */
+    public function setUnitPrice($unitPrice)
+    {
+        $this->unitPrice = $unitPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get unitPrice.
+     *
+     * @return float
+     */
+    public function getUnitPrice()
+    {
+        return $this->unitPrice;
     }
 }

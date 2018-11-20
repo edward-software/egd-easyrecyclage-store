@@ -102,6 +102,12 @@ class Category
     private $productChantierCategories;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrderLine", mappedBy="category", cascade={"all"})
+     */
+    private $productDIOrderLines;
+
+
     public function __construct()
     {
         $this->dateCreation = new \DateTime();

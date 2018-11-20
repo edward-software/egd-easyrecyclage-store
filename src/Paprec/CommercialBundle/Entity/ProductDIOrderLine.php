@@ -49,18 +49,30 @@ class ProductDIOrderLine
      * @var string
      *
      * @ORM\Column(name="productName", type="string", length=255)
-     * @Assert\NotBlank()
      */
     private $productName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="categoryName", type="string", length=255)
+     */
+    private $categoryName;
 
     /**
      * @var float
      *
      * @ORM\Column(name="unitPrice", type="float")
-     * @Assert\NotBlank()
-     * @Assert\Type(type="float")
      */
     private $unitPrice;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="totalAmount", type="float")
+     */
+    private $totalAmount;
+
 
     /**
      * @var integer
@@ -80,6 +92,13 @@ class ProductDIOrderLine
      * @ORM\JoinColumn(name="productId", referencedColumnName="id", nullable=false)
      */
     private $productDI;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\Category", inversedBy="productDIOrderLines")
+     * @ORM\JoinColumn(name="categoryId", referencedColumnName="id", nullable=false)
+     */
+    private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrder", inversedBy="productDIOrderLines")
@@ -297,5 +316,77 @@ class ProductDIOrderLine
     public function getProductDIOrder()
     {
         return $this->productDIOrder;
+    }
+
+    /**
+     * Set totalAmount.
+     *
+     * @param float $totalAmount
+     *
+     * @return ProductDIOrderLine
+     */
+    public function setTotalAmount($totalAmount)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return float
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
+    }
+
+    /**
+     * Set category.
+     *
+     * @param \Paprec\CatalogBundle\Entity\Category $category
+     *
+     * @return ProductDIOrderLine
+     */
+    public function setCategory(\Paprec\CatalogBundle\Entity\Category $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category.
+     *
+     * @return \Paprec\CatalogBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set categoryName.
+     *
+     * @param string $categoryName
+     *
+     * @return ProductDIOrderLine
+     */
+    public function setCategoryName($categoryName)
+    {
+        $this->categoryName = $categoryName;
+
+        return $this;
+    }
+
+    /**
+     * Get categoryName.
+     *
+     * @return string
+     */
+    public function getCategoryName()
+    {
+        return $this->categoryName;
     }
 }

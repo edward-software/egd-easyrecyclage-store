@@ -2,6 +2,8 @@
 
 namespace Paprec\PublicBundle\Controller\DI;
 
+use Paprec\CommercialBundle\Entity\ProductDIOrder;
+use Paprec\CommercialBundle\Form\ProductDIOrderShortType;
 use Paprec\PublicBundle\Entity\Cart;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -46,39 +48,72 @@ class SubscriptionController extends Controller
     }
 
     /**
+     * Etape du formulaire des informations contact
      * @Route("/step2/{cartUuid}", name="paprec_public_DI_subscription_step2")
      */
     public function step2Action(Request $request, $cartUuid)
     {
         $cartManager = $this->get('paprec.cart_manager');
-        $categoryManager = $this->get('paprec_catalog.category_manager');
-        $productDICategoryManager = $this->get('paprec_catalog.product_di_manager');
-
+        $productDIOrderManager = $this->get('paprec_catalog.product_di_order_manager');
 
         $cart = $cartManager->get($cartUuid);
+
+        $postalCode = substr($cart->getLocation(), 0, 5);
+        $city = substr($cart->getLocation(), 5);
+
+        $productDIOrder = new ProductDIOrder();
+        $productDIOrder->setCity($city);
+        $productDIOrder->setPostalCode($postalCode);
+
+        $form = $this->createForm(ProductDIOrderShortType::class, $productDIOrder);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $productDIOrder = $form->getData();
+            $productDIOrder->setOrderStatus('Créé');
+            $productDIOrder->setFrequency($cart->getFrequency());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($productDIOrder);
+            $em->flush();
+
+            // On récupère tous les produits ajoutés au Cart
+            foreach ($cart->getContent() as $item) {
+                $productDIOrderManager->addLineFromCart($productDIOrder, $item['pId'], $item['qtty'], $item['cId']);
+            }
+
+
+            return $this->redirectToRoute('paprec_public_DI_subscription_step3', array(
+                'cartUuid' => $cart->getId(),
+                'orderId' => $productDIOrder->getId()
+            ));
+
+        }
+
+
         return $this->render('@PaprecPublic/DI/contactDetails.html.twig', array(
-            'cart' => $cart
+            'cart' => $cart,
+            'form' => $form->createView()
         ));
     }
 
     /**
-     * @Route("/step3/{cartUuid}", name="paprec_public_DI_subscription_step3")
+     * @Route("/step3/{cartUuid}/{orderId}", name="paprec_public_DI_subscription_step3")
      */
-    public function step3Action(Request $request, $cartUuid)
+    public function step3Action(Request $request, $cartUuid, $orderId)
     {
         $cartManager = $this->get('paprec.cart_manager');
-        $categoryManager = $this->get('paprec_catalog.category_manager');
-        $productDICategoryManager = $this->get('paprec_catalog.product_di_manager');
+        $em = $this->getDoctrine()->getManager();
 
-
+        $productDIOrder = $em->getRepository('PaprecCommercialBundle:ProductDIOrder')->find($orderId);
         $cart = $cartManager->get($cartUuid);
+
         return $this->render('@PaprecPublic/DI/offerDetails.html.twig', array(
-            'cart' => $cart
+            'productDIOrder' => $productDIOrder
         ));
     }
-
-
-
 
 
     /**

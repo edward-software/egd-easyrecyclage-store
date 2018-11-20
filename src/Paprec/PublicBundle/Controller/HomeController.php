@@ -2,11 +2,14 @@
 
 namespace Paprec\PublicBundle\Controller;
 
+use Paprec\CommercialBundle\Entity\OrderRequest;
+use Paprec\CommercialBundle\Form\OrderRequestShortType;
 use Paprec\PublicBundle\Entity\Cart;
 use Paprec\PublicBundle\Service\CartManager;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends Controller
@@ -28,6 +31,7 @@ class HomeController extends Controller
          * step définie le prochain champ à afficher
          * Par défaut on est à la step l (location)
          * Quand l est définie on passe à l'étape d puis f
+         * si on choisit "Régulier", on passe en étape r
          */
         $step = "l";
         $divisions = $this->getParameter('paprec_divisions');
@@ -45,22 +49,82 @@ class HomeController extends Controller
             $cart = $cartManager->add($location, $division, $frequency);
 
 
-            switch ($cart->getDivision()) {
-                case('DI'):
-                    if ($cart->getFrequency() == 'ponctual') {
+            if ($cart->getFrequency() == 'regular') {
+                $step = "r";
+                return $this->render('@PaprecPublic/Home/index.html.twig', array(
+                    'divisions' => $divisions,
+                    'step' => $step,
+                    'cart' => $cart
+                ));
+            } else {
+                switch ($cart->getDivision()) {
+                    case('DI'):
                         return $this->redirectToRoute('paprec_public_DI_subscription_step1', array(
                             'cartUuid' => $cart->getId()
                         ));
-                    } else {
-
-                    }
+                }
             }
-        }
 
+        }
 
         return $this->render('@PaprecPublic/Home/index.html.twig', array(
             'divisions' => $divisions,
             'step' => $step
         ));
+    }
+
+    /**
+     * Formulaire pour besoin Régulier : commun à toutes les divisions donc dans HomeController
+     * @Route("/regularForm/{cartUuid}", name="paprec_public_home_regularForm")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function regularFormAction(Request $request, $cartUuid)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+
+        $divisions = $this->getParameter('paprec_divisions');
+        $cart = $cartManager->get($cartUuid);
+
+        $orderRequest = new OrderRequest();
+        $form = $this->createForm(OrderRequestShortType::class, $orderRequest);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $orderRequest = $form->getData();
+            $orderRequest->setOrderStatus('Créé');
+            $orderRequest->setFrequency($cart->getFrequency());
+            $orderRequest->setDivision($cart->getDivision());
+            $orderRequest->setPostalCode(substr($cart->getLocation(), 0, 5));
+
+            $files = array();
+            foreach ($orderRequest->getAttachedFiles() as $uploadedFile) {
+                if ($uploadedFile instanceof UploadedFile) {
+                    /**
+                     * On place le file uploadé dans le dossier web/files
+                     * et on ajoute le nom du fichier md5 dans le tableau $files
+                     */
+                    $uploadedFileName = md5(uniqid()) . '.' . $uploadedFile->guessExtension();
+
+                    $uploadedFile->move($this->getParameter('paprec_commercial.order_request.files_path'), $uploadedFileName);
+                    $files[] = $uploadedFileName;
+                }
+            }
+            $orderRequest->setAttachedFiles($files);
+            $em->persist($orderRequest);
+            $em->flush();
+
+
+            return $this->redirectToRoute('paprec_public_home_index');
+        }
+        return $this->render('@PaprecPublic/Home/regularForm.html.twig', array(
+            'form' => $form->createView(),
+            'cart' => $cart,
+            'divisions' => $divisions
+        ));
+
+
     }
 }

@@ -1,0 +1,264 @@
+{% extends "::base_admin.html.twig" %}
+
+{% block title %}
+    {{ 'Commercial.OrderRequest.View'|trans }}
+{% endblock %}
+
+{% block stylesheets %}
+
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
+{% endblock %}
+
+{% block content_title %}
+    {{ 'Commercial.OrderRequest.Users'|trans }}
+{% endblock %}
+
+{% block main_content %}
+
+
+    <div class="col-md-12">
+        <!-- FLASH MESSAGE -->
+        <div class="view-box">
+
+            {% for flashMessage in app.session.flashbag.get('errors') %}
+                <div class="alert alert-danger">{{ ('Commercial.OrderRequest.Error.' ~ flashMessage)|trans }}</div>
+            {% endfor %}
+
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">{{ ('Commercial.OrderRequest.Success.' ~ flashMessage)|trans }}</div>
+            {% endfor %}
+        </div>
+        <!-- CARD -->
+        <div class="card">
+            <div class="card-header">
+                <h4>
+                    <i class="fa fa-orderRequest"></i> {{ 'Commercial.OrderRequest.View'|trans }}
+                    <div class="float-right">
+                        <a href="{{ path("paprec_commercial_orderRequest_edit", {id: orderRequest.id}) }}"
+                           class="btn btn-warning"><i
+                                    class="fa fa-edit"></i> {{ 'Commercial.OrderRequest.Edit'|trans }}</a>
+                        <a id="commmecialOrderRequestRemoveButton_" href="javascript:void(0);" class="btn btn-danger"><i
+                                    class="fa fa-trash"></i> {{ 'Commercial.OrderRequest.Remove'|trans }}</a>
+                    </div>
+                </h4>
+                <div class="view-tools float-left">
+                    <a href="{{ path('paprec_commercial_orderRequest_index') }}" class="btn btn-default"><i
+                                class="fa fa-chevron-left"></i> {{ 'Commercial.OrderRequest.List'|trans }}</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Commercial.OrderRequest.Informations-FO'|trans }}</h5>
+                        </div>
+                        <div class="card-body row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.BusinessName'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.businessName }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Civility'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.civility }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.LastName'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.lastName }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.FirstName'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.firstName }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Email'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.email }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Phone'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.phone }}
+                                    </label>
+                                </div>
+                                {#<div class="form-group row">#}
+                                    {#<label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.AttachedFiles'|trans }}</label>#}
+                                    {#<label class="col-form-label">#}
+                                        {#{{ orderRequest.att }}#}
+                                    {#</label>#}
+                                {#</div>#}
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Function'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.function }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.OrderStatus'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.orderStatus }}
+                                    </label>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Division'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.division }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.PostalCode'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.postalCode }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.AttachedFiles'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if orderRequest.attachedFiles %}
+                                            <a href="{{ path('paprec_commercial_orderRequest_downloadAttachedFiles', {id: orderRequest.id}) }}"><i class="fa fa-download fa-lg"></i></a>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Need'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.need }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Commercial.OrderRequest.Informations-BO'|trans }}</h5>
+                        </div>
+                        <div class="card-body row">
+                            <div class="col-md-6">
+
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.GeneratedTurnover'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.generatedTurnover }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Agency'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if orderRequest.agency %}
+                                            <a href="{{ path('paprec_commercial_agence_view', {id: orderRequest.agency.id}) }}">{{ orderRequest.agency }}</a>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Summary'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.summary }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Frequency'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if orderRequest.frequency == 'regular' %}Régulier {% else %}Ponctuel{% endif %}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Tonnage'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.tonnage }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.KookaburaNumber'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ orderRequest.kookaburaNumber }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.UserInCharge'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if orderRequest.userInCharge %}
+                                            <a href="{{ path('paprec_user_user_view', {id: orderRequest.userInCharge.id}) }}">{{ orderRequest.userInCharge }}</a>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.AssociatedOrder'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if orderRequest.associatedOrder %}
+                                        <a href="{{ path('paprec_commercial_orderRequest_downloadAssociatedOrder', {id: orderRequest.id}) }}"><i class="fa fa-download fa-lg"></i></a>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Commercial.OrderRequest.System-informations'|trans }}</h5>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Date-creation'|trans }}</label>
+                                <label class="col-form-label">
+                                    {{ orderRequest.dateCreation|localizeddate('short', 'medium', app.request.locale) }}
+                                </label>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Date-update'|trans }}</label>
+                                <label class="col-form-label">
+                                    {{ orderRequest.dateUpdate is empty ? "" : orderRequest.dateUpdate|localizeddate('short', 'medium', app.request.locale) }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+        {% block javascripts %}
+            <!-- DATA TABLES JS -->
+            <script type="text/javascript"
+                    src="{{ asset('/assets/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+            <script type="text/javascript"
+                    src="{{ asset('/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+            <script>
+                $(function () {
+
+                    $('#commmecialOrderRequestRemoveButton_').on('click', function () {
+
+                        var url = "{{ path("paprec_commercial_orderRequest_remove", {id: orderRequest.id}) }}";
+
+                        bootbox.confirm("{{ 'Commercial.OrderRequest.Confirm-remove'|trans }}", function (result) {
+                            if (result === true) {
+                                $(location).attr('href', url);
+                            }
+                        });
+
+                    });
+                });
+            </script>
+        {% endblock %}

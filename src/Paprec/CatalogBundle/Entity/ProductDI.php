@@ -103,15 +103,6 @@ class ProductDI
     private $isDisplayed;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="unitPrice", type="float")
-     * @Assert\NotBlank()
-     * @Assert\Type(type="float")
-     */
-    private $unitPrice;
-
-    /**
      * @var text
      * @ORM\Column(name="availablePostalCodeIds", type="text", nullable=true)
      */
@@ -322,30 +313,6 @@ class ProductDI
     public function getReference()
     {
         return $this->reference;
-    }
-
-    /**
-     * Set unitPrice.
-     *
-     * @param float $unitPrice
-     *
-     * @return ProductDI
-     */
-    public function setUnitPrice($unitPrice)
-    {
-        $this->unitPrice = $unitPrice;
-
-        return $this;
-    }
-
-    /**
-     * Get unitPrice.
-     *
-     * @return float
-     */
-    public function getUnitPrice()
-    {
-        return $this->unitPrice;
     }
 
     /**
