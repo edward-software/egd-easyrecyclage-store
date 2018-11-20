@@ -7,12 +7,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * OrderRequest
+ * QuoteRequest
  *
- * @ORM\Table(name="orderRequests")
- * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\OrderRequestRepository")
+ * @ORM\Table(name="quoteRequests")
+ * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\QuoteRequestRepository")
  */
-class OrderRequest
+class QuoteRequest
 {
     /**
      * @var int
@@ -194,20 +194,20 @@ class OrderRequest
     ########################### */
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\UserBundle\Entity\User", inversedBy="orderRequests", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="Paprec\UserBundle\Entity\User", inversedBy="quoteRequests", cascade={"all"})
      * @ORM\JoinColumn(name="userInChargeId", referencedColumnName="id", nullable=true)
      */
     private $userInCharge;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agency", inversedBy="orderRequests")
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agency", inversedBy="quoteRequests")
      * @ORM\JoinColumn(name="agencyId", referencedColumnName="id", nullable=true)
      */
     private $agency;
 
 
     /**
-     * OrderRequest constructor.
+     * QuoteRequest constructor.
      */
     public function __construct()
     {
@@ -230,7 +230,7 @@ class OrderRequest
      *
      * @param \DateTime $dateCreation
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setDateCreation($dateCreation)
     {
@@ -254,7 +254,7 @@ class OrderRequest
      *
      * @param \DateTime|null $dateUpdate
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setDateUpdate($dateUpdate = null)
     {
@@ -278,7 +278,7 @@ class OrderRequest
      *
      * @param \DateTime|null $deleted
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setDeleted($deleted = null)
     {
@@ -302,7 +302,7 @@ class OrderRequest
      *
      * @param string $businessName
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setBusinessName($businessName)
     {
@@ -326,7 +326,7 @@ class OrderRequest
      *
      * @param string $civility
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setCivility($civility)
     {
@@ -350,7 +350,7 @@ class OrderRequest
      *
      * @param string $lastName
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setLastName($lastName)
     {
@@ -374,7 +374,7 @@ class OrderRequest
      *
      * @param string $firstName
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setFirstName($firstName)
     {
@@ -398,7 +398,7 @@ class OrderRequest
      *
      * @param string $email
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setEmail($email)
     {
@@ -422,7 +422,7 @@ class OrderRequest
      *
      * @param string $phone
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setPhone($phone)
     {
@@ -446,7 +446,7 @@ class OrderRequest
      *
      * @param string $orderStatus
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setOrderStatus($orderStatus)
     {
@@ -470,7 +470,7 @@ class OrderRequest
      *
      * @param string $need
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setNeed($need)
     {
@@ -494,7 +494,7 @@ class OrderRequest
      *
      * @param array|null $attachedFiles
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setAttachedFiles($attachedFiles = null)
     {
@@ -518,7 +518,7 @@ class OrderRequest
      *
      * @param float|null $generatedTurnover
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setGeneratedTurnover($generatedTurnover = null)
     {
@@ -542,7 +542,7 @@ class OrderRequest
      *
      * @param string|null $division
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setDivision($division = null)
     {
@@ -566,7 +566,7 @@ class OrderRequest
      *
      * @param string $postalCode
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setPostalCode($postalCode)
     {
@@ -590,7 +590,7 @@ class OrderRequest
      *
      * @param string|null $associatedOrder
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setAssociatedOrder($associatedOrder = null)
     {
@@ -614,7 +614,7 @@ class OrderRequest
      *
      * @param string|null $summary
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setSummary($summary = null)
     {
@@ -638,7 +638,7 @@ class OrderRequest
      *
      * @param string|null $frequency
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setFrequency($frequency = null)
     {
@@ -662,7 +662,7 @@ class OrderRequest
      *
      * @param float|null $tonnage
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setTonnage($tonnage = null)
     {
@@ -686,7 +686,7 @@ class OrderRequest
      *
      * @param int|null $kookaburaNumber
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setKookaburaNumber($kookaburaNumber = null)
     {
@@ -710,7 +710,7 @@ class OrderRequest
      *
      * @param \Paprec\UserBundle\Entity\User|null $userInCharge
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setUserInCharge(\Paprec\UserBundle\Entity\User $userInCharge = null)
     {
@@ -734,7 +734,7 @@ class OrderRequest
      *
      * @param \Paprec\CommercialBundle\Entity\Agency|null $agency
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setAgency(\Paprec\CommercialBundle\Entity\Agency $agency = null)
     {
@@ -758,7 +758,7 @@ class OrderRequest
      *
      * @param string $function
      *
-     * @return OrderRequest
+     * @return QuoteRequest
      */
     public function setFunction($function)
     {

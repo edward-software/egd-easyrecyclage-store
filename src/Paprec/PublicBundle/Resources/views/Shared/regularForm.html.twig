@@ -101,18 +101,18 @@
 
                         <div class="clearfix step--marginfield"></div>
 
-                        {{ form_widget(form.lastName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.OrderRequest.LastName'|trans}}) }}
+                        {{ form_widget(form.lastName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.QuoteRequest.LastName'|trans}}) }}
                         {{ form_errors(form.lastName) }}
-                        {{ form_widget(form.firstName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.OrderRequest.FirstName'|trans}}) }}
+                        {{ form_widget(form.firstName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.QuoteRequest.FirstName'|trans}}) }}
                         {{ form_errors(form.firstName) }}
 
-                        {{ form_widget(form.email, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.OrderRequest.Email'|trans}}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.Email'|trans}}) }}
                         {{ form_errors(form.email) }}
 
-                        {{ form_widget(form.phone, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.OrderRequest.PhonePlaceholder'|trans}}) }}
+                        {{ form_widget(form.phone, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.PhonePlaceholder'|trans}}) }}
                         {{ form_errors(form.phone) }}
 
-                        {{ form_widget(form.function, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.OrderRequest.FunctionPlaceholder'|trans}}) }}
+                        {{ form_widget(form.function, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.FunctionPlaceholder'|trans}}) }}
                         {{ form_errors(form.function) }}
 
                         <div class="clearfix"></div>
@@ -124,7 +124,7 @@
                         <div class="step__title">Mon besoin</div>
                     </div>
                     <div class="step__right step__right--small">
-                        {{ form_widget(form.need, {'attr': {'class': 'input input--full input--bordered', 'placeholder': 'Commercial.OrderRequest.NeedPlaceholder'|trans}}) }}
+                        {{ form_widget(form.need, {'attr': {'class': 'input input--full input--bordered', 'placeholder': 'Commercial.QuoteRequest.NeedPlaceholder'|trans}}) }}
                         {{ form_errors(form.need) }}
                     </div>
                     <div class="clearfix"></div>
@@ -134,7 +134,7 @@
                         fournir des photos (.jpg, .png, .tiff)
                         ou autres fichiers (.pdf, .doc, .xls)
                     </div>
-                    {#{{ form_widget(form.attachedFiles, {'attr': {'class': 'input-file', 'placeholder': 'Commercial.OrderRequest.NeedPlaceholder'|trans}}) }}#}
+                    {#{{ form_widget(form.attachedFiles, {'attr': {'class': 'input-file', 'placeholder': 'Commercial.QuoteRequest.NeedPlaceholder'|trans}}) }}#}
                     {#{{ form_errors(form.attachedFiles) }}#}
                     {{ form_label(form.attachedFiles, "TÉLÉCHARGER DES PIÈCES JOINTES OU DES PHOTOS", {'label_attr': {'class': 'button button--bordered'}}) }}
                     {{ form_widget(form.attachedFiles, {'attr': {'class': 'input-file'}}) }}

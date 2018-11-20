@@ -17,7 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OrderRequestShortType extends AbstractType
+class QuoteRequestShortType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -58,7 +58,7 @@ class OrderRequestShortType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\OrderRequest'
+            'data_class' => 'Paprec\CommercialBundle\Entity\QuoteRequest'
         ));
     }
 
@@ -67,7 +67,7 @@ class OrderRequestShortType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'paprec_commercialbundle_orderrequest';
+        return 'paprec_commercialbundle_quoteRequest';
     }
 
 

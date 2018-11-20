@@ -109,9 +109,9 @@ class User extends BaseUser
     private $productDIOrders;
 
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\OrderRequest", mappedBy="userInCharge")
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\QuoteRequest", mappedBy="userInCharge")
      */
-    private $orderRequests;
+    private $quoteRequests;
 
     public function __construct()
     {
@@ -337,38 +337,38 @@ class User extends BaseUser
     }
 
     /**
-     * Add orderRequest.
+     * Add quoteRequest.
      *
-     * @param \Paprec\CommercialBundle\Entity\OrderRequest $orderRequest
+     * @param \Paprec\CommercialBundle\Entity\QuoteRequest $quoteRequest
      *
      * @return User
      */
-    public function addOrderRequest(\Paprec\CommercialBundle\Entity\OrderRequest $orderRequest)
+    public function addQuoteRequest(\Paprec\CommercialBundle\Entity\QuoteRequest $quoteRequest)
     {
-        $this->orderRequests[] = $orderRequest;
+        $this->quoteRequests[] = $quoteRequest;
 
         return $this;
     }
 
     /**
-     * Remove orderRequest.
+     * Remove quoteRequest.
      *
-     * @param \Paprec\CommercialBundle\Entity\OrderRequest $orderRequest
+     * @param \Paprec\CommercialBundle\Entity\QuoteRequest $quoteRequest
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeOrderRequest(\Paprec\CommercialBundle\Entity\OrderRequest $orderRequest)
+    public function removeQuoteRequest(\Paprec\CommercialBundle\Entity\QuoteRequest $quoteRequest)
     {
-        return $this->orderRequests->removeElement($orderRequest);
+        return $this->quoteRequests->removeElement($quoteRequest);
     }
 
     /**
-     * Get orderRequests.
+     * Get quoteRequests.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getOrderRequests()
+    public function getQuoteRequests()
     {
-        return $this->orderRequests;
+        return $this->quoteRequests;
     }
 }

@@ -3,8 +3,8 @@
 namespace Paprec\CommercialBundle\Controller;
 
 use Exception;
-use Paprec\CommercialBundle\Entity\OrderRequest;
-use Paprec\CommercialBundle\Form\OrderRequestEditType;
+use Paprec\CommercialBundle\Entity\QuoteRequest;
+use Paprec\CommercialBundle\Form\QuoteRequestEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,19 +19,19 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use ZipArchive;
 
-class OrderRequestController extends Controller
+class QuoteRequestController extends Controller
 {
     /**
-     * @Route("/orderRequest", name="paprec_commercial_orderRequest_index")
+     * @Route("/quoteRequest", name="paprec_commercial_quoteRequest_index")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function indexAction()
     {
-        return $this->render('PaprecCommercialBundle:OrderRequest:index.html.twig');
+        return $this->render('PaprecCommercialBundle:QuoteRequest:index.html.twig');
     }
 
     /**
-     * @Route("/orderRequest/loadList", name="paprec_commercial_orderRequest_loadList")
+     * @Route("/quoteRequest/loadList", name="paprec_commercial_quoteRequest_loadList")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function loadListAction(Request $request)
@@ -45,7 +45,7 @@ class OrderRequestController extends Controller
         $search = $request->get('search');
         $columns = $request->get('columns');
         // Récupération du type de catégorie souhaité (DI, CHANTIER, D3E)
-        $typeOrderRequest = $request->get('typeOrderRequest');
+        $typeQuoteRequest = $request->get('typeQuoteRequest');
 
         $cols['id'] = array('label' => 'id', 'id' => 'o.id', 'method' => array('getId'));
         $cols['businessName'] = array('label' => 'businessName', 'id' => 'o.businessName', 'method' => array('getBusinessName'));
@@ -57,9 +57,9 @@ class OrderRequestController extends Controller
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
 
         $queryBuilder->select(array('o'))
-            ->from('PaprecCommercialBundle:OrderRequest', 'o')
+            ->from('PaprecCommercialBundle:QuoteRequest', 'o')
             ->where('o.deleted IS NULL')
-            ->where('o.division LIKE \'%' . $typeOrderRequest . '%\''); // Récupération des OrderRequests du type voulu
+            ->where('o.division LIKE \'%' . $typeQuoteRequest . '%\''); // Récupération des QuoteRequests du type voulu
 
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
@@ -90,7 +90,7 @@ class OrderRequestController extends Controller
     }
 
     /**
-     * @Route("/orderRequest/export", name="paprec_commercial_orderRequest_export")
+     * @Route("/quoteRequest/export", name="paprec_commercial_quoteRequest_export")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function exportAction(Request $request)
@@ -101,10 +101,10 @@ class OrderRequestController extends Controller
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
 
         $queryBuilder->select(array('o'))
-            ->from('PaprecCommercialBundle:OrderRequest', 'o')
+            ->from('PaprecCommercialBundle:QuoteRequest', 'o')
             ->where('o.deleted IS NULL');
 
-        $orderRequests = $queryBuilder->getQuery()->getResult();
+        $quoteRequests = $queryBuilder->getQuery()->getResult();
 
         $phpExcelObject->getProperties()->setCreator("Paprec Easy Recyclage")
             ->setLastModifiedBy("Paprec Easy Recyclage")
@@ -135,27 +135,27 @@ class OrderRequestController extends Controller
         $phpExcelObject->setActiveSheetIndex(0);
 
         $i = 2;
-        foreach ($orderRequests as $orderRequest) {
+        foreach ($quoteRequests as $quoteRequest) {
 
             $phpExcelObject->setActiveSheetIndex(0)
-                ->setCellValue('A' . $i, $orderRequest->getId())
-                ->setCellValue('B' . $i, $orderRequest->getBusinessName())
-                ->setCellValue('C' . $i, $orderRequest->getCivility())
-                ->setCellValue('D' . $i, $orderRequest->getLastName())
-                ->setCellValue('E' . $i, $orderRequest->getFirstName())
-                ->setCellValue('F' . $i, $orderRequest->getEmail())
-                ->setCellValue('G' . $i, $orderRequest->getPhone())
-                ->setCellValue('H' . $i, $orderRequest->getOrderStatus())
-                ->setCellValue('I' . $i, $orderRequest->getNeed())
-                ->setCellValue('J' . $i, $orderRequest->getGeneratedTurnover())
-                ->setCellValue('K' . $i, $orderRequest->getDivision())
-                ->setCellValue('L' . $i, $orderRequest->getPostalCode())
-                ->setCellValue('M' . $i, $orderRequest->getAgency())
-                ->setCellValue('N' . $i, $orderRequest->getSummary())
-                ->setCellValue('O' . $i, $orderRequest->getFrequency())
-                ->setCellValue('P' . $i, $orderRequest->getTonnage())
-                ->setCellValue('Q' . $i, $orderRequest->getKookaburaNumber())
-                ->setCellValue('R' . $i, $orderRequest->getDateCreation()->format('Y-m-d'));
+                ->setCellValue('A' . $i, $quoteRequest->getId())
+                ->setCellValue('B' . $i, $quoteRequest->getBusinessName())
+                ->setCellValue('C' . $i, $quoteRequest->getCivility())
+                ->setCellValue('D' . $i, $quoteRequest->getLastName())
+                ->setCellValue('E' . $i, $quoteRequest->getFirstName())
+                ->setCellValue('F' . $i, $quoteRequest->getEmail())
+                ->setCellValue('G' . $i, $quoteRequest->getPhone())
+                ->setCellValue('H' . $i, $quoteRequest->getOrderStatus())
+                ->setCellValue('I' . $i, $quoteRequest->getNeed())
+                ->setCellValue('J' . $i, $quoteRequest->getGeneratedTurnover())
+                ->setCellValue('K' . $i, $quoteRequest->getDivision())
+                ->setCellValue('L' . $i, $quoteRequest->getPostalCode())
+                ->setCellValue('M' . $i, $quoteRequest->getAgency())
+                ->setCellValue('N' . $i, $quoteRequest->getSummary())
+                ->setCellValue('O' . $i, $quoteRequest->getFrequency())
+                ->setCellValue('P' . $i, $quoteRequest->getTonnage())
+                ->setCellValue('Q' . $i, $quoteRequest->getKookaburaNumber())
+                ->setCellValue('R' . $i, $quoteRequest->getDateCreation()->format('Y-m-d'));
 
             $i++;
         }
@@ -182,21 +182,21 @@ class OrderRequestController extends Controller
 
 
     /**
-     * @Route("/orderRequest/view/{id}", name="paprec_commercial_orderRequest_view")
+     * @Route("/quoteRequest/view/{id}", name="paprec_commercial_quoteRequest_view")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function viewAction(Request $request, OrderRequest $orderRequest)
+    public function viewAction(Request $request, QuoteRequest $quoteRequest)
     {
-        return $this->render('PaprecCommercialBundle:OrderRequest:view.html.twig', array(
-            'orderRequest' => $orderRequest
+        return $this->render('PaprecCommercialBundle:QuoteRequest:view.html.twig', array(
+            'quoteRequest' => $quoteRequest
         ));
     }
 
     /**
-     * @Route("/orderRequest/edit/{id}", name="paprec_commercial_orderRequest_edit")
+     * @Route("/quoteRequest/edit/{id}", name="paprec_commercial_quoteRequest_edit")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editAction(Request $request, OrderRequest $orderRequest)
+    public function editAction(Request $request, QuoteRequest $quoteRequest)
     {
 
         $status = array();
@@ -204,7 +204,7 @@ class OrderRequestController extends Controller
             $status[$s] = $s;
         }
 
-        $form = $this->createForm(OrderRequestEditType::class, $orderRequest, array(
+        $form = $this->createForm(QuoteRequestEditType::class, $quoteRequest, array(
             'status' => $status
         ));
 
@@ -212,62 +212,62 @@ class OrderRequestController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $orderRequest = $form->getData();
-            $orderRequest->setDateUpdate(new \DateTime());
+            $quoteRequest = $form->getData();
+            $quoteRequest->setDateUpdate(new \DateTime());
 
-            if ($orderRequest->getAssociatedOrder() instanceof UploadedFile) {
+            if ($quoteRequest->getAssociatedOrder() instanceof UploadedFile) {
                 /**
                  * On place le picto uploadé dans le dossier web/uploads
                  * et on sauvegarde le nom du fichier dans la colonne 'picto' de l'argument
                  */
-                $associatedOrder = $orderRequest->getAssociatedOrder();
+                $associatedOrder = $quoteRequest->getAssociatedOrder();
                 $associatedOrderFileName = md5(uniqid()) . '.' . $associatedOrder->guessExtension();
 
                 $associatedOrder->move($this->getParameter('paprec_commercial.order_request.files_path'), $associatedOrderFileName);
 
-                $orderRequest->setAssociatedOrder($associatedOrderFileName);
+                $quoteRequest->setAssociatedOrder($associatedOrderFileName);
             }
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
-            return $this->redirectToRoute('paprec_commercial_orderRequest_view', array(
-                'id' => $orderRequest->getId()
+            return $this->redirectToRoute('paprec_commercial_quoteRequest_view', array(
+                'id' => $quoteRequest->getId()
             ));
 
         }
 
-        return $this->render('PaprecCommercialBundle:OrderRequest:edit.html.twig', array(
+        return $this->render('PaprecCommercialBundle:QuoteRequest:edit.html.twig', array(
             'form' => $form->createView(),
-            'orderRequest' => $orderRequest
+            'quoteRequest' => $quoteRequest
         ));
     }
 
     /**
-     * @Route("/orderRequest/remove/{id}", name="paprec_commercial_orderRequest_remove")
+     * @Route("/quoteRequest/remove/{id}", name="paprec_commercial_quoteRequest_remove")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function removeAction(Request $request, OrderRequest $orderRequest)
+    public function removeAction(Request $request, QuoteRequest $quoteRequest)
     {
         $em = $this->getDoctrine()->getManager();
 
-        foreach ($orderRequest->getAttachedFiles() as $file) {
+        foreach ($quoteRequest->getAttachedFiles() as $file) {
             $this->removeFile($this->getParameter('paprec_commercial.order_request.files_path') . '/' . $file);
-            $orderRequest->setAttachedFiles();
+            $quoteRequest->setAttachedFiles();
         }
-        if (!empty($orderRequest->getAssociatedOrder())) {
+        if (!empty($quoteRequest->getAssociatedOrder())) {
             $this->removeFile($this->getParameter('paprec_commercial.order_request.files_path') . '/' . $file);
-            $orderRequest->setAssociatedOrder();
+            $quoteRequest->setAssociatedOrder();
         }
 
-        $orderRequest->setDeleted(new \DateTime());
+        $quoteRequest->setDeleted(new \DateTime());
         $em->flush();
 
-        return $this->redirectToRoute('paprec_commercial_orderRequest_index');
+        return $this->redirectToRoute('paprec_commercial_quoteRequest_index');
     }
 
     /**
-     * @Route("/orderRequest/removeMany/{ids}", name="paprec_commercial_orderRequest_removeMany")
+     * @Route("/quoteRequest/removeMany/{ids}", name="paprec_commercial_quoteRequest_removeMany")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function removeManyAction(Request $request)
@@ -283,22 +283,22 @@ class OrderRequestController extends Controller
         $ids = explode(',', $ids);
 
         if (is_array($ids) && count($ids)) {
-            $orderRequests = $em->getRepository('PaprecCommercialBundle:OrderRequest')->findById($ids);
-            foreach ($orderRequests as $orderRequest) {
-                foreach ($orderRequest->getAttachedFiles() as $file) {
+            $quoteRequests = $em->getRepository('PaprecCommercialBundle:QuoteRequest')->findById($ids);
+            foreach ($quoteRequests as $quoteRequest) {
+                foreach ($quoteRequest->getAttachedFiles() as $file) {
                     $this->removeFile($this->getParameter('paprec_commercial.order_request.files_path') . '/' . $file);
-                    $orderRequest->setAttachedFiles();
+                    $quoteRequest->setAttachedFiles();
                 }
-                if (!empty($orderRequest->getAssociatedOrder())) {
+                if (!empty($quoteRequest->getAssociatedOrder())) {
                     $this->removeFile($this->getParameter('paprec_commercial.order_request.files_path') . '/' . $file);
-                    $orderRequest->setAssociatedOrder();
+                    $quoteRequest->setAssociatedOrder();
                 }
-                $orderRequest->setDeleted(new \DateTime);
+                $quoteRequest->setDeleted(new \DateTime);
             }
             $em->flush();
         }
 
-        return $this->redirectToRoute('paprec_commercial_orderRequest_index');
+        return $this->redirectToRoute('paprec_commercial_quoteRequest_index');
     }
 
 
@@ -318,18 +318,18 @@ class OrderRequestController extends Controller
     }
 
     /**
-     * @Route("/orderRequest/{id}/downloadAssociatedOrder", name="paprec_commercial_orderRequest_downloadAssociatedOrder")
+     * @Route("/quoteRequest/{id}/downloadAssociatedOrder", name="paprec_commercial_quoteRequest_downloadAssociatedOrder")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function downloadAssociatedOrderAction( OrderRequest $orderRequest)
+    public function downloadAssociatedOrderAction( QuoteRequest $quoteRequest)
     {
-        $filename = $orderRequest->getAssociatedOrder();
+        $filename = $quoteRequest->getAssociatedOrder();
         $path = $this->getParameter('paprec_commercial.order_request.files_path');
         $content = file_get_contents($path . '/' . $filename);
         $extension = pathinfo($path . '/' . $filename, PATHINFO_EXTENSION);
 
         $response = new Response();
-        $newFilename = "Demande-Devis-" . $orderRequest->getId() . '-Devis-Associe.' . $extension;
+        $newFilename = "Demande-Devis-" . $quoteRequest->getId() . '-Devis-Associe.' . $extension;
 
         //set headers
         $response->headers->set('Content-Type', 'mime/type');
@@ -342,19 +342,19 @@ class OrderRequestController extends Controller
     }
 
     /**
-     * @Route("/orderRequest/{id}/downloadAttachedFiles", name="paprec_commercial_orderRequest_downloadAttachedFiles")
+     * @Route("/quoteRequest/{id}/downloadAttachedFiles", name="paprec_commercial_quoteRequest_downloadAttachedFiles")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function downloadAttachedFilesAction(OrderRequest $orderRequest)
+    public function downloadAttachedFilesAction(QuoteRequest $quoteRequest)
     {
         $path = $this->getParameter('paprec_commercial.order_request.files_path');
         $zipname = 'file.zip';
         $zip = new ZipArchive;
         $zip->open($zipname, ZipArchive::CREATE);
         $cpt = 1;
-        foreach ($orderRequest->getAttachedFiles() as $file) {
+        foreach ($quoteRequest->getAttachedFiles() as $file) {
             $extension = pathinfo($path . '/' . $file, PATHINFO_EXTENSION);
-            $newFilename = "Demande-devis-" . $orderRequest->getId() . '-PJ' . $cpt . '.' . $extension;
+            $newFilename = "Demande-devis-" . $quoteRequest->getId() . '-PJ' . $cpt . '.' . $extension;
 
             $filename= $path . '/' . $file;
             $zip->addFile($filename, $newFilename);

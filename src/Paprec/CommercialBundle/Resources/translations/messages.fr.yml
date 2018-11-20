@@ -101,8 +101,8 @@ Commercial:
     TotalAmount:                Montant total
     Confirm-remove:             Etes-vous sûr de vouloir supprimer cette ligne du devis DI ?
 
-  OrderRequest:
-    OrderRequests:              Demandes de devis
+  QuoteRequest:
+    QuoteRequests:              Demandes de devis
     List:                       Liste des demandes de devis
     ListChantiers:              Division chantier
     ListD3Es:                   Division D3Es
@@ -142,7 +142,7 @@ Commercial:
     System-informations:        Informations système
     Export:                     Exporter les demandes de devis
     View:                       Visualiser la demande de devis
-    Edit:                       Modifier le demande de devis
+    Edit:                       Modifier la demande de devis
     Remove:                     Supprimer la demande de devis
     Save:                       Enregistrer
     Cancel:                     Annuler
