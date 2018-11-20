@@ -78,12 +78,19 @@ class ProductDIOrder
      */
     private $firstName;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="function", type="string", length=255)
+     */
+    private $function;
+
 
     /**
      * @var string
      * @ORM\Column(name="email", type="string", length=255)
      * @Assert\Email(
-     *      message = "The email '{{ value }}' is not a valid email.",
+     *      message = "Le format de l'email est invalide",
      *      checkMX = true
      * )
      */
@@ -788,5 +795,29 @@ class ProductDIOrder
     public function getOrderStatus()
     {
         return $this->orderStatus;
+    }
+
+    /**
+     * Set function.
+     *
+     * @param string $function
+     *
+     * @return ProductDIOrder
+     */
+    public function setFunction($function)
+    {
+        $this->function = $function;
+
+        return $this;
+    }
+
+    /**
+     * Get function.
+     *
+     * @return string
+     */
+    public function getFunction()
+    {
+        return $this->function;
     }
 }

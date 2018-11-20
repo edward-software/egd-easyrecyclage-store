@@ -165,6 +165,51 @@
             $('#regularFormSubmitButton').on('click', function () {
                 $('#regularForm').submit();
             });
+
+            // Fonction appelée à chaque input dans l'input Location
+            // On recharge la page en envoyant la "location" quand la location est égale à un des autocomplete proposé
+            // c-a-d quand on a choisi une "location" dans la datalist en gros
+            $("#locationSelect").on('input', function () {
+                var val = this.value;
+                if ($('#locationDatalist option').filter(function () {
+                    return this.value.toUpperCase() === val.toUpperCase();
+                }).length) {
+                    alert('Perte des données TODO Modal');
+                    {% autoescape'js' %}
+                    url = $(this).data('url').replace('locationTmp', val);
+                    {% endautoescape %}
+                    $(location).attr('href', url);
+                }
+            });
+
+            // Quand on sélectionne une division dans le select, on recharge en envoyant la location et la division
+            $("#divisionSelect").on('change', function () {
+                alert('Perte des données TODO Modal');
+                locationVal = $("#locationSelect").val();
+                {% autoescape'js' %}
+                url = $(this).data('url').replace('divisionTmp', this.value).replace('locationTmp', locationVal);
+                {% endautoescape %}
+
+                $(location).attr('href', url);
+            });
+
+            // Quand on sélectionne une frequence dans les radioButtons, on recharge la page en envoyant la location, division, frequence
+            // cela na nous faire naviguer vers le SubscriptionController de la division choisie
+            $('#frequencyRadioBox').change(function () {
+                alert('Perte des données TODO Modal');
+
+                frequency = $("input[name='frequencyRadio']:checked").val();
+                locationVal = $("#locationSelect").val();
+                divisionVal = $("#divisionSelect").val();
+                {% autoescape'js' %}
+                url = $(this).data('url')
+                    .replace('divisionTmp', divisionVal)
+                    .replace('locationTmp', locationVal)
+                    .replace('frequencyTmp', frequency);
+                {% endautoescape %}
+                $(location).attr('href', url);
+
+            });
         });
     </script>
 

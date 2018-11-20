@@ -20,13 +20,15 @@
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <i class="fa fa-pencil-alt"></i> {{ 'Commercial.ProductDIOrder.Edit'|trans }} #{{ productDIOrder.id }}
+                        <i class="fa fa-pencil-alt"></i> {{ 'Commercial.ProductDIOrder.Edit'|trans }}
+                        #{{ productDIOrder.id }}
 
                         <div class="float-right">
 
-                            <a href="javascript:void(0);" class="btn btn-success commercial-productDIOrder-save-button"><i
+                            <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-productDIOrder-save-button"><i
                                         class="fa fa-check"></i> {{ 'Commercial.ProductDIOrder.Save'|trans }}</a>
-                            <a href="javascript:void(0);" class="btn btn-danger commercial-productDIOrder-cancel-button"><i
+                            <a href="javascript:void(0);"
+                               class="btn btn-sm btn-danger commercial-productDIOrder-cancel-button"><i
                                         class="fa fa-close"></i> {{ 'Commercial.ProductDIOrder.Cancel'|trans }}</a>
                         </div>
                     </h4>
@@ -37,90 +39,102 @@
                             <div class="card-header">
                                 <h5 class="card-title">{{ 'Commercial.ProductDIOrder.Informations-FO'|trans }}</h5>
                             </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrder.BusinessName'|trans }}</label>
-                                    <div class="form-content">
-                                        {{ form_widget(form.businessName, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.businessName) }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrder.BusinessLine'|trans }}</label>
-                                    <div class="form-content">
-                                        {{ form_widget(form.businessLine, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.businessLine) }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrder.Civility'|trans }}</label>
-                                    <div class="form-content">
-                                        {{ form_widget(form.civility, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.civility) }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrder.LastName'|trans }}</label>
-                                    <div class="form-content">
-                                        {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.lastName) }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrder.FirstName'|trans }}</label>
-                                    <div class="form-content">
-                                        {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.firstName) }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrder.Email'|trans }}</label>
-                                    <div class="form-content">
-                                        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.email) }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrder.Address'|trans }}</label>
-                                    <div class="form-content">
-                                        {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.address) }}
-                                    </div>
-                                </div>
+                            <div class="card-body row">
+                                <div class="col-md-6">
 
-                                <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrder.PostalCode'|trans }}</label>
-                                    <div class="form-content">
-                                        {{ form_widget(form.postalCode, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.postalCode) }}
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.BusinessName'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.businessName, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.businessName) }}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrder.City'|trans }}</label>
-                                    <div class="form-content">
-                                        {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.city) }}
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.BusinessLine'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.businessLine, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.businessLine) }}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrder.Phone'|trans }}</label>
-                                    <div class="form-content">
-                                        {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.phone) }}
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.Civility'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.civility, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.civility) }}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrder.OrderStatus'|trans }}</label>
-                                    <div class="form-content">
-                                        {{ form_widget(form.orderStatus, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.orderStatus) }}
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.LastName'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.lastName) }}
+                                        </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.FirstName'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.firstName) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.Function'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.function, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.function) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.Address'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.address) }}
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrder.TotalAmount'|trans }}</label>
-                                    <div class="form-content">
-                                        {{ form_widget(form.totalAmount, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.totalAmount) }}
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.Email'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.email) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.PostalCode'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.postalCode, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.postalCode) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.City'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.city) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.Phone'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.phone) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.OrderStatus'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.orderStatus, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.orderStatus) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.TotalAmount'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.totalAmount, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.totalAmount) }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -191,9 +205,9 @@
                 </div>
                 <div class="card-footer">
                     <div class="float-right">
-                        <a href="javascript:void(0);" class="btn btn-success commercial-productDIOrder-save-button"><i
+                        <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-productDIOrder-save-button"><i
                                     class="fa fa-check"></i> {{ 'Commercial.ProductDIOrder.Save'|trans }}</a>
-                        <a href="javascript:void(0);" class="btn btn-danger commercial-productDIOrder-cancel-button"><i
+                        <a href="javascript:void(0);" class="btn btn-sm btn-danger commercial-productDIOrder-cancel-button"><i
                                     class="fa fa-close"></i> {{ 'Commercial.ProductDIOrder.Cancel'|trans }}</a>
                     </div>
                 </div>

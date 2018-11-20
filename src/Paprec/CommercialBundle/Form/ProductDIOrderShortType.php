@@ -48,14 +48,15 @@ class ProductDIOrderShortType extends AbstractType
                 'expanded' => true
             ))
             ->add('lastName', TextType::class)
-            ->add('firstName', TextType::class, array(
-                'required' => false
-            ))
+            ->add('firstName', TextType::class)
             ->add('email', TextType::class)
             ->add('address', TextareaType::class)
             ->add('postalCode', TextType::class)
             ->add('city', TextType::class)
-            ->add('phone', TextType::class);
+            ->add('phone', TextType::class)
+            ->add('function', TextType::class, array(
+                'required' => false
+            ));
 
     }/**
      * {@inheritdoc}

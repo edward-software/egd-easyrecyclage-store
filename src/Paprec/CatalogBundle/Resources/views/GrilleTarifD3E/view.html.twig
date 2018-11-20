@@ -25,14 +25,14 @@
                     <i class="fa fa-folder"></i> {{ 'Catalog.GrilleTarifD3E.View'|trans }}
                     <div class="float-right">
                         <a href="{{ path("paprec_catalog_grilleTarifD3E_edit", {id: grilleTarifD3E.id}) }}"
-                           class="btn btn-warning"><i
+                           class="btn btn-sm btn-warning"><i
                                     class="fa fa-edit"></i> {{ 'Catalog.GrilleTarifD3E.Edit'|trans }}</a>
-                        <a id="catalogGrilleTarifD3ERemoveButton" href="javascript:void(0);" class="btn btn-danger"><i
+                        <a id="catalogGrilleTarifD3ERemoveButton" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
                                     class="fa fa-trash"></i> {{ 'Catalog.GrilleTarifD3E.Remove'|trans }}</a>
                     </div>
                 </h4>
                 <div class="view-tools float-left">
-                    <a href="{{ path('paprec_catalog_grilleTarifD3E_index') }}" class="btn btn-default"><i
+                    <a href="{{ path('paprec_catalog_grilleTarifD3E_index') }}" class="btn btn-sm btn-default"><i
                                 class="fa fa-chevron-left"></i> {{ 'Catalog.GrilleTarifD3E.List'|trans }}</a>
                 </div>
             </div>
@@ -125,7 +125,7 @@
                                         <div class="form-label" style="visibility: hidden;">.</div>
                                         <div class="form-content align-bottom">
                                             <a href="javascript:void(0);"
-                                               class="btn btn-success catalogGrilleTarifD3ESaveButton"><i
+                                               class="btn btn-sm btn-success catalogGrilleTarifD3ESaveButton"><i
                                                         class="fa fa-check"></i> {{ 'Catalog.GrilleTarifD3E.Save'|trans }}
                                             </a>
                                         </div>
@@ -158,14 +158,14 @@
                                         <td>{{ grilleTarifLigneD3E.price }}</td>
                                         <td class="text-center">
                                             <a href="javascript:void(0);"
-                                               class="btn btn-warning btn-sm mx-1"
+                                               class="btn btn-sm btn-warning btn-sm mx-1"
                                                data-target="#editLigneModal"
                                                data-toggle="modal"
                                                data-id="{{ grilleTarifLigneD3E.id }}">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a href="javascript:void(0);"
-                                               class="btn btn-danger btn-sm catalogGrilleTarifLigneD3EEditButton"
+                                               class="btn btn-sm btn-danger btn-sm catalogGrilleTarifLigneD3EEditButton"
                                                onclick="removeLigne({{ grilleTarifLigneD3E.id }})">
                                                 <i class="fa fa-trash"></i>
                                             </a>
@@ -229,12 +229,12 @@
 
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
+                                                <button type="button" class="btn btn-sm btn-secondary"
                                                         data-dismiss="modal">
                                                     {{ 'General.Cancel'|trans }}
                                                 </button>
                                                 <a href="javascript:void(0);"
-                                                   class="btn btn-success catalogGrilleTarifD3EEditSaveButton"><i
+                                                   class="btn btn-sm btn-success catalogGrilleTarifD3EEditSaveButton"><i
                                                             class="fa fa-check"></i> {{ 'Catalog.GrilleTarifD3E.Save'|trans }}
                                                 </a></div>
                                             {{ form_rest(editLigneForm) }}

@@ -60,6 +60,8 @@ Commercial:
     Civility:                   Civilité
     LastName:                   Nom
     FirstName:                  Prénom
+    Function:                   Fonction
+    FunctionPlaceholder:        Fonction (facultatif)
     Email:                      Email
     Address:                    Adresse
     PostalCode:                 Code postal

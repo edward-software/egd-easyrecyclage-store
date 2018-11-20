@@ -43,7 +43,8 @@ class ProductDIOrderType extends AbstractType
                 'expanded' => true
             ))
             ->add('lastName', TextType::class)
-            ->add('firstName', TextType::class, array(
+            ->add('firstName', TextType::class)
+            ->add('function', TextType::class, array(
                 'required' => false
             ))
             ->add('email', TextType::class)

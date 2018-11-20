@@ -26,10 +26,10 @@
                     <h4>
                         <i class="fa fa-list"></i> {{ 'Catalog.GrilleTarifD3E.List'|trans }}
                         <div class="float-right">
-                            <a href="{{ path('paprec_catalog_grilleTarifD3E_add') }}" class="btn btn-outline-primary">
+                            <a href="{{ path('paprec_catalog_grilleTarifD3E_add') }}" class="btn btn-sm btn-outline-primary">
                                 <i class="fa fa-plus"></i> {{ 'Catalog.GrilleTarifD3E.Add'|trans }}
                             </a>
-                            <a href="{{ path('paprec_catalog_grilleTarifD3E_export') }}" class="btn btn-primary ">
+                            <a href="{{ path('paprec_catalog_grilleTarifD3E_export') }}" class="btn btn-sm btn-primary ">
                                 <i class="fa fa-file-excel"></i> {{ 'Catalog.GrilleTarifD3E.Export'|trans }}
                             </a>
                         </div>
@@ -130,7 +130,7 @@
                     viewUrl = "{{ path('paprec_catalog_grilleTarifD3E_view', {id: '0000'}) }}".replace('0000', aData['id']);
                     editUrl = "{{ path('paprec_catalog_grilleTarifD3E_edit', {id: '0000'}) }}".replace('0000', aData['id']);
 
-                    $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>');
+                    $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-sm btn-primary btn-sm"><i class="fa fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-sm btn-warning btn-sm"><i class="fa fa-edit"></i></a>');
 
                 },
             });

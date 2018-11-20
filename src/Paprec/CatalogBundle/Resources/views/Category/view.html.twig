@@ -22,14 +22,14 @@
                 <h4>
                     <i class="fa fa-folder"></i> {{ 'Catalog.Category.View'|trans }}
                     <div class="float-right">
-                        <a href="{{ path("paprec_catalog_category_edit", {id: category.id}) }}" class="btn btn-warning"><i
+                        <a href="{{ path("paprec_catalog_category_edit", {id: category.id}) }}" class="btn btn-sm btn-warning"><i
                                     class="fa fa-edit"></i> {{ 'Catalog.Category.Edit'|trans }}</a>
-                        <a id="catalogCategoryRemoveButton" href="javascript:void(0);" class="btn btn-danger"><i
+                        <a id="catalogCategoryRemoveButton" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
                                     class="fa fa-trash"></i> {{ 'Catalog.Category.Remove'|trans }}</a>
                     </div>
                 </h4>
                 <div class="view-tools float-left">
-                    <a href="{{ path('paprec_catalog_category_index') }}" class="btn btn-default"><i
+                    <a href="{{ path('paprec_catalog_category_index') }}" class="btn btn-sm btn-default"><i
                                 class="fa fa-chevron-left"></i> {{ 'Catalog.Category.List'|trans }}</a>
                 </div>
             </div>
@@ -123,12 +123,12 @@
                                                 {{ productDICategory.productDI.name }}
                                                 <div class="float-right">
                                                     <a href="{{ path("paprec_catalog_productDI_view", {id: productDICategory.productDI.id}) }}"
-                                                       class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></a>
+                                                       class="btn btn-sm btn-sm btn-primary"><i class="fa fa-eye"></i></a>
                                                     <a href="{{ path("paprec_catalog_productDI_edit", {id: productDICategory.productDI.id}) }}"
-                                                       class="mx-1 btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                                       class="mx-1 btn btn-sm btn-sm btn-warning"><i class="fa fa-edit"></i></a>
                                                     <a href="javascript:void(0);"
                                                        onclick="removeProductDICategory({{ category.id }}, {{ productDICategory.id }})"
-                                                       class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                                       class="btn btn-sm btn-sm btn-danger"><i class="fa fa-trash"></i></a>
                                                 </div>
                                             </li>
                                         {% endfor %}
@@ -149,12 +149,12 @@
                                                 {{ productChantierCategory.productChantier.name }}
                                                 <div class="float-right">
                                                     <a href="{{ path("paprec_catalog_productChantier_view", {id: productChantierCategory.productChantier.id}) }}"
-                                                       class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></a>
+                                                       class="btn btn-sm btn-sm btn-primary"><i class="fa fa-eye"></i></a>
                                                     <a href="{{ path("paprec_catalog_productChantier_edit", {id: productChantierCategory.productChantier.id}) }}"
-                                                       class="mx-1 btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                                       class="mx-1 btn btn-sm btn-sm btn-warning"><i class="fa fa-edit"></i></a>
                                                     <a href="javascript:void(0);"
                                                        onclick="removeProductChantierCategory({{ category.id }}, {{ productChantierCategory.id }})"
-                                                       class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                                       class="btn btn-sm btn-sm btn-danger"><i class="fa fa-trash"></i></a>
                                                 </div>
                                             </li>
                                         {% endfor %}

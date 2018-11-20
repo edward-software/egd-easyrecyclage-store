@@ -36,14 +36,14 @@
                     <i class="fa fa-productDIOrder"></i> {{ 'Commercial.ProductDIOrder.View'|trans }}
                     <div class="float-right">
                         <a href="{{ path("paprec_commercial_productDIOrder_edit", {id: productDIOrder.id}) }}"
-                           class="btn btn-warning"><i
+                           class="btn btn-sm btn-warning"><i
                                     class="fa fa-edit"></i> {{ 'Commercial.ProductDIOrder.Edit'|trans }}</a>
-                        <a id="commmecialProductDIOrderRemoveButton_" href="javascript:void(0);" class="btn btn-danger"><i
+                        <a id="commmecialProductDIOrderRemoveButton_" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
                                     class="fa fa-trash"></i> {{ 'Commercial.ProductDIOrder.Remove'|trans }}</a>
                     </div>
                 </h4>
                 <div class="view-tools float-left">
-                    <a href="{{ path('paprec_commercial_productDIOrder_index') }}" class="btn btn-default"><i
+                    <a href="{{ path('paprec_commercial_productDIOrder_index') }}" class="btn btn-sm btn-default"><i
                                 class="fa fa-chevron-left"></i> {{ 'Commercial.ProductDIOrder.List'|trans }}</a>
                 </div>
             </div>
@@ -85,6 +85,12 @@
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.FirstName'|trans }}</label>
                                     <label class="col-form-label">
                                         {{ productDIOrder.firstName }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIOrder.Function'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productDIOrder.function }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
@@ -203,7 +209,7 @@
                                 {{ 'Commercial.ProductDIOrder.ProductsList'|trans }}
                                 <div class="float-right">
 
-                                    <a href="{{ path('paprec_commercial_productDIOrder_addLine', {id: productDIOrder.id}) }}" class="btn btn-outline-primary">
+                                    <a href="{{ path('paprec_commercial_productDIOrder_addLine', {id: productDIOrder.id}) }}" class="btn btn-sm btn-outline-primary">
                                         <i class="fa fa-plus"></i> {{ 'Commercial.ProductDIOrder.AddLine'|trans }}
                                     </a>
                                 </div>
@@ -236,12 +242,12 @@
                                         <td>{{ productDIOrderLine.totalAmount }}</td>
                                         <td class="text-center">
                                             <a href="{{ path('paprec_commercial_productDIOrder_editLine', {id: productDIOrder.id, orderLineId: productDIOrderLine.id}) }}"
-                                               class="btn btn-warning btn-sm mx-1"
+                                               class="btn btn-sm btn-warning btn-sm mx-1"
                                                data-id="{{ productDIOrderLine.id }}">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a href="#"
-                                               class="btn btn-danger btn-sm commercialProductDIOrderLineRemoveButton"
+                                               class="btn btn-sm btn-danger btn-sm commercialProductDIOrderLineRemoveButton"
                                                data-id="{{ productDIOrderLine.id }}">
                                                 <i class="fa fa-trash"></i>
                                             </a>

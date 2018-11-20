@@ -24,14 +24,14 @@
                     <i class="fa fa-folder"></i> {{ 'Catalog.ProductChantier.View'|trans }}
                     <div class="float-right">
                         <a href="{{ path("paprec_catalog_productChantier_edit", {id: productChantier.id}) }}"
-                           class="btn btn-warning"><i
+                           class="btn btn-sm btn-warning"><i
                                     class="fa fa-edit"></i> {{ 'Catalog.ProductChantier.Edit'|trans }}</a>
-                        <a id="catalogProductRemoveButton" href="javascript:void(0);" class="btn btn-danger"><i
+                        <a id="catalogProductRemoveButton" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
                                     class="fa fa-trash"></i> {{ 'Catalog.ProductChantier.Remove'|trans }}</a>
                     </div>
                 </h4>
                 <div class="view-tools float-left">
-                    <a href="{{ path('paprec_catalog_productChantier_index') }}" class="btn btn-default"><i
+                    <a href="{{ path('paprec_catalog_productChantier_index') }}" class="btn btn-sm btn-default"><i
                                 class="fa fa-chevron-left"></i> {{ 'Catalog.ProductChantier.List'|trans }}</a>
                 </div>
             </div>
@@ -135,7 +135,7 @@
                                                             <div class="card-header">
                                                                 <div class="float-left"> {{ 'Catalog.ProductChantier.Picto'|trans }}</div>
                                                                 <div class="dropdown float-right">
-                                                                    <button class="p-0 btn btn-light dropdown-toggle btn-sm"
+                                                                    <button class="p-0 btn btn-sm btn-light dropdown-toggle btn-sm"
                                                                             type="button" id="{{ picture.id }}"
                                                                             data-toggle="dropdown" aria-haspopup="true"
                                                                             aria-expanded="false">
@@ -170,7 +170,7 @@
                                                     Card d'ajout d'une nouvelle photo Picto
                                                 #}
                                                 <div class="card card-sec bg-transparent border-0">
-                                                    <button class="card-img-top btn btn-light h-100 bg-transparent border-0"
+                                                    <button class="card-img-top btn btn-sm btn-light h-100 bg-transparent border-0"
                                                             data-target="#uploadPictureModal" data-toggle="modal"
                                                             data-type="Picto"
                                                             id="openModalUploadPicture">
@@ -197,7 +197,7 @@
                                                             <div class="card-header">
                                                                 <div class="float-left"> {{ 'Catalog.ProductChantier.PilotPicture'|trans }}</div>
                                                                 <div class="dropdown float-right">
-                                                                    <button class="p-0 btn btn-light dropdown-toggle btn-sm"
+                                                                    <button class="p-0 btn btn-sm btn-light dropdown-toggle btn-sm"
                                                                             type="button" id="{{ picture.id }}"
                                                                             data-toggle="dropdown" aria-haspopup="true"
                                                                             aria-expanded="false">
@@ -236,7 +236,7 @@
                                                     Card d'ajout d'une nouvelle photo PilotPicture
                                                 #}
                                                 <div class="card card-sec bg-transparent border-0">
-                                                    <button class="card-img-top btn btn-light h-100 bg-transparent border-0"
+                                                    <button class="card-img-top btn btn-sm btn-light h-100 bg-transparent border-0"
                                                             data-target="#uploadPictureModal" data-toggle="modal"
                                                             data-type="PilotPicture"
                                                             id="openModalUploadPicture">
@@ -263,7 +263,7 @@
                                                             <div class="card-header">
                                                                 <div class="float-left"> {{ 'Catalog.ProductChantier.Pictures'|trans }}</div>
                                                                 <div class="dropdown float-right">
-                                                                    <button class="p-0 btn btn-light dropdown-toggle btn-sm"
+                                                                    <button class="p-0 btn btn-sm btn-light dropdown-toggle btn-sm"
                                                                             type="button" id="{{ picture.id }}"
                                                                             data-toggle="dropdown" aria-haspopup="true"
                                                                             aria-expanded="false">
@@ -302,7 +302,7 @@
                                                     Card d'ajout d'une nouvelle photo Picture
                                                 #}
                                                 <div class="card card-sec bg-transparent border-0">
-                                                    <button class="card-img-top btn btn-light h-100 bg-transparent border-0"
+                                                    <button class="card-img-top btn btn-sm btn-light h-100 bg-transparent border-0"
                                                             data-target="#uploadPictureModal" data-toggle="modal"
                                                             data-type="Picture"
                                                             id="openModalUploadPicture">
@@ -343,7 +343,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
+                                                <button type="button" class="btn btn-sm btn-secondary"
                                                         data-dismiss="modal">
                                                     {{ 'General.Cancel'|trans }}
                                                 </button>
@@ -381,7 +381,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
+                                                <button type="button" class="btn btn-sm btn-secondary"
                                                         data-dismiss="modal">
                                                     {{ 'General.Cancel'|trans }}
                                                 </button>
@@ -405,7 +405,7 @@
                                 <div class="float-right">
 
                                     <a href="{{ path('paprec_catalog_productChantier_addCategory', {id: productChantier.id}) }}"
-                                       class="btn btn-outline-primary">
+                                       class="btn btn-sm btn-outline-primary">
                                         <i class="fa fa-plus"></i> {{ 'Catalog.ProductChantier.AddCategory'|trans }}
                                     </a>
                                 </div>
@@ -431,12 +431,12 @@
                                         <td>{{ productChantierCategory.unitPrice }}</td>
                                         <td class="text-center">
                                             <a href="{{ path('paprec_catalog_productChantier_editCategory', {id: productChantier.id, productChantierCategoryId: productChantierCategory.id}) }}"
-                                               class="btn btn-warning btn-sm mx-1"
+                                               class="btn btn-sm btn-warning btn-sm mx-1"
                                                data-id="{{ productChantierCategory.id }}">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a href="#"
-                                               class="btn btn-danger btn-sm catalogProductChantierCategoryRemoveButton"
+                                               class="btn btn-sm btn-danger btn-sm catalogProductChantierCategoryRemoveButton"
                                                data-id="{{ productChantierCategory.id }}">
                                                 <i class="fa fa-trash"></i>
                                             </a>

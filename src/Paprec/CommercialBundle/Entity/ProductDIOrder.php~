@@ -78,6 +78,13 @@ class ProductDIOrder
      */
     private $firstName;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="function", type="string", length=255)
+     */
+    private $function;
+
 
     /**
      * @var string
@@ -200,6 +207,7 @@ class ProductDIOrder
     /**
      * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\BusinessLine", inversedBy="productDIOrders")
      * @ORM\JoinColumn(name="businessLineId", referencedColumnName="id", nullable=true)
+     * @Assert\NotBlank()
      */
     private $businessLine;
 
