@@ -1,31 +1,31 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-    {{ 'Commercial.ProductDIOrder.Add'|trans }}
+    {{ 'Commercial.ProductDIQuote.Add'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'Commercial.ProductDIOrder.ProductDIOrders'|trans }}
+    {{ 'Commercial.ProductDIQuote.ProductDIQuotes'|trans }}
 {% endblock %}
 
 {% block main_content %}
 
-    <form id="catalogProductDIOrderForm" action="" method="post" enctype="multipart/form-data">
+    <form id="catalogProductDIQuoteForm" action="" method="post" enctype="multipart/form-data">
 
         <div class="col-md-12">
             <!-- BOX -->
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductDIOrder.Add'|trans }}
+                        <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductDIQuote.Add'|trans }}
                         <div class="float-right">
                             <a href="javascript:void(0);" class="btn btn-sm btn-success catalog-grilleTarifD3E-save-button"><i
-                                        class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductDIOrder.Save'|trans }}</a>
+                                        class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductDIQuote.Save'|trans }}</a>
                             <a href="javascript:void(0);" class="btn btn-sm btn-danger catalog-grilleTarifD3E-cancel-button"><i
-                                        class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductDIOrder.Cancel'|trans }}</a>
+                                        class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductDIQuote.Cancel'|trans }}</a>
                         </div>
                     </h4>
                 </div>
@@ -33,11 +33,11 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">{{ 'Commercial.ProductDIOrder.Informations'|trans }}</h5>
+                                <h5 class="card-title">{{ 'Commercial.ProductDIQuote.Informations'|trans }}</h5>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductDIOrderLine.Quantity'|trans }}</label>
+                                    <label class="form-label">{{ 'Commercial.ProductDIQuoteLine.Quantity'|trans }}</label>
                                     <div class="form-content">
                                         {{ form_widget(form.quantity, {'attr': {'class': 'form-control'}}) }}
                                         {{ form_errors(form.quantity) }}
@@ -51,9 +51,9 @@
                 <div class="card-footer">
                     <div class="float-right">
                         <a href="javascript:void(0);" class="btn btn-sm btn-success catalog-grilleTarifD3E-save-button"><i
-                                    class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductDIOrder.Save'|trans }}</a>
+                                    class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductDIQuote.Save'|trans }}</a>
                         <a href="javascript:void(0);" class="btn btn-sm btn-danger catalog-grilleTarifD3E-cancel-button"><i
-                                    class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductDIOrder.Cancel'|trans }}</a>
+                                    class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductDIQuote.Cancel'|trans }}</a>
                     </div>
                 </div>
             </div>
@@ -72,15 +72,15 @@
         $(function () {
 
             $('.catalog-grilleTarifD3E-save-button').on('click', function () {
-                $('#catalogProductDIOrderForm').submit();
+                $('#catalogProductDIQuoteForm').submit();
             });
 
 
             $('.catalog-grilleTarifD3E-cancel-button').on('click', function () {
 
-                var url = "{{ path("paprec_catalog_productDI_view", { id: productDIOrder.id }) }}";
+                var url = "{{ path("paprec_catalog_productDI_view", { id: productDIQuote.id }) }}";
 
-                bootbox.confirm("{{ 'Commercial.ProductDIOrder.Confirm-cancel'|trans }}", function (result) {
+                bootbox.confirm("{{ 'Commercial.ProductDIQuote.Confirm-cancel'|trans }}", function (result) {
                     if (result === true) {
                         $(location).attr('href', url);
                     }

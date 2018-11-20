@@ -25,11 +25,11 @@ class QuoteRequestEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('orderStatus', ChoiceType::class, array(
+            ->add('quoteStatus', ChoiceType::class, array(
                 "choices" => $options['status'],
             ))
             ->add('generatedTurnover', TextType::class)
-            ->add('associatedOrder', FileType::class, array(
+            ->add('associatedQuote', FileType::class, array(
                 'multiple' => false,
                 'data_class' => null
             ))
@@ -79,7 +79,7 @@ class QuoteRequestEditType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'paprec_commercialbundle_productdiorder';
+        return 'paprec_commercialbundle_productdiquote';
     }
 
 

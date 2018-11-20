@@ -48,8 +48,8 @@ Commercial:
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
     Confirm-remove:             Etes-vous sûr de vouloir supprimer ce secteur d'activité ?
 
-  ProductDIOrder:
-    ProductDIOrders:            Devis DI
+  ProductDIQuote:
+    ProductDIQuotes:            Devis DI
     List:                       Liste des devis DI
     Date-creation:              Date de création
     Date-crea:                  Date de créa.
@@ -68,7 +68,7 @@ Commercial:
     City:                       Ville
     Phone:                      Téléphone
     PhonePlaceholder:           Numéro de téléphone
-    OrderStatus:                Statut
+    QuoteStatus:                Statut
     TotalAmount:                Montant total
     GeneratedTurnover:          CA généré
     Agency:                     Agence associée
@@ -93,7 +93,7 @@ Commercial:
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
     Confirm-remove:             Etes-vous sûr de vouloir supprimer ce devis DI ?
 
-  ProductDIOrderLine:
+  ProductDIQuoteLine:
     ProductName:                Produit
     CategoryName:               Catégorie
     UnitPrice:                  Prix unitaire
@@ -126,10 +126,10 @@ Commercial:
     Need:                       Le besoin
     NeedPlaceholder:            Votre besoin
     Division:                   Division
-    OrderStatus:                Statut
+    QuoteStatus:                Statut
     TotalAmount:                Montant total
     GeneratedTurnover:          CA généré
-    AssociatedOrder:            Devis associé
+    AssociatedQuote:            Devis associé
     Agency:                     Agence associée
     Summary:                    Résumé du besoin
     Frequency:                  Ponctuel / Régulier

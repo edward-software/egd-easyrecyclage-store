@@ -2,17 +2,18 @@
 
 namespace Paprec\CommercialBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * QuoteRequest
+ * ProductDIQuote
  *
- * @ORM\Table(name="quoteRequests")
- * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\QuoteRequestRepository")
+ * @ORM\Table(name="productDIQuotes")
+ * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\ProductDIQuoteRepository")
  */
-class QuoteRequest
+class ProductDIQuote
 {
     /**
      * @var int
@@ -77,16 +78,47 @@ class QuoteRequest
      */
     private $firstName;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="function", type="string", length=255)
+     */
+    private $function;
+
 
     /**
      * @var string
      * @ORM\Column(name="email", type="string", length=255)
      * @Assert\Email(
-     *      message = "The email '{{ value }}' is not a valid email.",
+     *      message = "Le format de l'email est invalide",
      *      checkMX = true
      * )
      */
     private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="text")
+     * @Assert\NotBlank()
+     */
+    private $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="postalCode", type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $postalCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $city;
 
     /**
      * @var string
@@ -99,33 +131,17 @@ class QuoteRequest
     /**
      * @var string
      *
-     * @ORM\Column(name="function", type="string", length=255, nullable=true)
-     */
-    private $function;
-    
-    /**
-     * @var string
-     *
      * @ORM\Column(name="quoteStatus", type="string", length=255)
      */
     private $quoteStatus;
 
-    /**
-     * "Mon besoin" rempli par l'utilisateur Front Office
-     * @var string
-     *
-     * @ORM\Column(name="need", type="text")
-     * @Assert\NotBlank()
-     */
-    private $need;
 
     /**
-     * @var array
+     * @var float
      *
-     * @ORM\Column(name="attachedFiles", type="array", nullable=true)
+     * @ORM\Column(name="totalAmount", type="float", nullable=true)
      */
-    private $attachedFiles;
-
+    private $totalAmount;
 
     /**
      * @var float
@@ -135,30 +151,6 @@ class QuoteRequest
     private $generatedTurnover;
 
     /**
-     * @var array|null
-     *
-     * @ORM\Column(name="division", type="string")
-     */
-    private $division;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="postalCode", type="string", length=255)
-     */
-    private $postalCode;
-
-    /**
-     * Devis associé
-     * @var string
-     *
-     * @ORM\Column(name="associatedQuote", type="string", length=255, nullable=true)
-     * @Assert\File(mimeTypes={ "application/pdf" })
-     */
-    private $associatedQuote;
-
-    /**
-     * Résumé du besoin rempli par le commercial
      * @var string
      *
      * @ORM\Column(name="summary", type="text", nullable=true)
@@ -191,29 +183,43 @@ class QuoteRequest
      *
      *  RELATIONS
      *
-    ########################### */
+     ########################### */
+
+
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\UserBundle\Entity\User", inversedBy="quoteRequests", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuoteLine", mappedBy="productDIQuote", cascade={"all"})
+     */
+    private $productDIQuoteLines;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Paprec\UserBundle\Entity\User", inversedBy="productDIQuotes", cascade={"all"})
      * @ORM\JoinColumn(name="userInChargeId", referencedColumnName="id", nullable=true)
      */
     private $userInCharge;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agency", inversedBy="quoteRequests")
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agency", inversedBy="productDIQuotes")
      * @ORM\JoinColumn(name="agencyId", referencedColumnName="id", nullable=true)
      */
     private $agency;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\BusinessLine", inversedBy="productDIQuotes")
+     * @ORM\JoinColumn(name="businessLineId", referencedColumnName="id", nullable=true)
+     * @Assert\NotBlank()
+     */
+    private $businessLine;
 
     /**
-     * QuoteRequest constructor.
+     * ProductDIQuote constructor.
      */
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
-        $this->attachedFiles = array();
+        $this->productDIQuoteLines = new ArrayCollection();
     }
+
 
     /**
      * Get id.
@@ -230,7 +236,7 @@ class QuoteRequest
      *
      * @param \DateTime $dateCreation
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setDateCreation($dateCreation)
     {
@@ -254,7 +260,7 @@ class QuoteRequest
      *
      * @param \DateTime|null $dateUpdate
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setDateUpdate($dateUpdate = null)
     {
@@ -278,7 +284,7 @@ class QuoteRequest
      *
      * @param \DateTime|null $deleted
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setDeleted($deleted = null)
     {
@@ -302,7 +308,7 @@ class QuoteRequest
      *
      * @param string $businessName
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setBusinessName($businessName)
     {
@@ -326,7 +332,7 @@ class QuoteRequest
      *
      * @param string $civility
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setCivility($civility)
     {
@@ -350,7 +356,7 @@ class QuoteRequest
      *
      * @param string $lastName
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setLastName($lastName)
     {
@@ -374,7 +380,7 @@ class QuoteRequest
      *
      * @param string $firstName
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setFirstName($firstName)
     {
@@ -398,7 +404,7 @@ class QuoteRequest
      *
      * @param string $email
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setEmail($email)
     {
@@ -418,147 +424,27 @@ class QuoteRequest
     }
 
     /**
-     * Set phone.
+     * Set address.
      *
-     * @param string $phone
+     * @param string $address
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
-    public function setPhone($phone)
+    public function setAddress($address)
     {
-        $this->phone = $phone;
+        $this->address = $address;
 
         return $this;
     }
 
     /**
-     * Get phone.
+     * Get address.
      *
      * @return string
      */
-    public function getPhone()
+    public function getAddress()
     {
-        return $this->phone;
-    }
-
-    /**
-     * Set quoteStatus.
-     *
-     * @param string $quoteStatus
-     *
-     * @return QuoteRequest
-     */
-    public function setQuoteStatus($quoteStatus)
-    {
-        $this->quoteStatus = $quoteStatus;
-
-        return $this;
-    }
-
-    /**
-     * Get quoteStatus.
-     *
-     * @return string
-     */
-    public function getQuoteStatus()
-    {
-        return $this->quoteStatus;
-    }
-
-    /**
-     * Set need.
-     *
-     * @param string $need
-     *
-     * @return QuoteRequest
-     */
-    public function setNeed($need)
-    {
-        $this->need = $need;
-
-        return $this;
-    }
-
-    /**
-     * Get need.
-     *
-     * @return string
-     */
-    public function getNeed()
-    {
-        return $this->need;
-    }
-
-    /**
-     * Set attachedFiles.
-     *
-     * @param array|null $attachedFiles
-     *
-     * @return QuoteRequest
-     */
-    public function setAttachedFiles($attachedFiles = null)
-    {
-        $this->attachedFiles = $attachedFiles;
-
-        return $this;
-    }
-
-    /**
-     * Get attachedFiles.
-     *
-     * @return array|null
-     */
-    public function getAttachedFiles()
-    {
-        return $this->attachedFiles;
-    }
-
-    /**
-     * Set generatedTurnover.
-     *
-     * @param float|null $generatedTurnover
-     *
-     * @return QuoteRequest
-     */
-    public function setGeneratedTurnover($generatedTurnover = null)
-    {
-        $this->generatedTurnover = $generatedTurnover;
-
-        return $this;
-    }
-
-    /**
-     * Get generatedTurnover.
-     *
-     * @return float|null
-     */
-    public function getGeneratedTurnover()
-    {
-        return $this->generatedTurnover;
-    }
-
-    /**
-     * Set division.
-     *
-     * @param string|null $division
-     *
-     * @return QuoteRequest
-     */
-    public function setDivision($division = null)
-    {
-        $this->division = $division;
-
-        return $this;
-    }
-
-    /**
-     * Get division.
-     *
-     * @return string|null
-     */
-    public function getDivision()
-    {
-        return $this->division;
+        return $this->address;
     }
 
     /**
@@ -566,7 +452,7 @@ class QuoteRequest
      *
      * @param string $postalCode
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setPostalCode($postalCode)
     {
@@ -586,27 +472,101 @@ class QuoteRequest
     }
 
     /**
-     * Set associatedQuote.
+     * Set city.
      *
-     * @param string|null $associatedQuote
+     * @param string $city
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
-    public function setAssociatedQuote($associatedQuote = null)
+    public function setCity($city)
     {
-        $this->associatedQuote = $associatedQuote;
+        $this->city = $city;
 
         return $this;
     }
 
     /**
-     * Get associatedQuote.
+     * Get city.
      *
-     * @return string|null
+     * @return string
      */
-    public function getAssociatedQuote()
+    public function getCity()
     {
-        return $this->associatedQuote;
+        return $this->city;
+    }
+
+    /**
+     * Set phone.
+     *
+     * @param string $phone
+     *
+     * @return ProductDIQuote
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone.
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+
+
+    /**
+     * Set totalAmount.
+     *
+     * @param float $totalAmount
+     *
+     * @return ProductDIQuote
+     */
+    public function setTotalAmount($totalAmount)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return float
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
+    }
+
+    /**
+     * Set generatedTurnover.
+     *
+     * @param float|null $generatedTurnover
+     *
+     * @return ProductDIQuote
+     */
+    public function setGeneratedTurnover($generatedTurnover = null)
+    {
+        $this->generatedTurnover = $generatedTurnover;
+
+        return $this;
+    }
+
+    /**
+     * Get generatedTurnover.
+     *
+     * @return float|null
+     */
+    public function getGeneratedTurnover()
+    {
+        return $this->generatedTurnover;
     }
 
     /**
@@ -614,7 +574,7 @@ class QuoteRequest
      *
      * @param string|null $summary
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setSummary($summary = null)
     {
@@ -638,7 +598,7 @@ class QuoteRequest
      *
      * @param string|null $frequency
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setFrequency($frequency = null)
     {
@@ -662,7 +622,7 @@ class QuoteRequest
      *
      * @param float|null $tonnage
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setTonnage($tonnage = null)
     {
@@ -686,7 +646,7 @@ class QuoteRequest
      *
      * @param int|null $kookaburaNumber
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setKookaburaNumber($kookaburaNumber = null)
     {
@@ -706,11 +666,47 @@ class QuoteRequest
     }
 
     /**
+     * Add productDIQuoteLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine
+     *
+     * @return ProductDIQuote
+     */
+    public function addProductDIQuoteLine(\Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine)
+    {
+        $this->productDIQuoteLines[] = $productDIQuoteLine;
+
+        return $this;
+    }
+
+    /**
+     * Remove productDIQuoteLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductDIQuoteLine(\Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine)
+    {
+        return $this->productDIQuoteLines->removeElement($productDIQuoteLine);
+    }
+
+    /**
+     * Get productDIQuoteLines.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductDIQuoteLines()
+    {
+        return $this->productDIQuoteLines;
+    }
+
+    /**
      * Set userInCharge.
      *
      * @param \Paprec\UserBundle\Entity\User|null $userInCharge
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setUserInCharge(\Paprec\UserBundle\Entity\User $userInCharge = null)
     {
@@ -734,7 +730,7 @@ class QuoteRequest
      *
      * @param \Paprec\CommercialBundle\Entity\Agency|null $agency
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setAgency(\Paprec\CommercialBundle\Entity\Agency $agency = null)
     {
@@ -754,11 +750,59 @@ class QuoteRequest
     }
 
     /**
+     * Set businessLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\BusinessLine|null $businessLine
+     *
+     * @return ProductDIQuote
+     */
+    public function setBusinessLine(\Paprec\CommercialBundle\Entity\BusinessLine $businessLine = null)
+    {
+        $this->businessLine = $businessLine;
+
+        return $this;
+    }
+
+    /**
+     * Get businessLine.
+     *
+     * @return \Paprec\CommercialBundle\Entity\BusinessLine|null
+     */
+    public function getBusinessLine()
+    {
+        return $this->businessLine;
+    }
+
+    /**
+     * Set quoteStatus.
+     *
+     * @param string $quoteStatus
+     *
+     * @return ProductDIQuote
+     */
+    public function setQuoteStatus($quoteStatus)
+    {
+        $this->quoteStatus = $quoteStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get quoteStatus.
+     *
+     * @return string
+     */
+    public function getQuoteStatus()
+    {
+        return $this->quoteStatus;
+    }
+
+    /**
      * Set function.
      *
      * @param string $function
      *
-     * @return QuoteRequest
+     * @return ProductDIQuote
      */
     public function setFunction($function)
     {

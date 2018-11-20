@@ -11,7 +11,7 @@ namespace Paprec\CatalogBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
-use \Exception;
+use Exception;
 use Paprec\CatalogBundle\Entity\ProductDI;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

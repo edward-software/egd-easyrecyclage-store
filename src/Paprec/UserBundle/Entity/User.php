@@ -41,8 +41,8 @@ class User extends BaseUser
 
 
     /**
-     *  @var string
-     *  @Assert\Email(
+     * @var string
+     * @Assert\Email(
      *      message = "The email '{{ value }}' is not a valid email.",
      *      checkMX = true
      * )
@@ -103,10 +103,11 @@ class User extends BaseUser
      *              Relations
      * #################################
      */
+
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrder", mappedBy="userInCharge")
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuote", mappedBy="userInCharge")
      */
-    private $productDIOrders;
+    private $productDIQuotes;
 
     /**
      * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\QuoteRequest", mappedBy="userInCharge")
@@ -118,7 +119,7 @@ class User extends BaseUser
         parent::__construct();
 
         $this->dateCreation = new \DateTime();
-        $this->productDIOrders = new ArrayCollection();
+        $this->productDIQuotes = new ArrayCollection();
     }
 
 
@@ -301,39 +302,39 @@ class User extends BaseUser
     }
 
     /**
-     * Add productDIOrder.
+     * Add productDIQuote.
      *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder
+     * @param \Paprec\CommercialBundle\Entity\productDIQuote $productDIQuote
      *
      * @return User
      */
-    public function addProductDIOrder(\Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder)
+    public function addProductDIQuote(\Paprec\CommercialBundle\Entity\productDIQuote $productDIQuote)
     {
-        $this->productDIOrders[] = $productDIOrder;
+        $this->productDIQuotes[] = $productDIQuote;
 
         return $this;
     }
 
     /**
-     * Remove productDIOrder.
+     * Remove productDIQuote.
      *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder
+     * @param \Paprec\CommercialBundle\Entity\productDIQuote $productDIQuote
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeProductDIOrder(\Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder)
+    public function removeProductDIQuote(\Paprec\CommercialBundle\Entity\productDIQuote $productDIQuote)
     {
-        return $this->productDIOrders->removeElement($productDIOrder);
+        return $this->productDIQuotes->removeElement($productDIQuote);
     }
 
     /**
-     * Get productDIOrders.
+     * Get productDIQuotes.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getProductDIOrders()
+    public function getProductDIQuotes()
     {
-        return $this->productDIOrders;
+        return $this->productDIQuotes;
     }
 
     /**

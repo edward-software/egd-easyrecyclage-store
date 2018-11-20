@@ -7,12 +7,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * ProductDIOrderLine
+ * ProductDIQuoteLine
  *
- * @ORM\Table(name="productDIOrderLines")
- * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\ProductDIOrderLineRepository")
+ * @ORM\Table(name="productDIQuoteLines")
+ * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\ProductDIQuoteLineRepository")
  */
-class ProductDIOrderLine
+class ProductDIQuoteLine
 {
     /**
      * @var int
@@ -88,27 +88,27 @@ class ProductDIOrderLine
      */
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\ProductDI", inversedBy="productDIOrderLines")
+     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\ProductDI", inversedBy="productDIQuoteLines")
      * @ORM\JoinColumn(name="productId", referencedColumnName="id", nullable=false)
      */
     private $productDI;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\Category", inversedBy="productDIOrderLines")
+     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\Category", inversedBy="productDIQuoteLines")
      * @ORM\JoinColumn(name="categoryId", referencedColumnName="id", nullable=false)
      */
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrder", inversedBy="productDIOrderLines")
-     * @ORM\JoinColumn(name="productDIOrderId", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuote", inversedBy="productDIQuoteLines")
+     * @ORM\JoinColumn(name="productDIQuoteId", referencedColumnName="id", nullable=false)
      */
-    private $productDIOrder;
+    private $productDIQuote;
 
 
     /**
-     * ProductDIOrderLine constructor.
+     * ProductDIQuoteLine constructor.
      */
     public function __construct()
     {
@@ -131,7 +131,7 @@ class ProductDIOrderLine
      *
      * @param \DateTime $dateCreation
      *
-     * @return ProductDIOrderLine
+     * @return ProductDIQuoteLine
      */
     public function setDateCreation($dateCreation)
     {
@@ -155,7 +155,7 @@ class ProductDIOrderLine
      *
      * @param \DateTime|null $dateUpdate
      *
-     * @return ProductDIOrderLine
+     * @return ProductDIQuoteLine
      */
     public function setDateUpdate($dateUpdate = null)
     {
@@ -179,7 +179,7 @@ class ProductDIOrderLine
      *
      * @param \DateTime|null $deleted
      *
-     * @return ProductDIOrderLine
+     * @return ProductDIQuoteLine
      */
     public function setDeleted($deleted = null)
     {
@@ -203,7 +203,7 @@ class ProductDIOrderLine
      *
      * @param string $productName
      *
-     * @return ProductDIOrderLine
+     * @return ProductDIQuoteLine
      */
     public function setProductName($productName)
     {
@@ -227,7 +227,7 @@ class ProductDIOrderLine
      *
      * @param float $unitPrice
      *
-     * @return ProductDIOrderLine
+     * @return ProductDIQuoteLine
      */
     public function setUnitPrice($unitPrice)
     {
@@ -251,7 +251,7 @@ class ProductDIOrderLine
      *
      * @param int $quantity
      *
-     * @return ProductDIOrderLine
+     * @return ProductDIQuoteLine
      */
     public function setQuantity($quantity)
     {
@@ -275,7 +275,7 @@ class ProductDIOrderLine
      *
      * @param \Paprec\CatalogBundle\Entity\ProductDI $productDI
      *
-     * @return ProductDIOrderLine
+     * @return ProductDIQuoteLine
      */
     public function setProductDI(\Paprec\CatalogBundle\Entity\ProductDI $productDI)
     {
@@ -295,27 +295,27 @@ class ProductDIOrderLine
     }
 
     /**
-     * Set productDIOrder.
+     * Set productDIQuote.
      *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote
      *
-     * @return ProductDIOrderLine
+     * @return ProductDIQuoteLine
      */
-    public function setProductDIOrder(\Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder)
+    public function setProductDIQuote(\Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote)
     {
-        $this->productDIOrder = $productDIOrder;
+        $this->productDIQuote = $productDIQuote;
 
         return $this;
     }
 
     /**
-     * Get productDIOrder.
+     * Get productDIQuote.
      *
-     * @return \Paprec\CommercialBundle\Entity\ProductDIOrder
+     * @return \Paprec\CommercialBundle\Entity\ProductDIQuote
      */
-    public function getProductDIOrder()
+    public function getProductDIQuote()
     {
-        return $this->productDIOrder;
+        return $this->productDIQuote;
     }
 
     /**
@@ -323,7 +323,7 @@ class ProductDIOrderLine
      *
      * @param float $totalAmount
      *
-     * @return ProductDIOrderLine
+     * @return ProductDIQuoteLine
      */
     public function setTotalAmount($totalAmount)
     {
@@ -347,7 +347,7 @@ class ProductDIOrderLine
      *
      * @param \Paprec\CatalogBundle\Entity\Category $category
      *
-     * @return ProductDIOrderLine
+     * @return ProductDIQuoteLine
      */
     public function setCategory(\Paprec\CatalogBundle\Entity\Category $category)
     {
@@ -371,7 +371,7 @@ class ProductDIOrderLine
      *
      * @param string $categoryName
      *
-     * @return ProductDIOrderLine
+     * @return ProductDIQuoteLine
      */
     public function setCategoryName($categoryName)
     {

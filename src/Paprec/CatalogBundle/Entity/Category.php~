@@ -103,9 +103,9 @@ class Category
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrderLine", mappedBy="category", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuoteLine", mappedBy="category", cascade={"all"})
      */
-    private $productDIOrderLines;
+    private $productDIQuoteLines;
 
 
     public function __construct()
@@ -469,5 +469,41 @@ class Category
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * Add productDIQuoteLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine
+     *
+     * @return Category
+     */
+    public function addProductDIQuoteLine(\Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine)
+    {
+        $this->productDIQuoteLines[] = $productDIQuoteLine;
+
+        return $this;
+    }
+
+    /**
+     * Remove productDIQuoteLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductDIQuoteLine(\Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine)
+    {
+        return $this->productDIQuoteLines->removeElement($productDIQuoteLine);
+    }
+
+    /**
+     * Get productDIQuoteLines.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductDIQuoteLines()
+    {
+        return $this->productDIQuoteLines;
     }
 }

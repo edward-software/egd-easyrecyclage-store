@@ -93,7 +93,7 @@
                         <div class="step__title">Je suis</div>
                     </div>
                     <div class="step__right step__right--small">
-                        {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductDIOrder.BusinessName'|trans}}) }}
+                        {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductDIQuote.BusinessName'|trans}}) }}
                         {{ form_errors(form.businessName) }}
 
                         {{ form_widget(form.civility, {'attr': {'class': 'input--radio'}}) }}
@@ -124,7 +124,7 @@
                         <div class="step__title">Mon besoin</div>
                     </div>
                     <div class="step__right step__right--small">
-                        {{ form_widget(form.need, {'attr': {'class': 'input input--full input--bordered', 'placeholder': 'Commercial.QuoteRequest.NeedPlaceholder'|trans}}) }}
+                        {{ form_widget(form.need, {'attr': {'class': 'input input--full input--bquoteed', 'placeholder': 'Commercial.QuoteRequest.NeedPlaceholder'|trans}}) }}
                         {{ form_errors(form.need) }}
                     </div>
                     <div class="clearfix"></div>
@@ -136,10 +136,10 @@
                     </div>
                     {#{{ form_widget(form.attachedFiles, {'attr': {'class': 'input-file', 'placeholder': 'Commercial.QuoteRequest.NeedPlaceholder'|trans}}) }}#}
                     {#{{ form_errors(form.attachedFiles) }}#}
-                    {{ form_label(form.attachedFiles, "TÉLÉCHARGER DES PIÈCES JOINTES OU DES PHOTOS", {'label_attr': {'class': 'button button--bordered'}}) }}
+                    {{ form_label(form.attachedFiles, "TÉLÉCHARGER DES PIÈCES JOINTES OU DES PHOTOS", {'label_attr': {'class': 'button button--bquoteed'}}) }}
                     {{ form_widget(form.attachedFiles, {'attr': {'class': 'input-file'}}) }}
 
-                    {#<label for="file" class="button button--bordered">TÉLÉCHARGER DES PIÈCES JOINTES OU DES PHOTOS</label>#}
+                    {#<label for="file" class="button button--bquoteed">TÉLÉCHARGER DES PIÈCES JOINTES OU DES PHOTOS</label>#}
                     {#<input type="file" id="file" class="input-file" multiple>#}
                     <div class="clearfix"></div>
 

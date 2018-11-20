@@ -103,9 +103,9 @@ class Category
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrderLine", mappedBy="category", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuoteLine", mappedBy="category", cascade={"all"})
      */
-    private $productDIOrderLines;
+    private $productDIQuoteLines;
 
 
     public function __construct()
@@ -472,38 +472,38 @@ class Category
     }
 
     /**
-     * Add productDIOrderLine.
+     * Add productDIQuoteLine.
      *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine
      *
      * @return Category
      */
-    public function addProductDIOrderLine(\Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine)
+    public function addProductDIQuoteLine(\Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine)
     {
-        $this->productDIOrderLines[] = $productDIOrderLine;
+        $this->productDIQuoteLines[] = $productDIQuoteLine;
 
         return $this;
     }
 
     /**
-     * Remove productDIOrderLine.
+     * Remove productDIQuoteLine.
      *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeProductDIOrderLine(\Paprec\CommercialBundle\Entity\ProductDIOrderLine $productDIOrderLine)
+    public function removeProductDIQuoteLine(\Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine)
     {
-        return $this->productDIOrderLines->removeElement($productDIOrderLine);
+        return $this->productDIQuoteLines->removeElement($productDIQuoteLine);
     }
 
     /**
-     * Get productDIOrderLines.
+     * Get productDIQuoteLines.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getProductDIOrderLines()
+    public function getProductDIQuoteLines()
     {
-        return $this->productDIOrderLines;
+        return $this->productDIQuoteLines;
     }
 }

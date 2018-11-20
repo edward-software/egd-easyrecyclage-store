@@ -94,7 +94,7 @@ class HomeController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $quoteRequest = $form->getData();
-            $quoteRequest->setOrderStatus('Créé');
+            $quoteRequest->setQuoteStatus('Créé');
             $quoteRequest->setFrequency($cart->getFrequency());
             $quoteRequest->setDivision($cart->getDivision());
             $quoteRequest->setPostalCode(substr($cart->getLocation(), 0, 5));
@@ -108,7 +108,7 @@ class HomeController extends Controller
                      */
                     $uploadedFileName = md5(uniqid()) . '.' . $uploadedFile->guessExtension();
 
-                    $uploadedFile->move($this->getParameter('paprec_commercial.order_request.files_path'), $uploadedFileName);
+                    $uploadedFile->move($this->getParameter('paprec_commercial.quote_request.files_path'), $uploadedFileName);
                     $files[] = $uploadedFileName;
                 }
             }

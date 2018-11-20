@@ -128,9 +128,9 @@ class Agency
     private $grilleTarifLigneD3Es;
 
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrder", mappedBy="agency")
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuote", mappedBy="agency")
      */
-    private $productDIOrders;
+    private $productDIQuotes;
 
     /**
      * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\QuoteRequest", mappedBy="agency")
@@ -142,7 +142,7 @@ class Agency
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
-        $this->productDIOrders = new ArrayCollection();
+        $this->productDIQuotes = new ArrayCollection();
     }
 
     public function __toString()
@@ -485,39 +485,39 @@ class Agency
     }
 
     /**
-     * Add productDIOrder.
+     * Add productDIQuote.
      *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote
      *
      * @return Agency
      */
-    public function addProductDIOrder(\Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder)
+    public function addProductDIQuote(\Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote)
     {
-        $this->productDIOrders[] = $productDIOrder;
+        $this->productDIQuotes[] = $productDIQuote;
 
         return $this;
     }
 
     /**
-     * Remove productDIOrder.
+     * Remove productDIQuote.
      *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeProductDIOrder(\Paprec\CommercialBundle\Entity\ProductDIOrder $productDIOrder)
+    public function removeProductDIQuote(\Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote)
     {
-        return $this->productDIOrders->removeElement($productDIOrder);
+        return $this->productDIQuotes->removeElement($productDIQuote);
     }
 
     /**
-     * Get productDIOrders.
+     * Get productDIQuotes.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getProductDIOrders()
+    public function getProductDIQuotes()
     {
-        return $this->productDIOrders;
+        return $this->productDIQuotes;
     }
 
     /**

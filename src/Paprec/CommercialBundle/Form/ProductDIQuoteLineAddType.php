@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductDIOrderLineAddType extends AbstractType
+class ProductDIQuoteLineAddType extends AbstractType
 {
 
     private $selectedProductId;
@@ -63,7 +63,7 @@ class ProductDIOrderLineAddType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\ProductDIOrderLine',
+            'data_class' => 'Paprec\CommercialBundle\Entity\ProductDIQuoteLine',
             'selectedProductId' => null
         ));
     }

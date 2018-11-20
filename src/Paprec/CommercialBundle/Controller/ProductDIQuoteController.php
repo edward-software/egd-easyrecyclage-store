@@ -2,37 +2,36 @@
 
 namespace Paprec\CommercialBundle\Controller;
 
-use Paprec\CommercialBundle\Entity\ProductDIOrder;
-use Paprec\CommercialBundle\Entity\ProductDIOrderLine;
+use Paprec\CommercialBundle\Entity\ProductDIQuote;
+use Paprec\CommercialBundle\Entity\ProductDIQuoteLine;
 use Paprec\CommercialBundle\Form\ProductDICategoryAddType;
 use Paprec\CommercialBundle\Form\ProductDICategoryEditType;
-use Paprec\CommercialBundle\Form\ProductDIOrderLineAddType;
-use Paprec\CommercialBundle\Form\ProductDIOrderLineEditType;
-use Paprec\CommercialBundle\Form\ProductDIOrderType;
+use Paprec\CommercialBundle\Form\ProductDIQuoteLineAddType;
+use Paprec\CommercialBundle\Form\ProductDIQuoteLineEditType;
+use Paprec\CommercialBundle\Form\ProductDIQuoteType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Test\Fixture\Entity\Shop\Product;
 
-class ProductDIOrderController extends Controller
+class ProductDIQuoteController extends Controller
 {
 
     /**
-     * @Route("/productDIOrder", name="paprec_commercial_productDIOrder_index")
+     * @Route("/productDIQuote", name="paprec_commercial_productDIQuote_index")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function indexAction()
     {
-        return $this->render('PaprecCommercialBundle:ProductDIOrder:index.html.twig');
+        return $this->render('PaprecCommercialBundle:ProductDIQuote:index.html.twig');
     }
 
     /**
-     * @Route("/productDIOrder/loadList", name="paprec_commercial_productDIOrder_loadList")
+     * @Route("/productDIQuote/loadList", name="paprec_commercial_productDIQuote_loadList")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function loadListAction(Request $request)
@@ -42,21 +41,21 @@ class ProductDIOrderController extends Controller
         $filters = $request->get('filters');
         $pageSize = $request->get('length');
         $start = $request->get('start');
-        $orders = $request->get('order');
+        $quotes = $request->get('quote');
         $search = $request->get('search');
         $columns = $request->get('columns');
 
         $cols['id'] = array('label' => 'id', 'id' => 'p.id', 'method' => array('getId'));
         $cols['businessName'] = array('label' => 'businessName', 'id' => 'p.businessName', 'method' => array('getBusinessName'));
         $cols['totalAmount'] = array('label' => 'totalAmount', 'id' => 'p.totalAmount', 'method' => array('getTotalAmount'));
-        $cols['orderStatus'] = array('label' => 'orderStatus', 'id' => 'p.orderStatus', 'method' => array('getOrderStatus'));
+        $cols['quoteStatus'] = array('label' => 'quoteStatus', 'id' => 'p.quoteStatus', 'method' => array('getQuoteStatus'));
         $cols['dateCreation'] = array('label' => 'dateCreation', 'id' => 'p.dateCreation', 'method' => array('getDateCreation'), 'filter' => array(array('name' => 'format', 'args' => array('Y-m-d H:i:s'))));
 
 
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
 
         $queryBuilder->select(array('p'))
-            ->from('PaprecCommercialBundle:ProductDIOrder', 'p')
+            ->from('PaprecCommercialBundle:ProductDIQuote', 'p')
             ->where('p.deleted IS NULL');
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
@@ -68,13 +67,13 @@ class ProductDIOrderController extends Controller
                 $queryBuilder->andWhere($queryBuilder->expr()->orx(
                     $queryBuilder->expr()->like('p.businessName', '?1'),
                     $queryBuilder->expr()->like('p.totalAmount', '?1'),
-                    $queryBuilder->expr()->like('p.orderStatus', '?1'),
+                    $queryBuilder->expr()->like('p.quoteStatus', '?1'),
                     $queryBuilder->expr()->like('p.dateCreation', '?1')
                 ))->setParameter(1, '%' . $search['value'] . '%');
             }
         }
 
-        $datatable = $this->get('goondi_tools.datatable')->generateTable($cols, $queryBuilder, $pageSize, $start, $orders, $columns, $filters);
+        $datatable = $this->get('goondi_tools.datatable')->generateTable($cols, $queryBuilder, $pageSize, $start, $quotes, $columns, $filters);
 
         $return['recordsTotal'] = $datatable['recordsTotal'];
         $return['recordsFiltered'] = $datatable['recordsTotal'];
@@ -87,7 +86,7 @@ class ProductDIOrderController extends Controller
     }
 
     /**
-     * @Route("/productDIOrder/export", name="paprec_commercial_productDIOrder_export")
+     * @Route("/productDIQuote/export", name="paprec_commercial_productDIQuote_export")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function exportAction(Request $request)
@@ -98,10 +97,10 @@ class ProductDIOrderController extends Controller
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
 
         $queryBuilder->select(array('p'))
-            ->from('PaprecCommercialBundle:ProductDIOrder', 'p')
+            ->from('PaprecCommercialBundle:ProductDIQuote', 'p')
             ->where('p.deleted IS NULL');
 
-        $productDIOrders = $queryBuilder->getQuery()->getResult();
+        $productDIQuotes = $queryBuilder->getQuery()->getResult();
 
         $phpExcelObject->getProperties()->setCreator("Paprec Easy Recyclage")
             ->setLastModifiedBy("Paprec Easy Recyclage")
@@ -133,28 +132,28 @@ class ProductDIOrderController extends Controller
         $phpExcelObject->setActiveSheetIndex(0);
 
         $i = 2;
-        foreach ($productDIOrders as $productDIOrder) {
+        foreach ($productDIQuotes as $productDIQuote) {
 
             $phpExcelObject->setActiveSheetIndex(0)
-                ->setCellValue('A' . $i, $productDIOrder->getId())
-                ->setCellValue('B' . $i, $productDIOrder->getBusinessName())
-                ->setCellValue('C' . $i, $productDIOrder->getBusinessLine()->getName())
-                ->setCellValue('D' . $i, $productDIOrder->getCivility())
-                ->setCellValue('E' . $i, $productDIOrder->getLastName())
-                ->setCellValue('F' . $i, $productDIOrder->getFirstName())
-                ->setCellValue('G' . $i, $productDIOrder->getEmail())
-                ->setCellValue('H' . $i, $productDIOrder->getAddress())
-                ->setCellValue('I' . $i, $productDIOrder->getPostalCode())
-                ->setCellValue('J' . $i, $productDIOrder->getCity())
-                ->setCellValue('K' . $i, $productDIOrder->getPhone())
-                ->setCellValue('L' . $i, $productDIOrder->getOrderStatus())
-                ->setCellValue('M' . $i, $productDIOrder->getTotalAmount())
-                ->setCellValue('N' . $i, $productDIOrder->getGeneratedTurnover())
-                ->setCellValue('O' . $i, $productDIOrder->getAgency())
-                ->setCellValue('P' . $i, $productDIOrder->getSummary())
-                ->setCellValue('Q' . $i, $productDIOrder->getFrequency())
-                ->setCellValue('R' . $i, $productDIOrder->getTonnage())
-                ->setCellValue('S' . $i, $productDIOrder->getDateCreation()->format('Y-m-d'));
+                ->setCellValue('A' . $i, $productDIQuote->getId())
+                ->setCellValue('B' . $i, $productDIQuote->getBusinessName())
+                ->setCellValue('C' . $i, $productDIQuote->getBusinessLine()->getName())
+                ->setCellValue('D' . $i, $productDIQuote->getCivility())
+                ->setCellValue('E' . $i, $productDIQuote->getLastName())
+                ->setCellValue('F' . $i, $productDIQuote->getFirstName())
+                ->setCellValue('G' . $i, $productDIQuote->getEmail())
+                ->setCellValue('H' . $i, $productDIQuote->getAddress())
+                ->setCellValue('I' . $i, $productDIQuote->getPostalCode())
+                ->setCellValue('J' . $i, $productDIQuote->getCity())
+                ->setCellValue('K' . $i, $productDIQuote->getPhone())
+                ->setCellValue('L' . $i, $productDIQuote->getQuoteStatus())
+                ->setCellValue('M' . $i, $productDIQuote->getTotalAmount())
+                ->setCellValue('N' . $i, $productDIQuote->getGeneratedTurnover())
+                ->setCellValue('O' . $i, $productDIQuote->getAgency())
+                ->setCellValue('P' . $i, $productDIQuote->getSummary())
+                ->setCellValue('Q' . $i, $productDIQuote->getFrequency())
+                ->setCellValue('R' . $i, $productDIQuote->getTonnage())
+                ->setCellValue('S' . $i, $productDIQuote->getDateCreation()->format('Y-m-d'));
 
             $i++;
         }
@@ -180,31 +179,31 @@ class ProductDIOrderController extends Controller
     }
 
     /**
-     * @Route("/productDIOrder/view/{id}", name="paprec_commercial_productDIOrder_view")
+     * @Route("/productDIQuote/view/{id}", name="paprec_commercial_productDIQuote_view")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function viewAction(Request $request, ProductDIOrder $productDIOrder)
+    public function viewAction(Request $request, ProductDIQuote $productDIQuote)
     {
-        return $this->render('PaprecCommercialBundle:ProductDIOrder:view.html.twig', array(
-            'productDIOrder' => $productDIOrder
+        return $this->render('PaprecCommercialBundle:ProductDIQuote:view.html.twig', array(
+            'productDIQuote' => $productDIQuote
         ));
     }
 
     /**
-     * @Route("/productDIOrder/add", name="paprec_commercial_productDIOrder_add")
+     * @Route("/productDIQuote/add", name="paprec_commercial_productDIQuote_add")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function addAction(Request $request)
     {
 
-        $productDIOrder = new ProductDIOrder();
+        $productDIQuote = new ProductDIQuote();
 
         $status = array();
-        foreach ($this->getParameter('paprec_order_status') as $s) {
+        foreach ($this->getParameter('paprec_quote_status') as $s) {
             $status[$s] = $s;
         }
 
-        $form = $this->createForm(ProductDIOrderType::class, $productDIOrder, array(
+        $form = $this->createForm(ProductDIQuoteType::class, $productDIQuote, array(
             'status' => $status
         ));
 
@@ -212,36 +211,36 @@ class ProductDIOrderController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $productDIOrder = $form->getData();
+            $productDIQuote = $form->getData();
 
             $em = $this->getDoctrine()->getManager();
-            $em->persist($productDIOrder);
+            $em->persist($productDIQuote);
             $em->flush();
 
-            return $this->redirectToRoute('paprec_commercial_productDIOrder_view', array(
-                'id' => $productDIOrder->getId()
+            return $this->redirectToRoute('paprec_commercial_productDIQuote_view', array(
+                'id' => $productDIQuote->getId()
             ));
 
         }
 
-        return $this->render('PaprecCommercialBundle:ProductDIOrder:add.html.twig', array(
+        return $this->render('PaprecCommercialBundle:ProductDIQuote:add.html.twig', array(
             'form' => $form->createView()
         ));
     }
 
     /**
-     * @Route("/productDIOrder/edit/{id}", name="paprec_commercial_productDIOrder_edit")
+     * @Route("/productDIQuote/edit/{id}", name="paprec_commercial_productDIQuote_edit")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editAction(Request $request, ProductDIOrder $productDIOrder)
+    public function editAction(Request $request, ProductDIQuote $productDIQuote)
     {
 
         $status = array();
-        foreach ($this->getParameter('paprec_order_status') as $s) {
+        foreach ($this->getParameter('paprec_quote_status') as $s) {
             $status[$s] = $s;
         }
 
-        $form = $this->createForm(ProductDIOrderType::class, $productDIOrder, array(
+        $form = $this->createForm(ProductDIQuoteType::class, $productDIQuote, array(
             'status' => $status
         ));
 
@@ -249,40 +248,40 @@ class ProductDIOrderController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $productDIOrder = $form->getData();
-            $productDIOrder->setDateUpdate(new \DateTime());
+            $productDIQuote = $form->getData();
+            $productDIQuote->setDateUpdate(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
-            return $this->redirectToRoute('paprec_commercial_productDIOrder_view', array(
-                'id' => $productDIOrder->getId()
+            return $this->redirectToRoute('paprec_commercial_productDIQuote_view', array(
+                'id' => $productDIQuote->getId()
             ));
 
         }
 
-        return $this->render('PaprecCommercialBundle:ProductDIOrder:edit.html.twig', array(
+        return $this->render('PaprecCommercialBundle:ProductDIQuote:edit.html.twig', array(
             'form' => $form->createView(),
-            'productDIOrder' => $productDIOrder
+            'productDIQuote' => $productDIQuote
         ));
     }
 
     /**
-     * @Route("/productDIOrder/remove/{id}", name="paprec_commercial_productDIOrder_remove")
+     * @Route("/productDIQuote/remove/{id}", name="paprec_commercial_productDIQuote_remove")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function removeAction(Request $request, ProductDIOrder $productDIOrder)
+    public function removeAction(Request $request, ProductDIQuote $productDIQuote)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $productDIOrder->setDeleted(new \DateTime());
+        $productDIQuote->setDeleted(new \DateTime());
         $em->flush();
 
-        return $this->redirectToRoute('paprec_commercial_productDIOrder_index');
+        return $this->redirectToRoute('paprec_commercial_productDIQuote_index');
     }
 
     /**
-     * @Route("/productDIOrder/removeMany/{ids}", name="paprec_commercial_productDIOrder_removeMany")
+     * @Route("/productDIQuote/removeMany/{ids}", name="paprec_commercial_productDIQuote_removeMany")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function removeManyAction(Request $request)
@@ -298,34 +297,34 @@ class ProductDIOrderController extends Controller
         $ids = explode(',', $ids);
 
         if (is_array($ids) && count($ids)) {
-            $productDIOrders = $em->getRepository('PaprecCommercialBundle:ProductDIOrder')->findById($ids);
-            foreach ($productDIOrders as $productDIOrder) {
-                $productDIOrder->setDeleted(new \DateTime);
+            $productDIQuotes = $em->getRepository('PaprecCommercialBundle:ProductDIQuote')->findById($ids);
+            foreach ($productDIQuotes as $productDIQuote) {
+                $productDIQuote->setDeleted(new \DateTime);
             }
             $em->flush();
         }
 
-        return $this->redirectToRoute('paprec_commercial_productDIOrder_index');
+        return $this->redirectToRoute('paprec_commercial_productDIQuote_index');
     }
 
     /**
-     * @Route("/productDIOrder/{id}/addLine", name="paprec_commercial_productDIOrder_addLine")
+     * @Route("/productDIQuote/{id}/addLine", name="paprec_commercial_productDIQuote_addLine")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function addLineAction(Request $request, ProductDIOrder $productDIOrder)
+    public function addLineAction(Request $request, ProductDIQuote $productDIQuote)
     {
 
         $em = $this->getDoctrine()->getManager();
         $selectedProductId = $request->get('selectedProductId');
         $submitForm = $request->get('submitForm');
 
-        if ($productDIOrder->getDeleted() !== null) {
+        if ($productDIQuote->getDeleted() !== null) {
             throw new NotFoundHttpException();
         }
 
-        $productDIOrderLine = new ProductDIOrderLine();
+        $productDIQuoteLine = new ProductDIQuoteLine();
 
-        $form = $this->createForm(ProductDIOrderLineAddType::class, $productDIOrderLine,
+        $form = $this->createForm(ProductDIQuoteLineAddType::class, $productDIQuoteLine,
             array(
                 'selectedProductId' => $selectedProductId
             ));
@@ -333,91 +332,91 @@ class ProductDIOrderController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid() && $submitForm) {
-            $productDIOrderManager = $this->get('paprec_catalog.product_di_order_manager');
+            $productDIQuoteManager = $this->get('paprec_catalog.product_di_quote_manager');
 
-            $productDIOrderLine = $form->getData();
-            $productDIOrderManager->addLine($productDIOrder, $productDIOrderLine);
+            $productDIQuoteLine = $form->getData();
+            $productDIQuoteManager->addLine($productDIQuote, $productDIQuoteLine);
 
-            return $this->redirectToRoute('paprec_commercial_productDIOrder_view', array(
-                'id' => $productDIOrder->getId()
+            return $this->redirectToRoute('paprec_commercial_productDIQuote_view', array(
+                'id' => $productDIQuote->getId()
             ));
 
         }
 
-        return $this->render('PaprecCommercialBundle:ProductDIOrderLine:add.html.twig', array(
+        return $this->render('PaprecCommercialBundle:ProductDIQuoteLine:add.html.twig', array(
             'form' => $form->createView(),
-            'productDIOrder' => $productDIOrder,
+            'productDIQuote' => $productDIQuote,
         ));
     }
 
     /**
-     * @Route("/productDIOrder/{id}/editLine/{orderLineId}", name="paprec_commercial_productDIOrder_editLine")
+     * @Route("/productDIQuote/{id}/editLine/{quoteLineId}", name="paprec_commercial_productDIQuote_editLine")
      * @Security("has_role('ROLE_ADMIN')")
-     * @ParamConverter("productDIOrder", options={"id" = "id"})
-     * @ParamConverter("productDIOrderLine", options={"id" = "orderLineId"})
+     * @ParamConverter("productDIQuote", options={"id" = "id"})
+     * @ParamConverter("productDIQuoteLine", options={"id" = "quoteLineId"})
      */
-    public function editLineAction(Request $request, ProductDIOrder $productDIOrder, ProductDIOrderLine $productDIOrderLine)
+    public function editLineAction(Request $request, ProductDIQuote $productDIQuote, ProductDIQuoteLine $productDIQuoteLine)
     {
-        if ($productDIOrder->getDeleted() !== null) {
+        if ($productDIQuote->getDeleted() !== null) {
             throw new NotFoundHttpException();
         }
 
-        if ($productDIOrderLine->getProductDIOrder() !== $productDIOrder) {
+        if ($productDIQuoteLine->getProductDIQuote() !== $productDIQuote) {
             throw new NotFoundHttpException();
         }
 
 
-        $form = $this->createForm(ProductDIOrderLineEditType::class, $productDIOrderLine);
+        $form = $this->createForm(ProductDIQuoteLineEditType::class, $productDIQuoteLine);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $productDIOrderManager = $this->get('paprec_catalog.product_di_order_manager');
+            $productDIQuoteManager = $this->get('paprec_catalog.product_di_quote_manager');
 
-            $productDIOrderManager->editLine($productDIOrder, $productDIOrderLine);
+            $productDIQuoteManager->editLine($productDIQuote, $productDIQuoteLine);
 
-            return $this->redirectToRoute('paprec_commercial_productDIOrder_view', array(
-                'id' => $productDIOrder->getId()
+            return $this->redirectToRoute('paprec_commercial_productDIQuote_view', array(
+                'id' => $productDIQuote->getId()
             ));
         }
 
-        return $this->render('PaprecCommercialBundle:ProductDIOrderLine:edit.html.twig', array(
+        return $this->render('PaprecCommercialBundle:ProductDIQuoteLine:edit.html.twig', array(
             'form' => $form->createView(),
-            'productDIOrder' => $productDIOrder,
-            'productDIOrderLine' => $productDIOrderLine
+            'productDIQuote' => $productDIQuote,
+            'productDIQuoteLine' => $productDIQuoteLine
         ));
     }
 
     /**
-     * @Route("/productDIOrder/{id}/removeLine/{orderLineId}", name="paprec_commercial_productDIOrder_removeLine")
+     * @Route("/productDIQuote/{id}/removeLine/{quoteLineId}", name="paprec_commercial_productDIQuote_removeLine")
      * @Security("has_role('ROLE_ADMIN')")
-     * @ParamConverter("productDIOrder", options={"id" = "id"})
-     * @ParamConverter("productDIOrderLine", options={"id" = "orderLineId"})
+     * @ParamConverter("productDIQuote", options={"id" = "id"})
+     * @ParamConverter("productDIQuoteLine", options={"id" = "quoteLineId"})
      */
-    public function removeLineAction(Request $request, ProductDIOrder $productDIOrder, ProductDIOrderLine $productDIOrderLine)
+    public function removeLineAction(Request $request, ProductDIQuote $productDIQuote, ProductDIQuoteLine $productDIQuoteLine)
     {
-        if ($productDIOrder->getDeleted() !== null) {
+        if ($productDIQuote->getDeleted() !== null) {
             throw new NotFoundHttpException();
         }
 
-        if ($productDIOrderLine->getProductDIOrder() !== $productDIOrder) {
+        if ($productDIQuoteLine->getProductDIQuote() !== $productDIQuote) {
             throw new NotFoundHttpException();
         }
 
 
         $em = $this->getDoctrine()->getManager();
 
-        $em->remove($productDIOrderLine);
+        $em->remove($productDIQuoteLine);
         $em->flush();
 
-        $productDIOrderManager = $this->get('paprec_catalog.product_di_order_manager');
-        $total = $productDIOrderManager->calculateTotal($productDIOrder);
-        $productDIOrder->setTotalAmount($total);
+        $productDIQuoteManager = $this->get('paprec_catalog.product_di_quote_manager');
+        $total = $productDIQuoteManager->calculateTotal($productDIQuote);
+        $productDIQuote->setTotalAmount($total);
         $em->flush();
 
 
-        return $this->redirectToRoute('paprec_commercial_productDIOrder_view', array(
-            'id' => $productDIOrder->getId()
+        return $this->redirectToRoute('paprec_commercial_productDIQuote_view', array(
+            'id' => $productDIQuote->getId()
         ));
     }
 }

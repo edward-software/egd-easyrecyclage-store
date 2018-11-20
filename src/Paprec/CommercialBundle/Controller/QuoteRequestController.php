@@ -41,7 +41,7 @@ class QuoteRequestController extends Controller
         $filters = $request->get('filters');
         $pageSize = $request->get('length');
         $start = $request->get('start');
-        $orders = $request->get('order');
+        $quotes = $request->get('quote');
         $search = $request->get('search');
         $columns = $request->get('columns');
         // Récupération du type de catégorie souhaité (DI, CHANTIER, D3E)
@@ -50,7 +50,7 @@ class QuoteRequestController extends Controller
         $cols['id'] = array('label' => 'id', 'id' => 'o.id', 'method' => array('getId'));
         $cols['businessName'] = array('label' => 'businessName', 'id' => 'o.businessName', 'method' => array('getBusinessName'));
         $cols['email'] = array('label' => 'email', 'id' => 'o.email', 'method' => array('getEmail'));
-        $cols['orderStatus'] = array('label' => 'orderStatus', 'id' => 'o.orderStatus', 'method' => array('getOrderStatus'));
+        $cols['quoteStatus'] = array('label' => 'quoteStatus', 'id' => 'o.quoteStatus', 'method' => array('getQuoteStatus'));
         $cols['dateCreation'] = array('label' => 'dateCreation', 'id' => 'o.dateCreation', 'method' => array('getDateCreation'), 'filter' => array(array('name' => 'format', 'args' => array('Y-m-d H:i:s'))));
 
 
@@ -71,13 +71,13 @@ class QuoteRequestController extends Controller
                 $queryBuilder->andWhere($queryBuilder->expr()->orx(
                     $queryBuilder->expr()->like('o.businessName', '?1'),
                     $queryBuilder->expr()->like('o.email', '?1'),
-                    $queryBuilder->expr()->like('o.orderStatus', '?1'),
+                    $queryBuilder->expr()->like('o.quoteStatus', '?1'),
                     $queryBuilder->expr()->like('o.dateCreation', '?1')
                 ))->setParameter(1, '%' . $search['value'] . '%');
             }
         }
 
-        $datatable = $this->get('goondi_tools.datatable')->generateTable($cols, $queryBuilder, $pageSize, $start, $orders, $columns, $filters);
+        $datatable = $this->get('goondi_tools.datatable')->generateTable($cols, $queryBuilder, $pageSize, $start, $quotes, $columns, $filters);
 
         $return['recordsTotal'] = $datatable['recordsTotal'];
         $return['recordsFiltered'] = $datatable['recordsTotal'];
@@ -145,7 +145,7 @@ class QuoteRequestController extends Controller
                 ->setCellValue('E' . $i, $quoteRequest->getFirstName())
                 ->setCellValue('F' . $i, $quoteRequest->getEmail())
                 ->setCellValue('G' . $i, $quoteRequest->getPhone())
-                ->setCellValue('H' . $i, $quoteRequest->getOrderStatus())
+                ->setCellValue('H' . $i, $quoteRequest->getQuoteStatus())
                 ->setCellValue('I' . $i, $quoteRequest->getNeed())
                 ->setCellValue('J' . $i, $quoteRequest->getGeneratedTurnover())
                 ->setCellValue('K' . $i, $quoteRequest->getDivision())
@@ -200,7 +200,7 @@ class QuoteRequestController extends Controller
     {
 
         $status = array();
-        foreach ($this->getParameter('paprec_order_status') as $s) {
+        foreach ($this->getParameter('paprec_quote_status') as $s) {
             $status[$s] = $s;
         }
 
@@ -215,17 +215,17 @@ class QuoteRequestController extends Controller
             $quoteRequest = $form->getData();
             $quoteRequest->setDateUpdate(new \DateTime());
 
-            if ($quoteRequest->getAssociatedOrder() instanceof UploadedFile) {
+            if ($quoteRequest->getAssociatedQuote() instanceof UploadedFile) {
                 /**
                  * On place le picto uploadé dans le dossier web/uploads
                  * et on sauvegarde le nom du fichier dans la colonne 'picto' de l'argument
                  */
-                $associatedOrder = $quoteRequest->getAssociatedOrder();
-                $associatedOrderFileName = md5(uniqid()) . '.' . $associatedOrder->guessExtension();
+                $associatedQuote = $quoteRequest->getAssociatedQuote();
+                $associatedQuoteFileName = md5(uniqid()) . '.' . $associatedQuote->guessExtension();
 
-                $associatedOrder->move($this->getParameter('paprec_commercial.order_request.files_path'), $associatedOrderFileName);
+                $associatedQuote->move($this->getParameter('paprec_commercial.quote_request.files_path'), $associatedQuoteFileName);
 
-                $quoteRequest->setAssociatedOrder($associatedOrderFileName);
+                $quoteRequest->setAssociatedQuote($associatedQuoteFileName);
             }
 
             $em = $this->getDoctrine()->getManager();
@@ -252,12 +252,12 @@ class QuoteRequestController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         foreach ($quoteRequest->getAttachedFiles() as $file) {
-            $this->removeFile($this->getParameter('paprec_commercial.order_request.files_path') . '/' . $file);
+            $this->removeFile($this->getParameter('paprec_commercial.quote_request.files_path') . '/' . $file);
             $quoteRequest->setAttachedFiles();
         }
-        if (!empty($quoteRequest->getAssociatedOrder())) {
-            $this->removeFile($this->getParameter('paprec_commercial.order_request.files_path') . '/' . $file);
-            $quoteRequest->setAssociatedOrder();
+        if (!empty($quoteRequest->getAssociatedQuote())) {
+            $this->removeFile($this->getParameter('paprec_commercial.quote_request.files_path') . '/' . $file);
+            $quoteRequest->setAssociatedQuote();
         }
 
         $quoteRequest->setDeleted(new \DateTime());
@@ -286,12 +286,12 @@ class QuoteRequestController extends Controller
             $quoteRequests = $em->getRepository('PaprecCommercialBundle:QuoteRequest')->findById($ids);
             foreach ($quoteRequests as $quoteRequest) {
                 foreach ($quoteRequest->getAttachedFiles() as $file) {
-                    $this->removeFile($this->getParameter('paprec_commercial.order_request.files_path') . '/' . $file);
+                    $this->removeFile($this->getParameter('paprec_commercial.quote_request.files_path') . '/' . $file);
                     $quoteRequest->setAttachedFiles();
                 }
-                if (!empty($quoteRequest->getAssociatedOrder())) {
-                    $this->removeFile($this->getParameter('paprec_commercial.order_request.files_path') . '/' . $file);
-                    $quoteRequest->setAssociatedOrder();
+                if (!empty($quoteRequest->getAssociatedQuote())) {
+                    $this->removeFile($this->getParameter('paprec_commercial.quote_request.files_path') . '/' . $file);
+                    $quoteRequest->setAssociatedQuote();
                 }
                 $quoteRequest->setDeleted(new \DateTime);
             }
@@ -318,13 +318,13 @@ class QuoteRequestController extends Controller
     }
 
     /**
-     * @Route("/quoteRequest/{id}/downloadAssociatedOrder", name="paprec_commercial_quoteRequest_downloadAssociatedOrder")
+     * @Route("/quoteRequest/{id}/downloadAssociatedQuote", name="paprec_commercial_quoteRequest_downloadAssociatedQuote")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function downloadAssociatedOrderAction( QuoteRequest $quoteRequest)
+    public function downloadAssociatedQuoteAction( QuoteRequest $quoteRequest)
     {
-        $filename = $quoteRequest->getAssociatedOrder();
-        $path = $this->getParameter('paprec_commercial.order_request.files_path');
+        $filename = $quoteRequest->getAssociatedQuote();
+        $path = $this->getParameter('paprec_commercial.quote_request.files_path');
         $content = file_get_contents($path . '/' . $filename);
         $extension = pathinfo($path . '/' . $filename, PATHINFO_EXTENSION);
 
@@ -347,7 +347,7 @@ class QuoteRequestController extends Controller
      */
     public function downloadAttachedFilesAction(QuoteRequest $quoteRequest)
     {
-        $path = $this->getParameter('paprec_commercial.order_request.files_path');
+        $path = $this->getParameter('paprec_commercial.quote_request.files_path');
         $zipname = 'file.zip';
         $zip = new ZipArchive;
         $zip->open($zipname, ZipArchive::CREATE);

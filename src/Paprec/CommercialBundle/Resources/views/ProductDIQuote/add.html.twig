@@ -1,32 +1,32 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-    {{ 'Commercial.ProductDIOrder.Add'|trans }}
+    {{ 'Commercial.ProductDIQuote.Add'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'Commercial.ProductDIOrder.ProductDIOrders'|trans }}
+    {{ 'Commercial.ProductDIQuote.ProductDIQuotes'|trans }}
 {% endblock %}
 
 {% block main_content %}
 
-    <form id="commercialProductDIOrderForm" action="" method="post" enctype="multipart/form-data">
+    <form id="commercialProductDIQuoteForm" action="" method="post" enctype="multipart/form-data">
 
         <div class="col-md-12">
             <!-- BOX -->
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductDIOrder.Add'|trans }}
+                        <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductDIQuote.Add'|trans }}
                         <div class="float-right">
-                            <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-productDIOrder-save-button"><i
-                                        class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductDIOrder.Save'|trans }}</a>
+                            <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-productDIQuote-save-button"><i
+                                        class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductDIQuote.Save'|trans }}</a>
                             <a href="javascript:void(0);"
-                               class="btn btn-sm btn-danger commercial-productDIOrder-cancel-button"><i
-                                        class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductDIOrder.Cancel'|trans }}</a>
+                               class="btn btn-sm btn-danger commercial-productDIQuote-cancel-button"><i
+                                        class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductDIQuote.Cancel'|trans }}</a>
                         </div>
                     </h4>
                 </div>
@@ -34,55 +34,55 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">{{ 'Commercial.ProductDIOrder.Informations-FO'|trans }}</h5>
+                                <h5 class="card-title">{{ 'Commercial.ProductDIQuote.Informations-FO'|trans }}</h5>
                             </div>
                             <div class="card-body row">
                                 <div class="col-md-6">
 
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.BusinessName'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.BusinessName'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.businessName, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.businessName) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.BusinessLine'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.BusinessLine'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.businessLine, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.businessLine) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.Civility'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.Civility'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.civility, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.civility) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.LastName'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.LastName'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.lastName) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.FirstName'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.FirstName'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.firstName) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.Function'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.Function'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.function, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.function) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.Address'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.Address'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.address) }}
@@ -91,42 +91,42 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.Email'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.Email'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.email) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.PostalCode'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.PostalCode'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.postalCode, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.postalCode) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.City'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.City'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.city) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.Phone'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.Phone'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.phone) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.OrderStatus'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.QuoteStatus'|trans }}</label>
                                         <div class="form-content">
-                                            {{ form_widget(form.orderStatus, {'attr': {'class': 'form-control'}}) }}
-                                            {{ form_errors(form.orderStatus) }}
+                                            {{ form_widget(form.quoteStatus, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.quoteStatus) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.TotalAmount'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.TotalAmount'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.totalAmount, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.totalAmount) }}
@@ -139,33 +139,33 @@
                     <div class="col-md-12 mt-3">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">{{ 'Commercial.ProductDIOrder.Informations-BO'|trans }}</h5>
+                                <h5 class="card-title">{{ 'Commercial.ProductDIQuote.Informations-BO'|trans }}</h5>
                             </div>
                             <div class="card-body row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.GeneratedTurnover'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.GeneratedTurnover'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.generatedTurnover, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.generatedTurnover) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.Agency'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.Agency'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.agency, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.agency) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.Summary'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.Summary'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.summary, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.summary) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.Frequency'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.Frequency'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.frequency, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.frequency) }}
@@ -174,21 +174,21 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.Tonnage'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.Tonnage'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.tonnage, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.tonnage) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.KookaburaNumber'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.KookaburaNumber'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.kookaburaNumber, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.kookaburaNumber) }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">{{ 'Commercial.ProductDIOrder.UserInCharge'|trans }}</label>
+                                        <label class="form-label">{{ 'Commercial.ProductDIQuote.UserInCharge'|trans }}</label>
                                         <div class="form-content">
                                             {{ form_widget(form.userInCharge, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.userInCharge) }}
@@ -202,10 +202,10 @@
 
                 <div class="card-footer">
                     <div class="float-right">
-                        <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-productDIOrder-save-button"><i
-                                    class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductDIOrder.Save'|trans }}</a>
-                        <a href="javascript:void(0);" class="btn btn-sm btn-danger commercial-productDIOrder-cancel-button"><i
-                                    class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductDIOrder.Cancel'|trans }}</a>
+                        <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-productDIQuote-save-button"><i
+                                    class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductDIQuote.Save'|trans }}</a>
+                        <a href="javascript:void(0);" class="btn btn-sm btn-danger commercial-productDIQuote-cancel-button"><i
+                                    class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductDIQuote.Cancel'|trans }}</a>
                     </div>
                 </div>
             </div>
@@ -223,16 +223,16 @@
     <script>
         $(function () {
 
-            $('.commercial-productDIOrder-save-button').on('click', function () {
-                $('#commercialProductDIOrderForm').submit();
+            $('.commercial-productDIQuote-save-button').on('click', function () {
+                $('#commercialProductDIQuoteForm').submit();
             });
 
 
-            $('.commercial-productDIOrder-cancel-button').on('click', function () {
+            $('.commercial-productDIQuote-cancel-button').on('click', function () {
 
-                var url = "{{ path("paprec_commercial_productDIOrder_index") }}";
+                var url = "{{ path("paprec_commercial_productDIQuote_index") }}";
 
-                bootbox.confirm("{{ 'Commercial.ProductDIOrder.Confirm-cancel'|trans }}", function (result) {
+                bootbox.confirm("{{ 'Commercial.ProductDIQuote.Confirm-cancel'|trans }}", function (result) {
                     if (result === true) {
                         $(location).attr('href', url);
                     }
