@@ -125,6 +125,14 @@
                                     </label>
                                 </div>
                                 <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.AttachedFiles'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if orderRequest.attachedFiles %}
+                                            <a href="{{ path('paprec_commercial_orderRequest_downloadAttachedFiles', {id: orderRequest.id}) }}"><i class="fa fa-download fa-lg"></i></a>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.Need'|trans }}</label>
                                     <label class="col-form-label">
                                         {{ orderRequest.need }}
@@ -194,7 +202,7 @@
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.OrderRequest.AssociatedOrder'|trans }}</label>
                                     <label class="col-form-label">
                                         {% if orderRequest.associatedOrder %}
-                                        <a href="{{ path('paprec_commercial_orderRequest_downloadFile', {id: orderRequest.id, filename: orderRequest.associatedOrder}) }}"><i class="fa fa-download"></i></a>
+                                        <a href="{{ path('paprec_commercial_orderRequest_downloadAssociatedOrder', {id: orderRequest.id}) }}"><i class="fa fa-download fa-lg"></i></a>
                                         {% endif %}
                                     </label>
                                 </div>

@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use ZipArchive;
 
 class OrderRequestController extends Controller
 {
@@ -313,37 +314,56 @@ class OrderRequestController extends Controller
     }
 
     /**
-     * @Route("/orderRequest/{id}/downloadFile/{filename}", name="paprec_commercial_orderRequest_downloadFile")
+     * @Route("/orderRequest/{id}/downloadAssociatedOrder", name="paprec_commercial_orderRequest_downloadAssociatedOrder")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function downloadFileAction(Request $request, $filename, OrderRequest $orderRequest)
+    public function downloadAssociatedOrderAction( OrderRequest $orderRequest)
     {
+        $filename = $orderRequest->getAssociatedOrder();
         $path = $this->getParameter('paprec_commercial.order_request.files_path');
-        $content = file_get_contents($path.'/'.$filename);
-        $extension = pathinfo($path.'/'.$filename, PATHINFO_EXTENSION);
+        $content = file_get_contents($path . '/' . $filename);
+        $extension = pathinfo($path . '/' . $filename, PATHINFO_EXTENSION);
 
         $response = new Response();
-        $newFilename = "Demande-devis-".$orderRequest->getId().'-'.$orderRequest->getDivision() . '.' . $extension;
+        $newFilename = "Demande-Devis-" . $orderRequest->getId() . '-Devis-Associe.' . $extension;
 
         //set headers
         $response->headers->set('Content-Type', 'mime/type');
-        $response->headers->set('Content-Disposition', 'attachment;filename="'.$newFilename);
+        $response->headers->set('Cache-Control', 'maxage=1');
+        $response->headers->set('Pragma', 'public');
+        $response->headers->set('Content-Disposition', 'attachment;filename="' . $newFilename);
 
         $response->setContent($content);
         return $response;
-//        $response = new BinaryFileResponse($path.''.$filename);
-//
-//        // adding headers
-//        $dispositionHeader = $response->headers->makeDisposition(
-//            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-//            $filename
-//        );
-//        $response->headers->set('Content-Type', 'mime/type');
-//        $response->headers->set('Pragma', 'public');
-//        $response->headers->set('Cache-Control', 'maxage=1');
-//        $response->headers->set('Content-Disposition', $dispositionHeader);
+    }
 
-       return $response;
+    /**
+     * @Route("/orderRequest/{id}/downloadAttachedFiles", name="paprec_commercial_orderRequest_downloadAttachedFiles")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function downloadAttachedFilesAction(OrderRequest $orderRequest)
+    {
+        $path = $this->getParameter('paprec_commercial.order_request.files_path');
+        $zipname = 'file.zip';
+        $zip = new ZipArchive;
+        $zip->open($zipname, ZipArchive::CREATE);
+        $cpt = 1;
+        foreach ($orderRequest->getAttachedFiles() as $file) {
+            $extension = pathinfo($path . '/' . $file, PATHINFO_EXTENSION);
+            $newFilename = "Demande-devis-" . $orderRequest->getId() . '-PJ' . $cpt . '.' . $extension;
+
+            $filename= $path . '/' . $file;
+            $zip->addFile($filename, $newFilename);
+            $cpt++;
+        }
+        $zip->close();
+
+        $name = $zipname;
+        header('Content-Type: application/zip');
+        header('Content-disposition: attachment; filename='.$zipname);
+        header('Content-Length: ' . filesize($zipname));
+        readfile($zipname);
+        unlink($zipname);
     }
 
 }
