@@ -55,3 +55,29 @@ table.dataTable thead .sorting:before, table.dataTable thead .sorting:after, tab
 .form-control {
     height: 2rem;
 }
+
+.page-item.active .page-link,
+.btn-primary{
+    background-color: #4A90E2;
+    border-color: #4A90E2;
+}
+
+table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected{
+    background-color: #4A90E2 !important;
+}
+
+.btn-outline-primary:hover,
+.btn-primary:hover{
+    background-color: #2c76e2;
+    border-color: #2c76e2;
+}
+
+.page-link:hover,
+a:hover{
+    color: #4A90E2;
+}
+
+.btn-outline-primary{
+    color: #4A90E2;
+    border-color: #4A90E2;
+}
