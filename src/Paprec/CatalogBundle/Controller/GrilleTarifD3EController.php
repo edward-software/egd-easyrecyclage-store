@@ -155,9 +155,7 @@ class GrilleTarifD3EController extends Controller
 
 
         return $this->render('PaprecCatalogBundle:GrilleTarifD3E:view.html.twig', array(
-            'grilleTarifD3E' => $grilleTarifD3E,
-            'addLigneForm' => $addLigneForm->createView(),
-            'editLigneForm' => $editLigneForm->createView()
+            'grilleTarifD3E' => $grilleTarifD3E
         ));
     }
 
@@ -268,19 +266,19 @@ class GrilleTarifD3EController extends Controller
     }
 
     /**
- * @Route("/grilleTarifD3E/addLigne/{id}", name="paprec_catalog_grilleTarifD3E_addLigne")
+ * @Route("/grilleTarifD3E/{id}/addLigne", name="paprec_catalog_grilleTarifD3E_addLigne")
  * @Method("POST")
  * @Security("has_role('ROLE_ADMIN')")
  */
     public function addLigneAction(Request $request, GrilleTarifD3E $grilleTarifD3E)
     {
         $grilleTarifLigneD3E = new GrilleTarifLigneD3E();
-        $addLigneForm = $this->createForm(GrilleTarifLigneD3EType::class, $grilleTarifLigneD3E);
+        $form = $this->createForm(GrilleTarifLigneD3EType::class, $grilleTarifLigneD3E);
 
         $em = $this->getDoctrine()->getManager();
-        $addLigneForm->handleRequest($request);
-        if ($addLigneForm->isValid()) {
-            $grilleTarifLigneD3E = $addLigneForm->getData();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $grilleTarifLigneD3E = $form->getData();
             $grilleTarifLigneD3E->setGrilleTarifD3E($grilleTarifD3E);
             if ($grilleTarifLigneD3E->getMaxQuantity() == null) {
                 $grilleTarifLigneD3E->setMaxQuantity($grilleTarifLigneD3E->getMinQuantity());
@@ -293,9 +291,9 @@ class GrilleTarifD3EController extends Controller
             ));
         }
 
-        return $this->render('PaprecCatalogBundle:GrilleTarifD3E:view.html.twig', array(
+        return $this->render('PaprecCatalogBundle:GrilleTarifD3ELigne:edit.html.twig', array(
             'grilleTarifD3E' => $grilleTarifD3E,
-            'addLigneForm' => $addLigneForm->createView()
+            'form' => $form->createView()
         ));
     }
 
@@ -310,11 +308,11 @@ class GrilleTarifD3EController extends Controller
         $em = $this->getDoctrine()->getManager();
         $ligneID = $request->get('ligneID');
         $grilleTarifLigneD3E = $em->getRepository(GrilleTarifLigneD3E::class)->find($ligneID);
-        $editLigneForm = $this->createForm(GrilleTarifLigneD3EType::class, $grilleTarifLigneD3E);
+        $form = $this->createForm(GrilleTarifLigneD3EType::class, $grilleTarifLigneD3E);
 
-        $editLigneForm->handleRequest($request);
-        if ($editLigneForm->isValid()) {
-            $grilleTarifLigneD3E = $editLigneForm->getData();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $grilleTarifLigneD3E = $form->getData();
 
             if ($grilleTarifLigneD3E->getMaxQuantity() == null) {
                 $grilleTarifLigneD3E->setMaxQuantity($grilleTarifLigneD3E->getMinQuantity());
@@ -326,9 +324,10 @@ class GrilleTarifD3EController extends Controller
             ));
         }
 
-        return $this->render('PaprecCatalogBundle:GrilleTarifD3E:view.html.twig', array(
+        return $this->render('PaprecCatalogBundle:GrilleTarifD3ELigne:add.html.twig', array(
             'grilleTarifD3E' => $grilleTarifD3E,
-            'editLigneForm' => $editLigneForm->createView()
+            'grilleTarifLigneD3E' => $grilleTarifLigneD3E,
+            'form' => $form->createView()
         ));
     }
 
