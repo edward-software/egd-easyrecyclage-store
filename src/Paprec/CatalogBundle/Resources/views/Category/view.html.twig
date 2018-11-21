@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="card-body">
                                     <ul id="productDICategoryListContent">
-                                        {% for productDICategory in category.productDICategoriesQuoteed %}
+                                        {% for productDICategory in category.productDICategoriesOrdered %}
                                             <li class="list-group-item"
                                                 id="productDICategoryItem_{{ productDICategory.id }}">
                                                 {{ productDICategory.productDI.name }}
@@ -143,7 +143,7 @@
                                 </div>
                                 <div class="card-body">
                                     <ul id="productChantierCategoryListContent">
-                                        {% for productChantierCategory in category.productChantierCategoriesQuoteed %}
+                                        {% for productChantierCategory in category.productChantierCategoriesOrdered %}
                                             <li class="list-group-item"
                                                 id="productChantierCategoryItem_{{ productChantierCategory.id }}">
                                                 {{ productChantierCategory.productChantier.name }}

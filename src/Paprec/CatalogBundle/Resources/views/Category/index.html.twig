@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css"
           href="{{ asset('/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" type="text/css"
-          href="{{ asset('/assets/vendor/datatables.net-rowrequote-bs4/css/rowRequote.bootstrap4.min.css') }}">
+          href="{{ asset('/assets/vendor/datatables.net-rowreorder-bs4/css/rowReorder.bootstrap4.min.css') }}">
 {% endblock %}
 
 {% block content_title %}
@@ -116,10 +116,11 @@
     <script type="text/javascript"
             src="{{ asset('/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
     <script type="text/javascript"
-            src="{{ asset('/assets/vendor/datatables.net-rowrequote/js/dataTables.rowRequote.min.js') }}"></script>
+            src="{{ asset('/assets/vendor/datatables.net-rowreorder/js/dataTables.rowReorder.min.js') }}"></script>
 
     <script>
         $(document).ready(function () {
+
 
             // Création de la datatable affichant les catégories DI
             var categoryDIList = $('#categoriesDIListDatatable').DataTable({
@@ -136,9 +137,10 @@
                     }
                 },
                 dom: 'B<"ml-2">f<"ml-auto">lrti<"ml-auto">p',
-                rowRequote: {
+                rowReorder: {
                     dataSrc: 'position',
                     update: false
+                    // selector: 'td:not(:last-child)'
                 },
                 buttons: [
                     {
@@ -166,7 +168,7 @@
                 "serverSide": true,
                 "lengthMenu": [[5, 10, 20, 50], [5, 10, 20, 50]],
                 "ajax": "{{ path('paprec_catalog_category_loadList', {typeCategory: 'DI'}) }}",
-                "quote": [[4, "asc"]],
+                "order": [[4, "asc"]],
                 "columns": [
                     {"data": "id"},
                     {"data": "name"},
@@ -194,32 +196,32 @@
                     viewUrl = "{{ path('paprec_catalog_category_view', {id: '0000'}) }}".replace('0000', aData['id']);
                     editUrl = "{{ path('paprec_catalog_category_edit', {id: '0000'}) }}".replace('0000', aData['id']);
 
-                    $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-sm btn-primary btn-sm"><i class="fa fa-xs fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-sm btn-warning btn-sm"><i class="fa fa-xs fa-edit"></i></a>');
+                    $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-sm btn-primary"><i class="fa fa-xs fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-sm btn-warning"><i class="fa fa-xs fa-edit"></i></a>');
 
                 },
                 // On réduit la taille maximale de la deuxieme colonne pour ne pas qu'elle dépasse 50 caractères
                 columnDefs: [
-                    { "width": "120px", "targets": 1 },
-                    { "width": "170px", "targets": 2 },
+                    {"width": "120px", "targets": 1},
+                    {"width": "170px", "targets": 2},
                     {
-                    targets: 2,
-                    render: function (data, type, row) {
-                        if (data && data.length > 50)
-                            return data.substr(0, 50) + ' [...]';
-                        else
-                            return data;
-                    }
-                }]
+                        targets: 2,
+                        render: function (data, type, row) {
+                            if (data && data.length > 50)
+                                return data.substr(0, 50) + ' [...]';
+                            else
+                                return data;
+                        }
+                    }]
             });
-            categoryDIList.on('row-requote', function (e, diff, edit) {
+            categoryDIList.on('row-reorder', function (e, diff, edit) {
                 var categories = [];
-                //on parcourt toutes les rows et on ajoute l'id des catégories dans l'ordre
-                categoryDIList.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+                // on parcourt toutes les rows et on ajoute l'id des catégories dans l'ordre
+                categoryDIList.rows().every(function (rowIdx, tableLoop, rowLoop) {
                     categories.push(this.data().id);
-                } );
+                });
                 if (categories.length > 0) {
                     $.ajax({
-                        'url': '{{ path('paprec_catalog_category_quoteCategories') }}',
+                        'url': '{{ path('paprec_catalog_category_orderCategories') }}',
                         'method': 'post',
                         'data': {
                             IdPositionCategories: categories
@@ -228,7 +230,6 @@
                         categoryDIList.ajax.reload();
                     });
                 }
-
             });
 
             // Création de la datatable affichant les catégories CHANTIER
@@ -246,9 +247,10 @@
                     }
                 },
                 dom: 'B<"ml-2">f<"ml-auto">lrti<"ml-auto">p',
-                rowRequote: {
+                rowReorder: {
                     dataSrc: 'position',
                     update: false
+                    // selector: 'td:not(:last-child)'
                 },
                 buttons: [
                     {
@@ -276,7 +278,7 @@
                 "serverSide": true,
                 "lengthMenu": [[5, 10, 20, 50], [5, 10, 20, 50]],
                 "ajax": "{{ path('paprec_catalog_category_loadList', {typeCategory: 'CHANTIER'}) }}",
-                "quote": [[4, "asc"]],
+                "order": [[4, "asc"]],
                 "columns": [
                     {"data": "id"},
                     {"data": "name"},
@@ -309,27 +311,27 @@
                 },
                 // On réduit la taille maximale de la deuxieme colonne pour ne pas qu'elle dépasse 50 caractères
                 columnDefs: [
-                    { "width": "120px", "targets": 1 },
-                    { "width": "170px", "targets": 2 },
+                    {"width": "120px", "targets": 1},
+                    {"width": "170px", "targets": 2},
                     {
-                    targets: 2,
-                    render: function (data, type, row) {
-                        if (data && data.length > 50)
-                            return data.substr(0, 50) + ' [...]';
-                        else
-                            return data;
-                    }
-                }]
+                        targets: 2,
+                        render: function (data, type, row) {
+                            if (data && data.length > 50)
+                                return data.substr(0, 50) + ' [...]';
+                            else
+                                return data;
+                        }
+                    }]
             });
-            categoryChantierList.on('row-requote', function (e, diff, edit) {
+            categoryChantierList.on('row-reorder', function (e, diff, edit) {
                 var categories = [];
                 //on parcourt toutes les rows et on ajoute l'id des catégories dans l'ordre
-                categoryChantierList.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+                categoryChantierList.rows().every(function (rowIdx, tableLoop, rowLoop) {
                     categories.push(this.data().id);
-                } );
+                });
                 if (categories.length > 0) {
                     $.ajax({
-                        'url': '{{ path('paprec_catalog_category_quoteCategories') }}',
+                        'url': '{{ path('paprec_catalog_category_orderCategories') }}',
                         'method': 'post',
                         'data': {
                             IdPositionCategories: categories

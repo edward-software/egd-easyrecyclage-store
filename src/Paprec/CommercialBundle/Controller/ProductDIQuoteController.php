@@ -41,7 +41,7 @@ class ProductDIQuoteController extends Controller
         $filters = $request->get('filters');
         $pageSize = $request->get('length');
         $start = $request->get('start');
-        $quotes = $request->get('quote');
+        $orders = $request->get('order');
         $search = $request->get('search');
         $columns = $request->get('columns');
 
@@ -73,7 +73,7 @@ class ProductDIQuoteController extends Controller
             }
         }
 
-        $datatable = $this->get('goondi_tools.datatable')->generateTable($cols, $queryBuilder, $pageSize, $start, $quotes, $columns, $filters);
+        $datatable = $this->get('goondi_tools.datatable')->generateTable($cols, $queryBuilder, $pageSize, $start, $orders, $columns, $filters);
 
         $return['recordsTotal'] = $datatable['recordsTotal'];
         $return['recordsFiltered'] = $datatable['recordsTotal'];
