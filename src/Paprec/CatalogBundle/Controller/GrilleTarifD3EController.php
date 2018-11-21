@@ -291,7 +291,7 @@ class GrilleTarifD3EController extends Controller
             ));
         }
 
-        return $this->render('PaprecCatalogBundle:GrilleTarifD3ELigne:edit.html.twig', array(
+        return $this->render('PaprecCatalogBundle:GrilleTarifD3ELigne:add.html.twig', array(
             'grilleTarifD3E' => $grilleTarifD3E,
             'form' => $form->createView()
         ));
@@ -324,7 +324,7 @@ class GrilleTarifD3EController extends Controller
             ));
         }
 
-        return $this->render('PaprecCatalogBundle:GrilleTarifD3ELigne:add.html.twig', array(
+        return $this->render('PaprecCatalogBundle:GrilleTarifD3ELigne:edit.html.twig', array(
             'grilleTarifD3E' => $grilleTarifD3E,
             'grilleTarifLigneD3E' => $grilleTarifLigneD3E,
             'form' => $form->createView()
