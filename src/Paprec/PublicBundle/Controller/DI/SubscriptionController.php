@@ -66,7 +66,10 @@ class SubscriptionController extends Controller
         $productDIQuote->setCity($city);
         $productDIQuote->setPostalCode($postalCode);
 
-        $form = $this->createForm(productDIQuoteShortType::class, $productDIQuote);
+
+        $form = $this->createForm(productDIQuoteShortType::class, $productDIQuote, array(
+            'division' => 'DI'
+        ));
 
         $form->handleRequest($request);
 
