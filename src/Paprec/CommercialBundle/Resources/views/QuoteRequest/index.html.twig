@@ -186,6 +186,9 @@
                 ],
                 "rowCallback": function (row, data, displayIndex) {
                 },
+                "drawCallback": function () {
+                    $('.dataTables_paginate > .pagination').addClass('pagination-sm');
+                },
                 "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 
                     viewUrl = "{{ path('paprec_commercial_quoteRequest_view', {id: '0000'}) }}".replace('0000', aData['id']);
@@ -251,6 +254,9 @@
                 ],
                 "rowCallback": function (row, data, displayIndex) {
                 },
+                "drawCallback": function () {
+                    $('.dataTables_paginate > .pagination').addClass('pagination-sm');
+                },
                 "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 
                     viewUrl = "{{ path('paprec_commercial_quoteRequest_view', {id: '0000'}) }}".replace('0000', aData['id']);
@@ -315,6 +321,9 @@
                     {"data": "id", "width": "10%", "bSortable": false}
                 ],
                 "rowCallback": function (row, data, displayIndex) {
+                },
+                "drawCallback": function () {
+                    $('.dataTables_paginate > .pagination').addClass('pagination-sm');
                 },
                 "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 
