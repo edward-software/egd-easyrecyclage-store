@@ -191,7 +191,7 @@ class CartManager
      * @return array
      * @throws Exception
      */
-    public function loadCart($id)
+    public function loadCartDI($id)
     {
         $cart = $this->get($id);
         $productDIManager = $this->container->get('paprec_catalog.product_di_manager');
@@ -214,6 +214,39 @@ class CartManager
                     )
                 );
                 $loadedCart['sum'] += $productDICategory->getUnitPrice()*$productsCategory['qtty'];
+            }
+        } else {
+            return $loadedCart;
+        }
+        // On trie par ordre croissant sur les clés, donc par les id des produits
+        // ainsi les mêmes produits dans 2 catégories différentes
+        ksort($loadedCart);
+        return $loadedCart;
+    }
+
+    public function loadCartChantier($id)
+    {
+        $cart = $this->get($id);
+        $productChantierManager = $this->container->get('paprec_catalog.product_chantier_manager');
+        $categoryManager = $this->container->get('paprec_catalog.category_manager');
+
+
+        // on récupère les products ajoutés au cart
+        $productsCategories = $cart->getContent();
+        $loadedCart = array();
+        $loadedCart['sum'] = 0;
+        if ($productsCategories && count($productsCategories)) {
+            foreach ($productsCategories as $productsCategory) {
+                $productChantier = $productChantierManager->get($productsCategory['pId']);
+                $category = $categoryManager->get($productsCategory['cId']);
+                $loadedCart[$productsCategory['pId'] . '_' . $productsCategory['cId']] = ['qtty' => $productsCategory['qtty'], 'pName' => $productChantier->getName(), 'pCapacity' => $productChantier->getCapacity() . $productChantier->getCapacityUnit(), 'cName' => $category->getName(), 'frequency' => $cart->getFrequency()];
+                $productChantierCategory = $this->em->getRepository('PaprecCatalogBundle:ProductChantierCategory')->findOneBy(
+                    array(
+                        'productChantier' => $productChantier,
+                        'category' => $category
+                    )
+                );
+                $loadedCart['sum'] += $productChantierCategory->getUnitPrice()*$productsCategory['qtty'];
             }
         } else {
             return $loadedCart;

@@ -23,3 +23,5 @@
 /app/data/offer/notice/*
 /app/data/offer/tmp/*
 /app/data/ticketFile/*
+# Backup entities generated with doctrine:generate:entities command
+**/Entity/*~

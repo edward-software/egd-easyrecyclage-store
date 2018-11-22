@@ -30,7 +30,7 @@ class GrilleTarifLigneD3EType extends AbstractType
                 'query_builder' => function (AgencyRepository $er) {
                     return $er->createQueryBuilder('a')
                         ->where('a.deleted IS NULL')
-                        ->where('a.divisions LIKE \'%D3E%\'');
+                        ->andWhere('a.divisions LIKE \'%D3E%\'');
                 }
             ))
             ->add('minQuantity')

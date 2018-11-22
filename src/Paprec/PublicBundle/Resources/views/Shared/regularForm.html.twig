@@ -13,25 +13,19 @@
     <section>
         <div class="wrapper">
             <div class="sidebar">
-                <div class="recap passed">
+                <div class="recap active">
                     <div class="recap__step">
                         <span class="recap__stepNumber">01</span>Mon besoin
                     </div>
                 </div>
 
-                <div class="recap passed">
+                <div class="recap">
                     <div class="recap__step">
-                        <span class="recap__stepNumber">02</span>Mes coordonnées
+                        <span class="recap__stepNumber">02</span>Ma confirmation
                     </div>
 
                 </div>
 
-                <div class="recap active">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">03</span>Mon offre
-                    </div>
-
-                </div>
             </div>
             <form id="regularForm" action="#" class="main" method="post" enctype="multipart/form-data">
                 <div class="step">
@@ -161,6 +155,20 @@
 {% block javascripts %}
     <script>
         $(function () {
+
+            loadedPage();
+
+            function loadedPage() {
+                division = $("#divisionSelect").val();
+                if (division === 'DI') {
+                    $('body').addClass('tunnel--green');
+                } else if (division === 'CHANTIER') {
+                    $('body').addClass('tunnel--orange');
+                } else {
+                    $('body').addClass('tunnel--purple');
+                }
+            }
+
 
             $('#regularFormSubmitButton').on('click', function () {
                 $('#regularForm').submit();

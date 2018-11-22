@@ -65,6 +65,15 @@ class HomeController extends Controller
                         return $this->redirectToRoute('paprec_public_DI_subscription_step1', array(
                             'cartUuid' => $cart->getId()
                         ));
+                        break;
+                    case('CHANTIER'):
+                        return $this->redirectToRoute('paprec_public_Chantier_subscription_step0', array(
+                            'cartUuid' => $cart->getId()
+                        ));
+                    case('D3E'):
+//                        return $this->redirectToRoute('paprec_public_D3E_subscription_step0', array(
+//                            'cartUuid' => $cart->getId()
+//                        ));
                 }
             }
 
@@ -120,7 +129,9 @@ class HomeController extends Controller
             $em->flush();
 
 
-            return $this->redirectToRoute('paprec_public_home_index');
+            return $this->render('@PaprecPublic/Shared/regularConfirm.html.twig', array(
+                'quoteRequest' => $quoteRequest
+            ));
         }
         return $this->render('@PaprecPublic/Shared/regularForm.html.twig', array(
             'form' => $form->createView(),

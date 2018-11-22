@@ -59,6 +59,14 @@ class Cart
     private $frequency;
 
     /**
+     * 'Order' ou 'Quote' ou 'null' pour DI
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
+     */
+    private $type;
+
+    /**
      * @var array
      *
      * @ORM\Column(name="displayedCategories", type="simple_array", nullable=true)
@@ -286,5 +294,29 @@ class Cart
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Set type.
+     *
+     * @param string|null $type
+     *
+     * @return Cart
+     */
+    public function setType($type = null)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type.
+     *
+     * @return string|null
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

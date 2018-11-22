@@ -19,4 +19,6 @@ Public:
     AddToCart:                    Ajouter au devis
     NoProduct:                    Aucune prestation ajoutée
     NeedEstimation:               J'estime mon besoin en 3 minutes
+    3MinOrder:                    Je commande en ligne en 3 minutes
     FillForm:                     Je remplis un formulaire
+    QuoteRequest:                 J'établis un devis

@@ -59,6 +59,14 @@ class Cart
     private $frequency;
 
     /**
+     * 'Order' ou 'Quote' ou 'null' pour DI
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
+     */
+    private $type;
+
+    /**
      * @var array
      *
      * @ORM\Column(name="displayedCategories", type="simple_array", nullable=true)
@@ -84,6 +92,7 @@ class Cart
     {
         $this->dateCreation = new \DateTime();
         $this->setDisplayedProducts = array();
+        $this->content = array();
 
     }
 
@@ -261,5 +270,29 @@ class Cart
     public function getDisplayedProducts()
     {
         return $this->displayedProducts;
+    }
+
+    /**
+     * Set content.
+     *
+     * @param json|null $content
+     *
+     * @return Cart
+     */
+    public function setContent($content = null)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content.
+     *
+     * @return json|null
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 }

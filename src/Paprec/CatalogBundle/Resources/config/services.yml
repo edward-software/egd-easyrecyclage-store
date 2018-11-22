@@ -9,8 +9,8 @@ services:
     class: Paprec\CatalogBundle\Service\ProductDIManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
-  paprec_catalog.product_di_category_manager:
-    class: Paprec\CatalogBundle\Service\ProductDICategoryManager
+  paprec_catalog.product_chantier_manager:
+    class: Paprec\CatalogBundle\Service\ProductChantierManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
 parameters:

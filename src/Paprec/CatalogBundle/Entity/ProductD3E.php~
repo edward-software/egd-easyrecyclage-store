@@ -138,7 +138,7 @@ class ProductD3E
     private $pictos;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\GrilleTarifD3E", inversedBy="productD3Es")
+     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\GrilleTarifD3E", inversedBy="productD3Es", cascade={"all"})
      */
     private $grilleTarifD3E;
 
@@ -507,5 +507,29 @@ class ProductD3E
     public function getPictos()
     {
         return $this->pictos;
+    }
+
+    /**
+     * Set grilleTarifD3E.
+     *
+     * @param \Paprec\CatalogBundle\Entity\GrilleTarifD3E|null $grilleTarifD3E
+     *
+     * @return ProductD3E
+     */
+    public function setGrilleTarifD3E(\Paprec\CatalogBundle\Entity\GrilleTarifD3E $grilleTarifD3E = null)
+    {
+        $this->grilleTarifD3E = $grilleTarifD3E;
+
+        return $this;
+    }
+
+    /**
+     * Get grilleTarifD3E.
+     *
+     * @return \Paprec\CatalogBundle\Entity\GrilleTarifD3E|null
+     */
+    public function getGrilleTarifD3E()
+    {
+        return $this->grilleTarifD3E;
     }
 }

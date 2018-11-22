@@ -18,13 +18,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductDIQuoteShortType extends AbstractType
 {
-    private $division;
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->division = $options['division'];
         $builder
             ->add('businessName')
             ->add('businessLine', EntityType::class, array(
@@ -37,8 +35,7 @@ class ProductDIQuoteShortType extends AbstractType
                 'query_builder' => function (BusinessLineRepository $er) {
                     return $er->createQueryBuilder('b')
                         ->where('b.deleted IS NULL')
-                        ->where('b.division = :division')
-                        ->setParameter('division', $this->division);
+                        ->andWhere('b.division = \'DI\'');
                 }
             ))
             ->add('civility', ChoiceType::class, array(
@@ -68,8 +65,7 @@ class ProductDIQuoteShortType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\ProductDIQuote',
-            'division' => null
+            'data_class' => 'Paprec\CommercialBundle\Entity\ProductDIQuote'
         ));
     }
 

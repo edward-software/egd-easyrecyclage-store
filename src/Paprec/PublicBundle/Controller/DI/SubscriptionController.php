@@ -15,13 +15,13 @@ class SubscriptionController extends Controller
 {
 
     /**
-     * @Route("/step1/{cartUuid}", name="paprec_public_DI_subscription_step1")
+     * @Route("/di/step1/{cartUuid}", name="paprec_public_DI_subscription_step1")
      */
     public function step1Action(Request $request, $cartUuid)
     {
         $cartManager = $this->get('paprec.cart_manager');
         $categoryManager = $this->get('paprec_catalog.category_manager');
-        $productDICategoryManager = $this->get('paprec_catalog.product_di_manager');
+        $productDIManager = $this->get('paprec_catalog.product_di_manager');
 
 
         $cart = $cartManager->get($cartUuid);
@@ -37,9 +37,9 @@ class SubscriptionController extends Controller
          */
         $productsCategories = array();
         foreach ($cart->getDisplayedCategories() as $displayedCategory) {
-            $productsCategories[$displayedCategory] = $productDICategoryManager->getByCategory($displayedCategory);
+            $productsCategories[$displayedCategory] = $productDIManager->getByCategory($displayedCategory);
         }
-        return $this->render('@PaprecPublic/DI/index.html.twig', array(
+        return $this->render('@PaprecPublic/DI/need.html.twig', array(
             'divisions' => $divisions,
             'cart' => $cart,
             'categories' => $categories,
@@ -49,7 +49,7 @@ class SubscriptionController extends Controller
 
     /**
      * Etape du formulaire des informations contact
-     * @Route("/step2/{cartUuid}", name="paprec_public_DI_subscription_step2")
+     * @Route("/di/step2/{cartUuid}", name="paprec_public_DI_subscription_step2")
      * @throws \Exception
      */
     public function step2Action(Request $request, $cartUuid)
@@ -67,9 +67,7 @@ class SubscriptionController extends Controller
         $productDIQuote->setPostalCode($postalCode);
 
 
-        $form = $this->createForm(productDIQuoteShortType::class, $productDIQuote, array(
-            'division' => 'DI'
-        ));
+        $form = $this->createForm(productDIQuoteShortType::class, $productDIQuote);
 
         $form->handleRequest($request);
 
@@ -104,7 +102,7 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * @Route("/step3/{cartUuid}/{quoteId}", name="paprec_public_DI_subscription_step3")
+     * @Route("/di/step3/{cartUuid}/{quoteId}", name="paprec_public_DI_subscription_step3")
      */
     public function step3Action(Request $request, $cartUuid, $quoteId)
     {
@@ -121,7 +119,7 @@ class SubscriptionController extends Controller
 
 
     /**
-     * @Route("/addDisplayedCategory/{cartUuid}/{categoryId}", name="paprec_public_DI_subscription_addDisplayedCategory")
+     * @Route("/di/addDisplayedCategory/{cartUuid}/{categoryId}", name="paprec_public_DI_subscription_addDisplayedCategory")
      * @throws \Exception
      */
     public function addDisplayedCategoryAction(Request $request, $cartUuid, $categoryId)
@@ -138,7 +136,7 @@ class SubscriptionController extends Controller
 
     /**
      * Ajoute au cart un displayedProduct avec en key => value( categoryId => productId)
-     * @Route("/addOrRemoveDisplayedProduct/{cartUuid}/{categoryId}/{productId}", name="paprec_public_DI_subscription_addOrRemoveDisplayedProduct")
+     * @Route("/di/addOrRemoveDisplayedProduct/{cartUuid}/{categoryId}/{productId}", name="paprec_public_DI_subscription_addOrRemoveDisplayedProduct")
      * @throws \Exception
      */
     public function addOrRemoveDisplayedProductAction(Request $request, $cartUuid, $categoryId, $productId)
@@ -155,7 +153,7 @@ class SubscriptionController extends Controller
 
     /**
      * Ajoute au cart un product
-     * @Route("/addContent/{cartUuid}/{categoryId}/{productId}/{quantity}", name="paprec_public_DI_subscription_addContent")
+     * @Route("/di/addContent/{cartUuid}/{categoryId}/{productId}/{quantity}", name="paprec_public_DI_subscription_addContent")
      * @throws \Exception
      */
     public function addContentAction(Request $request, $cartUuid, $categoryId, $productId, $quantity)
@@ -170,7 +168,7 @@ class SubscriptionController extends Controller
 
     /**
      * Ajoute au cart un displayedProduct avec en key => value( categoryId => productId)
-     * @Route("/removeContent/{cartUuid}/{categoryId}/{productId}", name="paprec_public_DI_subscription_removeContent")
+     * @Route("/di/removeContent/{cartUuid}/{categoryId}/{productId}", name="paprec_public_DI_subscription_removeContent")
      * @throws \Exception
      */
     public function removeContentAction(Request $request, $cartUuid, $categoryId, $productId)
@@ -185,14 +183,14 @@ class SubscriptionController extends Controller
 
     /**
      * Retourne le twig du cart avec les produits dans celui-ci ainsi que le montant total
-     * @Route("/loadCart/{cartUuid}", name="paprec_public_DI_subscription_loadCart", condition="request.isXmlHttpRequest()")
+     * @Route("/di/loadCart/{cartUuid}", name="paprec_public_DI_subscription_loadCart", condition="request.isXmlHttpRequest()")
      */
     public function loadCartAction(Request $request, $cartUuid)
     {
         $cartManager = $this->get('paprec.cart_manager');
 
         // On récupère les informations du cart à afficher ainsi que le calcul de la somme du Cart
-        $loadedCart = $cartManager->loadCart($cartUuid);
+        $loadedCart = $cartManager->loadCartDI($cartUuid);
 
         return $this->render('@PaprecPublic/DI/partial/cartPartial.html.twig', array(
             'loadedCart' => $loadedCart

@@ -63,7 +63,7 @@ class CategoryController extends Controller
         $queryBuilder->select(array('c'))
             ->from('PaprecCatalogBundle:Category', 'c')
             ->where('c.deleted IS NULL')
-            ->where('c.division LIKE \'%' . $typeCategory . '%\''); // Récupération des catégories du type voulu
+            ->andWhere('c.division LIKE \'%' . $typeCategory . '%\''); // Récupération des catégories du type voulu
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
             if (substr($search['value'], 0, 1) == '#') {

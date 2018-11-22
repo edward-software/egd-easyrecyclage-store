@@ -242,7 +242,6 @@ class ProductChantierController extends Controller
         /**
          * On récupère les productChantierCategories présents avant la modif. Il faut les supprimer sinon on a un doublon
          */
-        $currentPCs = $productChantier->getProductChantierCategories();
 
         $form->handleRequest($request);
 
@@ -253,12 +252,6 @@ class ProductChantierController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
-            /**
-             * On supprime les anciennes relations productsChantierCategories
-             */
-            foreach ($currentPCs as $pC) {
-                $em->remove($pC);
-            }
 
             $em->flush();
 
@@ -448,6 +441,7 @@ class ProductChantierController extends Controller
     /**
      * @Route("/productChantier/removePicture/{id}/{pictureID}", name="paprec_catalog_productChantier_removePicture")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws Exception
      */
     public function removePictureAction(Request $request, ProductChantier $productChantier)
     {

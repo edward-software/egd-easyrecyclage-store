@@ -7,6 +7,10 @@ services:
     class: Paprec\CommercialBundle\Service\ProductDIQuoteManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
+  paprec_catalog.product_chantier_quote_manager:
+    class: Paprec\CommercialBundle\Service\ProductChantierQuoteManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
 parameters:
   paprec_commercial.quote_request.files_path: "%kernel.root_dir%/../web/uploads/files"
 

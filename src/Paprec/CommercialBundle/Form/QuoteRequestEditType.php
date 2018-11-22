@@ -46,7 +46,7 @@ class QuoteRequestEditType extends AbstractType
                 'query_builder' => function (UserRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->where('u.deleted IS NULL')
-                        ->where('u.enabled = 1');
+                        ->andWhere('u.enabled = 1');
                 }
             ))
             ->add('agency', EntityType::class, array(

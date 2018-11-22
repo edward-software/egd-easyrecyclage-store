@@ -133,6 +133,11 @@ class Agency
     private $productDIQuotes;
 
     /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductChantierQuote", mappedBy="agency")
+     */
+    private $productChantierQuotes;
+
+    /**
      * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\QuoteRequest", mappedBy="agency")
      */
     private $quoteRequests;
@@ -143,6 +148,8 @@ class Agency
     {
         $this->dateCreation = new \DateTime();
         $this->productDIQuotes = new ArrayCollection();
+        $this->productChantierQuotes = new ArrayCollection();
+
     }
 
     public function __toString()
@@ -554,5 +561,41 @@ class Agency
     public function getQuoteRequests()
     {
         return $this->quoteRequests;
+    }
+
+    /**
+     * Add productChantierQuote.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductChantierQuote $productChantierQuote
+     *
+     * @return Agency
+     */
+    public function addProductChantierQuote(\Paprec\CommercialBundle\Entity\ProductChantierQuote $productChantierQuote)
+    {
+        $this->productChantierQuotes[] = $productChantierQuote;
+
+        return $this;
+    }
+
+    /**
+     * Remove productChantierQuote.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductChantierQuote $productChantierQuote
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductChantierQuote(\Paprec\CommercialBundle\Entity\ProductChantierQuote $productChantierQuote)
+    {
+        return $this->productChantierQuotes->removeElement($productChantierQuote);
+    }
+
+    /**
+     * Get productChantierQuotes.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductChantierQuotes()
+    {
+        return $this->productChantierQuotes;
     }
 }

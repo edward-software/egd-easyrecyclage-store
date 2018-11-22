@@ -49,7 +49,7 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank()
      */
     private $name;
@@ -106,6 +106,11 @@ class Category
      * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuoteLine", mappedBy="category", cascade={"all"})
      */
     private $productDIQuoteLines;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductChantierQuoteLine", mappedBy="category", cascade={"all"})
+     */
+    private $productChantierQuoteLines;
 
 
     public function __construct()
@@ -505,5 +510,41 @@ class Category
     public function getProductDIQuoteLines()
     {
         return $this->productDIQuoteLines;
+    }
+
+    /**
+     * Add productChantierQuoteLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductChantierQuoteLine $productChantierQuoteLine
+     *
+     * @return Category
+     */
+    public function addProductChantierQuoteLine(\Paprec\CommercialBundle\Entity\ProductChantierQuoteLine $productChantierQuoteLine)
+    {
+        $this->productChantierQuoteLines[] = $productChantierQuoteLine;
+
+        return $this;
+    }
+
+    /**
+     * Remove productChantierQuoteLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductChantierQuoteLine $productChantierQuoteLine
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductChantierQuoteLine(\Paprec\CommercialBundle\Entity\ProductChantierQuoteLine $productChantierQuoteLine)
+    {
+        return $this->productChantierQuoteLines->removeElement($productChantierQuoteLine);
+    }
+
+    /**
+     * Get productChantierQuoteLines.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductChantierQuoteLines()
+    {
+        return $this->productChantierQuoteLines;
     }
 }

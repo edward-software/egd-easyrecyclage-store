@@ -41,8 +41,8 @@ class User extends BaseUser
 
 
     /**
-     *  @var string
-     *  @Assert\Email(
+     * @var string
+     * @Assert\Email(
      *      message = "The email '{{ value }}' is not a valid email.",
      *      checkMX = true
      * )
@@ -103,10 +103,16 @@ class User extends BaseUser
      *              Relations
      * #################################
      */
+
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\productDIQuote", mappedBy="userInCharge")
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuote", mappedBy="userInCharge")
      */
     private $productDIQuotes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductChantierQuote", mappedBy="userInCharge")
+     */
+    private $productChantierQuotes;
 
     /**
      * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\QuoteRequest", mappedBy="userInCharge")
@@ -119,6 +125,8 @@ class User extends BaseUser
 
         $this->dateCreation = new \DateTime();
         $this->productDIQuotes = new ArrayCollection();
+        $this->productChantierQuotes = new ArrayCollection();
+
     }
 
 

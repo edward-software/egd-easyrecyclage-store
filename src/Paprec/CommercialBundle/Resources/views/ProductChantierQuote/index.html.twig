@@ -1,0 +1,157 @@
+{% extends "::base_admin.html.twig" %}
+
+{% block title %}
+    {{ 'Commercial.ProductChantierQuote.ProductChantierQuotes'|trans }}
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}">
+{% endblock %}
+
+{% block content_title %}
+    {{ 'Commercial.ProductChantierQuote.ProductChantierQuotes'|trans }}
+{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BOX -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fa fa-xs fa-list"></i> {{ 'Commercial.ProductChantierQuote.List'|trans }}
+                        <div class="float-right">
+                            <a href="{{ path('paprec_commercial_productChantierQuote_add') }}"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductChantierQuote.Add'|trans }}
+                            </a>
+                            <a href="{{ path('paprec_commercial_productChantierQuote_export') }}" class="btn btn-sm btn-primary ">
+                                <i class="fa fa-xs fa-file-excel"></i> {{ 'Commercial.ProductChantierQuote.Export'|trans }}
+                            </a>
+                        </div>
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <table id="productChantierQuotesListDatatable" class="table table-striped table-bordered table-hover"
+                           cellpadding="0" cellspacing="0" border="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{{ 'Commercial.ProductChantierQuote.BusinessName'|trans }}</th>
+                            <th>{{ 'Commercial.ProductChantierQuote.TotalAmount'|trans }}</th>
+                            <th>{{ 'Commercial.ProductChantierQuote.QuoteStatus'|trans }}</th>
+                            <th>{{ 'Commercial.ProductChantierQuote.Date-crea'|trans }}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <!-- /BOX -->
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!-- DATA TABLES JS -->
+    <script type="text/javascript"
+            src="{{ asset('/assets/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('/assets/vendor/datatables.net-select/js/dataTables.select.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('/assets/vendor/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
+
+    <script>
+        $(function () {
+
+            var productChantierQuoteList = $('#productChantierQuotesListDatatable').DataTable({
+                "language": {
+                    "lengthMenu": "{{ 'General.Datatable.Records-per-page'|trans }}",
+                    "zeroRecords": "{{ 'General.Datatable.Nothing-found'|trans }}",
+                    "info": "{{ 'General.Datatable.Showing-page'|trans }}",
+                    "infoEmpty": "{{ 'General.Datatable.No-records-available'|trans }}",
+                    "search": "{{ 'General.Datatable.Search'|trans }}:",
+                    "sProcessing": "{{ 'General.Datatable.Loading'|trans }}",
+                    "paginate": {
+                        "previous": "{{ 'General.Datatable.Previous'|trans }}",
+                        "next": "{{ 'General.Datatable.Next'|trans }}",
+                    }
+                },
+                dom: 'B<"ml-2">f<"ml-auto">lrti<"ml-auto">p',
+                buttons: [
+                    {
+                        text: '{{ 'General.Remove'|trans }}',
+                        className: 'btn-sm',
+                        action: function (e, dt) {
+                            if (dt.rows({selected: true}).count() > 0) {
+                                var rowIds = [];
+                                $.each(dt.rows({selected: true}).data(), function () {
+                                    rowIds.push(this.id);
+                                });
+                                var url = "{{ path("paprec_commercial_productChantierQuote_removeMany", {ids: '0000'}) }}".replace('0000', rowIds.join(','));
+
+                                bootbox.confirm("{{ 'General.Confirm-remove'|trans }}", function (result) {
+                                    if (result === true) {
+                                        $(location).attr('href', url);
+                                    }
+                                });
+                            }
+                        }
+                    },
+                ],
+                "select": true,
+                "processing": true,
+                "serverSide": true,
+                "lengthMenu": [[5, 10, 20, 50], [5, 10, 20, 50]],
+                "ajax": "{{ path('paprec_commercial_productChantierQuote_loadList') }}",
+                "columns": [
+                    {"data": "id"},
+                    {"data": "businessName"},
+                    {"data": "totalAmount"},
+                    {"data": "quoteStatus"},
+                    {"data": "dateCreation"},
+                    {"data": "id", "width": "10%", "bSortable": false}
+                ],
+                columnDefs: [
+                    {"width": "250px", "targets": 1},
+                ],
+                "rowCallback": function (row, data, displayIndex) {
+                },
+                "drawCallback": function () {
+                    $('.dataTables_paginate > .pagination').addClass('pagination-sm');
+                },
+                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+
+                    viewUrl = "{{ path('paprec_commercial_productChantierQuote_view', {id: '0000'}) }}".replace('0000', aData['id']);
+                    editUrl = "{{ path('paprec_commercial_productChantierQuote_edit', {id: '0000'}) }}".replace('0000', aData['id']);
+
+                    $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-sm btn-primary btn-sm"><i class="fa fa-xs fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-sm btn-warning btn-sm"><i class="fa fa-xs fa-edit"></i></a>');
+
+                },
+            });
+
+            $('#productChantierQuotesListDatatable tbody').on('dblclick', 'tr', function (event) {
+                url = "{{ path('paprec_commercial_productChantierQuote_view', {id: '0000'}) }}".replace('0000', $(this).attr('id').replace('row_', ''));
+                $(location).attr('href', url);
+            });
+
+        });
+    </script>
+{% endblock %}

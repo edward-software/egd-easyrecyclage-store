@@ -166,11 +166,11 @@ class Picture
     /**
      * Set productD3E.
      *
-     * @param \Paprec\CatalogBundle\Entity\ProductChantier|null $productD3E
+     * @param \Paprec\CatalogBundle\Entity\ProductD3E|null $productD3E
      *
      * @return Picture
      */
-    public function setProductD3E(\Paprec\CatalogBundle\Entity\ProductChantier $productD3E = null)
+    public function setProductD3E(\Paprec\CatalogBundle\Entity\ProductD3E $productD3E = null)
     {
         $this->productD3E = $productD3E;
 
@@ -180,7 +180,7 @@ class Picture
     /**
      * Get productD3E.
      *
-     * @return \Paprec\CatalogBundle\Entity\ProductChantier|null
+     * @return \Paprec\CatalogBundle\Entity\ProductD3E|null
      */
     public function getProductD3E()
     {

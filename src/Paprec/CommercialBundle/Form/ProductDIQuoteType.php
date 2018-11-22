@@ -32,7 +32,8 @@ class ProductDIQuoteType extends AbstractType
                 'choice_label' => 'name',
                 'query_builder' => function (BusinessLineRepository $er) {
                     return $er->createQueryBuilder('b')
-                        ->where('b.deleted IS NULL');
+                        ->where('b.deleted IS NULL')
+                        ->andWhere('b.division = \'DI\'');
                 }
             ))
             ->add('civility', ChoiceType::class, array(
@@ -77,7 +78,7 @@ class ProductDIQuoteType extends AbstractType
                 'query_builder' => function (UserRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->where('u.deleted IS NULL')
-                        ->where('u.enabled = 1');
+                        ->andWhere('u.enabled = 1');
                 }
             ))
             ->add('agency', EntityType::class, array(
@@ -89,7 +90,8 @@ class ProductDIQuoteType extends AbstractType
                 'choice_label' => 'name',
                 'query_builder' => function (AgencyRepository $er) {
                     return $er->createQueryBuilder('a')
-                        ->where('a.deleted IS NULL');
+                        ->where('a.deleted IS NULL')
+                        ->andWhere('a.divisions LIKE \'%DI%\'');
                 }
             ));
     }/**

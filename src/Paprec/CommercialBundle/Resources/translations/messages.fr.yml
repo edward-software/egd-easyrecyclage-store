@@ -101,6 +101,59 @@ Commercial:
     TotalAmount:                Montant total
     Confirm-remove:             Etes-vous sûr de vouloir supprimer cette ligne du devis DI ?
 
+  ProductChantierQuote:
+    ProductChantierQuotes:            Devis Chantier
+    List:                       Liste des devis Chantier
+    Date-creation:              Date de création
+    Date-crea:                  Date de créa.
+    Date-update:                Date de mise à jour
+    BusinessName:               Raison sociale
+    BusinessLine:               Secteur d'activité
+    BusinessLinePlaceholder:    Sélectionnez votre secteur d'activité
+    Civility:                   Civilité
+    LastName:                   Nom
+    FirstName:                  Prénom
+    Function:                   Fonction
+    FunctionPlaceholder:        Fonction (facultatif)
+    Email:                      Email
+    Address:                    Adresse
+    PostalCode:                 Code postal
+    City:                       Ville
+    Phone:                      Téléphone
+    PhonePlaceholder:           Numéro de téléphone
+    QuoteStatus:                Statut
+    TotalAmount:                Montant total
+    GeneratedTurnover:          CA généré
+    Agency:                     Agence associée
+    Summary:                    Résumé du besoin
+    Frequency:                  Pontuel / Régulier
+    Tonnage:                    Tonnage
+    KookaburaNumber:            N° contrat Kookabura
+    UserInCharge:               Commercial en charge
+    ProductsList:               Liste des produits
+    Informations:               Informations
+    Informations-FO:            Informations Front Office
+    Informations-BO:            Informations Back Office
+    System-informations:        Informations système
+    Export:                     Exporter les devis Chantier
+    View:                       Visualiser le devis Chantier
+    Edit:                       Modifier le devis Chantier
+    Remove:                     Supprimer le devis Chantier
+    Add:                        Ajouter un devis Chantier
+    AddLine:                    Ajouter un produit
+    Save:                       Enregistrer
+    Cancel:                     Annuler
+    Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+    Confirm-remove:             Etes-vous sûr de vouloir supprimer ce devis Chantier ?
+
+  ProductChantierQuoteLine:
+    ProductName:                Produit
+    CategoryName:               Catégorie
+    UnitPrice:                  Prix unitaire
+    Quantity:                   Quantité
+    TotalAmount:                Montant total
+    Confirm-remove:             Etes-vous sûr de vouloir supprimer cette ligne du devis Chantier ?
+
   QuoteRequest:
     QuoteRequests:              Demandes de devis
     List:                       Liste des demandes de devis

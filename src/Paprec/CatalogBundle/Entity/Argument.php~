@@ -70,6 +70,7 @@ class Argument
 
     /**
      * @ORM\ManyToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductChantier", mappedBy="arguments", cascade={"persist"})
+
      */
     private $productChantiers;
 
@@ -194,7 +195,7 @@ class Argument
      *
      * @return Argument
      */
-    public function setPicto($picto)
+    public function setPicto($picto = null)
     {
         $this->picto = $picto;
 

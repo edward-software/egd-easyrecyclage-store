@@ -2,6 +2,7 @@
 
 namespace Paprec\CommercialBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -61,9 +62,14 @@ class BusinessLine
     private $division;
 
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIOrder", mappedBy="businessLine")
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuote", mappedBy="businessLine")
      */
-    private $productDIOrders;
+    private $productDIQuotes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductChantierQuote", mappedBy="businessLine")
+     */
+    private $productChantierQuotes;
 
     /**
      * BusinessLine constructor.
@@ -71,6 +77,8 @@ class BusinessLine
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
+        $this->productDIQuotes = new ArrayCollection();
+        $this->productChantierQuotes = new ArrayCollection();
     }
 
     /**
@@ -201,5 +209,77 @@ class BusinessLine
     public function getDivision()
     {
         return $this->division;
+    }
+
+    /**
+     * Add productDIQuote.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote
+     *
+     * @return BusinessLine
+     */
+    public function addProductDIQuote(\Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote)
+    {
+        $this->productDIQuotes[] = $productDIQuote;
+
+        return $this;
+    }
+
+    /**
+     * Remove productDIQuote.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductDIQuote(\Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote)
+    {
+        return $this->productDIQuotes->removeElement($productDIQuote);
+    }
+
+    /**
+     * Get productDIQuotes.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductDIQuotes()
+    {
+        return $this->productDIQuotes;
+    }
+
+    /**
+     * Add productChantierQuote.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductChantierQuote $productChantierQuote
+     *
+     * @return BusinessLine
+     */
+    public function addProductChantierQuote(\Paprec\CommercialBundle\Entity\ProductChantierQuote $productChantierQuote)
+    {
+        $this->productChantierQuotes[] = $productChantierQuote;
+
+        return $this;
+    }
+
+    /**
+     * Remove productChantierQuote.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductChantierQuote $productChantierQuote
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductChantierQuote(\Paprec\CommercialBundle\Entity\ProductChantierQuote $productChantierQuote)
+    {
+        return $this->productChantierQuotes->removeElement($productChantierQuote);
+    }
+
+    /**
+     * Get productChantierQuotes.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductChantierQuotes()
+    {
+        return $this->productChantierQuotes;
     }
 }

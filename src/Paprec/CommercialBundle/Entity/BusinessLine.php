@@ -2,6 +2,7 @@
 
 namespace Paprec\CommercialBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -66,11 +67,18 @@ class BusinessLine
     private $productDIQuotes;
 
     /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductChantierQuote", mappedBy="businessLine")
+     */
+    private $productChantierQuotes;
+
+    /**
      * BusinessLine constructor.
      */
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
+        $this->productDIQuotes = new ArrayCollection();
+        $this->productChantierQuotes = new ArrayCollection();
     }
 
     /**
@@ -237,5 +245,41 @@ class BusinessLine
     public function getProductDIQuotes()
     {
         return $this->productDIQuotes;
+    }
+
+    /**
+     * Add productChantierQuote.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductChantierQuote $productChantierQuote
+     *
+     * @return BusinessLine
+     */
+    public function addProductChantierQuote(\Paprec\CommercialBundle\Entity\ProductChantierQuote $productChantierQuote)
+    {
+        $this->productChantierQuotes[] = $productChantierQuote;
+
+        return $this;
+    }
+
+    /**
+     * Remove productChantierQuote.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductChantierQuote $productChantierQuote
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductChantierQuote(\Paprec\CommercialBundle\Entity\ProductChantierQuote $productChantierQuote)
+    {
+        return $this->productChantierQuotes->removeElement($productChantierQuote);
+    }
+
+    /**
+     * Get productChantierQuotes.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductChantierQuotes()
+    {
+        return $this->productChantierQuotes;
     }
 }

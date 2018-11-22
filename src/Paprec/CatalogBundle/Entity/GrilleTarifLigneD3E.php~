@@ -43,7 +43,6 @@ class GrilleTarifLigneD3E
      * @var int
      *
      * @ORM\Column(name="maxQuantity", type="integer")
-     * @Assert\NotBlank()
      */
     private $maxQuantity;
 
@@ -61,9 +60,9 @@ class GrilleTarifLigneD3E
     private $grilleTarifD3E;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agence", inversedBy="grilleTarifLigneD3Es")
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agency", inversedBy="grilleTarifLigneD3Es")
      */
-    private $agence;
+    private $agency;
 
     /**
      * Get id.
@@ -193,5 +192,29 @@ class GrilleTarifLigneD3E
     public function getGrilleTarifD3E()
     {
         return $this->grilleTarifD3E;
+    }
+
+    /**
+     * Set agency.
+     *
+     * @param \Paprec\CommercialBundle\Entity\Agency|null $agence
+     *
+     * @return GrilleTarifLigneD3E
+     */
+    public function setAgency(\Paprec\CommercialBundle\Entity\Agency $agency = null)
+    {
+        $this->agency = $agency;
+
+        return $this;
+    }
+
+    /**
+     * Get agency.
+     *
+     * @return \Paprec\CommercialBundle\Entity\Agency|null
+     */
+    public function getAgency()
+    {
+        return $this->agency;
     }
 }

@@ -238,11 +238,6 @@ class ProductDIController extends Controller
 
         $form = $this->createForm(ProductDIType::class, $productDI);
 
-        /**
-         * On récupère les productDICategories présents avant la modif. Il faut les supprimer sinon on a un doublon
-         */
-        $currentPCs = $productDI->getProductDICategories();
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -251,13 +246,6 @@ class ProductDIController extends Controller
             $productDI->setDateUpdate(new \DateTime);
 
             $em = $this->getDoctrine()->getManager();
-
-            /**
-             * On supprime les anciennes relations ProductDIsCategories
-             */
-            foreach ($currentPCs as $pC) {
-                $em->remove($pC);
-            }
 
             $em->flush();
 

@@ -39,7 +39,6 @@ class GrilleTarifD3E
     /**
      * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductD3E", mappedBy="grilleTarifD3E", cascade={"all"})
      */
-
     private $productD3Es;
 
     /**

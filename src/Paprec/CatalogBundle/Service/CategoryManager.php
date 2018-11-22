@@ -28,7 +28,8 @@ class CategoryManager
         $this->container = $container;
     }
 
-    public function get($category) {
+    public function get($category)
+    {
         $id = $category;
         if ($category instanceof Category) {
             $id = $category->getId();
@@ -69,6 +70,45 @@ class CategoryManager
 
         } catch (ORMException $e) {
             throw new Exception('unableToGetCategoriesDI', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * Jointure sur ProductChantierCategory comme ça on est sur de renvoyer uniquement les catégories qui ont des produits
+     * @return mixed
+     */
+    public function getCategoriesChantier($type)
+    {
+        try {
+
+            if ($type == 'order') {
+                $query = $this->em
+                    ->getRepository(Category::class)
+                    ->createQueryBuilder('c')
+                    ->innerJoin('PaprecCatalogBundle:ProductChantierCategory', 'pc', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.id = pc.category')
+                    ->innerJoin('PaprecCatalogBundle:ProductChantier', 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 'p.id = pc.productChantier')
+                    ->where('c.division = \'Chantier\'')
+                    ->andWhere('p.isPayableOnline = 1')
+                    ->distinct()
+                    ->orderBy('c.position', 'ASC');
+
+            } else {
+                $query = $this->em
+                    ->getRepository(Category::class)
+                    ->createQueryBuilder('c')
+                    ->innerJoin('PaprecCatalogBundle:ProductChantierCategory', 'pc', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.id = pc.category')
+                    ->where('c.division = \'Chantier\'')
+                    ->distinct()
+                    ->orderBy('c.position', 'ASC');
+            }
+
+            return $query->getQuery()->getResult();
+
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToGetCategoriesChantier', 500);
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode());
         }

@@ -17,6 +17,7 @@
                     <div class="recap__step">
                         <span class="recap__stepNumber">01</span>Mon besoin
                     </div>
+                    <div id="loadedCartPanel"></div>
                 </div>
 
                 <div class="recap active">
@@ -101,10 +102,30 @@
 {% block javascripts %}
     <script>
         $(function () {
+            reloadCart()
+            $('body').addClass('tunnel--green');
+
 
             $('#contactDetailsFormSubmitButton').on('click', function () {
                 $('#contactDetailsForm').submit();
             });
+
+            // Rechargement de l'HTML du Cart
+            function reloadCart() {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ path('paprec_public_DI_subscription_loadCart', {cartUuid: cart.id}) }}",
+                    contentType: "html",
+                    success: function (response) {
+                        // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
+                        var htmlToDisplay = response.trim();
+                        $("#loadedCartPanel").html(htmlToDisplay);
+                    },
+                    error: function (errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
+            }
         });
     </script>
 
