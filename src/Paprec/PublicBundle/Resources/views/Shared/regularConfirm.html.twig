@@ -54,8 +54,7 @@
                 <div class="step">
                     <div class="step__sucess">
                         <div class="title">MERCI POUR VOTRE CONFIANCE !</div>
-                        <div class="content">Votre demande a bien été prise en compte par nos agences et vous a été
-                            envoyée par mail.
+                        <div class="content">Votre demande a bien été prise en compte par nos agences.
                         </div>
                     </div>
                     <div class="bold">{% if quoteRequest.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ quoteRequest.firstName }} {{ quoteRequest.lastName  }},</div>
@@ -65,7 +64,7 @@
                         L’agence en charge de votre demande vous recontactera sous 48h par e-mail ou téléphone.
                     </div>
 
-                    <a href="#" class="backtohome button button--green">RETOUR À LA PAGE D’ACCUEIL</a>
+                    <a href="{{ paprec_public_site_url }}" class="backtohome button button--green">RETOUR À LA PAGE D’ACCUEIL</a>
 
                     <div class="notice notice--left">
                         Besoin d’une <span>information complémentaire</span> ? Vous souhaitez nous en parler ?
