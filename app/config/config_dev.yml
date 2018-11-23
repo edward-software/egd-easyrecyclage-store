@@ -36,6 +36,16 @@ monolog:
         #chromephp:
         #    type: chromephp
         #    level: info
+        doctrine:
+            action_level: debug
+            type: stream
+            path: "%kernel.logs_dir%/%kernel.environment%_doctrine.log"
+            channels: doctrine
 
 #swiftmailer:
 #    delivery_addresses: ['me@example.com']
+
+doctrine:
+    dbal:
+        logging:  true
+        profiling:  true
