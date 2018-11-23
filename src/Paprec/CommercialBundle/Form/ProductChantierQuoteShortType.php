@@ -6,11 +6,13 @@ use Paprec\CommercialBundle\Entity\BusinessLine;
 use Paprec\CommercialBundle\Repository\BusinessLineRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\IsTrue;
 
 class ProductChantierQuoteShortType extends AbstractType
 {
@@ -26,7 +28,7 @@ class ProductChantierQuoteShortType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
                 'placeholder' => 'Commercial.ProductChantierQuote.BusinessLinePlaceholder',
-                'empty_data'  => null,
+                'empty_data' => null,
                 'choice_label' => 'name',
                 'query_builder' => function (BusinessLineRepository $er) {
                     return $er->createQueryBuilder('b')
@@ -35,12 +37,12 @@ class ProductChantierQuoteShortType extends AbstractType
                 }
             ))
             ->add('civility', ChoiceType::class, array(
-                'choices'  => array(
+                'choices' => array(
                     'Monsieur' => 'M',
                     'Madame' => 'Mme',
                 ),
                 'choice_attr' => function () {
-                    return  ['class' => 'input__radio'];
+                    return ['class' => 'input__radio'];
                 },
                 'expanded' => true
             ))
@@ -53,9 +55,15 @@ class ProductChantierQuoteShortType extends AbstractType
             ->add('phone', TextType::class)
             ->add('function', TextType::class, array(
                 'required' => false
-            ));
+            ))
+            ->add('terms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => new IsTrue()
+            ]);
 
-    }/**
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)

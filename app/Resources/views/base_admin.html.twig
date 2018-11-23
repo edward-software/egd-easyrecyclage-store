@@ -68,6 +68,9 @@
                                href="{{ path('paprec_commercial_productDIQuote_index') }}">{{ 'Commercial.ProductDIQuote.ProductDIQuotes'|trans }}</a>
                             <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productChantierQuote'|length) == 'paprec_commercial_productChantierQuote' %} active{% endif %}"
                                href="{{ path('paprec_commercial_productChantierQuote_index') }}">{{ 'Commercial.ProductChantierQuote.ProductChantierQuotes'|trans }}</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productChantierOrder'|length) == 'paprec_commercial_productChantierOrder' %} active{% endif %}"
+                               href="{{ path('paprec_commercial_productChantierOrder_index') }}">{{ 'Commercial.ProductChantierOrder.ProductChantierOrders'|trans }}</a>
                         </div>
                     </li>
                 {% endif %}

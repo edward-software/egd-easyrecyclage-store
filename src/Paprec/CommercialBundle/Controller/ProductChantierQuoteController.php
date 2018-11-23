@@ -4,8 +4,6 @@ namespace Paprec\CommercialBundle\Controller;
 
 use Paprec\CommercialBundle\Entity\ProductChantierQuote;
 use Paprec\CommercialBundle\Entity\ProductChantierQuoteLine;
-use Paprec\CommercialBundle\Form\ProductChantierCategoryAddType;
-use Paprec\CommercialBundle\Form\ProductChantierCategoryEditType;
 use Paprec\CommercialBundle\Form\ProductChantierQuoteLineAddType;
 use Paprec\CommercialBundle\Form\ProductChantierQuoteLineEditType;
 use Paprec\CommercialBundle\Form\ProductChantierQuoteType;
@@ -104,7 +102,7 @@ class ProductChantierQuoteController extends Controller
 
         $phpExcelObject->getProperties()->setCreator("Paprec Easy Recyclage")
             ->setLastModifiedBy("Paprec Easy Recyclage")
-            ->setTitle("Paprec Easy Recyclage - Devis DI")
+            ->setTitle("Paprec Easy Recyclage - Devis Chantier")
             ->setSubject("Extraction");
 
         $phpExcelObject->setActiveSheetIndex(0)
@@ -128,7 +126,7 @@ class ProductChantierQuoteController extends Controller
             ->setCellValue('R1', 'Tonnage')
             ->setCellValue('S1', 'Date création');
 
-        $phpExcelObject->getActiveSheet()->setTitle('Devis DI');
+        $phpExcelObject->getActiveSheet()->setTitle('Devis Chantier');
         $phpExcelObject->setActiveSheetIndex(0);
 
         $i = 2;
@@ -160,7 +158,7 @@ class ProductChantierQuoteController extends Controller
 
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
 
-        $fileName = 'PaprecEasyRecyclage-Extraction-Devis-DI-' . date('Y-m-d') . '.xlsx';
+        $fileName = 'PaprecEasyRecyclage-Extraction-Devis-Chantier-' . date('Y-m-d') . '.xlsx';
 
         // create the response
         $response = $this->container->get('phpexcel')->createStreamedResponse($writer);

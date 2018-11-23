@@ -71,6 +71,12 @@ class BusinessLine
      */
     private $productChantierQuotes;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductChantierOrder", mappedBy="businessLine")
+     */
+    private $productChantierOrders;
+
     /**
      * BusinessLine constructor.
      */
@@ -281,5 +287,41 @@ class BusinessLine
     public function getProductChantierQuotes()
     {
         return $this->productChantierQuotes;
+    }
+
+    /**
+     * Add productChantierOrder.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductChantierOrder $productChantierOrder
+     *
+     * @return BusinessLine
+     */
+    public function addProductChantierOrder(\Paprec\CommercialBundle\Entity\ProductChantierOrder $productChantierOrder)
+    {
+        $this->productChantierOrders[] = $productChantierOrder;
+
+        return $this;
+    }
+
+    /**
+     * Remove productChantierOrder.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductChantierOrder $productChantierOrder
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductChantierOrder(\Paprec\CommercialBundle\Entity\ProductChantierOrder $productChantierOrder)
+    {
+        return $this->productChantierOrders->removeElement($productChantierOrder);
+    }
+
+    /**
+     * Get productChantierOrders.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductChantierOrders()
+    {
+        return $this->productChantierOrders;
     }
 }

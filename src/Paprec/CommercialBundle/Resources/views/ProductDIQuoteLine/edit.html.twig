@@ -78,7 +78,7 @@
 
             $('.catalog-grilleTarifD3E-cancel-button').on('click', function () {
 
-                var url = "{{ path("paprec_catalog_productDI_view", { id: productDIQuote.id }) }}";
+                var url = "{{ path("paprec_commercial_productDIQuote_view", { id: productDIQuote.id }) }}";
 
                 bootbox.confirm("{{ 'Commercial.ProductDIQuote.Confirm-cancel'|trans }}", function (result) {
                     if (result === true) {

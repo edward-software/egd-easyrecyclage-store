@@ -1,0 +1,166 @@
+{% extends "::base_public.html.twig" %}
+
+{#{% block title %}#}
+
+{#{% endblock %}#}
+
+{#{% block stylesheets %}#}
+
+{#{% endblock %}#}
+
+{% block main_content %}
+    <!-- section -->
+    <section>
+        <div class="wrapper">
+            <div class="sidebar">
+                <div class="recap passed">
+                    <div class="recap__step">
+                        <span class="recap__stepNumber">01</span>Mon besoin
+                    </div>
+                    <div id="loadedCartPanel">
+
+                    </div>
+                </div>
+
+                <div class="recap passed">
+                    <div class="recap__step">
+                        <span class="recap__stepNumber">02</span>Mes coordonnées
+                    </div>
+
+                </div>
+
+                <div class="recap passed">
+                    <div class="recap__step">
+                        <span class="recap__stepNumber">03</span>Ma livraison
+                    </div>
+
+                </div>
+                <div class="recap active">
+                    <div class="recap__step">
+                        <span class="recap__stepNumber">04</span>Mon paiement
+                    </div>
+
+                </div>
+                <div class="guide">
+                    <div class="guide__title">
+                        EASYRECYCLAGE,
+                        <br>
+                        C’EST SIMPLE ET RAPIDE
+                    </div>
+                    <div class="guide__step">
+                        Sélectionnez
+                        <br>
+                        vos déchets
+                    </div>
+                    <div class="guide__step">
+                        Validez
+                        <br>
+                        votre devis
+                    </div>
+                    <div class="guide__step">
+                        Triez vos déchets,
+                        <br>
+                        nous les collectons
+                        <br>
+                        et les valorisons
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+                <form id="paymentForm" action="" method="post" class="main">
+                    <div class="step">
+                        <div class="bold">{% if productChantierOrder.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productChantierOrder.firstName }} {{ productChantierOrder.lastName }}
+                            ,
+                        </div>
+                        <div class="recaptitle">Vous pouvez maintenant procéder au paiement de votre prestation.</div>
+                        <div class="choice">
+
+                            <div class="choice__title">Sélectionnez un mode de paiement et de signature</div>
+                            <input class="input__radio" type="radio" name="payment" id="cb"> <label for="cb">Payer en
+                                ligne
+                                via <span>carte bancaire</span></label>
+                            <div class="clearfix"></div>
+
+                            <div class="info">
+                                Si vous payez par carte bancaire, vous disposerez de votre prestation plus rapidemment
+                            </div>
+                        </div>
+                        <div class="choice">
+                            <input class="input__radio" type="radio" name="payment" id="virement"> <label
+                                    for="virement">Payer
+                                en ligne via <span>virement</span></label>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="choice">
+                            <input class="input__radio" type="radio" name="sign" id="online"> <label for="online">
+                                Signer en
+                                ligne votre devis</label>
+                            <div class="clearfix"></div>
+
+                            <div class="info">
+                                La signature électronique est un procédé technique qui permet de conférer à l’écrit
+                                électronique la même valeur
+                                contractuelle que sur support papier. Ce procédé technique assure l’identification du
+                                signataire, l’intégrité du document
+                                et manifeste le consentement du signataire au document signé.
+                            </div>
+                        </div>
+                        <div class="choice">
+                            <input class="input__radio" type="radio" name="sign" id="offline"> <label for="offline">Télécharger
+                                le dossier et renvoyer-le par courrier</label>
+                            <div class="clearfix"></div>
+                        </div>
+
+
+                        <a href="#" class="backtohome button button--green">Valider</a>
+
+                        <div class="notice notice--left">
+                            Besoin d’une <span>information complémentaire</span> ? Vous souhaitez nous en parler ?
+                        </div>
+
+                        <a href="#" class="button margint10 button--grey">CONTACTEZ-NOUS</a>
+                        <a href="#" class="button margint10 button--grey">ÊTRE RAPPELÉ</a>
+                    </div>
+                    {#{{ form_rest(form) }}#}
+                </form>
+            </div>
+
+
+            <div class="clearfix"></div>
+        </div>
+    </section>
+    <!-- /section -->
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function () {
+            reloadCart();
+            $('body').addClass('tunnel--orange');
+
+            // $('#deliveryFormSubmitButton').on('click', function () {
+            //     $('#deliveryForm').submit();
+            // })
+
+            // Rechargement de l'HTML du Cart
+            function reloadCart() {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ path('paprec_public_Chantier_subscription_loadCart', {cartUuid: cart.id}) }}",
+                    contentType: "html",
+                    success: function (response) {
+                        // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
+                        var htmlToDisplay = response.trim();
+                        $("#loadedCartPanel").html(htmlToDisplay);
+                        //on supprime les croix dans le panier
+                        $('.buttonDeleteProduct').remove();
+                    },
+                    error: function (errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
+            }
+        });
+    </script>
+
+{% endblock %}

@@ -149,6 +149,11 @@ class ProductChantier
     private $productChantierQuoteLines;
 
     /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductChantierOrderLine", mappedBy="productChantier", cascade={"all"})
+     */
+    private $productChantierOrderLines;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -156,6 +161,8 @@ class ProductChantier
         $this->dateCreation = new \DateTime();
         $this->arguments = new ArrayCollection();
         $this->productChantierCategories = new ArrayCollection();
+        $this->productChantierOrderLines = new ArrayCollection();
+        $this->productChantierQuoteLines = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->pictures = new ArrayCollection();
     }
@@ -660,5 +667,41 @@ class ProductChantier
     public function getProductChantierQuoteLines()
     {
         return $this->productChantierQuoteLines;
+    }
+
+    /**
+     * Add productChantierOrderLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductChantierOrderLine $productChantierOrderLine
+     *
+     * @return ProductChantier
+     */
+    public function addProductChantierOrderLine(\Paprec\CommercialBundle\Entity\ProductChantierOrderLine $productChantierOrderLine)
+    {
+        $this->productChantierOrderLines[] = $productChantierOrderLine;
+
+        return $this;
+    }
+
+    /**
+     * Remove productChantierOrderLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductChantierOrderLine $productChantierOrderLine
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductChantierOrderLine(\Paprec\CommercialBundle\Entity\ProductChantierOrderLine $productChantierOrderLine)
+    {
+        return $this->productChantierOrderLines->removeElement($productChantierOrderLine);
+    }
+
+    /**
+     * Get productChantierOrderLines.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductChantierOrderLines()
+    {
+        return $this->productChantierOrderLines;
     }
 }

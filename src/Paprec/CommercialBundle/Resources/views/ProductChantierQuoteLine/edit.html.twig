@@ -78,7 +78,7 @@
 
             $('.catalog-grilleTarifD3E-cancel-button').on('click', function () {
 
-                var url = "{{ path("paprec_catalog_productChantier_view", { id: productChantierQuote.id }) }}";
+                var url = "{{ path("paprec_commercial_productChantierOrder_view", { id: productChantierQuote.id }) }}";
 
                 bootbox.confirm("{{ 'Commercial.ProductChantierQuote.Confirm-cancel'|trans }}", function (result) {
                     if (result === true) {

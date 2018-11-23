@@ -2,14 +2,13 @@
 
 namespace Paprec\CommercialBundle\Form;
 
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductChantierQuoteLineEditType extends AbstractType
+class ProductChantierOrderLineEditType extends AbstractType
 {
 
     /**
@@ -30,7 +29,7 @@ class ProductChantierQuoteLineEditType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\ProductChantierQuoteLine'
+            'data_class' => 'Paprec\CommercialBundle\Entity\ProductChantierOrderLine'
         ));
     }
 }

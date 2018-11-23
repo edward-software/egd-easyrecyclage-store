@@ -3,7 +3,7 @@
 namespace Paprec\CommercialBundle\Form;
 
 use Paprec\CatalogBundle\Repository\CategoryRepository;
-use Paprec\CatalogBundle\Repository\ProductDIRepository;
+use Paprec\CatalogBundle\Repository\ProductChantierRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductDIQuoteLineAddType extends AbstractType
+class ProductChantierOrderLineAddType extends AbstractType
 {
 
     private $selectedProductId;
@@ -27,11 +27,11 @@ class ProductDIQuoteLineAddType extends AbstractType
             ->add('quantity', IntegerType::class, array(
                 "required" => true
             ))
-            ->add('productDI', EntityType::class, array(
-                'class' => 'PaprecCatalogBundle:ProductDI',
-                'query_builder' => function (ProductDIRepository $er) {
+            ->add('productChantier', EntityType::class, array(
+                'class' => 'PaprecCatalogBundle:ProductChantier',
+                'query_builder' => function (ProductChantierRepository $er) {
                     return $er->createQueryBuilder('p')
-                        ->leftJoin('PaprecCatalogBundle:ProductDICategory', 'pc', \Doctrine\ORM\Query\Expr\Join::WITH, 'p.id = pc.category')
+                        ->leftJoin('PaprecCatalogBundle:ProductChantierCategory', 'pc', \Doctrine\ORM\Query\Expr\Join::WITH, 'p.id = pc.category')
                         ->distinct()
                         ->where('p.deleted is NULL')
                         ->orderBy('p.name', 'ASC');
@@ -44,11 +44,10 @@ class ProductDIQuoteLineAddType extends AbstractType
                 'class' => 'PaprecCatalogBundle:Category',
                 'query_builder' => function (CategoryRepository $er) {
                     return $er->createQueryBuilder('c')
-                        ->innerJoin('PaprecCatalogBundle:ProductDICategory', 'pc', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.id = pc.category')
-                        //->join('pc.productDI', 'p')
-                        ->where('c.division = \'DI\'')
+                        ->innerJoin('PaprecCatalogBundle:ProductChantierCategory', 'pc', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.id = pc.category')
+                        ->where('c.division = \'CHANTIER\'')
                         ->andWhere('c.deleted is NULL')
-                        ->andWhere('pc.productDI = :selectedProductId')
+                        ->andWhere('pc.productChantier = :selectedProductId')
                         ->distinct()
                         ->orderBy('c.name', 'ASC')
                         ->setParameter('selectedProductId', $this->selectedProductId);
@@ -64,7 +63,7 @@ class ProductDIQuoteLineAddType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\ProductDIQuoteLine',
+            'data_class' => 'Paprec\CommercialBundle\Entity\ProductChantierOrderLine',
             'selectedProductId' => null
         ));
     }

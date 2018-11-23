@@ -8,12 +8,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * ProductDIQuote
+ * ProductChantierOrder
  *
- * @ORM\Table(name="productDIQuotes")
- * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\ProductDIQuoteRepository")
+ * @ORM\Table(name="productChantierOrders")
+ * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\ProductChantierOrderRepository")
  */
-class ProductDIQuote
+class ProductChantierOrder
 {
     /**
      * @var int
@@ -130,10 +130,9 @@ class ProductDIQuote
     /**
      * @var string
      *
-     * @ORM\Column(name="quoteStatus", type="string", length=255)
+     * @ORM\Column(name="orderStatus", type="string", length=255)
      */
-    private $quoteStatus;
-
+    private $orderStatus;
 
     /**
      * @var float
@@ -143,81 +142,111 @@ class ProductDIQuote
     private $totalAmount;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="generatedTurnover", type="float", nullable=true)
+     * @ORM\Column(name="paymentMethod", type="string", length=255, nullable=true)
      */
-    private $generatedTurnover;
+    private $paymentMethod;
+
 
     /**
      * @var string
      *
-     * @ORM\Column(name="summary", type="text", nullable=true)
+     * @ORM\Column(name="signatoryToken", type="string", length=255, nullable=true)
      */
-    private $summary;
+    private $signatoryToken;
+
+    /**
+     *
+     * Identifiant de la dernière transaction de signature générée
+     *
+     * @var string
+     *
+     * @ORM\Column(name="signatoryTransactionId", type="string", length=255, nullable=true)
+     */
+    private $signatoryTransactionId;
+
+    /**
+     *
+     * Identifiant de la signature de la dernière transaction de signature électronique
+     *
+     * @var string
+     *
+     * @ORM\Column(name="signatorySignatureId", type="string", length=255, nullable=true)
+     */
+    private $signatorySignatureId;
+
+    /**
+     * Facture associée
+     * @var string
+     *
+     * @ORM\Column(name="associatedInvoice", type="string", length=255, nullable=true)
+     * @Assert\File(mimeTypes={ "application/pdf" })
+     */
+    private $associatedInvoice;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="installationDate", type="datetime", nullable=true)
+     * @Assert\NotBlank(groups={"delivery"})
+
+     */
+    private $installationDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="removalDate", type="datetime", nullable=true)
+     * @Assert\NotBlank(groups={"delivery"})
+     */
+    private $removalDate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="frequency", type="string", length=10, nullable=true)
+     * @ORM\Column(name="domainType", type="string", length=10, nullable=true)
+     * @Assert\NotBlank(groups={"delivery"})
      */
-    private $frequency;
+    private $domainType;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="tonnage", type="float", nullable=true)
+     * @ORM\Column(name="accessConditions", type="text", nullable=true)
+     * @Assert\NotBlank(groups={"delivery"})
      */
-    private $tonnage;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="kookaburaNumber", type="integer", nullable=true)
-     */
-    private $kookaburaNumber;
-
+    private $accessConditions;
 
     /** ###########################
      *
      *  RELATIONS
      *
-     ########################### */
-
+     * ########################### */
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuoteLine", mappedBy="productDIQuote", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductChantierOrderLine", mappedBy="productChantierOrder", cascade={"all"})
      */
-    private $productDIQuoteLines;
+    private $productChantierOrderLines;
+
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\UserBundle\Entity\User", inversedBy="productDIQuotes", cascade={"all"})
-     * @ORM\JoinColumn(name="userInChargeId", referencedColumnName="id", nullable=true)
-     */
-    private $userInCharge;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agency", inversedBy="productDIQuotes")
-     * @ORM\JoinColumn(name="agencyId", referencedColumnName="id", nullable=true)
-     */
-    private $agency;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\BusinessLine", inversedBy="productDIQuotes")
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\BusinessLine", inversedBy="productChantierOrders")
      * @ORM\JoinColumn(name="businessLineId", referencedColumnName="id", nullable=true)
      * @Assert\NotBlank()
      */
     private $businessLine;
 
     /**
-     * ProductDIQuote constructor.
+     * ProductChantierOrder constructor.
      */
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
-        $this->productDIQuoteLines = new ArrayCollection();
+        $this->productChantierOrderLines = new ArrayCollection();
     }
+
 
 
     /**
@@ -230,12 +259,14 @@ class ProductDIQuote
         return $this->id;
     }
 
+
+
     /**
      * Set dateCreation.
      *
      * @param \DateTime $dateCreation
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
     public function setDateCreation($dateCreation)
     {
@@ -259,7 +290,7 @@ class ProductDIQuote
      *
      * @param \DateTime|null $dateUpdate
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
     public function setDateUpdate($dateUpdate = null)
     {
@@ -283,7 +314,7 @@ class ProductDIQuote
      *
      * @param \DateTime|null $deleted
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
     public function setDeleted($deleted = null)
     {
@@ -307,7 +338,7 @@ class ProductDIQuote
      *
      * @param string $businessName
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
     public function setBusinessName($businessName)
     {
@@ -331,7 +362,7 @@ class ProductDIQuote
      *
      * @param string $civility
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
     public function setCivility($civility)
     {
@@ -355,7 +386,7 @@ class ProductDIQuote
      *
      * @param string $lastName
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
     public function setLastName($lastName)
     {
@@ -379,7 +410,7 @@ class ProductDIQuote
      *
      * @param string $firstName
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
     public function setFirstName($firstName)
     {
@@ -399,11 +430,35 @@ class ProductDIQuote
     }
 
     /**
+     * Set function.
+     *
+     * @param string|null $function
+     *
+     * @return ProductChantierOrder
+     */
+    public function setFunction($function = null)
+    {
+        $this->function = $function;
+
+        return $this;
+    }
+
+    /**
+     * Get function.
+     *
+     * @return string|null
+     */
+    public function getFunction()
+    {
+        return $this->function;
+    }
+
+    /**
      * Set email.
      *
      * @param string $email
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
     public function setEmail($email)
     {
@@ -427,7 +482,7 @@ class ProductDIQuote
      *
      * @param string $address
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
     public function setAddress($address)
     {
@@ -451,7 +506,7 @@ class ProductDIQuote
      *
      * @param string $postalCode
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
     public function setPostalCode($postalCode)
     {
@@ -475,7 +530,7 @@ class ProductDIQuote
      *
      * @param string $city
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
     public function setCity($city)
     {
@@ -499,7 +554,7 @@ class ProductDIQuote
      *
      * @param string $phone
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
     public function setPhone($phone)
     {
@@ -518,16 +573,38 @@ class ProductDIQuote
         return $this->phone;
     }
 
+    /**
+     * Set orderStatus.
+     *
+     * @param string $orderStatus
+     *
+     * @return ProductChantierOrder
+     */
+    public function setOrderStatus($orderStatus)
+    {
+        $this->orderStatus = $orderStatus;
 
+        return $this;
+    }
+
+    /**
+     * Get orderStatus.
+     *
+     * @return string
+     */
+    public function getOrderStatus()
+    {
+        return $this->orderStatus;
+    }
 
     /**
      * Set totalAmount.
      *
-     * @param float $totalAmount
+     * @param float|null $totalAmount
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
-    public function setTotalAmount($totalAmount)
+    public function setTotalAmount($totalAmount = null)
     {
         $this->totalAmount = $totalAmount;
 
@@ -537,7 +614,7 @@ class ProductDIQuote
     /**
      * Get totalAmount.
      *
-     * @return float
+     * @return float|null
      */
     public function getTotalAmount()
     {
@@ -545,207 +622,159 @@ class ProductDIQuote
     }
 
     /**
-     * Set generatedTurnover.
+     * Set paymentMethod.
      *
-     * @param float|null $generatedTurnover
+     * @param string|null $paymentMethod
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
-    public function setGeneratedTurnover($generatedTurnover = null)
+    public function setPaymentMethod($paymentMethod = null)
     {
-        $this->generatedTurnover = $generatedTurnover;
+        $this->paymentMethod = $paymentMethod;
 
         return $this;
     }
 
     /**
-     * Get generatedTurnover.
-     *
-     * @return float|null
-     */
-    public function getGeneratedTurnover()
-    {
-        return $this->generatedTurnover;
-    }
-
-    /**
-     * Set summary.
-     *
-     * @param string|null $summary
-     *
-     * @return ProductDIQuote
-     */
-    public function setSummary($summary = null)
-    {
-        $this->summary = $summary;
-
-        return $this;
-    }
-
-    /**
-     * Get summary.
+     * Get paymentMethod.
      *
      * @return string|null
      */
-    public function getSummary()
+    public function getPaymentMethod()
     {
-        return $this->summary;
+        return $this->paymentMethod;
     }
 
     /**
-     * Set frequency.
+     * Set signatoryToken.
      *
-     * @param string|null $frequency
+     * @param string|null $signatoryToken
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
-    public function setFrequency($frequency = null)
+    public function setSignatoryToken($signatoryToken = null)
     {
-        $this->frequency = $frequency;
+        $this->signatoryToken = $signatoryToken;
 
         return $this;
     }
 
     /**
-     * Get frequency.
+     * Get signatoryToken.
      *
      * @return string|null
      */
-    public function getFrequency()
+    public function getSignatoryToken()
     {
-        return $this->frequency;
+        return $this->signatoryToken;
     }
 
     /**
-     * Set tonnage.
+     * Set signatoryTransactionId.
      *
-     * @param float|null $tonnage
+     * @param string|null $signatoryTransactionId
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
-    public function setTonnage($tonnage = null)
+    public function setSignatoryTransactionId($signatoryTransactionId = null)
     {
-        $this->tonnage = $tonnage;
+        $this->signatoryTransactionId = $signatoryTransactionId;
 
         return $this;
     }
 
     /**
-     * Get tonnage.
+     * Get signatoryTransactionId.
      *
-     * @return float|null
+     * @return string|null
      */
-    public function getTonnage()
+    public function getSignatoryTransactionId()
     {
-        return $this->tonnage;
+        return $this->signatoryTransactionId;
     }
 
     /**
-     * Set kookaburaNumber.
+     * Set signatorySignatureId.
      *
-     * @param int|null $kookaburaNumber
+     * @param string|null $signatorySignatureId
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
-    public function setKookaburaNumber($kookaburaNumber = null)
+    public function setSignatorySignatureId($signatorySignatureId = null)
     {
-        $this->kookaburaNumber = $kookaburaNumber;
+        $this->signatorySignatureId = $signatorySignatureId;
 
         return $this;
     }
 
     /**
-     * Get kookaburaNumber.
+     * Get signatorySignatureId.
      *
-     * @return int|null
+     * @return string|null
      */
-    public function getKookaburaNumber()
+    public function getSignatorySignatureId()
     {
-        return $this->kookaburaNumber;
+        return $this->signatorySignatureId;
     }
 
     /**
-     * Add productDIQuoteLine.
+     * Set associatedInvoice.
      *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine
+     * @param string|null $associatedInvoice
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
-    public function addProductDIQuoteLine(\Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine)
+    public function setAssociatedInvoice($associatedInvoice = null)
     {
-        $this->productDIQuoteLines[] = $productDIQuoteLine;
+        $this->associatedInvoice = $associatedInvoice;
 
         return $this;
     }
 
     /**
-     * Remove productDIQuoteLine.
+     * Get associatedInvoice.
      *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine
+     * @return string|null
+     */
+    public function getAssociatedInvoice()
+    {
+        return $this->associatedInvoice;
+    }
+
+    /**
+     * Add productChantierOrderLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductChantierOrderLine $productChantierOrderLine
+     *
+     * @return ProductChantierOrder
+     */
+    public function addProductChantierOrderLine(\Paprec\CommercialBundle\Entity\ProductChantierOrderLine $productChantierOrderLine)
+    {
+        $this->productChantierOrderLines[] = $productChantierOrderLine;
+
+        return $this;
+    }
+
+    /**
+     * Remove productChantierOrderLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductChantierOrderLine $productChantierOrderLine
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeProductDIQuoteLine(\Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine)
+    public function removeProductChantierOrderLine(\Paprec\CommercialBundle\Entity\ProductChantierOrderLine $productChantierOrderLine)
     {
-        return $this->productDIQuoteLines->removeElement($productDIQuoteLine);
+        return $this->productChantierOrderLines->removeElement($productChantierOrderLine);
     }
 
     /**
-     * Get productDIQuoteLines.
+     * Get productChantierOrderLines.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getProductDIQuoteLines()
+    public function getProductChantierOrderLines()
     {
-        return $this->productDIQuoteLines;
-    }
-
-    /**
-     * Set userInCharge.
-     *
-     * @param \Paprec\UserBundle\Entity\User|null $userInCharge
-     *
-     * @return ProductDIQuote
-     */
-    public function setUserInCharge(\Paprec\UserBundle\Entity\User $userInCharge = null)
-    {
-        $this->userInCharge = $userInCharge;
-
-        return $this;
-    }
-
-    /**
-     * Get userInCharge.
-     *
-     * @return \Paprec\UserBundle\Entity\User|null
-     */
-    public function getUserInCharge()
-    {
-        return $this->userInCharge;
-    }
-
-    /**
-     * Set agency.
-     *
-     * @param \Paprec\CommercialBundle\Entity\Agency|null $agency
-     *
-     * @return ProductDIQuote
-     */
-    public function setAgency(\Paprec\CommercialBundle\Entity\Agency $agency = null)
-    {
-        $this->agency = $agency;
-
-        return $this;
-    }
-
-    /**
-     * Get agency.
-     *
-     * @return \Paprec\CommercialBundle\Entity\Agency|null
-     */
-    public function getAgency()
-    {
-        return $this->agency;
+        return $this->productChantierOrderLines;
     }
 
     /**
@@ -753,7 +782,7 @@ class ProductDIQuote
      *
      * @param \Paprec\CommercialBundle\Entity\BusinessLine|null $businessLine
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
     public function setBusinessLine(\Paprec\CommercialBundle\Entity\BusinessLine $businessLine = null)
     {
@@ -773,50 +802,98 @@ class ProductDIQuote
     }
 
     /**
-     * Set quoteStatus.
+     * Set installationDate.
      *
-     * @param string $quoteStatus
+     * @param \DateTime $installationDate
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
-    public function setQuoteStatus($quoteStatus)
+    public function setInstallationDate($installationDate)
     {
-        $this->quoteStatus = $quoteStatus;
+        $this->installationDate = $installationDate;
 
         return $this;
     }
 
     /**
-     * Get quoteStatus.
+     * Get installationDate.
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getQuoteStatus()
+    public function getInstallationDate()
     {
-        return $this->quoteStatus;
+        return $this->installationDate;
     }
 
     /**
-     * Set function.
+     * Set removalDate.
      *
-     * @param string $function
+     * @param \DateTime $removalDate
      *
-     * @return ProductDIQuote
+     * @return ProductChantierOrder
      */
-    public function setFunction($function)
+    public function setRemovalDate($removalDate)
     {
-        $this->function = $function;
+        $this->removalDate = $removalDate;
 
         return $this;
     }
 
     /**
-     * Get function.
+     * Get removalDate.
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getFunction()
+    public function getRemovalDate()
     {
-        return $this->function;
+        return $this->removalDate;
+    }
+
+    /**
+     * Set domainType.
+     *
+     * @param string|null $domainType
+     *
+     * @return ProductChantierOrder
+     */
+    public function setDomainType($domainType = null)
+    {
+        $this->domainType = $domainType;
+
+        return $this;
+    }
+
+    /**
+     * Get domainType.
+     *
+     * @return string|null
+     */
+    public function getDomainType()
+    {
+        return $this->domainType;
+    }
+
+    /**
+     * Set accessConditions.
+     *
+     * @param string|null $accessConditions
+     *
+     * @return ProductChantierOrder
+     */
+    public function setAccessConditions($accessConditions = null)
+    {
+        $this->accessConditions = $accessConditions;
+
+        return $this;
+    }
+
+    /**
+     * Get accessConditions.
+     *
+     * @return string|null
+     */
+    public function getAccessConditions()
+    {
+        return $this->accessConditions;
     }
 }

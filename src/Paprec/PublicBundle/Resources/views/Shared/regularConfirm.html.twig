@@ -10,7 +10,8 @@
 
 {% block main_content %}
     <!-- section -->
-    <section>
+    <       >
+        <input type="hidden" id="divisionType" value="{{ quoteRequest.division }}">
         <div class="wrapper">
             <div class="sidebar">
                 <div class="recap passed">
@@ -87,7 +88,7 @@
             loadedPage();
 
             function loadedPage() {
-                division = $("#divisionSelect").val();
+                division = $("#divisionType").val();
                 if (division === 'DI') {
                     $('body').addClass('tunnel--green');
                 } else if (division === 'CHANTIER') {

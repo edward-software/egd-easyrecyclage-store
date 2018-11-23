@@ -11,8 +11,14 @@ services:
     class: Paprec\CommercialBundle\Service\ProductChantierQuoteManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
+  paprec_catalog.product_chantier_order_manager:
+    class: Paprec\CommercialBundle\Service\ProductChantierOrderManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
 parameters:
   paprec_commercial.quote_request.files_path: "%kernel.root_dir%/../web/uploads/files"
+  paprec_commercial.product_chantier_order.files_path: "%kernel.root_dir%/../web/uploads/files/invoices"
+
 
 
   paprec_quote_status:
@@ -20,3 +26,15 @@ parameters:
   - En attente
   - Traité
   - Clos
+
+  paprec_order_status:
+  - Créée
+  - En attente
+  - Payée
+  - Annulée
+
+  paprec_order_payment_methods:
+  - CB
+  - Virement
+  - E-signature
+  - Courrier

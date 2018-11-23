@@ -295,4 +295,28 @@ class Cart
     {
         return $this->content;
     }
+
+    /**
+     * Set type.
+     *
+     * @param string|null $type
+     *
+     * @return Cart
+     */
+    public function setType($type = null)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type.
+     *
+     * @return string|null
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 }

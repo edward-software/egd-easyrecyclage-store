@@ -112,6 +112,11 @@ class Category
      */
     private $productChantierQuoteLines;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductChantierOrderLine", mappedBy="category", cascade={"all"})
+     */
+    private $productChantierOrderLines;
+
 
     public function __construct()
     {

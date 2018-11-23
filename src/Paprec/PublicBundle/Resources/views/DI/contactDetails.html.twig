@@ -120,6 +120,8 @@
                         // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
                         var htmlToDisplay = response.trim();
                         $("#loadedCartPanel").html(htmlToDisplay);
+                        //on supprime les croix dans le panier
+                        $('.buttonDeleteProduct').remove();
                     },
                     error: function (errorThrown) {
                         console.log(errorThrown);

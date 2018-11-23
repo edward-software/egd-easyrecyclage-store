@@ -7,12 +7,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * ProductDIQuoteLine
+ * ProductChantierORderLine
  *
- * @ORM\Table(name="productDIQuoteLines")
- * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\ProductDIQuoteLineRepository")
+ * @ORM\Table(name="productChantierOrderLines")
+ * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\ProductChantierOrderLineRepository")
  */
-class ProductDIQuoteLine
+class ProductChantierOrderLine
 {
     /**
      * @var int
@@ -92,27 +92,27 @@ class ProductDIQuoteLine
      */
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\ProductDI", inversedBy="productDIQuoteLines")
+     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\ProductChantier", inversedBy="productChantierOrderLines")
      * @ORM\JoinColumn(name="productId", referencedColumnName="id", nullable=false)
      */
-    private $productDI;
+    private $productChantier;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\Category", inversedBy="productDIQuoteLines")
+     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\Category", inversedBy="productChantierOrderLines")
      * @ORM\JoinColumn(name="categoryId", referencedColumnName="id", nullable=false)
      */
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuote", inversedBy="productDIQuoteLines")
-     * @ORM\JoinColumn(name="productDIQuoteId", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\ProductChantierOrder", inversedBy="productChantierOrderLines")
+     * @ORM\JoinColumn(name="productChantierOrderId", referencedColumnName="id", nullable=false)
      */
-    private $productDIQuote;
+    private $productChantierOrder;
 
 
     /**
-     * ProductDIQuoteLine constructor.
+     * ProductChantierOrderLine constructor.
      */
     public function __construct()
     {
@@ -135,7 +135,7 @@ class ProductDIQuoteLine
      *
      * @param \DateTime $dateCreation
      *
-     * @return ProductDIQuoteLine
+     * @return ProductChantierOrderLine
      */
     public function setDateCreation($dateCreation)
     {
@@ -159,7 +159,7 @@ class ProductDIQuoteLine
      *
      * @param \DateTime|null $dateUpdate
      *
-     * @return ProductDIQuoteLine
+     * @return ProductChantierOrderLine
      */
     public function setDateUpdate($dateUpdate = null)
     {
@@ -183,7 +183,7 @@ class ProductDIQuoteLine
      *
      * @param \DateTime|null $deleted
      *
-     * @return ProductDIQuoteLine
+     * @return ProductChantierOrderLine
      */
     public function setDeleted($deleted = null)
     {
@@ -207,7 +207,7 @@ class ProductDIQuoteLine
      *
      * @param string $productName
      *
-     * @return ProductDIQuoteLine
+     * @return ProductChantierOrderLine
      */
     public function setProductName($productName)
     {
@@ -227,11 +227,35 @@ class ProductDIQuoteLine
     }
 
     /**
+     * Set categoryName.
+     *
+     * @param string $categoryName
+     *
+     * @return ProductChantierOrderLine
+     */
+    public function setCategoryName($categoryName)
+    {
+        $this->categoryName = $categoryName;
+
+        return $this;
+    }
+
+    /**
+     * Get categoryName.
+     *
+     * @return string
+     */
+    public function getCategoryName()
+    {
+        return $this->categoryName;
+    }
+
+    /**
      * Set unitPrice.
      *
      * @param float $unitPrice
      *
-     * @return ProductDIQuoteLine
+     * @return ProductChantierOrderLine
      */
     public function setUnitPrice($unitPrice)
     {
@@ -251,83 +275,11 @@ class ProductDIQuoteLine
     }
 
     /**
-     * Set quantity.
-     *
-     * @param int $quantity
-     *
-     * @return ProductDIQuoteLine
-     */
-    public function setQuantity($quantity)
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    /**
-     * Get quantity.
-     *
-     * @return int
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-
-    /**
-     * Set productDI.
-     *
-     * @param \Paprec\CatalogBundle\Entity\ProductDI $productDI
-     *
-     * @return ProductDIQuoteLine
-     */
-    public function setProductDI(\Paprec\CatalogBundle\Entity\ProductDI $productDI)
-    {
-        $this->productDI = $productDI;
-
-        return $this;
-    }
-
-    /**
-     * Get productDI.
-     *
-     * @return \Paprec\CatalogBundle\Entity\ProductDI
-     */
-    public function getProductDI()
-    {
-        return $this->productDI;
-    }
-
-    /**
-     * Set productDIQuote.
-     *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote
-     *
-     * @return ProductDIQuoteLine
-     */
-    public function setProductDIQuote(\Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote)
-    {
-        $this->productDIQuote = $productDIQuote;
-
-        return $this;
-    }
-
-    /**
-     * Get productDIQuote.
-     *
-     * @return \Paprec\CommercialBundle\Entity\ProductDIQuote
-     */
-    public function getProductDIQuote()
-    {
-        return $this->productDIQuote;
-    }
-
-    /**
      * Set totalAmount.
      *
      * @param float $totalAmount
      *
-     * @return ProductDIQuoteLine
+     * @return ProductChantierOrderLine
      */
     public function setTotalAmount($totalAmount)
     {
@@ -347,11 +299,59 @@ class ProductDIQuoteLine
     }
 
     /**
+     * Set quantity.
+     *
+     * @param int $quantity
+     *
+     * @return ProductChantierOrderLine
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity.
+     *
+     * @return int
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * Set productChantier.
+     *
+     * @param \Paprec\CatalogBundle\Entity\ProductChantier $productChantier
+     *
+     * @return ProductChantierOrderLine
+     */
+    public function setProductChantier(\Paprec\CatalogBundle\Entity\ProductChantier $productChantier)
+    {
+        $this->productChantier = $productChantier;
+
+        return $this;
+    }
+
+    /**
+     * Get productChantier.
+     *
+     * @return \Paprec\CatalogBundle\Entity\ProductChantier
+     */
+    public function getProductChantier()
+    {
+        return $this->productChantier;
+    }
+
+    /**
      * Set category.
      *
      * @param \Paprec\CatalogBundle\Entity\Category $category
      *
-     * @return ProductDIQuoteLine
+     * @return ProductChantierOrderLine
      */
     public function setCategory(\Paprec\CatalogBundle\Entity\Category $category)
     {
@@ -371,26 +371,26 @@ class ProductDIQuoteLine
     }
 
     /**
-     * Set categoryName.
+     * Set productChantierOrder.
      *
-     * @param string $categoryName
+     * @param \Paprec\CommercialBundle\Entity\ProductChantierOrder $productChantierOrder
      *
-     * @return ProductDIQuoteLine
+     * @return ProductChantierOrderLine
      */
-    public function setCategoryName($categoryName)
+    public function setProductChantierOrder(\Paprec\CommercialBundle\Entity\ProductChantierOrder $productChantierOrder)
     {
-        $this->categoryName = $categoryName;
+        $this->productChantierOrder = $productChantierOrder;
 
         return $this;
     }
 
     /**
-     * Get categoryName.
+     * Get productChantierOrder.
      *
-     * @return string
+     * @return \Paprec\CommercialBundle\Entity\ProductChantierOrder
      */
-    public function getCategoryName()
+    public function getProductChantierOrder()
     {
-        return $this->categoryName;
+        return $this->productChantierOrder;
     }
 }

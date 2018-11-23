@@ -27,13 +27,27 @@
                     </div>
 
                 </div>
+                {% if cart.type == 'quote' %}
+                    <div class="recap">
+                        <div class="recap__step">
+                            <span class="recap__stepNumber">03</span>Mon offre
+                        </div>
 
-                <div class="recap">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">03</span>Mon offre
                     </div>
+                {% else %}
+                    <div class="recap">
+                        <div class="recap__step">
+                            <span class="recap__stepNumber">03</span>Ma livraison
+                        </div>
 
-                </div>
+                    </div>
+                    <div class="recap">
+                        <div class="recap__step">
+                            <span class="recap__stepNumber">04</span>Mon paiement
+                        </div>
+
+                    </div>
+                {% endif %}
             </div>
             <form id="contactDetailsForm" action="" method="post" class="main">
                 <div class="step">
@@ -74,6 +88,11 @@
 
                         {{ form_widget(form.function, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductChantierQuote.FunctionPlaceholder'|trans}}) }}
                         {{ form_errors(form.function) }}
+
+
+                        {{ form_widget(form.terms) }}
+                        {{ form_label(form.terms, 'J\'accepte les conditions générales de vente') }}
+                        {{ form_errors(form.terms) }}
 
                         <div class="clearfix"></div>
                     </div>
@@ -121,6 +140,8 @@
                         // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
                         var htmlToDisplay = response.trim();
                         $("#loadedCartPanel").html(htmlToDisplay);
+                        //on supprime les croix dans le panier
+                        $('.buttonDeleteProduct').remove();
                     },
                     error: function (errorThrown) {
                         console.log(errorThrown);

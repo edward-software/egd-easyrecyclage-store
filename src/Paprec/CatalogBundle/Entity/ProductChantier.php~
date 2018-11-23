@@ -149,6 +149,11 @@ class ProductChantier
     private $productChantierQuoteLines;
 
     /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductChantierOrderLine", mappedBy="productChantier", cascade={"all"})
+     */
+    private $productChantierOrderLines;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -156,6 +161,8 @@ class ProductChantier
         $this->dateCreation = new \DateTime();
         $this->arguments = new ArrayCollection();
         $this->productChantierCategories = new ArrayCollection();
+        $this->productChantierOrderLines = new ArrayCollection();
+        $this->productChantierQuoteLines = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->pictures = new ArrayCollection();
     }

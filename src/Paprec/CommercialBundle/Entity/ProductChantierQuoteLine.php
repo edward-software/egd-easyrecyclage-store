@@ -79,6 +79,10 @@ class ProductChantierQuoteLine
      *
      * @ORM\Column(name="quantity", type="integer")
      * @Assert\NotBlank()
+     * @Assert\Type(
+     *     type="integer",
+     *     message="La quantité doit être un nombre entier"
+     * )
      */
     private $quantity;
 
@@ -108,7 +112,7 @@ class ProductChantierQuoteLine
 
 
     /**
-     * ProductDIQuoteLine constructor.
+     * ProductChantierQuoteLine constructor.
      */
     public function __construct()
     {

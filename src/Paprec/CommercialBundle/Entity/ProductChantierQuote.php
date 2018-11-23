@@ -90,8 +90,7 @@ class ProductChantierQuote
      * @var string
      * @ORM\Column(name="email", type="string", length=255)
      * @Assert\Email(
-     *      message = "Le format de l'email est invalide",
-     *      checkMX = true
+     *      message = "Le format de l'email est invalide"
      * )
      */
     private $email;

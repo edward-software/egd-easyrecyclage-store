@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,7 +58,7 @@ class QuoteRequestController extends Controller
         $queryBuilder->select(array('o'))
             ->from('PaprecCommercialBundle:QuoteRequest', 'o')
             ->where('o.deleted IS NULL')
-            ->where('o.division LIKE \'%' . $typeQuoteRequest . '%\''); // Récupération des QuoteRequests du type voulu
+            ->andWhere('o.division LIKE \'%' . $typeQuoteRequest . '%\''); // Récupération des QuoteRequests du type voulu
 
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
@@ -256,7 +255,7 @@ class QuoteRequestController extends Controller
             $quoteRequest->setAttachedFiles();
         }
         if (!empty($quoteRequest->getAssociatedQuote())) {
-            $this->removeFile($this->getParameter('paprec_commercial.quote_request.files_path') . '/' . $file);
+            $this->removeFile($this->getParameter('paprec_commercial.quote_request.files_path') . '/' . $quoteRequest->getAssociatedQuote());
             $quoteRequest->setAssociatedQuote();
         }
 

@@ -2,23 +2,20 @@
 
 namespace Paprec\CommercialBundle\Form;
 
-use Paprec\CommercialBundle\Entity\Agency;
 use Paprec\CommercialBundle\Entity\BusinessLine;
-use Paprec\CommercialBundle\Repository\AgencyRepository;
 use Paprec\CommercialBundle\Repository\BusinessLineRepository;
-use Paprec\UserBundle\Entity\User;
-use Paprec\UserBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\Validator\Constraints\Choice;
 
-class ProductDIQuoteShortType extends AbstractType
+class ProductChantierOrderType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -31,36 +28,54 @@ class ProductDIQuoteShortType extends AbstractType
                 'class' => BusinessLine::class,
                 'multiple' => false,
                 'expanded' => false,
-                'placeholder' => 'Commercial.ProductDIQuote.BusinessLinePlaceholder',
-                'empty_data' => null,
                 'choice_label' => 'name',
                 'query_builder' => function (BusinessLineRepository $er) {
                     return $er->createQueryBuilder('b')
                         ->where('b.deleted IS NULL')
-                        ->andWhere('b.division = \'DI\'');
+                        ->andWhere('b.division = \'CHANTIER\'');
                 }
             ))
             ->add('civility', ChoiceType::class, array(
                 'choices' => array(
-                    'Monsieur' => 'M',
-                    'Madame' => 'Mme',
+                    'M' => 'M',
+                    'Mme' => 'Mme',
                 ),
-                'choice_attr' => function () {
-                    return ['class' => 'input__radio'];
-                },
                 'expanded' => true
             ))
             ->add('lastName', TextType::class)
             ->add('firstName', TextType::class)
+            ->add('function', TextType::class, array(
+                'required' => false
+            ))
             ->add('email', TextType::class)
             ->add('address', TextareaType::class)
             ->add('postalCode', TextType::class)
             ->add('city', TextType::class)
             ->add('phone', TextType::class)
-            ->add('function', TextType::class, array(
-                'required' => false
-            ));
-
+            ->add('orderStatus', ChoiceType::class, array(
+                "choices" => $options['status'],
+            ))
+            ->add('totalAmount', TextType::class)
+            ->add('associatedInvoice', FileType::class, array(
+                'multiple' => false,
+                'data_class' => null
+            ))
+            ->add('paymentMethod', ChoiceType::class, array(
+                "choices" => $options['paymentMethods']
+            ))
+            ->add('installationDate', DateType::class, array(
+                'widget' => 'single_text'
+            ))
+            ->add('removalDate', DateType::class, array(
+                'widget' => 'single_text'
+            ))
+            ->add('domainType', ChoiceType::class, array(
+                'choices' => array(
+                    'Matériel présent sur le domaine privé' => 'private',
+                    'Matériel présent sur le domain public' => 'public'
+                )
+            ))
+            ->add('accessConditions', TextareaType::class);
     }
 
     /**
@@ -69,7 +84,9 @@ class ProductDIQuoteShortType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\ProductDIQuote'
+            'data_class' => 'Paprec\CommercialBundle\Entity\ProductChantierOrder',
+            'status' => null,
+            'paymentMethods' => null
         ));
     }
 
@@ -78,7 +95,7 @@ class ProductDIQuoteShortType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'paprec_commercialbundle_productdiquote';
+        return 'paprec_commercialbundle_productchantierorder';
     }
 
 

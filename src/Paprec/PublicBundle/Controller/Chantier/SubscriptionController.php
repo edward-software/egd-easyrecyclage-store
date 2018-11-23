@@ -2,7 +2,10 @@
 
 namespace Paprec\PublicBundle\Controller\Chantier;
 
+use Paprec\CommercialBundle\Entity\ProductChantierOrder;
 use Paprec\CommercialBundle\Entity\ProductChantierQuote;
+use Paprec\CommercialBundle\Form\ProductChantierOrderDeliveryType;
+use Paprec\CommercialBundle\Form\ProductChantierOrderShortType;
 use Paprec\CommercialBundle\Form\ProductChantierQuoteShortType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -66,6 +69,8 @@ class SubscriptionController extends Controller
     }
 
     /**
+     * Etape "Mon besoin", choix des produits et ajout au Cart
+     *
      * On passe le $type en paramère qui correspond à 'order' (commande) ou 'quote'(devis)
      * @Route("/chantier/step1/{cartUuid}", name="paprec_public_Chantier_subscription_step1")
      * @throws \Exception
@@ -103,7 +108,9 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Etape du formulaire des informations contact
+     * Etape "Mes coordonnées"
+     * où l'on créé le devis où la quote au submit du formulaire
+     *
      * @Route("/chantier/step2/{cartUuid}", name="paprec_public_Chantier_subscription_step2")
      * @throws \Exception
      */
@@ -119,8 +126,9 @@ class SubscriptionController extends Controller
         $postalCode = substr($cart->getLocation(), 0, 5);
         $city = substr($cart->getLocation(), 5);
 
-        if($type == 'quote') {
-            $productChantierQuote = new productChantierQuote();
+        // si l'utilisateur est dans "J'établis un devis" alors on créé un devis Chantier
+        if ($type == 'quote') {
+            $productChantierQuote = new ProductChantierQuote();
             $productChantierQuote->setCity($city);
             $productChantierQuote->setPostalCode($postalCode);
 
@@ -130,6 +138,7 @@ class SubscriptionController extends Controller
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                $productChantierQuoteManager = $this->get('paprec_catalog.product_chantier_quote_manager');
 
                 $productChantierQuote = $form->getData();
                 $productChantierQuote->setQuoteStatus('Créé');
@@ -150,7 +159,37 @@ class SubscriptionController extends Controller
                 ));
 
             }
-        } else {
+        } else { // sinon on créé une commande Chantier
+            $productChantierOrderManager = $this->get('paprec_catalog.product_chantier_order_manager');
+
+
+            $productChantierOrder = new ProductChantierOrder();
+            $productChantierOrder->setCity($city);
+            $productChantierOrder->setPostalCode($postalCode);
+
+            $form = $this->createForm(ProductChantierOrderShortType::class, $productChantierOrder);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $productChantierOrder = $form->getData();
+                $productChantierOrder->setOrderStatus('Créée');
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($productChantierOrder);
+                $em->flush();
+
+                // On récupère tous les produits ajoutés au Cart
+                foreach ($cart->getContent() as $item) {
+                    $productChantierOrderManager->addLineFromCart($productChantierOrder, $item['pId'], $item['qtty'], $item['cId']);
+                }
+
+                return $this->redirectToRoute('paprec_public_Chantier_subscription_step4', array(
+                    'cartUuid' => $cart->getId(),
+                    'orderId' => $productChantierOrder->getId()
+                ));
+            }
 
         }
         return $this->render('@PaprecPublic/Chantier/contactDetails.html.twig', array(
@@ -160,6 +199,8 @@ class SubscriptionController extends Controller
     }
 
     /**
+     * Etape "Mon offre" qui récapitule le de vis créé par l'utilisateur
+     *
      * @Route("/chantier/step3/{cartUuid}/{quoteId}", name="paprec_public_Chantier_subscription_step3")
      */
     public function step3Action(Request $request, $cartUuid, $quoteId)
@@ -177,6 +218,78 @@ class SubscriptionController extends Controller
 
 
     /**
+     * Etape "Ma livraison" qui est encore un formulaire complétant les infos du productChantierOrder
+     *
+     * @Route("/chantier/step4/{cartUuid}/{orderId}", name="paprec_public_Chantier_subscription_step4")
+     */
+    public function step4Action(Request $request, $cartUuid, $orderId)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $cartManager = $this->get('paprec.cart_manager');
+
+        $cart = $cartManager->get($cartUuid);
+        $productChantierOrder = $em->getRepository('PaprecCommercialBundle:ProductChantierOrder')->find($orderId);
+        $form = $this->createForm(ProductChantierOrderDeliveryType::class, $productChantierOrder);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $productChantierOrder = $form->getData();
+            $em->merge($productChantierOrder);
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_public_Chantier_subscription_step5', array(
+                'cartUuid' => $cart->getId(),
+                'orderId' => $productChantierOrder->getId()
+            ));
+        }
+        return $this->render('@PaprecPublic/Chantier/delivery.html.twig', array(
+            'cart' => $cart,
+            'productChantierOrder' => $productChantierOrder,
+            'form' => $form->createView()
+        ));
+    }
+
+
+    /**
+     * Etape "Mon paiement" qui est encore un formulaire complétant les infos du productChantierOrder
+     *
+     * @Route("/chantier/step5/{cartUuid}/{orderId}", name="paprec_public_Chantier_subscription_step5")
+     */
+    public function step5Action(Request $request, $cartUuid, $orderId)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $cartManager = $this->get('paprec.cart_manager');
+
+        $cart = $cartManager->get($cartUuid);
+        $productChantierOrder = $em->getRepository('PaprecCommercialBundle:ProductChantierOrder')->find($orderId);
+//        $form = $this->createForm(ProductChantierOrderDeliveryType::class, $productChantierOrder);
+//
+//        $form->handleRequest($request);
+//        if ($form->isSubmitted() && $form->isValid()) {
+//
+//            $productChantierOrder = $form->getData();
+//            $em->merge($productChantierOrder);
+//            $em->flush();
+//
+//            return $this->redirectToRoute(paprec_public_Chantier_subscription_step5, array(
+//                'cartUuid' => $cart->getId(),
+//                'orderId' => $productChantierOrder->getId()
+//            ));
+//        }
+        return $this->render('@PaprecPublic/Chantier/payment.html.twig', array(
+            'cart' => $cart,
+            'productChantierOrder' => $productChantierOrder
+//            'form' => $form->createView()
+        ));
+    }
+
+
+    /**
+     * Au clic sur une catégorie, on l'ajoute ou on la supprime des catégories affichées
+     *
      * @Route("/chantier/addDisplayedCategory/{cartUuid}/{categoryId}", name="paprec_public_Chantier_subscription_addDisplayedCategory")
      * @throws \Exception
      */
@@ -194,6 +307,7 @@ class SubscriptionController extends Controller
 
     /**
      * Ajoute au cart un displayedProduct avec en key => value( categoryId => productId)
+     *
      * @Route("/chantier/addOrRemoveDisplayedProduct/{cartUuid}/{categoryId}/{productId}", name="paprec_public_Chantier_subscription_addOrRemoveDisplayedProduct")
      * @throws \Exception
      */
@@ -210,7 +324,8 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Ajoute au cart un product
+     * Ajoute au cart un Product avec sa quantité et  sa catégorie
+     *
      * @Route("/chantier/addContent/{cartUuid}/{categoryId}/{productId}/{quantity}", name="paprec_public_Chantier_subscription_addContent")
      * @throws \Exception
      */
@@ -225,7 +340,8 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Ajoute au cart un displayedProduct avec en key => value( categoryId => productId)
+     * Supprime un Product du contenu du Cart
+     *
      * @Route("/chantier/removeContent/{cartUuid}/{categoryId}/{productId}", name="paprec_public_Chantier_subscription_removeContent")
      * @throws \Exception
      */
@@ -240,7 +356,8 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Retourne le twig du cart avec les produits dans celui-ci ainsi que le montant total
+     * Retourne le twig.html du cart avec les produits dans celui-ci ainsi que le montant total
+     *
      * @Route("/chantier/loadCart/{cartUuid}", name="paprec_public_Chantier_subscription_loadCart", condition="request.isXmlHttpRequest()")
      * @throws \Exception
      */

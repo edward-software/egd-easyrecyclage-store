@@ -128,9 +128,9 @@ class HomeController extends Controller
             $em->persist($quoteRequest);
             $em->flush();
 
-
-            return $this->render('@PaprecPublic/Shared/regularConfirm.html.twig', array(
-                'quoteRequest' => $quoteRequest
+            return $this->redirectToRoute('paprec_public_home_regularConfirm', array(
+                'cartUuid' => $cart->getId(),
+                'quoteRequestId' => $quoteRequest->getId()
             ));
         }
         return $this->render('@PaprecPublic/Shared/regularForm.html.twig', array(
@@ -138,7 +138,20 @@ class HomeController extends Controller
             'cart' => $cart,
             'divisions' => $divisions
         ));
+    }
 
-
+    /**
+     * Formulaire pour besoin Régulier : commun à toutes les divisions donc dans HomeController
+     * @Route("/regularConfirm/{cartUuid}/{quoteRequestId}", name="paprec_public_home_regularConfirm")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function regularConfirmAction(Request $request, $cartUuid, $quoteRequestId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $quoteRequest = $em->getRepository('PaprecCommercialBundle:QuoteRequest')->find($quoteRequestId);
+        return $this->render('@PaprecPublic/Shared/regularConfirm.html.twig', array(
+            'quoteRequest' => $quoteRequest
+        ));
     }
 }

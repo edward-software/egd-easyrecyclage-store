@@ -6,6 +6,7 @@ use Paprec\CatalogBundle\Repository\CategoryRepository;
 use Paprec\CatalogBundle\Repository\ProductChantierRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,7 +24,7 @@ class ProductChantierQuoteLineAddType extends AbstractType
     {
         $this->selectedProductId = $options['selectedProductId'];
         $builder
-            ->add('quantity', TextType::class, array(
+            ->add('quantity', IntegerType::class, array(
                 "required" => true
             ))
             ->add('productChantier', EntityType::class, array(

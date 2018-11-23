@@ -71,6 +71,12 @@ class BusinessLine
      */
     private $productChantierQuotes;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductChantierOrder", mappedBy="businessLine")
+     */
+    private $productChantierOrders;
+
     /**
      * BusinessLine constructor.
      */
