@@ -1,31 +1,31 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-    {{ 'Commercial.ProductChantierQuote.Add'|trans }}
+    {{ 'Commercial.ProductD3EQuote.Add'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'Commercial.ProductChantierQuote.ProductChantierQuotes'|trans }}
+    {{ 'Commercial.ProductD3EQuote.ProductD3EQuotes'|trans }}
 {% endblock %}
 
 {% block main_content %}
 
-    <form id="catalogProductChantierQuoteForm" action="" method="post" enctype="multipart/form-data">
+    <form id="catalogProductD3EQuoteForm" action="" method="post" enctype="multipart/form-data">
 
         <div class="col-md-12">
             <!-- BOX -->
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductChantierQuote.Add'|trans }}
+                        <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductD3EQuote.Add'|trans }}
                         <div class="float-right">
                             <a href="javascript:void(0);" class="btn btn-sm btn-success catalog-grilleTarifD3E-save-button"><i
-                                        class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductChantierQuote.Save'|trans }}</a>
+                                        class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductD3EQuote.Save'|trans }}</a>
                             <a href="javascript:void(0);" class="btn btn-sm btn-danger catalog-grilleTarifD3E-cancel-button"><i
-                                        class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductChantierQuote.Cancel'|trans }}</a>
+                                        class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductD3EQuote.Cancel'|trans }}</a>
                         </div>
                     </h4>
                 </div>
@@ -33,11 +33,11 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">{{ 'Commercial.ProductChantierQuote.Informations'|trans }}</h5>
+                                <h5 class="card-title">{{ 'Commercial.ProductD3EQuote.Informations'|trans }}</h5>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label class="form-label">{{ 'Commercial.ProductChantierQuoteLine.Quantity'|trans }}</label>
+                                    <label class="form-label">{{ 'Commercial.ProductD3EQuoteLine.Quantity'|trans }}</label>
                                     <div class="form-content">
                                         {{ form_widget(form.quantity, {'attr': {'class': 'form-control'}}) }}
                                         {{ form_errors(form.quantity) }}
@@ -51,9 +51,9 @@
                 <div class="card-footer">
                     <div class="float-right">
                         <a href="javascript:void(0);" class="btn btn-sm btn-success catalog-grilleTarifD3E-save-button"><i
-                                    class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductChantierQuote.Save'|trans }}</a>
+                                    class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductD3EQuote.Save'|trans }}</a>
                         <a href="javascript:void(0);" class="btn btn-sm btn-danger catalog-grilleTarifD3E-cancel-button"><i
-                                    class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductChantierQuote.Cancel'|trans }}</a>
+                                    class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductD3EQuote.Cancel'|trans }}</a>
                     </div>
                 </div>
             </div>
@@ -72,15 +72,15 @@
         $(function () {
 
             $('.catalog-grilleTarifD3E-save-button').on('click', function () {
-                $('#catalogProductChantierQuoteForm').submit();
+                $('#catalogProductD3EQuoteForm').submit();
             });
 
 
             $('.catalog-grilleTarifD3E-cancel-button').on('click', function () {
 
-                var url = "{{ path("paprec_commercial_productChantierQuote_view", { id: productChantierQuote.id }) }}";
+                var url = "{{ path("paprec_commercial_productD3EQuote_view", { id: productD3EQuote.id }) }}";
 
-                bootbox.confirm("{{ 'Commercial.ProductChantierQuote.Confirm-cancel'|trans }}", function (result) {
+                bootbox.confirm("{{ 'Commercial.ProductD3EQuote.Confirm-cancel'|trans }}", function (result) {
                     if (result === true) {
                         $(location).attr('href', url);
                     }

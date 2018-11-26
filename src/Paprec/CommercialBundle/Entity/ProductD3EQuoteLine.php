@@ -7,12 +7,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * ProductDIQuoteLine
+ * ProductD3EQuoteLine
  *
- * @ORM\Table(name="productDIQuoteLines")
- * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\ProductDIQuoteLineRepository")
+ * @ORM\Table(name="productD3EQuoteLines")
+ * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\ProductD3EQuoteLineRepository")
  */
-class ProductDIQuoteLine
+class ProductD3EQuoteLine
 {
     /**
      * @var int
@@ -52,12 +52,6 @@ class ProductDIQuoteLine
      */
     private $productName;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="categoryName", type="string", length=255)
-     */
-    private $categoryName;
 
     /**
      * @var float
@@ -92,27 +86,21 @@ class ProductDIQuoteLine
      */
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\ProductDI", inversedBy="productDIQuoteLines")
+     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\ProductD3E", inversedBy="productD3EQuoteLines")
      * @ORM\JoinColumn(name="productId", referencedColumnName="id", nullable=false)
      */
-    private $productDI;
+    private $productD3E;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\Category", inversedBy="productDIQuoteLines")
-     * @ORM\JoinColumn(name="categoryId", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\ProductD3EQuote", inversedBy="productD3EQuoteLines")
+     * @ORM\JoinColumn(name="productD3EQuoteId", referencedColumnName="id", nullable=false)
      */
-    private $category;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuote", inversedBy="productDIQuoteLines")
-     * @ORM\JoinColumn(name="productDIQuoteId", referencedColumnName="id", nullable=false)
-     */
-    private $productDIQuote;
+    private $productD3EQuote;
 
 
     /**
-     * ProductDIQuoteLine constructor.
+     * ProductD3EQuoteLine constructor.
      */
     public function __construct()
     {
@@ -130,12 +118,14 @@ class ProductDIQuoteLine
         return $this->id;
     }
 
+
+
     /**
      * Set dateCreation.
      *
      * @param \DateTime $dateCreation
      *
-     * @return ProductDIQuoteLine
+     * @return ProductD3EQuoteLine
      */
     public function setDateCreation($dateCreation)
     {
@@ -159,7 +149,7 @@ class ProductDIQuoteLine
      *
      * @param \DateTime|null $dateUpdate
      *
-     * @return ProductDIQuoteLine
+     * @return ProductD3EQuoteLine
      */
     public function setDateUpdate($dateUpdate = null)
     {
@@ -183,7 +173,7 @@ class ProductDIQuoteLine
      *
      * @param \DateTime|null $deleted
      *
-     * @return ProductDIQuoteLine
+     * @return ProductD3EQuoteLine
      */
     public function setDeleted($deleted = null)
     {
@@ -207,7 +197,7 @@ class ProductDIQuoteLine
      *
      * @param string $productName
      *
-     * @return ProductDIQuoteLine
+     * @return ProductD3EQuoteLine
      */
     public function setProductName($productName)
     {
@@ -231,7 +221,7 @@ class ProductDIQuoteLine
      *
      * @param float $unitPrice
      *
-     * @return ProductDIQuoteLine
+     * @return ProductD3EQuoteLine
      */
     public function setUnitPrice($unitPrice)
     {
@@ -251,83 +241,11 @@ class ProductDIQuoteLine
     }
 
     /**
-     * Set quantity.
-     *
-     * @param int $quantity
-     *
-     * @return ProductDIQuoteLine
-     */
-    public function setQuantity($quantity)
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    /**
-     * Get quantity.
-     *
-     * @return int
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-
-    /**
-     * Set productDI.
-     *
-     * @param \Paprec\CatalogBundle\Entity\ProductDI $productDI
-     *
-     * @return ProductDIQuoteLine
-     */
-    public function setProductDI(\Paprec\CatalogBundle\Entity\ProductDI $productDI)
-    {
-        $this->productDI = $productDI;
-
-        return $this;
-    }
-
-    /**
-     * Get productDI.
-     *
-     * @return \Paprec\CatalogBundle\Entity\ProductDI
-     */
-    public function getProductDI()
-    {
-        return $this->productDI;
-    }
-
-    /**
-     * Set productDIQuote.
-     *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote
-     *
-     * @return ProductDIQuoteLine
-     */
-    public function setProductDIQuote(\Paprec\CommercialBundle\Entity\ProductDIQuote $productDIQuote)
-    {
-        $this->productDIQuote = $productDIQuote;
-
-        return $this;
-    }
-
-    /**
-     * Get productDIQuote.
-     *
-     * @return \Paprec\CommercialBundle\Entity\ProductDIQuote
-     */
-    public function getProductDIQuote()
-    {
-        return $this->productDIQuote;
-    }
-
-    /**
      * Set totalAmount.
      *
      * @param float $totalAmount
      *
-     * @return ProductDIQuoteLine
+     * @return ProductD3EQuoteLine
      */
     public function setTotalAmount($totalAmount)
     {
@@ -347,50 +265,74 @@ class ProductDIQuoteLine
     }
 
     /**
-     * Set category.
+     * Set quantity.
      *
-     * @param \Paprec\CatalogBundle\Entity\Category $category
+     * @param int $quantity
      *
-     * @return ProductDIQuoteLine
+     * @return ProductD3EQuoteLine
      */
-    public function setCategory(\Paprec\CatalogBundle\Entity\Category $category)
+    public function setQuantity($quantity)
     {
-        $this->category = $category;
+        $this->quantity = $quantity;
 
         return $this;
     }
 
     /**
-     * Get category.
+     * Get quantity.
      *
-     * @return \Paprec\CatalogBundle\Entity\Category
+     * @return int
      */
-    public function getCategory()
+    public function getQuantity()
     {
-        return $this->category;
+        return $this->quantity;
     }
 
     /**
-     * Set categoryName.
+     * Set productD3E.
      *
-     * @param string $categoryName
+     * @param \Paprec\CatalogBundle\Entity\ProductD3E $productD3E
      *
-     * @return ProductDIQuoteLine
+     * @return ProductD3EQuoteLine
      */
-    public function setCategoryName($categoryName)
+    public function setProductD3E(\Paprec\CatalogBundle\Entity\ProductD3E $productD3E)
     {
-        $this->categoryName = $categoryName;
+        $this->productD3E = $productD3E;
 
         return $this;
     }
 
     /**
-     * Get categoryName.
+     * Get productD3E.
      *
-     * @return string
+     * @return \Paprec\CatalogBundle\Entity\ProductD3E
      */
-    public function getCategoryName()
+    public function getProductD3E()
     {
-        return $this->categoryName;
+        return $this->productD3E;
+    }
+
+    /**
+     * Set productD3EQuote.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductD3EQuote $productD3EQuote
+     *
+     * @return ProductD3EQuoteLine
+     */
+    public function setProductD3EQuote(\Paprec\CommercialBundle\Entity\ProductD3EQuote $productD3EQuote)
+    {
+        $this->productD3EQuote = $productD3EQuote;
+
+        return $this;
+    }
+
+    /**
+     * Get productD3EQuote.
+     *
+     * @return \Paprec\CommercialBundle\Entity\ProductD3EQuote
+     */
+    public function getProductD3EQuote()
+    {
+        return $this->productD3EQuote;
     }
 }

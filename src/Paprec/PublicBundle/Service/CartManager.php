@@ -137,6 +137,31 @@ class CartManager
     }
 
     /**
+     * Pour D3E,il n'y a pas de notion de catégorie, on remplace donc le displayedProdu
+     * @param $id
+     * @param $productId
+     * @return null|object|Cart
+     * @throws Exception
+     */
+    public function addOrRemoveDisplayedProductD3E($id, $productId)
+    {
+        $cart = $this->get($id);
+        $dProducts = $cart->getDisplayedProducts();
+
+        if ($dProducts && in_array($productId, $dProducts)) {
+            $dProducts = array();
+        } else {
+            $dProducts = array();
+            $dProducts[] = $productId;
+        }
+
+        $cart->setDisplayedProducts($dProducts);
+        $this->em->persist($cart);
+        $this->em->flush();
+        return $cart;
+    }
+
+    /**
      * @param $id
      * @param $categoryId
      * @param $productId
@@ -162,6 +187,30 @@ class CartManager
     }
 
     /**
+     * @param $id
+     * @param $productId
+     * @param $quantity
+     * @return null|object|Cart
+     * @throws Exception
+     */
+    public function addContentD3E($id, $productId, $quantity)
+    {
+        $cart = $this->get($id);
+        $content = $cart->getContent();
+        $product = ['pId' => $productId, 'qtty' => $quantity];
+        foreach ($content as $key => $value) {
+            if ($value['pId'] == $productId) {
+                unset($content[$key]);
+            }
+        }
+        $content[] = $product;
+        $cart->setContent($content);
+        $this->em->persist($cart);
+        $this->em->flush();
+        return $cart;
+    }
+
+    /**
      * Supprime un produit
      * @param $id
      * @param $categoryId
@@ -172,13 +221,34 @@ class CartManager
     public function removeContent($id, $categoryId, $productId)
     {
         $cart = $this->get($id);
-        $productCategories = $cart->getContent();
-        foreach ($productCategories as $key => $productCategory) {
-            if ($productCategory['cId'] == $categoryId && $productCategory['pId'] == $productId) {
-                unset($productCategories[$key]);
+        $products = $cart->getContent();
+        foreach ($products as $key => $product) {
+            if ($product['cId'] == $categoryId && $product['pId'] == $productId) {
+                unset($products[$key]);
             }
         }
-        $cart->setContent($productCategories);
+        $cart->setContent($products);
+        $this->em->persist($cart);
+        $this->em->flush();
+        return $cart;
+    }
+
+    /**
+     * @param $id
+     * @param $productId
+     * @return null|object|Cart
+     * @throws Exception
+     */
+    public function removeContentD3E($id, $productId)
+    {
+        $cart = $this->get($id);
+        $products = $cart->getContent();
+        foreach ($products as $key => $product) {
+            if ($product['pId'] == $productId) {
+                unset($products[$key]);
+            }
+        }
+        $cart->setContent($products);
         $this->em->persist($cart);
         $this->em->flush();
         return $cart;
@@ -213,7 +283,7 @@ class CartManager
                         'category' => $category
                     )
                 );
-                $loadedCart['sum'] += $productDICategory->getUnitPrice()*$productsCategory['qtty'];
+                $loadedCart['sum'] += $productDICategory->getUnitPrice() * $productsCategory['qtty'];
             }
         } else {
             return $loadedCart;
@@ -246,7 +316,7 @@ class CartManager
                         'category' => $category
                     )
                 );
-                $loadedCart['sum'] += $productChantierCategory->getUnitPrice()*$productsCategory['qtty'];
+                $loadedCart['sum'] += $productChantierCategory->getUnitPrice() * $productsCategory['qtty'];
             }
         } else {
             return $loadedCart;
@@ -257,9 +327,31 @@ class CartManager
         return $loadedCart;
     }
 
-    private function calculateAmount()
+    public function loadCartD3E($id)
     {
-        return 100;
-    }
+        $cart = $this->get($id);
+        $productChantierManager = $this->container->get('paprec_catalog.product_D3E_manager');
+        $grilleTarifD3EManager = $this->container->get('paprec_catalog.grille_tarif_d3e_manager');
 
+
+        // on récupère les products ajoutés au cart
+        $products = $cart->getContent();
+        $loadedCart = array();
+        $loadedCart['sum'] = 0;
+        if ($products && count($products)) {
+            foreach ($products as $product) {
+                $productD3E = $productChantierManager->get($product['pId']);
+                $loadedCart[$product['pId']] = ['qtty' => $product['qtty'], 'pName' => $productD3E->getName(), 'frequency' => $cart->getFrequency()];
+
+                $postalCode = substr($cart->getLocation(), 0, 5);
+                $loadedCart['sum'] += $grilleTarifD3EManager->getUnitPriceByPostalCodeQtty($productD3E->getGrilleTarifD3E(), $postalCode, $product['qtty']) * $product['qtty'];
+            }
+        } else {
+            return $loadedCart;
+        }
+        // On trie par ordre croissant sur les clés, donc par les id des produits
+        // ainsi les mêmes produits dans 2 catégories différentes
+        ksort($loadedCart);
+        return $loadedCart;
+    }
 }

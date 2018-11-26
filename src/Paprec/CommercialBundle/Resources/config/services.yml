@@ -11,6 +11,10 @@ services:
     class: Paprec\CommercialBundle\Service\ProductChantierQuoteManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
+  paprec_catalog.product_d3e_quote_manager:
+    class: Paprec\CommercialBundle\Service\ProductD3EQuoteManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
   paprec_catalog.product_chantier_order_manager:
     class: Paprec\CommercialBundle\Service\ProductChantierOrderManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]

@@ -55,19 +55,6 @@ class ProductChantierQuoteManager
      */
     public function addLine(ProductChantierQuote $productChantierQuote, ProductChantierQuoteLine $productChantierQuoteLine)
     {
-        $productChantierQuoteLine->setProductChantierQuote($productChantierQuote);
-        $productChantierQuote->addProductChantierQuoteLine($productChantierQuoteLine);
-        $productChantierCategory = $this->em->getRepository('PaprecCatalogBundle:ProductChantierCategory')->findOneBy(
-            array(
-                'productChantier' => $productChantierQuoteLine->getProductChantier(),
-                'category' => $productChantierQuoteLine->getCategory()
-            )
-        );
-        $productChantierQuoteLine->setUnitPrice($productChantierCategory->getUnitPrice());
-        $productChantierQuoteLine->setProductName($productChantierQuoteLine->getProductChantier()->getName());
-        $productChantierQuoteLine->setCategoryName($productChantierQuoteLine->getCategory()->getName());
-
-
         // On check s'il existe déjà une ligne pour ce produit, pour l'incrémenter
         $currentQuoteLine = $this->em->getRepository('PaprecCommercialBundle:ProductChantierQuoteLine')->findOneBy(
             array(
@@ -81,6 +68,17 @@ class ProductChantierQuoteManager
             $quantity = $productChantierQuoteLine->getQuantity() + $currentQuoteLine->getQuantity();
             $currentQuoteLine->setQuantity($quantity);
         } else {
+            $productChantierQuoteLine->setProductChantierQuote($productChantierQuote);
+            $productChantierQuote->addProductChantierQuoteLine($productChantierQuoteLine);
+            $productChantierCategory = $this->em->getRepository('PaprecCatalogBundle:ProductChantierCategory')->findOneBy(
+                array(
+                    'productChantier' => $productChantierQuoteLine->getProductChantier(),
+                    'category' => $productChantierQuoteLine->getCategory()
+                )
+            );
+            $productChantierQuoteLine->setUnitPrice($productChantierCategory->getUnitPrice());
+            $productChantierQuoteLine->setProductName($productChantierQuoteLine->getProductChantier()->getName());
+            $productChantierQuoteLine->setCategoryName($productChantierQuoteLine->getCategory()->getName());
 
             $this->em->persist($productChantierQuoteLine);
         }

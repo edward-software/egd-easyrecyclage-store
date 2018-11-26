@@ -8,12 +8,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * ProductDIQuote
+ * ProductD3EQuote
  *
- * @ORM\Table(name="productDIQuotes")
- * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\ProductDIQuoteRepository")
+ * @ORM\Table(name="productD3EQuotes")
+ * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\ProductD3EQuoteRepository")
  */
-class ProductDIQuote
+class ProductD3EQuote
 {
     /**
      * @var int
@@ -134,7 +134,6 @@ class ProductDIQuote
      */
     private $quoteStatus;
 
-
     /**
      * @var float
      *
@@ -182,33 +181,33 @@ class ProductDIQuote
      *
      *  RELATIONS
      *
-     ########################### */
-
+     * ########################### */
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuoteLine", mappedBy="productDIQuote", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductD3EQuoteLine", mappedBy="productD3EQuote", cascade={"all"})
      */
-    private $productDIQuoteLines;
+    private $productD3EQuoteLines;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\UserBundle\Entity\User", inversedBy="productDIQuotes", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="Paprec\UserBundle\Entity\User", inversedBy="productD3EQuotes", cascade={"all"})
      * @ORM\JoinColumn(name="userInChargeId", referencedColumnName="id", nullable=true)
      */
     private $userInCharge;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agency", inversedBy="productDIQuotes")
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agency", inversedBy="productD3EQuotes")
      * @ORM\JoinColumn(name="agencyId", referencedColumnName="id", nullable=true)
      */
     private $agency;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\BusinessLine", inversedBy="productDIQuotes")
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\BusinessLine", inversedBy="productD3EQuotes")
      * @ORM\JoinColumn(name="businessLineId", referencedColumnName="id", nullable=true)
      * @Assert\NotBlank()
      */
     private $businessLine;
+
 
     /**
      * ProductDIQuote constructor.
@@ -216,7 +215,7 @@ class ProductDIQuote
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
-        $this->productDIQuoteLines = new ArrayCollection();
+        $this->productD3EQuoteLines = new ArrayCollection();
     }
 
 
@@ -235,7 +234,7 @@ class ProductDIQuote
      *
      * @param \DateTime $dateCreation
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setDateCreation($dateCreation)
     {
@@ -259,7 +258,7 @@ class ProductDIQuote
      *
      * @param \DateTime|null $dateUpdate
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setDateUpdate($dateUpdate = null)
     {
@@ -283,7 +282,7 @@ class ProductDIQuote
      *
      * @param \DateTime|null $deleted
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setDeleted($deleted = null)
     {
@@ -307,7 +306,7 @@ class ProductDIQuote
      *
      * @param string $businessName
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setBusinessName($businessName)
     {
@@ -331,7 +330,7 @@ class ProductDIQuote
      *
      * @param string $civility
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setCivility($civility)
     {
@@ -355,7 +354,7 @@ class ProductDIQuote
      *
      * @param string $lastName
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setLastName($lastName)
     {
@@ -379,7 +378,7 @@ class ProductDIQuote
      *
      * @param string $firstName
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setFirstName($firstName)
     {
@@ -399,11 +398,35 @@ class ProductDIQuote
     }
 
     /**
+     * Set function.
+     *
+     * @param string|null $function
+     *
+     * @return ProductD3EQuote
+     */
+    public function setFunction($function = null)
+    {
+        $this->function = $function;
+
+        return $this;
+    }
+
+    /**
+     * Get function.
+     *
+     * @return string|null
+     */
+    public function getFunction()
+    {
+        return $this->function;
+    }
+
+    /**
      * Set email.
      *
      * @param string $email
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setEmail($email)
     {
@@ -427,7 +450,7 @@ class ProductDIQuote
      *
      * @param string $address
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setAddress($address)
     {
@@ -451,7 +474,7 @@ class ProductDIQuote
      *
      * @param string $postalCode
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setPostalCode($postalCode)
     {
@@ -475,7 +498,7 @@ class ProductDIQuote
      *
      * @param string $city
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setCity($city)
     {
@@ -499,7 +522,7 @@ class ProductDIQuote
      *
      * @param string $phone
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setPhone($phone)
     {
@@ -518,16 +541,38 @@ class ProductDIQuote
         return $this->phone;
     }
 
+    /**
+     * Set quoteStatus.
+     *
+     * @param string $quoteStatus
+     *
+     * @return ProductD3EQuote
+     */
+    public function setQuoteStatus($quoteStatus)
+    {
+        $this->quoteStatus = $quoteStatus;
 
+        return $this;
+    }
+
+    /**
+     * Get quoteStatus.
+     *
+     * @return string
+     */
+    public function getQuoteStatus()
+    {
+        return $this->quoteStatus;
+    }
 
     /**
      * Set totalAmount.
      *
-     * @param float $totalAmount
+     * @param float|null $totalAmount
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
-    public function setTotalAmount($totalAmount)
+    public function setTotalAmount($totalAmount = null)
     {
         $this->totalAmount = $totalAmount;
 
@@ -537,7 +582,7 @@ class ProductDIQuote
     /**
      * Get totalAmount.
      *
-     * @return float
+     * @return float|null
      */
     public function getTotalAmount()
     {
@@ -549,7 +594,7 @@ class ProductDIQuote
      *
      * @param float|null $generatedTurnover
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setGeneratedTurnover($generatedTurnover = null)
     {
@@ -573,7 +618,7 @@ class ProductDIQuote
      *
      * @param string|null $summary
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setSummary($summary = null)
     {
@@ -597,7 +642,7 @@ class ProductDIQuote
      *
      * @param string|null $frequency
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setFrequency($frequency = null)
     {
@@ -621,7 +666,7 @@ class ProductDIQuote
      *
      * @param float|null $tonnage
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setTonnage($tonnage = null)
     {
@@ -645,7 +690,7 @@ class ProductDIQuote
      *
      * @param int|null $kookaburaNumber
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setKookaburaNumber($kookaburaNumber = null)
     {
@@ -665,39 +710,39 @@ class ProductDIQuote
     }
 
     /**
-     * Add productDIQuoteLine.
+     * Add productD3EQuoteLine.
      *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine
+     * @param \Paprec\CommercialBundle\Entity\ProductD3EQuoteLine $productD3EQuoteLine
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
-    public function addProductDIQuoteLine(\Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine)
+    public function addProductD3EQuoteLine(\Paprec\CommercialBundle\Entity\ProductD3EQuoteLine $productD3EQuoteLine)
     {
-        $this->productDIQuoteLines[] = $productDIQuoteLine;
+        $this->productD3EQuoteLines[] = $productD3EQuoteLine;
 
         return $this;
     }
 
     /**
-     * Remove productDIQuoteLine.
+     * Remove productD3EQuoteLine.
      *
-     * @param \Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine
+     * @param \Paprec\CommercialBundle\Entity\ProductD3EQuoteLine $productD3EQuoteLine
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeProductDIQuoteLine(\Paprec\CommercialBundle\Entity\ProductDIQuoteLine $productDIQuoteLine)
+    public function removeProductD3EQuoteLine(\Paprec\CommercialBundle\Entity\ProductD3EQuoteLine $productD3EQuoteLine)
     {
-        return $this->productDIQuoteLines->removeElement($productDIQuoteLine);
+        return $this->productD3EQuoteLines->removeElement($productD3EQuoteLine);
     }
 
     /**
-     * Get productDIQuoteLines.
+     * Get productD3EQuoteLines.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getProductDIQuoteLines()
+    public function getProductD3EQuoteLines()
     {
-        return $this->productDIQuoteLines;
+        return $this->productD3EQuoteLines;
     }
 
     /**
@@ -705,7 +750,7 @@ class ProductDIQuote
      *
      * @param \Paprec\UserBundle\Entity\User|null $userInCharge
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setUserInCharge(\Paprec\UserBundle\Entity\User $userInCharge = null)
     {
@@ -729,7 +774,7 @@ class ProductDIQuote
      *
      * @param \Paprec\CommercialBundle\Entity\Agency|null $agency
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setAgency(\Paprec\CommercialBundle\Entity\Agency $agency = null)
     {
@@ -753,7 +798,7 @@ class ProductDIQuote
      *
      * @param \Paprec\CommercialBundle\Entity\BusinessLine|null $businessLine
      *
-     * @return ProductDIQuote
+     * @return ProductD3EQuote
      */
     public function setBusinessLine(\Paprec\CommercialBundle\Entity\BusinessLine $businessLine = null)
     {
@@ -770,53 +815,5 @@ class ProductDIQuote
     public function getBusinessLine()
     {
         return $this->businessLine;
-    }
-
-    /**
-     * Set quoteStatus.
-     *
-     * @param string $quoteStatus
-     *
-     * @return ProductDIQuote
-     */
-    public function setQuoteStatus($quoteStatus)
-    {
-        $this->quoteStatus = $quoteStatus;
-
-        return $this;
-    }
-
-    /**
-     * Get quoteStatus.
-     *
-     * @return string
-     */
-    public function getQuoteStatus()
-    {
-        return $this->quoteStatus;
-    }
-
-    /**
-     * Set function.
-     *
-     * @param string $function
-     *
-     * @return ProductDIQuote
-     */
-    public function setFunction($function)
-    {
-        $this->function = $function;
-
-        return $this;
-    }
-
-    /**
-     * Get function.
-     *
-     * @return string
-     */
-    public function getFunction()
-    {
-        return $this->function;
     }
 }

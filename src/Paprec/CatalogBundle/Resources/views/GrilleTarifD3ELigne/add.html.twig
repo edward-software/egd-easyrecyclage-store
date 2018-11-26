@@ -1,59 +1,126 @@
-<form id="formEditGrilleTarifLigneD3E" name="formEditGrilleTarifLigneD3E"
-      action="{{ path("paprec_catalog_grilleTarifD3E_addLigne", {id: grilleTarifD3E.id}) }}"
-      method="post">
-    <div class="modal-header">
-        <h5 class="modal-title" id="editLigneModalTitle">
-            {{ 'Catalog.GrilleTarifLigneD3E.Edit'|trans }}
-        </h5>
-        <button type="button" class="close" data-dismiss="modal"
-                aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <div class="form-group">
-            <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.PostalCodes'|trans }}</div>
-            <div class="form-content">
-                {{ form_widget(form.postalCodes, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.postalCodes) }}
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.Agency'|trans }}</div>
-            <div class="form-content">
-                {{ form_widget(form.agency, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.agency) }}
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.MinQuantity'|trans }}</div>
-            <div class="form-content">
-                {{ form_widget(form.minQuantity, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.minQuantity) }}
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.MaxQuantity'|trans }}</div>
-            <div class="form-content">
-                {{ form_widget(form.maxQuantity, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.maxQuantity) }}
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.Price'|trans }}</div>
-            <div class="form-content">
-                {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.price) }}
-            </div>
-        </div>
+{% extends "::base_admin.html.twig" %}
 
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-secondary"
-                data-dismiss="modal">
-            {{ 'General.Cancel'|trans }}
-        </button>
-        {{ form_widget(form.save, {'attr': {'class': 'btn btn-sm btn-success'}}) }}
-    </div>
-    {{ form_rest(form) }}
-</form>
+{% block title %}
+    {{ 'Catalog.GrilleTarifD3E.Add'|trans }}
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block content_title %}
+    {{ 'Catalog.GrilleTarifD3E.GrilleTarifD3Es'|trans }}
+{% endblock %}
+
+{% block main_content %}
+
+    <form id="formAddGrilleTarifLigneD3E" name="formAddGrilleTarifLigneD3E"
+          action="" method="post">
+        <div class="col-md-12">
+            <!-- BOX -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.GrilleTarifLigneD3E.Add'|trans }}
+                        <div class="float-right">
+                            <a href="javascript:void(0);"
+                               class="btn btn-sm btn-success catalog-grilleTarifD3ELine-save-button"><i
+                                        class="fa fa-xs fa-check"></i> {{ 'Catalog.GrilleTarifD3E.Save'|trans }}</a>
+                            <a href="javascript:void(0);"
+                               class="btn btn-sm btn-danger catalog-grilleTarifD3ELine-cancel-button"><i
+                                        class="fa fa-xs fa-close"></i> {{ 'Catalog.GrilleTarifD3E.Cancel'|trans }}</a>
+                        </div>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.PostalCodes'|trans }}</div>
+                            <div class="form-content">
+                                {{ form_widget(form.postalCodes, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.postalCodes) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.Agency'|trans }}</div>
+                            <div class="form-content">
+                                {{ form_widget(form.agency, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.agency) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.MinQuantity'|trans }}</div>
+                            <div class="form-content">
+                                {{ form_widget(form.minQuantity, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.minQuantity) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.MaxQuantity'|trans }}</div>
+                            <div class="form-content">
+                                {{ form_widget(form.maxQuantity, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.maxQuantity) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+
+                            <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.Price'|trans }}</div>
+                            <div class="form-content">
+                                {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.price) }}
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="card-footer">
+                    <div class="float-right">
+                        <a href="javascript:void(0);"
+                           class="btn btn-sm btn-success catalog-grilleTarifD3ELine-save-button"><i
+                                    class="fa fa-xs fa-check"></i> {{ 'Catalog.GrilleTarifD3E.Save'|trans }}</a>
+                        <a href="javascript:void(0);"
+                           class="btn btn-sm btn-danger catalog-grilleTarifD3ELine-cancel-button"><i
+                                    class="fa fa-xs fa-close"></i> {{ 'Catalog.GrilleTarifD3E.Cancel'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_rest(form) }}
+    </form>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        $(function () {
+
+            $('.catalog-grilleTarifD3ELine-save-button').on('click', function () {
+                $('#formAddGrilleTarifLigneD3E').submit();
+            });
+
+
+            $('.catalog-grilleTarifD3ELine-cancel-button').on('click', function () {
+
+                var url = "{{ path("paprec_catalog_grilleTarifD3E_view", {id: grilleTarifD3E.id}) }}";
+
+                bootbox.confirm("{{ 'Catalog.GrilleTarifD3E.Confirm-cancel'|trans }}", function (result) {
+                    if (result === true) {
+                        $(location).attr('href', url);
+                    }
+                });
+
+            });
+
+        });
+    </script>
+{% endblock %}

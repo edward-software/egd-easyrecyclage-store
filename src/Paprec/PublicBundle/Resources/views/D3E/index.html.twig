@@ -86,9 +86,9 @@
                         </div>
                         <div class="clearfix"></div>
                         <a class="button button--grey"
-                           href="{{ path('paprec_public_Chantier_subscription_setOrder', {cartUuid: cart.id}) }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
+                           href="{{ path('paprec_public_D3E_subscription_setOrder', {cartUuid: cart.id}) }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
                         <a class="button button--grey"
-                           href="{{ path('paprec_public_Chantier_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
+                           href="{{ path('paprec_public_D3E_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
                     </div>
                 </div>
             </form>
@@ -157,8 +157,116 @@
 
             // Au chargement, on applique au body la couleur de la division DI
             function loadedPage() {
-                $('body').addClass('tunnel--purple');
+                $('body').addClass('tunnel--orange');
 
+            }
+
+            // Au clic sur une catégorie, on l'ajoute où on la supprime des displayedCategories du cart
+            $('.categoryCheckboxPicto').click(function () {
+                categoryId = (this.id).replace('categoryCheckboxPicto_', '');
+                url = $(this).data('url').replace('categoryTmp', categoryId);
+                $(location).attr('href', url);
+            });
+
+            // Au clic sur la croix de l'infoproduct, on supprime le produit des displayedProduct
+            $('.productCheckboxPicto').click(function () {
+                //on récupère la fin de l'id contenant : productId_categoryId et on met chaque id dans une case d'un tableau
+                productCategory = (this.id).replace('productCheckboxPicto_', '').split('_', 2);
+                productId = productCategory[0];
+                categoryId = productCategory[1];
+                addOrRemoveDisplayedProduct(productId, categoryId);
+            });
+
+            function addOrRemoveDisplayedProduct(productId, categoryId) {
+                {% autoescape'js' %}
+                url = "{{ path('paprec_public_DI_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
+                    .replace('categoryTmp', categoryId)
+                    .replace('productTmp', productId);
+                $(location).attr('href', url);
+                {% endautoescape %}
+            }
+
+            // Au clic sur une catégorie, on l'ajoute où on la supprime des displayedCategories du cart
+            $('.infoproduct__close').click(function () {
+                //on récupère la fin de l'id contenant : productId_categoryId et on met chaque id dans une case d'un tableau
+                productCategory = (this.id).replace('infoProductClose_', '').split('_', 2);
+                productId = productCategory[0];
+                categoryId = productCategory[1];
+                addOrRemoveDisplayedProduct(productId, categoryId);
+            });
+
+            // Au clic sur un wrapper, on l'affiche ou on le cache
+            $('.step__wrappertop').click(function () {
+                if ($('.step__wrappertop').hasClass('open')) {
+                    $('.step__wrappertop').removeClass('open')
+                } else {
+                    $('.step__wrappertop').addClass('open');
+                }
+            });
+
+            $('.addToCartSubmitButton').click(function () {
+                productCategory = (this.id).replace('addToCartSubmitButton_', '').split('_', 2);
+                productId = productCategory[0];
+                categoryId = productCategory[1];
+                qtty = $('#quantityProducSelect_' + productId + '_' + categoryId).val();
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('paprec_public_DI_subscription_addContent', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp', quantity: 'quantityTmp'}) }}"
+                        .replace('categoryTmp', categoryId)
+                        .replace('productTmp', productId)
+                        .replace('quantityTmp', qtty),
+                    success: function (response) {
+                        // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
+                        // addOrRemoveDisplayedProduct(productId, categoryId);
+                        removeBadge(productId, categoryId);
+                        $('#productCheckboxPicto_' + productId + '_' + categoryId).prepend("<span class=\"number\">" + qtty + "<span");
+                        reloadCart()
+                    },
+                    error: function (errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
+            });
+
+            function removeBadge(productId, categoryId) {
+                $('#productCheckboxPicto_' + productId + '_' + categoryId).find('span.number').remove();
+            }
+
+            // Rechargement de l'HTML du Cart
+            function reloadCart() {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ path('paprec_public_DI_subscription_loadCart', {cartUuid: cart.id}) }}",
+                    contentType: "html",
+                    success: function (response) {
+                        // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
+                        var htmlToDisplay = response.trim();
+                        $("#loadedCartPanel").html(htmlToDisplay);
+                        // On ajoute un listener sur les "x" dans la liste des produits dans le Cart
+                        $(".buttonDeleteProduct").click(function () {
+                            productCategory = (this.id).replace('buttonDeleteProduct_', '').split('_', 2);
+                            productId = productCategory[0];
+                            categoryId = productCategory[1];
+                            $.ajax({
+                                type: "GET",
+                                dataType: "json",
+                                url: "{{ path('paprec_public_DI_subscription_removeContent', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
+                                    .replace('categoryTmp', categoryId)
+                                    .replace('productTmp', productId),
+                                success: function (response) {
+                                    removeBadge(productId, categoryId);
+                                    reloadCart();
+                                },
+                                error: function (errorThrown) {
+                                    console.log(errorThrown);
+                                }
+                            });
+                        })
+                    },
+                    error: function (errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
             }
         });
     </script>

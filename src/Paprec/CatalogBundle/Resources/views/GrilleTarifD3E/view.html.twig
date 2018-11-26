@@ -83,9 +83,8 @@
                             <h5 class="card-title">
                                 {{ 'Catalog.GrilleTarifLigneD3E.GrilleTarifLigneD3Es'|trans }}
                                 <div class="float-right">
-                                    <a href="javascript:void(0);" id="addGrilleTarifD3ELigneButton"
-                                       class="btn btn-sm btn-outline-primary" data-target="#grilleTarifD3ELigneModal"
-                                       data-toggle="modal">
+                                    <a href="{{ path('paprec_catalog_grilleTarifD3E_addLigne', {id: grilleTarifD3E.id}) }}" id="addGrilleTarifD3ELigneButton"
+                                       class="btn btn-sm btn-outline-primary">
                                         <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.GrilleTarifLigneD3E.Add'|trans }}
                                     </a>
                                 </div>
@@ -116,11 +115,8 @@
                                         <td>{{ grilleTarifLigneD3E.maxQuantity }}</td>
                                         <td>{{ grilleTarifLigneD3E.price }}</td>
                                         <td class="text-center">
-                                            <a href="javascript:void(0);"
-                                               class="btn btn-sm btn-warning mx-1 editGrilleTarifD3ELigneButton"
-                                               data-target="#grilleTarifD3ELigneModal"
-                                               data-toggle="modal"
-                                               data-id="{{ grilleTarifLigneD3E.id }}">
+                                            <a href="{{ path('paprec_catalog_grilleTarifD3E_editLigne', {id: grilleTarifD3E.id, ligneID: grilleTarifLigneD3E.id }) }}"
+                                               class="btn btn-sm btn-warning mx-1">
                                                 <i class="fa fa-xs fa-edit"></i>
                                             </a>
                                             <a href="javascript:void(0);"
@@ -196,21 +192,21 @@
                         dom: 'f<"ml-auto">lrti<"ml-auto">p',
                     });
 
-                    $('#addGrilleTarifD3ELigneButton').on('click', function () {
-                        $.ajax({
-                            type: "GET",
-                            url: "{{ path('paprec_catalog_grilleTarifD3E_addLigne', {id: grilleTarifD3E.id}) }}",
-                            contentType: "html",
-                            success: function (response) {
-                                // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
-                                var htmlToDisplay = response.trim();
-                                $("#grilleTarifD3ELigneModalContent").html(htmlToDisplay);
-                            },
-                            error: function (errorThrown) {
-                                console.log(errorThrown);
-                            }
-                        });
-                    });
+                    {#$('#addGrilleTarifD3ELigneButton').on('click', function () {#}
+                        {#$.ajax({#}
+                            {#type: "GET",#}
+                            {#url: "{{ path('paprec_catalog_grilleTarifD3E_addLigne', {id: grilleTarifD3E.id}) }}",#}
+                            {#contentType: "html",#}
+                            {#success: function (response) {#}
+                                {#// On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar#}
+                                {#var htmlToDisplay = response.trim();#}
+                                {#$("#grilleTarifD3ELigneModalContent").html(htmlToDisplay);#}
+                            {#},#}
+                            {#error: function (errorThrown) {#}
+                                {#console.log(errorThrown);#}
+                            {#}#}
+                        {#});#}
+                    {#});#}
 
                     $('.editGrilleTarifD3ELigneButton').on('click', function () {
                         id = $(this).data('id');

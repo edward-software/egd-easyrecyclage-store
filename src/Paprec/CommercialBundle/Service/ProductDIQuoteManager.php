@@ -55,18 +55,6 @@ class ProductDIQuoteManager
      */
     public function addLine(ProductDIQuote $productDIQuote, ProductDIQuoteLine $productDIQuoteLine)
     {
-        $productDIQuoteLine->setProductDIQuote($productDIQuote);
-        $productDIQuote->addProductDIQuoteLine($productDIQuoteLine);
-        $productDICategory = $this->em->getRepository('PaprecCatalogBundle:ProductDICategory')->findOneBy(
-            array(
-                'productDI' => $productDIQuoteLine->getProductDI(),
-                'category' => $productDIQuoteLine->getCategory()
-            )
-        );
-        $productDIQuoteLine->setUnitPrice($productDICategory->getUnitPrice());
-        $productDIQuoteLine->setProductName($productDIQuoteLine->getProductDI()->getName());
-        $productDIQuoteLine->setCategoryName($productDIQuoteLine->getCategory()->getName());
-
 
         // On check s'il existe déjà une ligne pour ce produit, pour l'incrémenter
         $currentQuoteLine = $this->em->getRepository('PaprecCommercialBundle:ProductDIQuoteLine')->findOneBy(
@@ -81,6 +69,17 @@ class ProductDIQuoteManager
             $quantity = $productDIQuoteLine->getQuantity() + $currentQuoteLine->getQuantity();
             $currentQuoteLine->setQuantity($quantity);
         } else {
+            $productDIQuoteLine->setProductDIQuote($productDIQuote);
+            $productDIQuote->addProductDIQuoteLine($productDIQuoteLine);
+            $productDICategory = $this->em->getRepository('PaprecCatalogBundle:ProductDICategory')->findOneBy(
+                array(
+                    'productDI' => $productDIQuoteLine->getProductDI(),
+                    'category' => $productDIQuoteLine->getCategory()
+                )
+            );
+            $productDIQuoteLine->setUnitPrice($productDICategory->getUnitPrice());
+            $productDIQuoteLine->setProductName($productDIQuoteLine->getProductDI()->getName());
+            $productDIQuoteLine->setCategoryName($productDIQuoteLine->getCategory()->getName());
 
             $this->em->persist($productDIQuoteLine);
         }

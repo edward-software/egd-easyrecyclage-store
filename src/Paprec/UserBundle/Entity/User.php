@@ -115,6 +115,11 @@ class User extends BaseUser
     private $productChantierQuotes;
 
     /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductD3EQuote", mappedBy="userInCharge")
+     */
+    private $productD3EQuotes;
+
+    /**
      * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\QuoteRequest", mappedBy="userInCharge")
      */
     private $quoteRequests;
@@ -126,6 +131,7 @@ class User extends BaseUser
         $this->dateCreation = new \DateTime();
         $this->productDIQuotes = new ArrayCollection();
         $this->productChantierQuotes = new ArrayCollection();
+        $this->productD3EQuotes = new ArrayCollection();
 
     }
 
@@ -414,5 +420,41 @@ class User extends BaseUser
     public function getProductChantierQuotes()
     {
         return $this->productChantierQuotes;
+    }
+
+    /**
+     * Add productD3EQuote.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductD3EQuote $productD3EQuote
+     *
+     * @return User
+     */
+    public function addProductD3EQuote(\Paprec\CommercialBundle\Entity\ProductD3EQuote $productD3EQuote)
+    {
+        $this->productD3EQuotes[] = $productD3EQuote;
+
+        return $this;
+    }
+
+    /**
+     * Remove productD3EQuote.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductD3EQuote $productD3EQuote
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductD3EQuote(\Paprec\CommercialBundle\Entity\ProductD3EQuote $productD3EQuote)
+    {
+        return $this->productD3EQuotes->removeElement($productD3EQuote);
+    }
+
+    /**
+     * Get productD3EQuotes.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductD3EQuotes()
+    {
+        return $this->productD3EQuotes;
     }
 }

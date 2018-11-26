@@ -143,6 +143,11 @@ class ProductD3E
     private $grilleTarifD3E;
 
     /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductD3EQuoteLine", mappedBy="productD3E", cascade={"all"})
+     */
+    private $productD3EQuoteLines;
+
+    /**
      * Constructor
      */
     public function __construct()

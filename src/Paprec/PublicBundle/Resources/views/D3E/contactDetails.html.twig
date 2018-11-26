@@ -1,0 +1,155 @@
+{% extends "::base_public.html.twig" %}
+
+{#{% block title %}#}
+
+{#{% endblock %}#}
+
+{#{% block stylesheets %}#}
+
+{#{% endblock %}#}
+
+{% block main_content %}
+    <!-- section -->
+    <section>
+        <div class="wrapper">
+            <div class="sidebar">
+                <div class="recap passed">
+                    <div class="recap__step">
+                        <span class="recap__stepNumber">01</span>Mon besoin
+                    </div>
+                    <div id="loadedCartPanel"></div>
+
+                    </div>
+
+                <div class="recap active">
+                    <div class="recap__step">
+                        <span class="recap__stepNumber">02</span>Mes coordonnées
+                    </div>
+
+                </div>
+                {% if cart.type == 'quote' %}
+                    <div class="recap">
+                        <div class="recap__step">
+                            <span class="recap__stepNumber">03</span>Mon offre
+                        </div>
+
+                    </div>
+                {% else %}
+                    <div class="recap">
+                        <div class="recap__step">
+                            <span class="recap__stepNumber">03</span>Ma livraison
+                        </div>
+
+                    </div>
+                    <div class="recap">
+                        <div class="recap__step">
+                            <span class="recap__stepNumber">04</span>Mon paiement
+                        </div>
+
+                    </div>
+                {% endif %}
+            </div>
+            <form id="contactDetailsForm" action="" method="post" class="main">
+                <div class="step">
+                    <div class="step__left">
+                        <div class="step__title">Je suis</div>
+                    </div>
+                    <div class="step__right step__right--small">
+                        {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.BusinessName'|trans}}) }}
+                        {{ form_errors(form.businessName) }}
+
+                        {{ form_widget(form.businessLine, {'attr': {'class': 'input input--full'}}) }}
+                        {{ form_errors(form.businessLine) }}
+
+                        {{ form_widget(form.civility, {'attr': {'class': 'input--radio'}}) }}
+                        {{ form_errors(form.civility) }}
+
+                        <div class="clearfix step--marginfield"></div>
+
+                        {{ form_widget(form.lastName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.LastName'|trans}}) }}
+                        {{ form_errors(form.lastName) }}
+                        {{ form_widget(form.firstName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.FirstName'|trans}}) }}
+                        {{ form_errors(form.firstName) }}
+
+                        {{ form_widget(form.email, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.Email'|trans}}) }}
+                        {{ form_errors(form.email) }}
+
+                        {{ form_widget(form.address, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.Address'|trans}}) }}
+                        {{ form_errors(form.address) }}
+
+                        {{ form_widget(form.postalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.PostalCode'|trans}}) }}
+                        {{ form_errors(form.postalCode) }}
+
+                        {{ form_widget(form.city, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.City'|trans}}) }}
+                        {{ form_errors(form.city) }}
+
+                        {{ form_widget(form.phone, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.PhonePlaceholder'|trans}}) }}
+                        {{ form_errors(form.phone) }}
+
+                        {{ form_widget(form.function, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.FunctionPlaceholder'|trans}}) }}
+                        {{ form_errors(form.function) }}
+
+
+                        {{ form_widget(form.terms) }}
+                        {{ form_label(form.terms, 'J\'accepte les conditions générales de vente') }}
+                        {{ form_errors(form.terms) }}
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="notice">Un besoin <span>plus complexe</span> ? Vous souhaitez nous en parler ?</div>
+                    <div class="clearfix"></div>
+                    <div class="step__left">
+                        <a href="{{ path('paprec_public_D3E_subscription_step1', {cartUuid: cart.id}) }}" class="back">Retour</a>
+                    </div>
+                    <div class="step__right">
+                        <a href="#" class="button margint10 button--grey">Contactez-nous</a>
+                        <a href="#" class="button margint10 button--grey">Être rappelé</a>
+                        <a href="javascript:void(0);" id="contactDetailsFormSubmitButton"
+                           class="button margint10 button--green">Accéder à votre offre</a>
+                    </div>
+                </div>
+                {{ form_rest(form) }}
+            </form>
+
+            <div class="clearfix"></div>
+        </div>
+    </section>
+    <!-- /section -->
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function () {
+            reloadCart();
+            $('body').addClass('tunnel--purple');
+
+
+            $('#contactDetailsFormSubmitButton').on('click', function () {
+                $('#contactDetailsForm').submit();
+            });
+
+            // Rechargement de l'HTML du Cart
+            function reloadCart() {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ path('paprec_public_D3E_subscription_loadCart', {cartUuid: cart.id}) }}",
+                    contentType: "html",
+                    success: function (response) {
+                        // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
+                        var htmlToDisplay = response.trim();
+                        $("#loadedCartPanel").html(htmlToDisplay);
+                        //on supprime les croix dans le panier
+                        $('.buttonDeleteProduct').remove();
+                    },
+                    error: function (errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
+            }
+        });
+    </script>
+
+
+{% endblock %}

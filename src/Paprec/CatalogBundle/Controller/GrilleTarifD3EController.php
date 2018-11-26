@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -150,8 +151,6 @@ class GrilleTarifD3EController extends Controller
             throw new NotFoundHttpException();
         }
         $grilleTarifLigneD3E = new GrilleTarifLigneD3E();
-        $addLigneForm = $this->createForm(GrilleTarifLigneD3EType::class, $grilleTarifLigneD3E);
-        $editLigneForm = $this->createForm(GrilleTarifLigneD3EType::class, $grilleTarifLigneD3E);
 
 
         return $this->render('PaprecCatalogBundle:GrilleTarifD3E:view.html.twig', array(
@@ -277,6 +276,7 @@ class GrilleTarifD3EController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $grilleTarifLigneD3E = $form->getData();
             $grilleTarifLigneD3E->setGrilleTarifD3E($grilleTarifD3E);

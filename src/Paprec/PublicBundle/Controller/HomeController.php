@@ -71,9 +71,9 @@ class HomeController extends Controller
                             'cartUuid' => $cart->getId()
                         ));
                     case('D3E'):
-//                        return $this->redirectToRoute('paprec_public_D3E_subscription_step0', array(
-//                            'cartUuid' => $cart->getId()
-//                        ));
+                        return $this->redirectToRoute('paprec_public_D3E_subscription_step0', array(
+                            'cartUuid' => $cart->getId()
+                        ));
                 }
             }
 

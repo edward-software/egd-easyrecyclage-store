@@ -24,10 +24,14 @@
                     <h4>
                         <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductChantierQuote.AddLine'|trans }}
                         <div class="float-right">
-                            <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-productChantierQuoteLine-save-button"><i
-                                        class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductChantierQuote.Save'|trans }}</a>
-                            <a href="javascript:void(0);" class="btn btn-sm btn-danger commercial-productChantierQuoteLine-cancel-button"><i
-                                        class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductChantierQuote.Cancel'|trans }}</a>
+                            <a href="javascript:void(0);"
+                               class="btn btn-sm btn-success commercial-productChantierQuoteLine-save-button"><i
+                                        class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductChantierQuote.Save'|trans }}
+                            </a>
+                            <a href="javascript:void(0);"
+                               class="btn btn-sm btn-danger commercial-productChantierQuoteLine-cancel-button"><i
+                                        class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductChantierQuote.Cancel'|trans }}
+                            </a>
                         </div>
                     </h4>
                 </div>
@@ -66,17 +70,20 @@
 
                 <div class="card-footer">
                     <div class="float-right">
-                        <a href="javascript:void(0);" class="btn btn-sm btn-success commercial-productChantierQuoteLine-save-button"><i
-                                    class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductChantierQuote.Save'|trans }}</a>
-                        <a href="javascript:void(0);" class="btn btn-sm btn-danger commercial-productChantierQuoteLine-cancel-button"><i
-                                    class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductChantierQuote.Cancel'|trans }}</a>
+                        <a href="javascript:void(0);"
+                           class="btn btn-sm btn-success commercial-productChantierQuoteLine-save-button"><i
+                                    class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductChantierQuote.Save'|trans }}
+                        </a>
+                        <a href="javascript:void(0);"
+                           class="btn btn-sm btn-danger commercial-productChantierQuoteLine-cancel-button"><i
+                                    class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductChantierQuote.Cancel'|trans }}
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
         {{ form_rest(form) }}
     </form>
-    </div>
 
 
 
@@ -107,11 +114,10 @@
 
             });
 
-            $('.select-product').on('change', function(){
+            $('.select-product').on('change', function () {
                 $('#selectedProductInput').val($(this).val());
                 $('#submitFormInput').val('');
-                if($(this).val() != '')
-                {
+                if ($(this).val() != '') {
                     $('#commercialProductChantierQuoteForm').submit();
                 }
             });

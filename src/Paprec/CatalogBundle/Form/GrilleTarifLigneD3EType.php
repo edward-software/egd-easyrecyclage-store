@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Choice;
@@ -21,7 +22,7 @@ class GrilleTarifLigneD3EType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('postalCodes')
+            ->add('postalCodes', TextareaType::class)
             ->add('agency', EntityType::class, array(
                 'class' => Agency::class,
                 'multiple' => false,
@@ -37,11 +38,7 @@ class GrilleTarifLigneD3EType extends AbstractType
             ->add('maxQuantity', IntegerType::class, array(
                 'required' => false
             ))
-            ->add('price')
-            ->add('save', SubmitType::class, array(
-                'attr' => array('class' => 'save'),
-                'label' => 'Catalog.GrilleTarifD3E.Save'
-            ));
+            ->add('price');
     }
 
     /**
