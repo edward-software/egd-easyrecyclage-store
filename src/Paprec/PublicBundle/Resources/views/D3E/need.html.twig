@@ -135,98 +135,99 @@
                            href="{{ path('paprec_public_corp_D3E_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
                     </div>
                 </div>
-                    <div class="step">
-                        <div class="step__left">
-                            <div class="step__title">
-                                Mes prestations
-                            </div>
+                <div class="step">
+                    <div class="step__left">
+                        <div class="step__title">
+                            Mes prestations
                         </div>
-                        <div class="step__right">
-                            {% set cpt = 5 %}
-                            {% set displayedProduct = "" %}
-                            {# On parcourt la liste des produits D3E #}
-                                {% for product in products %}
-                                    {% if (cpt%5 == 0) %}
-                                        <div class="first-row">
-                                    {% endif %}
-                                    {% if product.id in cart.displayedProducts %}
-                                        {% set displayedProduct = product %}
-                                    {% endif %}
-                                    <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts %}  active {% endif %}"
-                                         id="productCheckboxPicto_{{ product.id }}"
-                                         style="{% if product.pictos %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
-                                        {{ product.name }}
-                                        {% for items in cart.content %}
-                                            {% if items['pId'] == product.id %}
-                                                <span class="number">{{ items['qtty'] }}</span>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                    {% set cpt = cpt + 1 %}
-
-                                    {% if ((cpt%5 == 0) and (cpt > 5)) or loop.last %}
-                                        </div>
-                                        {% if cart.displayedProducts and displayedProduct != '' %}
-                                            <div class="infoproduct">
-                                                <div class="left">
-                                                    {{ displayedProduct.description }}
-
-                                                </div>
-                                                <div class="right">
-                                                    <div class="infoproduct__close"
-                                                         data-url="{{ path('paprec_public_corp_D3E_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: displayedProduct.id}) }}"
-                                                         id="infoProductClose_{{ displayedProduct.id }}"></div>
-                                                    <div class="infoproduct__title">
-                                                        QUANTIFIEZ VOTRE BESOIN
-                                                    </div>
-
-                                                    <div class="clearfix"></div>
-
-                                                    {% set qtty = '' %}
-                                                    {% for items in cart.content %}
-                                                        {% if items['pId'] == displayedProduct.id %}
-                                                            {% set qtty = items['qtty'] %}
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                    <div class="infoproduct__qtytitle">{{ 'Public.Cart.Qtty'|trans }}</div>
-
-                                                    <select name=""
-                                                            id="quantityProducSelect_{{ displayedProduct.id }}"
-                                                            class="infoproduct__qty">
-                                                        {% for i in 1..10 %}
-                                                            {% if i == qtty %}
-                                                                <option value="{{ i }}"
-                                                                        selected="selected">{{ i }}</option>
-                                                            {% else %}
-                                                                <option value="{{ i }}">{{ i }}</option>
-
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    </select>
-                                                    <div class="button button--lightgreen addToCartSubmitButton"
-                                                         id="addToCartSubmitButton_{{ displayedProduct.id }}">{{ 'Public.Cart.AddToCart'|trans }}
-                                                    </div>
-
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                            {% set displayedProduct = '' %}
-                                        {% endif %}
-                                        <div class="clearfix"></div>
+                    </div>
+                    <div class="step__right">
+                        {% set cpt = 5 %}
+                        {% set displayedProduct = "" %}
+                        {# On parcourt la liste des produits D3E #}
+                        {% for product in products %}
+                            {% if (cpt%5 == 0) %}
+                                <div class="first-row">
+                            {% endif %}
+                            {% if product.id in cart.displayedProducts %}
+                                {% set displayedProduct = product %}
+                            {% endif %}
+                            <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts %}  active {% endif %}"
+                                 id="productCheckboxPicto_{{ product.id }}"
+                                 style="{% if product.pictos %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
+                                {{ product.name }}
+                                {% for items in cart.content %}
+                                    {% if items['pId'] == product.id %}
+                                        <span class="number">{{ items['qtty'] }}</span>
                                     {% endif %}
                                 {% endfor %}
+                            </div>
+                            {% set cpt = cpt + 1 %}
 
+                            {% if ((cpt%5 == 0) and (cpt > 5)) or loop.last %}
+                                </div>
+                                {% if cart.displayedProducts and displayedProduct != '' %}
+                                    <div class="infoproduct">
+                                        <div class="left">
+                                            {{ displayedProduct.description }}
 
+                                        </div>
+                                        <div class="right">
+                                            <div class="infoproduct__close"
+                                                 data-url="{{ path('paprec_public_corp_D3E_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: displayedProduct.id}) }}"
+                                                 id="infoProductClose_{{ displayedProduct.id }}"></div>
+                                            <div class="infoproduct__title">
+                                                QUANTIFIEZ VOTRE BESOIN
+                                            </div>
+
+                                            <div class="clearfix"></div>
+
+                                            {% set qtty = '' %}
+                                            {% for items in cart.content %}
+                                                {% if items['pId'] == displayedProduct.id %}
+                                                    {% set qtty = items['qtty'] %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            <div class="infoproduct__qtytitle">{{ 'Public.Cart.Qtty'|trans }}</div>
+
+                                            <select name=""
+                                                    id="quantityProducSelect_{{ displayedProduct.id }}"
+                                                    class="infoproduct__qty">
+                                                {% for i in 1..10 %}
+                                                    {% if i == qtty %}
+                                                        <option value="{{ i }}"
+                                                                selected="selected">{{ i }}</option>
+                                                    {% else %}
+                                                        <option value="{{ i }}">{{ i }}</option>
+
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                            <div class="button button--lightgreen addToCartSubmitButton"
+                                                 id="addToCartSubmitButton_{{ displayedProduct.id }}">{{ 'Public.Cart.AddToCart'|trans }}
+                                            </div>
+
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    {% set displayedProduct = '' %}
+                                {% endif %}
                                 <div class="clearfix"></div>
+                            {% endif %}
+                        {% endfor %}
 
-                            <div class="button button--grey">Contactez-nous</div>
-                            <div class="button button--grey">Etre rappelé</div>
-                            <a href="{{ path('paprec_public_corp_D3E_subscription_step2', {cartUuid: cart.id}) }}"
-                               class="button button--green">Valider votre besoin
-                            </a>
-                        </div>
 
+                        <div class="clearfix"></div>
+
+                        <a href="{{ path('paprec_public_home_contactForm', {cartUuid: cart.id}) }}"
+                           class="button button--grey">CONTACTEZ-NOUS</a>
+                        <div class="button button--grey">Etre rappelé</div>
+                        <a href="{{ path('paprec_public_corp_D3E_subscription_step2', {cartUuid: cart.id}) }}"
+                           class="button button--green">Valider votre besoin
+                        </a>
                     </div>
+
+                </div>
             </form>
 
 

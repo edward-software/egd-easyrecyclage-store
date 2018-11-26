@@ -25,6 +25,8 @@ services:
 
 parameters:
   paprec_commercial.quote_request.files_path: "%kernel.root_dir%/../web/uploads/files"
+  paprec_commercial.contact_us.files_path: "%kernel.root_dir%/../web/uploads/files"
+
   paprec_commercial.product_chantier_order.files_path: "%kernel.root_dir%/../web/uploads/files/invoices"
 
 
@@ -40,6 +42,11 @@ parameters:
   - En attente
   - Payée
   - Annulée
+
+  paprec_treatment_status:
+  - Créé
+  - En attente
+  - Recontacté
 
   paprec_order_payment_methods:
   - CB

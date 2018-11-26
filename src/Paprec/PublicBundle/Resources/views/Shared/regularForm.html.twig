@@ -64,7 +64,7 @@
                                 {% if division == cart.division %}
                                     <option value="{{ division }}" selected="selected">{{ division }}</option>
                                 {% else %}
-                                    <option va  lue="{{ division }}">{{ division }}</option>
+                                    <option value="{{ division }}">{{ division }}</option>
                                 {% endif %}
                             {% endfor %}
                         </select>
@@ -127,7 +127,7 @@
                     <div class="notice">Afin de mieux appréhender votre demande, vous pouvez si vous le souhaitez nous
                         fournir des photos (.jpg, .png, .tiff)
                         ou autres fichiers (.pdf, .doc, .xls)
-
+                    </div>
                     {{ form_label(form.attachedFiles, "TÉLÉCHARGER DES PIÈCES JOINTES OU DES PHOTOS", {'label_attr': {'class': 'button button--bordered'}}) }}
                     {{ form_widget(form.attachedFiles, {'attr': {'class': 'input-file'}}) }}
 

@@ -2,7 +2,9 @@
 
 namespace Paprec\PublicBundle\Controller;
 
+use Paprec\CommercialBundle\Entity\ContactUs;
 use Paprec\CommercialBundle\Entity\QuoteRequest;
+use Paprec\CommercialBundle\Form\ContactUsShortType;
 use Paprec\CommercialBundle\Form\QuoteRequestShortType;
 use Paprec\PublicBundle\Entity\Cart;
 use Paprec\PublicBundle\Service\CartManager;
@@ -141,11 +143,11 @@ class HomeController extends Controller
     }
 
     /**
-     * Formulaire pour besoin Régulier : commun à toutes les divisions donc dans HomeController
-     * @Route("/regularConfirm/{cartUuid}/{quoteRequestId}", name="paprec_public_home_regularConfirm")
-     * @param Request $request
-     * @throws \Exception
-     */
+ * Formulaire pour besoin Régulier : commun à toutes les divisions donc dans HomeController
+ * @Route("/regularConfirm/{cartUuid}/{quoteRequestId}", name="paprec_public_home_regularConfirm")
+ * @param Request $request
+ * @throws \Exception
+ */
     public function regularConfirmAction(Request $request, $cartUuid, $quoteRequestId)
     {
         $em = $this->getDoctrine()->getManager();
@@ -154,4 +156,72 @@ class HomeController extends Controller
             'quoteRequest' => $quoteRequest
         ));
     }
+
+    /**
+     * Formulaire "Contactez-nous"
+     * @Route("/contactForm/{cartUuid}", name="paprec_public_home_contactForm")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function contactFormAction(Request $request, $cartUuid)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+
+        $cart = $cartManager->get($cartUuid);
+
+        $contactUs = new ContactUs();
+        $form = $this->createForm(ContactUsShortType::class, $contactUs);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $contactUs = $form->getData();
+            $contactUs->setTreatmentStatus('Créé');
+            $contactUs->setDivision($cart->getDivision());
+            $contactUs->setCartContent($cart->getContent());
+
+            $files = array();
+            foreach ($contactUs->getAttachedFiles() as $uploadedFile) {
+                if ($uploadedFile instanceof UploadedFile) {
+                    /**
+                     * On place le file uploadé dans le dossier web/files
+                     * et on ajoute le nom du fichier md5 dans le tableau $files
+                     */
+                    $uploadedFileName = md5(uniqid()) . '.' . $uploadedFile->guessExtension();
+
+                    $uploadedFile->move($this->getParameter('paprec_commercial.contact_us.files_path'), $uploadedFileName);
+                    $files[] = $uploadedFileName;
+                }
+            }
+            $contactUs->setAttachedFiles($files);
+            $em->persist($contactUs);
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_public_home_contactConfirm', array(
+                'cartUuid' => $cart->getId(),
+                'contactUsId' => $contactUs->getId()
+            ));
+        }
+        return $this->render('@PaprecPublic/Shared/contactForm.html.twig', array(
+            'form' => $form->createView(),
+            'cart' => $cart
+        ));
+    }
+
+    /**
+     * Formulaire pour besoin Régulier : commun à toutes les divisions donc dans HomeController
+     * @Route("/contactConfirm/{cartUuid}/{contactUsId}", name="paprec_public_home_contactConfirm")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function contactConfirmAction(Request $request, $cartUuid, $contactUsId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $contactUs = $em->getRepository('PaprecCommercialBundle:ContactUs')->find($contactUsId);
+        return $this->render('@PaprecPublic/Shared/contactConfirm.html.twig', array(
+            'contactUs' => $contactUs
+        ));
+    }
+
 }

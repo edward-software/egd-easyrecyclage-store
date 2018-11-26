@@ -65,7 +65,9 @@
                             envoyée par mail.
                         </div>
                     </div>
-                    <div class="bold">{% if productDIQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productDIQuote.firstName }} {{ productDIQuote.lastName  }},</div>
+                    <div class="bold">{% if productDIQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productDIQuote.firstName }} {{ productDIQuote.lastName }}
+                        ,
+                    </div>
 
                     <div class="recaptitle">Voici le récapitulatif de votre demande.</div>
                     <div class="greyrecap">
@@ -86,15 +88,17 @@
                         valider un devis.
                     </div>
                     {% for productDIQuoteLine in productDIQuote.productDIQuoteLines %}
-                    <div class="recapproduct">
-                        <div class="wrapperimage">
-                            <img src="{% if productDIQuoteLine.productDI.pilotPictures %}{{ asset('/uploads/pictos/' ~ productDIQuoteLine.productDI.pilotPictures[0].path) }}{% endif %}"
-                                 alt="#">
+                        <div class="recapproduct">
+                            <div class="wrapperimage">
+                                <img src="{% if productDIQuoteLine.productDI.pilotPictures %}{{ asset('/uploads/pictos/' ~ productDIQuoteLine.productDI.pilotPictures[0].path) }}{% endif %}"
+                                     alt="#">
+                            </div>
+                            <div class="name">{{ productDIQuoteLine.quantity }}
+                                x {{ productDIQuoteLine.productDI.name }} {{ productDIQuoteLine.productDI.capacity }}{{ productDIQuoteLine.productDI.capacityUnit }}</div>
+                            <div class="nameof">de {{ productDIQuoteLine.categoryName }}</div>
+                            <div class="desc">
+                                Prestation {% if productDIQuote.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}</div>
                         </div>
-                        <div class="name">{{ productDIQuoteLine.quantity }} x {{ productDIQuoteLine.productDI.name }} {{ productDIQuoteLine.productDI.capacity }}{{ productDIQuoteLine.productDI.capacityUnit }}</div>
-                        <div class="nameof">de {{ productDIQuoteLine.categoryName }}</div>
-                        <div class="desc">Prestation {% if productDIQuote.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}</div>
-                    </div>
                     {% endfor %}
 
                     <a href="#" class="backtohome button button--green">RETOUR À LA PAGE D’ACCUEIL</a>
@@ -103,7 +107,8 @@
                         Besoin d’une <span>information complémentaire</span> ? Vous souhaitez nous en parler ?
                     </div>
 
-                    <a href="#" class="button margint10 button--grey">CONTACTEZ-NOUS</a>
+                    <a href="{{ path('paprec_public_home_contactForm', {cartUuid: cart.id}) }}"
+                       class="button button--grey">CONTACTEZ-NOUS</a>
                     <a href="#" class="button margint10 button--grey">ÊTRE RAPPELÉ</a>
                 </div>
             </div>

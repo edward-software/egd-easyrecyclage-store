@@ -306,6 +306,7 @@ class CartManager
         $loadedCart = array();
         $loadedCart['sum'] = 0;
         if ($productsCategories && count($productsCategories)) {
+
             foreach ($productsCategories as $productsCategory) {
                 $productChantier = $productChantierManager->get($productsCategory['pId']);
                 $category = $categoryManager->get($productsCategory['cId']);

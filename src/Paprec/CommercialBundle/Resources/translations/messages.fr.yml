@@ -363,6 +363,42 @@ Commercial:
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
     Confirm-remove:             Etes-vous sûr de vouloir supprimer cette demande de devis ?
 
+  ContactUs:
+    ContactUss:                 Demandes de contact
+    List:                       Liste des demandes de contact
+    ListChantiers:              Division chantier
+    ListD3Es:                   Division D3Es
+    ListDIs:                    Division DI
+    Date-creation:              Date de création
+    Date-crea:                  Date de créa.
+    Date-update:                Date de mise à jour
+    BusinessName:               Raison sociale
+    Civility:                   Civilité
+    LastName:                   Nom
+    FirstName:                  Prénom
+    Email:                      Email
+    Phone:                      Téléphone
+    AttachedFiles:              Fichiers en PJ
+    PhonePlaceholder:           Numéro de téléphone
+    FunctionPlaceholder:        Fonction (facultatif)
+    Function:                   Fonction
+    Need:                       Le besoin
+    NeedPlaceholder:            Votre besoin
+    Division:                   Division
+    TreatmentStatus:            Statut
+    Informations:               Informations
+    Informations-FO:            Informations Front Office
+    Informations-BO:            Informations Back Office
+    System-informations:        Informations système
+    Export:                     Exporter les demandes de contact
+    View:                       Visualiser la demande de contact
+    Edit:                       Modifier la demande de contact
+    Remove:                     Supprimer la demande de contact
+    Save:                       Enregistrer
+    Cancel:                     Annuler
+    Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+    Confirm-remove:             Etes-vous sûr de vouloir supprimer cette demande de contact ?
+
   QuoteRequestNonCorporate:
     QuoteRequestNonCorporates:  Demandes de devis non entreprise
     List:                       Liste des demandes de devis
