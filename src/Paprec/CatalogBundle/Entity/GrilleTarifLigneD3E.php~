@@ -30,7 +30,7 @@ class GrilleTarifLigneD3E
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="@(\d{2}(?:\d{3})?)(,\s*)*@",
-     *     match=true,
+     *     htmlPattern="(\d{2}(?:\d{3})?)(,\s*)*",
      *     message="Les codes postaux doivent être des nombres de taille 2 ou 5 séparés par des virgules. (ex: '75, 92150, 36')"
      * )
      */

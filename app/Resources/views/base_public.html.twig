@@ -53,17 +53,23 @@
             <div class="righter">
                 <div class="whoare__title">Je suis</div>
 
-                <a href="{{ path('paprec_public_home_index') }}" class="whoare__cta">Entreprise<br>& administration</a>
-                <a href="#" class="whoare__cta">Groupe<br>& réseaux</a>
-                <a href="#" class="whoare__cta whoare__cta--center">Collectivité</a>
-                <a href="#" class="whoare__cta whoare__cta--center">Particulier</a>
+                <a href="{{ path('paprec_public_corp_home_index') }}"
+                   class="whoare__cta {% if app.request.get('_route')|slice(0, 'paprec_public_corp'|length) == 'paprec_public_corp' %} active{% endif %}">Entreprise<br>&
+                    administration</a>
+                <a href="{{ path('paprec_public_non_corporate_subscription_groupe_step0') }}"
+                   class="whoare__cta {% if app.request.get('_route')|slice(0, 'paprec_public_groupe'|length) == 'paprec_public_groupe' %} active{% endif %}">Groupe<br>&
+                    réseaux</a>
+                <a href="{{ path('paprec_public_non_corporate_subscription_collectivite_step0') }}"
+                   class="whoare__cta whoare__cta--center {% if app.request.get('_route')|slice(0, 'paprec_public_collectivite'|length) == 'paprec_public_collectivite' %} active{% endif %}">Collectivité</a>
+                <a href="{{ path('paprec_public_non_corporate_subscription_particulier_step0') }}"
+                   class="whoare__cta whoare__cta--center {% if app.request.get('_route')|slice(0, 'paprec_public_particulier'|length) == 'paprec_public_particulier' %} active{% endif %}">Particulier</a>
             </div>
         </div>
     </div>
     {% block main_content %}
-    <!-- section -->
+        <!-- section -->
 
-    <!-- /section -->
+        <!-- /section -->
     {% endblock %}
 </main>
 

@@ -101,7 +101,7 @@
                     <div class="notice">Un besoin <span>plus complexe</span> ? Vous souhaitez nous en parler ?</div>
                     <div class="clearfix"></div>
                     <div class="step__left">
-                        <a href="{{ path('paprec_public_D3E_subscription_step1', {cartUuid: cart.id}) }}" class="back">Retour</a>
+                        <a href="{{ path('paprec_public_corp_D3E_subscription_step1', {cartUuid: cart.id}) }}" class="back">Retour</a>
                     </div>
                     <div class="step__right">
                         <a href="#" class="button margint10 button--grey">Contactez-nous</a>
@@ -134,7 +134,7 @@
             function reloadCart() {
                 $.ajax({
                     type: "GET",
-                    url: "{{ path('paprec_public_D3E_subscription_loadCart', {cartUuid: cart.id}) }}",
+                    url: "{{ path('paprec_public_corp_D3E_subscription_loadCart', {cartUuid: cart.id}) }}",
                     contentType: "html",
                     success: function (response) {
                         // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar

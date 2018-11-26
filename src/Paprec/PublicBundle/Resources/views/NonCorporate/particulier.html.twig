@@ -34,14 +34,14 @@
                     </div>
                     <div class="step__right">
                         <input class="input" type="text" list="locationDatalist"
-                               id="locationSelect" autocomplete="off"
-                               data-url="{{ path('paprec_public_corp_home_index', {l: 'locationTmp', d: '' }) }}"
-                               value="{{ cart.location }}">
+                               id="locationSelect" autocomplete="off">
                         <datalist id="locationDatalist">
                             <option data-vicopo="#locationSelect">
                                 <a data-vicopo-code-postal> </a>&nbsp;<a data-vicopo-ville></a></option>
                             </option>
                         </datalist>
+                        {{ form_errors(form.postalCode) }}
+
                     </div>
                     <div class="step__agency">
                         <div class="left">2</div>
@@ -50,36 +50,6 @@
                             sont à moins de 50km
                         </div>
                         <div class="right"></div>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step__left">
-                        <div class="step__title">{{ 'Public.Home.Recycle'|trans }}</div>
-                    </div>
-                    <div class="step__right">
-                        <select class="input" id="divisionSelect"
-                                data-url="{{ path('paprec_public_corp_home_index', {l: 'locationTmp', d: 'divisionTmp', f: '' }) }}">
-                            <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
-                            {% for division in divisions %}
-                                {% if division == cart.division %}
-                                    <option value="{{ division }}" selected="selected">{{ division }}</option>
-                                {% else %}
-                                    <option va  lue="{{ division }}">{{ division }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                        <br>
-                        <div id="frequencyRadioBox"
-                             data-url="{{ path('paprec_public_corp_home_index', {l: 'locationTmp', d: 'divisionTmp', f: 'frequencyTmp' }) }}">
-                            <input class="input__radio" type="radio" id="ponctualRadio" name="frequencyRadio"
-                                   value="ponctual" {% if cart.frequency == 'ponctual' %}checked{% endif %}>
-                            <label for="ponctualRadio">{{ 'Public.Cart.Ponctal'|trans }}</label>
-
-                            <input class="input__radio" type="radio" id="regularRadio" name="frequencyRadio"
-                                   value="regular" {% if cart.frequency == 'regular' %}checked{% endif %}>
-                            <label for="regularRadio">{{ 'Public.Cart.Regular'|trans }}</label>
-                        </div>
-                        <div class="clearfix"></div>
                     </div>
                 </div>
                 <div class="step">
@@ -118,6 +88,7 @@
                         <div class="step__title">Mon besoin</div>
                     </div>
                     <div class="step__right step__right--small">
+
                         {{ form_widget(form.need, {'attr': {'class': 'input input--full input--bordered', 'placeholder': 'Commercial.QuoteRequest.NeedPlaceholder'|trans}}) }}
                         {{ form_errors(form.need) }}
                     </div>
@@ -127,13 +98,14 @@
                     <div class="notice">Afin de mieux appréhender votre demande, vous pouvez si vous le souhaitez nous
                         fournir des photos (.jpg, .png, .tiff)
                         ou autres fichiers (.pdf, .doc, .xls)
+                    </div>
 
                     {{ form_label(form.attachedFiles, "TÉLÉCHARGER DES PIÈCES JOINTES OU DES PHOTOS", {'label_attr': {'class': 'button button--bordered'}}) }}
                     {{ form_widget(form.attachedFiles, {'attr': {'class': 'input-file'}}) }}
 
                     <div class="clearfix"></div>
 
-                    <a href="javascript:void(0);" id="regularFormSubmitButton" class="button button--green">
+                    <a href="javascript:void(0);" id="groupFormSubmitButton" class="button button--green">
                         ENVOYER VOTRE BESOIN
                     </a>
                 </div>
@@ -149,27 +121,10 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script type="text/javascript"
+            src="https://vicopo.selfbuild.fr/api.min.js"></script>
     <script>
         $(function () {
-
-            loadedPage();
-
-            function loadedPage() {
-                division = $("#divisionSelect").val();
-                if (division === 'DI') {
-                    $('body').addClass('tunnel--green');
-                } else if (division === 'CHANTIER') {
-                    $('body').addClass('tunnel--orange');
-                } else {
-                    $('body').addClass('tunnel--purple');
-                }
-            }
-
-
-            $('#regularFormSubmitButton').on('click', function () {
-                $('#regularForm').submit();
-            });
-
             // Fonction appelée à chaque input dans l'input Location
             // On recharge la page en envoyant la "location" quand la location est égale à un des autocomplete proposé
             // c-a-d quand on a choisi une "location" dans la datalist en gros
@@ -178,42 +133,14 @@
                 if ($('#locationDatalist option').filter(function () {
                     return this.value.toUpperCase() === val.toUpperCase();
                 }).length) {
-                    alert('Perte des données TODO Modal');
-                    {% autoescape'js' %}
-                    url = $(this).data('url').replace('locationTmp', val);
-                    {% endautoescape %}
-                    $(location).attr('href', url);
+                    $('#paprec_commercialbundle_quoteRequestNonCorporate_postalCode').val(val.substr(0,5));
                 }
             });
 
-            // Quand on sélectionne une division dans le select, on recharge en envoyant la location et la division
-            $("#divisionSelect").on('change', function () {
-                alert('Perte des données TODO Modal');
-                locationVal = $("#locationSelect").val();
-                {% autoescape'js' %}
-                url = $(this).data('url').replace('divisionTmp', this.value).replace('locationTmp', locationVal);
-                {% endautoescape %}
-
-                $(location).attr('href', url);
+            $('#groupFormSubmitButton').on('click', function () {
+                $('#regularForm').submit();
             });
 
-            // Quand on sélectionne une frequence dans les radioButtons, on recharge la page en envoyant la location, division, frequence
-            // cela na nous faire naviguer vers le SubscriptionController de la division choisie
-            $('#frequencyRadioBox').change(function () {
-                alert('Perte des données TODO Modal');
-
-                frequency = $("input[name='frequencyRadio']:checked").val();
-                locationVal = $("#locationSelect").val();
-                divisionVal = $("#divisionSelect").val();
-                {% autoescape'js' %}
-                url = $(this).data('url')
-                    .replace('divisionTmp', divisionVal)
-                    .replace('locationTmp', locationVal)
-                    .replace('frequencyTmp', frequency);
-                {% endautoescape %}
-                $(location).attr('href', url);
-
-            });
         });
     </script>
 

@@ -148,6 +148,11 @@ class Agency
      */
     private $quoteRequests;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate", mappedBy="agency")
+     */
+    private $quoteRequestNonCorporates;
+
 
 
     public function __construct()
@@ -156,6 +161,8 @@ class Agency
         $this->productDIQuotes = new ArrayCollection();
         $this->productChantierQuotes = new ArrayCollection();
         $this->productD3EQuotes = new ArrayCollection();
+        $this->quoteRequestNonCorporates = new ArrayCollection();
+        $this->quoteRequests = new ArrayCollection();
 
     }
 

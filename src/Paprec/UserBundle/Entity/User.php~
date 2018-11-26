@@ -124,6 +124,11 @@ class User extends BaseUser
      */
     private $quoteRequests;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate", mappedBy="userInCharge")
+     */
+    private $quoteRequestNonCorporates;
+
     public function __construct()
     {
         parent::__construct();
@@ -420,5 +425,41 @@ class User extends BaseUser
     public function getProductChantierQuotes()
     {
         return $this->productChantierQuotes;
+    }
+
+    /**
+     * Add productD3EQuote.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductD3EQuote $productD3EQuote
+     *
+     * @return User
+     */
+    public function addProductD3EQuote(\Paprec\CommercialBundle\Entity\ProductD3EQuote $productD3EQuote)
+    {
+        $this->productD3EQuotes[] = $productD3EQuote;
+
+        return $this;
+    }
+
+    /**
+     * Remove productD3EQuote.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductD3EQuote $productD3EQuote
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductD3EQuote(\Paprec\CommercialBundle\Entity\ProductD3EQuote $productD3EQuote)
+    {
+        return $this->productD3EQuotes->removeElement($productD3EQuote);
+    }
+
+    /**
+     * Get productD3EQuotes.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductD3EQuotes()
+    {
+        return $this->productD3EQuotes;
     }
 }

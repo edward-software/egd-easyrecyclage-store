@@ -148,6 +148,11 @@ class Agency
      */
     private $quoteRequests;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate", mappedBy="agency")
+     */
+    private $quoteRequestNonCorporates;
+
 
 
     public function __construct()
@@ -156,6 +161,8 @@ class Agency
         $this->productDIQuotes = new ArrayCollection();
         $this->productChantierQuotes = new ArrayCollection();
         $this->productD3EQuotes = new ArrayCollection();
+        $this->quoteRequestNonCorporates = new ArrayCollection();
+        $this->quoteRequests = new ArrayCollection();
 
     }
 
@@ -640,5 +647,41 @@ class Agency
     public function getProductD3EQuotes()
     {
         return $this->productD3EQuotes;
+    }
+
+    /**
+     * Add quoteRequestNonCorporate.
+     *
+     * @param \Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate $quoteRequestNonCorporate
+     *
+     * @return Agency
+     */
+    public function addQuoteRequestNonCorporate(\Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate $quoteRequestNonCorporate)
+    {
+        $this->quoteRequestNonCorporates[] = $quoteRequestNonCorporate;
+
+        return $this;
+    }
+
+    /**
+     * Remove quoteRequestNonCorporate.
+     *
+     * @param \Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate $quoteRequestNonCorporate
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeQuoteRequestNonCorporate(\Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate $quoteRequestNonCorporate)
+    {
+        return $this->quoteRequestNonCorporates->removeElement($quoteRequestNonCorporate);
+    }
+
+    /**
+     * Get quoteRequestNonCorporates.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuoteRequestNonCorporates()
+    {
+        return $this->quoteRequestNonCorporates;
     }
 }

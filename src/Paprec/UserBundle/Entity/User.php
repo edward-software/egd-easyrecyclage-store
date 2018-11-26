@@ -124,6 +124,11 @@ class User extends BaseUser
      */
     private $quoteRequests;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate", mappedBy="userInCharge")
+     */
+    private $quoteRequestNonCorporates;
+
     public function __construct()
     {
         parent::__construct();
@@ -456,5 +461,41 @@ class User extends BaseUser
     public function getProductD3EQuotes()
     {
         return $this->productD3EQuotes;
+    }
+
+    /**
+     * Add quoteRequestNonCorporate.
+     *
+     * @param \Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate $quoteRequestNonCorporate
+     *
+     * @return User
+     */
+    public function addQuoteRequestNonCorporate(\Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate $quoteRequestNonCorporate)
+    {
+        $this->quoteRequestNonCorporates[] = $quoteRequestNonCorporate;
+
+        return $this;
+    }
+
+    /**
+     * Remove quoteRequestNonCorporate.
+     *
+     * @param \Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate $quoteRequestNonCorporate
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeQuoteRequestNonCorporate(\Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate $quoteRequestNonCorporate)
+    {
+        return $this->quoteRequestNonCorporates->removeElement($quoteRequestNonCorporate);
+    }
+
+    /**
+     * Get quoteRequestNonCorporates.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuoteRequestNonCorporates()
+    {
+        return $this->quoteRequestNonCorporates;
     }
 }

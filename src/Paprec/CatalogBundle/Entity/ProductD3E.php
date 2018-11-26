@@ -160,6 +160,8 @@ class ProductD3E
     {
         $this->dateCreation = new \DateTime();
         $this->pictos = new ArrayCollection();
+        $this->productD3EOrderLines = new ArrayCollection();
+        $this->productD3EQuoteLines = new ArrayCollection();
     }
 
     /**

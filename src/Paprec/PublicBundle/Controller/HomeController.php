@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 class HomeController extends Controller
 {
     /**
-     * @Route("/step0", name="paprec_public_home_index")
+     * @Route("/step0", name="paprec_public_corp_home_index")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
@@ -62,16 +62,16 @@ class HomeController extends Controller
             } else {
                 switch ($cart->getDivision()) {
                     case('DI'):
-                        return $this->redirectToRoute('paprec_public_DI_subscription_step1', array(
+                        return $this->redirectToRoute('paprec_public_corp_DI_subscription_step1', array(
                             'cartUuid' => $cart->getId()
                         ));
                         break;
                     case('CHANTIER'):
-                        return $this->redirectToRoute('paprec_public_Chantier_subscription_step0', array(
+                        return $this->redirectToRoute('paprec_public_corp_Chantier_subscription_step0', array(
                             'cartUuid' => $cart->getId()
                         ));
                     case('D3E'):
-                        return $this->redirectToRoute('paprec_public_D3E_subscription_step0', array(
+                        return $this->redirectToRoute('paprec_public_corp_D3E_subscription_step0', array(
                             'cartUuid' => $cart->getId()
                         ));
                 }

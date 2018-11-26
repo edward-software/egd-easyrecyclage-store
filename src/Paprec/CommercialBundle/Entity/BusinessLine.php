@@ -97,6 +97,8 @@ class BusinessLine
         $this->productDIQuotes = new ArrayCollection();
         $this->productChantierQuotes = new ArrayCollection();
         $this->productD3EQuotes = new ArrayCollection();
+        $this->productChantierOrders = new ArrayCollection();
+        $this->productD3EOrders = new ArrayCollection();
     }
 
     /**

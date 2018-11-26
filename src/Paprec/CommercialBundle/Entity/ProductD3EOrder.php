@@ -214,7 +214,7 @@ class ProductD3EOrder
      * @var string
      *
      * @ORM\Column(name="accessConditions", type="text", nullable=true)
-     * @Assert\NotBlank(groups={"delivery"})
+     * @Assert\Type(type="string", groups={"delivery"})
      */
     private $accessConditions;
 

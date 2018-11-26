@@ -146,7 +146,7 @@
             function reloadCart() {
                 $.ajax({
                     type: "GET",
-                    url: "{{ path('paprec_public_D3E_subscription_loadCart', {cartUuid: cart.id}) }}",
+                    url: "{{ path('paprec_public_corp_D3E_subscription_loadCart', {cartUuid: cart.id}) }}",
                     contentType: "html",
                     success: function (response) {
                         // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar

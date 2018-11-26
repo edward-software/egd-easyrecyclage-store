@@ -68,7 +68,7 @@
                     <div class="step__right">
                         <input class="input" type="text" list="locationDatalist"
                                id="locationSelect" autocomplete="off"
-                               data-url="{{ path('paprec_public_home_index', {l: 'locationTmp', d: '' }) }}"
+                               data-url="{{ path('paprec_public_corp_home_index', {l: 'locationTmp', d: '' }) }}"
                                value="{{ cart.location }}">
                         <datalist id="locationDatalist">
                             <option data-vicopo="#locationSelect">
@@ -91,7 +91,7 @@
                     </div>
                     <div class="step__right">
                         <select class="input" id="divisionSelect"
-                                data-url="{{ path('paprec_public_home_index', {l: 'locationTmp', d: 'divisionTmp', f: '' }) }}">
+                                data-url="{{ path('paprec_public_corp_home_index', {l: 'locationTmp', d: 'divisionTmp', f: '' }) }}">
                             <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
                             {% for division in divisions %}
                                 {% if division == cart.division %}
@@ -103,7 +103,7 @@
                         </select>
                         <br>
                         <div id="frequencyRadioBox"
-                             data-url="{{ path('paprec_public_home_index', {l: 'locationTmp', d: 'divisionTmp', f: 'frequencyTmp' }) }}">
+                             data-url="{{ path('paprec_public_corp_home_index', {l: 'locationTmp', d: 'divisionTmp', f: 'frequencyTmp' }) }}">
                             <input class="input__radio" type="radio" id="ponctualRadio" name="frequencyRadio"
                                    value="ponctual" {% if cart.frequency == 'ponctual' %}checked{% endif %}>
                             <label for="ponctualRadio">{{ 'Public.Cart.Ponctal'|trans }}</label>
@@ -135,7 +135,7 @@
                             {% for category in categories %}
                                 <div class="checkboxPicto categoryCheckboxPicto"
                                      id="categoryCheckboxPicto_{{ category.id }}"
-                                     data-url="{{ path('paprec_public_DI_subscription_addDisplayedCategory', {cartUuid: cart.id, categoryId: 'categoryTmp'}) }}"
+                                     data-url="{{ path('paprec_public_corp_DI_subscription_addDisplayedCategory', {cartUuid: cart.id, categoryId: 'categoryTmp'}) }}"
                                      style="background-image: url({{ asset('/uploads/pictos/' ~ category.picto) }})">
                                     {{ category.name }}
                                 </div>
@@ -222,7 +222,7 @@
                                                             </div>
                                                             <div class="right">
                                                                 <div class="infoproduct__close"
-                                                                     data-url="{{ path('paprec_public_DI_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
+                                                                     data-url="{{ path('paprec_public_corp_DI_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
                                                                      id="infoProductClose_{{ displayedProduct.id }}_{{ category.id }}"></div>
                                                                 <div class="infoproduct__title">
                                                                     {{ displayedProduct.name }}
@@ -297,7 +297,7 @@
 
                             <div class="button button--grey">Contactez-nous</div>
                             <div class="button button--grey">Etre rappelé</div>
-                            <a href="{{ path('paprec_public_DI_subscription_step2', {cartUuid: cart.id}) }}"
+                            <a href="{{ path('paprec_public_corp_DI_subscription_step2', {cartUuid: cart.id}) }}"
                                class="button button--green">Valider votre besoin
                             </a>
                         </div>
@@ -394,7 +394,7 @@
 
             function addOrRemoveDisplayedProduct(productId, categoryId) {
                 {% autoescape'js' %}
-                url = "{{ path('paprec_public_DI_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
+                url = "{{ path('paprec_public_corp_DI_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
                     .replace('categoryTmp', categoryId)
                     .replace('productTmp', productId);
                 $(location).attr('href', url);
@@ -426,7 +426,7 @@
                 qtty = $('#quantityProducSelect_' + productId + '_' + categoryId).val();
                 $.ajax({
                     type: "POST",
-                    url: "{{ path('paprec_public_DI_subscription_addContent', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp', quantity: 'quantityTmp'}) }}"
+                    url: "{{ path('paprec_public_corp_DI_subscription_addContent', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp', quantity: 'quantityTmp'}) }}"
                         .replace('categoryTmp', categoryId)
                         .replace('productTmp', productId)
                         .replace('quantityTmp', qtty),
@@ -451,7 +451,7 @@
             function reloadCart() {
                 $.ajax({
                     type: "GET",
-                    url: "{{ path('paprec_public_DI_subscription_loadCart', {cartUuid: cart.id}) }}",
+                    url: "{{ path('paprec_public_corp_DI_subscription_loadCart', {cartUuid: cart.id}) }}",
                     contentType: "html",
                     success: function (response) {
                         // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
@@ -465,7 +465,7 @@
                             $.ajax({
                                 type: "GET",
                                 dataType: "json",
-                                url: "{{ path('paprec_public_DI_subscription_removeContent', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
+                                url: "{{ path('paprec_public_corp_DI_subscription_removeContent', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
                                     .replace('categoryTmp', categoryId)
                                     .replace('productTmp', productId),
                                 success: function (response) {

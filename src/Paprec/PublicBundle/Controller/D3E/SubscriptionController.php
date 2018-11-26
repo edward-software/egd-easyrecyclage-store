@@ -16,7 +16,7 @@ class SubscriptionController extends Controller
 {
 
     /**
-     * @Route("/D3E/step0/{cartUuid}", name="paprec_public_D3E_subscription_step0")
+     * @Route("/D3E/step0/{cartUuid}", name="paprec_public_corp_D3E_subscription_step0")
      * @throws \Exception
      */
     public function step0Action(Request $request, $cartUuid)
@@ -35,7 +35,7 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * @Route("/D3E/setOrder/{cartUuid}", name="paprec_public_D3E_subscription_setOrder")
+     * @Route("/D3E/setOrder/{cartUuid}", name="paprec_public_corp_D3E_subscription_setOrder")
      * @throws \Exception
      */
     public function setOrderAction(Request $request, $cartUuid)
@@ -46,13 +46,13 @@ class SubscriptionController extends Controller
         $cart->setType('order');
         $em->flush();
 
-        return $this->redirectToRoute('paprec_public_D3E_subscription_step1', array(
+        return $this->redirectToRoute('paprec_public_corp_D3E_subscription_step1', array(
             'cartUuid' => $cart->getId()
         ));
     }
 
     /**
-     * @Route("/D3E/setQuote/{cartUuid}", name="paprec_public_D3E_subscription_setQuote")
+     * @Route("/D3E/setQuote/{cartUuid}", name="paprec_public_corp_D3E_subscription_setQuote")
      * @throws \Exception
      */
     public function setQuoteAction(Request $request, $cartUuid)
@@ -63,7 +63,7 @@ class SubscriptionController extends Controller
         $cart->setType('quote');
         $em->flush();
 
-        return $this->redirectToRoute('paprec_public_D3E_subscription_step1', array(
+        return $this->redirectToRoute('paprec_public_corp_D3E_subscription_step1', array(
             'cartUuid' => $cart->getId()
         ));
     }
@@ -72,13 +72,12 @@ class SubscriptionController extends Controller
      * Etape "Mon besoin", choix des produits et ajout au Cart
      *
      * On passe le $type en paramère qui correspond à 'order' (commande) ou 'quote'(devis)
-     * @Route("/D3E/step1/{cartUuid}", name="paprec_public_D3E_subscription_step1")
+     * @Route("/D3E/step1/{cartUuid}", name="paprec_public_corp_D3E_subscription_step1")
      * @throws \Exception
      */
     public function step1Action(Request $request, $cartUuid)
     {
         $cartManager = $this->get('paprec.cart_manager');
-        $categoryManager = $this->get('paprec_catalog.category_manager');
         $productD3EManager = $this->get('paprec_catalog.product_D3E_manager');
 
 
@@ -102,7 +101,7 @@ class SubscriptionController extends Controller
      * Etape "Mes coordonnées"
      * où l'on créé le devis où la quote au submit du formulaire
      *
-     * @Route("/D3E/step2/{cartUuid}", name="paprec_public_D3E_subscription_step2")
+     * @Route("/D3E/step2/{cartUuid}", name="paprec_public_corp_D3E_subscription_step2")
      * @throws \Exception
      */
     public function step2Action(Request $request, $cartUuid)
@@ -142,43 +141,43 @@ class SubscriptionController extends Controller
                     $productD3EQuoteManager->addLineFromCart($productD3EQuote, $item['pId'], $item['qtty']);
                 }
 
-                return $this->redirectToRoute('paprec_public_D3E_subscription_step3', array(
+                return $this->redirectToRoute('paprec_public_corp_D3E_subscription_step3', array(
                     'cartUuid' => $cart->getId(),
                     'quoteId' => $productD3EQuote->getId()
                 ));
 
             }
         } else { // sinon on créé une commande D3E
-//            $productD3EOrderManager = $this->get('paprec_catalog.product_D3E_order_manager');
-//
-//
-//            $productD3EOrder = new ProductD3EOrder();
-//            $productD3EOrder->setCity($city);
-//            $productD3EOrder->setPostalCode($postalCode);
-//
-//            $form = $this->createForm(ProductD3EOrderShortType::class, $productD3EOrder);
-//
-//            $form->handleRequest($request);
-//
-//            if ($form->isSubmitted() && $form->isValid()) {
-//
-//                $productD3EOrder = $form->getData();
-//                $productD3EOrder->setOrderStatus('Créée');
-//
-//                $em = $this->getDoctrine()->getManager();
-//                $em->persist($productD3EOrder);
-//                $em->flush();
-//
-//                // On récupère tous les produits ajoutés au Cart
-//                foreach ($cart->getContent() as $item) {
-//                    $productD3EOrderManager->addLineFromCart($productD3EOrder, $item['pId'], $item['qtty'], $item['cId']);
-//                }
-//
-//                return $this->redirectToRoute('paprec_public_D3E_subscription_step4', array(
-//                    'cartUuid' => $cart->getId(),
-//                    'orderId' => $productD3EOrder->getId()
-//                ));
-//            }
+            $productD3EOrderManager = $this->get('paprec_catalog.product_d3e_order_manager');
+
+
+            $productD3EOrder = new ProductD3EOrder();
+            $productD3EOrder->setCity($city);
+            $productD3EOrder->setPostalCode($postalCode);
+
+            $form = $this->createForm(ProductD3EOrderShortType::class, $productD3EOrder);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $productD3EOrder = $form->getData();
+                $productD3EOrder->setOrderStatus('Créée');
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($productD3EOrder);
+                $em->flush();
+
+                // On récupère tous les produits ajoutés au Cart
+                foreach ($cart->getContent() as $item) {
+                    $productD3EOrderManager->addLineFromCart($productD3EOrder, $item['pId'], $item['qtty']);
+                }
+
+                return $this->redirectToRoute('paprec_public_corp_D3E_subscription_step4', array(
+                    'cartUuid' => $cart->getId(),
+                    'orderId' => $productD3EOrder->getId()
+                ));
+            }
 
         }
         return $this->render('@PaprecPublic/D3E/contactDetails.html.twig', array(
@@ -190,7 +189,7 @@ class SubscriptionController extends Controller
     /**
      * Etape "Mon offre" qui récapitule le de vis créé par l'utilisateur
      *
-     * @Route("/D3E/step3/{cartUuid}/{quoteId}", name="paprec_public_D3E_subscription_step3")
+     * @Route("/D3E/step3/{cartUuid}/{quoteId}", name="paprec_public_corp_D3E_subscription_step3")
      */
     public function step3Action(Request $request, $cartUuid, $quoteId)
     {
@@ -209,7 +208,7 @@ class SubscriptionController extends Controller
     /**
      * Etape "Ma livraison" qui est encore un formulaire complétant les infos du productD3EOrder
      *
-     * @Route("/D3E/step4/{cartUuid}/{orderId}", name="paprec_public_D3E_subscription_step4")
+     * @Route("/D3E/step4/{cartUuid}/{orderId}", name="paprec_public_corp_D3E_subscription_step4")
      */
     public function step4Action(Request $request, $cartUuid, $orderId)
     {
@@ -228,7 +227,7 @@ class SubscriptionController extends Controller
             $em->merge($productD3EOrder);
             $em->flush();
 
-            return $this->redirectToRoute('paprec_public_D3E_subscription_step5', array(
+            return $this->redirectToRoute('paprec_public_corp_D3E_subscription_step5', array(
                 'cartUuid' => $cart->getId(),
                 'orderId' => $productD3EOrder->getId()
             ));
@@ -244,7 +243,7 @@ class SubscriptionController extends Controller
     /**
      * Etape "Mon paiement" qui est encore un formulaire complétant les infos du productD3EOrder
      *
-     * @Route("/D3E/step5/{cartUuid}/{orderId}", name="paprec_public_D3E_subscription_step5")
+     * @Route("/D3E/step5/{cartUuid}/{orderId}", name="paprec_public_corp_D3E_subscription_step5")
      */
     public function step5Action(Request $request, $cartUuid, $orderId)
     {
@@ -263,7 +262,7 @@ class SubscriptionController extends Controller
 //            $em->merge($productD3EOrder);
 //            $em->flush();
 //
-//            return $this->redirectToRoute(paprec_public_D3E_subscription_step5, array(
+//            return $this->redirectToRoute(paprec_public_corp_D3E_subscription_step5, array(
 //                'cartUuid' => $cart->getId(),
 //                'orderId' => $productD3EOrder->getId()
 //            ));
@@ -279,7 +278,7 @@ class SubscriptionController extends Controller
     /**
      * Ajoute au cart un displayedProduct
      *
-     * @Route("/D3E/addOrRemoveDisplayedProduct/{cartUuid}/{productId}", name="paprec_public_D3E_subscription_addOrRemoveDisplayedProduct")
+     * @Route("/D3E/addOrRemoveDisplayedProduct/{cartUuid}/{productId}", name="paprec_public_corp_D3E_subscription_addOrRemoveDisplayedProduct")
      * @throws \Exception
      */
     public function addOrRemoveDisplayedProductAction(Request $request, $cartUuid, $productId)
@@ -289,7 +288,7 @@ class SubscriptionController extends Controller
         // On ajoute ou on supprime le produit sélecionné au tableau des displayedProduct du Cart
         $cart = $cartManager->addOrRemoveDisplayedProductD3E($cartUuid, $productId);
 
-        return $this->redirectToRoute('paprec_public_D3E_subscription_step1', array(
+        return $this->redirectToRoute('paprec_public_corp_D3E_subscription_step1', array(
             'cartUuid' => $cart->getId()
         ));
     }
@@ -297,7 +296,7 @@ class SubscriptionController extends Controller
     /**
      * Ajoute au cart un Product avec sa quantité
      *
-     * @Route("/D3E/addContent/{cartUuid}/{productId}/{quantity}", name="paprec_public_D3E_subscription_addContent")
+     * @Route("/D3E/addContent/{cartUuid}/{productId}/{quantity}", name="paprec_public_corp_D3E_subscription_addContent")
      * @throws \Exception
      */
     public function addContentAction(Request $request, $cartUuid, $productId, $quantity)
@@ -312,7 +311,7 @@ class SubscriptionController extends Controller
     /**
      * Supprime un Product du contenu du Cart
      *
-     * @Route("/D3E/removeContent/{cartUuid}/{productId}", name="paprec_public_D3E_subscription_removeContent")
+     * @Route("/D3E/removeContent/{cartUuid}/{productId}", name="paprec_public_corp_D3E_subscription_removeContent")
      * @throws \Exception
      */
     public function removeContentAction(Request $request, $cartUuid, $productId)
@@ -328,7 +327,7 @@ class SubscriptionController extends Controller
     /**
      * Retourne le twig.html du cart avec les produits dans celui-ci ainsi que le montant total
      *
-     * @Route("/D3E/loadCart/{cartUuid}", name="paprec_public_D3E_subscription_loadCart", condition="request.isXmlHttpRequest()")
+     * @Route("/D3E/loadCart/{cartUuid}", name="paprec_public_corp_D3E_subscription_loadCart", condition="request.isXmlHttpRequest()")
      * @throws \Exception
      */
     public function  loadCartAction(Request $request, $cartUuid)

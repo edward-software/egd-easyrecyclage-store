@@ -1,0 +1,264 @@
+{% extends "::base_admin.html.twig" %}
+
+{% block title %}
+    {{ 'Commercial.QuoteRequestNonCorporate.View'|trans }}
+{% endblock %}
+
+{% block stylesheets %}
+
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
+{% endblock %}
+
+{% block content_title %}
+    {{ 'Commercial.QuoteRequestNonCorporate.Users'|trans }}
+{% endblock %}
+
+{% block main_content %}
+
+
+    <div class="col-md-12">
+        <!-- FLASH MESSAGE -->
+        <div class="view-box">
+
+            {% for flashMessage in app.session.flashbag.get('errors') %}
+                <div class="alert alert-danger">{{ ('Commercial.QuoteRequestNonCorporate.Error.' ~ flashMessage)|trans }}</div>
+            {% endfor %}
+
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">{{ ('Commercial.QuoteRequestNonCorporate.Success.' ~ flashMessage)|trans }}</div>
+            {% endfor %}
+        </div>
+        <!-- CARD -->
+        <div class="card">
+            <div class="card-header">
+                <h4>
+                    <i class="fa fa-xs fa-quoteRequestNonCorporate"></i> {{ 'Commercial.QuoteRequestNonCorporate.View'|trans }}
+                    <div class="float-right">
+                        <a href="{{ path("paprec_commercial_quoteRequestNonCorporate_edit", {id: quoteRequestNonCorporate.id}) }}"
+                           class="btn btn-sm btn-warning"><i
+                                    class="fa fa-xs fa-edit"></i> {{ 'Commercial.QuoteRequestNonCorporate.Edit'|trans }}</a>
+                        <a id="commmecialQuoteRequestNonCorporateRemoveButton_" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
+                                    class="fa fa-xs fa-trash"></i> {{ 'Commercial.QuoteRequestNonCorporate.Remove'|trans }}</a>
+                    </div>
+                </h4>
+                <div class="view-tools float-left">
+                    <a href="{{ path('paprec_commercial_quoteRequestNonCorporate_index') }}" class="btn btn-sm btn-default"><i
+                                class="fa fa-xs fa-chevron-left"></i> {{ 'Commercial.QuoteRequestNonCorporate.List'|trans }}</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Commercial.QuoteRequestNonCorporate.Informations-FO'|trans }}</h5>
+                        </div>
+                        <div class="card-body row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.BusinessName'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.businessName }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.Civility'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.civility }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.LastName'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.lastName }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.FirstName'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.firstName }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.Email'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.email }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.Phone'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.phone }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.CustomerType'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.customertype }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.Function'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.function }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.QuoteStatus'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.quoteStatus }}
+                                    </label>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.Division'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.division }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.PostalCode'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.postalCode }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.AttachedFiles'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if quoteRequestNonCorporate.attachedFiles %}
+                                            <a href="{{ path('paprec_commercial_quoteRequestNonCorporate_downloadAttachedFiles', {id: quoteRequestNonCorporate.id}) }}"><i class="fa fa-download"></i></a>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.Need'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.need }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Commercial.QuoteRequestNonCorporate.Informations-BO'|trans }}</h5>
+                        </div>
+                        <div class="card-body row">
+                            <div class="col-md-6">
+
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.GeneratedTurnover'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.generatedTurnover }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.Agency'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if quoteRequestNonCorporate.agency %}
+                                            <a href="{{ path('paprec_commercial_agence_view', {id: quoteRequestNonCorporate.agency.id}) }}">{{ quoteRequestNonCorporate.agency }}</a>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.Summary'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.summary }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.Frequency'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if quoteRequestNonCorporate.frequency == 'regular' %}Régulier {% else %}Ponctuel{% endif %}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.Tonnage'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.tonnage }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.KookaburaNumber'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ quoteRequestNonCorporate.kookaburaNumber }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.UserInCharge'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if quoteRequestNonCorporate.userInCharge %}
+                                            <a href="{{ path('paprec_user_user_view', {id: quoteRequestNonCorporate.userInCharge.id}) }}">{{ quoteRequestNonCorporate.userInCharge }}</a>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.AssociatedQuote'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if quoteRequestNonCorporate.associatedQuote %}
+                                        <a href="{{ path('paprec_commercial_quoteRequestNonCorporate_downloadAssociatedQuote', {id: quoteRequestNonCorporate.id}) }}"><i class="fa fa-download"></i></a>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Commercial.QuoteRequestNonCorporate.System-informations'|trans }}</h5>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.Date-creation'|trans }}</label>
+                                <label class="col-form-label">
+                                    {{ quoteRequestNonCorporate.dateCreation|localizeddate('short', 'medium', app.request.locale) }}
+                                </label>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequestNonCorporate.Date-update'|trans }}</label>
+                                <label class="col-form-label">
+                                    {{ quoteRequestNonCorporate.dateUpdate is empty ? "" : quoteRequestNonCorporate.dateUpdate|localizeddate('short', 'medium', app.request.locale) }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+        {% block javascripts %}
+            <!-- DATA TABLES JS -->
+            <script type="text/javascript"
+                    src="{{ asset('/assets/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+            <script type="text/javascript"
+                    src="{{ asset('/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+            <script>
+                $(function () {
+
+                    $('#commmecialQuoteRequestNonCorporateRemoveButton_').on('click', function () {
+
+                        var url = "{{ path("paprec_commercial_quoteRequestNonCorporate_remove", {id: quoteRequestNonCorporate.id}) }}";
+
+                        bootbox.confirm("{{ 'Commercial.QuoteRequestNonCorporate.Confirm-remove'|trans }}", function (result) {
+                            if (result === true) {
+                                $(location).attr('href', url);
+                            }
+                        });
+
+                    });
+                });
+            </script>
+        {% endblock %}
