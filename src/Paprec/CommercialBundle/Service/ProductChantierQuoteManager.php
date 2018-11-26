@@ -58,7 +58,6 @@ class ProductChantierQuoteManager
         // On check s'il existe déjà une ligne pour ce produit, pour l'incrémenter
         $currentQuoteLine = $this->em->getRepository('PaprecCommercialBundle:ProductChantierQuoteLine')->findOneBy(
             array(
-                'productChantierQuote' => $productChantierQuote,
                 'productChantier' => $productChantierQuoteLine->getProductChantier(),
                 'category' => $productChantierQuoteLine->getCategory()
             )

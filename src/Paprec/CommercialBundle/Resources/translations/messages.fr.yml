@@ -261,6 +261,60 @@ Commercial:
     TotalAmount:                Montant total
     Confirm-remove:             Etes-vous sûr de vouloir supprimer cette ligne de la commande Chantier ?
 
+  ProductD3EOrder:
+    ProductD3EOrders:           Commandes D3E
+    List:                       Liste des commandes D3E
+    Date-creation:              Date de création
+    Date-crea:                  Date de créa.
+    Date-update:                Date de mise à jour
+    BusinessName:               Raison sociale
+    BusinessLine:               Secteur d'activité
+    BusinessLinePlaceholder:    Sélectionnez votre secteur d'activité
+    Civility:                   Civilité
+    LastName:                   Nom
+    FirstName:                  Prénom
+    Function:                   Fonction
+    FunctionPlaceholder:        Fonction (facultatif)
+    Email:                      Email
+    Address:                    Adresse
+    PostalCode:                 Code postal
+    City:                       Ville
+    Phone:                      Téléphone
+    PhonePlaceholder:           Numéro de téléphone
+    OrderStatus:                Statut
+    TotalAmount:                Montant total
+    AssociatedInvoice:          Facture associée
+    PaymentMethod:              Méthode de paiement
+    InstallationDate:           Date de pose
+    RemovalDate:                Date d'enlèvement
+    DomainType:                 Domaine
+    AccessConditions:           Conditions d'accès
+    AccessConditionsPlaceholder: L'accès présente-t-il des spécificités ou des conditions particulières ? (facultatif)
+    ProductsList:               Liste des produits
+    Informations:               Informations
+    Informations-FO:            Informations Front Office
+    Informations-BO:            Informations Back Office
+    Informations-Delivery:      Informations de livraison
+    System-informations:        Informations système
+    Export:                     Exporter les commandes D3E
+    View:                       Visualiser la commande D3E
+    Edit:                       Modifier la commande D3E
+    Remove:                     Supprimer la commande D3E
+    Add:                        Ajouter une commande D3E
+    AddLine:                    Ajouter un produit
+    Save:                       Enregistrer
+    Cancel:                     Annuler
+    Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+    Confirm-remove:             Etes-vous sûr de vouloir supprimer cette commande D3E ?
+
+  ProductD3EOrderLine:
+    ProductName:                Produit
+    CategoryName:               Catégorie
+    UnitPrice:                  Prix unitaire
+    Quantity:                   Quantité
+    TotalAmount:                Montant total
+    Confirm-remove:             Etes-vous sûr de vouloir supprimer cette ligne de la commande D3E ?
+
   QuoteRequest:
     QuoteRequests:              Demandes de devis
     List:                       Liste des demandes de devis

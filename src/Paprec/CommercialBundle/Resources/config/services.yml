@@ -19,6 +19,10 @@ services:
     class: Paprec\CommercialBundle\Service\ProductChantierOrderManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
+  paprec_catalog.product_d3e_order_manager:
+    class: Paprec\CommercialBundle\Service\ProductD3EOrderManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
 parameters:
   paprec_commercial.quote_request.files_path: "%kernel.root_dir%/../web/uploads/files"
   paprec_commercial.product_chantier_order.files_path: "%kernel.root_dir%/../web/uploads/files/invoices"

@@ -82,6 +82,11 @@ class BusinessLine
      */
     private $productChantierOrders;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductD3EOrder", mappedBy="businessLine")
+     */
+    private $productD3EOrders;
+
 
     /**
      * BusinessLine constructor.
@@ -366,5 +371,41 @@ class BusinessLine
     public function getProductD3EQuotes()
     {
         return $this->productD3EQuotes;
+    }
+
+    /**
+     * Add productD3EOrder.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductD3EOrder $productD3EOrder
+     *
+     * @return BusinessLine
+     */
+    public function addProductD3EOrder(\Paprec\CommercialBundle\Entity\ProductD3EOrder $productD3EOrder)
+    {
+        $this->productD3EOrders[] = $productD3EOrder;
+
+        return $this;
+    }
+
+    /**
+     * Remove productD3EOrder.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductD3EOrder $productD3EOrder
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductD3EOrder(\Paprec\CommercialBundle\Entity\ProductD3EOrder $productD3EOrder)
+    {
+        return $this->productD3EOrders->removeElement($productD3EOrder);
+    }
+
+    /**
+     * Get productD3EOrders.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductD3EOrders()
+    {
+        return $this->productD3EOrders;
     }
 }

@@ -1,0 +1,327 @@
+{% extends "::base_admin.html.twig" %}
+
+{% block title %}
+    {{ 'Commercial.ProductD3EOrder.View'|trans }}
+{% endblock %}
+
+{% block stylesheets %}
+
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
+{% endblock %}
+
+{% block content_title %}
+    {{ 'Commercial.ProductD3EOrder.ProductD3EOrders'|trans }}
+{% endblock %}
+
+{% block main_content %}
+
+
+    <div class="col-md-12">
+        <!-- FLASH MESSAGE -->
+        <div class="view-box">
+
+            {% for flashMessage in app.session.flashbag.get('errors') %}
+                <div class="alert alert-danger">{{ ('Commercial.ProductD3EOrder.Error.' ~ flashMessage)|trans }}</div>
+            {% endfor %}
+
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">{{ ('Commercial.ProductD3EOrder.Success.' ~ flashMessage)|trans }}</div>
+            {% endfor %}
+        </div>
+        <!-- CARD -->
+        <div class="card">
+            <div class="card-header">
+                <h4>
+                    <i class="fa fa-xs fa-productD3EOrder"></i> {{ 'Commercial.ProductD3EOrder.View'|trans }}
+                    <div class="float-right">
+                        <a href="{{ path("paprec_commercial_productD3EOrder_edit", {id: productD3EOrder.id}) }}"
+                           class="btn btn-sm btn-warning"><i
+                                    class="fa fa-xs fa-edit"></i> {{ 'Commercial.ProductD3EOrder.Edit'|trans }}</a>
+                        <a id="commmecialProductD3EOrderRemoveButton_" href="javascript:void(0);"
+                           class="btn btn-sm btn-danger"><i
+                                    class="fa fa-xs fa-trash"></i> {{ 'Commercial.ProductD3EOrder.Remove'|trans }}
+                        </a>
+                    </div>
+                </h4>
+                <div class="view-tools float-left">
+                    <a href="{{ path('paprec_commercial_productD3EOrder_index') }}" class="btn btn-sm btn-default"><i
+                                class="fa fa-xs fa-chevron-left"></i> {{ 'Commercial.ProductD3EOrder.List'|trans }}
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Commercial.ProductD3EOrder.Informations-FO'|trans }}</h5>
+                        </div>
+                        <div class="card-body row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.BusinessName'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.businessName }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.BusinessLine'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if productD3EOrder.businessLine %}
+                                            <a href="{{ path('paprec_commercial_businessLine_view', {id: productD3EOrder.businessLine.id}) }}">{{ productD3EOrder.businessLine.name }}</a>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.Civility'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.civility }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.LastName'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.lastName }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.FirstName'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.firstName }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.Function'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.function }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.Email'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.email }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.Phone'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.phone }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.Address'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.address }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.PostalCode'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.postalCode }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.City'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.city }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.Phone'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.phone }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.OrderStatus'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.orderStatus }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.TotalAmount'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.totalAmount }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.PaymentMethod'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.paymentMethod }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.AssociatedInvoice'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if productD3EOrder.associatedInvoice %}
+                                            <a href="{{ path('paprec_commercial_quoteRequest_downloadAssociatedInvoice', {id: productD3EOrder.id}) }}"><i
+                                                        class="fa fa-download"></i></a>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Commercial.ProductD3EOrder.Informations-Delivery'|trans }}</h5>
+                        </div>
+                        <div class="card-body row ">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.InstallationDate'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.installationDate|date('d/m/Y') }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.RemovalDate'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.removalDate|date('d/m/Y') }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.DomainType'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if productD3EOrder.domainType == 'private' %}
+                                            Privé
+                                        {% else %}
+                                            Public
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.AccessConditions'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ productD3EOrder.accessConditions }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>
+                                {{ 'Commercial.ProductD3EOrder.ProductsList'|trans }}
+                                <div class="float-right">
+
+                                    <a href="{{ path('paprec_commercial_productD3EOrder_addLine', {id: productD3EOrder.id}) }}"
+                                       class="btn btn-sm btn-outline-primary">
+                                        <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductD3EOrder.AddLine'|trans }}
+                                    </a>
+                                </div>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <table id="productD3EOrderLinesDatatable"
+                                   class="table table-striped table-bordered table-hover"
+                                   cellpadding="0" cellspacing="0" border="0">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{ 'Commercial.ProductD3EOrderLine.ProductName'|trans }}</th>
+                                    <th>{{ 'Commercial.ProductD3EOrderLine.UnitPrice'|trans }}</th>
+                                    <th>{{ 'Commercial.ProductD3EOrderLine.Quantity'|trans }}</th>
+                                    <th>{{ 'Commercial.ProductD3EOrderLine.TotalAmount'|trans }}</th>
+
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for productD3EOrderLine in productD3EOrder.productD3EOrderLines %}
+                                    <tr>
+                                        <td>{{ productD3EOrderLine.id }}</td>
+                                        <td>{{ productD3EOrderLine.productName }}</td>
+                                        <td>{{ productD3EOrderLine.unitPrice }}</td>
+                                        <td>{{ productD3EOrderLine.quantity }}</td>
+                                        <td>{{ productD3EOrderLine.totalAmount }}</td>
+                                        <td class="text-center">
+                                            <a href="{{ path('paprec_commercial_productD3EOrder_editLine', {id: productD3EOrder.id, orderLineId: productD3EOrderLine.id}) }}"
+                                               class="btn btn-sm btn-warning btn-sm mx-1"
+                                               data-id="{{ productD3EOrderLine.id }}">
+                                                <i class="fa fa-xs fa-edit"></i>
+                                            </a>
+                                            <a href="#"
+                                               class="btn btn-sm btn-danger btn-sm commercialProductD3EOrderLineRemoveButton"
+                                               data-id="{{ productD3EOrderLine.id }}">
+                                                <i class="fa fa-xs fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Commercial.ProductD3EOrder.System-informations'|trans }}</h5>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.Date-creation'|trans }}</label>
+                                <label class="col-form-label">
+                                    {{ productD3EOrder.dateCreation|localizeddate('short', 'medium', app.request.locale) }}
+                                </label>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.Date-update'|trans }}</label>
+                                <label class="col-form-label">
+                                    {{ productD3EOrder.dateUpdate is empty ? "" : productD3EOrder.dateUpdate|localizeddate('short', 'medium', app.request.locale) }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+        {% block javascripts %}
+            <!-- DATA TABLES JS -->
+            <script type="text/javascript"
+                    src="{{ asset('/assets/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+            <script type="text/javascript"
+                    src="{{ asset('/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+            <script>
+                $(function () {
+
+                    $('#commmecialProductD3EOrderRemoveButton_').on('click', function () {
+
+                        var url = "{{ path("paprec_commercial_productD3EOrder_remove", {id: productD3EOrder.id}) }}";
+
+                        bootbox.confirm("{{ 'Commercial.ProductD3EOrder.Confirm-remove'|trans }}", function (result) {
+                            if (result === true) {
+                                $(location).attr('href', url);
+                            }
+                        });
+
+                    });
+                    $('.commercialProductD3EOrderLineRemoveButton').on('click', function () {
+                        orderLineId = $(this).data('id');
+                        var url = "{{ path("paprec_commercial_productD3EOrder_removeLine", {id: productD3EOrder.id, orderLineId: 'orderLineIdTmp'}) }}".replace('orderLineIdTmp', orderLineId);
+
+                        bootbox.confirm("{{ 'Commercial.ProductD3EOrderLine.Confirm-remove'|trans }}", function (result) {
+                            if (result === true) {
+                                $(location).attr('href', url);
+                            }
+                        });
+                    });
+
+                });
+            </script>
+        {% endblock %}

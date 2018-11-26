@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductD3EQuoteLineAddType extends AbstractType
+class ProductD3EOrderLineAddType extends AbstractType
 {
 
     /**
@@ -43,7 +43,7 @@ class ProductD3EQuoteLineAddType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\ProductD3EQuoteLine'
+            'data_class' => 'Paprec\CommercialBundle\Entity\ProductD3EOrderLine'
         ));
     }
 }

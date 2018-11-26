@@ -1,0 +1,248 @@
+{% extends "::base_admin.html.twig" %}
+
+{% block title %}
+    {{ 'Commercial.ProductD3EOrder.Edit'|trans }}
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block content_title %}
+    {{ 'Commercial.ProductD3EOrder.ProductD3EOrders'|trans }}
+{% endblock %}
+
+{% block main_content %}
+
+    <form id="commercialProductD3EOrderForm" action="" method="post" enctype="multipart/form-data">
+
+        <div class="col-md-12">
+            <!-- BOX -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        <i class="fa fa-xs fa-pencil-alt"></i> {{ 'Commercial.ProductD3EOrder.Edit'|trans }}
+                        #{{ productD3EOrder.id }}
+
+                        <div class="float-right">
+
+                            <a href="javascript:void(0);"
+                               class="btn btn-sm btn-success commercial-productD3EOrder-save-button"><i
+                                        class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductD3EOrder.Save'|trans }}
+                            </a>
+                            <a href="javascript:void(0);"
+                               class="btn btn-sm btn-danger commercial-productD3EOrder-cancel-button"><i
+                                        class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductD3EOrder.Cancel'|trans }}
+                            </a>
+                        </div>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">{{ 'Commercial.ProductD3EOrder.Informations-FO'|trans }}</h5>
+                            </div>
+                            <div class="card-body row">
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.BusinessName'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.businessName, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.businessName) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.BusinessLine'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.businessLine, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.businessLine) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.Civility'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.civility, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.civility) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.LastName'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.lastName) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.FirstName'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.firstName) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.Function'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.function, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.function) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.Address'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.address) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.Phone'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.phone) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.Email'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.email) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.PostalCode'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.postalCode, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.postalCode) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.City'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.city) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.OrderStatus'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.orderStatus, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.orderStatus) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.TotalAmount'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.totalAmount, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.totalAmount) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.PaymentMethod'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.paymentMethod, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.paymentMethod) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.AssociatedInvoice'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.associatedInvoice, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.associatedInvoice) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">{{ 'Commercial.ProductD3EOrder.Informations-Delivery'|trans }}</h5>
+                            </div>
+                            <div class="card-body row ">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.InstallationDate'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.installationDate, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.installationDate) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.RemovalDate'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.removalDate, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.removalDate) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.DomainType'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.domainType, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.domainType) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">{{ 'Commercial.ProductD3EOrder.AccessConditions'|trans }}</label>
+                                        <div class="form-content">
+                                            {{ form_widget(form.accessConditions, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.accessConditions) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="float-right">
+                        <a href="javascript:void(0);"
+                           class="btn btn-sm btn-success commercial-productD3EOrder-save-button"><i
+                                    class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductD3EOrder.Save'|trans }}
+                        </a>
+                        <a href="javascript:void(0);"
+                           class="btn btn-sm btn-danger commercial-productD3EOrder-cancel-button"><i
+                                    class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductD3EOrder.Cancel'|trans }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_rest(form) }}
+    </form>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        $(function () {
+
+            $('.commercial-productD3EOrder-save-button').on('click', function () {
+
+                $('#commercialProductD3EOrderForm').submit();
+
+            });
+
+
+            $('.commercial-productD3EOrder-cancel-button').on('click', function () {
+
+                var url = "{{ path("paprec_commercial_productD3EOrder_view", {id: productD3EOrder.id}) }}";
+
+                bootbox.confirm("{{ 'Commercial.ProductD3EOrder.Confirm-cancel'|trans }}", function (result) {
+                    if (result === true) {
+                        $(location).attr('href', url);
+                    }
+                });
+
+            });
+
+        });
+    </script>
+{% endblock %}

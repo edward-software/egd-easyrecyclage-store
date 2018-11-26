@@ -148,6 +148,12 @@ class ProductD3E
     private $productD3EQuoteLines;
 
     /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductD3EOrderLine", mappedBy="productD3E", cascade={"all"})
+     */
+    private $productD3EOrderLines;
+
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -572,5 +578,41 @@ class ProductD3E
     public function getProductD3EQuoteLines()
     {
         return $this->productD3EQuoteLines;
+    }
+
+    /**
+     * Add productD3EOrderLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductD3EOrderLine $productD3EOrderLine
+     *
+     * @return ProductD3E
+     */
+    public function addProductD3EOrderLine(\Paprec\CommercialBundle\Entity\ProductD3EOrderLine $productD3EOrderLine)
+    {
+        $this->productD3EOrderLines[] = $productD3EOrderLine;
+
+        return $this;
+    }
+
+    /**
+     * Remove productD3EOrderLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductD3EOrderLine $productD3EOrderLine
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductD3EOrderLine(\Paprec\CommercialBundle\Entity\ProductD3EOrderLine $productD3EOrderLine)
+    {
+        return $this->productD3EOrderLines->removeElement($productD3EOrderLine);
+    }
+
+    /**
+     * Get productD3EOrderLines.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductD3EOrderLines()
+    {
+        return $this->productD3EOrderLines;
     }
 }
