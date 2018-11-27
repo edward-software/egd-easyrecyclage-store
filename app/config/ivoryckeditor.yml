@@ -1,0 +1,12 @@
+ivory_ck_editor:
+    configs:
+        full_config:
+            jquery: true
+            height: '900px'
+            language: '%locale%'
+            extraPlugins: 'lineutils,widget,dialog,codesnippet,widgetselection'
+        basic_config:
+            jquery: true
+            heihgt: '250px'
+            language: '%locale%'
+            toolbar: basic

@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new \Liuggio\ExcelBundle\LiuggioExcelBundle(),
+            new \Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new Goondi\ToolsBundle\GoondiToolsBundle(),
             new Paprec\HomeBundle\PaprecHomeBundle(),
             new Paprec\UserBundle\PaprecUserBundle(),

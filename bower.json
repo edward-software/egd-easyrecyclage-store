@@ -26,6 +26,10 @@
     "popper.js": "^1.14.4",
     "datatables.net-rowreorder-bs4": "^1.2.5",
     "jquery-sortable": "^0.9.13",
-    "jquery-ui": "^1.12.1"
+    "jquery-ui": "^1.12.1",
+    "jQuery-contextMenu": "^2.2.3"
+  },
+  "resolutions": {
+    "jquery": "^3.3.1"
   }
 }

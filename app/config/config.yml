@@ -3,6 +3,7 @@ imports:
 - { resource: security.yml }
 - { resource: services.yml }
 - { resource: twig.yml }
+- { resource: ivoryckeditor.yml }
 - { resource: "@GoondiToolsBundle/Resources/config/services.yml" }
 - { resource: "@PaprecHomeBundle/Resources/config/services.yml" }
 - { resource: "@PaprecUserBundle/Resources/config/services.yml" }
