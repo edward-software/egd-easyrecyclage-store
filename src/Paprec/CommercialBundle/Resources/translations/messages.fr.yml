@@ -386,6 +386,7 @@ Commercial:
     NeedPlaceholder:            Votre besoin
     Division:                   Division
     TreatmentStatus:            Statut
+    CartContent:                Contenu du panier
     Informations:               Informations
     Informations-FO:            Informations Front Office
     Informations-BO:            Informations Back Office
@@ -398,6 +399,37 @@ Commercial:
     Cancel:                     Annuler
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
     Confirm-remove:             Etes-vous sûr de vouloir supprimer cette demande de contact ?
+
+  CallBack:
+    CallBacks:                  Demandes de rappel
+    List:                       Liste des demandes de rappel
+    Date-creation:              Date de création
+    Date-crea:                  Date de créa.
+    Date-update:                Date de mise à jour
+    BusinessName:               Raison sociale
+    Civility:                   Civilité
+    LastName:                   Nom
+    FirstName:                  Prénom
+    Email:                      Email
+    Phone:                      Téléphone
+    PhonePlaceholder:           Numéro de téléphone
+    FunctionPlaceholder:        Fonction (facultatif)
+    Function:                   Fonction
+    TreatmentStatus:            Statut
+    DateCallBack:               Date et heure de rappel
+    CartContent:                Contenu du panier
+    Informations:               Informations
+    Informations-FO:            Informations Front Office
+    Informations-BO:            Informations Back Office
+    System-informations:        Informations système
+    Export:                     Exporter les demandes de rappel
+    View:                       Visualiser la demande de rappel
+    Edit:                       Modifier la demande de rappel
+    Remove:                     Supprimer la demande de rappel
+    Save:                       Enregistrer
+    Cancel:                     Annuler
+    Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+    Confirm-remove:             Etes-vous sûr de vouloir supprimer cette demande de rappel ?
 
   QuoteRequestNonCorporate:
     QuoteRequestNonCorporates:  Demandes de devis non entreprise

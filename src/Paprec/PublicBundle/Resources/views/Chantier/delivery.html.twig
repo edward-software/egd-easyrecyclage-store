@@ -70,7 +70,8 @@
                 <form id="deliveryForm" action="" method="post" class="main">
                     <div class="step">
                         <div class="bold">
-                            {% if productChantierOrder.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productChantierOrder.firstName }} {{ productChantierOrder.lastName }},
+                            {% if productChantierOrder.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productChantierOrder.firstName }} {{ productChantierOrder.lastName }}
+                            ,
                         </div>
                         <div class="recaptitle">Vous pouvez maintenant nous indiquer vos préférences de livraison.</div>
                         <div>
@@ -116,7 +117,8 @@
                         <div class="step__right">
                             <a href="{{ path('paprec_public_home_contactForm', {cartUuid: cart.id}) }}"
                                class="button button--grey">CONTACTEZ-NOUS</a>
-                            <a href="#" class="button margint10 button--grey">Être rappelé</a>
+                            <a href="{{ path('paprec_public_home_callBackForm', {cartUuid: cart.id }) }}"
+                               class="button margint10 button--grey">ÊTRE RAPPELÉ</a>
                             <a href="javascript:void(0);" id="deliveryFormSubmitButton"
                                class="button margint10 button--green">VALIDER VOTRE COMMANDE</a>
                         </div>
@@ -142,6 +144,7 @@
             $('#deliveryFormSubmitButton').on('click', function () {
                 $('#deliveryForm').submit();
             })
+
             // Rechargement de l'HTML du Cart
             function reloadCart() {
                 $.ajax({

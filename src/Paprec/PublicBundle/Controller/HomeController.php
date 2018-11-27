@@ -2,15 +2,14 @@
 
 namespace Paprec\PublicBundle\Controller;
 
+use Paprec\CommercialBundle\Entity\CallBack;
 use Paprec\CommercialBundle\Entity\ContactUs;
 use Paprec\CommercialBundle\Entity\QuoteRequest;
-use Paprec\CommercialBundle\Form\ContactUsShortType;
+use Paprec\CommercialBundle\Form\CallBack\CallBackShortType;
+use Paprec\CommercialBundle\Form\ContactUs\ContactUsShortType;
 use Paprec\CommercialBundle\Form\QuoteRequestShortType;
-use Paprec\PublicBundle\Entity\Cart;
-use Paprec\PublicBundle\Service\CartManager;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -210,7 +209,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Formulaire pour besoin Régulier : commun à toutes les divisions donc dans HomeController
+     * IHM de confirmation de prise en compte de la demande "Demande de contact"
      * @Route("/contactConfirm/{cartUuid}/{contactUsId}", name="paprec_public_home_contactConfirm")
      * @param Request $request
      * @throws \Exception
@@ -221,6 +220,64 @@ class HomeController extends Controller
         $contactUs = $em->getRepository('PaprecCommercialBundle:ContactUs')->find($contactUsId);
         return $this->render('@PaprecPublic/Shared/contactConfirm.html.twig', array(
             'contactUs' => $contactUs
+        ));
+    }
+
+
+    /**
+     * Formulaire "Etre rappelé"
+     * @Route("/callBackForm/{cartUuid}", name="paprec_public_home_callBackForm")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function callBackFormAction(Request $request, $cartUuid)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+
+        $cart = $cartManager->get($cartUuid);
+
+        $callBack = new CallBack();
+        $form = $this->createForm(CallBackShortType::class, $callBack);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $callBack = $form->getData();
+            $callBack->setTreatmentStatus('Créé');
+            $callBack->setCartContent($cart->getContent());
+
+
+            $em->persist($callBack);
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_public_home_callBackConfirm', array(
+                'cartUuid' => $cart->getId(),
+                'callBackId' => $callBack->getId()
+            ));
+        }
+        return $this->render('@PaprecPublic/Shared/callBackForm.html.twig', array(
+            'form' => $form->createView(),
+            'cart' => $cart
+        ));
+    }
+
+    /**
+     * IHM de confirmation de prise en compte de la demande "Etre rappelé"
+     * @Route("/callBackConfirm/{cartUuid}/{callBackId}", name="paprec_public_home_callBackConfirm")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function callBackConfirmAction(Request $request, $cartUuid, $callBackId)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+        $em = $this->getDoctrine()->getManager();
+
+        $cart = $cartManager->get($cartUuid);
+        $callBack = $em->getRepository('PaprecCommercialBundle:CallBack')->find($callBackId);
+        return $this->render('@PaprecPublic/Shared/Home/callBackConfirm.html.twig', array(
+            'callBack' => $callBack,
+            'cart' => $cart
         ));
     }
 

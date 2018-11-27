@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;
 /**
- * ContactUs
+ * CallBack
  *
- * @ORM\Table(name="contactUs")
- * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\ContactUsRepository")
+ * @ORM\Table(name="callBacks")
+ * @ORM\Entity(repositoryClass="Paprec\CommercialBundle\Repository\CallBackRepository")
  */
-class ContactUs
+class CallBack
 {
     /**
      * @var int
@@ -109,28 +109,20 @@ class ContactUs
     private $treatmentStatus;
 
     /**
-     * "Mon besoin" rempli par l'utilisateur Front Office
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateCallBack", type="datetime")
+     * @Assert\GreaterThan("today")
+     */
+    private $dateCallBack;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="need", type="text")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="timeCallBack", type="string", length=255, nullable=true)
+     * @Assert\Time
      */
-    private $need;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="attachedFiles", type="array", nullable=true)
-     */
-    private $attachedFiles;
-
-
-    /**
-     * @var array|null
-     *
-     * @ORM\Column(name="division", type="string")
-     */
-    private $division;
+    private $timeCallBack;
 
     /**
      * @var array|null
@@ -140,13 +132,12 @@ class ContactUs
     private $cartContent;
 
     /**
-     * ContactUs constructor.
+     * CallBack constructor.
      * @throws \Exception
      */
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
-        $this->attachedFiles = array();
         $this->content = array();
     }
 
@@ -160,13 +151,12 @@ class ContactUs
         return $this->id;
     }
 
-
     /**
      * Set dateCreation.
      *
      * @param \DateTime $dateCreation
      *
-     * @return ContactUs
+     * @return CallBack
      */
     public function setDateCreation($dateCreation)
     {
@@ -190,7 +180,7 @@ class ContactUs
      *
      * @param \DateTime|null $dateUpdate
      *
-     * @return ContactUs
+     * @return CallBack
      */
     public function setDateUpdate($dateUpdate = null)
     {
@@ -214,7 +204,7 @@ class ContactUs
      *
      * @param \DateTime|null $deleted
      *
-     * @return ContactUs
+     * @return CallBack
      */
     public function setDeleted($deleted = null)
     {
@@ -238,7 +228,7 @@ class ContactUs
      *
      * @param string $businessName
      *
-     * @return ContactUs
+     * @return CallBack
      */
     public function setBusinessName($businessName)
     {
@@ -262,7 +252,7 @@ class ContactUs
      *
      * @param string $civility
      *
-     * @return ContactUs
+     * @return CallBack
      */
     public function setCivility($civility)
     {
@@ -286,7 +276,7 @@ class ContactUs
      *
      * @param string $lastName
      *
-     * @return ContactUs
+     * @return CallBack
      */
     public function setLastName($lastName)
     {
@@ -310,7 +300,7 @@ class ContactUs
      *
      * @param string $firstName
      *
-     * @return ContactUs
+     * @return CallBack
      */
     public function setFirstName($firstName)
     {
@@ -334,7 +324,7 @@ class ContactUs
      *
      * @param string $email
      *
-     * @return ContactUs
+     * @return CallBack
      */
     public function setEmail($email)
     {
@@ -358,7 +348,7 @@ class ContactUs
      *
      * @param string $phone
      *
-     * @return ContactUs
+     * @return CallBack
      */
     public function setPhone($phone)
     {
@@ -382,7 +372,7 @@ class ContactUs
      *
      * @param string|null $function
      *
-     * @return ContactUs
+     * @return CallBack
      */
     public function setFunction($function = null)
     {
@@ -406,7 +396,7 @@ class ContactUs
      *
      * @param string $treatmentStatus
      *
-     * @return ContactUs
+     * @return CallBack
      */
     public function setTreatmentStatus($treatmentStatus)
     {
@@ -426,75 +416,27 @@ class ContactUs
     }
 
     /**
-     * Set need.
+     * Set dateCallBack.
      *
-     * @param string $need
+     * @param \DateTime $dateCallBack
      *
-     * @return ContactUs
+     * @return CallBack
      */
-    public function setNeed($need)
+    public function setDateCallBack($dateCallBack)
     {
-        $this->need = $need;
+        $this->dateCallBack = $dateCallBack;
 
         return $this;
     }
 
     /**
-     * Get need.
+     * Get dateCallBack.
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getNeed()
+    public function getDateCallBack()
     {
-        return $this->need;
-    }
-
-    /**
-     * Set attachedFiles.
-     *
-     * @param array|null $attachedFiles
-     *
-     * @return ContactUs
-     */
-    public function setAttachedFiles($attachedFiles = null)
-    {
-        $this->attachedFiles = $attachedFiles;
-
-        return $this;
-    }
-
-    /**
-     * Get attachedFiles.
-     *
-     * @return array|null
-     */
-    public function getAttachedFiles()
-    {
-        return $this->attachedFiles;
-    }
-
-    /**
-     * Set division.
-     *
-     * @param string $division
-     *
-     * @return ContactUs
-     */
-    public function setDivision($division)
-    {
-        $this->division = $division;
-
-        return $this;
-    }
-
-    /**
-     * Get division.
-     *
-     * @return string
-     */
-    public function getDivision()
-    {
-        return $this->division;
+        return $this->dateCallBack;
     }
 
     /**
@@ -502,7 +444,7 @@ class ContactUs
      *
      * @param json|null $cartContent
      *
-     * @return ContactUs
+     * @return CallBack
      */
     public function setCartContent($cartContent = null)
     {
@@ -521,4 +463,27 @@ class ContactUs
         return $this->cartContent;
     }
 
+    /**
+     * Set timeCallBack.
+     *
+     * @param string|null $timeCallBack
+     *
+     * @return CallBack
+     */
+    public function setTimeCallBack($timeCallBack = null)
+    {
+        $this->timeCallBack = $timeCallBack;
+
+        return $this;
+    }
+
+    /**
+     * Get timeCallBack.
+     *
+     * @return string|null
+     */
+    public function getTimeCallBack()
+    {
+        return $this->timeCallBack;
+    }
 }

@@ -1,7 +1,7 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-    {{ 'Commercial.ContactUs.View'|trans }}
+    {{ 'Commercial.CallBack.View'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content_title %}
-    {{ 'Commercial.ContactUs.ContactUss'|trans }}
+    {{ 'Commercial.CallBack.CallBacks'|trans }}
 {% endblock %}
 
 {% block main_content %}
@@ -22,108 +22,95 @@
         <div class="view-box">
 
             {% for flashMessage in app.session.flashbag.get('errors') %}
-                <div class="alert alert-danger">{{ ('Commercial.ContactUs.Error.' ~ flashMessage)|trans }}</div>
+                <div class="alert alert-danger">{{ ('Commercial.CallBack.Error.' ~ flashMessage)|trans }}</div>
             {% endfor %}
 
             {% for flashMessage in app.session.flashbag.get('success') %}
-                <div class="alert alert-success">{{ ('Commercial.ContactUs.Success.' ~ flashMessage)|trans }}</div>
+                <div class="alert alert-success">{{ ('Commercial.CallBack.Success.' ~ flashMessage)|trans }}</div>
             {% endfor %}
         </div>
         <!-- CARD -->
         <div class="card">
             <div class="card-header">
                 <h4>
-                    <i class="fa fa-xs fa-contactUs"></i> {{ 'Commercial.ContactUs.View'|trans }}
+                    <i class="fa fa-xs fa-callBack"></i> {{ 'Commercial.CallBack.View'|trans }}
                     <div class="float-right">
-                        <a href="{{ path("paprec_commercial_contactUs_edit", {id: contactUs.id}) }}"
+                        <a href="{{ path("paprec_commercial_callBack_edit", {id: callBack.id}) }}"
                            class="btn btn-sm btn-warning"><i
-                                    class="fa fa-xs fa-edit"></i> {{ 'Commercial.ContactUs.Edit'|trans }}</a>
-                        <a id="commmecialContactUsRemoveButton_" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
-                                    class="fa fa-xs fa-trash"></i> {{ 'Commercial.ContactUs.Remove'|trans }}</a>
+                                    class="fa fa-xs fa-edit"></i> {{ 'Commercial.CallBack.Edit'|trans }}</a>
+                        <a id="commmecialCallBackRemoveButton_" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
+                                    class="fa fa-xs fa-trash"></i> {{ 'Commercial.CallBack.Remove'|trans }}</a>
                     </div>
                 </h4>
                 <div class="view-tools float-left">
-                    <a href="{{ path('paprec_commercial_contactUs_index') }}" class="btn btn-sm btn-default"><i
-                                class="fa fa-xs fa-chevron-left"></i> {{ 'Commercial.ContactUs.List'|trans }}</a>
+                    <a href="{{ path('paprec_commercial_callBack_index') }}" class="btn btn-sm btn-default"><i
+                                class="fa fa-xs fa-chevron-left"></i> {{ 'Commercial.CallBack.List'|trans }}</a>
                 </div>
             </div>
             <div class="card-body">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title">{{ 'Commercial.ContactUs.Informations'|trans }}</h5>
+                            <h5 class="card-title">{{ 'Commercial.CallBack.Informations'|trans }}</h5>
                         </div>
                         <div class="card-body row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.BusinessName'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.BusinessName'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ contactUs.businessName }}
+                                        {{ callBack.businessName }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.Civility'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.Civility'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ contactUs.civility }}
+                                        {{ callBack.civility }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.LastName'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.LastName'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ contactUs.lastName }}
+                                        {{ callBack.lastName }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.FirstName'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.FirstName'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ contactUs.firstName }}
+                                        {{ callBack.firstName }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.Email'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.Email'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ contactUs.email }}
+                                        {{ callBack.email }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.Phone'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.Phone'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ contactUs.phone }}
+                                        {{ callBack.phone }}
                                     </label>
                                 </div>
 
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.Function'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.DateCallBack'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ contactUs.function }}
+                                        {{ callBack.dateCallBack is empty ? "" : callBack.dateCallBack|localizeddate('short', 'none', app.request.locale) }} {{ callBack.timeCallBack }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.Division'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.Function'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ contactUs.division }}
+                                        {{ callBack.function }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.AttachedFiles'|trans }}</label>
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.CartContent'|trans }}</label>
                                     <label class="col-form-label">
-                                        {% if contactUs.attachedFiles %}
-                                            <a href="{{ path('paprec_commercial_contactUs_downloadAttachedFiles', {id: contactUs.id}) }}"><i class="fa fa-download"></i></a>
-                                        {% endif %}
-                                    </label>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.Need'|trans }}</label>
-                                    <label class="col-form-label">
-                                        {{ contactUs.need }}
-                                    </label>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.CartContent'|trans }}</label>
-                                    <label class="col-form-label">
-                                        {% for content in contactUs.cartContent %}
+                                        {% for content in callBack.cartContent %}
                                             Id produit : {{ content['pId'] }} Quantité : {{ content['qtty']}}
                                         {% endfor %}
                                     </label>
@@ -135,21 +122,21 @@
                 <div class="col-md-12 mt-3">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title">{{ 'Commercial.ContactUs.System-informations'|trans }}</h5>
+                            <h5 class="card-title">{{ 'Commercial.CallBack.System-informations'|trans }}</h5>
                         </div>
                         <div class="card-body">
 
                             <div class="form-group row">
-                                <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.Date-creation'|trans }}</label>
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.Date-creation'|trans }}</label>
                                 <label class="col-form-label">
-                                    {{ contactUs.dateCreation|localizeddate('short', 'medium', app.request.locale) }}
+                                    {{ callBack.dateCreation|localizeddate('short', 'medium', app.request.locale) }}
                                 </label>
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.Date-update'|trans }}</label>
+                                <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.Date-update'|trans }}</label>
                                 <label class="col-form-label">
-                                    {{ contactUs.dateUpdate is empty ? "" : contactUs.dateUpdate|localizeddate('short', 'medium', app.request.locale) }}
+                                    {{ callBack.dateUpdate is empty ? "" : callBack.dateUpdate|localizeddate('short', 'medium', app.request.locale) }}
                                 </label>
                             </div>
                         </div>
@@ -170,11 +157,11 @@
             <script>
                 $(function () {
 
-                    $('#commmecialContactUsRemoveButton_').on('click', function () {
+                    $('#commmecialCallBackRemoveButton_').on('click', function () {
 
-                        var url = "{{ path("paprec_commercial_contactUs_remove", {id: contactUs.id}) }}";
+                        var url = "{{ path("paprec_commercial_callBack_remove", {id: callBack.id}) }}";
 
-                        bootbox.confirm("{{ 'Commercial.ContactUs.Confirm-remove'|trans }}", function (result) {
+                        bootbox.confirm("{{ 'Commercial.CallBack.Confirm-remove'|trans }}", function (result) {
                             if (result === true) {
                                 $(location).attr('href', url);
                             }

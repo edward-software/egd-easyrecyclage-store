@@ -3,34 +3,29 @@
 namespace Paprec\CommercialBundle\Controller;
 
 use Exception;
-use Paprec\CommercialBundle\Entity\ContactUs;
-use Paprec\CommercialBundle\Form\ContactUs\ContactUsEditType;
+use Paprec\CommercialBundle\Entity\CallBack;
+use Paprec\CommercialBundle\Form\CallBack\CallBackEditType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Filesystem\Exception\IOException;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use ZipArchive;
 
-class ContactUsController extends Controller
+class CallBackController extends Controller
 {
     /**
-     * @Route("/contactUs", name="paprec_commercial_contactUs_index")
+     * @Route("/callBack", name="paprec_commercial_callBack_index")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function indexAction()
     {
-        return $this->render('PaprecCommercialBundle:ContactUs:index.html.twig');
+        return $this->render('PaprecCommercialBundle:CallBack:index.html.twig');
     }
 
     /**
-     * @Route("/contactUs/loadList", name="paprec_commercial_contactUs_loadList")
+     * @Route("/callBack/loadList", name="paprec_commercial_callBack_loadList")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function loadListAction(Request $request)
@@ -43,8 +38,6 @@ class ContactUsController extends Controller
         $orders = $request->get('order');
         $search = $request->get('search');
         $columns = $request->get('columns');
-        // Récupération du type de catégorie souhaité (DI, CHANTIER, D3E)
-        $typeContactUs = $request->get('typeContactUs');
 
         $cols['id'] = array('label' => 'id', 'id' => 'o.id', 'method' => array('getId'));
         $cols['businessName'] = array('label' => 'businessName', 'id' => 'o.businessName', 'method' => array('getBusinessName'));
@@ -56,9 +49,8 @@ class ContactUsController extends Controller
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
 
         $queryBuilder->select(array('o'))
-            ->from('PaprecCommercialBundle:ContactUs', 'o')
-            ->where('o.deleted IS NULL')
-            ->andWhere('o.division LIKE \'%' . $typeContactUs . '%\''); // Récupération des ContactUss du type voulu
+            ->from('PaprecCommercialBundle:CallBack', 'o')
+            ->where('o.deleted IS NULL');
 
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
@@ -89,7 +81,7 @@ class ContactUsController extends Controller
     }
 
     /**
-     * @Route("/contactUs/export", name="paprec_commercial_contactUs_export")
+     * @Route("/callBack/export", name="paprec_commercial_callBack_export")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function exportAction(Request $request)
@@ -100,14 +92,14 @@ class ContactUsController extends Controller
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
 
         $queryBuilder->select(array('o'))
-            ->from('PaprecCommercialBundle:ContactUs', 'o')
+            ->from('PaprecCommercialBundle:CallBack', 'o')
             ->where('o.deleted IS NULL');
 
-        $contactUss = $queryBuilder->getQuery()->getResult();
+        $callBacks = $queryBuilder->getQuery()->getResult();
 
         $phpExcelObject->getProperties()->setCreator("Paprec Easy Recyclage")
             ->setLastModifiedBy("Paprec Easy Recyclage")
-            ->setTitle("Paprec Easy Recyclage - Demandes de contact")
+            ->setTitle("Paprec Easy Recyclage - Demandes de rappel")
             ->setSubject("Extraction");
 
         $phpExcelObject->setActiveSheetIndex(0)
@@ -119,35 +111,33 @@ class ContactUsController extends Controller
             ->setCellValue('F1', 'Email')
             ->setCellValue('G1', 'Téléphone')
             ->setCellValue('H1', 'Statut')
-            ->setCellValue('I1', 'Mon besoin')
-            ->setCellValue('J1', 'Division')
-            ->setCellValue('K1', 'Date création');
+            ->setCellValue('I1', 'Date/Heure rappel')
+            ->setCellValue('J1', 'Date création');
 
-        $phpExcelObject->getActiveSheet()->setTitle('Demandes de contact');
+        $phpExcelObject->getActiveSheet()->setTitle('Demandes de rappel');
         $phpExcelObject->setActiveSheetIndex(0);
 
         $i = 2;
-        foreach ($contactUss as $contactUs) {
+        foreach ($callBacks as $callBack) {
 
             $phpExcelObject->setActiveSheetIndex(0)
-                ->setCellValue('A' . $i, $contactUs->getId())
-                ->setCellValue('B' . $i, $contactUs->getBusinessName())
-                ->setCellValue('C' . $i, $contactUs->getCivility())
-                ->setCellValue('D' . $i, $contactUs->getLastName())
-                ->setCellValue('E' . $i, $contactUs->getFirstName())
-                ->setCellValue('F' . $i, $contactUs->getEmail())
-                ->setCellValue('G' . $i, $contactUs->getPhone())
-                ->setCellValue('H' . $i, $contactUs->getTreatmentStatus())
-                ->setCellValue('I' . $i, $contactUs->getNeed())
-                ->setCellValue('J' . $i, $contactUs->getDivision())
-                ->setCellValue('K' . $i, $contactUs->getDateCreation()->format('Y-m-d'));
+                ->setCellValue('A' . $i, $callBack->getId())
+                ->setCellValue('B' . $i, $callBack->getBusinessName())
+                ->setCellValue('C' . $i, $callBack->getCivility())
+                ->setCellValue('D' . $i, $callBack->getLastName())
+                ->setCellValue('E' . $i, $callBack->getFirstName())
+                ->setCellValue('F' . $i, $callBack->getEmail())
+                ->setCellValue('G' . $i, $callBack->getPhone())
+                ->setCellValue('H' . $i, $callBack->getTreatmentStatus())
+                ->setCellValue('I' . $i, $callBack->getDateCallBack())
+                ->setCellValue('J' . $i, $callBack->getDateCreation()->format('Y-m-d'));
 
             $i++;
         }
 
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
 
-        $fileName = 'PaprecEasyRecyclage-Extraction-Contacts-' . date('Y-m-d') . '.xlsx';
+        $fileName = 'PaprecEasyRecyclage-Extraction-Rappels-' . date('Y-m-d') . '.xlsx';
 
         // create the response
         $response = $this->container->get('phpexcel')->createStreamedResponse($writer);
@@ -167,22 +157,22 @@ class ContactUsController extends Controller
 
 
     /**
-     * @Route("/contactUs/view/{id}", name="paprec_commercial_contactUs_view")
+     * @Route("/callBack/view/{id}", name="paprec_commercial_callBack_view")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function viewAction(Request $request, ContactUs $contactUs)
+    public function viewAction(Request $request, CallBack $callBack)
     {
-        return $this->render('PaprecCommercialBundle:ContactUs:view.html.twig', array(
-            'contactUs' => $contactUs
+        return $this->render('PaprecCommercialBundle:CallBack:view.html.twig', array(
+            'callBack' => $callBack
         ));
     }
 
     /**
-     * @Route("/contactUs/edit/{id}", name="paprec_commercial_contactUs_edit")
+     * @Route("/callBack/edit/{id}", name="paprec_commercial_callBack_edit")
      * @Security("has_role('ROLE_ADMIN')")
      * @throws Exception
      */
-    public function editAction(Request $request, ContactUs $contactUs)
+    public function editAction(Request $request, CallBack $callBack)
     {
 
         $status = array();
@@ -190,7 +180,7 @@ class ContactUsController extends Controller
             $status[$s] = $s;
         }
 
-        $form = $this->createForm(ContactUsEditType::class, $contactUs, array(
+        $form = $this->createForm(CallBackEditType::class, $callBack, array(
             'status' => $status
         ));
 
@@ -198,46 +188,41 @@ class ContactUsController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $contactUs = $form->getData();
-            $contactUs->setDateUpdate(new \DateTime());
+            $callBack = $form->getData();
+            $callBack->setDateUpdate(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
-            return $this->redirectToRoute('paprec_commercial_contactUs_view', array(
-                'id' => $contactUs->getId()
+            return $this->redirectToRoute('paprec_commercial_callBack_view', array(
+                'id' => $callBack->getId()
             ));
 
         }
 
-        return $this->render('PaprecCommercialBundle:ContactUs:edit.html.twig', array(
+        return $this->render('PaprecCommercialBundle:CallBack:edit.html.twig', array(
             'form' => $form->createView(),
-            'contactUs' => $contactUs
+            'callBack' => $callBack
         ));
     }
 
     /**
-     * @Route("/contactUs/remove/{id}", name="paprec_commercial_contactUs_remove")
+     * @Route("/callBack/remove/{id}", name="paprec_commercial_callBack_remove")
      * @Security("has_role('ROLE_ADMIN')")
      * @throws Exception
      */
-    public function removeAction(Request $request, ContactUs $contactUs)
+    public function removeAction(Request $request, CallBack $callBack)
     {
         $em = $this->getDoctrine()->getManager();
 
-        foreach ($contactUs->getAttachedFiles() as $file) {
-            $this->removeFile($this->getParameter('paprec_commercial.contact_us.files_path') . '/' . $file);
-            $contactUs->setAttachedFiles();
-        }
-
-        $contactUs->setDeleted(new \DateTime());
+        $callBack->setDeleted(new \DateTime());
         $em->flush();
 
-        return $this->redirectToRoute('paprec_commercial_contactUs_index');
+        return $this->redirectToRoute('paprec_commercial_callBack_index');
     }
 
     /**
-     * @Route("/contactUs/removeMany/{ids}", name="paprec_commercial_contactUs_removeMany")
+     * @Route("/callBack/removeMany/{ids}", name="paprec_commercial_callBack_removeMany")
      * @Security("has_role('ROLE_ADMIN')")
      * @throws Exception
      */
@@ -254,66 +239,14 @@ class ContactUsController extends Controller
         $ids = explode(',', $ids);
 
         if (is_array($ids) && count($ids)) {
-            $contactUss = $em->getRepository('PaprecCommercialBundle:ContactUs')->findById($ids);
-            foreach ($contactUss as $contactUs) {
-                if ($contactUs->getAttachedFiles()) {
-                    foreach ($contactUs->getAttachedFiles() as $file) {
-                        $this->removeFile($this->getParameter('paprec_commercial.contact_us.files_path') . '/' . $file);
-                        $contactUs->setAttachedFiles();
-                    }
-                }
-                $contactUs->setDeleted(new \DateTime);
+            $callBacks = $em->getRepository('PaprecCommercialBundle:CallBack')->findById($ids);
+            foreach ($callBacks as $callBack) {
+
+                $callBack->setDeleted(new \DateTime);
             }
             $em->flush();
         }
 
-        return $this->redirectToRoute('paprec_commercial_contactUs_index');
+        return $this->redirectToRoute('paprec_commercial_callBack_index');
     }
-
-
-    /**
-     * Supprimme un fichier du sytème de fichiers
-     *
-     * @param $path
-     */
-    public function removeFile($path)
-    {
-        $fs = new Filesystem();
-        try {
-            $fs->remove($path);
-        } catch (IOException $e) {
-            throw new Exception($e->getMessage());
-        }
-    }
-
-
-    /**
-     * @Route("/contactUs/{id}/downloadAttachedFiles", name="paprec_commercial_contactUs_downloadAttachedFiles")
-     * @Security("has_role('ROLE_ADMIN')")
-     */
-    public function downloadAttachedFilesAction(ContactUs $contactUs)
-    {
-        $path = $this->getParameter('paprec_commercial.contact_us.files_path');
-        $zipname = 'demandeContacts.zip';
-        $zip = new ZipArchive;
-        $zip->open($zipname, ZipArchive::CREATE);
-        $cpt = 1;
-        foreach ($contactUs->getAttachedFiles() as $file) {
-            $extension = pathinfo($path . '/' . $file, PATHINFO_EXTENSION);
-            $newFilename = "Demande-contact-" . $contactUs->getId() . '-PJ' . $cpt . '.' . $extension;
-
-            $filename= $path . '/' . $file;
-            $zip->addFile($filename, $newFilename);
-            $cpt++;
-        }
-        $zip->close();
-
-        $name = $zipname;
-        header('Content-Type: application/zip');
-        header('Content-disposition: attachment; filename='.$zipname);
-        header('Content-Length: ' . filesize($zipname));
-        readfile($zipname);
-        unlink($zipname);
-    }
-
 }

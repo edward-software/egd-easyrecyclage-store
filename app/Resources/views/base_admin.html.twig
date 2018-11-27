@@ -64,6 +64,8 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_contactUs'|length) == 'paprec_commercial_contactUs' %} active{% endif %}"
                                href="{{ path('paprec_commercial_contactUs_index') }}">{{ 'Commercial.ContactUs.ContactUss'|trans }}</a>
+                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_callBack'|length) == 'paprec_commercial_callBack' %} active{% endif %}"
+                               href="{{ path('paprec_commercial_callBack_index') }}">{{ 'Commercial.CallBack.CallBacks'|trans }}</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_quoteRequest'|length) == 'paprec_commercial_quoteRequest' %} active{% endif %}"
                                href="{{ path('paprec_commercial_quoteRequest_index') }}">{{ 'Commercial.QuoteRequest.QuoteRequests'|trans }}</a>

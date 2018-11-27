@@ -113,7 +113,8 @@ class SubscriptionController extends Controller
         $cart = $cartManager->get($cartUuid);
 
         return $this->render('@PaprecPublic/DI/offerDetails.html.twig', array(
-            'productDIQuote' => $productDIQuote
+            'productDIQuote' => $productDIQuote,
+            'cart' => $cart
         ));
     }
 

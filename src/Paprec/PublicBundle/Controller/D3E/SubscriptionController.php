@@ -200,7 +200,8 @@ class SubscriptionController extends Controller
         $cart = $cartManager->get($cartUuid);
 
         return $this->render('@PaprecPublic/D3E/offerDetails.html.twig', array(
-            'productD3EQuote' => $productD3EQuote
+            'productD3EQuote' => $productD3EQuote,
+            'cart' => $cart
         ));
     }
 

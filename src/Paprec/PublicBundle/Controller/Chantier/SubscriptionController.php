@@ -212,7 +212,8 @@ class SubscriptionController extends Controller
         $cart = $cartManager->get($cartUuid);
 
         return $this->render('@PaprecPublic/Chantier/offerDetails.html.twig', array(
-            'productChantierQuote' => $productChantierQuote
+            'productChantierQuote' => $productChantierQuote,
+            'cart' => $cart
         ));
     }
 
