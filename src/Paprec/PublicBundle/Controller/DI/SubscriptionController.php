@@ -30,7 +30,10 @@ class SubscriptionController extends Controller
         $categories = $categoryManager->getCategoriesDI();
 
         // Pour alimenter le "select" des types de déchets
-        $divisions = $this->getParameter('paprec_divisions');
+        $divisions = array();
+        foreach ($this->getParameter('paprec_divisions_select') as $division => $divisionLong) {
+            $divisions[$division] = $divisionLong;
+        }
 
         /*
          * Si il y a des displayedCategories, il faut récupérer leurs produits pour les afficher

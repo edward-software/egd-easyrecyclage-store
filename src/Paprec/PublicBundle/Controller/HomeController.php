@@ -26,7 +26,10 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $cartManager = $this->get('paprec.cart_manager');
-        $divisions = $this->getParameter('paprec_divisions');
+        $divisions = array();
+        foreach ($this->getParameter('paprec_divisions_select') as $division => $divisionLong) {
+            $divisions[$division] = $divisionLong;
+        }
         $step = "l";
 
         if (!$cartUuid) {
@@ -46,7 +49,11 @@ class HomeController extends Controller
              * Quand l est définie on passe à l'étape d puis f
              * si on choisit "Régulier", on passe en étape r
              */
-            $divisions = $this->getParameter('paprec_divisions');
+    //            $divisions = $this->getParameter('paprec_divisions');
+            $divisions = array();
+            foreach ($this->getParameter('paprec_divisions_select') as $division => $divisionLong) {
+                $divisions[$division] = $divisionLong;
+            }
             if ($cart->getLocation() && $cart->getLocation() !== '') {
                 $step = "d";
             }
@@ -168,7 +175,10 @@ class HomeController extends Controller
     {
         $cartManager = $this->get('paprec.cart_manager');
 
-        $divisions = $this->getParameter('paprec_divisions');
+        $divisions = array();
+        foreach ($this->getParameter('paprec_divisions_select') as $division => $divisionLong) {
+            $divisions[$division] = $divisionLong;
+        }
         $cart = $cartManager->get($cartUuid);
 
         $quoteRequest = new QuoteRequest();
@@ -182,7 +192,7 @@ class HomeController extends Controller
             $quoteRequest->setQuoteStatus('Créé');
             $quoteRequest->setFrequency($cart->getFrequency());
             $quoteRequest->setDivision($cart->getDivision());
-            $quoteRequest->setPostalCode(substr($cart->getLocation(), 0, 5));
+            $quoteRequest->setPostalCode($cart->getPostalCode());
 
             $files = array();
             foreach ($quoteRequest->getAttachedFiles() as $uploadedFile) {

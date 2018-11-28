@@ -25,7 +25,10 @@ class SubscriptionController extends Controller
         $cart = $cartManager->get($cartUuid);
 
         // Pour alimenter le "select" des types de déchets
-        $divisions = $this->getParameter('paprec_divisions');
+        $divisions = array();
+        foreach ($this->getParameter('paprec_divisions_select') as $division => $divisionLong) {
+            $divisions[$division] = $divisionLong;
+        }
 
         return $this->render('@PaprecPublic/D3E/index.html.twig', array(
             'divisions' => $divisions,
@@ -88,7 +91,10 @@ class SubscriptionController extends Controller
         $products = $productD3EManager->getByType($type);
 
         // Pour alimenter le "select" des types de déchets
-        $divisions = $this->getParameter('paprec_divisions');
+        $divisions = array();
+        foreach ($this->getParameter('paprec_divisions_select') as $division => $divisionLong) {
+            $divisions[$division] = $divisionLong;
+        }
 
         return $this->render('@PaprecPublic/D3E/need.html.twig', array(
             'divisions' => $divisions,

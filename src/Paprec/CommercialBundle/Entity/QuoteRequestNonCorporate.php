@@ -82,7 +82,7 @@ class QuoteRequestNonCorporate
      * @var string
      * @ORM\Column(name="email", type="string", length=255)
      * @Assert\Email(
-     *      message = "The email '{{ value }}' is not a valid email."
+     *      message = "L'email '{{ value }}' n'a pas un format valide"
      * )
      */
     private $email;

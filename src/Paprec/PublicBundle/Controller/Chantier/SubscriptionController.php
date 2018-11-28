@@ -25,7 +25,10 @@ class SubscriptionController extends Controller
         $cart = $cartManager->get($cartUuid);
 
         // Pour alimenter le "select" des types de déchets
-        $divisions = $this->getParameter('paprec_divisions');
+        $divisions = array();
+        foreach ($this->getParameter('paprec_divisions_select') as $division => $divisionLong) {
+            $divisions[$division] = $divisionLong;
+        }
 
         return $this->render('@PaprecPublic/Chantier/index.html.twig', array(
             'divisions' => $divisions,
@@ -89,7 +92,10 @@ class SubscriptionController extends Controller
         $categories = $categoryManager->getCategoriesChantier($type);
 
         // Pour alimenter le "select" des types de déchets
-        $divisions = $this->getParameter('paprec_divisions');
+        $divisions = array();
+        foreach ($this->getParameter('paprec_divisions_select') as $division => $divisionLong) {
+            $divisions[$division] = $divisionLong;
+        }
 
         /*
          * Si il y a des displayedCategories, il faut récupérer leurs produits pour les afficher

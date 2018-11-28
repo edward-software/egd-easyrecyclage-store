@@ -9,6 +9,11 @@ parameters:
         - CHANTIER
         - D3E
 
+    paprec_divisions_select:
+        DI: Mes déchets d'entreprise
+        CHANTIER: Mes déchets de chantier
+        D3E: Mes déchets électriques et électroniques
+
 
 services:
     # default configuration for services in *this* file

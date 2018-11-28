@@ -95,11 +95,11 @@
                         <select class="input" id="divisionSelect"
                                 data-url="{{ path('paprec_public_corp_home_addDivision', {cartUuid: cart.id , division: 'divisionTmp'}) }}">
                             <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
-                            {% for division in divisions %}
-                                {% if division == cart.division %}
-                                    <option value="{{ division }}" selected="selected">{{ division }}</option>
+                            {% for key,division in divisions %}
+                                {% if key == cart.division %}
+                                    <option value="{{ key }}" selected="selected">{{ division }}</option>
                                 {% else %}
-                                    <option value="{{ division }}">{{ division }}</option>
+                                    <option value="{{ key }}">{{ division }}</option>
                                 {% endif %}
                             {% endfor %}
                         </select>
