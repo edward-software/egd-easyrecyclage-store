@@ -5,9 +5,9 @@ namespace Paprec\CommercialBundle\Controller;
 use Exception;
 use Paprec\CommercialBundle\Entity\ProductD3EOrder;
 use Paprec\CommercialBundle\Entity\ProductD3EOrderLine;
-use Paprec\CommercialBundle\Form\ProductD3EOrderLineAddType;
-use Paprec\CommercialBundle\Form\ProductD3EOrderLineEditType;
-use Paprec\CommercialBundle\Form\ProductD3EOrderType;
+use Paprec\CommercialBundle\Form\ProductD3EOrder\ProductD3EOrderLineAddType;
+use Paprec\CommercialBundle\Form\ProductD3EOrder\ProductD3EOrderLineEditType;
+use Paprec\CommercialBundle\Form\ProductD3EOrder\ProductD3EOrderType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -330,7 +330,7 @@ class ProductD3EOrderController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $productD3EOrderManager = $this->get('paprec_catalog.product_d3e_order_manager');
+            $productD3EOrderManager = $this->get('paprec_commercial.product_d3e_order_manager');
 
             $productD3EOrderLine = $form->getData();
             $productD3EOrderManager->addLine($productD3EOrder, $productD3EOrderLine);
@@ -369,7 +369,7 @@ class ProductD3EOrderController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $productD3EOrderManager = $this->get('paprec_catalog.product_d3e_order_manager');
+            $productD3EOrderManager = $this->get('paprec_commercial.product_d3e_order_manager');
 
             $productD3EOrderManager->editLine($productD3EOrder, $productD3EOrderLine);
 
@@ -407,7 +407,7 @@ class ProductD3EOrderController extends Controller
         $em->remove($productD3EOrderLine);
         $em->flush();
 
-        $productD3EOrderManager = $this->get('paprec_catalog.product_d3e_order_manager');
+        $productD3EOrderManager = $this->get('paprec_commercial.product_d3e_order_manager');
         $total = $productD3EOrderManager->calculateTotal($productD3EOrder);
         $productD3EOrder->setTotalAmount($total);
         $em->flush();

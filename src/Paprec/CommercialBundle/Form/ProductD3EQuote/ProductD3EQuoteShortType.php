@@ -1,6 +1,6 @@
 <?php
 
-namespace Paprec\CommercialBundle\Form;
+namespace Paprec\CommercialBundle\Form\ProductD3EQuote;
 
 use Paprec\CommercialBundle\Entity\BusinessLine;
 use Paprec\CommercialBundle\Repository\BusinessLineRepository;
@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 
-class ProductChantierOrderShortType extends AbstractType
+class ProductD3EQuoteShortType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -27,13 +27,13 @@ class ProductChantierOrderShortType extends AbstractType
                 'class' => BusinessLine::class,
                 'multiple' => false,
                 'expanded' => false,
-                'placeholder' => 'Commercial.ProductChantierOrder.BusinessLinePlaceholder',
+                'placeholder' => 'Commercial.ProductD3EQuote.BusinessLinePlaceholder',
                 'empty_data' => null,
                 'choice_label' => 'name',
                 'query_builder' => function (BusinessLineRepository $er) {
                     return $er->createQueryBuilder('b')
                         ->where('b.deleted IS NULL')
-                        ->andWhere('b.division = \'CHANTIER\'');
+                        ->andWhere('b.division = \'D3E\'');
                 }
             ))
             ->add('civility', ChoiceType::class, array(
@@ -69,7 +69,7 @@ class ProductChantierOrderShortType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\ProductChantierOrder'
+            'data_class' => 'Paprec\CommercialBundle\Entity\ProductD3EQuote'
         ));
     }
 
@@ -78,7 +78,7 @@ class ProductChantierOrderShortType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'paprec_commercialbundle_productchantierordershort';
+        return 'paprec_commercialbundle_productD3Equote';
     }
 
 

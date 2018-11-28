@@ -1,6 +1,6 @@
 <?php
 
-namespace Paprec\CommercialBundle\Form;
+namespace Paprec\CommercialBundle\Form\ProductChantierOrder;
 
 use Paprec\CommercialBundle\Entity\BusinessLine;
 use Paprec\CommercialBundle\Repository\BusinessLineRepository;

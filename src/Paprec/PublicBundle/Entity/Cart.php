@@ -40,21 +40,49 @@ class Cart
     /**
      * @var string
      *
-     * @ORM\Column(name="division", type="string", length=255)
+     * @ORM\Column(name="division", type="string", length=255, nullable=true)
      */
     private $division;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="location", type="string", length=255)
+     * @ORM\Column(name="location", type="string", length=255, nullable=true)
      */
     private $location;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="latitude", type="decimal", precision=18, scale=15, nullable=true)
+     */
+    private $latitude;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="longitude", type="decimal", precision=18, scale=15, nullable=true)
+     */
+    private $longitude;
+    /**
      * @var string
      *
-     * @ORM\Column(name="frequency", type="string", length=255)
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     */
+    private $city;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="postalCode", type="string", length=255, nullable=true)
+     */
+    private $postalCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="frequency", type="string", length=255, nullable=true)
      */
     private $frequency;
 
@@ -318,5 +346,101 @@ class Cart
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set city.
+     *
+     * @param string|null $city
+     *
+     * @return Cart
+     */
+    public function setCity($city = null)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city.
+     *
+     * @return string|null
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set postalCode.
+     *
+     * @param string|null $postalCode
+     *
+     * @return Cart
+     */
+    public function setPostalCode($postalCode = null)
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get postalCode.
+     *
+     * @return string|null
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * Set latitude.
+     *
+     * @param string|null $latitude
+     *
+     * @return Cart
+     */
+    public function setLatitude($latitude = null)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude.
+     *
+     * @return string|null
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set longitude.
+     *
+     * @param string|null $longitude
+     *
+     * @return Cart
+     */
+    public function setLongitude($longitude = null)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude.
+     *
+     * @return string|null
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
     }
 }

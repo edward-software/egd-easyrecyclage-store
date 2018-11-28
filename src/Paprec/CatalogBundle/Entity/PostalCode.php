@@ -27,6 +27,11 @@ class PostalCode
      *
      * @ORM\Column(name="code", type="string", length=20)
      * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="@^\d{2}(?:\d{3})?$@",
+     *     htmlPattern="^\d{2}(?:\d{3})?$",
+     *     message="Les codes postaux doivent être des nombres de taille 2 ou 5 (75, 92150)"
+     * )
      */
     private $code;
 

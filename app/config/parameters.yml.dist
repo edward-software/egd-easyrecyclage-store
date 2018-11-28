@@ -22,4 +22,6 @@ parameters:
     paprec_email_call: digital@eggers-conseil.com
     paprec_email_other_services: digital@eggers-conseil.com
     paprec_public_site_url: 'http://wordpress.eggers-digital.com'
+    paprec_google_api_key: AIzaSyBdYprWZt8V-GkukzTG2ev3-eVdLb3FSCA
+
 

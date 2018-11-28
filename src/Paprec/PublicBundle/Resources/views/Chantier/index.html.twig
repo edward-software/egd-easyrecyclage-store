@@ -39,22 +39,11 @@
                         <div class="step__title">{{ 'Public.Home.Location'|trans }}</div>
                     </div>
                     <div class="step__right">
-                        <input class="input" type="text" list="locationDatalist" id="locationSelect"
-                               data-url="{{ path('paprec_public_corp_home_index', {l: 'locationTmp', d: '' }) }}"
-                               value="{{ cart.location }}">
-                        <datalist id="locationDatalist">
-                            <option data-vicopo="#locationSelect">
-                                <a data-vicopo-code-postal> </a>&nbsp;<a data-vicopo-ville></a>
-                            </option>
-                        </datalist>
+                        <input class="input" type="text" name="locationSelect"
+                               id="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}>
                     </div>
                     <div class="step__agency">
-                        <div class="left">2</div>
-                        <div class="middle">
-                            <span>Agences</span>
-                            sont à moins de 50km
-                        </div>
-                        <div class="right"></div>
+
                     </div>
                 </div>
                 <div class="step">
@@ -63,7 +52,7 @@
                     </div>
                     <div class="step__right">
                         <select class="input" id="divisionSelect"
-                                data-url="{{ path('paprec_public_corp_home_index', {l: 'locationTmp', d: 'divisionTmp', f: '' }) }}">
+                                data-url="{{ path('paprec_public_corp_home_addDivision', {cartUuid: cart.id , division: 'divisionTmp'}) }}">
                             <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
                             {% for division in divisions %}
                                 {% if division == cart.division %}
@@ -75,13 +64,13 @@
                         </select>
                         <br>
                         <div id="frequencyRadioBox"
-                             data-url="{{ path('paprec_public_corp_home_index', {l: 'locationTmp', d: 'divisionTmp', f: 'frequencyTmp' }) }}">
+                             data-url="{{ path('paprec_public_corp_home_addFrequency', {cartUuid: cart.id, frequency: 'frequencyTmp' }) }}">
                             <input class="input__radio" type="radio" id="ponctualRadio" name="frequencyRadio"
                                    value="ponctual" {% if cart.frequency == 'ponctual' %}checked{% endif %}>
                             <label for="ponctualRadio">{{ 'Public.Cart.Ponctal'|trans }}</label>
 
                             <input class="input__radio" type="radio" id="regularRadio" name="frequencyRadio"
-                                   value="regular"  {% if cart.frequency == 'regular' %}checked{% endif %}>
+                                   value="regular" {% if cart.frequency == 'regular' %}checked{% endif %}>
                             <label for="regularRadio">{{ 'Public.Cart.Regular'|trans }}</label>
                         </div>
                         <div class="clearfix"></div>
@@ -101,64 +90,142 @@
 
 {% block javascripts %}
     <script type="text/javascript"
-            src="https://vicopo.selfbuild.fr/api.min.js"></script>
+            src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
+    </script>
     <script>
         $(function () {
 
-            var addOrRemoveDisplayedProdutUrl = "/addOrRemoveDisplayedProduct/{cartUuid}/{categoryId}/{productId}";
 
             reloadCart();
             loadedPage();
+            reloadNearbyAgencies()
 
-            // Fonction appelée à chaque input dans l'input Location
-            // On recharge la page en envoyant la "location" quand la location est égale à un des autocomplete proposé
-            // c-a-d quand on a choisi une "location" dans la datalist en gros
-            $("#locationSelect").on('input', function () {
-                var val = this.value;
-                if ($('#locationDatalist option').filter(function () {
-                    return this.value.toUpperCase() === val.toUpperCase();
-                }).length) {
-                    alert('Perte des données TODO Modal');
-                    {% autoescape'js' %}
-                    url = $(this).data('url').replace('locationTmp', val);
-                    {% endautoescape %}
-                    $(location).attr('href', url);
+            function initializeAutocomplete(id) {
+                var element = document.getElementById(id);
+                var options = {
+                    types: ['(regions)'],
+                    componentRestrictions: {country: "fr"}
+                };
+                if (element) {
+                    var autocomplete = new google.maps.places.Autocomplete(element, options);
+                    google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChanged);
                 }
-            });
+            }
 
-            // Quand on sélectionne une division dans le select, on recharge en envoyant la location et la division
+            // Fonction appelée lorsque l'on choisit une proposition de l'autocomplete Google
+            function onPlaceChanged() {
+                var loc = $('#locationSelect').val();
+                // On init les variables car si un champ manque, on se retrouve avec city/%20/long dans l'url et non city//long
+                var place = this.getPlace();
+                var city = " ";
+                var postalCode = " ";
+                var long = " ";
+                var lat = " ";
+                lat = place.geometry.location.lat();
+                long = place.geometry.location.lng();
+                for (var i in place.address_components) {
+                    var component = place.address_components[i];
+                    for (var j in component.types) {  // Some types are ["country", "political"]
+                        if (component.types[j] === 'postal_code') {
+                            postalCode = component.long_name;
+                        }
+                        if (component.types[j] === 'locality') {
+                            city = component.long_name;
+                        }
+                    }
+                }
+                {% autoescape'js' %}
+                url = "{{ path('paprec_public_corp_home_addLocation', {cartUuid: cart.id, location: 'locationTmp', city: 'cityTmp', postalCode: 'postalCodeTmp', long: 'longTmp', lat:'latTmp' }) }}"
+                    .replace('locationTmp', loc)
+                    .replace('cityTmp', city)
+                    .replace('postalCodeTmp', postalCode)
+                    .replace('longTmp', long)
+                    .replace('latTmp', lat);
+                {% endautoescape %}
+                $(location).attr('href', url);
+            }
+
+            // google.maps.event.addDomListener(window, 'load', function () {
+            // Si l'on met ce listener, l'autocomplete est initialisé 1fois/1000
+            initializeAutocomplete('locationSelect');
+
+            {# Quand on sélectionne une division dans le select, on recharge en envoyant la location et la division #}
             $("#divisionSelect").on('change', function () {
-                alert('Perte des données TODO Modal');
-                locationVal = $("#locationSelect").val();
                 {% autoescape'js' %}
-                url = $(this).data('url').replace('divisionTmp', this.value).replace('locationTmp', locationVal);
+                url = $(this).data('url').replace('divisionTmp', this.value);
                 {% endautoescape %}
 
                 $(location).attr('href', url);
             });
 
-            // Quand on sélectionne une frequence dans les radioButtons, on recharge la page en envoyant la location, division, frequence
-            // cela na nous faire naviguer vers le SubscriptionController de la division choisie
+            {# Quand on sélectionne une frequence dans les radioButtons, on recharge la page en envoyant la location, division, frequence#}
+            {# cela na nous faire naviguer vers le SubscriptionController de la division choisie #}
             $('#frequencyRadioBox').change(function () {
-                alert('Perte des données TODO Modal');
-
                 frequency = $("input[name='frequencyRadio']:checked").val();
-                locationVal = $("#locationSelect").val();
-                divisionVal = $("#divisionSelect").val();
                 {% autoescape'js' %}
-                url = $(this).data('url')
-                    .replace('divisionTmp', divisionVal)
-                    .replace('locationTmp', locationVal)
-                    .replace('frequencyTmp', frequency);
+                url = $(this).data('url').replace('frequencyTmp', frequency);
                 {% endautoescape %}
                 $(location).attr('href', url);
 
             });
+
 
             // Au chargement, on applique au body la couleur de la division DI
             function loadedPage() {
-                $('body').addClass('tunnel--purple');
+                $('body').addClass('tunnel--orange');
+            }
 
+            // Rechargement de l'HTML du Cart
+            function reloadCart() {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ path('paprec_public_corp_Chantier_subscription_loadCart', {cartUuid: cart.id}) }}",
+                    contentType: "html",
+                    success: function (response) {
+                        // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
+                        var htmlToDisplay = response.trim();
+                        $("#loadedCartPanel").html(htmlToDisplay);
+                        // On ajoute un listener sur les "x" dans la liste des produits dans le Cart
+                        $(".buttonDeleteProduct").click(function () {
+                            productCategory = (this.id).replace('buttonDeleteProduct_', '').split('_', 2);
+                            productId = productCategory[0];
+                            categoryId = productCategory[1];
+                            $.ajax({
+                                type: "GET",
+                                dataType: "json",
+                                url: "{{ path('paprec_public_corp_Chantier_subscription_removeContent', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
+                                    .replace('categoryTmp', categoryId)
+                                    .replace('productTmp', productId),
+                                success: function (response) {
+                                    removeBadge(productId, categoryId);
+                                    reloadCart();
+                                },
+                                error: function (errorThrown) {
+                                    console.log(errorThrown);
+                                }
+                            });
+                        })
+                    },
+                    error: function (errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
+            }
+
+            function reloadNearbyAgencies() {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ path('paprec_public_corp_Chantier_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}",
+                    contentType: "html",
+                    success: function (response) {
+                        // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
+                        var htmlToDisplay = response.trim();
+                        $(".step__agency").html(htmlToDisplay);
+                    },
+                    error: function (errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
             }
         });
     </script>

@@ -127,7 +127,7 @@ class ProductD3EOrderManager
     }
 
     /**
-     * Pour ajouter une productD3EOrderLine depuis le Cart, il faut d'abord retrouver le ProductD3E
+     * Pour ajouter une productD3EOrderLine depuis le Cart, il faut d'abord retrouver le ProductD3EOrder
      * @param ProductD3EOrder $productD3EOrder
      * @param $productId
      * @param $qtty

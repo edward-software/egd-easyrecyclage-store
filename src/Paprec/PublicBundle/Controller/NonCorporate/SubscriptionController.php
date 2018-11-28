@@ -4,7 +4,8 @@ namespace Paprec\PublicBundle\Controller\NonCorporate;
 
 
 use Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate;
-use Paprec\CommercialBundle\Form\QuoteRequestNonCorporateShortType;
+use Paprec\CommercialBundle\Form\QuoteRequestNonCorporate\QuoteRequestNonCorporateGroupeType;
+use Paprec\CommercialBundle\Form\QuoteRequestNonCorporate\QuoteRequestNonCorporateShortType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -20,7 +21,7 @@ class SubscriptionController extends Controller
     {
 
         $quoteRequestNonCorporate = new QuoteRequestNonCorporate();
-        $form = $this->createForm('Paprec\CommercialBundle\Form\QuoteRequestNonCorporateGroupeType', $quoteRequestNonCorporate);
+        $form = $this->createForm(QuoteRequestNonCorporateGroupeType::class, $quoteRequestNonCorporate);
 
         $form->handleRequest($request);
 
@@ -81,7 +82,7 @@ class SubscriptionController extends Controller
     {
 
         $quoteRequestNonCorporate = new QuoteRequestNonCorporate();
-        $form = $this->createForm('Paprec\CommercialBundle\Form\QuoteRequestNonCorporateShortType', $quoteRequestNonCorporate);
+        $form = $this->createForm(QuoteRequestNonCorporateShortType::class, $quoteRequestNonCorporate);
 
         $form->handleRequest($request);
 
@@ -142,7 +143,7 @@ class SubscriptionController extends Controller
     {
 
         $quoteRequestNonCorporate = new QuoteRequestNonCorporate();
-        $form = $this->createForm('Paprec\CommercialBundle\Form\QuoteRequestNonCorporateShortType', $quoteRequestNonCorporate);
+        $form = $this->createForm(QuoteRequestNonCorporateShortType::class, $quoteRequestNonCorporate);
 
         $form->handleRequest($request);
 

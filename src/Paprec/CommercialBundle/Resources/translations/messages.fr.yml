@@ -10,6 +10,7 @@ Commercial:
     Name:                       Nom
     Divisions:                  Divisions
     Address:                    Adresse
+    SearchAddress:              Rechercher l'adresse de l'agence
     PostalCode:                 Code postal
     City:                       Ville
     Phone:                      Téléphone

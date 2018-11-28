@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * ProductD3E
+ * ProductD3EOrder
  *
  * @ORM\Table(name="productD3Es")
  * @ORM\Entity(repositoryClass="Paprec\CatalogBundle\Repository\ProductD3ERepository")

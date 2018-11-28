@@ -9,6 +9,7 @@ parameters:
         - CHANTIER
         - D3E
 
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -48,3 +49,4 @@ services:
 twig:
     globals:
         paprec_public_site_url: "%paprec_public_site_url%"
+        paprec_google_api_key: "%paprec_google_api_key%"

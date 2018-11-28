@@ -45,6 +45,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <div class="form-label">{{ 'Commercial.Agency.SearchAddress'|trans }}</div>
+                                    <div class="form-content">
+                                        <input id="agencyAddress" class="form-control"
+                                               placeholder="Adresse de l'agence">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <div class="form-label">{{ 'Commercial.Agency.Address'|trans }}</div>
                                     <div class="form-content">
                                         {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
@@ -67,6 +74,22 @@
                                         {{ form_errors(form.city) }}
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <div class="form-label">{{ 'Commercial.Agency.Longitude'|trans }}</div>
+                                        <div class="form-content">
+                                            {{ form_widget(form.longitude, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.longitude) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-label">{{ 'Commercial.Agency.Latitude'|trans }}</div>
+                                        <div class="form-content">
+                                            {{ form_widget(form.latitude, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.latitude) }}
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <div class="form-label">{{ 'Commercial.Agency.Phone'|trans }}</div>
                                     <div class="form-content">
@@ -74,21 +97,6 @@
                                         {{ form_errors(form.phone) }}
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="form-label">{{ 'Commercial.Agency.Latitude'|trans }}</div>
-                                    <div class="form-content">
-                                        {{ form_widget(form.latitude, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.latitude) }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="form-label">{{ 'Commercial.Agency.Longitude'|trans }}</div>
-                                    <div class="form-content">
-                                        {{ form_widget(form.longitude, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.longitude) }}
-                                    </div>
-                                </div>
-
                                 <div class="form-group">
                                     <div class="form-label">{{ 'Commercial.Agency.Divisions'|trans }}</div>
                                     <div class="form-content checkbox-list">
@@ -129,9 +137,47 @@
 {% endblock %}
 
 {% block javascripts %}
-
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
+    </script>
     <script>
         $(function () {
+            function initializeAutocomplete(id) {
+                console.log('salut');
+                var element = document.getElementById(id);
+                var options = {
+                    types: ['address'],
+                    componentRestrictions: {country: "fr"}
+                };
+                if (element) {
+                    var autocomplete = new google.maps.places.Autocomplete(element, options);
+                    google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChanged);
+                }
+            }
+
+            // Fonction appelée lorsque l'on choisit une proposition de l'autocomplete Google
+            function onPlaceChanged() {
+                var place = this.getPlace();
+                console.log(place);
+                $('#paprec_commercialbundle_agence_latitude').val(place.geometry.location.lat());
+                $('#paprec_commercialbundle_agence_longitude').val(place.geometry.location.lng());
+                $('#paprec_commercialbundle_agence_address').val(place.name);
+                for (var i in place.address_components) {
+                    var component = place.address_components[i];
+                    for (var j in component.types) {  // Some types are ["country", "political"]
+                        if (component.types[j] === 'postal_code') {
+                            $('#paprec_commercialbundle_agence_postalCode').val(component.long_name);
+                        }
+                        if (component.types[j] === 'locality') {
+                            $('#paprec_commercialbundle_agence_city').val(component.long_name);
+                        }
+                    }
+                }
+            }
+
+            // google.maps.event.addDomListener(window, 'load', function () {
+            // Si l'on met ce listener, l'autocomplete est initialisé 1fois/1000
+            initializeAutocomplete('agencyAddress');
 
             $('.commercial-agency-save-button').on('click', function () {
                 $('#commercialAgenceForm').submit();

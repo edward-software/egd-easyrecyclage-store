@@ -4,9 +4,9 @@ namespace Paprec\PublicBundle\Controller\D3E;
 
 use Paprec\CommercialBundle\Entity\ProductD3EOrder;
 use Paprec\CommercialBundle\Entity\ProductD3EQuote;
-use Paprec\CommercialBundle\Form\ProductD3EOrderDeliveryType;
-use Paprec\CommercialBundle\Form\ProductD3EOrderShortType;
-use Paprec\CommercialBundle\Form\ProductD3EQuoteShortType;
+use Paprec\CommercialBundle\Form\ProductD3EOrder\ProductD3EOrderDeliveryType;
+use Paprec\CommercialBundle\Form\ProductD3EOrder\ProductD3EOrderShortType;
+use Paprec\CommercialBundle\Form\ProductD3EQuote\ProductD3EQuoteShortType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -111,8 +111,8 @@ class SubscriptionController extends Controller
         $cart = $cartManager->get($cartUuid);
         $type = $cart->getType();
 
-        $postalCode = substr($cart->getLocation(), 0, 5);
-        $city = substr($cart->getLocation(), 5);
+        $postalCode = $cart->getPostalCode();
+        $city = $cart->getCity();
 
         // si l'utilisateur est dans "J'établis un devis" alors on créé un devis D3E
         if ($type == 'quote') {
@@ -126,7 +126,7 @@ class SubscriptionController extends Controller
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $productD3EQuoteManager = $this->get('paprec_catalog.product_d3e_quote_manager');
+                $productD3EQuoteManager = $this->get('paprec_commercial.product_d3e_quote_manager');
 
                 $productD3EQuote = $form->getData();
                 $productD3EQuote->setQuoteStatus('Créé');
@@ -148,7 +148,7 @@ class SubscriptionController extends Controller
 
             }
         } else { // sinon on créé une commande D3E
-            $productD3EOrderManager = $this->get('paprec_catalog.product_d3e_order_manager');
+            $productD3EOrderManager = $this->get('paprec_commercial.product_d3e_order_manager');
 
 
             $productD3EOrder = new ProductD3EOrder();
@@ -340,6 +340,24 @@ class SubscriptionController extends Controller
 
         return $this->render('@PaprecPublic/D3E/partial/cartPartial.html.twig', array(
             'loadedCart' => $loadedCart
+        ));
+    }
+
+    /**
+     * Retourne le twig des agences proches
+     * @Route("/D3E/loadNearbyAgencies/{cartUuid}", name="paprec_public_corp_D3E_subscription_loadNearbyAgencies", condition="request.isXmlHttpRequest()")
+     */
+    public function loadNearbyAgenciesAction(Request $request, $cartUuid) {
+        $cartManager = $this->get('paprec.cart_manager');
+        $agencyManager = $this->get('paprec_commercial.agency_manager');
+
+        $cart = $cartManager->get($cartUuid);
+        $distance  = 50;
+        $nbAgencies = $agencyManager->getNearbyAgencies($cart->getLongitude(), $cart->getLatitude(), 'D3E', $distance);
+
+        return $this->render('@PaprecPublic/Shared/partial/nearbyAgencies.html.twig', array(
+            'nbAgencies' => $nbAgencies,
+            'distance' => $distance
         ));
     }
 

@@ -4,7 +4,7 @@ namespace Paprec\CommercialBundle\Controller;
 
 use Exception;
 use Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate;
-use Paprec\CommercialBundle\Form\QuoteRequestNonCorporateEditType;
+use Paprec\CommercialBundle\Form\QuoteRequestNonCorporate\QuoteRequestNonCorporateEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

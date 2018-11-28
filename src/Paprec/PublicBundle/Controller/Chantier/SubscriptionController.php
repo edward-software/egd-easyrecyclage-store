@@ -4,9 +4,9 @@ namespace Paprec\PublicBundle\Controller\Chantier;
 
 use Paprec\CommercialBundle\Entity\ProductChantierOrder;
 use Paprec\CommercialBundle\Entity\ProductChantierQuote;
-use Paprec\CommercialBundle\Form\ProductChantierOrderDeliveryType;
-use Paprec\CommercialBundle\Form\ProductChantierOrderShortType;
-use Paprec\CommercialBundle\Form\ProductChantierQuoteShortType;
+use Paprec\CommercialBundle\Form\ProductChantierOrder\ProductChantierOrderDeliveryType;
+use Paprec\CommercialBundle\Form\ProductChantierOrder\ProductChantierOrderShortType;
+use Paprec\CommercialBundle\Form\ProductChantierQuote\ProductChantierQuoteShortType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -118,13 +118,13 @@ class SubscriptionController extends Controller
     {
         $type = $request->get('type');
         $cartManager = $this->get('paprec.cart_manager');
-        $productChantierQuoteManager = $this->get('paprec_catalog.product_chantier_quote_manager');
+        $productChantierQuoteManager = $this->get('paprec_commercial.product_chantier_quote_manager');
 
         $cart = $cartManager->get($cartUuid);
         $type = $cart->getType();
 
-        $postalCode = substr($cart->getLocation(), 0, 5);
-        $city = substr($cart->getLocation(), 5);
+        $postalCode =$cart->getPostalCode();
+        $city = $cart->getCity();
 
         // si l'utilisateur est dans "J'établis un devis" alors on créé un devis Chantier
         if ($type == 'quote') {
@@ -138,7 +138,7 @@ class SubscriptionController extends Controller
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $productChantierQuoteManager = $this->get('paprec_catalog.product_chantier_quote_manager');
+                $productChantierQuoteManager = $this->get('paprec_commercial.product_chantier_quote_manager');
 
                 $productChantierQuote = $form->getData();
                 $productChantierQuote->setQuoteStatus('Créé');
@@ -160,7 +160,7 @@ class SubscriptionController extends Controller
 
             }
         } else { // sinon on créé une commande Chantier
-            $productChantierOrderManager = $this->get('paprec_catalog.product_chantier_order_manager');
+            $productChantierOrderManager = $this->get('paprec_commercial.product_chantier_order_manager');
 
 
             $productChantierOrder = new ProductChantierOrder();
@@ -371,6 +371,24 @@ class SubscriptionController extends Controller
 
         return $this->render('@PaprecPublic/Chantier/partial/cartPartial.html.twig', array(
             'loadedCart' => $loadedCart
+        ));
+    }
+
+    /**
+     * Retourne le twig des agences proches
+     * @Route("/chantier/loadNearbyAgencies/{cartUuid}", name="paprec_public_corp_Chantier_subscription_loadNearbyAgencies", condition="request.isXmlHttpRequest()")
+     */
+    public function loadNearbyAgenciesAction(Request $request, $cartUuid) {
+        $cartManager = $this->get('paprec.cart_manager');
+        $agencyManager = $this->get('paprec_commercial.agency_manager');
+
+        $cart = $cartManager->get($cartUuid);
+        $distance  = 50;
+        $nbAgencies = $agencyManager->getNearbyAgencies($cart->getLongitude(), $cart->getLatitude(), 'CHANTIER', $distance);
+
+        return $this->render('@PaprecPublic/Shared/partial/nearbyAgencies.html.twig', array(
+            'nbAgencies' => $nbAgencies,
+            'distance' => $distance
         ));
     }
 

@@ -1,13 +1,9 @@
 <?php
 
-namespace Paprec\CommercialBundle\Form;
+namespace Paprec\CommercialBundle\Form\ProductD3EOrder;
 
-use Paprec\CommercialBundle\Entity\Agency;
 use Paprec\CommercialBundle\Entity\BusinessLine;
-use Paprec\CommercialBundle\Repository\AgencyRepository;
 use Paprec\CommercialBundle\Repository\BusinessLineRepository;
-use Paprec\UserBundle\Entity\User;
-use Paprec\UserBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -18,7 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 
-class ProductDIQuoteShortType extends AbstractType
+class ProductD3EOrderShortType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -31,13 +27,13 @@ class ProductDIQuoteShortType extends AbstractType
                 'class' => BusinessLine::class,
                 'multiple' => false,
                 'expanded' => false,
-                'placeholder' => 'Commercial.ProductDIQuote.BusinessLinePlaceholder',
+                'placeholder' => 'Commercial.ProductD3EOrder.BusinessLinePlaceholder',
                 'empty_data' => null,
                 'choice_label' => 'name',
                 'query_builder' => function (BusinessLineRepository $er) {
                     return $er->createQueryBuilder('b')
                         ->where('b.deleted IS NULL')
-                        ->andWhere('b.division = \'DI\'');
+                        ->andWhere('b.division = \'D3E\'');
                 }
             ))
             ->add('civility', ChoiceType::class, array(
@@ -59,7 +55,11 @@ class ProductDIQuoteShortType extends AbstractType
             ->add('phone', TextType::class)
             ->add('function', TextType::class, array(
                 'required' => false
-            ));
+            ))
+            ->add('terms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => new IsTrue()
+            ]);
 
     }
 
@@ -69,7 +69,7 @@ class ProductDIQuoteShortType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\ProductDIQuote'
+            'data_class' => 'Paprec\CommercialBundle\Entity\ProductD3EOrder'
         ));
     }
 
@@ -78,7 +78,7 @@ class ProductDIQuoteShortType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'paprec_commercialbundle_productdiquote';
+        return 'paprec_commercialbundle_productd3eordershort';
     }
 
 

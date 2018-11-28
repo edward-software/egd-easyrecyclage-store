@@ -4,9 +4,9 @@ namespace Paprec\CommercialBundle\Controller;
 
 use Paprec\CommercialBundle\Entity\ProductChantierQuote;
 use Paprec\CommercialBundle\Entity\ProductChantierQuoteLine;
-use Paprec\CommercialBundle\Form\ProductChantierQuoteLineAddType;
-use Paprec\CommercialBundle\Form\ProductChantierQuoteLineEditType;
-use Paprec\CommercialBundle\Form\ProductChantierQuoteType;
+use Paprec\CommercialBundle\Form\ProductChantierQuote\ProductChantierQuoteLineAddType;
+use Paprec\CommercialBundle\Form\ProductChantierQuote\ProductChantierQuoteLineEditType;
+use Paprec\CommercialBundle\Form\ProductChantierQuote\ProductChantierQuoteType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -330,7 +330,7 @@ class ProductChantierQuoteController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid() && $submitForm) {
-            $productChantierQuoteManager = $this->get('paprec_catalog.product_chantier_quote_manager');
+            $productChantierQuoteManager = $this->get('paprec_commercial.product_chantier_quote_manager');
 
             $productChantierQuoteLine = $form->getData();
             $productChantierQuoteManager->addLine($productChantierQuote, $productChantierQuoteLine);
@@ -369,7 +369,7 @@ class ProductChantierQuoteController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $productChantierQuoteManager = $this->get('paprec_catalog.product_chantier_quote_manager');
+            $productChantierQuoteManager = $this->get('paprec_commercial.product_chantier_quote_manager');
 
             $productChantierQuoteManager->editLine($productChantierQuote, $productChantierQuoteLine);
 
@@ -407,7 +407,7 @@ class ProductChantierQuoteController extends Controller
         $em->remove($productChantierQuoteLine);
         $em->flush();
 
-        $productChantierQuoteManager = $this->get('paprec_catalog.product_chantier_quote_manager');
+        $productChantierQuoteManager = $this->get('paprec_commercial.product_chantier_quote_manager');
         $total = $productChantierQuoteManager->calculateTotal($productChantierQuote);
         $productChantierQuote->setTotalAmount($total);
         $em->flush();

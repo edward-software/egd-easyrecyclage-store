@@ -1,9 +1,13 @@
 <?php
 
-namespace Paprec\CommercialBundle\Form;
+namespace Paprec\CommercialBundle\Form\Agency;
+
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,12 +25,32 @@ class AgenceType extends AbstractType
                 "expanded" => true,
                 "multiple" => true
             ))
-            ->add('address')
-            ->add('postalCode')
-            ->add('city')
+            ->add('address', TextareaType::class, array(
+                'attr' => array(
+                    'readonly' => true,
+                ),
+            ))
+            ->add('postalCode', TextType::class, array(
+                'attr' => array(
+                    'readonly' => true,
+                ),
+            ))
+            ->add('city', TextType::class, array(
+                'attr' => array(
+                    'readonly' => true,
+                ),
+            ))
             ->add('phone')
-            ->add('latitude')
-            ->add('longitude')
+            ->add('latitude', NumberType::class, array(
+                'attr' => array(
+                    'readonly' => true,
+                ),
+            ))
+            ->add('longitude', NumberType::class, array(
+                'attr' => array(
+                    'readonly' => true,
+                ),
+            ))
             ->add('isDisplayed', ChoiceType::class, array(
                 "choices" => array(
                     'Non' => 0,

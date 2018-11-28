@@ -4,9 +4,9 @@ namespace Paprec\CommercialBundle\Controller;
 
 use Paprec\CommercialBundle\Entity\ProductD3EQuote;
 use Paprec\CommercialBundle\Entity\ProductD3EQuoteLine;
-use Paprec\CommercialBundle\Form\ProductD3EQuoteLineAddType;
-use Paprec\CommercialBundle\Form\ProductD3EQuoteLineEditType;
-use Paprec\CommercialBundle\Form\ProductD3EQuoteType;
+use Paprec\CommercialBundle\Form\ProductD3EQuote\ProductD3EQuoteLineAddType;
+use Paprec\CommercialBundle\Form\ProductD3EQuote\ProductD3EQuoteLineEditType;
+use Paprec\CommercialBundle\Form\ProductD3EQuote\ProductD3EQuoteType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -326,7 +326,7 @@ class ProductD3EQuoteController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $productD3EQuoteManager = $this->get('paprec_catalog.product_d3e_quote_manager');
+            $productD3EQuoteManager = $this->get('paprec_commercial.product_d3e_quote_manager');
 
             $productD3EQuoteLine = $form->getData();
             $productD3EQuoteManager->addLine($productD3EQuote, $productD3EQuoteLine);
@@ -364,7 +364,7 @@ class ProductD3EQuoteController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $productD3EQuoteManager = $this->get('paprec_catalog.product_d3e_quote_manager');
+            $productD3EQuoteManager = $this->get('paprec_commercial.product_d3e_quote_manager');
 
             $productD3EQuoteManager->editLine($productD3EQuote, $productD3EQuoteLine);
 
@@ -402,7 +402,7 @@ class ProductD3EQuoteController extends Controller
         $em->remove($productD3EQuoteLine);
         $em->flush();
 
-        $productD3EQuoteManager = $this->get('paprec_catalog.product_d3e_quote_manager');
+        $productD3EQuoteManager = $this->get('paprec_commercial.product_d3e_quote_manager');
         $total = $productD3EQuoteManager->calculateTotal($productD3EQuote);
         $productD3EQuote->setTotalAmount($total);
         $em->flush();

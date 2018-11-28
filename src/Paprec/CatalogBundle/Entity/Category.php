@@ -413,7 +413,9 @@ class Category
     public function getProductChantierCategoriesOrdered()
     {
         $productChantierCategoriesToOrdered = $this->getProductChantierCategories()->getValues();
-        usort($productChantierCategoriesToOrdered, array($this, 'compare'));
+        if (!empty($productChantierCategoriesToOrdered)) {
+            usort($productChantierCategoriesToOrdered, array($this, 'compare'));
+        }
         $orderedItems = array();
         foreach ($productChantierCategoriesToOrdered as $orderedItem) {
             array_push($orderedItems, $orderedItem);

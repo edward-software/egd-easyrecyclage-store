@@ -1,6 +1,6 @@
 <?php
 
-namespace Paprec\CommercialBundle\Form;
+namespace Paprec\CommercialBundle\Form\ProductChantierQuote;
 
 use Paprec\CommercialBundle\Entity\Agency;
 use Paprec\CommercialBundle\Entity\BusinessLine;
@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductD3EQuoteType extends AbstractType
+class ProductChantierQuoteType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -33,7 +33,7 @@ class ProductD3EQuoteType extends AbstractType
                 'query_builder' => function (BusinessLineRepository $er) {
                     return $er->createQueryBuilder('b')
                         ->where('b.deleted IS NULL')
-                        ->andWhere('b.division = \'D3E\'');
+                        ->andWhere('b.division = \'CHANTIER\'');
                 }
             ))
             ->add('civility', ChoiceType::class, array(
@@ -91,7 +91,7 @@ class ProductD3EQuoteType extends AbstractType
                 'query_builder' => function (AgencyRepository $er) {
                     return $er->createQueryBuilder('a')
                         ->where('a.deleted IS NULL')
-                        ->andWhere('a.divisions LIKE \'%D3E%\'');
+                        ->andWhere('a.divisions LIKE \'%CHANTIER%\'');
                     ;
                 }
             ));
@@ -101,7 +101,7 @@ class ProductD3EQuoteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\ProductD3EQuote',
+            'data_class' => 'Paprec\CommercialBundle\Entity\ProductChantierQuote',
             'status' => null
         ));
     }
@@ -111,7 +111,7 @@ class ProductD3EQuoteType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'paprec_commercialbundle_productD3Equote';
+        return 'paprec_commercialbundle_productchantierquote';
     }
 
 

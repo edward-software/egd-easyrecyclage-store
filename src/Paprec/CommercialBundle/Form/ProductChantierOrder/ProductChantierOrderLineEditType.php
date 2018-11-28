@@ -1,16 +1,14 @@
 <?php
 
-namespace Paprec\CommercialBundle\Form;
+namespace Paprec\CommercialBundle\Form\ProductChantierOrder;
 
-use Paprec\CatalogBundle\Repository\ProductDIRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductDIQuoteLineEditType extends AbstractType
+class ProductChantierOrderLineEditType extends AbstractType
 {
 
     /**
@@ -31,7 +29,7 @@ class ProductDIQuoteLineEditType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\ProductDIQuoteLine'
+            'data_class' => 'Paprec\CommercialBundle\Entity\ProductChantierOrderLine'
         ));
     }
 }

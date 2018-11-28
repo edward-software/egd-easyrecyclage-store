@@ -32,7 +32,7 @@ class ProductDICategoryAddType extends AbstractType
                 'query_builder' => function (CategoryRepository $er) {
                     $subQueryBuilder = $this->productDICategoryRepo->createQueryBuilder('pc');
                     $subQuery = $subQueryBuilder->select(array('IDENTITY(pc.category)'))
-                        ->innerJoin('PaprecCatalogBundle:ProductDI', 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 'p.id = pc.productDI')
+                        ->innerJoin('PaprecCatalogBundle:ProductDIQuote', 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 'p.id = pc.productDI')
                         ->andWhere('p.id = :productId');
 
                     $queryBuilder = $er->createQueryBuilder('c');

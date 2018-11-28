@@ -5,9 +5,9 @@ namespace Paprec\CommercialBundle\Controller;
 use Paprec\CommercialBundle\Entity\ProductDIQuote;
 use Paprec\CommercialBundle\Entity\ProductDIQuoteLine;
 
-use Paprec\CommercialBundle\Form\ProductDIQuoteLineAddType;
-use Paprec\CommercialBundle\Form\ProductDIQuoteLineEditType;
-use Paprec\CommercialBundle\Form\ProductDIQuoteType;
+use Paprec\CommercialBundle\Form\ProductDIQuote\ProductDIQuoteLineAddType;
+use Paprec\CommercialBundle\Form\ProductDIQuote\ProductDIQuoteLineEditType;
+use Paprec\CommercialBundle\Form\ProductDIQuote\ProductDIQuoteType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -331,7 +331,7 @@ class ProductDIQuoteController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid() && $submitForm) {
-            $productDIQuoteManager = $this->get('paprec_catalog.product_di_quote_manager');
+            $productDIQuoteManager = $this->get('paprec_commercial.product_di_quote_manager');
 
             $productDIQuoteLine = $form->getData();
             $productDIQuoteManager->addLine($productDIQuote, $productDIQuoteLine);
@@ -370,7 +370,7 @@ class ProductDIQuoteController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $productDIQuoteManager = $this->get('paprec_catalog.product_di_quote_manager');
+            $productDIQuoteManager = $this->get('paprec_commercial.product_di_quote_manager');
 
             $productDIQuoteManager->editLine($productDIQuote, $productDIQuoteLine);
 
@@ -408,7 +408,7 @@ class ProductDIQuoteController extends Controller
         $em->remove($productDIQuoteLine);
         $em->flush();
 
-        $productDIQuoteManager = $this->get('paprec_catalog.product_di_quote_manager');
+        $productDIQuoteManager = $this->get('paprec_commercial.product_di_quote_manager');
         $total = $productDIQuoteManager->calculateTotal($productDIQuote);
         $productDIQuote->setTotalAmount($total);
         $em->flush();

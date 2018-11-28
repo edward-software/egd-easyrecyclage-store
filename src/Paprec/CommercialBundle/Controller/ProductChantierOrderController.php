@@ -5,9 +5,9 @@ namespace Paprec\CommercialBundle\Controller;
 use Exception;
 use Paprec\CommercialBundle\Entity\ProductChantierOrder;
 use Paprec\CommercialBundle\Entity\ProductChantierOrderLine;
-use Paprec\CommercialBundle\Form\ProductChantierOrderLineAddType;
-use Paprec\CommercialBundle\Form\ProductChantierOrderLineEditType;
-use Paprec\CommercialBundle\Form\ProductChantierOrderType;
+use Paprec\CommercialBundle\Form\ProductChantierOrder\ProductChantierOrderLineAddType;
+use Paprec\CommercialBundle\Form\ProductChantierOrder\ProductChantierOrderLineEditType;
+use Paprec\CommercialBundle\Form\ProductChantierOrder\ProductChantierOrderType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -337,7 +337,7 @@ class ProductChantierOrderController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid() && $submitForm) {
-            $productChantierOrderManager = $this->get('paprec_catalog.product_chantier_order_manager');
+            $productChantierOrderManager = $this->get('paprec_commercial.product_chantier_order_manager');
 
             $productChantierOrderLine = $form->getData();
             $productChantierOrderManager->addLine($productChantierOrder, $productChantierOrderLine);
@@ -376,7 +376,7 @@ class ProductChantierOrderController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $productChantierOrderManager = $this->get('paprec_catalog.product_chantier_order_manager');
+            $productChantierOrderManager = $this->get('paprec_commercial.product_chantier_order_manager');
 
             $productChantierOrderManager->editLine($productChantierOrder, $productChantierOrderLine);
 
@@ -414,7 +414,7 @@ class ProductChantierOrderController extends Controller
         $em->remove($productChantierOrderLine);
         $em->flush();
 
-        $productChantierOrderManager = $this->get('paprec_catalog.product_chantier_order_manager');
+        $productChantierOrderManager = $this->get('paprec_commercial.product_chantier_order_manager');
         $total = $productChantierOrderManager->calculateTotal($productChantierOrder);
         $productChantierOrder->setTotalAmount($total);
         $em->flush();

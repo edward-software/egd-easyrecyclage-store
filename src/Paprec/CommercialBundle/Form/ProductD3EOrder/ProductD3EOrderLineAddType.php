@@ -1,15 +1,15 @@
 <?php
 
-namespace Paprec\CommercialBundle\Form;
+namespace Paprec\CommercialBundle\Form\ProductD3EOrder;
 
+use Paprec\CatalogBundle\Repository\ProductD3ERepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductChantierQuoteLineEditType extends AbstractType
+class ProductD3EOrderLineAddType extends AbstractType
 {
 
     /**
@@ -21,6 +21,17 @@ class ProductChantierQuoteLineEditType extends AbstractType
         $builder
             ->add('quantity', IntegerType::class, array(
                 "required" => true
+            ))
+            ->add('productD3E', EntityType::class, array(
+                'class' => 'PaprecCatalogBundle:ProductD3E',
+                'query_builder' => function (ProductD3ERepository $er) {
+                    return $er->createQueryBuilder('p')
+                        ->where('p.deleted is NULL')
+                        ->orderBy('p.name', 'ASC');
+                },
+                'choice_label' => 'name',
+                'placeholder' => '',
+                'empty_data' => null,
             ));
     }
 
@@ -30,7 +41,7 @@ class ProductChantierQuoteLineEditType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\ProductChantierQuoteLine'
+            'data_class' => 'Paprec\CommercialBundle\Entity\ProductD3EOrderLine'
         ));
     }
 }

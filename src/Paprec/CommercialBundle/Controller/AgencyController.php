@@ -3,12 +3,10 @@
 namespace Paprec\CommercialBundle\Controller;
 
 use Paprec\CommercialBundle\Entity\Agency;
-use Paprec\CommercialBundle\Form\AgenceType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Paprec\CommercialBundle\Form\Agency\AgenceType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -174,6 +172,7 @@ class AgencyController extends Controller
     /**
      * @Route("/agency/add", name="paprec_commercial_agence_add")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Exception
      */
     public function addAction(Request $request)
     {

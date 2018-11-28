@@ -3,7 +3,7 @@
 namespace Paprec\PublicBundle\Controller\DI;
 
 use Paprec\CommercialBundle\Entity\ProductDIQuote;
-use Paprec\CommercialBundle\Form\ProductDIQuoteShortType;
+use Paprec\CommercialBundle\Form\ProductDIQuote\ProductDIQuoteShortType;
 use Paprec\PublicBundle\Entity\Cart;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -55,19 +55,18 @@ class SubscriptionController extends Controller
     public function step2Action(Request $request, $cartUuid)
     {
         $cartManager = $this->get('paprec.cart_manager');
-        $productDIQuoteManager = $this->get('paprec_catalog.product_di_quote_manager');
+        $productDIQuoteManager = $this->get('paprec_commercial.product_di_quote_manager');
 
         $cart = $cartManager->get($cartUuid);
 
-        $postalCode = substr($cart->getLocation(), 0, 5);
-        $city = substr($cart->getLocation(), 5);
+
 
         $productDIQuote = new productDIQuote();
-        $productDIQuote->setCity($city);
-        $productDIQuote->setPostalCode($postalCode);
+        $productDIQuote->setCity($cart->getCity());
+        $productDIQuote->setPostalCode($cart->getPostalCode());
 
 
-        $form = $this->createForm(productDIQuoteShortType::class, $productDIQuote);
+        $form = $this->createForm(ProductDIQuoteShortType::class, $productDIQuote);
 
         $form->handleRequest($request);
 
@@ -196,6 +195,25 @@ class SubscriptionController extends Controller
         return $this->render('@PaprecPublic/DI/partial/cartPartial.html.twig', array(
             'loadedCart' => $loadedCart
         ));
+    }
+
+    /**
+     * Retourne le twig des agences proches
+     * @Route("/di/loadNearbyAgencies/{cartUuid}", name="paprec_public_corp_DI_subscription_loadNearbyAgencies", condition="request.isXmlHttpRequest()")
+     */
+    public function loadNearbyAgenciesAction(Request $request, $cartUuid) {
+        $cartManager = $this->get('paprec.cart_manager');
+        $agencyManager = $this->get('paprec_commercial.agency_manager');
+
+        $cart = $cartManager->get($cartUuid);
+        $distance  = 50;
+        $nbAgencies = $agencyManager->getNearbyAgencies($cart->getLongitude(), $cart->getLatitude(), 'DI', $distance);
+
+        return $this->render('@PaprecPublic/Shared/partial/nearbyAgencies.html.twig', array(
+            'nbAgencies' => $nbAgencies,
+            'distance' => $distance
+        ));
+
     }
 
 }

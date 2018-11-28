@@ -1,17 +1,15 @@
 <?php
 
-namespace Paprec\CommercialBundle\Form;
+namespace Paprec\CommercialBundle\Form\ProductD3EQuote;
 
-use Paprec\CatalogBundle\Repository\CategoryRepository;
 use Paprec\CatalogBundle\Repository\ProductD3ERepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductD3EOrderLineAddType extends AbstractType
+class ProductD3EQuoteLineAddType extends AbstractType
 {
 
     /**
@@ -43,7 +41,7 @@ class ProductD3EOrderLineAddType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\ProductD3EOrderLine'
+            'data_class' => 'Paprec\CommercialBundle\Entity\ProductD3EQuoteLine'
         ));
     }
 }

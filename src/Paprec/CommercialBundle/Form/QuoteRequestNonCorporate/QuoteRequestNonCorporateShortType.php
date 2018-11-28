@@ -1,14 +1,7 @@
 <?php
 
-namespace Paprec\CommercialBundle\Form;
+namespace Paprec\CommercialBundle\Form\QuoteRequestNonCorporate;
 
-use Paprec\CommercialBundle\Entity\Agency;
-use Paprec\CommercialBundle\Entity\BusinessLine;
-use Paprec\CommercialBundle\Repository\AgencyRepository;
-use Paprec\CommercialBundle\Repository\BusinessLineRepository;
-use Paprec\UserBundle\Entity\User;
-use Paprec\UserBundle\Repository\UserRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -18,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class QuoteRequestNonCorporateGroupeType extends AbstractType
+class QuoteRequestNonCorporateShortType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -50,7 +43,6 @@ class QuoteRequestNonCorporateGroupeType extends AbstractType
             ->add('need', TextareaType::class, array(
                 'attr' => array('cols' => '30', 'rows' => '10')
             ))
-            ->add('locationsNumber', TextType::class)
             ->add('attachedFiles', FileType::class, array(
                 'multiple' => true,
                 'data_class' => null

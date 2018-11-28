@@ -2,24 +2,27 @@ services:
 #    paprec_commercial.example:
 #        class: Paprec\CommercialBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+  paprec_commercial.agency_manager:
+    class: Paprec\CommercialBundle\Service\AgencyManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
-  paprec_catalog.product_di_quote_manager:
+  paprec_commercial.product_di_quote_manager:
     class: Paprec\CommercialBundle\Service\ProductDIQuoteManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
-  paprec_catalog.product_chantier_quote_manager:
+  paprec_commercial.product_chantier_quote_manager:
     class: Paprec\CommercialBundle\Service\ProductChantierQuoteManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
-  paprec_catalog.product_d3e_quote_manager:
+  paprec_commercial.product_d3e_quote_manager:
     class: Paprec\CommercialBundle\Service\ProductD3EQuoteManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
-  paprec_catalog.product_chantier_order_manager:
+  paprec_commercial.product_chantier_order_manager:
     class: Paprec\CommercialBundle\Service\ProductChantierOrderManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
-  paprec_catalog.product_d3e_order_manager:
+  paprec_commercial.product_d3e_order_manager:
     class: Paprec\CommercialBundle\Service\ProductD3EOrderManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 

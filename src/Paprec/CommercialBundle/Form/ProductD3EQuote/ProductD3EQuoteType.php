@@ -1,6 +1,6 @@
 <?php
 
-namespace Paprec\CommercialBundle\Form;
+namespace Paprec\CommercialBundle\Form\ProductD3EQuote;
 
 use Paprec\CommercialBundle\Entity\Agency;
 use Paprec\CommercialBundle\Entity\BusinessLine;
@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductChantierQuoteType extends AbstractType
+class ProductD3EQuoteType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -33,7 +33,7 @@ class ProductChantierQuoteType extends AbstractType
                 'query_builder' => function (BusinessLineRepository $er) {
                     return $er->createQueryBuilder('b')
                         ->where('b.deleted IS NULL')
-                        ->andWhere('b.division = \'CHANTIER\'');
+                        ->andWhere('b.division = \'D3E\'');
                 }
             ))
             ->add('civility', ChoiceType::class, array(
@@ -91,7 +91,7 @@ class ProductChantierQuoteType extends AbstractType
                 'query_builder' => function (AgencyRepository $er) {
                     return $er->createQueryBuilder('a')
                         ->where('a.deleted IS NULL')
-                        ->andWhere('a.divisions LIKE \'%CHANTIER%\'');
+                        ->andWhere('a.divisions LIKE \'%D3E%\'');
                     ;
                 }
             ));
@@ -101,7 +101,7 @@ class ProductChantierQuoteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CommercialBundle\Entity\ProductChantierQuote',
+            'data_class' => 'Paprec\CommercialBundle\Entity\ProductD3EQuote',
             'status' => null
         ));
     }
@@ -111,7 +111,7 @@ class ProductChantierQuoteType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'paprec_commercialbundle_productchantierquote';
+        return 'paprec_commercialbundle_productD3Equote';
     }
 
 

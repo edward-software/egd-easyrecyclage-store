@@ -7,7 +7,8 @@ use Paprec\CommercialBundle\Entity\ContactUs;
 use Paprec\CommercialBundle\Entity\QuoteRequest;
 use Paprec\CommercialBundle\Form\CallBack\CallBackShortType;
 use Paprec\CommercialBundle\Form\ContactUs\ContactUsShortType;
-use Paprec\CommercialBundle\Form\QuoteRequestShortType;
+use Paprec\CommercialBundle\Form\QuoteRequest\QuoteRequestShortType;
+use Paprec\PublicBundle\Entity\Cart;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -16,73 +17,144 @@ use Symfony\Component\HttpFoundation\Request;
 class HomeController extends Controller
 {
     /**
-     * @Route("/step0", name="paprec_public_corp_home_index")
+     * @Route("/step0/{cartUuid}", defaults={"cartUuid"=null}, name="paprec_public_corp_home_index")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, $cartUuid)
     {
-        $location = $request->get('l');
-        $division = $request->get('d');
-        $frequency = $request->get('f');
-
+        $em = $this->getDoctrine()->getManager();
         $cartManager = $this->get('paprec.cart_manager');
-
-        /**
-         * step définie le prochain champ à afficher
-         * Par défaut on est à la step l (location)
-         * Quand l est définie on passe à l'étape d puis f
-         * si on choisit "Régulier", on passe en étape r
-         */
-        $step = "l";
         $divisions = $this->getParameter('paprec_divisions');
-        if (isset($location)) {
-            $step = "d";
+        $step = "l";
+
+        if (!$cartUuid) {
+            $cart = new Cart();
+            $em->persist($cart);
+            $em->flush();
+            return $this->redirectToRoute('paprec_public_corp_home_index', array(
+                'cartUuid' => $cart->getId()
+            ));
         }
-        if (isset($location) && isset($division) && !empty($division)) {
-            $step = "f";
-        }
-        if (isset($location) && isset($division) && isset($frequency) && !empty($frequency)) {
+        else {
+            $cart = $cartManager->get($cartUuid);
 
-            // On créé un Cart qui va porter les informations saisies et que l'on va passer aux SubscriptionControllers
-
-            $cart = $cartManager->add($location, $division, $frequency);
-
-
-            if ($cart->getFrequency() == 'regular') {
-                $step = "r";
-                // Si  la personne choisi "Régulier", on lui créé quand même un Cart
-                // On renvoit ce Cart au twig, ainsi la personne peut "Remplir un formulaire" et abandonner le Cart
-                // Ou bien "d'estimer son besoin en 3 minutes" et on navigue vers la step1 en passant le Cart
-                return $this->render('@PaprecPublic/Shared/Home/index.html.twig', array(
-                    'divisions' => $divisions,
-                    'step' => $step,
-                    'cart' => $cart
-                ));
-            } else {
-                switch ($cart->getDivision()) {
-                    case('DI'):
-                        return $this->redirectToRoute('paprec_public_corp_DI_subscription_step1', array(
-                            'cartUuid' => $cart->getId()
-                        ));
-                        break;
-                    case('CHANTIER'):
-                        return $this->redirectToRoute('paprec_public_corp_Chantier_subscription_step0', array(
-                            'cartUuid' => $cart->getId()
-                        ));
-                    case('D3E'):
-                        return $this->redirectToRoute('paprec_public_corp_D3E_subscription_step0', array(
-                            'cartUuid' => $cart->getId()
-                        ));
-                }
+            /**
+             * step définie le prochain champ à afficher
+             * Par défaut on est à la step l (location)
+             * Quand l est définie on passe à l'étape d puis f
+             * si on choisit "Régulier", on passe en étape r
+             */
+            $divisions = $this->getParameter('paprec_divisions');
+            if ($cart->getLocation() && $cart->getLocation() !== '') {
+                $step = "d";
             }
+            if ($cart->getDivision() && $cart->getDivision() !== '') {
+                $step = "f";
+            }
+            if ($cart->getFrequency() && $cart->getFrequency() !== '') {
 
+                // On créé un Cart qui va porter les informations saisies et que l'on va passer aux SubscriptionControllers
+
+                if ($cart->getFrequency() == 'regular') {
+                    $step = "r";
+                    // On renvoit ce Cart au twig, ainsi la personne peut "Remplir un formulaire" et abandonner le Cart
+                    // Ou bien "d'estimer son besoin en 3 minutes" et on navigue vers la step1 en passant le Cart
+                    return $this->render('@PaprecPublic/Shared/Home/index.html.twig', array(
+                        'divisions' => $divisions,
+                        'step' => $step,
+                        'cart' => $cart
+                    ));
+                } else {
+                    switch ($cart->getDivision()) {
+                        case('DI'):
+                            return $this->redirectToRoute('paprec_public_corp_DI_subscription_step1', array(
+                                'cartUuid' => $cart->getId()
+                            ));
+                            break;
+                        case('CHANTIER'):
+                            return $this->redirectToRoute('paprec_public_corp_Chantier_subscription_step0', array(
+                                'cartUuid' => $cart->getId()
+                            ));
+                        case('D3E'):
+                            return $this->redirectToRoute('paprec_public_corp_D3E_subscription_step0', array(
+                                'cartUuid' => $cart->getId()
+                            ));
+                    }
+                }
+
+            }
         }
 
         return $this->render('@PaprecPublic/Shared/Home/index.html.twig', array(
             'divisions' => $divisions,
-            'step' => $step
+            'step' => $step,
+            'cart' => $cart
+        ));
+    }
+
+    /**
+     * @Route("/addLocation/{cartUuid}/{location}/{city}/{postalCode}/{long}/{lat}", name="paprec_public_corp_home_addLocation")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
+    public function addLocationAction(Request $request, $cartUuid, $location, $city, $postalCode, $long, $lat)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $cartManager = $this->get('paprec.cart_manager');
+        $cart = $cartManager->get($cartUuid);
+
+        $cart->setLocation($location);
+        $cart->setCity($city);
+        $cart->setPostalCode($postalCode);
+        $cart->setLatitude($lat);
+        $cart->setLongitude($long);
+        $em->flush();
+
+        return $this->redirectToRoute('paprec_public_corp_home_index', array(
+            'cartUuid' => $cartUuid
+        ));
+    }
+
+    /**
+     * @Route("/addDivision/{cartUuid}/{division}", name="paprec_public_corp_home_addDivision")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
+    public function addDivisionAction(Request $request, $cartUuid, $division)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $cartManager = $this->get('paprec.cart_manager');
+        $cart = $cartManager->get($cartUuid);
+
+        $cart->setDivision($division);
+        $em->flush();
+
+        return $this->redirectToRoute('paprec_public_corp_home_index', array(
+            'cartUuid' => $cartUuid
+        ));
+    }
+
+    /**
+     * @Route("/addFrequency/{cartUuid}/{frequency}", name="paprec_public_corp_home_addFrequency")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
+    public function addFrequencyAction(Request $request, $cartUuid, $frequency)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $cartManager = $this->get('paprec.cart_manager');
+        $cart = $cartManager->get($cartUuid);
+
+        $cart->setFrequency($frequency);
+        $em->flush();
+
+        return $this->redirectToRoute('paprec_public_corp_home_index', array(
+            'cartUuid' => $cartUuid
         ));
     }
 
