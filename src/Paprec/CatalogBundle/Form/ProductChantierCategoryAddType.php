@@ -2,7 +2,6 @@
 
 namespace Paprec\CatalogBundle\Form;
 
-use Doctrine\ORM\EntityRepository;
 use Paprec\CatalogBundle\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;

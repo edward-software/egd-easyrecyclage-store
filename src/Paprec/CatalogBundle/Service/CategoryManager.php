@@ -11,10 +11,8 @@ namespace Paprec\CatalogBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
-use \Exception;
+use Exception;
 use Paprec\CatalogBundle\Entity\Category;
-use Paprec\CatalogBundle\Entity\ProductDICategory;
-use Paprec\CatalogBundle\PaprecCatalogBundle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class CategoryManager

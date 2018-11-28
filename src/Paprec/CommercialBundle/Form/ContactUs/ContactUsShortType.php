@@ -2,13 +2,6 @@
 
 namespace Paprec\CommercialBundle\Form\ContactUs;
 
-use Paprec\CommercialBundle\Entity\Agency;
-use Paprec\CommercialBundle\Entity\BusinessLine;
-use Paprec\CommercialBundle\Repository\AgencyRepository;
-use Paprec\CommercialBundle\Repository\BusinessLineRepository;
-use Paprec\UserBundle\Entity\User;
-use Paprec\UserBundle\Repository\UserRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;

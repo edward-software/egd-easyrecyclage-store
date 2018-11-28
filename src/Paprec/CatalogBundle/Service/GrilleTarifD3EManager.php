@@ -11,7 +11,6 @@ namespace Paprec\CatalogBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
-use Doctrine\ORM\ORMException;
 use Exception;
 use Paprec\CatalogBundle\Entity\GrilleTarifD3E;
 use Symfony\Component\DependencyInjection\ContainerInterface;

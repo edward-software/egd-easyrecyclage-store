@@ -3,12 +3,12 @@
 namespace Paprec\CommercialBundle\Controller;
 
 use Paprec\CommercialBundle\Entity\BusinessLine;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Paprec\CommercialBundle\Form\BusinessLine\BusinessLineType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Paprec\CommercialBundle\Form\BusinessLine\BusinessLineType;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

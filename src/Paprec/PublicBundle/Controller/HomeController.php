@@ -357,7 +357,7 @@ class HomeController extends Controller
 
         $cart = $cartManager->get($cartUuid);
         $callBack = $em->getRepository('PaprecCommercialBundle:CallBack')->find($callBackId);
-        return $this->render('@PaprecPublic/Shared/Home/callBackConfirm.html.twig', array(
+        return $this->render('@PaprecPublic/Shared/callBackConfirm.html.twig', array(
             'callBack' => $callBack,
             'cart' => $cart
         ));

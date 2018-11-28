@@ -4,7 +4,6 @@ namespace Paprec\CommercialBundle\Controller;
 
 use Paprec\CommercialBundle\Entity\ProductDIQuote;
 use Paprec\CommercialBundle\Entity\ProductDIQuoteLine;
-
 use Paprec\CommercialBundle\Form\ProductDIQuote\ProductDIQuoteLineAddType;
 use Paprec\CommercialBundle\Form\ProductDIQuote\ProductDIQuoteLineEditType;
 use Paprec\CommercialBundle\Form\ProductDIQuote\ProductDIQuoteType;

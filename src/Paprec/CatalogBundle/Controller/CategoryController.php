@@ -2,18 +2,16 @@
 
 namespace Paprec\CatalogBundle\Controller;
 
-use Goondi\ToolsBundle\Services\Logger;
 use Paprec\CatalogBundle\Entity\Category;
 use Paprec\CatalogBundle\Entity\ProductChantierCategory;
 use Paprec\CatalogBundle\Entity\ProductDICategory;
 use Paprec\CatalogBundle\Form\CategoryType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

@@ -188,6 +188,9 @@
                             }
 
                         },
+                        "drawCallback": function () {
+                            $('.dataTables_paginate > .pagination').addClass('pagination-sm');
+                        },
                         "bSortCellsTop": true,
                         dom: 'f<"ml-auto">lrti<"ml-auto">p',
                     });

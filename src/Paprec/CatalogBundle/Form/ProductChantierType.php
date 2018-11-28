@@ -3,13 +3,10 @@
 namespace Paprec\CatalogBundle\Form;
 
 use Paprec\CatalogBundle\Entity\Argument;
-use Paprec\CatalogBundle\Entity\Category;
 use Paprec\CatalogBundle\Repository\ArgumentRepository;
-use Paprec\CatalogBundle\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

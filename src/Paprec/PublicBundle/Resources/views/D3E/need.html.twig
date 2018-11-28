@@ -97,9 +97,9 @@
                             <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
                             {% for key,division in divisions %}
                                 {% if key == cart.division %}
-                                    <option value="{{ key }}" selected="selected">{{ division }}</option>
+                                    <option value="{{ key }}" selected="selected" style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
                                 {% else %}
-                                    <option value="{{ key }}">{{ division }}</option>
+                                    <option value="{{ key }}" style="color:{% if key == 'DI' %} }}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
                                 {% endif %}
                             {% endfor %}
                         </select>

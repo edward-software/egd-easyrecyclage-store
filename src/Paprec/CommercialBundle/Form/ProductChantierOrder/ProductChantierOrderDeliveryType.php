@@ -2,18 +2,12 @@
 
 namespace Paprec\CommercialBundle\Form\ProductChantierOrder;
 
-use Paprec\CommercialBundle\Entity\BusinessLine;
-use Paprec\CommercialBundle\Repository\BusinessLineRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\IsTrue;
 
 class ProductChantierOrderDeliveryType extends AbstractType
 {

@@ -2,14 +2,13 @@
 
 namespace Paprec\CatalogBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Paprec\CatalogBundle\Entity\PostalCode;
+use Paprec\CatalogBundle\Form\PostalCodeType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
-use Paprec\CatalogBundle\Entity\PostalCode;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Paprec\CatalogBundle\Form\PostalCodeType;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
