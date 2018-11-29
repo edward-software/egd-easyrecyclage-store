@@ -47,7 +47,7 @@
                                 <div class="form-group">
                                     <div class="form-label">{{ 'Catalog.Category.Division'|trans }}</div>
                                     <div class="form-content checkbox-list">
-                                        {{ form_widget(form.division) }}
+                                        {{ form_widget(form.division, {'attr': {'class': 'form-control'}) }}
                                         {{ form_errors(form.division) }}
                                     </div>
                                 </div>

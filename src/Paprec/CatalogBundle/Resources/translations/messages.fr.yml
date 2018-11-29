@@ -239,3 +239,26 @@ Catalog:
       Edit:                       Modifier la ligne
       Confirm-remove:             Etes-vous sûr de vouloir supprimer cette ligne ?
       Add:                        Ajouter une ligne
+
+    CustomizableArea:
+
+      CustomizableAreas:          Zones personnalisables
+      Date-crea:                  Date de créa.
+      Date-creation:              Date de création
+      Date-update:                Date de mise à jour
+      Informations:               Informations
+      System-informations:        Informations système
+      List:                       Liste des Zones personnalisables
+      Add:                        Ajouter une zone personnalisable
+      Export:                     Exporter les Zones personnalisables
+      Code:                       Code
+      Content:                    Contenu
+      IsDisplayed:                Affiché
+      Division:                   Division
+      View:                       Visualiser la zone personnalisable
+      Edit:                       Modifier la zone personnalisable
+      Remove:                     Supprimer la zone personnalisable
+      Save:                       Enregistrer
+      Cancel:                     Annuler
+      Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+      Confirm-remove:             Etes-vous sûr de vouloir supprimer cette zone personnalisable ?

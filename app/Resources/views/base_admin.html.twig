@@ -47,6 +47,8 @@
                                href="{{ path('paprec_catalog_argument_index') }}">{{ 'Catalog.Argument.Arguments'|trans }}</a>
                             <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_postalCode'|length) == 'paprec_catalog_postalCode' %} active{% endif %}"
                                href="{{ path('paprec_catalog_postalCode_index') }}">{{ 'Catalog.PostalCode.PostalCodes'|trans }}</a>
+                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_customizableArea'|length) == 'paprec_catalog_customizableArea' %} active{% endif %}"
+                               href="{{ path('paprec_catalog_customizableArea_index') }}">{{ 'Catalog.CustomizableArea.CustomizableAreas'|trans }}</a>
                         </div>
                     </li>
                 {% endif %}
