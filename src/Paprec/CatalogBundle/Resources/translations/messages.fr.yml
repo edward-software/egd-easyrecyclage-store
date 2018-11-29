@@ -109,6 +109,7 @@ Catalog:
         CategoriesList:             Liste des catégories
         AddCategory:                Ajouter une catégorie
         Add:                        Ajouter un produit
+        AddPicture:                 Ajouter
         Export:                     Exporter les produits
         View:                       Visualiser le produit DI
         Edit:                       Modifier le produit DI
@@ -118,7 +119,7 @@ Catalog:
         Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
         Confirm-remove:             Etes-vous sûr de vouloir supprimer ce produit ?
         Confirm-remove-picture:     Etes-vous sûr de vouloir supprimer cette photo ?
-        Confirm-set_pilote:         Etes-vous sûr de vouloir définir cette photo comme photo principale ?
+        Confirm-set_pilot:          Etes-vous sûr de vouloir définir cette photo comme photo principale ?
         Confirm-set_picture:        Etes-vous sûr de vouloir définir cette photo comme photo secondaire ?
 
     ProductDICategory:
@@ -158,6 +159,7 @@ Catalog:
       CategoriesList:             Liste des catégories
       AddCategory:                Ajouter une catégorie
       Add:                        Ajouter un produit
+      AddPicture:                 Ajouter
       Export:                     Exporter les produits
       View:                       Visualiser le produit Chantier
       Edit:                       Modifier le produit Chantier
@@ -167,7 +169,7 @@ Catalog:
       Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
       Confirm-remove:             Etes-vous sûr de vouloir supprimer ce produit ?
       Confirm-remove-picture:     Etes-vous sûr de vouloir supprimer cette photo ?
-      Confirm-set_pilote:         Etes-vous sûr de vouloir définir cette photo comme photo principale ?
+      Confirm-set_pilot:          Etes-vous sûr de vouloir définir cette photo comme photo principale ?
       Confirm-set_picture:        Etes-vous sûr de vouloir définir cette photo comme photo secondaire ?
 
 

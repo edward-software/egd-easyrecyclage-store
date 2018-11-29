@@ -468,7 +468,7 @@ class ProductChantierController extends Controller
     }
 
     /**
-     * @Route("/productChantier/setPilotePicture/{id}/{pictureID}", name="paprec_catalog_productChantier_setPilotePicture")
+     * @Route("/productChantier/setPilotPicture/{id}/{pictureID}", name="paprec_catalog_productChantier_setPilotPicture")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function setPilotPictureAction(Request $request, ProductChantier $productChantier)

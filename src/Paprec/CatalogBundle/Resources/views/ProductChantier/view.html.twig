@@ -126,6 +126,13 @@
                                     <div class="card">
                                         <div class="card-header">
                                             {{ 'Catalog.ProductChantier.Picto'|trans }}
+                                            <div class="float-right">
+                                                <button class="btn btn-sm btn-outline-primary"
+                                                        data-target="#uploadPictureModal" data-toggle="modal"
+                                                        data-type="Picto" id="openModalUploadPicture">
+                                                    <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductChantier.AddPicture'|trans }}
+                                                </button>
+                                            </div>
                                         </div>
                                         <div class="card-body">
                                             <div class="card-group">
@@ -152,8 +159,8 @@
                                                                                 data-id="{{ picture.id }}">
                                                                             <i class="fa fa-xs fa-pencil-alt"></i> {{ 'General.Edit'|trans }}
                                                                         </button>
-                                                                        <button onclick="removePicture(this)"
-                                                                                class="dropdown-item"
+                                                                        <button data-id="{{ picture.id }}"
+                                                                                class="dropdown-item removePictureButton"
                                                                                 type="button">
                                                                             <i class="fa fa-xs fa-trash"></i> {{ 'General.Remove'|trans }}
                                                                         </button>
@@ -166,17 +173,6 @@
                                                         </div>
                                                     {% endfor %}
                                                 {% endif %}
-                                                {#
-                                                    Card d'ajout d'une nouvelle photo Picto
-                                                #}
-                                                <div class="card card-sec bg-transparent border-0">
-                                                    <button class="card-img-top btn btn-sm btn-light h-100 bg-transparent border-0"
-                                                            data-target="#uploadPictureModal" data-toggle="modal"
-                                                            data-type="Picto"
-                                                            id="openModalUploadPicture">
-                                                        <i class="fa fa-xs fa-plus-circle fa-2x"></i>
-                                                    </button>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -184,10 +180,17 @@
                                 {#
                                     Affichage des photos PilotPicture
                                 #}
-                                <div class="col-md-12 no-gutters">
+                                <div class="col-md-12 mt-2 no-gutters">
                                     <div class="card">
                                         <div class="card-header">
                                             {{ 'Catalog.ProductChantier.PilotPicture'|trans }}
+                                            <div class="float-right">
+                                                <button class="btn btn-sm btn-outline-primary"
+                                                        data-target="#uploadPictureModal" data-toggle="modal"
+                                                        data-type="PilotPicture" id="openModalUploadPicture">
+                                                    <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductChantier.AddPicture'|trans }}
+                                                </button>
+                                            </div>
                                         </div>
                                         <div class="card-body">
                                             <div class="card-group">
@@ -214,12 +217,12 @@
                                                                                 data-id="{{ picture.id }}">
                                                                             <i class="fa fa-xs fa-pencil-alt"></i> {{ 'General.Edit'|trans }}
                                                                         </button>
-                                                                        <button onclick="setPicture(this)"
-                                                                                class="dropdown-item" type="button">
+                                                                        <button data-id="{{ picture.id }}"
+                                                                                class="dropdown-item setPictureButton" type="button">
                                                                             <i class="fa fa-xs fa-exchange-alt"></i> {{ 'Catalog.ProductChantier.SetSecondaryPicture'|trans }}
                                                                         </button>
-                                                                        <button onclick="removePicture(this)"
-                                                                                class="dropdown-item"
+                                                                        <button data-id="{{ picture.id }}"
+                                                                                class="dropdown-item removePictureButton"
                                                                                 type="button">
                                                                             <i class="fa fa-xs fa-trash"></i> {{ 'General.Remove'|trans }}
                                                                         </button>
@@ -232,17 +235,6 @@
                                                         </div>
                                                     {% endfor %}
                                                 {% endif %}
-                                                {#
-                                                    Card d'ajout d'une nouvelle photo PilotPicture
-                                                #}
-                                                <div class="card card-sec bg-transparent border-0">
-                                                    <button class="card-img-top btn btn-sm btn-light h-100 bg-transparent border-0"
-                                                            data-target="#uploadPictureModal" data-toggle="modal"
-                                                            data-type="PilotPicture"
-                                                            id="openModalUploadPicture">
-                                                        <i class="fa fa-xs fa-plus-circle fa-2x"></i>
-                                                    </button>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -250,10 +242,17 @@
                                 {#
                                     Affichage photo de type Picture
                                 #}
-                                <div class="col-md-12 no-gutters">
+                                <div class="col-md-12 mt-2 no-gutters">
                                     <div class="card">
                                         <div class="card-header">
                                             {{ 'Catalog.ProductChantier.Pictures'|trans }}
+                                            <div class="float-right">
+                                                <button class="btn btn-sm btn-outline-primary"
+                                                        data-target="#uploadPictureModal" data-toggle="modal"
+                                                        data-type="Picture" id="openModalUploadPicture">
+                                                    <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductChantier.AddPicture'|trans }}
+                                                </button>
+                                            </div>
                                         </div>
                                         <div class="card-body">
                                             <div class="card-group">
@@ -280,12 +279,12 @@
                                                                                 data-id="{{ picture.id }}">
                                                                             <i class="fa fa-xs fa-pencil-alt"></i> {{ 'General.Edit'|trans }}
                                                                         </button>
-                                                                        <button onclick="setPilotePicture(this)"
-                                                                                class="dropdown-item" type="button">
+                                                                        <button data-id="{{ picture.id }}"
+                                                                                class="dropdown-item setPilotPictureButton" type="button">
                                                                             <i class="fa fa-xs fa-exchange-alt"></i> {{ 'Catalog.ProductChantier.PilotPicture'|trans }}
                                                                         </button>
-                                                                        <button onclick="removePicture(this)"
-                                                                                class="dropdown-item"
+                                                                        <button data-id="{{ picture.id }}"
+                                                                                class="dropdown-item removePictureButton"
                                                                                 type="button">
                                                                             <i class="fa fa-xs fa-trash"></i> {{ 'General.Remove'|trans }}
                                                                         </button>
@@ -298,17 +297,6 @@
                                                         </div>
                                                     {% endfor %}
                                                 {% endif %}
-                                                {#
-                                                    Card d'ajout d'une nouvelle photo Picture
-                                                #}
-                                                <div class="card card-sec bg-transparent border-0">
-                                                    <button class="card-img-top btn btn-sm btn-light h-100 bg-transparent border-0"
-                                                            data-target="#uploadPictureModal" data-toggle="modal"
-                                                            data-type="Picture"
-                                                            id="openModalUploadPicture">
-                                                        <i class="fa fa-xs fa-plus-circle fa-2x"></i>
-                                                    </button>
-                                                </div>
                                             </div>
                                         </div>
                                     </div> <!-- fin de la Card affichage des Pictures -->
@@ -540,9 +528,8 @@
                 });
 
 
-                function removePicture(obj) {
-                    var picId = "";
-                    picId = obj.parentNode.previousElementSibling.id;
+                $('.removePictureButton').on('click', function () {
+                    picId = $(this).data('id');
                     bootbox.confirm("{{ 'Catalog.ProductChantier.Confirm-remove-picture'|trans }}", function (result) {
                         if (result === true) {
                             var url = "{{ path("paprec_catalog_productChantier_removePicture", {id: productChantier.id, pictureID: 'pictureTmp'}) }}";
@@ -550,25 +537,24 @@
                             $(location).attr('href', url);
                         }
                     });
-                }
+                })
+
 
                 // Change le type de la Picture en PilotPicture
-                function setPilotePicture(obj) {
-                    var picId = "";
-                    picId = obj.parentNode.previousElementSibling.id;
-                    bootbox.confirm("{{ 'Catalog.ProductChantier.Confirm-set_pilote'|trans }}", function (result) {
+                $('.setPilotPictureButton').on('click', function() {
+                    picId = $(this).data('id');
+                    bootbox.confirm("{{ 'Catalog.ProductChantier.Confirm-set_pilot'|trans }}", function (result) {
                         if (result === true) {
-                            var url = "{{ path("paprec_catalog_productChantier_setPilotePicture", {id: productChantier.id, pictureID: 'pictureTmp'}) }}";
+                            var url = "{{ path("paprec_catalog_productChantier_setPilotPicture", {id: productChantier.id, pictureID: 'pictureTmp'}) }}";
                             url = url.replace('pictureTmp', picId);
                             $(location).attr('href', url);
                         }
                     });
-                }
+                });
 
                 // Change dle type de PilotPicture en Picture
-                function setPicture(obj) {
-                    var picId = "";
-                    picId = obj.parentNode.previousElementSibling.id;
+                $('.setPictureButton').on('click', function() {
+                    picId = $(this).data('id');
                     bootbox.confirm("{{ 'Catalog.ProductChantier.Confirm-set_picture'|trans }}", function (result) {
                         if (result === true) {
                             var url = "{{ path("paprec_catalog_productChantier_setPicture", {id: productChantier.id, pictureID: 'pictureTmp'}) }}";
@@ -576,7 +562,7 @@
                             $(location).attr('href', url);
                         }
                     });
-                }
+                });
 
                 $('.catalogProductChantierCategoryRemoveButton').on('click', function () {
                     productChantierCategoryId = $(this).data('id');

@@ -456,7 +456,7 @@ class ProductDIController extends Controller
     }
 
     /**
-     * @Route("/productDI/setPilotePicture/{id}/{pictureID}", name="paprec_catalog_productDI_setPilotePicture")
+     * @Route("/productDI/setPilotPicture/{id}/{pictureID}", name="paprec_catalog_productDI_setPilotPicture")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function setPilotPictureAction(Request $request, ProductDI $productDI)
