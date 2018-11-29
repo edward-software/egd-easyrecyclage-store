@@ -520,6 +520,7 @@ class ProductChantierController extends Controller
     /**
      * @Route("/productChantier/{id}/addCategory", name="paprec_catalog_productChantier_addCategory")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws Exception
      */
     public function addCategoryAction(Request $request, ProductChantier $productChantier)
     {
@@ -547,6 +548,7 @@ class ProductChantierController extends Controller
             $productChantierCategory = $form->getData();
             $productChantierCategory->setProductChantier($productChantier);
             $productChantier->addProductChantierCategory($productChantierCategory);
+            $productChantier->setDateUpdate(new \DateTime());
             $em->flush();
 
             return $this->redirectToRoute('paprec_catalog_productChantier_view', array(

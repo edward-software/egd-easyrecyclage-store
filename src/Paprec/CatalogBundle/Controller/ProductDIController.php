@@ -508,6 +508,7 @@ class ProductDIController extends Controller
     /**
      * @Route("/productDI/{id}/addCategory", name="paprec_catalog_productDI_addCategory")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Exception
      */
     public function addCategoryAction(Request $request, ProductDI $productDI)
     {
@@ -535,6 +536,7 @@ class ProductDIController extends Controller
             $productDICategory = $form->getData();
             $productDICategory->setProductDI($productDI);
             $productDI->addProductDICategory($productDICategory);
+            $productDI->setDateUpdate(new \DateTime());
             $em->flush();
 
             return $this->redirectToRoute('paprec_catalog_productDI_view', array(

@@ -4,7 +4,6 @@ namespace Paprec\CatalogBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,9 +20,6 @@ class PictureProductType extends AbstractType
                 'attr' => array(
                     'accept' => 'image/*'
                 )
-            ))
-            ->add('save', SubmitType::class, array(
-                'attr' => array('class' => 'btn btn-primary'),
             ));
     }
 

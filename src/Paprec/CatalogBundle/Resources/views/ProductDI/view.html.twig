@@ -88,7 +88,8 @@
                                     <label class="col-form-label col-md-8">
                                         {% for argument in productDI.arguments %}
                                             {% if argument.deleted is null %}
-                                                <a href="{{ path('paprec_catalog_argument_view', {id: argument.id}) }}">{{ argument }}</a>
+                                                <a class="btn btn-sm btn-outline-primary"
+                                                   href="{{ path('paprec_catalog_argument_view', {id: argument.id}) }}">{{ argument }}</a>
                                             {% endif %}
                                         {% endfor %}
                                     </label>
@@ -98,7 +99,8 @@
                                     <label class="col-form-label col-md-8">
                                         {% for productDICategory in productDI.productDICategories %}
                                             {% if productDICategory.category.deleted is null %}
-                                                <a href="{{ path('paprec_catalog_category_view', {id: productDICategory.category.id}) }}">{{ productDICategory.category }}</a>
+                                                <a class="btn btn-sm btn-outline-primary"
+                                                   href="{{ path('paprec_catalog_category_view', {id: productDICategory.category.id}) }}">{{ productDICategory.category }}</a>
                                             {% endif %}
                                         {% endfor %}
                                     </label>
@@ -213,7 +215,8 @@
                                                                             <i class="fa fa-xs fa-pencil-alt"></i> {{ 'General.Edit'|trans }}
                                                                         </button>
                                                                         <button data-id="{{ picture.id }}"
-                                                                                class="dropdown-item setPictureButton" type="button">
+                                                                                class="dropdown-item setPictureButton"
+                                                                                type="button">
                                                                             <i class="fa fa-xs fa-exchange-alt"></i> {{ 'Catalog.ProductDI.SetSecondaryPicture'|trans }}
                                                                         </button>
                                                                         <button data-id="{{ picture.id }}"
@@ -276,7 +279,8 @@
                                                                             <i class="fa fa-xs fa-pencil-alt"></i> {{ 'General.Edit'|trans }}
                                                                         </button>
                                                                         <button data-id="{{ picture.id }}"
-                                                                                class="dropdown-item setPilotPictureButton" type="button">
+                                                                                class="dropdown-item setPilotPictureButton"
+                                                                                type="button">
                                                                             <i class="fa fa-xs fa-exchange-alt"></i> {{ 'Catalog.ProductDI.PilotPicture'|trans }}
                                                                         </button>
                                                                         <button data-id="{{ picture.id }}"
@@ -331,8 +335,10 @@
                                                         data-dismiss="modal">
                                                     {{ 'General.Cancel'|trans }}
                                                 </button>
-                                                {{ form_widget(formAddPicture.save, { 'label': 'General.Save'|trans }) }}
-
+                                                <button type="button" class="btn btn-sm btn-primary"
+                                                        id="formAddPictureSubmitButton">
+                                                    {{ 'General.Save'|trans }}
+                                                </button>
                                             </div>
                                             {{ form_rest(formAddPicture) }}
                                         </form>
@@ -369,8 +375,10 @@
                                                         data-dismiss="modal">
                                                     {{ 'General.Cancel'|trans }}
                                                 </button>
-                                                {{ form_widget(formEditPicture.save, { 'label': 'General.Save'|trans }) }}
-
+                                                <button type="button" class="btn btn-sm btn-primary"
+                                                        id="formEditPictureSubmitButton">
+                                                    {{ 'General.Save'|trans }}
+                                                </button>
                                             </div>
                                             {{ form_rest(formEditPicture) }}
                                         </form>
@@ -536,7 +544,7 @@
 
 
                 // Change le type de la Picture en PilotPicture
-                $('.setPilotPictureButton').on('click', function() {
+                $('.setPilotPictureButton').on('click', function () {
                     picId = $(this).data('id');
                     bootbox.confirm("{{ 'Catalog.ProductDI.Confirm-set_pilot'|trans }}", function (result) {
                         if (result === true) {
@@ -548,7 +556,7 @@
                 });
 
                 // Change dle type de PilotPicture en Picture
-                $('.setPictureButton').on('click', function() {
+                $('.setPictureButton').on('click', function () {
                     picId = $(this).data('id');
                     bootbox.confirm("{{ 'Catalog.ProductDI.Confirm-set_picture'|trans }}", function (result) {
                         if (result === true) {
@@ -568,6 +576,14 @@
                             $(location).attr('href', url);
                         }
                     });
+                });
+
+                $('#formAddPictureSubmitButton').on('click', function () {
+                    $('#formAddPicture').submit();
+                });
+
+                $('#formEditPictureSubmitButton').on('click', function () {
+                    $('#formEditPicture').submit();
                 });
             });
         </script>

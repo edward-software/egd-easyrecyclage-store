@@ -87,7 +87,7 @@
                                     <label class="col-form-label col-md-8">
                                         {% for argument in productChantier.arguments %}
                                             {% if argument.deleted is null %}
-                                                <a href="{{ path('paprec_catalog_argument_view', {id: argument.id}) }}">{{ argument }}</a>
+                                                <a  class="btn btn-sm btn-outline-primary" href="{{ path('paprec_catalog_argument_view', {id: argument.id}) }}">{{ argument }}</a>
                                             {% endif %}
                                         {% endfor %}
                                     </label>
@@ -97,7 +97,7 @@
                                     <label class="col-form-label col-md-8">
                                         {% for productChantierCategory in productChantier.productChantierCategories %}
                                             {% if productChantierCategory.category.deleted is null %}
-                                                <a href="{{ path('paprec_catalog_category_view', {id: productChantierCategory.category.id}) }}">{{ productChantierCategory.category }}</a>
+                                                <a  class="btn btn-sm btn-outline-primary" href="{{ path('paprec_catalog_category_view', {id: productChantierCategory.category.id}) }}">{{ productChantierCategory.category }}</a>
                                             {% endif %}
                                         {% endfor %}
                                     </label>
@@ -335,8 +335,10 @@
                                                         data-dismiss="modal">
                                                     {{ 'General.Cancel'|trans }}
                                                 </button>
-                                                {{ form_widget(formAddPicture.save, { 'label': 'General.Save'|trans }) }}
-
+                                                <button type="button" class="btn btn-sm btn-primary"
+                                                        id="formAddPictureSubmitButton">
+                                                    {{ 'General.Save'|trans }}
+                                                </button>
                                             </div>
                                             {{ form_rest(formAddPicture) }}
                                         </form>
@@ -373,8 +375,10 @@
                                                         data-dismiss="modal">
                                                     {{ 'General.Cancel'|trans }}
                                                 </button>
-                                                {{ form_widget(formEditPicture.save, { 'label': 'General.Save'|trans }) }}
-
+                                                <button type="button" class="btn btn-sm btn-primary"
+                                                        id="formEditPictureSubmitButton">
+                                                    {{ 'General.Save'|trans }}
+                                                </button>
                                             </div>
                                             {{ form_rest(formEditPicture) }}
                                         </form>
@@ -552,7 +556,7 @@
                     });
                 });
 
-                // Change dle type de PilotPicture en Picture
+                // Change le type de PilotPicture en Picture
                 $('.setPictureButton').on('click', function() {
                     picId = $(this).data('id');
                     bootbox.confirm("{{ 'Catalog.ProductChantier.Confirm-set_picture'|trans }}", function (result) {
@@ -564,6 +568,7 @@
                     });
                 });
 
+                // Suppression d'une catégorie rattachée au Produit
                 $('.catalogProductChantierCategoryRemoveButton').on('click', function () {
                     productChantierCategoryId = $(this).data('id');
                     var url = "{{ path("paprec_catalog_productChantier_removeCategory", {id: productChantier.id, productChantierCategoryId: 'productChantierCategoryIdTmp'}) }}".replace('productChantierCategoryIdTmp', productChantierCategoryId);
@@ -574,6 +579,14 @@
                         }
                     });
                 });
+
+                $('#formAddPictureSubmitButton').on('click', function () {
+                    $('#formAddPicture').submit();
+                })
+
+                $('#formEditPictureSubmitButton').on('click', function () {
+                    $('#formEditPicture').submit();
+                })
             });
 
 
