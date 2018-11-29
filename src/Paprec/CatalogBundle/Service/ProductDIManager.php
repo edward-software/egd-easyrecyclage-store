@@ -69,4 +69,20 @@ class ProductDIManager
         }
     }
 
+    public function isDeleted(ProductDI $productDI, $throwException = false)
+    {
+        $now = new \DateTime();
+
+        if ($productDI->getDeleted() !== null && $productDI->getDeleted() instanceof \DateTime && $productDI->getDeleted() < $now) {
+
+            if ($throwException) {
+                throw new EntityNotFoundException('productDINotFound');
+            }
+
+            return true;
+
+        }
+        return false;
+    }
+
 }

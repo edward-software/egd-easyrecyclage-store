@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -172,7 +173,8 @@ class ProductDIController extends Controller
         if ($productDI->getDeleted() !== null) {
             throw new NotFoundHttpException();
         }
-        foreach($this->getParameter('paprec_types_picture') as $type) {
+
+        foreach ($this->getParameter('paprec_types_picture') as $type) {
             $types[$type] = $type;
         }
 
@@ -231,9 +233,8 @@ class ProductDIController extends Controller
      */
     public function editAction(Request $request, ProductDI $productDI)
     {
-        if ($productDI->getDeleted() !== null) {
-            throw new NotFoundHttpException();
-        }
+        $productDIManager = $this->get('paprec_catalog.product_di_manager');
+        $productDIManager->isDeleted($productDI, true);
 
         $form = $this->createForm(ProductDIType::class, $productDI);
 
@@ -305,7 +306,7 @@ class ProductDIController extends Controller
                     $productDI->removePicture($picture);
                 }
 
-                $productDI->setDeleted(new \DateTime);
+                $productDI->setDeleted(new \DateTime());
                 $productDI->setIsDisplayed(false);
             }
             $em->flush();
@@ -334,10 +335,11 @@ class ProductDIController extends Controller
      * @Method("POST")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function addPictureAction(Request $request, ProductDI $productDI) {
+    public function addPictureAction(Request $request, ProductDI $productDI)
+    {
 
         $picture = new Picture();
-        foreach($this->getParameter('paprec_types_picture') as $type) {
+        foreach ($this->getParameter('paprec_types_picture') as $type) {
             $types[$type] = $type;
         }
 
@@ -348,10 +350,9 @@ class ProductDIController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $form->handleRequest($request);
-        if($form->isValid())
-        {
+        if ($form->isValid()) {
             $productDI->setDateUpdate(new \DateTime());
-            $picture =  $form->getData();
+            $picture = $form->getData();
 
             if ($picture->getPath() instanceof UploadedFile) {
                 $pic = $picture->getPath();
@@ -381,7 +382,8 @@ class ProductDIController extends Controller
      * @Method("POST")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editPictureAction(Request $request, ProductDI $productDI) {
+    public function editPictureAction(Request $request, ProductDI $productDI)
+    {
 
         $em = $this->getDoctrine()->getManager();
         $pictureID = $request->get('pictureID');
@@ -390,7 +392,7 @@ class ProductDIController extends Controller
 
         $em = $this->getDoctrine()->getEntityManager();
 
-        foreach($this->getParameter('paprec_types_picture') as $type) {
+        foreach ($this->getParameter('paprec_types_picture') as $type) {
             $types[$type] = $type;
         }
 
@@ -400,10 +402,9 @@ class ProductDIController extends Controller
 
 
         $form->handleRequest($request);
-        if($form->isValid())
-        {
+        if ($form->isValid()) {
             $productDI->setDateUpdate(new \DateTime());
-            $picture =  $form->getData();
+            $picture = $form->getData();
 
             if ($picture->getPath() instanceof UploadedFile) {
                 $pic = $picture->getPath();
@@ -439,7 +440,7 @@ class ProductDIController extends Controller
         $pictureID = $request->get('pictureID');
 
         $pictures = $productDI->getPictures();
-        foreach($pictures as $picture) {
+        foreach ($pictures as $picture) {
             if ($picture->getId() == $pictureID) {
                 $productDI->setDateUpdate(new \DateTime());
                 $this->removeFile($this->getParameter('paprec_catalog.product.di.picto_path') . '/' . $picture->getPath());
@@ -455,9 +456,9 @@ class ProductDIController extends Controller
     }
 
     /**
- * @Route("/productDI/setPilotePicture/{id}/{pictureID}", name="paprec_catalog_productDI_setPilotePicture")
- * @Security("has_role('ROLE_ADMIN')")
- */
+     * @Route("/productDI/setPilotePicture/{id}/{pictureID}", name="paprec_catalog_productDI_setPilotePicture")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
     public function setPilotPictureAction(Request $request, ProductDI $productDI)
     {
 
@@ -465,7 +466,7 @@ class ProductDIController extends Controller
 
         $pictureID = $request->get('pictureID');
         $pictures = $productDI->getPictures();
-        foreach($pictures as $picture) {
+        foreach ($pictures as $picture) {
             if ($picture->getId() == $pictureID) {
                 $productDI->setDateUpdate(new \DateTime());
                 $picture->setType('PilotPicture');
@@ -489,7 +490,7 @@ class ProductDIController extends Controller
 
         $pictureID = $request->get('pictureID');
         $pictures = $productDI->getPictures();
-        foreach($pictures as $picture) {
+        foreach ($pictures as $picture) {
             if ($picture->getId() == $pictureID) {
                 $productDI->setDateUpdate(new \DateTime());
                 $picture->setType('Picture');

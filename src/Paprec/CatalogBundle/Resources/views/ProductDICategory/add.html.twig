@@ -1,14 +1,14 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-    {{ 'Catalog.ProductDIQuote.Add'|trans }}
+    {{ 'Catalog.ProductDI.Add'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'Catalog.ProductDIQuote.ProductDIs'|trans }}
+    {{ 'Catalog.ProductDI.ProductDIs'|trans }}
 {% endblock %}
 
 {% block main_content %}
@@ -19,14 +19,14 @@
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductDIQuote.AddCategory'|trans }}
+                        <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductDI.AddCategory'|trans }}
                         <div class="float-right">
                             <a href="javascript:void(0);"
                                class="btn btn-sm btn-success catalog-productDICategoryLine-save-button"><i
-                                        class="fa fa-xs fa-check"></i> {{ 'Catalog.ProductDIQuote.Save'|trans }}</a>
+                                        class="fa fa-xs fa-check"></i> {{ 'Catalog.ProductDI.Save'|trans }}</a>
                             <a href="javascript:void(0);"
                                class="btn btn-sm btn-danger catalog-productDICategoryLine-cancel-button"><i
-                                        class="fa fa-xs fa-close"></i> {{ 'Catalog.ProductDIQuote.Cancel'|trans }}</a>
+                                        class="fa fa-xs fa-close"></i> {{ 'Catalog.ProductDI.Cancel'|trans }}</a>
                         </div>
                     </h4>
                 </div>
@@ -34,7 +34,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">{{ 'Catalog.ProductDIQuote.Informations'|trans }}</h5>
+                                <h5 class="card-title">{{ 'Catalog.ProductDI.Informations'|trans }}</h5>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
@@ -60,10 +60,10 @@
                 <div class="card-footer">
                     <div class="float-right">
                         <a href="javascript:void(0);" class="btn btn-sm btn-success catalog-productDICategoryLine-save-button"><i
-                                    class="fa fa-xs fa-check"></i> {{ 'Catalog.ProductDIQuote.Save'|trans }}</a>
+                                    class="fa fa-xs fa-check"></i> {{ 'Catalog.ProductDI.Save'|trans }}</a>
                         <a href="javascript:void(0);"
                            class="btn btn-sm btn-danger catalog-productDICategoryLine-cancel-button"><i
-                                    class="fa fa-xs fa-close"></i> {{ 'Catalog.ProductDIQuote.Cancel'|trans }}</a>
+                                    class="fa fa-xs fa-close"></i> {{ 'Catalog.ProductDI.Cancel'|trans }}</a>
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
 
                 var url = "{{ path("paprec_catalog_productDI_view", { id: productDI.id }) }}";
 
-                bootbox.confirm("{{ 'Catalog.ProductDIQuote.Confirm-cancel'|trans }}", function (result) {
+                bootbox.confirm("{{ 'Catalog.ProductDI.Confirm-cancel'|trans }}", function (result) {
                     if (result === true) {
                         $(location).attr('href', url);
                     }

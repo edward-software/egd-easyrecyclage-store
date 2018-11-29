@@ -27,7 +27,8 @@
     "datatables.net-rowreorder-bs4": "^1.2.5",
     "jquery-sortable": "^0.9.13",
     "jquery-ui": "^1.12.1",
-    "jQuery-contextMenu": "^2.2.3"
+    "jQuery-contextMenu": "^2.2.3",
+    "bootbox.js": "bootbox#^4.4.0"
   },
   "resolutions": {
     "jquery": "^3.3.1"

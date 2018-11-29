@@ -48,6 +48,10 @@ class CartManager
                 throw new EntityNotFoundException('cartNotFound');
             }
 
+            /**
+             * TODO : gérer le isDisabled
+             */
+
             return $cart;
 
         } catch (Exception $e) {
@@ -72,6 +76,10 @@ class CartManager
             $cart->setDivision($division);
             $cart->setLocation($location);
             $cart->setFrequency($frequency);
+
+            /**
+             * TODO : Intégrer la date isDisabled directement pour dans "6 mois" (à mettre en parametre, en jour)
+             */
 
             $this->em->persist($cart);
             $this->em->flush();
@@ -268,6 +276,12 @@ class CartManager
         $categoryManager = $this->container->get('paprec_catalog.category_manager');
 
 
+        /**
+         * TODO : gérer la somme du panier dans une autre méthode :
+         * calcule en fonction de la division, du code postal, etc ...
+         */
+
+
         // on récupère les products ajoutés au cart
         $productsCategories = $cart->getContent();
         $loadedCart = array();
@@ -283,7 +297,9 @@ class CartManager
                         'category' => $category
                     )
                 );
-                $loadedCart['sum'] += $productDICategory->getUnitPrice() * $productsCategory['qtty'];
+                if($productDICategory !== null) {
+                    $loadedCart['sum'] += $productDICategory->getUnitPrice() * $productsCategory['qtty'];
+                }
             }
         } else {
             return $loadedCart;
@@ -300,6 +316,10 @@ class CartManager
         $productChantierManager = $this->container->get('paprec_catalog.product_chantier_manager');
         $categoryManager = $this->container->get('paprec_catalog.category_manager');
 
+        /**
+         * TODO : gérer la somme du panier dans une autre méthode :
+         * calcule en fonction de la division, du code postal, etc ...
+         */
 
         // on récupère les products ajoutés au cart
         $productsCategories = $cart->getContent();
@@ -334,6 +354,10 @@ class CartManager
         $productChantierManager = $this->container->get('paprec_catalog.product_D3E_manager');
         $grilleTarifD3EManager = $this->container->get('paprec_catalog.grille_tarif_d3e_manager');
 
+        /**
+         * TODO : gérer la somme du panier dans une autre méthode :
+         * calcule en fonction de la division, du code postal, etc ...
+         */
 
         // on récupère les products ajoutés au cart
         $products = $cart->getContent();
