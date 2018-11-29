@@ -481,7 +481,7 @@ class ProductChantierController extends Controller
         foreach($pictures as $picture) {
             if ($picture->getId() == $pictureID) {
                 $productChantier->setDateUpdate(new \DateTime());
-                $picture->setType('PilotPicture');
+                $picture->setType('PILOTPICTURE');
                 continue;
             }
         }
@@ -505,7 +505,7 @@ class ProductChantierController extends Controller
         foreach($pictures as $picture) {
             if ($picture->getId() == $pictureID) {
                 $productChantier->setDateUpdate(new \DateTime());
-                $picture->setType('Picture');
+                $picture->setType('PICTURE');
                 continue;
             }
         }

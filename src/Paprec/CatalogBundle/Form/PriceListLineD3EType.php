@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GrilleTarifLigneD3EType extends AbstractType
+class PriceListLineD3EType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -44,7 +44,7 @@ class GrilleTarifLigneD3EType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E'
+            'data_class' => 'Paprec\CatalogBundle\Entity\PriceListLineD3E'
         ));
     }
 
@@ -53,7 +53,7 @@ class GrilleTarifLigneD3EType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'paprec_catalogbundle_grilletarifligned3e';
+        return 'paprec_catalogbundle_pricelistlined3e';
     }
 
 

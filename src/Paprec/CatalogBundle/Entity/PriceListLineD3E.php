@@ -7,12 +7,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * GrilleTarifLigneD3E
+ * PriceListLineD3E
  *
- * @ORM\Table(name="grilleTarifLigneD3Es")
- * @ORM\Entity(repositoryClass="Paprec\CatalogBundle\Repository\GrilleTarifLigneD3ERepository")
+ * @ORM\Table(name="priceListLineD3Es")
+ * @ORM\Entity(repositoryClass="Paprec\CatalogBundle\Repository\PriceListLineD3ERepository")
  */
-class GrilleTarifLigneD3E
+class PriceListLineD3E
 {
     /**
      * @var int
@@ -60,12 +60,12 @@ class GrilleTarifLigneD3E
     private $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\GrilleTarifD3E", inversedBy="grilleTarifLigneD3Es")
+     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\PriceListD3E", inversedBy="priceListLineD3Es")
      */
-    private $grilleTarifD3E;
+    private $priceListD3E;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agency", inversedBy="grilleTarifLigneD3Es")
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\Agency", inversedBy="priceListLineD3Es")
      */
     private $agency;
 
@@ -79,12 +79,14 @@ class GrilleTarifLigneD3E
         return $this->id;
     }
 
+
+
     /**
      * Set postalCodes.
      *
      * @param string $postalCodes
      *
-     * @return GrilleTarifLigneD3E
+     * @return PriceListLineD3E
      */
     public function setPostalCodes($postalCodes)
     {
@@ -108,7 +110,7 @@ class GrilleTarifLigneD3E
      *
      * @param int $minQuantity
      *
-     * @return GrilleTarifLigneD3E
+     * @return PriceListLineD3E
      */
     public function setMinQuantity($minQuantity)
     {
@@ -132,7 +134,7 @@ class GrilleTarifLigneD3E
      *
      * @param int $maxQuantity
      *
-     * @return GrilleTarifLigneD3E
+     * @return PriceListLineD3E
      */
     public function setMaxQuantity($maxQuantity)
     {
@@ -156,7 +158,7 @@ class GrilleTarifLigneD3E
      *
      * @param float $price
      *
-     * @return GrilleTarifLigneD3E
+     * @return PriceListLineD3E
      */
     public function setPrice($price)
     {
@@ -176,35 +178,35 @@ class GrilleTarifLigneD3E
     }
 
     /**
-     * Set grilleTarifD3E.
+     * Set priceListD3E.
      *
-     * @param \Paprec\CatalogBundle\Entity\GrilleTarifD3E|null $grilleTarifD3E
+     * @param \Paprec\CatalogBundle\Entity\PriceListD3E|null $priceListD3E
      *
-     * @return GrilleTarifLigneD3E
+     * @return PriceListLineD3E
      */
-    public function setGrilleTarifD3E(\Paprec\CatalogBundle\Entity\GrilleTarifD3E $grilleTarifD3E = null)
+    public function setPriceListD3E(\Paprec\CatalogBundle\Entity\PriceListD3E $priceListD3E = null)
     {
-        $this->grilleTarifD3E = $grilleTarifD3E;
+        $this->priceListD3E = $priceListD3E;
 
         return $this;
     }
 
     /**
-     * Get grilleTarifD3E.
+     * Get priceListD3E.
      *
-     * @return \Paprec\CatalogBundle\Entity\GrilleTarifD3E|null
+     * @return \Paprec\CatalogBundle\Entity\PriceListD3E|null
      */
-    public function getGrilleTarifD3E()
+    public function getPriceListD3E()
     {
-        return $this->grilleTarifD3E;
+        return $this->priceListD3E;
     }
 
     /**
      * Set agency.
      *
-     * @param \Paprec\CommercialBundle\Entity\Agency|null $agence
+     * @param \Paprec\CommercialBundle\Entity\Agency|null $agency
      *
-     * @return GrilleTarifLigneD3E
+     * @return PriceListLineD3E
      */
     public function setAgency(\Paprec\CommercialBundle\Entity\Agency $agency = null)
     {

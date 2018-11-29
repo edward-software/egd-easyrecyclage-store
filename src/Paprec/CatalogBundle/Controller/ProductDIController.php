@@ -469,7 +469,7 @@ class ProductDIController extends Controller
         foreach ($pictures as $picture) {
             if ($picture->getId() == $pictureID) {
                 $productDI->setDateUpdate(new \DateTime());
-                $picture->setType('PilotPicture');
+                $picture->setType('PILOTPICTURE');
                 continue;
             }
         }
@@ -493,7 +493,7 @@ class ProductDIController extends Controller
         foreach ($pictures as $picture) {
             if ($picture->getId() == $pictureID) {
                 $productDI->setDateUpdate(new \DateTime());
-                $picture->setType('Picture');
+                $picture->setType('PICTURE');
                 continue;
             }
         }

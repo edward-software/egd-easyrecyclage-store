@@ -123,9 +123,9 @@ class Agency
      *  RELATIONS
      * ########################## */
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E", mappedBy="agency", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\PriceListLineD3E", mappedBy="agency", cascade={"all"})
      */
-    private $grilleTarifLigneD3Es;
+    private $priceListLineD3Es;
 
     /**
      * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductDIQuote", mappedBy="agency")
@@ -469,41 +469,6 @@ class Agency
         return $this->divisions;
     }
 
-    /**
-     * Add grilleTarifLigneD3E.
-     *
-     * @param \Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E $grilleTarifLigneD3E
-     *
-     * @return Agency
-     */
-    public function addGrilleTarifLigneD3E(\Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E $grilleTarifLigneD3E)
-    {
-        $this->grilleTarifLigneD3Es[] = $grilleTarifLigneD3E;
-
-        return $this;
-    }
-
-    /**
-     * Remove grilleTarifLigneD3E.
-     *
-     * @param \Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E $grilleTarifLigneD3E
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeGrilleTarifLigneD3E(\Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E $grilleTarifLigneD3E)
-    {
-        return $this->grilleTarifLigneD3Es->removeElement($grilleTarifLigneD3E);
-    }
-
-    /**
-     * Get grilleTarifLigneD3Es.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGrilleTarifLigneD3Es()
-    {
-        return $this->grilleTarifLigneD3Es;
-    }
 
     /**
      * Add productDIQuote.
@@ -683,5 +648,41 @@ class Agency
     public function getQuoteRequestNonCorporates()
     {
         return $this->quoteRequestNonCorporates;
+    }
+
+    /**
+     * Add priceListLineD3E.
+     *
+     * @param \Paprec\CatalogBundle\Entity\PriceListLineD3E $priceListLineD3E
+     *
+     * @return Agency
+     */
+    public function addPriceListLineD3E(\Paprec\CatalogBundle\Entity\PriceListLineD3E $priceListLineD3E)
+    {
+        $this->priceListLineD3Es[] = $priceListLineD3E;
+
+        return $this;
+    }
+
+    /**
+     * Remove priceListLineD3E.
+     *
+     * @param \Paprec\CatalogBundle\Entity\PriceListLineD3E $priceListLineD3E
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removePriceListLineD3E(\Paprec\CatalogBundle\Entity\PriceListLineD3E $priceListLineD3E)
+    {
+        return $this->priceListLineD3Es->removeElement($priceListLineD3E);
+    }
+
+    /**
+     * Get priceListLineD3Es.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPriceListLineD3Es()
+    {
+        return $this->priceListLineD3Es;
     }
 }

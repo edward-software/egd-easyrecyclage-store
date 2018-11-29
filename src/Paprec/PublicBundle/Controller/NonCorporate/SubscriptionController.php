@@ -29,7 +29,7 @@ class SubscriptionController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $quoteRequestNonCorporate = $form->getData();
-            $quoteRequestNonCorporate->setQuoteStatus('Créé');
+            $quoteRequestNonCorporate->setQuoteStatus('CREATED');
             $quoteRequestNonCorporate->setCustomerType('Groupe et Réseau');
 
             $files = array();
@@ -90,7 +90,7 @@ class SubscriptionController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $quoteRequestNonCorporate = $form->getData();
-            $quoteRequestNonCorporate->setQuoteStatus('Créé');
+            $quoteRequestNonCorporate->setQuoteStatus('CREATED');
             $quoteRequestNonCorporate->setCustomerType('Collectivité');
 
             $files = array();
@@ -151,7 +151,7 @@ class SubscriptionController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $quoteRequestNonCorporate = $form->getData();
-            $quoteRequestNonCorporate->setQuoteStatus('Créé');
+            $quoteRequestNonCorporate->setQuoteStatus('CREATED');
             $quoteRequestNonCorporate->setCustomerType('Particulier');
 
             $files = array();

@@ -1,7 +1,7 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-    {{ 'Catalog.GrilleTarifD3E.GrilleTarifD3Es'|trans }}
+    {{ 'Catalog.PriceListD3E.PriceListD3Es'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block content_title %}
-    {{ 'Catalog.GrilleTarifD3E.GrilleTarifD3Es'|trans }}
+    {{ 'Catalog.PriceListD3E.PriceListD3Es'|trans }}
 {% endblock %}
 
 {% block main_content %}
@@ -24,26 +24,26 @@
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <i class="fa fa-xs fa-list"></i> {{ 'Catalog.GrilleTarifD3E.List'|trans }}
+                        <i class="fa fa-xs fa-list"></i> {{ 'Catalog.PriceListD3E.List'|trans }}
                         <div class="float-right">
-                            <a href="{{ path('paprec_catalog_grilleTarifD3E_add') }}" class="btn btn-sm btn-outline-primary">
-                                <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.GrilleTarifD3E.Add'|trans }}
+                            <a href="{{ path('paprec_catalog_priceListD3E_add') }}" class="btn btn-sm btn-outline-primary">
+                                <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.PriceListD3E.Add'|trans }}
                             </a>
-                            <a href="{{ path('paprec_catalog_grilleTarifD3E_export') }}" class="btn btn-sm btn-primary ">
-                                <i class="fa fa-xs fa-file-excel"></i> {{ 'Catalog.GrilleTarifD3E.Export'|trans }}
+                            <a href="{{ path('paprec_catalog_priceListD3E_export') }}" class="btn btn-sm btn-primary ">
+                                <i class="fa fa-xs fa-file-excel"></i> {{ 'Catalog.PriceListD3E.Export'|trans }}
                             </a>
                         </div>
                     </h4>
                 </div>
 
                 <div class="card-body">
-                    <table id="grilleTarifD3EsListDatatable" class="table table-striped table-bordered table-hover"
+                    <table id="priceListD3EsListDatatable" class="table table-striped table-bordered table-hover"
                            cellpadding="0" cellspacing="0" border="0" width="100%">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ 'Catalog.GrilleTarifD3E.Name'|trans }}</th>
-                            <th>{{ 'Catalog.GrilleTarifD3E.Date-crea'|trans }}</th>
+                            <th>{{ 'Catalog.PriceListD3E.Name'|trans }}</th>
+                            <th>{{ 'Catalog.PriceListD3E.Date-crea'|trans }}</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -78,7 +78,7 @@
     <script>
         $(function () {
 
-            var grilleTarifD3EList = $('#grilleTarifD3EsListDatatable').DataTable({
+            var priceListD3EList = $('#priceListD3EsListDatatable').DataTable({
                 "language": {
                     "lengthMenu": "{{ 'General.Datatable.Records-per-page'|trans }}",
                     "zeroRecords": "{{ 'General.Datatable.Nothing-found'|trans }}",
@@ -102,7 +102,7 @@
                                 $.each(dt.rows({selected: true}).data(), function () {
                                     rowIds.push(this.id);
                                 });
-                                var url = "{{ path("paprec_catalog_grilleTarifD3E_removeMany", {ids: '0000'}) }}".replace('0000', rowIds.join(','));
+                                var url = "{{ path("paprec_catalog_priceListD3E_removeMany", {ids: '0000'}) }}".replace('0000', rowIds.join(','));
 
                                 bootbox.confirm("{{ 'General.Confirm-remove'|trans }}", function (result) {
                                     if (result === true) {
@@ -118,7 +118,7 @@
                 "serverSide": true,
                 "lengthMenu": [[5, 10, 20, 50], [5, 10, 20, 50]],
                 "iDisplayLength": 20,
-                "ajax": "{{ path('paprec_catalog_grilleTarifD3E_loadList') }}",
+                "ajax": "{{ path('paprec_catalog_priceListD3E_loadList') }}",
                 "columns": [
                     {"data": "id"},
                     {"data": "name"},
@@ -132,16 +132,16 @@
                 },
                 "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 
-                    viewUrl = "{{ path('paprec_catalog_grilleTarifD3E_view', {id: '0000'}) }}".replace('0000', aData['id']);
-                    editUrl = "{{ path('paprec_catalog_grilleTarifD3E_edit', {id: '0000'}) }}".replace('0000', aData['id']);
+                    viewUrl = "{{ path('paprec_catalog_priceListD3E_view', {id: '0000'}) }}".replace('0000', aData['id']);
+                    editUrl = "{{ path('paprec_catalog_priceListD3E_edit', {id: '0000'}) }}".replace('0000', aData['id']);
 
                     $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-sm btn-primary btn-sm"><i class="fa fa-xs fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-sm btn-warning btn-sm"><i class="fa fa-xs fa-edit"></i></a>');
 
                 },
             });
 
-            $('#grilleTarifD3EsListDatatable tbody').on('dblclick', 'tr', function (event) {
-                url = "{{ path('paprec_catalog_grilleTarifD3E_view', {id: '0000'}) }}".replace('0000', $(this).attr('id').replace('row_', ''));
+            $('#priceListD3EsListDatatable tbody').on('dblclick', 'tr', function (event) {
+                url = "{{ path('paprec_catalog_priceListD3E_view', {id: '0000'}) }}".replace('0000', $(this).attr('id').replace('row_', ''));
                 $(location).attr('href', url);
             });
 

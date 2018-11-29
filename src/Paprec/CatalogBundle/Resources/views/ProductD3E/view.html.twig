@@ -96,10 +96,10 @@
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.GrilleTarifD3E'|trans }}</label>
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.PriceListD3E'|trans }}</label>
                                     <label class="col-form-label col-md-7">
-                                        {% if productD3E.grilleTarifD3E and productD3E.grilleTarifD3E.deleted is null %}
-                                            <a href="{{ path('paprec_catalog_grilleTarifD3E_view', {id: productD3E.grilleTarifD3E.id}) }}">{{ productD3E.grilleTarifD3E }}</a>
+                                        {% if productD3E.priceListD3E and productD3E.priceListD3E.deleted is null %}
+                                            <a href="{{ path('paprec_catalog_priceListD3E_view', {id: productD3E.priceListD3E.id}) }}">{{ productD3E.priceListD3E }}</a>
                                         {% endif %}
                                     </label>
                                 </div>

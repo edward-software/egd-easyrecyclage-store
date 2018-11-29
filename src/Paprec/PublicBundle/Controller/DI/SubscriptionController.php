@@ -76,7 +76,7 @@ class SubscriptionController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $productDIQuote = $form->getData();
-            $productDIQuote->setQuoteStatus('Créé');
+            $productDIQuote->setQuoteStatus('CREATED');
             $productDIQuote->setFrequency($cart->getFrequency());
 
             $em = $this->getDoctrine()->getManager();

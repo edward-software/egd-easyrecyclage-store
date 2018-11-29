@@ -147,7 +147,7 @@ class SubscriptionController extends Controller
                 $productChantierQuoteManager = $this->get('paprec_commercial.product_chantier_quote_manager');
 
                 $productChantierQuote = $form->getData();
-                $productChantierQuote->setQuoteStatus('Créé');
+                $productChantierQuote->setQuoteStatus('CREATED');
                 $productChantierQuote->setFrequency($cart->getFrequency());
 
                 $em = $this->getDoctrine()->getManager();
@@ -180,7 +180,7 @@ class SubscriptionController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
 
                 $productChantierOrder = $form->getData();
-                $productChantierOrder->setOrderStatus('Créée');
+                $productChantierOrder->setOrderStatus('CREATED');
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($productChantierOrder);

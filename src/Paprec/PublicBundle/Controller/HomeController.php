@@ -189,7 +189,7 @@ class HomeController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $quoteRequest = $form->getData();
-            $quoteRequest->setQuoteStatus('Créé');
+            $quoteRequest->setQuoteStatus('CREATED');
             $quoteRequest->setFrequency($cart->getFrequency());
             $quoteRequest->setDivision($cart->getDivision());
             $quoteRequest->setPostalCode($cart->getPostalCode());
@@ -258,7 +258,7 @@ class HomeController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $contactUs = $form->getData();
-            $contactUs->setTreatmentStatus('Créé');
+            $contactUs->setTreatmentStatus('CREATED');
             $contactUs->setDivision($cart->getDivision());
             $contactUs->setCartContent($cart->getContent());
 
@@ -326,7 +326,7 @@ class HomeController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $callBack = $form->getData();
-            $callBack->setTreatmentStatus('Créé');
+            $callBack->setTreatmentStatus('CREATED');
             $callBack->setCartContent($cart->getContent());
 
 

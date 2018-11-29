@@ -22,9 +22,9 @@
                     <h4>
                         <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductChantierQuote.Add'|trans }}
                         <div class="float-right">
-                            <a href="javascript:void(0);" class="btn btn-sm btn-success catalog-grilleTarifD3E-save-button"><i
+                            <a href="javascript:void(0);" class="btn btn-sm btn-success catalog-productChantierQuoteLine-save-button"><i
                                         class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductChantierQuote.Save'|trans }}</a>
-                            <a href="javascript:void(0);" class="btn btn-sm btn-danger catalog-grilleTarifD3E-cancel-button"><i
+                            <a href="javascript:void(0);" class="btn btn-sm btn-danger catalog-productChantierQuoteLine-cancel-button"><i
                                         class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductChantierQuote.Cancel'|trans }}</a>
                         </div>
                     </h4>
@@ -50,9 +50,9 @@
 
                 <div class="card-footer">
                     <div class="float-right">
-                        <a href="javascript:void(0);" class="btn btn-sm btn-success catalog-grilleTarifD3E-save-button"><i
+                        <a href="javascript:void(0);" class="btn btn-sm btn-success catalog-productChantierQuoteLine-save-button"><i
                                     class="fa fa-xs fa-check"></i> {{ 'Commercial.ProductChantierQuote.Save'|trans }}</a>
-                        <a href="javascript:void(0);" class="btn btn-sm btn-danger catalog-grilleTarifD3E-cancel-button"><i
+                        <a href="javascript:void(0);" class="btn btn-sm btn-danger catalog-productChantierQuoteLine-cancel-button"><i
                                     class="fa fa-xs fa-close"></i> {{ 'Commercial.ProductChantierQuote.Cancel'|trans }}</a>
                     </div>
                 </div>
@@ -71,12 +71,12 @@
     <script>
         $(function () {
 
-            $('.catalog-grilleTarifD3E-save-button').on('click', function () {
+            $('.catalog-productChantierQuoteLine-save-button').on('click', function () {
                 $('#catalogProductChantierQuoteForm').submit();
             });
 
 
-            $('.catalog-grilleTarifD3E-cancel-button').on('click', function () {
+            $('.catalog-productChantierQuoteLine-cancel-button').on('click', function () {
 
                 var url = "{{ path("paprec_commercial_productChantierQuote_view", { id: productChantierQuote.id }) }}";
 

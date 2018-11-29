@@ -1,40 +1,40 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-    {{ 'Catalog.GrilleTarifD3E.Add'|trans }}
+    {{ 'Catalog.PriceListD3E.Add'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'Catalog.GrilleTarifD3E.GrilleTarifD3Es'|trans }}
+    {{ 'Catalog.PriceListD3E.PriceListD3Es'|trans }}
 {% endblock %}
 
 {% block main_content %}
 
-<form id="formEditGrilleTarifLigneD3E" name="formEditGrilleTarifLigneD3E"
+<form id="formEditPriceListLineD3E" name="formEditPriceListLineD3E"
       action="" method="post">
     <div class="col-md-12">
         <!-- BOX -->
         <div class="card">
             <div class="card-header">
                 <h4>
-                    <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.GrilleTarifLigneD3E.Edit'|trans }}
+                    <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.PriceListLineD3E.Edit'|trans }}
                     <div class="float-right">
                         <a href="javascript:void(0);"
-                           class="btn btn-sm btn-success catalog-grilleTarifD3ELine-save-button"><i
-                                    class="fa fa-xs fa-check"></i> {{ 'Catalog.GrilleTarifD3E.Save'|trans }}</a>
+                           class="btn btn-sm btn-success catalog-priceListLineD3Es-save-button"><i
+                                    class="fa fa-xs fa-check"></i> {{ 'Catalog.PriceListD3E.Save'|trans }}</a>
                         <a href="javascript:void(0);"
-                           class="btn btn-sm btn-danger catalog-grilleTarifD3ELine-cancel-button"><i
-                                    class="fa fa-xs fa-close"></i> {{ 'Catalog.GrilleTarifD3E.Cancel'|trans }}</a>
+                           class="btn btn-sm btn-danger catalog-priceListLineD3Es-cancel-button"><i
+                                    class="fa fa-xs fa-close"></i> {{ 'Catalog.PriceListD3E.Cancel'|trans }}</a>
                     </div>
                 </h4>
             </div>
             <div class="card-body">
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.PostalCodes'|trans }}</div>
+                        <div class="form-label">{{ 'Catalog.PriceListLineD3E.PostalCodes'|trans }}</div>
                         <div class="form-content">
                             {{ form_widget(form.postalCodes, {'attr': {'class': 'form-control'}}) }}
                             {{ form_errors(form.postalCodes) }}
@@ -43,7 +43,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.Agency'|trans }}</div>
+                        <div class="form-label">{{ 'Catalog.PriceListLineD3E.Agency'|trans }}</div>
                         <div class="form-content">
                             {{ form_widget(form.agency, {'attr': {'class': 'form-control'}}) }}
                             {{ form_errors(form.agency) }}
@@ -52,7 +52,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.MinQuantity'|trans }}</div>
+                        <div class="form-label">{{ 'Catalog.PriceListLineD3E.MinQuantity'|trans }}</div>
                         <div class="form-content">
                             {{ form_widget(form.minQuantity, {'attr': {'class': 'form-control'}}) }}
                             {{ form_errors(form.minQuantity) }}
@@ -61,7 +61,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.MaxQuantity'|trans }}</div>
+                        <div class="form-label">{{ 'Catalog.PriceListLineD3E.MaxQuantity'|trans }}</div>
                         <div class="form-content">
                             {{ form_widget(form.maxQuantity, {'attr': {'class': 'form-control'}}) }}
                             {{ form_errors(form.maxQuantity) }}
@@ -71,7 +71,7 @@
                 <div class="form-group row">
                     <div class="col-md-6">
 
-                        <div class="form-label">{{ 'Catalog.GrilleTarifLigneD3E.Price'|trans }}</div>
+                        <div class="form-label">{{ 'Catalog.PriceListLineD3E.Price'|trans }}</div>
                         <div class="form-content">
                             {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
                             {{ form_errors(form.price) }}
@@ -84,11 +84,11 @@
             <div class="card-footer">
                 <div class="float-right">
                     <a href="javascript:void(0);"
-                       class="btn btn-sm btn-success catalog-grilleTarifD3ELine-save-button"><i
-                                class="fa fa-xs fa-check"></i> {{ 'Catalog.GrilleTarifD3E.Save'|trans }}</a>
+                       class="btn btn-sm btn-success catalog-priceListLineD3Es-save-button"><i
+                                class="fa fa-xs fa-check"></i> {{ 'Catalog.PriceListD3E.Save'|trans }}</a>
                     <a href="javascript:void(0);"
-                       class="btn btn-sm btn-danger catalog-grilleTarifD3ELine-cancel-button"><i
-                                class="fa fa-xs fa-close"></i> {{ 'Catalog.GrilleTarifD3E.Cancel'|trans }}</a>
+                       class="btn btn-sm btn-danger catalog-priceListLineD3Es-cancel-button"><i
+                                class="fa fa-xs fa-close"></i> {{ 'Catalog.PriceListD3E.Cancel'|trans }}</a>
                 </div>
             </div>
         </div>
@@ -103,16 +103,16 @@
     <script>
         $(function () {
 
-            $('.catalog-grilleTarifD3ELine-save-button').on('click', function () {
-                $('#formEditGrilleTarifLigneD3E').submit();
+            $('.catalog-priceListLineD3Es-save-button').on('click', function () {
+                $('#formEditPriceListLineD3E').submit();
             });
 
 
-            $('.catalog-grilleTarifD3ELine-cancel-button').on('click', function () {
+            $('.catalog-priceListLineD3Es-cancel-button').on('click', function () {
 
-                var url = "{{ path("paprec_catalog_grilleTarifD3E_view", {id: grilleTarifD3E.id}) }}";
+                var url = "{{ path("paprec_catalog_priceListD3E_view", {id: priceListD3E.id}) }}";
 
-                bootbox.confirm("{{ 'Catalog.GrilleTarifD3E.Confirm-cancel'|trans }}", function (result) {
+                bootbox.confirm("{{ 'Catalog.PriceListD3E.Confirm-cancel'|trans }}", function (result) {
                     if (result === true) {
                         $(location).attr('href', url);
                     }

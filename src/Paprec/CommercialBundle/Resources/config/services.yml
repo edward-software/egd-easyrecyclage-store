@@ -35,21 +35,22 @@ parameters:
 
 
   paprec_quote_status:
-  - Créé
-  - En attente
-  - Traité
-  - Clos
+  - CREATED
+  - PENDING
+  - PROCESSING
+  - CLOSED
 
   paprec_order_status:
-  - Créée
-  - En attente
-  - Payée
-  - Annulée
+  - CREATED
+  - PENDING
+  - INVOICED
+  - CANCELED
 
   paprec_treatment_status:
-  - Créé
-  - En attente
-  - Recontacté
+  - CREATED
+  - PENDING
+  - PROCESSING
+  - CLOSED
 
   paprec_order_payment_methods:
   - CB

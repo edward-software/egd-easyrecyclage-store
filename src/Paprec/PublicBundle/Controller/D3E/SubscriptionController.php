@@ -135,7 +135,7 @@ class SubscriptionController extends Controller
                 $productD3EQuoteManager = $this->get('paprec_commercial.product_d3e_quote_manager');
 
                 $productD3EQuote = $form->getData();
-                $productD3EQuote->setQuoteStatus('Créé');
+                $productD3EQuote->setQuoteStatus('CREATED');
                 $productD3EQuote->setFrequency($cart->getFrequency());
 
                 $em = $this->getDoctrine()->getManager();
@@ -168,7 +168,7 @@ class SubscriptionController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
 
                 $productD3EOrder = $form->getData();
-                $productD3EOrder->setOrderStatus('Créée');
+                $productD3EOrder->setOrderStatus('CREATED');
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($productD3EOrder);

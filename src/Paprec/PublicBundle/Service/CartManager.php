@@ -352,7 +352,7 @@ class CartManager
     {
         $cart = $this->get($id);
         $productChantierManager = $this->container->get('paprec_catalog.product_D3E_manager');
-        $grilleTarifD3EManager = $this->container->get('paprec_catalog.grille_tarif_d3e_manager');
+        $priceListD3EManager = $this->container->get('paprec_catalog.price_list_d3e_manager');
 
         /**
          * TODO : gérer la somme du panier dans une autre méthode :
@@ -369,7 +369,7 @@ class CartManager
                 $loadedCart[$product['pId']] = ['qtty' => $product['qtty'], 'pName' => $productD3E->getName(), 'frequency' => $cart->getFrequency()];
 
                 $postalCode = substr($cart->getLocation(), 0, 5);
-                $loadedCart['sum'] += $grilleTarifD3EManager->getUnitPriceByPostalCodeQtty($productD3E->getGrilleTarifD3E(), $postalCode, $product['qtty']) * $product['qtty'];
+                $loadedCart['sum'] += $priceListD3EManager->getUnitPriceByPostalCodeQtty($productD3E->getPriceListD3E(), $postalCode, $product['qtty']) * $product['qtty'];
             }
         } else {
             return $loadedCart;

@@ -6,12 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * GrilleTarifD3E
+ * PriceListD3E
  *
- * @ORM\Table(name="grilleTarifD3Es")
- * @ORM\Entity(repositoryClass="Paprec\CatalogBundle\Repository\GrilleTarifD3ERepository")
+ * @ORM\Table(name="priceListD3Es")
+ * @ORM\Entity(repositoryClass="Paprec\CatalogBundle\Repository\PriceListD3ERepository")
  */
-class GrilleTarifD3E
+class PriceListD3E
 {
     /**
      * @var int
@@ -21,49 +21,6 @@ class GrilleTarifD3E
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
-     */
-    private $name;
-
-    /**
-     * #################################
-     *              Relations
-     * #################################
-     */
-
-    /**
-     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductD3E", mappedBy="grilleTarifD3E", cascade={"all"})
-     */
-    private $productD3Es;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E", mappedBy="grilleTarifD3E", cascade={"all"})
-     */
-    private $grilleTarifLigneD3Es;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->dateCreation = new \DateTime();
-        $this->productD3Es = new ArrayCollection();
-        $this->grilleTarifLigneD3Es = new ArrayCollection();
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * @var \DateTime
@@ -87,11 +44,56 @@ class GrilleTarifD3E
     private $deleted;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     */
+    private $name;
+
+    /**
+     * #################################
+     *              Relations
+     * #################################
+     */
+
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductD3E", mappedBy="priceListD3E", cascade={"all"})
+     */
+    private $productD3Es;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\PriceListLineD3E", mappedBy="priceListD3E", cascade={"all"})
+     */
+    private $priceListLineD3Es;
+
+    /**
+     * Constructor
+     * @throws \Exception
+     */
+    public function __construct()
+    {
+        $this->dateCreation = new \DateTime();
+        $this->productD3Es = new ArrayCollection();
+        $this->priceListLineD3Es = new ArrayCollection();
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+    /**
      * Set name.
      *
      * @param string $name
      *
-     * @return GrilleTarifD3E
+     * @return PriceListD3E
      */
     public function setName($name)
     {
@@ -115,7 +117,7 @@ class GrilleTarifD3E
      *
      * @param \Paprec\CatalogBundle\Entity\ProductD3E $productD3E
      *
-     * @return GrilleTarifD3E
+     * @return PriceListD3E
      */
     public function addProductD3E(\Paprec\CatalogBundle\Entity\ProductD3E $productD3E)
     {
@@ -147,11 +149,47 @@ class GrilleTarifD3E
     }
 
     /**
+     * Add priceListLineD3E.
+     *
+     * @param \Paprec\CatalogBundle\Entity\PriceListLineD3E $priceListLineD3E
+     *
+     * @return PriceListD3E
+     */
+    public function addPriceListLineD3E(\Paprec\CatalogBundle\Entity\PriceListLineD3E $priceListLineD3E)
+    {
+        $this->priceListLineD3Es[] = $priceListLineD3E;
+
+        return $this;
+    }
+
+    /**
+     * Remove priceListLineD3E.
+     *
+     * @param \Paprec\CatalogBundle\Entity\PriceListLineD3E $priceListLineD3E
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removePriceListLineD3E(\Paprec\CatalogBundle\Entity\PriceListLineD3E $priceListLineD3E)
+    {
+        return $this->priceListLineD3Es->removeElement($priceListLineD3E);
+    }
+
+    /**
+     * Get priceListLineD3Es.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPriceListLineD3Es()
+    {
+        return $this->priceListLineD3Es;
+    }
+
+    /**
      * Set dateCreation.
      *
      * @param \DateTime $dateCreation
      *
-     * @return GrilleTarifD3E
+     * @return PriceListD3E
      */
     public function setDateCreation($dateCreation)
     {
@@ -175,7 +213,7 @@ class GrilleTarifD3E
      *
      * @param \DateTime|null $dateUpdate
      *
-     * @return GrilleTarifD3E
+     * @return PriceListD3E
      */
     public function setDateUpdate($dateUpdate = null)
     {
@@ -199,7 +237,7 @@ class GrilleTarifD3E
      *
      * @param \DateTime|null $deleted
      *
-     * @return GrilleTarifD3E
+     * @return PriceListD3E
      */
     public function setDeleted($deleted = null)
     {
@@ -216,46 +254,5 @@ class GrilleTarifD3E
     public function getDeleted()
     {
         return $this->deleted;
-    }
-
-    public function __toString()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Add grilleTarifLigneD3E.
-     *
-     * @param \Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E $grilleTarifLigneD3E
-     *
-     * @return GrilleTarifD3E
-     */
-    public function addGrilleTarifLigneD3E(\Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E $grilleTarifLigneD3E)
-    {
-        $this->grilleTarifLigneD3Es[] = $grilleTarifLigneD3E;
-
-        return $this;
-    }
-
-    /**
-     * Remove grilleTarifLigneD3E.
-     *
-     * @param \Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E $grilleTarifLigneD3E
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeGrilleTarifLigneD3E(\Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E $grilleTarifLigneD3E)
-    {
-        return $this->grilleTarifLigneD3Es->removeElement($grilleTarifLigneD3E);
-    }
-
-    /**
-     * Get grilleTarifLigneD3Es.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGrilleTarifLigneD3Es()
-    {
-        return $this->grilleTarifLigneD3Es;
     }
 }

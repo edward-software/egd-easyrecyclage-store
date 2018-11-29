@@ -4,7 +4,6 @@ namespace Paprec\CatalogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -413,7 +412,9 @@ class Category
     public function getProductChantierCategoriesOrdered()
     {
         $productChantierCategoriesToOrdered = $this->getProductChantierCategories()->getValues();
-        usort($productChantierCategoriesToOrdered, array($this, 'compare'));
+        if (!empty($productChantierCategoriesToOrdered)) {
+            usort($productChantierCategoriesToOrdered, array($this, 'compare'));
+        }
         $orderedItems = array();
         foreach ($productChantierCategoriesToOrdered as $orderedItem) {
             array_push($orderedItems, $orderedItem);

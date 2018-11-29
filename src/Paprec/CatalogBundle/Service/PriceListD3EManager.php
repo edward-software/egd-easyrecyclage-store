@@ -12,10 +12,10 @@ namespace Paprec\CatalogBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Exception;
-use Paprec\CatalogBundle\Entity\GrilleTarifD3E;
+use Paprec\CatalogBundle\Entity\PriceListD3E;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class GrilleTarifD3EManager
+class PriceListD3EManager
 {
 
     private $em;
@@ -27,20 +27,20 @@ class GrilleTarifD3EManager
         $this->container = $container;
     }
 
-    public function get($grilleTarifD3E){
-        $id = $grilleTarifD3E;
-        if ($grilleTarifD3E instanceof GrilleTarifD3E) {
-            $id = $grilleTarifD3E->getId();
+    public function get($priceListD3E){
+        $id = $priceListD3E;
+        if ($priceListD3E instanceof PriceListD3E) {
+            $id = $priceListD3E->getId();
         }
         try {
 
-            $grilleTarifD3E = $this->em->getRepository('PaprecCatalogBundle:GrilleTarifD3E')->find($id);
+            $priceListD3E = $this->em->getRepository('PaprecCatalogBundle:PriceListD3E')->find($id);
 
-            if ($grilleTarifD3E === null) {
-                throw new EntityNotFoundException('grilleTarifD3ENotFound');
+            if ($priceListD3E === null) {
+                throw new EntityNotFoundException('priceListD3ENotFound');
             }
 
-            return $grilleTarifD3E;
+            return $priceListD3E;
 
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode());
@@ -48,25 +48,25 @@ class GrilleTarifD3EManager
     }
 
     /**
-     * Fonction qui récupère le prix de la grilleTarifLigneD3E qui correspond à la grille, au code postal et à la quantité en param
+     * Fonction qui récupère le prix la priceListLineD3E qui correspond à la grille, au code postal et à la quantité en param
      *
-     * @param GrilleTarifD3E $grilleTarifD3E
+     * @param PriceListD3E $priceListD3E
      * @param $postalCodeQuote
      * @param $qtty
      * @return int
      */
-    public function getUnitPriceByPostalCodeQtty(GrilleTarifD3E $grilleTarifD3E, $postalCodeQuote, $qtty) {
+    public function getUnitPriceByPostalCodeQtty(PriceListD3E $priceListD3E, $postalCodeQuote, $qtty) {
         $lignesPostalCodeMatch = array();
         $return = 0;
 
         // On parcourt toutes les lignes de la grille pour récupérer celles qui possèdent le postalCodeQuote
-        foreach ($grilleTarifD3E->getGrilleTarifLigneD3Es() as $grilleTarifLigneD3E) {
-            $postalCodes = str_replace(' ', '', $grilleTarifLigneD3E->getPostalCodes());
+        foreach ($priceListD3E->getPriceListLineD3Es() as $priceListLineD3E) {
+            $postalCodes = str_replace(' ', '', $priceListLineD3E->getPostalCodes());
             $postalCodesArray = explode(',', $postalCodes);
             foreach ($postalCodesArray as $pC) {
                 //on teste juste les deux premiers caractères pour avoir le code du département
                 if (substr($pC, 0, 2) == substr($postalCodeQuote, 0, 2)) {
-                    $lignesPostalCodeMatch[] = $grilleTarifLigneD3E;
+                    $lignesPostalCodeMatch[] = $priceListLineD3E;
                 }
             }
         }

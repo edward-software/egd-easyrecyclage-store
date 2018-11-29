@@ -55,10 +55,10 @@ class ProductD3EOrderManager
      */
     public function addLine(ProductD3EOrder $productD3EOrder, ProductD3EOrderLine $productD3EOrderLine)
     {
-        $grilleTarifD3EManager = $this->container->get('paprec_catalog.grille_tarif_d3e_manager');
+        $priceListD3EManager = $this->container->get('paprec_catalog.price_list_d3e_manager');
 
         //Récupération de la grille liée au produit
-        $grille = $productD3EOrderLine->getProductD3E()->getGrilleTarifD3E();
+        $priceList = $productD3EOrderLine->getProductD3E()->getPriceListD3E();
 
         // On check s'il existe déjà une ligne pour ce produit, pour l'incrémenter
         $currentOrderLine = $this->em->getRepository('PaprecCommercialBundle:ProductD3EOrderLine')->findOneBy(
@@ -74,7 +74,7 @@ class ProductD3EOrderManager
 
             // On vérifie de prix unitaire du produit exisntant qui a pu changer si l'on a changé de tranche
             // en augmentant la quantité
-            $unitPrice = $grilleTarifD3EManager->getUnitPriceByPostalCodeQtty($grille, $productD3EOrder->getPostalCode(), $currentOrderLine->getQuantity());
+            $unitPrice = $priceListD3EManager->getUnitPriceByPostalCodeQtty($priceList, $productD3EOrder->getPostalCode(), $currentOrderLine->getQuantity());
             $currentOrderLine->setUnitPrice($unitPrice);
 
             //On recalcule le montant total de la ligne ainsi que celui du devis complet
@@ -89,7 +89,7 @@ class ProductD3EOrderManager
             $productD3EOrderLine->setProductName($productD3EOrderLine->getProductD3E()->getName());
 
             // Récupération du prix unitaire du produit
-            $unitPrice = $grilleTarifD3EManager->getUnitPriceByPostalCodeQtty($grille, $productD3EOrder->getPostalCode(), $productD3EOrderLine->getQuantity());
+            $unitPrice = $priceListD3EManager->getUnitPriceByPostalCodeQtty($priceList, $productD3EOrder->getPostalCode(), $productD3EOrderLine->getQuantity());
             $productD3EOrderLine->setUnitPrice($unitPrice);
             $this->em->persist($productD3EOrderLine);
 
@@ -111,10 +111,10 @@ class ProductD3EOrderManager
      */
     public function editLine(ProductD3EOrder $productD3EOrder, ProductD3EOrderLine $productD3EOrderLine)
     {
-        $productD3EOrderManager = $this->container->get('paprec_catalog.grille_tarif_d3e_manager');
+        $productD3EOrderManager = $this->container->get('paprec_catalog.price_list_d3e_manager');
 
         // Récupération du prix unitaire du produit
-        $unitPrice = $productD3EOrderManager->getUnitPriceByPostalCodeQtty($productD3EOrderLine->getProductD3E()->getGrilleTarifD3E(), $productD3EOrder->getPostalCode(), $productD3EOrderLine->getQuantity());
+        $unitPrice = $productD3EOrderManager->getUnitPriceByPostalCodeQtty($productD3EOrderLine->getProductD3E()->getPriceListD3E(), $productD3EOrder->getPostalCode(), $productD3EOrderLine->getQuantity());
         $productD3EOrderLine->setUnitPrice($unitPrice);
 
         $totalLine = $this->calculateTotalLine($productD3EOrderLine);

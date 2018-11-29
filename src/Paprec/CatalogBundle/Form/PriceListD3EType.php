@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GrilleTarifD3EType extends AbstractType
+class PriceListD3EType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -24,7 +24,7 @@ class GrilleTarifD3EType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CatalogBundle\Entity\GrilleTarifD3E'
+            'data_class' => 'Paprec\CatalogBundle\Entity\PriceListD3E'
         ));
     }
 
@@ -33,7 +33,7 @@ class GrilleTarifD3EType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'paprec_catalogbundle_grilletarifd3e';
+        return 'paprec_catalogbundle_pricelistd3e';
     }
 
 

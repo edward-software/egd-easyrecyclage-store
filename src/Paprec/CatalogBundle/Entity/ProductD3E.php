@@ -138,9 +138,9 @@ class ProductD3E
     private $pictos;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\GrilleTarifD3E", inversedBy="productD3Es", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\PriceListD3E", inversedBy="productD3Es", cascade={"all"})
      */
-    private $grilleTarifD3E;
+    private $priceListD3E;
 
     /**
      * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductD3EQuoteLine", mappedBy="productD3E", cascade={"all"})
@@ -522,29 +522,6 @@ class ProductD3E
         return $this->pictos;
     }
 
-    /**
-     * Set grilleTarifD3E.
-     *
-     * @param \Paprec\CatalogBundle\Entity\GrilleTarifD3E|null $grilleTarifD3E
-     *
-     * @return ProductD3E
-     */
-    public function setGrilleTarifD3E(\Paprec\CatalogBundle\Entity\GrilleTarifD3E $grilleTarifD3E = null)
-    {
-        $this->grilleTarifD3E = $grilleTarifD3E;
-
-        return $this;
-    }
-
-    /**
-     * Get grilleTarifD3E.
-     *
-     * @return \Paprec\CatalogBundle\Entity\GrilleTarifD3E|null
-     */
-    public function getGrilleTarifD3E()
-    {
-        return $this->grilleTarifD3E;
-    }
 
     /**
      * Add productD3EQuoteLine.
@@ -616,5 +593,29 @@ class ProductD3E
     public function getProductD3EOrderLines()
     {
         return $this->productD3EOrderLines;
+    }
+
+    /**
+     * Set priceListD3E.
+     *
+     * @param \Paprec\CatalogBundle\Entity\PriceListD3E|null $priceListD3E
+     *
+     * @return ProductD3E
+     */
+    public function setPriceListD3E(\Paprec\CatalogBundle\Entity\PriceListD3E $priceListD3E = null)
+    {
+        $this->priceListD3E = $priceListD3E;
+
+        return $this;
+    }
+
+    /**
+     * Get priceListD3E.
+     *
+     * @return \Paprec\CatalogBundle\Entity\PriceListD3E|null
+     */
+    public function getPriceListD3E()
+    {
+        return $this->priceListD3E;
     }
 }

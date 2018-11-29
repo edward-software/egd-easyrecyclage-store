@@ -2,10 +2,10 @@
 
 namespace Paprec\CatalogBundle\Controller;
 
-use Paprec\CatalogBundle\Entity\GrilleTarifD3E;
-use Paprec\CatalogBundle\Entity\GrilleTarifLigneD3E;
-use Paprec\CatalogBundle\Form\GrilleTarifD3EType;
-use Paprec\CatalogBundle\Form\GrilleTarifLigneD3EType;
+use Paprec\CatalogBundle\Entity\PriceListD3E;
+use Paprec\CatalogBundle\Entity\PriceListLineD3E;
+use Paprec\CatalogBundle\Form\PriceListD3EType;
+use Paprec\CatalogBundle\Form\PriceListLineD3EType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -15,21 +15,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class GrilleTarifD3EController extends Controller
+class PrinceListD3EController extends Controller
 {
 
     /**
-     * @Route("/grilleTarifD3E",  name="paprec_catalog_grilleTarifD3E_index")
+     * @Route("/priceListD3E",  name="paprec_catalog_priceListD3E_index")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function indexAction()
     {
-        return $this->render('PaprecCatalogBundle:GrilleTarifD3E:index.html.twig');
+        return $this->render('PaprecCatalogBundle:PriceListD3E:index.html.twig');
     }
 
 
     /**
-     * @Route("/grilleTarifD3E/loadList",  name="paprec_catalog_grilleTarifD3E_loadList")
+     * @Route("/priceListD3E/loadList",  name="paprec_catalog_priceListD3E_loadList")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function loadListAction(Request $request)
@@ -50,8 +50,7 @@ class GrilleTarifD3EController extends Controller
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
 
         $queryBuilder->select(array('g'))
-            ->from('PaprecCatalogBundle:GrilleTarifD3E', 'g')
-            ->where('g.deleted IS NULL');
+            ->from('PaprecCatalogBundle:PriceListD3E', 'g');
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
             if (substr($search['value'], 0, 1) == '#') {
@@ -78,7 +77,7 @@ class GrilleTarifD3EController extends Controller
     }
 
     /**
-     * @Route("/grilleTarifD3E/export",  name="paprec_catalog_grilleTarifD3E_export")
+     * @Route("/priceListD3E/export",  name="paprec_catalog_priceListD3E_export")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function exportAction()
@@ -90,10 +89,10 @@ class GrilleTarifD3EController extends Controller
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
 
         $queryBuilder->select(array('g'))
-            ->from('PaprecCatalogBundle:GrilleTarifD3E', 'g')
+            ->from('PaprecCatalogBundle:PriceListD3E', 'g')
             ->where('g.deleted IS NULL');
 
-        $grilleTarifD3Es = $queryBuilder->getQuery()->getResult();
+        $priceListD3Es = $queryBuilder->getQuery()->getResult();
 
         $phpExcelObject->getProperties()->setCreator("Paprec Easy Recyclage")
             ->setLastModifiedBy("Paprec Easy Recyclage")
@@ -109,18 +108,18 @@ class GrilleTarifD3EController extends Controller
         $phpExcelObject->setActiveSheetIndex(0);
 
         $i = 2;
-        foreach ($grilleTarifD3Es as $grilleTarifD3E) {
+        foreach ($priceListD3Es as $priceListD3E) {
 
             $phpExcelObject->setActiveSheetIndex(0)
-                ->setCellValue('A' . $i, $grilleTarifD3E->getId())
-                ->setCellValue('B' . $i, $grilleTarifD3E->getName())
-                ->setCellValue('C' . $i, $grilleTarifD3E->getDateCreation()->format('Y-m-d'));
+                ->setCellValue('A' . $i, $priceListD3E->getId())
+                ->setCellValue('B' . $i, $priceListD3E->getName())
+                ->setCellValue('C' . $i, $priceListD3E->getDateCreation()->format('Y-m-d'));
             $i++;
         }
 
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
 
-        $fileName = 'PaprecEasyRecyclage-Extraction-GrilleTarifD3Es-' . date('Y-m-d') . '.xlsx';
+        $fileName = 'PaprecEasyRecyclage-Extraction-PriceListD3Es-' . date('Y-m-d') . '.xlsx';
 
         // create the response
         $response = $this->container->get('phpexcel')->createStreamedResponse($writer);
@@ -139,104 +138,105 @@ class GrilleTarifD3EController extends Controller
     }
 
     /**
-     * @Route("/grilleTarifD3E/view/{id}",  name="paprec_catalog_grilleTarifD3E_view")
+     * @Route("/priceListD3E/view/{id}",  name="paprec_catalog_priceListD3E_view")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function viewAction(Request $request, GrilleTarifD3E $grilleTarifD3E)
+    public function viewAction(Request $request, PriceListD3E $priceListD3E)
     {
 
-        if ($grilleTarifD3E->getDeleted() !== null) {
+        if ($priceListD3E->getDeleted() !== null) {
             throw new NotFoundHttpException();
         }
-        $grilleTarifLigneD3E = new GrilleTarifLigneD3E();
+        $priceListLineD3E = new PriceListLineD3E();
 
 
-        return $this->render('PaprecCatalogBundle:GrilleTarifD3E:view.html.twig', array(
-            'grilleTarifD3E' => $grilleTarifD3E
+        return $this->render('PaprecCatalogBundle:PriceListD3E:view.html.twig', array(
+            'priceListD3E' => $priceListD3E
         ));
     }
 
     /**
-     * @Route("/grilleTarifD3E/add",  name="paprec_catalog_grilleTarifD3E_add")
+     * @Route("/priceListD3E/add",  name="paprec_catalog_priceListD3E_add")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Exception
      */
     public function addAction(Request $request)
     {
-        $grilleTarifD3E = new GrilleTarifD3E();
+        $priceListD3E = new PriceListD3E();
 
-        $form = $this->createForm(GrilleTarifD3EType::class, $grilleTarifD3E);
+        $form = $this->createForm(PriceListD3EType::class, $priceListD3E);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $grilleTarifD3E = $form->getData();
-            $grilleTarifD3E->setDateCreation(new \DateTime);
+            $priceListD3E = $form->getData();
+            $priceListD3E->setDateCreation(new \DateTime);
 
             $em = $this->getDoctrine()->getManager();
-            $em->persist($grilleTarifD3E);
+            $em->persist($priceListD3E);
             $em->flush();
 
-            return $this->redirectToRoute('paprec_catalog_grilleTarifD3E_view', array(
-                'id' => $grilleTarifD3E->getId()
+            return $this->redirectToRoute('paprec_catalog_priceListD3E_view', array(
+                'id' => $priceListD3E->getId()
             ));
 
         }
 
-        return $this->render('PaprecCatalogBundle:GrilleTarifD3E:add.html.twig', array(
+        return $this->render('PaprecCatalogBundle:PriceListD3E:add.html.twig', array(
             'form' => $form->createView()
         ));
     }
 
     /**
-     * @Route("/grilleTarifD3E/edit/{id}",  name="paprec_catalog_grilleTarifD3E_edit")
+     * @Route("/priceListD3E/edit/{id}",  name="paprec_catalog_priceListD3E_edit")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editAction(Request $request, GrilleTarifD3E $grilleTarifD3E)
+    public function editAction(Request $request, PriceListD3E $priceListD3E)
     {
-        if ($grilleTarifD3E->getDeleted() !== null) {
+        if ($priceListD3E->getDeleted() !== null) {
             throw new NotFoundHttpException();
         }
 
-        $form = $this->createForm(GrilleTarifD3EType::class, $grilleTarifD3E);
+        $form = $this->createForm(PriceListD3EType::class, $priceListD3E);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $grilleTarifD3E = $form->getData();
-            $grilleTarifD3E->setDateUpdate(new \DateTime);
+            $priceListD3E = $form->getData();
+            $priceListD3E->setDateUpdate(new \DateTime);
 
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
-            return $this->redirectToRoute('paprec_catalog_grilleTarifD3E_view', array(
-                'id' => $grilleTarifD3E->getId()
+            return $this->redirectToRoute('paprec_catalog_priceListD3E_view', array(
+                'id' => $priceListD3E->getId()
             ));
 
         }
 
-        return $this->render('PaprecCatalogBundle:GrilleTarifD3E:edit.html.twig', array(
+        return $this->render('PaprecCatalogBundle:PriceListD3E:edit.html.twig', array(
             'form' => $form->createView(),
-            'grilleTarifD3E' => $grilleTarifD3E
+            'priceListD3E' => $priceListD3E
         ));
     }
 
     /**
-     * @Route("/grilleTarifD3E/remove/{id}", name="paprec_catalog_grilleTarifD3E_remove")
+     * @Route("/priceListD3E/remove/{id}", name="paprec_catalog_priceListD3E_remove")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function removeAction(Request $request, GrilleTarifD3E $grilleTarifD3E)
+    public function removeAction(Request $request, PriceListD3E $priceListD3E)
     {
         $em = $this->getDoctrine()->getManager();
-        $grilleTarifD3E->setDeleted(new \DateTime());
+        $priceListD3E->setDeleted(new \DateTime());
         $em->flush();
 
-        return $this->redirectToRoute('paprec_catalog_grilleTarifD3E_index');
+        return $this->redirectToRoute('paprec_catalog_priceListD3E_index');
     }
 
     /**
-     * @Route("/grilleTarifD3E/removeMany/{ids}", name="paprec_catalog_grilleTarifD3E_removeMany")
+     * @Route("/priceListD3E/removeMany/{ids}", name="paprec_catalog_priceListD3E_removeMany")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function removeManyAction(Request $request)
@@ -252,107 +252,107 @@ class GrilleTarifD3EController extends Controller
         $ids = explode(',', $ids);
 
         if (is_array($ids) && count($ids)) {
-            $grilleTarifD3Es = $em->getRepository('PaprecCatalogBundle:GrilleTarifD3E')->findById($ids);
-            foreach ($grilleTarifD3Es as $grilleTarifD3E) {
-                $grilleTarifD3E->setDeleted(new \DateTime);
+            $priceListD3Es = $em->getRepository('PriceListD3E.php')->findById($ids);
+            foreach ($priceListD3Es as $priceListD3E) {
+                $priceListD3E->setDeleted(new \DateTime);
             }
             $em->flush();
         }
 
-        return $this->redirectToRoute('paprec_catalog_grilleTarifD3E_index');
+        return $this->redirectToRoute('paprec_catalog_priceListD3E_index');
     }
 
     /**
- * @Route("/grilleTarifD3E/{id}/addLigne", name="paprec_catalog_grilleTarifD3E_addLigne")
+ * @Route("/priceListD3E/{id}/addLine", name="paprec_catalog_priceListD3E_addLine")
  * @Method("POST")
  * @Security("has_role('ROLE_ADMIN')")
  */
-    public function addLigneAction(Request $request, GrilleTarifD3E $grilleTarifD3E)
+    public function addLineAction(Request $request, PriceListD3E $priceListD3E)
     {
-        $grilleTarifLigneD3E = new GrilleTarifLigneD3E();
-        $form = $this->createForm(GrilleTarifLigneD3EType::class, $grilleTarifLigneD3E);
+        $priceListLineD3E = new PriceListLineD3E();
+        $form = $this->createForm(PriceListLineD3EType::class, $priceListLineD3E);
 
         $em = $this->getDoctrine()->getManager();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $grilleTarifLigneD3E = $form->getData();
-            $grilleTarifLigneD3E->setGrilleTarifD3E($grilleTarifD3E);
-            if ($grilleTarifLigneD3E->getMaxQuantity() == null) {
-                $grilleTarifLigneD3E->setMaxQuantity($grilleTarifLigneD3E->getMinQuantity());
+            $priceListLineD3E = $form->getData();
+            $priceListLineD3E->setPriceListD3E($priceListD3E);
+            if ($priceListLineD3E->getMaxQuantity() == null) {
+                $priceListLineD3E->setMaxQuantity($priceListLineD3E->getMinQuantity());
             }
-            $grilleTarifD3E->addGrilleTarifLigneD3E($grilleTarifLigneD3E);
+            $priceListD3E->addPriceListLineD3E($priceListLineD3E);
             $em->flush();
 
-            return $this->redirectToRoute('paprec_catalog_grilleTarifD3E_view', array(
-                'id' => $grilleTarifD3E->getId()
+            return $this->redirectToRoute('paprec_catalog_priceListD3E_view', array(
+                'id' => $priceListD3E->getId()
             ));
         }
 
-        return $this->render('PaprecCatalogBundle:GrilleTarifD3ELigne:add.html.twig', array(
-            'grilleTarifD3E' => $grilleTarifD3E,
+        return $this->render('PaprecCatalogBundle:PriceListLineD3E:add.html.twig', array(
+            'priceListD3E' => $priceListD3E,
             'form' => $form->createView()
         ));
     }
 
     /**
-     * @Route("/grilleTarifD3E/{id}/editLigne/{ligneID}", name="paprec_catalog_grilleTarifD3E_editLigne")
+     * @Route("/priceListD3E/{id}/editLine/{lineId}", name="paprec_catalog_priceListD3E_editLine")
      * @Method("POST")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editLigneAction(Request $request, GrilleTarifD3E $grilleTarifD3E)
+    public function editLineAction(Request $request, PriceListD3E $priceListD3E)
     {
 
         $em = $this->getDoctrine()->getManager();
-        $ligneID = $request->get('ligneID');
-        $grilleTarifLigneD3E = $em->getRepository(GrilleTarifLigneD3E::class)->find($ligneID);
-        $form = $this->createForm(GrilleTarifLigneD3EType::class, $grilleTarifLigneD3E);
+        $lineId = $request->get('lineId');
+        $priceListLineD3E = $em->getRepository(PriceListLineD3E::class)->find($lineId);
+        $form = $this->createForm(PriceListLineD3EType::class, $priceListLineD3E);
 
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $grilleTarifLigneD3E = $form->getData();
+            $priceListLineD3E = $form->getData();
 
-            if ($grilleTarifLigneD3E->getMaxQuantity() == null) {
-                $grilleTarifLigneD3E->setMaxQuantity($grilleTarifLigneD3E->getMinQuantity());
+            if ($priceListLineD3E->getMaxQuantity() == null) {
+                $priceListLineD3E->setMaxQuantity($priceListLineD3E->getMinQuantity());
             }
             $em->flush();
 
-            return $this->redirectToRoute('paprec_catalog_grilleTarifD3E_view', array(
-                'id' => $grilleTarifD3E->getId()
+            return $this->redirectToRoute('paprec_catalog_priceListD3E_view', array(
+                'id' => $priceListD3E->getId()
             ));
         }
 
-        return $this->render('PaprecCatalogBundle:GrilleTarifD3ELigne:edit.html.twig', array(
-            'grilleTarifD3E' => $grilleTarifD3E,
-            'grilleTarifLigneD3E' => $grilleTarifLigneD3E,
+        return $this->render('PaprecCatalogBundle:PriceListLineD3E:edit.html.twig', array(
+            'priceListD3E' => $priceListD3E,
+            'priceListLineD3E' => $priceListLineD3E,
             'form' => $form->createView()
         ));
     }
 
 
     /**
-     * @Route("/grilleTarifD3E/removeLigne/{id}/{ligneID}", name="paprec_catalog_grilleTarifD3E_removeLigne")
+     * @Route("/priceListD3E/removeLine/{id}/{lineId}", name="paprec_catalog_priceListD3E_removeLine")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function removeLigneAction(Request $request, GrilleTarifD3E $grilleTarifD3E)
+    public function removeLineAction(Request $request, PriceListD3E $priceListD3E)
     {
 
         $em = $this->getDoctrine()->getManager();
 
-        $ligneID = $request->get('ligneID');
+        $lineId = $request->get('lineId');
 
-        $grilleTarifLigneD3Es = $grilleTarifD3E->getGrilleTarifLigneD3Es();
-        foreach($grilleTarifLigneD3Es as $grilleTarifLigneD3E) {
-            if ($grilleTarifLigneD3E->getId() == $ligneID) {
-                $grilleTarifD3E->setDateUpdate(new \DateTime());
-                $em->remove($grilleTarifLigneD3E);
+        $priceListLineD3Es = $priceListD3E->getPriceListLineD3Es();
+        foreach($priceListLineD3Es as $priceListLineD3E) {
+            if ($priceListLineD3E->getId() == $lineId) {
+                $priceListD3E->setDateUpdate(new \DateTime());
+                $em->remove($priceListLineD3E);
                 continue;
             }
         }
         $em->flush();
 
-        return $this->redirectToRoute('paprec_catalog_grilleTarifD3E_view', array(
-            'id' => $grilleTarifD3E->getId()
+        return $this->redirectToRoute('paprec_catalog_priceListD3E_view', array(
+            'id' => $priceListD3E->getId()
         ));
     }
 }
