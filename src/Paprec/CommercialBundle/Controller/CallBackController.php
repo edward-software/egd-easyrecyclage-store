@@ -159,9 +159,13 @@ class CallBackController extends Controller
     /**
      * @Route("/callBack/view/{id}", name="paprec_commercial_callBack_view")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function viewAction(Request $request, CallBack $callBack)
     {
+        $callBackManager = $this->get('paprec_commercial.call_back_manager');
+        $callBackManager->isDeleted($callBack, true);
+
         return $this->render('PaprecCommercialBundle:CallBack:view.html.twig', array(
             'callBack' => $callBack
         ));
@@ -174,6 +178,8 @@ class CallBackController extends Controller
      */
     public function editAction(Request $request, CallBack $callBack)
     {
+        $callBackManager = $this->get('paprec_commercial.call_back_manager');
+        $callBackManager->isDeleted($callBack, true);
 
         $status = array();
         foreach ($this->getParameter('paprec_treatment_status') as $s) {

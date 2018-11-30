@@ -160,9 +160,8 @@ class AgencyController extends Controller
      */
     public function viewAction(Request $request, Agency $agence)
     {
-        if ($agence->getDeleted() !== null) {
-            throw new NotFoundHttpException();
-        }
+        $agencyManager = $this->get('paprec_commercial.agency_manager');
+        $agencyManager->isDeleted($agence, true);
 
         return $this->render('PaprecCommercialBundle:Agency:view.html.twig', array(
             'agency' => $agence
@@ -212,12 +211,14 @@ class AgencyController extends Controller
     /**
      * @Route("/agency/edit/{id}", name="paprec_commercial_agence_edit")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws \Exception
      */
     public function editAction(Request $request, Agency $agence)
     {
-        if ($agence->getDeleted() !== null) {
-            throw new NotFoundHttpException();
-        }
+        $agencyManager = $this->get('paprec_commercial.agency_manager');
+        $agencyManager->isDeleted($agence, true);
+
 
         $divisions = array();
         foreach ($this->getParameter('paprec_divisions') as $division) {

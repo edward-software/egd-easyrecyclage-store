@@ -519,9 +519,10 @@ class ProductD3E
      */
     public function getPictos()
     {
-        return $this->pictos;
+        $pictos = array();
+        $pictos = $this->pictos;
+        return $pictos;
     }
-
 
     /**
      * Add productD3EQuoteLine.

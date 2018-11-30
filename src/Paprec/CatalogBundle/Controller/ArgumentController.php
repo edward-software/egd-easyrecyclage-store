@@ -141,12 +141,12 @@ class ArgumentController extends Controller
     /**
      * @Route("/argument/view/{id}",  name="paprec_catalog_argument_view")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function viewAction(Request $request, Argument $argument)
     {
-        if($argument->getDeleted() !== null) {
-            throw new NotFoundHttpException();
-        }
+        $argumentManager = $this->get('paprec_catalog.argument_manager');
+        $argumentManager->isDeleted($argument, true);
 
         return $this->render('PaprecCatalogBundle:Argument:view.html.twig', array(
             'argument' => $argument
@@ -200,12 +200,13 @@ class ArgumentController extends Controller
     /**
      * @Route("/argument/edit/{id}",  name="paprec_catalog_argument_edit")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws \Exception
      */
     public function editAction(Request $request, Argument $argument)
     {
-        if($argument->getDeleted() !== null) {
-            throw new NotFoundHttpException();
-        }
+        $argumentManager = $this->get('paprec_catalog.argument_manager');
+        $argumentManager->isDeleted($argument, true);
 
         $form = $this->createForm(ArgumentType::class, $argument);
 

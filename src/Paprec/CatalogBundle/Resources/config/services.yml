@@ -1,8 +1,20 @@
 services:
   _defaults: { public: true }
 
+  paprec_catalog.argument_manager:
+    class: Paprec\CatalogBundle\Service\ArgumentManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
   paprec_catalog.category_manager:
     class: Paprec\CatalogBundle\Service\CategoryManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
+  paprec_catalog.customizable_area_manager:
+    class: Paprec\CatalogBundle\Service\CustomizableAreaManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
+  paprec_catalog.postal_code_manager:
+    class: Paprec\CatalogBundle\Service\PostalCodeManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
   paprec_catalog.product_di_manager:

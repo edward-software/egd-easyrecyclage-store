@@ -182,6 +182,9 @@ class ProductD3EQuoteController extends Controller
      */
     public function viewAction(Request $request, ProductD3EQuote $productD3EQuote)
     {
+        $productD3EQuoteManager = $this->get('paprec_commercial.product_d3e_quote_manager');
+        $productD3EQuoteManager->isDeleted($productD3EQuote, true);
+
         return $this->render('PaprecCommercialBundle:ProductD3EQuote:view.html.twig', array(
             'productD3EQuote' => $productD3EQuote
         ));
@@ -229,9 +232,13 @@ class ProductD3EQuoteController extends Controller
     /**
      * @Route("/productD3EQuote/edit/{id}", name="paprec_commercial_productD3EQuote_edit")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws \Exception
      */
     public function editAction(Request $request, ProductD3EQuote $productD3EQuote)
     {
+        $productD3EQuoteManager = $this->get('paprec_commercial.product_d3e_quote_manager');
+        $productD3EQuoteManager->isDeleted($productD3EQuote, true);
 
         $status = array();
         foreach ($this->getParameter('paprec_quote_status') as $s) {

@@ -37,7 +37,7 @@ class ProductChantierOrderManager
 
             $productChantierOrder = $this->em->getRepository('PaprecCatalogBundle:ProductChantierOrder')->find($id);
 
-            if ($productChantierOrder === null) {
+            if ($productChantierOrder === null || $this->isDeleted($productChantierOrder)) {
                 throw new EntityNotFoundException('productChantierOrderNotFound');
             }
 
@@ -47,6 +47,34 @@ class ProductChantierOrderManager
             throw new Exception($e->getMessage(), $e->getCode());
         }
     }
+
+    /**
+     * Vérification qu'à ce jour le productChantierOrder ne soit pas supprimé
+     *
+     * @param ProductChantierOrder $productChantierOrder
+     * @param bool $throwException
+     * @return bool
+     * @throws EntityNotFoundException
+     */
+    public function isDeleted(ProductChantierOrder $productChantierOrder, $throwException = false)
+    {
+        try {
+            $now = new \DateTime();
+        } catch (Exception $e) {
+        }
+
+        if ($productChantierOrder->getDeleted() !== null && $productChantierOrder->getDeleted() instanceof \DateTime && $productChantierOrder->getDeleted() < $now) {
+
+            if ($throwException) {
+                throw new EntityNotFoundException('productChantierOrderNotFound');
+            }
+
+            return true;
+
+        }
+        return false;
+    }
+
 
     /**
      * Ajoute une productChantierOrderLine à un productChantierOrder

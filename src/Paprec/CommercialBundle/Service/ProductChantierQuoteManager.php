@@ -37,7 +37,7 @@ class ProductChantierQuoteManager
 
             $productChantierQuote = $this->em->getRepository('PaprecCatalogBundle:ProductChantierQuote')->find($id);
 
-            if ($productChantierQuote === null) {
+            if ($productChantierQuote === null || $this->isDeleted($productChantierQuote)) {
                 throw new EntityNotFoundException('productChantierQuoteNotFound');
             }
 
@@ -47,6 +47,34 @@ class ProductChantierQuoteManager
             throw new Exception($e->getMessage(), $e->getCode());
         }
     }
+
+    /**
+     * Vérificatiion que le ProductChantierQuote ne soit pas supprimé
+     *
+     * @param ProductChantierQuote $productChantierQuote
+     * @param bool $throwException
+     * @return bool
+     * @throws EntityNotFoundException
+     */
+    public function isDeleted(ProductChantierQuote $productChantierQuote, $throwException = false)
+    {
+        try {
+            $now = new \DateTime();
+        } catch (Exception $e) {
+        }
+
+        if ($productChantierQuote->getDeleted() !== null && $productChantierQuote->getDeleted() instanceof \DateTime && $productChantierQuote->getDeleted() < $now) {
+
+            if ($throwException) {
+                throw new EntityNotFoundException('productChantierQuoteNotFound');
+            }
+
+            return true;
+
+        }
+        return false;
+    }
+
 
     /**
      * Ajoute une productChantierQuoteLine à un productChantierQuote

@@ -144,6 +144,9 @@ class CustomizableAreaController extends Controller
      */
     public function viewAction(Request $request, CustomizableArea $customizableArea)
     {
+        $customizableAreaManager = $this->get('paprec_catalog.customizable_area_manager');
+        $customizableAreaManager->isDeleted($customizableArea, true);
+
         if($customizableArea->getDeleted() !== null) {
             throw new NotFoundHttpException();
         }
@@ -198,9 +201,8 @@ class CustomizableAreaController extends Controller
      */
     public function editAction(Request $request, CustomizableArea $customizableArea)
     {
-        if($customizableArea->getDeleted() !== null) {
-            throw new NotFoundHttpException();
-        }
+        $customizableAreaManager = $this->get('paprec_catalog.customizable_area_manager');
+        $customizableAreaManager->isDeleted($customizableArea, true);
 
         $divisions = array();
         foreach($this->getParameter('paprec_divisions') as $division) {

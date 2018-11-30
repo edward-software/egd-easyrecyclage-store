@@ -37,7 +37,7 @@ class AgencyManager
 
             $agency = $this->em->getRepository('PaprecCommercialBundle:Agency')->find($id);
 
-            if ($agency === null) {
+            if ($agency === null || $this->isDeleted($agency)) {
                 throw new EntityNotFoundException('agencyNotFound');
             }
 
@@ -48,6 +48,32 @@ class AgencyManager
         }
     }
 
+    /**
+     * Vérification qu'à ce jour l'agence ne soit pas supprimée
+     *
+     * @param Agency $agency
+     * @param bool $throwException
+     * @return bool
+     * @throws EntityNotFoundException
+     */
+    public function isDeleted(Agency $agency, $throwException = false)
+    {
+        try {
+            $now = new \DateTime();
+        } catch (Exception $e) {
+        }
+
+        if ($agency->getDeleted() !== null && $agency->getDeleted() instanceof \DateTime && $agency->getDeleted() < $now) {
+
+            if ($throwException) {
+                throw new EntityNotFoundException('agencyNotFound');
+            }
+
+            return true;
+
+        }
+        return false;
+    }
 
     /**
      * Récupération du NOMBRE d'agences appartenant à la division @division

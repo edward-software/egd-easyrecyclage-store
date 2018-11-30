@@ -179,9 +179,13 @@ class ProductDIQuoteController extends Controller
     /**
      * @Route("/productDIQuote/view/{id}", name="paprec_commercial_productDIQuote_view")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function viewAction(Request $request, ProductDIQuote $productDIQuote)
     {
+        $productDIQuoteManager = $this->get('paprec_commercial.product_di_quote_manager');
+        $productDIQuoteManager->isDeleted($productDIQuote, true);
+
         return $this->render('PaprecCommercialBundle:ProductDIQuote:view.html.twig', array(
             'productDIQuote' => $productDIQuote
         ));
@@ -229,9 +233,13 @@ class ProductDIQuoteController extends Controller
     /**
      * @Route("/productDIQuote/edit/{id}", name="paprec_commercial_productDIQuote_edit")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws \Exception
      */
     public function editAction(Request $request, ProductDIQuote $productDIQuote)
     {
+        $productDIQuoteManager = $this->get('paprec_commercial.product_di_quote_manager');
+        $productDIQuoteManager->isDeleted($productDIQuote, true);
 
         $status = array();
         foreach ($this->getParameter('paprec_quote_status') as $s) {

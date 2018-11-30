@@ -145,6 +145,9 @@ class PostalCodeController extends Controller
      */
     public function viewAction(Request $request, PostalCode $postalCode)
     {
+        $postalCodeManager = $this->get('paprec_catalog.postal_code_manager');
+        $postalCodeManager->isDeleted($postalCode, true);
+
         return $this->render('PaprecCatalogBundle:PostalCode:view.html.twig', array(
             'postalCode' => $postalCode
         ));
@@ -192,9 +195,12 @@ class PostalCodeController extends Controller
     /**
      * @Route("/postalCode/edit/{id}", name="paprec_catalog_postalCode_edit")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function editAction(Request $request, PostalCode $postalCode)
     {
+        $postalCodeManager = $this->get('paprec_catalog.postal_code_manager');
+        $postalCodeManager->isDeleted($postalCode, true);
 
         $divisions = array();
         foreach($this->getParameter('paprec_divisions') as $division) {

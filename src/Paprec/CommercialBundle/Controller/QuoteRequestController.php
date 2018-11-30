@@ -188,6 +188,9 @@ class QuoteRequestController extends Controller
      */
     public function viewAction(Request $request, QuoteRequest $quoteRequest)
     {
+        $quoteRequestManager = $this->get('paprec_commercial.quote_request_manager');
+        $quoteRequestManager->isDeleted($quoteRequest, true);
+
         $form = $this->createForm(QuoteRequestAssociatedQuoteType::class, $quoteRequest);
         return $this->render('PaprecCommercialBundle:QuoteRequest:view.html.twig', array(
             'quoteRequest' => $quoteRequest,
@@ -201,6 +204,8 @@ class QuoteRequestController extends Controller
      */
     public function editAction(Request $request, QuoteRequest $quoteRequest)
     {
+        $quoteRequestManager = $this->get('paprec_commercial.quote_request_manager');
+        $quoteRequestManager->isDeleted($quoteRequest, true);
 
         $status = array();
         foreach ($this->getParameter('paprec_quote_status') as $s) {

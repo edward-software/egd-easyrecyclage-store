@@ -36,7 +36,7 @@ class PriceListD3EManager
 
             $priceListD3E = $this->em->getRepository('PaprecCatalogBundle:PriceListD3E')->find($id);
 
-            if ($priceListD3E === null) {
+            if ($priceListD3E === null || $this->isDeleted($priceListD3E)) {
                 throw new EntityNotFoundException('priceListD3ENotFound');
             }
 
@@ -45,6 +45,30 @@ class PriceListD3EManager
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode());
         }
+    }
+
+    /**
+     * Vérification qu'aà ce jours la grille tarifaire
+     *
+     * @param PriceListD3E $priceListD3E
+     * @param bool $throwException
+     * @return bool
+     * @throws EntityNotFoundException
+     */
+    public function isDeleted(PriceListD3E $priceListD3E, $throwException = false)
+    {
+        $now = new \DateTime();
+
+        if ($priceListD3E->getDeleted() !== null && $priceListD3E->getDeleted() instanceof \DateTime && $priceListD3E->getDeleted() < $now) {
+
+            if ($throwException) {
+                throw new EntityNotFoundException('priceListD3ENotFound');
+            }
+
+            return true;
+
+        }
+        return false;
     }
 
     /**

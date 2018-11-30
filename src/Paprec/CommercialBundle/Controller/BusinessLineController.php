@@ -143,9 +143,13 @@ class BusinessLineController extends Controller
     /**
      * @Route("/businessLine/view/{id}", name="paprec_commercial_businessLine_view")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function viewAction(Request $request, BusinessLine $businessLine)
     {
+        $businessLineManager = $this->get('paprec_commercial.business_line_manager');
+        $businessLineManager->isDeleted($businessLine, true);
+
         return $this->render('PaprecCommercialBundle:BusinessLine:view.html.twig', array(
             'businessLine' => $businessLine
         ));
@@ -193,9 +197,12 @@ class BusinessLineController extends Controller
     /**
      * @Route("/businessLine/edit/{id}", name="paprec_commercial_businessLine_edit")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function editAction(Request $request, BusinessLine $businessLine)
     {
+        $businessLineManager = $this->get('paprec_commercial.business_line_manager');
+        $businessLineManager->isDeleted($businessLine, true);
 
         $divisions = array();
         foreach($this->getParameter('paprec_divisions') as $division) {

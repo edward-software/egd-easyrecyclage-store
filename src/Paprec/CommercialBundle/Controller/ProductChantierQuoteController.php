@@ -182,6 +182,9 @@ class ProductChantierQuoteController extends Controller
      */
     public function viewAction(Request $request, ProductChantierQuote $productChantierQuote)
     {
+        $productChantierQuoteManager = $this->get('paprec_commercial.product_chantier_quote_manager');
+        $productChantierQuoteManager->isDeleted($productChantierQuote, true);
+
         return $this->render('PaprecCommercialBundle:ProductChantierQuote:view.html.twig', array(
             'productChantierQuote' => $productChantierQuote
         ));
@@ -229,9 +232,13 @@ class ProductChantierQuoteController extends Controller
     /**
      * @Route("/productChantierQuote/edit/{id}", name="paprec_commercial_productChantierQuote_edit")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws \Exception
      */
     public function editAction(Request $request, ProductChantierQuote $productChantierQuote)
     {
+        $productChantierQuoteManager = $this->get('paprec_commercial.product_chantier_quote_manager');
+        $productChantierQuoteManager->isDeleted($productChantierQuote, true);
 
         $status = array();
         foreach ($this->getParameter('paprec_quote_status') as $s) {

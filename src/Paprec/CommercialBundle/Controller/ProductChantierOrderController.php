@@ -178,9 +178,13 @@ class ProductChantierOrderController extends Controller
     /**
      * @Route("/productChantierOrder/view/{id}", name="paprec_commercial_productChantierOrder_view")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function viewAction(Request $request, ProductChantierOrder $productChantierOrder)
     {
+        $productChantierOrderManager = $this->get('paprec_commercial.product_chantier_order_manager');
+        $productChantierOrderManager->isDeleted($productChantierOrder, true);
+
         $formAddInvoice = $this->createForm(ProductChantierOrderInvoiceType::class, $productChantierOrder);
 
         return $this->render('PaprecCommercialBundle:ProductChantierOrder:view.html.twig', array(
@@ -192,9 +196,12 @@ class ProductChantierOrderController extends Controller
     /**
      * @Route("/productChantierOrder/edit/{id}", name="paprec_commercial_productChantierOrder_edit")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws Exception
      */
     public function editAction(Request $request, ProductChantierOrder $productChantierOrder)
     {
+        $productChantierOrderManager = $this->get('paprec_commercial.product_chantier_order_manager');
+        $productChantierOrderManager->isDeleted($productChantierOrder, true);
 
         $status = array();
         foreach ($this->getParameter('paprec_order_status') as $s) {

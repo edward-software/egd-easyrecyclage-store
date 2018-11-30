@@ -144,9 +144,8 @@ class PrinceListD3EController extends Controller
     public function viewAction(Request $request, PriceListD3E $priceListD3E)
     {
 
-        if ($priceListD3E->getDeleted() !== null) {
-            throw new NotFoundHttpException();
-        }
+        $priceListD3EManager = $this->get('paprec_catalog.price_list_d3e_manager');
+        $priceListD3EManager->isDeleted($priceListD3E, true);
         $priceListLineD3E = new PriceListLineD3E();
 
 
@@ -190,12 +189,13 @@ class PrinceListD3EController extends Controller
     /**
      * @Route("/priceListD3E/edit/{id}",  name="paprec_catalog_priceListD3E_edit")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws \Exception
      */
     public function editAction(Request $request, PriceListD3E $priceListD3E)
     {
-        if ($priceListD3E->getDeleted() !== null) {
-            throw new NotFoundHttpException();
-        }
+        $priceListD3EManager = $this->get('paprec_catalog.price_list_d3e_manager');
+        $priceListD3EManager->isDeleted($priceListD3E, true);
 
         $form = $this->createForm(PriceListD3EType::class, $priceListD3E);
 

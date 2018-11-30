@@ -182,6 +182,9 @@ class ProductD3EOrderController extends Controller
      */
     public function viewAction(Request $request, ProductD3EOrder $productD3EOrder)
     {
+        $productD3EOrderManager = $this->get('paprec_commercial.product_d3e_order_manager');
+        $productD3EOrderManager->isDeleted($productD3EOrder, true);
+
         $formAddInvoice = $this->createForm(ProductD3EOrderInvoiceType::class, $productD3EOrder);
 
 
@@ -194,9 +197,13 @@ class ProductD3EOrderController extends Controller
     /**
      * @Route("/productD3EOrder/edit/{id}", name="paprec_commercial_productD3EOrder_edit")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws Exception
      */
     public function editAction(Request $request, ProductD3EOrder $productD3EOrder)
     {
+        $productD3EOrderManager = $this->get('paprec_commercial.product_d3e_order_manager');
+        $productD3EOrderManager->isDeleted($productD3EOrder, true);
 
         $status = array();
         foreach ($this->getParameter('paprec_order_status') as $s) {

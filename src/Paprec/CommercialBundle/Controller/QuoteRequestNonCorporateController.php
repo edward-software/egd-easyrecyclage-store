@@ -96,7 +96,6 @@ class QuoteRequestNonCorporateController extends Controller
      */
     public function exportAction(Request $request)
     {
-
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
 
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
@@ -187,9 +186,13 @@ class QuoteRequestNonCorporateController extends Controller
     /**
      * @Route("/quoteRequestNonCorporate/view/{id}", name="paprec_commercial_quoteRequestNonCorporate_view")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function viewAction(Request $request, QuoteRequestNonCorporate $quoteRequestNonCorporate)
     {
+        $quoteRequestNonCorporateManager = $this->get('paprec_commercialquote_request_non_corporate_manager');
+        $quoteRequestNonCorporateManager->isDeleted($quoteRequestNonCorporate, true);
+
         $form = $this->createForm(QuoteRequestNonCorporateAssociatedQuoteType::class, $quoteRequestNonCorporate);
 
         return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate:view.html.twig', array(
@@ -201,9 +204,12 @@ class QuoteRequestNonCorporateController extends Controller
     /**
      * @Route("/quoteRequestNonCorporate/edit/{id}", name="paprec_commercial_quoteRequestNonCorporate_edit")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function editAction(Request $request, QuoteRequestNonCorporate $quoteRequestNonCorporate)
     {
+        $quoteRequestNonCorporateManager = $this->get('paprec_commercialquote_request_non_corporate_manager');
+        $quoteRequestNonCorporateManager->isDeleted($quoteRequestNonCorporate, true);
 
         $status = array();
         foreach ($this->getParameter('paprec_quote_status') as $s) {

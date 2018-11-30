@@ -89,6 +89,7 @@ class ProductD3EManager
             $query = $this->em
                 ->getRepository(ProductD3E::class)
                 ->createQueryBuilder('p')
+                ->where('p.deleted is NULL')
                 ->orderBy('p.position', 'ASC');
             if ($type == 'order') {
                 $query->andWhere('p.isPayableOnline = 1');

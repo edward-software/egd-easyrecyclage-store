@@ -6,6 +6,18 @@ services:
     class: Paprec\CommercialBundle\Service\AgencyManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
+  paprec_commercial.business_line_manager:
+    class: Paprec\CommercialBundle\Service\BusinessLineManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
+  paprec_commercial.call_back_manager:
+    class: Paprec\CommercialBundle\Service\CallBackManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
+  paprec_commercial.contact_us_manager:
+    class: Paprec\CommercialBundle\Service\ContactUsManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
   paprec_commercial.product_di_quote_manager:
     class: Paprec\CommercialBundle\Service\ProductDIQuoteManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
@@ -24,6 +36,14 @@ services:
 
   paprec_commercial.product_d3e_order_manager:
     class: Paprec\CommercialBundle\Service\ProductD3EOrderManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
+  paprec_commercial.quote_request_manager:
+    class: Paprec\CommercialBundle\Service\QuoteRequestManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
+  paprec_commercialquote_request_non_corporate_manager:
+    class: Paprec\CommercialBundle\Service\QuoteRequestNonCorporateManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
 parameters:

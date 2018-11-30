@@ -37,7 +37,7 @@ class ProductD3EQuoteManager
 
             $productD3EQuote = $this->em->getRepository('PaprecCatalogBundle:ProductD3EQuote')->find($id);
 
-            if ($productD3EQuote === null) {
+            if ($productD3EQuote === null || $this->isDeleted($productD3EQuote)) {
                 throw new EntityNotFoundException('productD3EQuoteNotFound');
             }
 
@@ -48,6 +48,33 @@ class ProductD3EQuoteManager
         }
     }
 
+    /**
+     * Vérification qu'à ce jour le productD3EQuote ne soit pas supprimé
+     *
+     * @param ProductD3EQuote $productD3EQuote
+     * @param bool $throwException
+     * @return bool
+     * @throws EntityNotFoundException
+     */
+    public function isDeleted(ProductD3EQuote $productD3EQuote, $throwException = false)
+    {
+        try {
+            $now = new \DateTime();
+        } catch (Exception $e) {
+        }
+
+        if ($productD3EQuote->getDeleted() !== null && $productD3EQuote->getDeleted() instanceof \DateTime && $productD3EQuote->getDeleted() < $now) {
+
+            if ($throwException) {
+                throw new EntityNotFoundException('productD3EQuoteNotFound');
+            }
+
+            return true;
+
+        }
+        return false;
+    }
+    
     /**
      * Ajoute une productD3EQuoteLine à un productD3EQuote
      * @param ProductD3EQuote $productD3EQuote

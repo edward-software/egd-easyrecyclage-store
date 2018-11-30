@@ -37,7 +37,7 @@ class ProductD3EOrderManager
 
             $productD3EOrder = $this->em->getRepository('PaprecCatalogBundle:ProductD3EOrder')->find($id);
 
-            if ($productD3EOrder === null) {
+            if ($productD3EOrder === null || $this->isDeleted($productD3EOrder)) {
                 throw new EntityNotFoundException('productD3EOrderNotFound');
             }
 
@@ -46,6 +46,33 @@ class ProductD3EOrderManager
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode());
         }
+    }
+
+    /**
+     * Vérification que le ProductD3EOrder ne soit pas supprimé
+     *
+     * @param ProductD3EOrder $productD3EOrder
+     * @param bool $throwException
+     * @return bool
+     * @throws EntityNotFoundException
+     */
+    public function isDeleted(ProductD3EOrder $productD3EOrder, $throwException = false)
+    {
+        try {
+            $now = new \DateTime();
+        } catch (Exception $e) {
+        }
+
+        if ($productD3EOrder->getDeleted() !== null && $productD3EOrder->getDeleted() instanceof \DateTime && $productD3EOrder->getDeleted() < $now) {
+
+            if ($throwException) {
+                throw new EntityNotFoundException('productD3EOrderNotFound');
+            }
+
+            return true;
+
+        }
+        return false;
     }
 
     /**

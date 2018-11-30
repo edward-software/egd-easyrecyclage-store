@@ -92,7 +92,6 @@ class ContactUsController extends Controller
      */
     public function exportAction(Request $request)
     {
-
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
 
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
@@ -167,9 +166,13 @@ class ContactUsController extends Controller
     /**
      * @Route("/contactUs/view/{id}", name="paprec_commercial_contactUs_view")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function viewAction(Request $request, ContactUs $contactUs)
     {
+        $contactUsManager = $this->get('paprec_commercial.contact_us_manager');
+        $contactUsManager->isDeleted($contactUs, true);
+
         return $this->render('PaprecCommercialBundle:ContactUs:view.html.twig', array(
             'contactUs' => $contactUs
         ));
@@ -182,6 +185,8 @@ class ContactUsController extends Controller
      */
     public function editAction(Request $request, ContactUs $contactUs)
     {
+        $contactUsManager = $this->get('paprec_commercial.contact_us_manager');
+        $contactUsManager->isDeleted($contactUs, true);
 
         $status = array();
         foreach ($this->getParameter('paprec_treatment_status') as $s) {

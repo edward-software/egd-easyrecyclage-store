@@ -37,7 +37,7 @@ class ProductDIQuoteManager
 
             $productDIQuote = $this->em->getRepository('PaprecCatalogBundle:ProductDIQuote')->find($id);
 
-            if ($productDIQuote === null) {
+            if ($productDIQuote === null || $this->isDeleted($productDIQuote)) {
                 throw new EntityNotFoundException('productDIQuoteNotFound');
             }
 
@@ -46,6 +46,33 @@ class ProductDIQuoteManager
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode());
         }
+    }
+
+    /**
+     * Vérification qu'à ce jour le ProductDIQuote ne soit pas supprimé
+     *
+     * @param ProductDIQuote $productDIQuote
+     * @param bool $throwException
+     * @return bool
+     * @throws EntityNotFoundException
+     */
+    public function isDeleted(ProductDIQuote $productDIQuote, $throwException = false)
+    {
+        try {
+            $now = new \DateTime();
+        } catch (Exception $e) {
+        }
+
+        if ($productDIQuote->getDeleted() !== null && $productDIQuote->getDeleted() instanceof \DateTime && $productDIQuote->getDeleted() < $now) {
+
+            if ($throwException) {
+                throw new EntityNotFoundException('productDIQuoteNotFound');
+            }
+
+            return true;
+
+        }
+        return false;
     }
 
     /**
