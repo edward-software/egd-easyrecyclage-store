@@ -38,6 +38,14 @@ class Cart
     private $dateUpdate;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="disabled", type="datetime", nullable=true)
+     */
+    private $disabled;
+
+
+    /**
      * @var string
      *
      * @ORM\Column(name="division", type="string", length=255, nullable=true)
@@ -442,5 +450,29 @@ class Cart
     public function getLongitude()
     {
         return $this->longitude;
+    }
+
+    /**
+     * Set disabled.
+     *
+     * @param \DateTime|null $disabled
+     *
+     * @return Cart
+     */
+    public function setDisabled($disabled = null)
+    {
+        $this->disabled = $disabled;
+
+        return $this;
+    }
+
+    /**
+     * Get disabled.
+     *
+     * @return \DateTime|null
+     */
+    public function getDisabled()
+    {
+        return $this->disabled;
     }
 }

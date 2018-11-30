@@ -168,12 +168,12 @@ class ProductChantierController extends Controller
      * @Route("/productChantier/view/{id}",  name="paprec_catalog_productChantier_view")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function viewAction(Request $request, ProductChantier $product)
+    public function viewAction(Request $request, ProductChantier $productChantier)
     {
-        if ($product->getDeleted() !== null) {
-            throw new NotFoundHttpException();
-        }
-        foreach($this->getParameter('paprec_types_picture') as $type) {
+        $productChantierManager = $this->get('paprec_catalog.product_D3E_manager');
+        $productChantierManager->isDeleted($productChantier, true);
+
+        foreach ($this->getParameter('paprec_types_picture') as $type) {
             $types[$type] = $type;
         }
 
@@ -189,7 +189,7 @@ class ProductChantierController extends Controller
 
 
         return $this->render('PaprecCatalogBundle:ProductChantier:view.html.twig', array(
-            'productChantier' => $product,
+            'productChantier' => $productChantier,
             'formAddPicture' => $formAddPicture->createView(),
             'formEditPicture' => $formEditPicture->createView()
         ));
@@ -233,9 +233,8 @@ class ProductChantierController extends Controller
      */
     public function editAction(Request $request, ProductChantier $productChantier)
     {
-        if ($productChantier->getDeleted() !== null) {
-            throw new NotFoundHttpException();
-        }
+        $productChantierManager = $this->get('paprec_catalog.product_D3E_manager');
+        $productChantierManager->isDeleted($productChantier, true);
 
         $form = $this->createForm(ProductChantierType::class, $productChantier);
 
@@ -344,10 +343,11 @@ class ProductChantierController extends Controller
      * @Method("POST")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function addPictureAction(Request $request, ProductChantier $productChantier) {
+    public function addPictureAction(Request $request, ProductChantier $productChantier)
+    {
 
         $picture = new Picture();
-        foreach($this->getParameter('paprec_types_picture') as $type) {
+        foreach ($this->getParameter('paprec_types_picture') as $type) {
             $types[$type] = $type;
         }
 
@@ -358,9 +358,8 @@ class ProductChantierController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $form->handleRequest($request);
-        if($form->isValid())
-        {
-            $picture =  $form->getData();
+        if ($form->isValid()) {
+            $picture = $form->getData();
             $productChantier->setDateUpdate(new \DateTime());
 
             if ($picture->getPath() instanceof UploadedFile) {
@@ -391,7 +390,8 @@ class ProductChantierController extends Controller
      * @Method("POST")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editPictureAction(Request $request, ProductChantier $productChantier) {
+    public function editPictureAction(Request $request, ProductChantier $productChantier)
+    {
 
         $em = $this->getDoctrine()->getManager();
 
@@ -401,7 +401,7 @@ class ProductChantierController extends Controller
 
         $em = $this->getDoctrine()->getEntityManager();
 
-        foreach($this->getParameter('paprec_types_picture') as $type) {
+        foreach ($this->getParameter('paprec_types_picture') as $type) {
             $types[$type] = $type;
         }
 
@@ -411,9 +411,8 @@ class ProductChantierController extends Controller
 
 
         $form->handleRequest($request);
-        if($form->isValid())
-        {
-            $picture =  $form->getData();
+        if ($form->isValid()) {
+            $picture = $form->getData();
             $productChantier->setDateUpdate(new \DateTime());
 
             if ($picture->getPath() instanceof UploadedFile) {
@@ -452,7 +451,7 @@ class ProductChantierController extends Controller
         $pictureID = $request->get('pictureID');
 
         $pictures = $productChantier->getPictures();
-        foreach($pictures as $picture) {
+        foreach ($pictures as $picture) {
             if ($picture->getId() == $pictureID) {
                 $productChantier->setDateUpdate(new \DateTime());
                 $this->removeFile($this->getParameter('paprec_catalog.product.di.picto_path') . '/' . $picture->getPath());
@@ -478,7 +477,7 @@ class ProductChantierController extends Controller
 
         $pictureID = $request->get('pictureID');
         $pictures = $productChantier->getPictures();
-        foreach($pictures as $picture) {
+        foreach ($pictures as $picture) {
             if ($picture->getId() == $pictureID) {
                 $productChantier->setDateUpdate(new \DateTime());
                 $picture->setType('PILOTPICTURE');
@@ -502,7 +501,7 @@ class ProductChantierController extends Controller
 
         $pictureID = $request->get('pictureID');
         $pictures = $productChantier->getPictures();
-        foreach($pictures as $picture) {
+        foreach ($pictures as $picture) {
             if ($picture->getId() == $pictureID) {
                 $productChantier->setDateUpdate(new \DateTime());
                 $picture->setType('PICTURE');

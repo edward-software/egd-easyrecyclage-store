@@ -167,9 +167,8 @@ class CategoryController extends Controller
      */
     public function viewAction(Request $request, Category $category)
     {
-        if ($category->getDeleted() !== null) {
-            throw new NotFoundHttpException();
-        }
+        $categoryManager = $this->get('paprec_catalog.category_manager');
+        $categoryManager->isDeleted($category, true);
 
         return $this->render('PaprecCatalogBundle:Category:view.html.twig', array(
             'category' => $category
@@ -263,9 +262,8 @@ class CategoryController extends Controller
      */
     public function editAction(Request $request, Category $category)
     {
-        if ($category->getDeleted() !== null) {
-            throw new NotFoundHttpException();
-        }
+        $categoryManager = $this->get('paprec_catalog.category_manager');
+        $categoryManager->isDeleted($category, true);
 
         $divisions = array();
         foreach ($this->getParameter('paprec_divisions') as $division) {

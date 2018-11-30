@@ -127,6 +127,13 @@
                                     <div class="card">
                                         <div class="card-header">
                                             {{ 'Catalog.ProductD3E.Picto'|trans }}
+                                            <div class="float-right">
+                                                <button class="btn btn-sm btn-outline-primary"
+                                                        data-target="#uploadPictureModal" data-toggle="modal"
+                                                        data-type="PICTO" id="openModalUploadPicture">
+                                                    <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductD3E.AddPicture'|trans }}
+                                                </button>
+                                            </div>
                                         </div>
                                         <div class="card-body">
                                             <div class="card-group">
@@ -153,8 +160,8 @@
                                                                                 data-id="{{ picto.id }}">
                                                                             <i class="fa fa-xs fa-pencil-alt"></i> {{ 'General.Edit'|trans }}
                                                                         </button>
-                                                                        <button onclick="removePicture(this)"
-                                                                                class="dropdown-item"
+                                                                        <button data-id="{{ picto.id }}"
+                                                                                class="dropdown-item removePictureButton"
                                                                                 type="button">
                                                                             <i class="fa fa-xs fa-trash"></i> {{ 'General.Remove'|trans }}
                                                                         </button>
@@ -167,17 +174,6 @@
                                                         </div>
                                                     {% endfor %}
                                                 {% endif %}
-                                                {#
-                                                    Card d'ajout d'une nouvelle photo Picto
-                                                #}
-                                                <div class="card card-sec bg-transparent border-0">
-                                                    <button class="card-img-top btn btn-sm btn-light h-100 bg-transparent border-0"
-                                                            data-target="#uploadPictureModal" data-toggle="modal"
-                                                            data-type="Picto"
-                                                            id="openModalUploadPicture">
-                                                        <i class="fa fa-xs fa-plus-circle fa-2x"></i>
-                                                    </button>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -217,7 +213,10 @@
                                                     data-dismiss="modal">
                                                 {{ 'General.Cancel'|trans }}
                                             </button>
-                                            {{ form_widget(formAddPicture.save, { 'label': 'General.Save'|trans }) }}
+                                            <button type="button" class="btn btn-sm btn-primary"
+                                                    id="formAddPictureSubmitButton">
+                                                {{ 'General.Save'|trans }}
+                                            </button>
 
                                         </div>
                                         {{ form_rest(formAddPicture) }}
@@ -255,8 +254,10 @@
                                                     data-dismiss="modal">
                                                 {{ 'General.Cancel'|trans }}
                                             </button>
-                                            {{ form_widget(formEditPicture.save, { 'label': 'General.Save'|trans }) }}
-
+                                            <button type="button" class="btn btn-sm btn-primary"
+                                                    id="formEditPictureSubmitButton">
+                                                {{ 'General.Save'|trans }}
+                                            </button>
                                         </div>
                                         {{ form_rest(formEditPicture) }}
                                     </form>
@@ -320,55 +321,62 @@
                     $('#catalogProductD3EForm').submit();
 
                 });
-            });
-
-            // Au chargement de la modal d'ajout d'une photo
-            // On met à jour le titre de la modal d'ajout de photo en fonction du type que l'on ajoute
-            // On modifie aussi l'url d'action pour passer en paramètre le type de photo à ajouter
-            $('#uploadPictureModal').on('show.bs.modal', function (e) {
-                var type = $(e.relatedTarget).data('type');
-                var actionUrl = "{{ path("paprec_catalog_productD3E_addPicture", {id: productD3E.id, type: 'typeTmp'}) }}";
-                actionUrl = actionUrl.replace('typeTmp', type);
-                document.formAddPicture.action = actionUrl;
-                switch (type) {
-                    case 'Picto':
-                        type = "{{ 'Catalog.ProductD3E.Picto'|trans }}";
-                        break;
-                        {#case 'PilotPicture':#}
-                        {#type = "{{ 'Catalog.ProductD3E.PilotPicture'|trans }}";#}
-                        {#break;#}
-                    default:
-                        type = "{{ 'Catalog.ProductD3E.Pictures'|trans }}";
-                        break;
-                }
-                var title = document.getElementById('uploadPictureModalTitle');
-                title.innerText = type;
-            });
-
-            // Au chargement de la modal d'édition d'une photo
-            // On modifie l'URL d'action du formulaire pour passer en paramètre l'ID de la photo modifiée
-            $('#editPictureModal').on('show.bs.modal', function (e) {
-                var pictureID = $(e.relatedTarget).data('id');
-                var type = $(e.relatedTarget).data('type');
-                var actionUrl = "{{ path("paprec_catalog_productD3E_editPicture", {id: productD3E.id, pictureID: 'pictureTmp'}) }}";
-                actionUrl = actionUrl.replace('pictureTmp', pictureID);
-                document.formEditPicture.action = actionUrl;
-                var title = document.getElementById('editPictureModalTitle');
-                title.innerText = type;
-            });
 
 
-            function removePicture(obj) {
-                var picId = "";
-                picId = obj.parentNode.previousElementSibling.id;
-                bootbox.confirm("{{ 'Catalog.ProductD3E.Confirm-remove-picture'|trans }}", function (result) {
-                    if (result === true) {
-                        var url = "{{ path("paprec_catalog_productD3E_removePicture", {id: productD3E.id, pictureID: 'pictureTmp'}) }}";
-                        url = url.replace('pictureTmp', picId);
-                        $(location).attr('href', url);
+                // Au chargement de la modal d'ajout d'une photo
+                // On met à jour le titre de la modal d'ajout de photo en fonction du type que l'on ajoute
+                // On modifie aussi l'url d'action pour passer en paramètre le type de photo à ajouter
+                $('#uploadPictureModal').on('show.bs.modal', function (e) {
+                    var type = $(e.relatedTarget).data('type');
+                    var actionUrl = "{{ path("paprec_catalog_productD3E_addPicture", {id: productD3E.id, type: 'typeTmp'}) }}";
+                    actionUrl = actionUrl.replace('typeTmp', type);
+                    document.formAddPicture.action = actionUrl;
+                    switch (type) {
+                        case 'Picto':
+                            type = "{{ 'Catalog.ProductD3E.Picto'|trans }}";
+                            break;
+                            {#case 'PilotPicture':#}
+                            {#type = "{{ 'Catalog.ProductD3E.PilotPicture'|trans }}";#}
+                            {#break;#}
+                        default:
+                            type = "{{ 'Catalog.ProductD3E.Pictures'|trans }}";
+                            break;
                     }
+                    var title = document.getElementById('uploadPictureModalTitle');
+                    title.innerText = type;
                 });
-            };
+
+                // Au chargement de la modal d'édition d'une photo
+                // On modifie l'URL d'action du formulaire pour passer en paramètre l'ID de la photo modifiée
+                $('#editPictureModal').on('show.bs.modal', function (e) {
+                    var pictureID = $(e.relatedTarget).data('id');
+                    var type = $(e.relatedTarget).data('type');
+                    var actionUrl = "{{ path("paprec_catalog_productD3E_editPicture", {id: productD3E.id, pictureID: 'pictureTmp'}) }}";
+                    actionUrl = actionUrl.replace('pictureTmp', pictureID);
+                    document.formEditPicture.action = actionUrl;
+                    var title = document.getElementById('editPictureModalTitle');
+                    title.innerText = type;
+                });
+
+                $('.removePictureButton').on('click', function () {
+                    picId = $(this).data('id');
+                    bootbox.confirm("{{ 'Catalog.ProductD3E.Confirm-remove-picture'|trans }}", function (result) {
+                        if (result === true) {
+                            var url = "{{ path("paprec_catalog_productD3E_removePicture", {id: productD3E.id, pictureID: 'pictureTmp'}) }}";
+                            url = url.replace('pictureTmp', picId);
+                            $(location).attr('href', url);
+                        }
+                    });
+                });
+
+                $('#formAddPictureSubmitButton').on('click', function () {
+                    $('#formAddPicture').submit();
+                });
+
+                $('#formEditPictureSubmitButton').on('click', function () {
+                    $('#formEditPicture').submit();
+                });
+            });
         </script>
 
     {% endblock %}

@@ -37,9 +37,13 @@ class ProductDIManager
 
             $productDI = $this->em->getRepository('PaprecCatalogBundle:ProductDI')->find($id);
 
-            if ($productDI === null) {
+            /**
+             * Vérification que le produit existe ou ne soit pas supprimé
+             */
+            if ($productDI === null || $this->isDeleted($productDI)) {
                 throw new EntityNotFoundException('productDINotFound');
             }
+
 
             return $productDI;
 
@@ -69,6 +73,14 @@ class ProductDIManager
         }
     }
 
+    /**
+     * Vérifie qu'à ce jour, le produit ce soit pas supprimé
+     *
+     * @param ProductDI $productDI
+     * @param bool $throwException
+     * @return bool
+     * @throws EntityNotFoundException
+     */
     public function isDeleted(ProductDI $productDI, $throwException = false)
     {
         $now = new \DateTime();

@@ -10,6 +10,7 @@ namespace Paprec\CatalogBundle\Service;
 
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\ORMException;
 use Exception;
 use Paprec\CatalogBundle\Entity\Category;
@@ -36,7 +37,7 @@ class CategoryManager
 
             $category = $this->em->getRepository('PaprecCatalogBundle:Category')->find($id);
 
-            if ($category === null) {
+            if ($category === null || $this->isDeleted($category)) {
                 throw new EntityNotFoundException('categoryNotFound');
             }
 
@@ -45,6 +46,30 @@ class CategoryManager
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode());
         }
+    }
+
+    /**
+     * Vérification qu'à ce jour la catégorie n'est pas supprimée
+     *
+     * @param Category $category
+     * @param bool $throwException
+     * @return bool
+     * @throws EntityNotFoundException
+     */
+    public function isDeleted(Category $category, $throwException = false)
+    {
+        $now = new \DateTime();
+
+        if ($category->getDeleted() !== null && $category->getDeleted() instanceof \DateTime && $category->getDeleted() < $now) {
+
+            if ($throwException) {
+                throw new EntityNotFoundException('categoryNotFound');
+            }
+
+            return true;
+
+        }
+        return false;
     }
 
 

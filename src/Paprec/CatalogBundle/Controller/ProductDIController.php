@@ -170,9 +170,8 @@ class ProductDIController extends Controller
      */
     public function viewAction(Request $request, ProductDI $productDI)
     {
-        if ($productDI->getDeleted() !== null) {
-            throw new NotFoundHttpException();
-        }
+        $productDIManager = $this->get('paprec_catalog.product_di_manager');
+        $productDIManager->isDeleted($productDI, true);
 
         foreach ($this->getParameter('paprec_types_picture') as $type) {
             $types[$type] = $type;
@@ -230,6 +229,8 @@ class ProductDIController extends Controller
     /**
      * @Route("/productDI/edit/{id}",  name="paprec_catalog_productDI_edit")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws \Exception
      */
     public function editAction(Request $request, ProductDI $productDI)
     {
@@ -384,10 +385,11 @@ class ProductDIController extends Controller
      */
     public function editPictureAction(Request $request, ProductDI $productDI)
     {
+        $productDIManager = $this->get('paprec_catalog.product_di_manager');
 
         $em = $this->getDoctrine()->getManager();
         $pictureID = $request->get('pictureID');
-        $picture = $em->getRepository('PaprecCatalogBundle:Picture')->find($pictureID);
+        $picture = $productDIManager->get($productDI);
         $oldPath = $picture->getPath();
 
         $em = $this->getDoctrine()->getEntityManager();

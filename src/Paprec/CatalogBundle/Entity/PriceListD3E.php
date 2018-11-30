@@ -77,6 +77,11 @@ class PriceListD3E
         $this->priceListLineD3Es = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
     /**
      * Get id.
      *

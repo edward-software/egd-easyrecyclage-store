@@ -44,13 +44,9 @@ class CartManager
 
             $cart = $this->em->getRepository('PaprecPublicBundle:Cart')->find($id);
 
-            if ($cart === null) {
+            if ($cart === null || $this->isDisabled($cart)) {
                 throw new EntityNotFoundException('cartNotFound');
             }
-
-            /**
-             * TODO : gérer le isDisabled
-             */
 
             return $cart;
 
@@ -60,26 +56,49 @@ class CartManager
     }
 
     /**
-     * Créé un nouveau Cart
-     * @param $location
-     * @param $division
-     * @param $frequency
+     * Vérification qu'a ce jour, le cart ne soit pas désactivé
+     *
+     * @param Cart $cart
+     * @param bool $throwException
+     * @return bool
+     * @throws EntityNotFoundException
+     */
+    public function isDisabled(Cart $cart, $throwException = false)
+    {
+        $now = new \DateTime();
+
+        if ($cart->getDisabled() !== null && $cart->getDisabled() instanceof \DateTime && $cart->getDisabled() < $now) {
+
+            if ($throwException) {
+                throw new EntityNotFoundException('cartNotFound');
+            }
+
+            return true;
+
+        }
+        return false;
+    }
+
+    /**
+     * Créé un nouveau Cart en initialisant sa date Disabled  dans Today + $deltaJours
+     *
+     * @param $deltaJours
      * @return Cart
      * @throws Exception
      */
-    public function add($location, $division, $frequency)
+    public function create($deltaJours)
     {
         try {
 
             $cart = new Cart();
 
-            $cart->setDivision($division);
-            $cart->setLocation($location);
-            $cart->setFrequency($frequency);
-
             /**
-             * TODO : Intégrer la date isDisabled directement pour dans "6 mois" (à mettre en parametre, en jour)
+             * Initialisant de $disabled
              */
+            $now = new \DateTime();
+            $disabledDate = $now->modify('+' . $deltaJours . 'day');
+            $cart->setDisabled($disabledDate);
+
 
             $this->em->persist($cart);
             $this->em->flush();
@@ -98,14 +117,15 @@ class CartManager
      * @return Cart
      * @throws Exception
      */
-    public function cloneCart($cart) {
+    public function cloneCart($cart)
+    {
         try {
             $cart = $this->get($cart);
 
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode());
         }
-        $newCart = new Cart();
+        $newCart = $this->create(90);
         $newCart->setLocation($cart->getLocation());
         $newCart->setPostalCode($cart->getPostalCode());
         $newCart->setCity($cart->getCity());
@@ -323,7 +343,7 @@ class CartManager
                         'category' => $category
                     )
                 );
-                if($productDICategory !== null) {
+                if ($productDICategory !== null) {
                     $loadedCart['sum'] += $productDICategory->getUnitPrice() * $productsCategory['qtty'];
                 }
             }

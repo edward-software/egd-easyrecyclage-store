@@ -170,9 +170,9 @@ class ProductD3EController extends Controller
      */
     public function viewAction(Request $request, ProductD3E $productD3E)
     {
-        if ($productD3E->getDeleted() !== null) {
-            throw new NotFoundHttpException();
-        }
+        $productD3EManager = $this->get('paprec_catalog.product_D3E_manager');
+        $productD3EManager->isDeleted($productD3E, true);
+
         foreach($this->getParameter('paprec_types_picture') as $type) {
             $types[$type] = $type;
         }
@@ -229,12 +229,13 @@ class ProductD3EController extends Controller
     /**
      * @Route("/productD3E/edit/{id}",  name="paprec_catalog_productD3E_edit")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws \Exception
      */
     public function editAction(Request $request, ProductD3E $productD3E)
     {
-        if ($productD3E->getDeleted() !== null) {
-            throw new NotFoundHttpException();
-        }
+        $productD3EManager = $this->get('paprec_catalog.product_D3E_manager');
+        $productD3EManager->isDeleted($productD3E, true);
 
         $form = $this->createForm(ProductD3EType::class, $productD3E);
 
@@ -335,8 +336,8 @@ class ProductD3EController extends Controller
      * @Method("POST")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function addPictureAction(Request $request, ProductD3E $productD3E) {
-
+    public function addPictureAction(Request $request, ProductD3E $productD3E)
+    {
         $picture = new Picture();
         foreach($this->getParameter('paprec_types_picture') as $type) {
             $types[$type] = $type;
@@ -383,7 +384,6 @@ class ProductD3EController extends Controller
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function editPictureAction(Request $request, ProductD3E $productD3E) {
-
         $em = $this->getDoctrine()->getManager();
         $pictureID = $request->get('pictureID');
         $picture = $em->getRepository('PaprecCatalogBundle:Picture')->find($pictureID);

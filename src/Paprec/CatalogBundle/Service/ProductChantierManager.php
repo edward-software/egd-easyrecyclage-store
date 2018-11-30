@@ -37,7 +37,10 @@ class ProductChantierManager
 
             $productChantier = $this->em->getRepository('PaprecCatalogBundle:ProductChantier')->find($id);
 
-            if ($productChantier === null) {
+            /**
+             * Vérification que le produit existe ou ne soit pas supprimé
+             */
+            if ($productChantier === null || $this->isDeleted($productChantier)) {
                 throw new EntityNotFoundException('productChantierNotFound');
             }
 
@@ -46,6 +49,30 @@ class ProductChantierManager
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode());
         }
+    }
+
+    /**
+     * Vérification qu'à ce jour le produit n'est pas supprimé
+     *
+     * @param ProductChantier $productChantier
+     * @param bool $throwException
+     * @return bool
+     * @throws EntityNotFoundException
+     */
+    public function isDeleted(ProductChantier $productChantier, $throwException = false)
+    {
+        $now = new \DateTime();
+
+        if ($productChantier->getDeleted() !== null && $productChantier->getDeleted() instanceof \DateTime && $productChantier->getDeleted() < $now) {
+
+            if ($throwException) {
+                throw new EntityNotFoundException('productChantierNotFound');
+            }
+
+            return true;
+
+        }
+        return false;
     }
 
     /**

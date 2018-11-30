@@ -202,6 +202,7 @@ Catalog:
       EditPicto:                  Modificiation du picto
       List:                       Liste des produits D3E
       Add:                        Ajouter un produit
+      AddPicture:                 Ajouter
       Export:                     Exporter les produits
       View:                       Visualiser le produit D3E
       Edit:                       Modifier le produit D3E

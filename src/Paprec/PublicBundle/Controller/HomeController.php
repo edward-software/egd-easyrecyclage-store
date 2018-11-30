@@ -33,7 +33,7 @@ class HomeController extends Controller
         $step = "l";
 
         if (!$cartUuid) {
-            $cart = new Cart();
+            $cart = $cartManager->create(90);
             $em->persist($cart);
             $em->flush();
             return $this->redirectToRoute('paprec_public_corp_home_index', array(
