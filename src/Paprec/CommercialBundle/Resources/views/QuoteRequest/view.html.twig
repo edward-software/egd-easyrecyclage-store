@@ -38,7 +38,8 @@
                         <a href="{{ path("paprec_commercial_quoteRequest_edit", {id: quoteRequest.id}) }}"
                            class="btn btn-sm btn-warning"><i
                                     class="fa fa-xs fa-edit"></i> {{ 'Commercial.QuoteRequest.Edit'|trans }}</a>
-                        <a id="commmecialQuoteRequestRemoveButton_" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
+                        <a id="commmecialQuoteRequestRemoveButton_" href="javascript:void(0);"
+                           class="btn btn-sm btn-danger"><i
                                     class="fa fa-xs fa-trash"></i> {{ 'Commercial.QuoteRequest.Remove'|trans }}</a>
                     </div>
                 </h4>
@@ -92,10 +93,10 @@
                                     </label>
                                 </div>
                                 {#<div class="form-group row">#}
-                                    {#<label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.AttachedFiles'|trans }}</label>#}
-                                    {#<label class="col-form-label">#}
-                                        {#{{ quoteRequest.att }}#}
-                                    {#</label>#}
+                                {#<label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.AttachedFiles'|trans }}</label>#}
+                                {#<label class="col-form-label">#}
+                                {#{{ quoteRequest.att }}#}
+                                {#</label>#}
                                 {#</div>#}
                             </div>
                             <div class="col-md-6">
@@ -128,7 +129,8 @@
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.AttachedFiles'|trans }}</label>
                                     <label class="col-form-label">
                                         {% if quoteRequest.attachedFiles %}
-                                            <a href="{{ path('paprec_commercial_quoteRequest_downloadAttachedFiles', {id: quoteRequest.id}) }}"><i class="fa fa-download"></i></a>
+                                            <a href="{{ path('paprec_commercial_quoteRequest_downloadAttachedFiles', {id: quoteRequest.id}) }}"><i
+                                                        class="fa fa-download"></i></a>
                                         {% endif %}
                                     </label>
                                 </div>
@@ -202,7 +204,54 @@
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.AssociatedQuote'|trans }}</label>
                                     <label class="col-form-label">
                                         {% if quoteRequest.associatedQuote %}
-                                        <a href="{{ path('paprec_commercial_quoteRequest_downloadAssociatedQuote', {id: quoteRequest.id}) }}"><i class="fa fa-download"></i></a>
+                                            <a href="{{ path('paprec_commercial_quoteRequest_downloadAssociatedQuote', {id: quoteRequest.id}) }}"><i
+                                                        class="fa fa-download"></i></a>
+                                        {% else %}
+                                            <button class="btn btn-sm btn-outline-primary"
+                                                    data-target="#uploadAssociatedQuoteModal" data-toggle="modal"
+                                                    id="openModalUploadQuote">
+                                                <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.QuoteRequest.AddAssociatedQuote'|trans }}
+                                            </button>
+                                            <div class="modal fade" id="uploadAssociatedQuoteModal" tabindex="-1"
+                                                 role="dialog"
+                                                 aria-labelledby="Upload Picture" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <form id="formAddAssociatedQuote" name="formAddAssociatedQuote"
+                                                              action="{{ path("paprec_commercial_quoteRequest_addAssociatedQuote", {id: quoteRequest.id}) }}"
+                                                              method="post" enctype="multipart/form-data">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">{{ 'Commercial.QuoteRequest.AddAssociatedQuote'|trans }}
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <div class="form-label">{{ 'Commercial.ChoseFile'|trans }}</div>
+                                                                    <div class="form-content">
+                                                                        {{ form_widget(formAddAssociatedQuote.associatedQuote, {'attr': {'class': 'form-control'}}) }}
+                                                                        {{ form_errors(formAddAssociatedQuote.associatedQuote) }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-sm btn-secondary"
+                                                                        data-dismiss="modal">
+                                                                    {{ 'General.Cancel'|trans }}
+                                                                </button>
+                                                                <button type="button" class="btn btn-sm btn-primary"
+                                                                        id="formAddAssociatedQuoteSubmitButton">
+                                                                    {{ 'General.Save'|trans }}
+                                                                </button>
+                                                            </div>
+                                                            {{ form_rest(formAddAssociatedQuote) }}
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         {% endif %}
                                     </label>
                                 </div>
@@ -260,5 +309,9 @@
 
                     });
                 });
+
+                $('#formAddAssociatedQuoteSubmitButton').on('click', function () {
+                    $('#formAddAssociatedQuote').submit();
+                })
             </script>
         {% endblock %}

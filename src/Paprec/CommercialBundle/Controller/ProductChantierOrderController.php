@@ -5,9 +5,11 @@ namespace Paprec\CommercialBundle\Controller;
 use Exception;
 use Paprec\CommercialBundle\Entity\ProductChantierOrder;
 use Paprec\CommercialBundle\Entity\ProductChantierOrderLine;
+use Paprec\CommercialBundle\Form\ProductChantierOrder\ProductChantierOrderInvoiceType;
 use Paprec\CommercialBundle\Form\ProductChantierOrder\ProductChantierOrderLineAddType;
 use Paprec\CommercialBundle\Form\ProductChantierOrder\ProductChantierOrderLineEditType;
 use Paprec\CommercialBundle\Form\ProductChantierOrder\ProductChantierOrderType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -179,8 +181,11 @@ class ProductChantierOrderController extends Controller
      */
     public function viewAction(Request $request, ProductChantierOrder $productChantierOrder)
     {
+        $formAddInvoice = $this->createForm(ProductChantierOrderInvoiceType::class, $productChantierOrder);
+
         return $this->render('PaprecCommercialBundle:ProductChantierOrder:view.html.twig', array(
-            'productChantierOrder' => $productChantierOrder
+            'productChantierOrder' => $productChantierOrder,
+            'formAddInvoice' => $formAddInvoice->createView()
         ));
     }
 
@@ -425,8 +430,49 @@ class ProductChantierOrderController extends Controller
         ));
     }
 
+
     /**
-     * @Route("/productChantierOrder/{id}/downloadAssociatedInvoice", name="paprec_commercial_quoteRequest_downloadAssociatedInvoice")
+     * @Route("/productChantierOrder/addInvoice/{id}", name="paprec_commercial_productChantierOrder_addInvoice")
+     * @Method("POST")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @throws Exception
+     */
+    public function addInvoiceAction(Request $request, ProductChantierOrder $productChantierOrder)
+    {
+
+        $form = $this->createForm(ProductChantierOrderInvoiceType::class, $productChantierOrder);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $productChantierOrder = $form->getData();
+            $productChantierOrder->setDateUpdate(new \DateTime());
+
+            if ($productChantierOrder->getAssociatedInvoice() instanceof UploadedFile) {
+                $associatedInvoice = $productChantierOrder->getAssociatedInvoice();
+                $associatedInvoiceFileName = md5(uniqid()) . '.' . $associatedInvoice->guessExtension();
+
+                $associatedInvoice->move($this->getParameter('paprec_commercial.product_chantier_order.files_path'), $associatedInvoiceFileName);
+
+                $productChantierOrder->setAssociatedInvoice($associatedInvoiceFileName);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_commercial_productChantierOrder_view', array(
+                'id' => $productChantierOrder->getId()
+            ));
+        }
+        return $this->render('PaprecCommercialBundle:ProductChantierOrder:view.html.twig', array(
+            'productChantierOrder' => $productChantierOrder,
+            'formAddInvoice' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Route("/productChantierOrder/{id}/downloadAssociatedInvoice", name="paprec_commercial_productChantierOrder_downloadAssociatedInvoice")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function downloadAssociatedQuoteAction( ProductChantierOrder $productChantierOrder)

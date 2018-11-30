@@ -39,8 +39,7 @@ class HomeController extends Controller
             return $this->redirectToRoute('paprec_public_corp_home_index', array(
                 'cartUuid' => $cart->getId()
             ));
-        }
-        else {
+        } else {
             $cart = $cartManager->get($cartUuid);
 
             /**
@@ -49,7 +48,7 @@ class HomeController extends Controller
              * Quand l est définie on passe à l'étape d puis f
              * si on choisit "Régulier", on passe en étape r
              */
-    //            $divisions = $this->getParameter('paprec_divisions');
+            //            $divisions = $this->getParameter('paprec_divisions');
             $divisions = array();
             foreach ($this->getParameter('paprec_divisions_select') as $division => $divisionLong) {
                 $divisions[$division] = $divisionLong;
@@ -137,11 +136,17 @@ class HomeController extends Controller
         $cartManager = $this->get('paprec.cart_manager');
         $cart = $cartManager->get($cartUuid);
 
+        // Si le Cart a déjà une division
+        // alors on créé un noveau Cart
+        if ($cart->getDivision() && $cart->getDivision() != '') {
+            $cart = $cartManager->cloneCart($cart);
+        }
+
         $cart->setDivision($division);
         $em->flush();
 
         return $this->redirectToRoute('paprec_public_corp_home_index', array(
-            'cartUuid' => $cartUuid
+            'cartUuid' => $cart->getId()
         ));
     }
 
@@ -224,11 +229,11 @@ class HomeController extends Controller
     }
 
     /**
- * Formulaire pour besoin Régulier : commun à toutes les divisions donc dans HomeController
- * @Route("/regularConfirm/{cartUuid}/{quoteRequestId}", name="paprec_public_home_regularConfirm")
- * @param Request $request
- * @throws \Exception
- */
+     * Formulaire pour besoin Régulier : commun à toutes les divisions donc dans HomeController
+     * @Route("/regularConfirm/{cartUuid}/{quoteRequestId}", name="paprec_public_home_regularConfirm")
+     * @param Request $request
+     * @throws \Exception
+     */
     public function regularConfirmAction(Request $request, $cartUuid, $quoteRequestId)
     {
         $em = $this->getDoctrine()->getManager();

@@ -31,6 +31,8 @@ parameters:
   paprec_commercial.contact_us.files_path: "%kernel.root_dir%/../var/files"
 
   paprec_commercial.product_chantier_order.files_path: "%kernel.root_dir%/../var/files/invoices"
+  paprec_commercial.product_d3e_order.files_path: "%kernel.root_dir%/../var/files/invoices"
+
 
 
 

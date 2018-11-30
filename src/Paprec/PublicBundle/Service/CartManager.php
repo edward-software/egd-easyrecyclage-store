@@ -92,6 +92,32 @@ class CartManager
     }
 
     /**
+     * Créé un nouveau Cart à partir d'un autre en copiant ses données géographiques
+     * Utile lorsque l'on change de choix de division mais que l'on veut conserver les données "Je me situe"
+     * @param $cart
+     * @return Cart
+     * @throws Exception
+     */
+    public function cloneCart($cart) {
+        try {
+            $cart = $this->get($cart);
+
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+        $newCart = new Cart();
+        $newCart->setLocation($cart->getLocation());
+        $newCart->setPostalCode($cart->getPostalCode());
+        $newCart->setCity($cart->getCity());
+        $newCart->setLongitude($cart->getLongitude());
+        $newCart->setLatitude($cart->getLatitude());
+
+        $this->em->persist($newCart);
+
+        return $newCart;
+    }
+
+    /**
      * Ajoute une displayedCategory au simple_array displayedCategories du cart si elle n'est pas déjà existante
      * La supprime si elle existe déjà
      * @param $id

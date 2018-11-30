@@ -5,9 +5,11 @@ namespace Paprec\CommercialBundle\Controller;
 use Exception;
 use Paprec\CommercialBundle\Entity\ProductD3EOrder;
 use Paprec\CommercialBundle\Entity\ProductD3EOrderLine;
+use Paprec\CommercialBundle\Form\ProductD3EOrder\ProductD3EOrderInvoiceType;
 use Paprec\CommercialBundle\Form\ProductD3EOrder\ProductD3EOrderLineAddType;
 use Paprec\CommercialBundle\Form\ProductD3EOrder\ProductD3EOrderLineEditType;
 use Paprec\CommercialBundle\Form\ProductD3EOrder\ProductD3EOrderType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -176,11 +178,16 @@ class ProductD3EOrderController extends Controller
     /**
      * @Route("/productD3EOrder/view/{id}", name="paprec_commercial_productD3EOrder_view")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws Exception
      */
     public function viewAction(Request $request, ProductD3EOrder $productD3EOrder)
     {
+        $formAddInvoice = $this->createForm(ProductD3EOrderInvoiceType::class, $productD3EOrder);
+
+
         return $this->render('PaprecCommercialBundle:ProductD3EOrder:view.html.twig', array(
-            'productD3EOrder' => $productD3EOrder
+            'productD3EOrder' => $productD3EOrder,
+            'formAddInvoice' => $formAddInvoice->createView()
         ));
     }
 
@@ -419,10 +426,50 @@ class ProductD3EOrderController extends Controller
     }
 
     /**
-     * @Route("/productD3EOrder/{id}/downloadAssociatedInvoice", name="paprec_commercial_quoteRequest_downloadAssociatedInvoice")
+     * @Route("/productD3EOrder/addInvoice/{id}", name="paprec_commercial_productD3EOrder_addInvoice")
+     * @Method("POST")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @throws Exception
+     */
+    public function addInvoiceAction(Request $request, ProductD3EOrder $productD3EOrder)
+    {
+
+        $form = $this->createForm(ProductD3EOrderInvoiceType::class, $productD3EOrder);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $productD3EOrder = $form->getData();
+            $productD3EOrder->setDateUpdate(new \DateTime());
+
+            if ($productD3EOrder->getAssociatedInvoice() instanceof UploadedFile) {
+                $associatedInvoice = $productD3EOrder->getAssociatedInvoice();
+                $associatedInvoiceFileName = md5(uniqid()) . '.' . $associatedInvoice->guessExtension();
+
+                $associatedInvoice->move($this->getParameter('paprec_commercial.product_d3e_order.files_path'), $associatedInvoiceFileName);
+
+                $productD3EOrder->setAssociatedInvoice($associatedInvoiceFileName);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_commercial_productD3EOrder_view', array(
+                'id' => $productD3EOrder->getId()
+            ));
+        }
+        return $this->render('PaprecCommercialBundle:ProductD3EOrder:view.html.twig', array(
+            'productD3EOrder' => $productD3EOrder,
+            'formAddInvoice' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Route("/productD3EOrder/{id}/downloadAssociatedInvoice", name="paprec_commercial_productD3EOrder_downloadAssociatedInvoice")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function downloadAssociatedQuoteAction( ProductD3EOrder $productD3EOrder)
+    public function downloadAssociatedQuoteAction(ProductD3EOrder $productD3EOrder)
     {
         $filename = $productD3EOrder->getAssociatedInvoice();
         $path = $this->getParameter('paprec_commercial.product_d3e_order.files_path');

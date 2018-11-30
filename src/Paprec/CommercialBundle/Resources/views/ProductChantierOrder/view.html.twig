@@ -156,8 +156,53 @@
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductChantierOrder.AssociatedInvoice'|trans }}</label>
                                     <label class="col-form-label">
                                         {% if productChantierOrder.associatedInvoice %}
-                                            <a href="{{ path('paprec_commercial_quoteRequest_downloadAssociatedInvoice', {id: productChantierOrder.id}) }}"><i
+                                            <a href="{{ path('paprec_commercial_productChantierOrder_downloadAssociatedInvoice', {id: productChantierOrder.id}) }}"><i
                                                         class="fa fa-download"></i></a>
+                                        {% else %}
+                                            <button class="btn btn-sm btn-outline-primary"
+                                                    data-target="#uploadInvoiceModal" data-toggle="modal"
+                                                    id="openModalUploadInvoice">
+                                                <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductChantierOrder.AddInvoice'|trans }}
+                                            </button>
+                                            <div class="modal fade" id="uploadInvoiceModal" tabindex="-1" role="dialog"
+                                                 aria-labelledby="Upload Picture" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <form id="formAddInvoice" name="formAddInvoice"
+                                                              action="{{ path("paprec_commercial_productChantierOrder_addInvoice", {id: productChantierOrder.id}) }}"
+                                                              method="post" enctype="multipart/form-data">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">{{ 'Commercial.ProductChantierOrder.AddInvoice'|trans }}
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <div class="form-label">{{ 'Commercial.ChoseFile'|trans }}</div>
+                                                                    <div class="form-content">
+                                                                        {{ form_widget(formAddInvoice.associatedInvoice, {'attr': {'class': 'form-control'}}) }}
+                                                                        {{ form_errors(formAddInvoice.associatedInvoice) }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-sm btn-secondary"
+                                                                        data-dismiss="modal">
+                                                                    {{ 'General.Cancel'|trans }}
+                                                                </button>
+                                                                <button type="button" class="btn btn-sm btn-primary"
+                                                                        id="formAddInvoiceSubmitButton">
+                                                                    {{ 'General.Save'|trans }}
+                                                                </button>
+                                                            </div>
+                                                            {{ form_rest(formAddInvoice) }}
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         {% endif %}
                                     </label>
                                 </div>
@@ -323,6 +368,10 @@
                             }
                         });
                     });
+
+                    $('#formAddInvoiceSubmitButton').on('click', function () {
+                        $('#formAddInvoice').submit();
+                    })
 
                 });
             </script>

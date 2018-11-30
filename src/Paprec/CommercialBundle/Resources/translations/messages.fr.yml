@@ -1,5 +1,7 @@
 Commercial:
 
+  ChoseFile:                    Choisir un fichier
+
   Bundle-name:                    Gestion Commerciale
   Agency:
     Agencies:                   Agences
@@ -248,7 +250,8 @@ Commercial:
     Edit:                       Modifier la commande Chantier
     Remove:                     Supprimer la commande Chantier
     Add:                        Ajouter une commande Chantier
-    AddLine:                    Ajouter un produit
+    AddLine:                    Ajouter un
+    AddInvoice:                 Ajouter une facture
     Save:                       Enregistrer
     Cancel:                     Annuler
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
@@ -303,6 +306,7 @@ Commercial:
     Remove:                     Supprimer la commande D3E
     Add:                        Ajouter une commande D3E
     AddLine:                    Ajouter un produit
+    AddInvoice:                 Ajouter une facture
     Save:                       Enregistrer
     Cancel:                     Annuler
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
@@ -345,6 +349,7 @@ Commercial:
     TotalAmount:                Montant total
     GeneratedTurnover:          CA généré
     AssociatedQuote:            Devis associé
+    AddAssociatedQuote:         Ajouter un devis
     Agency:                     Agence associée
     Summary:                    Résumé du besoin
     Frequency:                  Ponctuel / Régulier
@@ -461,6 +466,7 @@ Commercial:
     TotalAmount:                Montant total
     GeneratedTurnover:          CA généré
     AssociatedQuote:            Devis associé
+    AddAssociatedQuote:         Ajouter un devis
     Agency:                     Agence associée
     Summary:                    Résumé du besoin
     Frequency:                  Ponctuel / Régulier

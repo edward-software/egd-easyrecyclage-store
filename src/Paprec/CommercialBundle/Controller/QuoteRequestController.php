@@ -4,7 +4,9 @@ namespace Paprec\CommercialBundle\Controller;
 
 use Exception;
 use Paprec\CommercialBundle\Entity\QuoteRequest;
+use Paprec\CommercialBundle\Form\QuoteRequest\QuoteRequestAssociatedQuoteType;
 use Paprec\CommercialBundle\Form\QuoteRequest\QuoteRequestEditType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -186,8 +188,10 @@ class QuoteRequestController extends Controller
      */
     public function viewAction(Request $request, QuoteRequest $quoteRequest)
     {
+        $form = $this->createForm(QuoteRequestAssociatedQuoteType::class, $quoteRequest);
         return $this->render('PaprecCommercialBundle:QuoteRequest:view.html.twig', array(
-            'quoteRequest' => $quoteRequest
+            'quoteRequest' => $quoteRequest,
+            'formAddAssociatedQuote' => $form->createView()
         ));
     }
 
@@ -315,6 +319,48 @@ class QuoteRequestController extends Controller
             throw new Exception($e->getMessage());
         }
     }
+
+    /**
+     * @Route("/quoteRequest/addAssociatedQuote/{id}", name="paprec_commercial_quoteRequest_addAssociatedQuote")
+     * @Method("POST")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @throws Exception
+     */
+    public function addAssociatedQuoteAction(Request $request, QuoteRequest $quoteRequest)
+    {
+
+        $form = $this->createForm(QuoteRequestAssociatedQuoteType::class, $quoteRequest);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $quoteRequest = $form->getData();
+            $quoteRequest->setDateUpdate(new \DateTime());
+
+            if ($quoteRequest->getAssociatedQuote() instanceof UploadedFile) {
+
+                $associatedQuote = $quoteRequest->getAssociatedQuote();
+                $associatedQuoteFileName = md5(uniqid()) . '.' . $associatedQuote->guessExtension();
+
+                $associatedQuote->move($this->getParameter('paprec_commercial.quote_request.files_path'), $associatedQuoteFileName);
+
+                $quoteRequest->setAssociatedQuote($associatedQuoteFileName);
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_commercial_quoteRequest_view', array(
+                'id' => $quoteRequest->getId()
+            ));
+        }
+        return $this->render('PaprecCommercialBundle:QuoteRequest:view.html.twig', array(
+            'quoteRequest' => $quoteRequest,
+            'formAddAssociatedQuote' => $form->createView()
+        ));
+    }
+
 
     /**
      * @Route("/quoteRequest/{id}/downloadAssociatedQuote", name="paprec_commercial_quoteRequest_downloadAssociatedQuote")

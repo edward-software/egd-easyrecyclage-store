@@ -4,7 +4,9 @@ namespace Paprec\CommercialBundle\Controller;
 
 use Exception;
 use Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate;
+use Paprec\CommercialBundle\Form\QuoteRequestNonCorporate\QuoteRequestNonCorporateAssociatedQuoteType;
 use Paprec\CommercialBundle\Form\QuoteRequestNonCorporate\QuoteRequestNonCorporateEditType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -188,8 +190,11 @@ class QuoteRequestNonCorporateController extends Controller
      */
     public function viewAction(Request $request, QuoteRequestNonCorporate $quoteRequestNonCorporate)
     {
+        $form = $this->createForm(QuoteRequestNonCorporateAssociatedQuoteType::class, $quoteRequestNonCorporate);
+
         return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate:view.html.twig', array(
-            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
+            'quoteRequestNonCorporate' => $quoteRequestNonCorporate,
+            'formAddAssociatedQuote' => $form->createView()
         ));
     }
 
@@ -328,11 +333,52 @@ class QuoteRequestNonCorporateController extends Controller
     }
 
     /**
+     * @Route("/quoteRequestNonCorporate/addAssociatedQuote/{id}", name="paprec_commercial_quoteRequestNonCorporate_addAssociatedQuote")
+     * @Method("POST")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @throws Exception
+     */
+    public function addAssociatedQuoteAction(Request $request, QuoteRequestNonCorporate $quoteRequestNonCorporate)
+    {
+
+        $form = $this->createForm(QuoteRequestNonCorporateAssociatedQuoteType::class, $quoteRequestNonCorporate);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $quoteRequestNonCorporate = $form->getData();
+            $quoteRequestNonCorporate->setDateUpdate(new \DateTime());
+
+            if ($quoteRequestNonCorporate->getAssociatedQuote() instanceof UploadedFile) {
+
+                $associatedQuote = $quoteRequestNonCorporate->getAssociatedQuote();
+                $associatedQuoteFileName = md5(uniqid()) . '.' . $associatedQuote->guessExtension();
+
+                $associatedQuote->move($this->getParameter('paprec_commercial.quote_request.files_path'), $associatedQuoteFileName);
+
+                $quoteRequestNonCorporate->setAssociatedQuote($associatedQuoteFileName);
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_commercial_quoteRequest_view', array(
+                'id' => $quoteRequestNonCorporate->getId()
+            ));
+        }
+        return $this->render('PaprecCommercialBundle:QuoteRequest:view.html.twig', array(
+            'quoteRequestNonCorporate' => $quoteRequestNonCorporate,
+            'formAddAssociatedQuote' => $form->createView()
+        ));
+    }
+
+
+    /**
      * @Route("/quoteRequestNonCorporate/{id}/downloadAssociatedQuote", name="paprec_commercial_quoteRequestNonCorporate_downloadAssociatedQuote")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public
-    function downloadAssociatedQuoteAction(QuoteRequestNonCorporate $quoteRequestNonCorporate)
+    public function downloadAssociatedQuoteAction(QuoteRequestNonCorporate $quoteRequestNonCorporate)
     {
         $filename = $quoteRequestNonCorporate->getAssociatedQuote();
         $path = $this->getParameter('paprec_commercial.quote_request.files_path');
@@ -356,8 +402,7 @@ class QuoteRequestNonCorporateController extends Controller
      * @Route("/quoteRequestNonCorporate/{id}/downloadAttachedFiles", name="paprec_commercial_quoteRequestNonCorporate_downloadAttachedFiles")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public
-    function downloadAttachedFilesAction(QuoteRequestNonCorporate $quoteRequestNonCorporate)
+    public function downloadAttachedFilesAction(QuoteRequestNonCorporate $quoteRequestNonCorporate)
     {
         $path = $this->getParameter('paprec_commercial.quote_request.files_path');
         $zipname = 'demandeDevisNonEntreprise.zip';
