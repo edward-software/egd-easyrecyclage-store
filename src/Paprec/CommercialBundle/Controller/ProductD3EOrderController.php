@@ -480,19 +480,21 @@ class ProductD3EOrderController extends Controller
     {
         $filename = $productD3EOrder->getAssociatedInvoice();
         $path = $this->getParameter('paprec_commercial.product_d3e_order.files_path');
-        $content = file_get_contents($path . '/' . $filename);
-        $extension = pathinfo($path . '/' . $filename, PATHINFO_EXTENSION);
+        $file = $path . '/' . $filename;
+        $extension = pathinfo($file, PATHINFO_EXTENSION);
 
-        $response = new Response();
         $newFilename = "Commande-D3E-" . $productD3EOrder->getId() . '-Facture.' . $extension;
 
-        //set headers
-        $response->headers->set('Content-Type', 'mime/type');
-        $response->headers->set('Cache-Control', 'maxage=1');
-        $response->headers->set('Pragma', 'public');
-        $response->headers->set('Content-Disposition', 'attachment;filename="' . $newFilename);
-
-        $response->setContent($content);
-        return $response;
+        if (file_exists($file)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($newFilename) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+            exit;
+        }
     }
 }

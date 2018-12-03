@@ -140,7 +140,7 @@
                             {% endif %}
                             <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts %}  active {% endif %}"
                                  id="productCheckboxPicto_{{ product.id }}"
-                                 style="{% if product.pictos %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
+                                 style="{% if product.pictos|length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
                                 {{ product.name }}
                                 {% for items in cart.content %}
                                     {% if items['pId'] == product.id %}
