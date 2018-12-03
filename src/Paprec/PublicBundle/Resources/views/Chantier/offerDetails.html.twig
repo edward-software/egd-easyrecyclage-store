@@ -66,7 +66,7 @@
                     {% for productChantierQuoteLine in productChantierQuote.productChantierQuoteLines %}
                         <div class="recapproduct">
                             <div class="wrapperimage">
-                                <img src="{% if productChantierQuoteLine.productChantier.pilotPictures %}{{ asset('/uploads/pictos/' ~ productChantierQuoteLine.productChantier.pilotPictures[0].path) }}{% endif %}"
+                                <img src="{% if productChantierQuoteLine.productChantier.pilotPictures| length > 0 %}{{ asset('/uploads/pictos/' ~ productChantierQuoteLine.productChantier.pilotPictures[0].path) }}{% endif %}"
                                      alt="#">
                             </div>
                             <div class="name">{{ productChantierQuoteLine.quantity }}

@@ -102,7 +102,11 @@ class SubscriptionController extends Controller
          */
         $productsCategories = array();
         foreach ($cart->getDisplayedCategories() as $displayedCategory) {
-            $productsCategories[$displayedCategory] = $productChantierManager->getByCategory($displayedCategory, $type);
+            $productsCategories[$displayedCategory] = $productChantierManager->findAvailables(array(
+                'category' => $displayedCategory,
+                'type' => $type,
+                'postalCode' => $cart->getPostalCode()
+            ));
         }
 
         return $this->render('@PaprecPublic/Chantier/need.html.twig', array(

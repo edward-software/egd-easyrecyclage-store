@@ -90,7 +90,7 @@
                     {% for productDIQuoteLine in productDIQuote.productDIQuoteLines %}
                         <div class="recapproduct">
                             <div class="wrapperimage">
-                                <img src="{% if productDIQuoteLine.productDI.pilotPictures %}{{ asset('/uploads/pictos/' ~ productDIQuoteLine.productDI.pilotPictures[0].path) }}{% endif %}"
+                                <img src="{% if productDIQuoteLine.productDI.pilotPictures|length > 0 %}{{ asset('/uploads/pictos/' ~ productDIQuoteLine.productDI.pilotPictures[0].path) }}{% endif %}"
                                      alt="#">
                             </div>
                             <div class="name">{{ productDIQuoteLine.quantity }}

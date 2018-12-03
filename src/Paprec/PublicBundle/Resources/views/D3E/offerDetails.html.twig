@@ -66,7 +66,7 @@
                     {% for productD3EQuoteLine in productD3EQuote.productD3EQuoteLines %}
                         <div class="recapproduct">
                             <div class="wrapperimage">
-                                <img src="{% if productD3EQuoteLine.productD3E.pictos %}{{ asset('/uploads/pictos/' ~ productD3EQuoteLine.productD3E.pictos[0].path) }}{% endif %}"
+                                <img src="{% if productD3EQuoteLine.productD3E.pictos| length > 0 %}{{ asset('/uploads/pictos/' ~ productD3EQuoteLine.productD3E.pictos[0].path) }}{% endif %}"
                                      alt="#">
                             </div>
                             <div class="name">{{ productD3EQuoteLine.quantity }}

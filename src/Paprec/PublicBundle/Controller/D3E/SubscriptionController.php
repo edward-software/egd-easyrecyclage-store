@@ -87,8 +87,11 @@ class SubscriptionController extends Controller
         $cart = $cartManager->get($cartUuid);
         $type = $cart->getType();
 
-        // On récupère les catégoriesDI pour afficher le choix des catégories
-        $products = $productD3EManager->getByType($type);
+        // On récupère les produits D3E pour afficher le choix des produits (ou prestations)
+        $products = $productD3EManager->findAvailables(array(
+            'type' => $type,
+            'postalCode' => $cart->getPostalCode()
+        ));
 
         // Pour alimenter le "select" des types de déchets
         $divisions = array();

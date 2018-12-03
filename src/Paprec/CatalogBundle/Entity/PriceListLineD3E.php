@@ -29,9 +29,9 @@ class PriceListLineD3E
      * @ORM\Column(name="postalCodes", type="text")
      * @Assert\NotBlank()
      * @Assert\Regex(
-     *     pattern="@(\d{2}(?:\d{3})?)(,\s*)*@",
-     *     htmlPattern="(\d{2}(?:\d{3})?)(,\s*)*",
-     *     message="Les codes postaux doivent être des nombres de taille 2 ou 5 séparés par des virgules. (ex: '75, 92150, 36')"
+     *     pattern="/^(\d{2}(\*|(?:\d{3}))(,\s*)?)+$/",
+     *     match=true,
+     *     message="Les codes postaux doivent être des nombres séparés par des virgules, de taille 2 suivis d'une étoile  ou 5 . (ex: 75*, 92150, 36*)"
      * )
      */
     private $postalCodes;

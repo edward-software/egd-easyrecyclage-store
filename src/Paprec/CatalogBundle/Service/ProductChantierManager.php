@@ -83,8 +83,12 @@ class ProductChantierManager
      * @return mixed
      * @throws Exception
      */
-    public function getByCategory($categoryId, $type)
+    public function findAvailables($options)
     {
+        $type = $options['type'];
+        $postalCode = $options['postalCode'];
+        $categoryId = $options['category'];
+
         try {
             $query = $this->em
                 ->getRepository(ProductChantier::class)
@@ -97,8 +101,23 @@ class ProductChantierManager
                 $query->andWhere('p.isPayableOnline = 1');
             }
 
-            return $query->getQuery()->getResult();
+            $products = $query->getQuery()->getResult();
 
+            $productsPostalCodeMatch = array();
+
+
+            // On parcourt tous les produits Chantier    pour récupérer ceux  qui possèdent le postalCode
+            foreach ($products as $product) {
+                $postalCodes = str_replace(' ', '', $product->getAvailablePostalCodes());
+                $postalCodesArray = explode(',', $postalCodes);
+                foreach ($postalCodesArray as $pC) {
+                    //on teste juste les deux premiers caractères pour avoir le code du département
+                    if (substr($pC, 0, 2) == substr($postalCode, 0, 2)) {
+                        $productsPostalCodeMatch[] = $product;
+                    }
+                }
+            }
+            return $productsPostalCodeMatch;
 
         } catch (ORMException $e) {
             throw new Exception('unableToGetProductChantiers', 500);

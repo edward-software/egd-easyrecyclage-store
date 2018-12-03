@@ -193,7 +193,7 @@
                                                 {% endif %}
                                                 <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts and category.id in cart.displayedProducts|keys %}  active {% endif %}"
                                                      id="productCheckboxPicto_{{ product.id }}_{{ category.id }}"
-                                                     style="{% if product.pictos %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
+                                                     style="{% if product.pictos| length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
                                                     {{ product.name }}
                                                     <br>{{ product.capacity }}{{ product.capacityUnit }}
                                                     {% for items in cart.content %}
@@ -210,7 +210,7 @@
                                                     {% if cart.displayedProducts and displayedProduct != '' %}
                                                         <div class="infoproduct">
                                                             <div class="left">
-                                                                <img src="{% if displayedProduct.pilotPictures %}{{ asset('/uploads/pictos/' ~ displayedProduct.pilotPictures[0].path) }}{% endif %}"
+                                                                <img src="{% if displayedProduct.pilotPictures | length > 0 %}{{ asset('/uploads/pictos/' ~ displayedProduct.pilotPictures[0].path) }}{% endif %}"
                                                                      alt="#" class="mainpicture">
                                                                 <br>
                                                                 {% if displayedProduct.getPicturesPictures() %}

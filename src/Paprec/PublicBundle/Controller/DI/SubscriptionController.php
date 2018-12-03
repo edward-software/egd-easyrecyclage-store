@@ -40,7 +40,10 @@ class SubscriptionController extends Controller
          */
         $productsCategories = array();
         foreach ($cart->getDisplayedCategories() as $displayedCategory) {
-            $productsCategories[$displayedCategory] = $productDIManager->getByCategory($displayedCategory);
+            $productsCategories[$displayedCategory] = $productDIManager->findAvailables(array(
+                'category' => $displayedCategory,
+                'postalCode' => $cart->getPostalCode()
+            ));
         }
         return $this->render('@PaprecPublic/DI/need.html.twig', array(
             'divisions' => $divisions,

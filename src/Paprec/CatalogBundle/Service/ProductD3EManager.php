@@ -83,8 +83,10 @@ class ProductD3EManager
      * @return mixed
      * @throws Exception
      */
-    public function getByType($type)
+    public function findAvailables($options)
     {
+        $type = $options['type'];
+        $postalCode = $options['postalCode'];
         try {
             $query = $this->em
                 ->getRepository(ProductD3E::class)
@@ -95,7 +97,24 @@ class ProductD3EManager
                 $query->andWhere('p.isPayableOnline = 1');
             }
 
-            return $query->getQuery()->getResult();
+            $products = $query->getQuery()->getResult();
+
+            $productsPostalCodeMatch = array();
+
+
+            // On parcourt tous les produits D3E pour récupérer ceux  qui possèdent le postalCode
+            foreach ($products as $product) {
+                $postalCodes = str_replace(' ', '', $product->getAvailablePostalCodes());
+                $postalCodesArray = explode(',', $postalCodes);
+                foreach ($postalCodesArray as $pC) {
+                    //on teste juste les deux premiers caractères pour avoir le code du département
+                    if (substr($pC, 0, 2) == substr($postalCode, 0, 2)) {
+                        $productsPostalCodeMatch[] = $product;
+                    }
+                }
+            }
+
+            return $productsPostalCodeMatch;
 
         } catch (ORMException $e) {
             throw new Exception('unableToGetProductD3Es', 500);
