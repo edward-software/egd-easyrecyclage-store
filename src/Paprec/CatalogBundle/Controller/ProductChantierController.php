@@ -170,7 +170,7 @@ class ProductChantierController extends Controller
      */
     public function viewAction(Request $request, ProductChantier $productChantier)
     {
-        $productChantierManager = $this->get('paprec_catalog.product_D3E_manager');
+        $productChantierManager = $this->get('paprec_catalog.product_chantier_manager');
         $productChantierManager->isDeleted($productChantier, true);
 
         foreach ($this->getParameter('paprec_types_picture') as $type) {
@@ -233,7 +233,7 @@ class ProductChantierController extends Controller
      */
     public function editAction(Request $request, ProductChantier $productChantier)
     {
-        $productChantierManager = $this->get('paprec_catalog.product_D3E_manager');
+        $productChantierManager = $this->get('paprec_catalog.product_chantier_manager');
         $productChantierManager->isDeleted($productChantier, true);
 
         $form = $this->createForm(ProductChantierType::class, $productChantier);

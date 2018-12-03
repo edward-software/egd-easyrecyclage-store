@@ -26,6 +26,27 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
 
+    DataFixtures\DevFixtures:
+        tags: [doctrine.fixtures.orm]
+
+    # On ajoute la définition de ces services pour les injecter dans les fixtures
+    Paprec\CatalogBundle\Repository\ProductDIRepository:
+        public: true
+        factory: 'doctrine.orm.entity_manager:getRepository'
+        arguments: ['Paprec\CatalogBundle\Entity\ProductDI']
+    Paprec\CatalogBundle\Repository\ProductChantierRepository:
+        public: true
+        factory: 'doctrine.orm.entity_manager:getRepository'
+        arguments: ['Paprec\CatalogBundle\Entity\ProductChantier']
+    Paprec\CatalogBundle\Repository\CategoryRepository:
+        public: true
+        factory: 'doctrine.orm.entity_manager:getRepository'
+        arguments: ['Paprec\CatalogBundle\Entity\Category']
+    Paprec\CatalogBundle\Repository\PriceListD3ERepository:
+        public: true
+        factory: 'doctrine.orm.entity_manager:getRepository'
+        arguments: ['Paprec\CatalogBundle\Entity\PriceListD3E']
+
     # makes classes in src/AppBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
 #    AppBundle\:
