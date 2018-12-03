@@ -217,9 +217,14 @@
             categoryDIList.on('row-reorder', function (e, diff, edit) {
                 var categories = [];
                 // on parcourt toutes les rows et on ajoute l'id des catégories dans l'ordre
-                categoryDIList.rows().every(function (rowIdx, tableLoop, rowLoop) {
-                    categories.push(this.data().id);
-                });
+                var table = document.getElementById('categoriesDIListDatatable');
+                var rowLength = table.rows.length;
+
+                // On commence l'itérateur à 1 pour exclure la ligne d'entête
+                for(var i=1; i<rowLength; i+=1){
+                    var row = table.rows[i];
+                    categories.push(row.id.replace('row_', ''))
+                }
                 if (categories.length > 0) {
                     $.ajax({
                         'url': '{{ path('paprec_catalog_category_orderCategories') }}',
@@ -327,9 +332,14 @@
             categoryChantierList.on('row-reorder', function (e, diff, edit) {
                 var categories = [];
                 //on parcourt toutes les rows et on ajoute l'id des catégories dans l'ordre
-                categoryChantierList.rows().every(function (rowIdx, tableLoop, rowLoop) {
-                    categories.push(this.data().id);
-                });
+                var table = document.getElementById('categoriesChantierListDatatable');
+                var rowLength = table.rows.length;
+
+                // On commence l'itérateur à 1 pour exclure la ligne d'entête
+                for(var i=1; i<rowLength; i+=1){
+                    var row = table.rows[i];
+                    categories.push(row.id.replace('row_', ''))
+                }
                 if (categories.length > 0) {
                     $.ajax({
                         'url': '{{ path('paprec_catalog_category_orderCategories') }}',
