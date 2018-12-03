@@ -23,6 +23,7 @@ use Paprec\CatalogBundle\Repository\PriceListD3ERepository;
 use Paprec\CatalogBundle\Repository\ProductChantierRepository;
 use Paprec\CatalogBundle\Repository\ProductDIRepository;
 use Paprec\CommercialBundle\Entity\Agency;
+use Paprec\CommercialBundle\Entity\BusinessLine;
 use Paprec\UserBundle\Entity\User;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -250,51 +251,6 @@ class DevFixtures extends Fixture
         $category12->setEnabled(true);
         $category12->setDescription('Description Bois');
         $manager->persist($category12);
-        /**
-         *  Création des ProductDICategories
-         */
-        $productsDI = $this->productDIRepository->findAll();
-        $categoriesDI = $this->categoryRepository->findBy(array(
-            'division' => 'DI'
-        ));
-        foreach ($productsDI as $productDI) {
-            $cpt = 0;
-            foreach ($categoriesDI as $categoryDI) {
-                $productDICategory = new ProductDICategory();
-                $productDICategory->setPosition($cpt);
-                $productDICategory->setUnitPrice(mt_rand(10, 100));
-                $productDICategory->setProductDI($productDI);
-                $productDICategory->setCategory($categoryDI);
-                $manager->persist($productDICategory);
-                $cpt++;
-            }
-        }
-
-        /**
-         * On flush une première fois pour créer les référentiels et pouvoir les récupérer ensuite dans des repository->find()
-         */
-        $manager->flush();
-
-
-        /**
-         *  Création des ProductChantierCategories
-         */
-        $productsChantier = $this->productChantierRepository->findAll();
-        $categoriesChantier = $this->categoryRepository->findBy(array(
-            'division' => 'CHANTIER'
-        ));
-        foreach ($productsChantier as $productChantier) {
-            $cpt = 0;
-            foreach ($categoriesChantier as $categoryChantier) {
-                $productChantierCategory = new ProductChantierCategory();
-                $productChantierCategory->setPosition($cpt);
-                $productChantierCategory->setUnitPrice(mt_rand(10, 100));
-                $productChantierCategory->setProductChantier($productChantier);
-                $productChantierCategory->setCategory($categoryChantier);
-                $manager->persist($productChantierCategory);
-                $cpt++;
-            }
-        }
 
         /**
          * Création des agences
@@ -334,6 +290,70 @@ class DevFixtures extends Fixture
         $agency3->setLongitude(5.4);
         $agency3->setIsDisplayed(true);
         $manager->persist($agency3);
+
+        /**
+         * Création des Business Lines
+         */
+        $businessLine1 = new BusinessLine();
+        $businessLine1->setName('BTP');
+        $businessLine1->setDivision('CHANTIER');
+        $manager->persist($businessLine1);
+
+        $businessLine2 = new BusinessLine();
+        $businessLine2->setName('Informatique');
+        $businessLine2->setDivision('D3E');
+        $manager->persist($businessLine2);
+
+        $businessLine3 = new BusinessLine();
+        $businessLine3->setName('Menuiserie');
+        $businessLine3->setDivision('DI');
+        $manager->persist($businessLine3);
+
+        /**
+         * On flush une première fois pour créer les référentiels et pouvoir les récupérer ensuite dans des repository->find()
+         */
+        $manager->flush();
+
+        /**
+         *  Création des ProductDICategories
+         */
+        $productsDI = $this->productDIRepository->findAll();
+        $categoriesDI = $this->categoryRepository->findBy(array(
+            'division' => 'DI'
+        ));
+        foreach ($productsDI as $productDI) {
+            $cpt = 0;
+            foreach ($categoriesDI as $categoryDI) {
+                $productDICategory = new ProductDICategory();
+                $productDICategory->setPosition($cpt);
+                $productDICategory->setUnitPrice(mt_rand(10, 100));
+                $productDICategory->setProductDI($productDI);
+                $productDICategory->setCategory($categoryDI);
+                $manager->persist($productDICategory);
+                $cpt++;
+            }
+        }
+
+        /**
+         *  Création des ProductChantierCategories
+         */
+        $productsChantier = $this->productChantierRepository->findAll();
+        $categoriesChantier = $this->categoryRepository->findBy(array(
+            'division' => 'CHANTIER'
+        ));
+        foreach ($productsChantier as $productChantier) {
+            $cpt = 0;
+            foreach ($categoriesChantier as $categoryChantier) {
+                $productChantierCategory = new ProductChantierCategory();
+                $productChantierCategory->setPosition($cpt);
+                $productChantierCategory->setUnitPrice(mt_rand(10, 100));
+                $productChantierCategory->setProductChantier($productChantier);
+                $productChantierCategory->setCategory($categoryChantier);
+                $manager->persist($productChantierCategory);
+                $cpt++;
+            }
+        }
+
 
         /**
          * Création des PriceListLineD3E
