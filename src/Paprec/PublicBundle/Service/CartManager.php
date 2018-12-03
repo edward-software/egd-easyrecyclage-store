@@ -244,14 +244,15 @@ class CartManager
      * @param $id
      * @param $productId
      * @param $quantity
+     * @param $option
      * @return null|object|Cart
      * @throws Exception
      */
-    public function addContentD3E($id, $productId, $quantity)
+    public function addContentD3E($id, $productId, $quantity, $optHandling, $optSerialNumberStmt, $optDestruction)
     {
         $cart = $this->get($id);
         $content = $cart->getContent();
-        $product = ['pId' => $productId, 'qtty' => $quantity];
+        $product = ['pId' => $productId, 'qtty' => $quantity, 'optHandling' => $optHandling, 'optSerialNumberStmt' => $optSerialNumberStmt, 'optDestruction' => $optDestruction ];
         foreach ($content as $key => $value) {
             if ($value['pId'] == $productId) {
                 unset($content[$key]);
@@ -397,7 +398,7 @@ class CartManager
     public function loadCartD3E($id)
     {
         $cart = $this->get($id);
-        $productChantierManager = $this->container->get('paprec_catalog.product_D3E_manager');
+        $productD3EManager = $this->container->get('paprec_catalog.product_D3E_manager');
         $priceListD3EManager = $this->container->get('paprec_catalog.price_list_d3e_manager');
 
         /**
@@ -411,10 +412,10 @@ class CartManager
         $loadedCart['sum'] = 0;
         if ($products && count($products)) {
             foreach ($products as $product) {
-                $productD3E = $productChantierManager->get($product['pId']);
-                $loadedCart[$product['pId']] = ['qtty' => $product['qtty'], 'pName' => $productD3E->getName(), 'frequency' => $cart->getFrequency()];
-
-                $postalCode = substr($cart->getLocation(), 0, 5);
+                $productD3E = $productD3EManager->get($product['pId']);
+                $nbOptions =  $product['optHandling'] + $product['optSerialNumberStmt'] + $product['optDestruction'];
+                $loadedCart[$product['pId']] = ['qtty' => $product['qtty'], 'pName' => $productD3E->getName(), 'frequency' => $cart->getFrequency(),'nbOptions' => $nbOptions];
+                $postalCode = $cart->getPostalCode();
                 $loadedCart['sum'] += $priceListD3EManager->getUnitPriceByPostalCodeQtty($productD3E->getPriceListD3E(), $postalCode, $product['qtty']) * $product['qtty'];
             }
         } else {

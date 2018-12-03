@@ -97,9 +97,11 @@
                             <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
                             {% for key,division in divisions %}
                                 {% if key == cart.division %}
-                                    <option value="{{ key }}" selected="selected" style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
+                                    <option value="{{ key }}" selected="selected"
+                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
                                 {% else %}
-                                    <option value="{{ key }}" style="color:{% if key == 'DI' %} }}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
+                                    <option value="{{ key }}"
+                                            style="color:{% if key == 'DI' %} }}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
                                 {% endif %}
                             {% endfor %}
                         </select>
@@ -168,12 +170,26 @@
 
                                             <div class="clearfix"></div>
 
+                                            {# Si le produit sélectionné est déjà dans le Cart on récupère la quantité et les options qui étaient choisis #}
                                             {% set qtty = '' %}
+                                            {% set optHandling = '' %}
+                                            {% set optSerialNumberStmt = '' %}
+                                            {% set optDestruction = '' %}
                                             {% for items in cart.content %}
                                                 {% if items['pId'] == displayedProduct.id %}
                                                     {% set qtty = items['qtty'] %}
+                                                    {% if items['optHandling'] == '1' %}
+                                                        {% set optHandling = '1' %}
+                                                    {% endif %}
+                                                    {% if items['optSerialNumberStmt'] == '1' %}
+                                                        {% set optSerialNumberStmt = '1' %}
+                                                    {% endif %}
+                                                    {% if items['optDestruction'] == '1' %}
+                                                        {% set optDestruction = '1' %}
+                                                    {% endif %}
                                                 {% endif %}
                                             {% endfor %}
+
                                             <div class="infoproduct__qtytitle">{{ 'Public.Cart.Qtty'|trans }}</div>
 
                                             <select name=""
@@ -189,6 +205,23 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             </select>
+                                            <div class="-align-right">
+                                                <input type="checkbox"
+                                                       id="optHandlingProductSelect_{{ displayedProduct.id }}"
+                                                        {% if optHandling is defined and optHandling == '1'%} checked{% endif %}>
+                                                {{ 'Commercial.ProductD3EOrderLine.OptHandling'|trans }}<br>
+
+                                                <input type="checkbox"
+                                                       id="optSerialNumberStmtProductSelect_{{ displayedProduct.id }}"
+                                                        {% if optSerialNumberStmt is defined and optSerialNumberStmt == '1' %} checked{% endif %}>
+                                                {{ 'Commercial.ProductD3EOrderLine.OptSerialNumberStmt'|trans }}<br>
+
+                                                <input type="checkbox"
+                                                       id="optDestructionProductSelect_{{ displayedProduct.id }}"
+                                                        {% if optDestruction is defined and optDestruction == '1' %} checked{% endif %}>
+                                                {{ 'Commercial.ProductD3EOrderLine.OptDestruction'|trans }}<br>
+                                            </div>
+
                                             <div class="button button--lightgreen addToCartSubmitButton"
                                                  id="addToCartSubmitButton_{{ displayedProduct.id }}">{{ 'Public.Cart.AddToCart'|trans }}
                                             </div>
@@ -336,13 +369,20 @@
 
 
             $('.addToCartSubmitButton').click(function () {
+                // Récupération des infos du produits à ajouter au panier
                 productId = (this.id).replace('addToCartSubmitButton_', '');
                 qtty = $('#quantityProducSelect_' + productId).val();
+                optHandling = $('#optHandlingProductSelect_' + productId).prop('checked') ? 1 : 0;
+                optSerialNumberStmt = $('#optSerialNumberStmtProductSelect_' + productId).prop('checked') ? 1 : 0;
+                optDestruction = $('#optDestructionProductSelect_' + productId).prop('checked') ? 1 : 0;
                 $.ajax({
                     type: "POST",
-                    url: "{{ path('paprec_public_corp_D3E_subscription_addContent', {cartUuid: cart.id, productId: 'productTmp', quantity: 'quantityTmp'}) }}"
+                    url: "{{ path('paprec_public_corp_D3E_subscription_addContent', {cartUuid: cart.id, productId: 'productTmp', quantity: 'quantityTmp', optHandling: 'optHandlingTmp', optSerialNumberStmt: 'optSerialNumberStmtTmp', optDestruction: 'optDestructionTmp'}) }}"
                         .replace('productTmp', productId)
-                        .replace('quantityTmp', qtty),
+                        .replace('quantityTmp', qtty)
+                        .replace('optHandlingTmp', optHandling)
+                        .replace('optSerialNumberStmtTmp', optSerialNumberStmt)
+                        .replace('optDestructionTmp', optDestruction),
                     success: function (response) {
                         // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
                         // addOrRemoveDisplayedProduct(productId, categoryId);
@@ -394,7 +434,7 @@
                 });
             }
 
-                // Récupération du nombre d'agences proches
+            // Récupération du nombre d'agences proches
             function reloadNearbyAgencies() {
                 $.ajax({
                     type: "GET",

@@ -52,6 +52,26 @@ class ProductD3EOrderLine
      */
     private $productName;
 
+    /**
+     * @var boolean
+     * Option de manutention sélectionnée
+     * @ORM\Column(name="optHandling", type="boolean", options={"default" : false})
+     */
+    private $optHandling;
+
+    /**
+     * @var boolean
+     * option de relevé de numéro de série sélectionnée
+     * @ORM\Column(name="optSerialNumberStmt", type="boolean", options={"default" : false})
+     */
+    private $optSerialNumberStmt;
+
+    /**
+     * @var boolean
+     * option de de destruction par broyage sélectionnée
+     * @ORM\Column(name="optDestruction", type="boolean", options={"default" : false})
+     */
+    private $optDestruction;
 
     /**
      * @var float
@@ -331,5 +351,77 @@ class ProductD3EOrderLine
     public function getProductD3EOrder()
     {
         return $this->productD3EOrder;
+    }
+
+    /**
+     * Set optHandling.
+     *
+     * @param bool $optHandling
+     *
+     * @return ProductD3EOrderLine
+     */
+    public function setOptHandling($optHandling)
+    {
+        $this->optHandling = $optHandling;
+
+        return $this;
+    }
+
+    /**
+     * Get optHandling.
+     *
+     * @return bool
+     */
+    public function getOptHandling()
+    {
+        return $this->optHandling;
+    }
+
+    /**
+     * Set optSerialNumberStmt.
+     *
+     * @param bool $optSerialNumberStmt
+     *
+     * @return ProductD3EOrderLine
+     */
+    public function setOptSerialNumberStmt($optSerialNumberStmt)
+    {
+        $this->optSerialNumberStmt = $optSerialNumberStmt;
+
+        return $this;
+    }
+
+    /**
+     * Get optSerialNumberStmt.
+     *
+     * @return bool
+     */
+    public function getOptSerialNumberStmt()
+    {
+        return $this->optSerialNumberStmt;
+    }
+
+    /**
+     * Set optDestruction.
+     *
+     * @param bool $optDestruction
+     *
+     * @return ProductD3EOrderLine
+     */
+    public function setOptDestruction($optDestruction)
+    {
+        $this->optDestruction = $optDestruction;
+
+        return $this;
+    }
+
+    /**
+     * Get optDestruction.
+     *
+     * @return bool
+     */
+    public function getOptDestruction()
+    {
+        return $this->optDestruction;
     }
 }

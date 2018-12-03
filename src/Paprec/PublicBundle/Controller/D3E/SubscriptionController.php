@@ -147,7 +147,7 @@ class SubscriptionController extends Controller
 
                 // On récupère tous les produits ajoutés au Cart
                 foreach ($cart->getContent() as $item) {
-                    $productD3EQuoteManager->addLineFromCart($productD3EQuote, $item['pId'], $item['qtty']);
+                    $productD3EQuoteManager->addLineFromCart($productD3EQuote, $item['pId'], $item['qtty'], $item['optHandling'], $item['optSerialNumberStmt'], $item['optDestruction']);
                 }
 
                 return $this->redirectToRoute('paprec_public_corp_D3E_subscription_step3', array(
@@ -179,7 +179,7 @@ class SubscriptionController extends Controller
 
                 // On récupère tous les produits ajoutés au Cart
                 foreach ($cart->getContent() as $item) {
-                    $productD3EOrderManager->addLineFromCart($productD3EOrder, $item['pId'], $item['qtty']);
+                    $productD3EOrderManager->addLineFromCart($productD3EOrder, $item['pId'], $item['qtty'], $item['optHandling'], $item['optSerialNumberStmt'], $item['optDestruction']);
                 }
 
                 return $this->redirectToRoute('paprec_public_corp_D3E_subscription_step4', array(
@@ -306,14 +306,14 @@ class SubscriptionController extends Controller
     /**
      * Ajoute au cart un Product avec sa quantité
      *
-     * @Route("/D3E/addContent/{cartUuid}/{productId}/{quantity}", name="paprec_public_corp_D3E_subscription_addContent")
+     * @Route("/D3E/addContent/{cartUuid}/{productId}/{quantity}/{optHandling}/{optSerialNumberStmt}/{optDestruction}", name="paprec_public_corp_D3E_subscription_addContent")
      * @throws \Exception
      */
-    public function addContentAction(Request $request, $cartUuid, $productId, $quantity)
+    public function addContentAction(Request $request, $cartUuid, $productId, $quantity, $optHandling, $optSerialNumberStmt, $optDestruction)
     {
         $cartManager = $this->get('paprec.cart_manager');
 
-        $cart = $cartManager->addContentD3E($cartUuid, $productId, $quantity);
+        $cart = $cartManager->addContentD3E($cartUuid, $productId, $quantity, $optHandling, $optSerialNumberStmt, $optDestruction);
 
         return new JsonResponse('200');
     }

@@ -160,7 +160,7 @@ class ProductD3EQuoteManager
      * @param $qtty
      * @throws Exception
      */
-    public function addLineFromCart(ProductD3EQuote $productD3EQuote, $productId, $qtty)
+    public function addLineFromCart(ProductD3EQuote $productD3EQuote, $productId, $qtty, $optHandling, $optSerialNumberStmt, $optDestruction)
     {
         $productD3EManager = $this->container->get('paprec_catalog.product_D3E_manager');
 
@@ -168,7 +168,9 @@ class ProductD3EQuoteManager
             $productD3E = $productD3EManager->get($productId);
             $productD3EQuoteLine = new ProductD3EQuoteLine();
 
-
+            $productD3EQuoteLine->setOptHandling($optHandling);
+            $productD3EQuoteLine->setOptSerialNumberStmt($optSerialNumberStmt);
+            $productD3EQuoteLine->setOptDestruction($optDestruction);
             $productD3EQuoteLine->setProductD3E($productD3E);
             $productD3EQuoteLine->setQuantity($qtty);
             $this->addLine($productD3EQuote, $productD3EQuoteLine);

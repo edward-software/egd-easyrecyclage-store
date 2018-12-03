@@ -13,7 +13,9 @@
                         <div class="title">{{ cartLine['pName'] }}</div>
                         <div class="delete buttonDeleteProduct" id="buttonDeleteProduct_{{ key }}"></div>
                         <div class="info">
-                            • {% if cartLine['frequency'] == 'ponctual' %}{{ 'Public.Cart.Ponctal'|trans }}{% else %}{{ 'Public.Cart.Regular'|trans }}{% endif %}
+                            {% if cartLine['frequency'] == 'ponctual' %}{{ 'Public.Cart.Ponctal'|trans }}{% else %}{{ 'Public.Cart.Regular'|trans }}{% endif %}
+                            • {{ cartLine['nbOptions'] }} option{% if cartLine['nbOptions'] > 1 %}s{% endif %}
+
                         </div>
                         <div class="clearfix"></div>
                     </div>

@@ -225,6 +225,9 @@
                                     <th>{{ 'Commercial.ProductD3EQuoteLine.ProductName'|trans }}</th>
                                     <th>{{ 'Commercial.ProductD3EQuoteLine.UnitPrice'|trans }}</th>
                                     <th>{{ 'Commercial.ProductD3EQuoteLine.Quantity'|trans }}</th>
+                                    <th>{{ 'Commercial.ProductD3EQuoteLine.OptHandling'|trans }}</th>
+                                    <th>{{ 'Commercial.ProductD3EQuoteLine.OptSerialNumberStmtShort'|trans }}</th>
+                                    <th>{{ 'Commercial.ProductD3EQuoteLine.OptDestructionShort'|trans }}</th>
                                     <th>{{ 'Commercial.ProductD3EQuoteLine.TotalAmount'|trans }}</th>
 
                                     <th></th>
@@ -237,6 +240,9 @@
                                         <td>{{ productD3EQuoteLine.productName }}</td>
                                         <td>{{ productD3EQuoteLine.unitPrice }}</td>
                                         <td>{{ productD3EQuoteLine.quantity }}</td>
+                                        <td>{% if productD3EQuoteLine.optHandling == 1 %}Oui{% else %}Non{% endif %}</td>
+                                        <td>{% if productD3EQuoteLine.optSerialNumberStmt == 1 %}Oui{% else %}Non{% endif %}</td>
+                                        <td>{% if productD3EQuoteLine.optDestruction == 1 %}Oui{% else %}Non{% endif %}</td>
                                         <td>{{ productD3EQuoteLine.totalAmount }}</td>
                                         <td class="text-center">
                                             <a href="{{ path('paprec_commercial_productD3EQuote_editLine', {id: productD3EQuote.id, quoteLineId: productD3EQuoteLine.id}) }}"
