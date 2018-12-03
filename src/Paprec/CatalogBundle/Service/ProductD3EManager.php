@@ -76,8 +76,8 @@ class ProductD3EManager
     }
 
     /**
-     * On passe le type de produits pour renvoyer les produits payables en ligne si c'est de type 'Order'
-     * tous les produits si c'est un devis  ('Ouote')
+     * On passe en paramètre les options Type et PostalCode, retourne les produits  qui sont disponibles dans le postalCode
+     * et si le Type est 'Order' alors il faut vérifier que les produits retournés sont payables en ligne
      * @param $categoryId
      * @param $type
      * @return mixed
