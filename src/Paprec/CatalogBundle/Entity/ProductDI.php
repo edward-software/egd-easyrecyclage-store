@@ -64,9 +64,8 @@ class ProductDI
     /**
      * @var float
      * Le volume du produit
-     * @ORM\Column(name="capacity", type="float")
+     * @ORM\Column(name="capacity", type="string", length=10)
      * @Assert\NotBlank()
-     * @Assert\Type(type="float")
      */
     private $capacity;
 
@@ -249,30 +248,6 @@ class ProductDI
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set capacity.
-     *
-     * @param float $capacity
-     *
-     * @return ProductDI
-     */
-    public function setCapacity($capacity)
-    {
-        $this->capacity = $capacity;
-
-        return $this;
-    }
-
-    /**
-     * Get capacity.
-     *
-     * @return float
-     */
-    public function getCapacity()
-    {
-        return $this->capacity;
     }
 
     /**
@@ -644,5 +619,29 @@ class ProductDI
     public function getProductDIQuoteLines()
     {
         return $this->productDIQuoteLines;
+    }
+
+    /**
+     * Set capacity.
+     *
+     * @param string $capacity
+     *
+     * @return ProductDI
+     */
+    public function setCapacity($capacity)
+    {
+        $this->capacity = $capacity;
+
+        return $this;
+    }
+
+    /**
+     * Get capacity.
+     *
+     * @return string
+     */
+    public function getCapacity()
+    {
+        return $this->capacity;
     }
 }

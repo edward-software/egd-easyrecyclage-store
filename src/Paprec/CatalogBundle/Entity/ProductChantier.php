@@ -62,11 +62,10 @@ class ProductChantier
     private $description;
 
     /**
-     * @var float
+     * @var string
      * Le volume du produit
-     * @ORM\Column(name="capacity", type="float")
+     * @ORM\Column(name="capacity", type="string", length=10)
      * @Assert\NotBlank()
-     * @Assert\Type(type="float")
      */
     private $capacity;
 
@@ -257,30 +256,6 @@ class ProductChantier
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set capacity.
-     *
-     * @param float $capacity
-     *
-     * @return ProductChantier
-     */
-    public function setCapacity($capacity)
-    {
-        $this->capacity = $capacity;
-
-        return $this;
-    }
-
-    /**
-     * Get capacity.
-     *
-     * @return float
-     */
-    public function getCapacity()
-    {
-        return $this->capacity;
     }
 
     /**
@@ -708,5 +683,29 @@ class ProductChantier
     public function getProductChantierOrderLines()
     {
         return $this->productChantierOrderLines;
+    }
+
+    /**
+     * Set capacity.
+     *
+     * @param string $capacity
+     *
+     * @return ProductChantier
+     */
+    public function setCapacity($capacity)
+    {
+        $this->capacity = $capacity;
+
+        return $this;
+    }
+
+    /**
+     * Get capacity.
+     *
+     * @return string
+     */
+    public function getCapacity()
+    {
+        return $this->capacity;
     }
 }

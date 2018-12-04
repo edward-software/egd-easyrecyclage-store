@@ -88,19 +88,23 @@
                                     <label class="col-form-label col-md-8">
                                         {% for argument in productDI.arguments %}
                                             {% if argument.deleted is null %}
-                                                <a class="btn btn-sm btn-outline-primary"
-                                                   href="{{ path('paprec_catalog_argument_view', {id: argument.id}) }}">{{ argument }}</a>
+                                                <div class="col-md-6">
+                                                    <a class="btn btn-sm btn-outline-primary w-75 my-2"
+                                                       href="{{ path('paprec_catalog_argument_view', {id: argument.id}) }}">{{ argument }}</a>
+                                                </div>
                                             {% endif %}
                                         {% endfor %}
                                     </label>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Catalog.ProductDI.Categories'|trans }}</label>
-                                    <label class="col-form-label col-md-8">
+                                    <label class="row no-gutters justify-content-md-left col-md-8">
                                         {% for productDICategory in productDI.productDICategories %}
                                             {% if productDICategory.category.deleted is null %}
-                                                <a class="btn btn-sm btn-outline-primary"
-                                                   href="{{ path('paprec_catalog_category_view', {id: productDICategory.category.id}) }}">{{ productDICategory.category }}</a>
+                                                <div class="col-md-6">
+                                                    <a class="btn btn-sm btn-outline-primary w-75 my-2"
+                                                       href="{{ path('paprec_catalog_category_view', {id: productDICategory.category.id}) }}">{{ productDICategory.category }}</a>
+                                                </div>
                                             {% endif %}
                                         {% endfor %}
                                     </label>

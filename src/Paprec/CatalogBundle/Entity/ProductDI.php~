@@ -64,9 +64,8 @@ class ProductDI
     /**
      * @var float
      * Le volume du produit
-     * @ORM\Column(name="capacity", type="float")
+     * @ORM\Column(name="capacity", type="string", length=10)
      * @Assert\NotBlank()
-     * @Assert\Type(type="float")
      */
     private $capacity;
 
@@ -104,6 +103,11 @@ class ProductDI
     /**
      * @var text
      * @ORM\Column(name="availablePostalCodeIds", type="text", nullable=true)
+     * @Assert\Regex(
+     *     pattern="/^(\d{2}(\*|(?:\d{3}))(,\s*)?)+$/",
+     *     match=true,
+     *     message="Les codes postaux doivent être des nombres séparés par des virgules, de taille 2 suivis d'une étoile  ou 5 . (ex: 75*, 92150, 36*)"
+     * )
      */
     private $availablePostalCodes;
 
@@ -244,30 +248,6 @@ class ProductDI
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set capacity.
-     *
-     * @param float $capacity
-     *
-     * @return ProductDI
-     */
-    public function setCapacity($capacity)
-    {
-        $this->capacity = $capacity;
-
-        return $this;
-    }
-
-    /**
-     * Get capacity.
-     *
-     * @return float
-     */
-    public function getCapacity()
-    {
-        return $this->capacity;
     }
 
     /**
@@ -575,7 +555,7 @@ class ProductDI
     {
         $pilotPictures = array();
         foreach ($this->pictures as $picture) {
-            if ($picture->getType() == 'PilotPicture') {
+            if ($picture->getType() == 'PILOTPICTURE') {
                 $pilotPictures[] = $picture;
             }
         }
@@ -586,7 +566,7 @@ class ProductDI
     {
         $pictos = array();
         foreach ($this->pictures as $picture) {
-            if ($picture->getType() == 'Picto') {
+            if ($picture->getType() == 'PICTO') {
                 $pictos[] = $picture;
             }
         }
@@ -597,7 +577,7 @@ class ProductDI
     {
         $pictures = array();
         foreach ($this->pictures as $picture) {
-            if ($picture->getType() == 'Picture') {
+            if ($picture->getType() == 'PICTURE') {
                 $pictures[] = $picture;
             }
         }
