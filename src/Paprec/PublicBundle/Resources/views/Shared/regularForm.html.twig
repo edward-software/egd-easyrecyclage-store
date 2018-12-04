@@ -56,9 +56,11 @@
                             <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
                             {% for key,division in divisions %}
                                 {% if key == cart.division %}
-                                    <option value="{{ key }}" selected="selected" style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
+                                    <option value="{{ key }}" selected="selected"
+                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
                                 {% else %}
-                                    <option value="{{ key }}" style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
+                                    <option value="{{ key }}"
+                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
                                 {% endif %}
                             {% endfor %}
                         </select>
@@ -214,7 +216,7 @@
 
             // google.maps.event.addDomListener(window, 'load', function () {
             // Si l'on met ce listener, l'autocomplete est initialisé 1fois/1000
-                initializeAutocomplete('locationSelect');
+            initializeAutocomplete('locationSelect');
 
 
             {# Quand on sélectionne une division dans le select, on recharge en envoyant la location et la division #}

@@ -66,11 +66,44 @@ class PostalCodeManager
             if ($throwException) {
                 throw new EntityNotFoundException('postalCodeNotFound');
             }
-
             return true;
-
         }
         return false;
     }
 
+
+    /**
+     * Renvoie le rate du postalCode correspondant à la division et au code postal passé en param
+     * Return 1 si pas de code postal trouvé  TODO retourner une erreur ?
+     * @param $postalCode
+     * @param $division
+     * @return float|int
+     */
+    public function getRateByPostalCodeDivision($postalCode, $division) {
+        $rate = 1;
+        $postalCodeDivs = $this->em->getRepository('PaprecCatalogBundle:PostalCode')->findBy(array(
+            'division' => $division
+        ));
+
+        // On parcourt tous les codes postaux appartenant à la division
+        if($postalCodeDivs !== null) {
+            foreach ($postalCodeDivs as $pC) {
+                // si il existe un code postal exactement égal au $postalCode en param, alors on récupère son rate et on sort del a boucle
+                // ex : (92* == 92*) (92150 == 92150)
+                if ($pC->getCode() == $postalCode){
+                    $rate =  $pC->getRate();
+                    break;
+                }
+                // Sinon on regarde les deux premiers caractères
+                // ex : Il existe un code postal (code = 92*, ratio = 1.5),
+                //      On passe en param postalCode = 92150
+                //      Alors on test 92 == 92
+                else if (substr($pC->getCode(), 0, 2) == substr($postalCode, 0, 2)) {
+                    $rate = $pC->getRate();
+                    break;
+                }
+            }
+        }
+        return $rate;
+    }
 }

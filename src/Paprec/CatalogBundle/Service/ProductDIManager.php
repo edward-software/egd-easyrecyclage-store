@@ -75,6 +75,7 @@ class ProductDIManager
 
             $products = $query->getQuery()->getResult();
 
+
             $productsPostalCodeMatch = array();
 
 

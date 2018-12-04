@@ -610,7 +610,7 @@ class ProductChantier
     public function getPilotPictures() {
         $pilotPictures = array();
         foreach($this->pictures as $picture) {
-            if($picture->getType() == 'PilotPicture') {
+            if($picture->getType() == 'PILOTPICTURE') {
                 $pilotPictures[] = $picture;
             }
         }
@@ -620,7 +620,7 @@ class ProductChantier
     public function getPictos() {
         $pictos = array();
         foreach($this->pictures as $picture) {
-            if($picture->getType() == 'Picto') {
+            if($picture->getType() == 'PICTO') {
                 $pictos[] = $picture;
             }
         }
@@ -630,7 +630,7 @@ class ProductChantier
     public function getPicturesPictures() {
         $pictures = array();
         foreach($this->pictures as $picture) {
-            if($picture->getType() == 'Picture') {
+            if($picture->getType() == 'PICTURE') {
                 $pictures[] = $picture;
             }
         }

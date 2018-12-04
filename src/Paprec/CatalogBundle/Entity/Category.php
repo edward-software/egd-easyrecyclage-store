@@ -425,7 +425,7 @@ class Category
     /**
      * Fonction de tri d'un tableau
      */
-    private function compare(ProductDICategory $a, ProductDICategory $b)
+    private function compare($a, $b)
     {
         if ($a->getPosition() == $b->getPosition()) {
             return 0;

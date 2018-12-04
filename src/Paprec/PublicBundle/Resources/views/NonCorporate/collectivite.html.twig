@@ -145,6 +145,12 @@
                 $('#regularForm').submit();
             });
 
+            $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function() {
+                for (var i = 0; i < this.files.length; i++) {
+                    console.log(this.files[i].name);
+                }
+            });
+
         });
     </script>
 

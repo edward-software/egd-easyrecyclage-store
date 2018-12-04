@@ -252,7 +252,7 @@ class CartManager
     {
         $cart = $this->get($id);
         $content = $cart->getContent();
-        $product = ['pId' => $productId, 'qtty' => $quantity, 'optHandling' => $optHandling, 'optSerialNumberStmt' => $optSerialNumberStmt, 'optDestruction' => $optDestruction ];
+        $product = ['pId' => $productId, 'qtty' => $quantity, 'optHandling' => $optHandling, 'optSerialNumberStmt' => $optSerialNumberStmt, 'optDestruction' => $optDestruction];
         foreach ($content as $key => $value) {
             if ($value['pId'] == $productId) {
                 unset($content[$key]);
@@ -322,15 +322,11 @@ class CartManager
         $productDIManager = $this->container->get('paprec_catalog.product_di_manager');
         $categoryManager = $this->container->get('paprec_catalog.category_manager');
 
-
-        /**
-         * TODO : gérer la somme du panier dans une autre méthode :
-         * calcule en fonction de la division, du code postal, etc ...
-         */
-
-
         // on récupère les products ajoutés au cart
         $productsCategories = $cart->getContent();
+        // On récupère le code postal
+        $postalCode = $cart->getPostalCode();
+
         $loadedCart = array();
         $loadedCart['sum'] = 0;
         if ($productsCategories && count($productsCategories)) {
@@ -338,16 +334,8 @@ class CartManager
                 $productDI = $productDIManager->get($productsCategory['pId']);
                 $category = $categoryManager->get($productsCategory['cId']);
                 $loadedCart[$productsCategory['pId'] . '_' . $productsCategory['cId']] = ['qtty' => $productsCategory['qtty'], 'pName' => $productDI->getName(), 'pCapacity' => $productDI->getCapacity() . $productDI->getCapacityUnit(), 'cName' => $category->getName(), 'frequency' => $cart->getFrequency()];
-                $productDICategory = $this->em->getRepository('PaprecCatalogBundle:ProductDICategory')->findOneBy(
-                    array(
-                        'productDI' => $productDI,
-                        'category' => $category
-                    )
-                );
-                if ($productDICategory !== null) {
-                    $loadedCart['sum'] += $productDICategory->getUnitPrice() * $productsCategory['qtty'];
-                }
             }
+            $loadedCart['sum'] = $this->calculateSumDI($productsCategories, $postalCode, $productDIManager, $categoryManager);
         } else {
             return $loadedCart;
         }
@@ -357,6 +345,46 @@ class CartManager
         return $loadedCart;
     }
 
+    /**
+     * Renvoie la somme totale des produits DI du Cart
+     * Récupère le prix unitaire, défini dans ProductDICategory, que l'on multiplie par la quantité
+     * mais aussi par le ratio en fonction du code postal
+     *
+     * @param $productsCategories
+     * @param $postalCode
+     * @param $productDIManager
+     * @param $categoryManager
+     * @return float|int
+     */
+    private function calculateSumDI($productsCategories, $postalCode, $productDIManager, $categoryManager)
+    {
+        $postalCodeManager = $this->container->get('paprec_catalog.postal_code_manager');
+
+        $sum = 0;
+        foreach ($productsCategories as $productsCategory) {
+            $productDI = $productDIManager->get($productsCategory['pId']);
+            $category = $categoryManager->get($productsCategory['cId']);
+            $productDICategory = $this->em->getRepository('PaprecCatalogBundle:ProductDICategory')->findOneBy(
+                array(
+                    'productDI' => $productDI,
+                    'category' => $category
+                )
+            );
+            if ($productDICategory !== null) {
+                $rate = $postalCodeManager->getRateByPostalCodeDivision($postalCode, 'DI');
+                $sum += $productDICategory->getUnitPrice() * $productsCategory['qtty'] * $rate;
+            }
+        }
+        return $sum;
+    }
+
+    /**
+     * Fonction qui renvoie un tableau permettant d'afficher tous les produits dans le Cart dans la partie "Mon besoin"
+     * ainsi que la somme du prix du Cart
+     * @param $id
+     * @return array
+     * @throws Exception
+     */
     public function loadCartChantier($id)
     {
         $cart = $this->get($id);
@@ -370,6 +398,9 @@ class CartManager
 
         // on récupère les products ajoutés au cart
         $productsCategories = $cart->getContent();
+        // On récupère le code postal
+        $postalCode = $cart->getPostalCode();
+
         $loadedCart = array();
         $loadedCart['sum'] = 0;
         if ($productsCategories && count($productsCategories)) {
@@ -378,14 +409,8 @@ class CartManager
                 $productChantier = $productChantierManager->get($productsCategory['pId']);
                 $category = $categoryManager->get($productsCategory['cId']);
                 $loadedCart[$productsCategory['pId'] . '_' . $productsCategory['cId']] = ['qtty' => $productsCategory['qtty'], 'pName' => $productChantier->getName(), 'pCapacity' => $productChantier->getCapacity() . $productChantier->getCapacityUnit(), 'cName' => $category->getName(), 'frequency' => $cart->getFrequency()];
-                $productChantierCategory = $this->em->getRepository('PaprecCatalogBundle:ProductChantierCategory')->findOneBy(
-                    array(
-                        'productChantier' => $productChantier,
-                        'category' => $category
-                    )
-                );
-                $loadedCart['sum'] += $productChantierCategory->getUnitPrice() * $productsCategory['qtty'];
             }
+            $loadedCart['sum'] = $this->calculateSumChantier($productsCategories, $postalCode, $productChantierManager, $categoryManager);
         } else {
             return $loadedCart;
         }
@@ -395,6 +420,47 @@ class CartManager
         return $loadedCart;
     }
 
+    /**
+     * Renvoie la somme totale des produits Chantier du Cart
+     * Récupère le prix unitaire, défini dans ProductDICategory, que l'on multiplie par la quantité
+     * mais aussi par le ratio en fonction du code postal
+     *
+     * @param $productsCategories
+     * @param $postalCode
+     * @param $productDIManager
+     * @param $categoryManager
+     * @return float|int
+     */
+    private function calculateSumChantier($productsCategories, $postalCode, $productChantierManager, $categoryManager)
+    {
+        $postalCodeManager = $this->container->get('paprec_catalog.postal_code_manager');
+
+        $sum = 0;
+        foreach ($productsCategories as $productsCategory) {
+            $productChantier = $productChantierManager->get($productsCategory['pId']);
+            $category = $categoryManager->get($productsCategory['cId']);
+            $productChantierCategory = $this->em->getRepository('PaprecCatalogBundle:ProductChantierCategory')->findOneBy(
+                array(
+                    'productChantier' => $productChantier,
+                    'category' => $category
+                )
+            );
+            if ($productChantierCategory !== null) {
+                $rate = $postalCodeManager->getRateByPostalCodeDivision($postalCode, 'CHANTIER');
+                $sum += $productChantierCategory->getUnitPrice() * $productsCategory['qtty'] * $rate;
+            }
+        }
+        return $sum;
+    }
+
+
+    /**
+     * Fonction qui renvoie un tableau permettant d'afficher tous les produits dans le Cart dans la partie "Mon besoin"
+     * ainsi que la somme du prix du Cart
+     * @param $id
+     * @return array
+     * @throws Exception
+     */
     public function loadCartD3E($id)
     {
         $cart = $this->get($id);
@@ -406,18 +472,21 @@ class CartManager
          * calcule en fonction de la division, du code postal, etc ...
          */
 
-        // on récupère les products ajoutés au cart
+        // on récupère les products ajoutés au Cart
         $products = $cart->getContent();
+        // on récupère le postalCode du Cart
+        $postalCode = $cart->getPostalCode();
+
         $loadedCart = array();
         $loadedCart['sum'] = 0;
         if ($products && count($products)) {
             foreach ($products as $product) {
                 $productD3E = $productD3EManager->get($product['pId']);
-                $nbOptions =  $product['optHandling'] + $product['optSerialNumberStmt'] + $product['optDestruction'];
-                $loadedCart[$product['pId']] = ['qtty' => $product['qtty'], 'pName' => $productD3E->getName(), 'frequency' => $cart->getFrequency(),'nbOptions' => $nbOptions];
-                $postalCode = $cart->getPostalCode();
+                $nbOptions = $product['optHandling'] + $product['optSerialNumberStmt'] + $product['optDestruction'];
+                $loadedCart[$product['pId']] = ['qtty' => $product['qtty'], 'pName' => $productD3E->getName(), 'frequency' => $cart->getFrequency(), 'nbOptions' => $nbOptions];
                 $loadedCart['sum'] += $priceListD3EManager->getUnitPriceByPostalCodeQtty($productD3E->getPriceListD3E(), $postalCode, $product['qtty']) * $product['qtty'];
             }
+            $loadedCart['sum'] = $this->calculateSumD3E($products, $postalCode);
         } else {
             return $loadedCart;
         }
@@ -425,5 +494,25 @@ class CartManager
         // ainsi les mêmes produits dans 2 catégories différentes
         ksort($loadedCart);
         return $loadedCart;
+    }
+
+    private function calculateSumD3E($products, $postalCode)
+    {
+        $postalCodeManager = $this->container->get('paprec_catalog.postal_code_manager');
+        $priceListD3EManager = $this->container->get('paprec_catalog.price_list_d3e_manager');
+        $productD3EManager = $this->container->get('paprec_catalog.product_D3E_manager');
+
+        $sum = 0;
+        foreach ($products as $product) {
+            $productD3E = $productD3EManager->get($product['pId']);
+            $rateHandling = ($product['optHandling'] == 1) ? $productD3E->getCoefHandling() : 1;
+            $rateSerialNumberStmt = ($product['optSerialNumberStmt'] == 1) ? $productD3E->getCoefSerialNumberStmt() : 1;
+            $rateDestruction = ($product['optDestruction'] == 1) ? $productD3E->getCoefDestruction() : 1;
+
+
+            $ratePostalCode = $postalCodeManager->getRateByPostalCodeDivision($postalCode, 'D3E');
+            $sum += $priceListD3EManager->getUnitPriceByPostalCodeQtty($productD3E->getPriceListD3E(), $postalCode, $product['qtty']) * $product['qtty'] * $ratePostalCode * $rateHandling * $rateSerialNumberStmt * $rateDestruction;
+        }
+        return $sum;
     }
 }

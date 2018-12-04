@@ -338,7 +338,6 @@ class ProductDIController extends Controller
      */
     public function addPictureAction(Request $request, ProductDI $productDI)
     {
-
         $picture = new Picture();
         foreach ($this->getParameter('paprec_types_picture') as $type) {
             $types[$type] = $type;
@@ -356,6 +355,7 @@ class ProductDIController extends Controller
             $picture = $form->getData();
 
             if ($picture->getPath() instanceof UploadedFile) {
+
                 $pic = $picture->getPath();
                 $pictoFileName = md5(uniqid()) . '.' . $pic->guessExtension();
 
@@ -365,6 +365,7 @@ class ProductDIController extends Controller
                 $picture->setType($request->get('type'));
                 $picture->setProductDI($productDI);
                 $productDI->addPicture($picture);
+                $em->persist($picture);
                 $em->flush();
             }
 

@@ -112,6 +112,12 @@ class HomeController extends Controller
         $cartManager = $this->get('paprec.cart_manager');
         $cart = $cartManager->get($cartUuid);
 
+        // on supprime le contenu et les items affichés
+        $cart->setContent();
+        $cart->setDisplayedCategories();
+        $cart->setDisplayedProducts();
+
+        // on ajoute les données géographiques
         $cart->setLocation($location);
         $cart->setCity($city);
         $cart->setPostalCode($postalCode);
