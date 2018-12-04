@@ -200,14 +200,22 @@ class ProductD3EOrderManager
 
     /**
      * Retourne le montant total d'une ProductD3EOrderLine
-     * @param ProductD3EOrder $productD3EOrder
      * @param ProductD3EOrderLine $productD3EOrderLine
      * @return float|int
      */
     public function calculateTotalLine(ProductD3EOrderLine $productD3EOrderLine)
     {
+        $productD3EManager = $this->container->get('paprec_catalog.product_D3E_manager');
 
-        return $productD3EOrderLine->getQuantity() * $productD3EOrderLine->getUnitPrice();
+        return $productD3EManager->calculatePrice(
+            $productD3EOrderLine->getProductD3E(),
+            $productD3EOrderLine->getProductD3EOrder()->getPostalCode(),
+            $productD3EOrderLine->getUnitPrice(),
+            $productD3EOrderLine->getQuantity(),
+            $productD3EOrderLine->getOptHandling(),
+            $productD3EOrderLine->getOptSerialNumberStmt(),
+            $productD3EOrderLine->getOptDestruction()
+        );
     }
 
 }

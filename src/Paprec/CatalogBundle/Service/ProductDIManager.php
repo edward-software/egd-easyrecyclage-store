@@ -28,7 +28,8 @@ class ProductDIManager
         $this->container = $container;
     }
 
-    public function get($productDI){
+    public function get($productDI)
+    {
         $id = $productDI;
         if ($productDI instanceof ProductDI) {
             $id = $productDI->getId();
@@ -53,6 +54,31 @@ class ProductDIManager
     }
 
     /**
+     * Vérifie qu'à ce jour, le produit ce soit pas supprimé
+     *
+     * @param ProductDI $productDI
+     * @param bool $throwException
+     * @return bool
+     * @throws EntityNotFoundException
+     * @throws Exception
+     */
+    public function isDeleted(ProductDI $productDI, $throwException = false)
+    {
+        $now = new \DateTime();
+
+        if ($productDI->getDeleted() !== null && $productDI->getDeleted() instanceof \DateTime && $productDI->getDeleted() < $now) {
+
+            if ($throwException) {
+                throw new EntityNotFoundException('productDINotFound');
+            }
+
+            return true;
+
+        }
+        return false;
+    }
+
+    /**
      * On passe en paramètre les options Category et PostalCode, retourne les produits qui appartiennent à la catégorie
      * et qui sont disponibles dans le postalCode
      * @param $options
@@ -62,7 +88,7 @@ class ProductDIManager
     public function findAvailables($options)
     {
         $categoryId = $options['category'];
-        $postalCode= $options['postalCode'];
+        $postalCode = $options['postalCode'];
 
         try {
             $query = $this->em
@@ -101,27 +127,23 @@ class ProductDIManager
     }
 
     /**
-     * Vérifie qu'à ce jour, le produit ce soit pas supprimé
+     * Fonction calculant le prix d'un produit en fonction de sa quantité, du code postal
+     * Utilisée dans le calcul du montant d'un Cart et dans le calcul du montant d'une ligne ProductDIQuoteLine
+     * Si le calcul est modifiée, il faudra donc le modifier uniquement ici
      *
-     * @param ProductDI $productDI
-     * @param bool $throwException
-     * @return bool
-     * @throws EntityNotFoundException
+     * @param $postalCode
+     * @param $unitPrice
+     * @param $qtty
+     * @return float|int
      */
-    public function isDeleted(ProductDI $productDI, $throwException = false)
+    public function calculatePrice($postalCode, $unitPrice, $qtty)
     {
-        $now = new \DateTime();
+        $postalCodeManager = $this->container->get('paprec_catalog.postal_code_manager');
 
-        if ($productDI->getDeleted() !== null && $productDI->getDeleted() instanceof \DateTime && $productDI->getDeleted() < $now) {
+        $ratePostalCode = $postalCodeManager->getRateByPostalCodeDivision($postalCode, 'DI');
 
-            if ($throwException) {
-                throw new EntityNotFoundException('productDINotFound');
-            }
-
-            return true;
-
-        }
-        return false;
+        return $unitPrice * $qtty * $ratePostalCode;
     }
+
 
 }

@@ -168,7 +168,6 @@ class ProductDIQuoteManager
 
     /**
      * Calcule le montant total d'un ProductDIQuote
-     * TODO relier le ProductDIQuote aux PostalCodes pour calculer avec le coefficient multiplicateur du postalCode
      * @param ProductDIQuote $productDIQuote
      * @return float|int
      */
@@ -184,14 +183,14 @@ class ProductDIQuoteManager
 
     /**
      * Retourne le montant total d'une ProductDIQuoteLine
-     * @param ProductDIQuote $productDIQuote
      * @param ProductDIQuoteLine $productDIQuoteLine
      * @return float|int
      */
     public function calculateTotalLine(ProductDIQuoteLine $productDIQuoteLine)
     {
+        $productDIManager = $this->container->get('paprec_catalog.product_di_manager');
 
-        return $productDIQuoteLine->getQuantity() * $productDIQuoteLine->getUnitPrice();
+        return $productDIManager->calculatePrice($productDIQuoteLine->getProductDIQuote()->getPostalCode(), $productDIQuoteLine->getUnitPrice(), $productDIQuoteLine->getQuantity());
     }
 
 }

@@ -228,11 +228,14 @@ class CartManager
         $cart = $this->get($id);
         $content = $cart->getContent();
         $product = ['cId' => $categoryId, 'pId' => $productId, 'qtty' => $quantity];
-        foreach ($content as $key => $value) {
-            if ($value['cId'] == $categoryId && $value['pId'] == $productId) {
-                unset($content[$key]);
+        if ($content && count($content)) {
+            foreach ($content as $key => $value) {
+                if ($value['cId'] == $categoryId && $value['pId'] == $productId) {
+                    unset($content[$key]);
+                }
             }
         }
+
         $content[] = $product;
         $cart->setContent($content);
         $this->em->persist($cart);
@@ -253,9 +256,11 @@ class CartManager
         $cart = $this->get($id);
         $content = $cart->getContent();
         $product = ['pId' => $productId, 'qtty' => $quantity, 'optHandling' => $optHandling, 'optSerialNumberStmt' => $optSerialNumberStmt, 'optDestruction' => $optDestruction];
-        foreach ($content as $key => $value) {
-            if ($value['pId'] == $productId) {
-                unset($content[$key]);
+        if ($content && count($content)) {
+            foreach ($content as $key => $value) {
+                if ($value['pId'] == $productId) {
+                    unset($content[$key]);
+                }
             }
         }
         $content[] = $product;
@@ -277,9 +282,11 @@ class CartManager
     {
         $cart = $this->get($id);
         $products = $cart->getContent();
-        foreach ($products as $key => $product) {
-            if ($product['cId'] == $categoryId && $product['pId'] == $productId) {
-                unset($products[$key]);
+        if ($products && count($products)) {
+            foreach ($products as $key => $product) {
+                if ($product['cId'] == $categoryId && $product['pId'] == $productId) {
+                    unset($products[$key]);
+                }
             }
         }
         $cart->setContent($products);
@@ -298,9 +305,11 @@ class CartManager
     {
         $cart = $this->get($id);
         $products = $cart->getContent();
-        foreach ($products as $key => $product) {
-            if ($product['pId'] == $productId) {
-                unset($products[$key]);
+        if ($products && count($products)) {
+            foreach ($products as $key => $product) {
+                if ($product['pId'] == $productId) {
+                    unset($products[$key]);
+                }
             }
         }
         $cart->setContent($products);
@@ -335,7 +344,7 @@ class CartManager
                 $category = $categoryManager->get($productsCategory['cId']);
                 $loadedCart[$productsCategory['pId'] . '_' . $productsCategory['cId']] = ['qtty' => $productsCategory['qtty'], 'pName' => $productDI->getName(), 'pCapacity' => $productDI->getCapacity() . $productDI->getCapacityUnit(), 'cName' => $category->getName(), 'frequency' => $cart->getFrequency()];
             }
-            $loadedCart['sum'] = $this->calculateSumDI($productsCategories, $postalCode, $productDIManager, $categoryManager);
+            $loadedCart['sum'] = $this->calculateSumDI($productsCategories, $postalCode);
         } else {
             return $loadedCart;
         }
@@ -355,10 +364,13 @@ class CartManager
      * @param $productDIManager
      * @param $categoryManager
      * @return float|int
+     * @throws Exception
      */
-    private function calculateSumDI($productsCategories, $postalCode, $productDIManager, $categoryManager)
+    private function calculateSumDI($productsCategories, $postalCode)
     {
-        $postalCodeManager = $this->container->get('paprec_catalog.postal_code_manager');
+        $productDIManager = $this->container->get('paprec_catalog.product_di_manager');
+        $categoryManager = $this->container->get('paprec_catalog.category_manager');
+
 
         $sum = 0;
         foreach ($productsCategories as $productsCategory) {
@@ -371,8 +383,7 @@ class CartManager
                 )
             );
             if ($productDICategory !== null) {
-                $rate = $postalCodeManager->getRateByPostalCodeDivision($postalCode, 'DI');
-                $sum += $productDICategory->getUnitPrice() * $productsCategory['qtty'] * $rate;
+                $sum += $productDIManager->calculatePrice($postalCode, $productDICategory->getUnitPrice(), $productsCategory['qtty']);
             }
         }
         return $sum;
@@ -410,7 +421,7 @@ class CartManager
                 $category = $categoryManager->get($productsCategory['cId']);
                 $loadedCart[$productsCategory['pId'] . '_' . $productsCategory['cId']] = ['qtty' => $productsCategory['qtty'], 'pName' => $productChantier->getName(), 'pCapacity' => $productChantier->getCapacity() . $productChantier->getCapacityUnit(), 'cName' => $category->getName(), 'frequency' => $cart->getFrequency()];
             }
-            $loadedCart['sum'] = $this->calculateSumChantier($productsCategories, $postalCode, $productChantierManager, $categoryManager);
+            $loadedCart['sum'] = $this->calculateSumChantier($productsCategories, $postalCode);
         } else {
             return $loadedCart;
         }
@@ -430,10 +441,12 @@ class CartManager
      * @param $productDIManager
      * @param $categoryManager
      * @return float|int
+     * @throws Exception
      */
-    private function calculateSumChantier($productsCategories, $postalCode, $productChantierManager, $categoryManager)
+    private function calculateSumChantier($productsCategories, $postalCode)
     {
-        $postalCodeManager = $this->container->get('paprec_catalog.postal_code_manager');
+        $productChantierManager = $this->container->get('paprec_catalog.product_chantier_manager');
+        $categoryManager = $this->container->get('paprec_catalog.category_manager');
 
         $sum = 0;
         foreach ($productsCategories as $productsCategory) {
@@ -446,8 +459,7 @@ class CartManager
                 )
             );
             if ($productChantierCategory !== null) {
-                $rate = $postalCodeManager->getRateByPostalCodeDivision($postalCode, 'CHANTIER');
-                $sum += $productChantierCategory->getUnitPrice() * $productsCategory['qtty'] * $rate;
+                $sum += $productChantierManager->calculatePrice($postalCode, $productChantierCategory->getUnitPrice(), $productsCategory['qtty']);
             }
         }
         return $sum;
@@ -505,13 +517,9 @@ class CartManager
         $sum = 0;
         foreach ($products as $product) {
             $productD3E = $productD3EManager->get($product['pId']);
-            $rateHandling = ($product['optHandling'] == 1) ? $productD3E->getCoefHandling() : 1;
-            $rateSerialNumberStmt = ($product['optSerialNumberStmt'] == 1) ? $productD3E->getCoefSerialNumberStmt() : 1;
-            $rateDestruction = ($product['optDestruction'] == 1) ? $productD3E->getCoefDestruction() : 1;
+            $unitPrice = $priceListD3EManager->getUnitPriceByPostalCodeQtty($productD3E->getPriceListD3E(), $postalCode, $product['qtty']);
 
-
-            $ratePostalCode = $postalCodeManager->getRateByPostalCodeDivision($postalCode, 'D3E');
-            $sum += $priceListD3EManager->getUnitPriceByPostalCodeQtty($productD3E->getPriceListD3E(), $postalCode, $product['qtty']) * $product['qtty'] * $ratePostalCode * $rateHandling * $rateSerialNumberStmt * $rateDestruction;
+            $sum += $productD3EManager->calculatePrice($productD3E, $postalCode, $unitPrice, $product['qtty'], $product['optHandling'], $product['optSerialNumberStmt'], $product['optDestruction']);
         }
         return $sum;
     }

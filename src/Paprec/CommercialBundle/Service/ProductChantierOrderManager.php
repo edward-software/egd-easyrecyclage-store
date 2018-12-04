@@ -192,8 +192,9 @@ class ProductChantierOrderManager
      */
     public function calculateTotalLine(ProductChantierOrderLine $productChantierOrderLine)
     {
+        $productChantierManager = $this->container->get('paprec_catalog.product_chantier_manager');
 
-        return $productChantierOrderLine->getQuantity() * $productChantierOrderLine->getUnitPrice();
+        return $productChantierManager->calculatePrice($productChantierOrderLine->getProductChantierOrder()->getPostalCode(), $productChantierOrderLine->getUnitPrice(), $productChantierOrderLine->getQuantity());
     }
 
 }

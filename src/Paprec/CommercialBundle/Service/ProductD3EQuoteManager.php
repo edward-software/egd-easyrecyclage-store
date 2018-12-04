@@ -199,14 +199,22 @@ class ProductD3EQuoteManager
 
     /**
      * Retourne le montant total d'une ProductD3EQuoteLine
-     * @param ProductD3EQuote $productD3EQuote
      * @param ProductD3EQuoteLine $productD3EQuoteLine
      * @return float|int
      */
     public function calculateTotalLine(ProductD3EQuoteLine $productD3EQuoteLine)
     {
 
-        return $productD3EQuoteLine->getQuantity() * $productD3EQuoteLine->getUnitPrice();
-    }
+        $productD3EManager = $this->container->get('paprec_catalog.product_D3E_manager');
+
+        return $productD3EManager->calculatePrice(
+            $productD3EQuoteLine->getProductD3E(),
+            $productD3EQuoteLine->getProductD3EQuote()->getPostalCode(),
+            $productD3EQuoteLine->getUnitPrice(),
+            $productD3EQuoteLine->getQuantity(),
+            $productD3EQuoteLine->getOptHandling(),
+            $productD3EQuoteLine->getOptSerialNumberStmt(),
+            $productD3EQuoteLine->getOptDestruction()
+        );    }
 
 }

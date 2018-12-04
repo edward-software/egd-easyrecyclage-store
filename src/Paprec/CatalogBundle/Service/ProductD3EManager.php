@@ -123,4 +123,28 @@ class ProductD3EManager
         }
     }
 
+    /**
+     * Fonction calculant le prix d'un produit en fonction de sa quantité, du code postal et des options sélectionnées
+     * Utilisée dans le calcul du montant d'un Cart et dans le calcul du montant d'une ligne ProductDIQuoteLine
+     * Si le calcul est modifiée, il faudra donc le modifier uniquement ici
+     *
+     * @param $postalCode
+     * @param $unitPrice
+     * @param $qtty
+     * @return float|int
+     */
+    public function calculatePrice($productD3E, $postalCode, $unitPrice, $qtty, $optHandling, $optSerialNumberStmt, $optDestruction) {
+        $postalCodeManager = $this->container->get('paprec_catalog.postal_code_manager');
+
+        $productD3E = $this->get($productD3E);
+
+        $rateHandling = ($optHandling == 1) ? $productD3E->getCoefHandling() : 1;
+        $rateSerialNumberStmt = ($optSerialNumberStmt == 1) ? $productD3E->getCoefSerialNumberStmt() : 1;
+        $rateDestruction = ($optDestruction == 1) ? $productD3E->getCoefDestruction() : 1;
+
+        $ratePostalCode = $postalCodeManager->getRateByPostalCodeDivision($postalCode, 'D3E');
+
+        return $unitPrice * $qtty * $ratePostalCode * $rateHandling * $rateSerialNumberStmt * $rateDestruction;
+    }
+
 }

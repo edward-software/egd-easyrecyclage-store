@@ -16,9 +16,14 @@ Public:
     ChooseTrash:                  Sélectionnez vos déchets
     Qtty:                         Quantité
     Dimensions:                   Dimensions
-    AddToCart:                    Ajouter au devis
+    AddToCartQuote:               Ajouter au devis
+    AddToCartOrder:               Ajouter au panier
     NoProduct:                    Aucune prestation ajoutée
     NeedEstimation:               J'estime mon besoin en 3 minutes
     3MinOrder:                    Je commande en ligne en 3 minutes
     FillForm:                     Je remplis un formulaire
     QuoteRequest:                 J'établis un devis
+
+  Step1:
+    NextStepQuote:                Valider votre besoin
+    NextStepOrder:                Commander

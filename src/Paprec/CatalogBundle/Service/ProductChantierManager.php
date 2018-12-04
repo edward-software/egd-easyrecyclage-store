@@ -127,4 +127,22 @@ class ProductChantierManager
         }
     }
 
+    /**
+     * Fonction calculant le prix d'un produit en fonction de sa quantité, du code postal
+     * Utilisée dans le calcul du montant d'un Cart et dans le calcul du montant d'une ligne ProductDIQuoteLine
+     * Si le calcul est modifiée, il faudra donc le modifier uniquement ici
+     *
+     * @param $postalCode
+     * @param $unitPrice
+     * @param $qtty
+     * @return float|int
+     */
+    public function calculatePrice($postalCode, $unitPrice, $qtty) {
+        $postalCodeManager = $this->container->get('paprec_catalog.postal_code_manager');
+
+        $ratePostalCode = $postalCodeManager->getRateByPostalCodeDivision($postalCode, 'CHANTIER');
+
+        return $unitPrice * $qtty * $ratePostalCode;
+    }
+
 }
