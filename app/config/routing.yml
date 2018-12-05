@@ -14,36 +14,36 @@
 ### Back Office
 
 fos_user_security_login:
-    path:  /admin/login
+    path:  /devis/admin/login
     defaults: { _controller: FOSUserBundle:Security:login }
 
 fos_user_security_check:
-    path:  /admin/check
+    path:  /devis/admin/check
     defaults: { _controller: FOSUserBundle:Security:check }
 
 fos_user_security_logout:
-    path:  /admin/logout
+    path:  /devis/admin/logout
     defaults: { _controller: FOSUserBundle:Security:logout }
 
 paprec_home:
     resource: "@PaprecHomeBundle/Controller/"
     type:     annotation
-    prefix:   /admin
+    prefix:   /devis/admin
 
 paprec_user:
     resource: "@PaprecUserBundle/Controller/"
     type:     annotation
-    prefix:   /admin/user
+    prefix:   /devis/admin/user
 
 paprec_catalog:
     resource: "@PaprecCatalogBundle/Controller/"
     type:     annotation
-    prefix:   /admin/catalog
+    prefix:   /devis/admin/catalog
 
 paprec_commercial:
     resource: "@PaprecCommercialBundle/Controller/"
     type:     annotation
-    prefix:   /admin/commercial
+    prefix:   /devis/admin/commercial
 
 ### Front Office
 

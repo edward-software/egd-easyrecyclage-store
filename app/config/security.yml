@@ -21,7 +21,7 @@ security:
 
         # Par-feu du Backoffice
         admin:
-            pattern: ^/admin/
+            pattern: ^/devis/admin/
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
@@ -43,5 +43,5 @@ security:
             anonymous:    true
 
     access_control:
-        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/devis/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/devis/admin/, role: ROLE_ADMIN }
