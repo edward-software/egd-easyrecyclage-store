@@ -135,16 +135,18 @@ class ProductD3EManager
      */
     public function calculatePrice($productD3E, $postalCode, $unitPrice, $qtty, $optHandling, $optSerialNumberStmt, $optDestruction) {
         $postalCodeManager = $this->container->get('paprec_catalog.postal_code_manager');
+        $numberManager = $this->container->get('paprec_catalog.number_manager');
 
         $productD3E = $this->get($productD3E);
 
-        $rateHandling = ($optHandling == 1) ? $productD3E->getCoefHandling() : 1;
-        $rateSerialNumberStmt = ($optSerialNumberStmt == 1) ? $productD3E->getCoefSerialNumberStmt() : 1;
-        $rateDestruction = ($optDestruction == 1) ? $productD3E->getCoefDestruction() : 1;
+        // Pour chaque option, si elle est sélectionné, on récupère son coefficient dénormalisé. Sinon on returne 1
+        $rateHandling = ($optHandling == 1) ? $numberManager->denormalize($productD3E->getCoefHandling()) : 1;
+        $rateSerialNumberStmt = ($optSerialNumberStmt == 1) ? $numberManager->denormalize($productD3E->getCoefSerialNumberStmt()) : 1;
+        $rateDestruction = ($optDestruction == 1) ? $numberManager->denormalize($productD3E->getCoefDestruction()) : 1;
 
         $ratePostalCode = $postalCodeManager->getRateByPostalCodeDivision($postalCode, 'D3E');
 
-        return $unitPrice * $qtty * $ratePostalCode * $rateHandling * $rateSerialNumberStmt * $rateDestruction;
+        return $numberManager->denormalize($unitPrice) * $qtty * $numberManager->denormalize($ratePostalCode) * $rateHandling * $rateSerialNumberStmt * $rateDestruction;
     }
 
 }

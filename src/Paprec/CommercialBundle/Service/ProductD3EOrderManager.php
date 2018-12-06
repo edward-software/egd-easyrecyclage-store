@@ -162,7 +162,7 @@ class ProductD3EOrderManager
      */
     public function addLineFromCart(ProductD3EOrder $productD3EOrder, $productId, $qtty, $optHandling, $optSerialNumberStmt, $optDestruction)
     {
-        $productD3EManager = $this->container->get('paprec_catalog.product_D3E_manager');
+        $productD3EManager = $this->container->get('paprec_catalog.product_d3e_manager');
 
         try {
             $productD3E = $productD3EManager->get($productId);
@@ -205,17 +205,20 @@ class ProductD3EOrderManager
      */
     public function calculateTotalLine(ProductD3EOrderLine $productD3EOrderLine)
     {
-        $productD3EManager = $this->container->get('paprec_catalog.product_D3E_manager');
+        $productD3EManager = $this->container->get('paprec_catalog.product_d3e_manager');
+        $numberManager = $this->container->get('paprec_catalog.number_manager');
 
-        return $productD3EManager->calculatePrice(
-            $productD3EOrderLine->getProductD3E(),
-            $productD3EOrderLine->getProductD3EOrder()->getPostalCode(),
-            $productD3EOrderLine->getUnitPrice(),
-            $productD3EOrderLine->getQuantity(),
-            $productD3EOrderLine->getOptHandling(),
-            $productD3EOrderLine->getOptSerialNumberStmt(),
-            $productD3EOrderLine->getOptDestruction()
-        );
+        return round($numberManager->normalize(
+                $productD3EManager->calculatePrice(
+                $productD3EOrderLine->getProductD3E(),
+                $productD3EOrderLine->getProductD3EOrder()->getPostalCode(),
+                $productD3EOrderLine->getUnitPrice(),
+                $productD3EOrderLine->getQuantity(),
+                $productD3EOrderLine->getOptHandling(),
+                $productD3EOrderLine->getOptSerialNumberStmt(),
+                $productD3EOrderLine->getOptDestruction()
+            )
+        ), 2);
     }
 
 }

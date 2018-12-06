@@ -170,7 +170,7 @@ class ProductD3EController extends Controller
      */
     public function viewAction(Request $request, ProductD3E $productD3E)
     {
-        $productD3EManager = $this->get('paprec_catalog.product_D3E_manager');
+        $productD3EManager = $this->get('paprec_catalog.product_d3e_manager');
         $productD3EManager->isDeleted($productD3E, true);
 
         foreach($this->getParameter('paprec_types_picture') as $type) {
@@ -198,9 +198,12 @@ class ProductD3EController extends Controller
     /**
      * @Route("/productD3E/add",  name="paprec_catalog_productD3E_add")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Exception
      */
     public function addAction(Request $request)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
+
         $productD3E = new ProductD3E();
 
         $form = $this->createForm(ProductD3EType::class, $productD3E);
@@ -209,6 +212,11 @@ class ProductD3EController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $productD3E = $form->getData();
+
+            $productD3E->setCoefHandling($numberManager->normalize($productD3E->getCoefHandling()));
+            $productD3E->setCoefSerialNumberStmt($numberManager->normalize($productD3E->getCoefSerialNumberStmt()));
+            $productD3E->setCoefDestruction($numberManager->normalize($productD3E->getCoefDestruction()));
+
             $productD3E->setDateCreation(new \DateTime);
 
             $em = $this->getDoctrine()->getManager();
@@ -234,9 +242,13 @@ class ProductD3EController extends Controller
      */
     public function editAction(Request $request, ProductD3E $productD3E)
     {
-        $productD3EManager = $this->get('paprec_catalog.product_D3E_manager');
+        $numberManager = $this->get('paprec_catalog.number_manager');
+        $productD3EManager = $this->get('paprec_catalog.product_d3e_manager');
         $productD3EManager->isDeleted($productD3E, true);
 
+        $productD3E->setCoefHandling($numberManager->denormalize($productD3E->getCoefHandling()));
+        $productD3E->setCoefSerialNumberStmt($numberManager->denormalize($productD3E->getCoefSerialNumberStmt()));
+        $productD3E->setCoefDestruction($numberManager->denormalize($productD3E->getCoefDestruction()));
         $form = $this->createForm(ProductD3EType::class, $productD3E);
 
         $form->handleRequest($request);
@@ -244,6 +256,11 @@ class ProductD3EController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $productD3E = $form->getData();
+
+            $productD3E->setCoefHandling($numberManager->normalize($productD3E->getCoefHandling()));
+            $productD3E->setCoefSerialNumberStmt($numberManager->normalize($productD3E->getCoefSerialNumberStmt()));
+            $productD3E->setCoefDestruction($numberManager->normalize($productD3E->getCoefDestruction()));
+
             $productD3E->setDateUpdate(new \DateTime);
 
             $em = $this->getDoctrine()->getManager();

@@ -54,9 +54,9 @@ class ProductD3EQuoteLine
 
 
     /**
-     * @var float
+     * @var int
      *
-     * @ORM\Column(name="unitPrice", type="float")
+     * @ORM\Column(name="unitPrice", type="integer")
      */
     private $unitPrice;
 
@@ -82,9 +82,9 @@ class ProductD3EQuoteLine
     private $optDestruction;
 
     /**
-     * @var float
+     * @var int
      *
-     * @ORM\Column(name="totalAmount", type="float")
+     * @ORM\Column(name="totalAmount", type="integer")
      */
     private $totalAmount;
 
@@ -238,54 +238,6 @@ class ProductD3EQuoteLine
     }
 
     /**
-     * Set unitPrice.
-     *
-     * @param float $unitPrice
-     *
-     * @return ProductD3EQuoteLine
-     */
-    public function setUnitPrice($unitPrice)
-    {
-        $this->unitPrice = $unitPrice;
-
-        return $this;
-    }
-
-    /**
-     * Get unitPrice.
-     *
-     * @return float
-     */
-    public function getUnitPrice()
-    {
-        return $this->unitPrice;
-    }
-
-    /**
-     * Set totalAmount.
-     *
-     * @param float $totalAmount
-     *
-     * @return ProductD3EQuoteLine
-     */
-    public function setTotalAmount($totalAmount)
-    {
-        $this->totalAmount = $totalAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get totalAmount.
-     *
-     * @return float
-     */
-    public function getTotalAmount()
-    {
-        return $this->totalAmount;
-    }
-
-    /**
      * Set quantity.
      *
      * @param int $quantity
@@ -427,5 +379,53 @@ class ProductD3EQuoteLine
     public function getOptDestruction()
     {
         return $this->optDestruction;
+    }
+
+    /**
+     * Set unitPrice.
+     *
+     * @param int $unitPrice
+     *
+     * @return ProductD3EQuoteLine
+     */
+    public function setUnitPrice($unitPrice)
+    {
+        $this->unitPrice = $unitPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get unitPrice.
+     *
+     * @return int
+     */
+    public function getUnitPrice()
+    {
+        return $this->unitPrice;
+    }
+
+    /**
+     * Set totalAmount.
+     *
+     * @param int $totalAmount
+     *
+     * @return ProductD3EQuoteLine
+     */
+    public function setTotalAmount($totalAmount)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return int
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
     }
 }

@@ -2,7 +2,18 @@ Commercial:
 
   ChoseFile:                    Choisir un fichier
 
-  Bundle-name:                    Gestion Commerciale
+  Bundle-name:                  Gestion Commerciale
+  Requests:                     Demandes
+  Quotes:                       Devis
+  Settings:                     Paramétrage
+  Orders:                       Commandes
+  DI:                           DI
+  CHANTIER:                     Chantier
+  D3E:                          D3E
+  CorpQuoteRequests:            Demandes entreprise
+  NonCorpQuoteRequests:         Demandes non entreprise
+  Contact:                      Contact
+  Callback:                     Rappel
   Agency:
     Agencies:                   Agences
     List:                       Liste des agences

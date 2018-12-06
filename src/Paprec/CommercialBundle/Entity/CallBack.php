@@ -113,6 +113,7 @@ class CallBack
      *
      * @ORM\Column(name="dateCallBack", type="datetime")
      * @Assert\GreaterThan("today")
+     * @Assert\NotBlank()
      */
     private $dateCallBack;
 
@@ -121,6 +122,7 @@ class CallBack
      *
      * @ORM\Column(name="timeCallBack", type="string", length=255, nullable=true)
      * @Assert\Time
+     * @Assert\NotBlank()
      */
     private $timeCallBack;
 

@@ -684,4 +684,28 @@ class ProductChantier
     {
         return $this->productChantierOrderLines;
     }
+
+    /**
+     * Set capacity.
+     *
+     * @param string $capacity
+     *
+     * @return ProductChantier
+     */
+    public function setCapacity($capacity)
+    {
+        $this->capacity = $capacity;
+
+        return $this;
+    }
+
+    /**
+     * Get capacity.
+     *
+     * @return string
+     */
+    public function getCapacity()
+    {
+        return $this->capacity;
+    }
 }

@@ -138,11 +138,12 @@ class ProductDIManager
      */
     public function calculatePrice($postalCode, $unitPrice, $qtty)
     {
+        $numberManager = $this->container->get('paprec_catalog.number_manager');
         $postalCodeManager = $this->container->get('paprec_catalog.postal_code_manager');
 
         $ratePostalCode = $postalCodeManager->getRateByPostalCodeDivision($postalCode, 'DI');
 
-        return $unitPrice * $qtty * $ratePostalCode;
+        return $numberManager->denormalize($unitPrice) * $qtty * $numberManager->denormalize($ratePostalCode);
     }
 
 

@@ -30,10 +30,15 @@ class ProductDICategory
     private $position;
 
     /**
-     * @var float
+     * @var int
      *
-     * @ORM\Column(name="unitPrice", type="float")
+     * @ORM\Column(name="unitPrice", type="integer")
      * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/^\d{1,6}((\.|\,)\d{1,2})?$/",
+     *     match=true,
+     *     message="la valeur doit être un nombre entre 0 et 999 999,99 ('.' autorisé)"
+     * )
      */
     private $unitPrice;
 
@@ -150,7 +155,7 @@ class ProductDICategory
     /**
      * Set unitPrice.
      *
-     * @param float $unitPrice
+     * @param int $unitPrice
      *
      * @return ProductDICategory
      */
@@ -164,7 +169,7 @@ class ProductDICategory
     /**
      * Get unitPrice.
      *
-     * @return float
+     * @return int
      */
     public function getUnitPrice()
     {

@@ -135,16 +135,16 @@ class ProductChantierQuote
     private $quoteStatus;
 
     /**
-     * @var float
+     * @var int
      *
-     * @ORM\Column(name="totalAmount", type="float", nullable=true)
+     * @ORM\Column(name="totalAmount", type="integer", nullable=true)
      */
     private $totalAmount;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="generatedTurnover", type="float", nullable=true)
+     * @ORM\Column(name="generatedTurnover", type="string", length=20, nullable=true)
      */
     private $generatedTurnover;
 
@@ -163,9 +163,9 @@ class ProductChantierQuote
     private $frequency;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="tonnage", type="float", nullable=true)
+     * @ORM\Column(name="tonnage", type="string", length=50, nullable=true)
      */
     private $tonnage;
 
@@ -566,54 +566,6 @@ class ProductChantierQuote
     }
 
     /**
-     * Set totalAmount.
-     *
-     * @param float|null $totalAmount
-     *
-     * @return ProductChantierQuote
-     */
-    public function setTotalAmount($totalAmount = null)
-    {
-        $this->totalAmount = $totalAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get totalAmount.
-     *
-     * @return float|null
-     */
-    public function getTotalAmount()
-    {
-        return $this->totalAmount;
-    }
-
-    /**
-     * Set generatedTurnover.
-     *
-     * @param float|null $generatedTurnover
-     *
-     * @return ProductChantierQuote
-     */
-    public function setGeneratedTurnover($generatedTurnover = null)
-    {
-        $this->generatedTurnover = $generatedTurnover;
-
-        return $this;
-    }
-
-    /**
-     * Get generatedTurnover.
-     *
-     * @return float|null
-     */
-    public function getGeneratedTurnover()
-    {
-        return $this->generatedTurnover;
-    }
-
-    /**
      * Set summary.
      *
      * @param string|null $summary
@@ -659,30 +611,6 @@ class ProductChantierQuote
     public function getFrequency()
     {
         return $this->frequency;
-    }
-
-    /**
-     * Set tonnage.
-     *
-     * @param float|null $tonnage
-     *
-     * @return ProductChantierQuote
-     */
-    public function setTonnage($tonnage = null)
-    {
-        $this->tonnage = $tonnage;
-
-        return $this;
-    }
-
-    /**
-     * Get tonnage.
-     *
-     * @return float|null
-     */
-    public function getTonnage()
-    {
-        return $this->tonnage;
     }
 
     /**
@@ -815,5 +743,77 @@ class ProductChantierQuote
     public function getBusinessLine()
     {
         return $this->businessLine;
+    }
+
+    /**
+     * Set totalAmount.
+     *
+     * @param int|null $totalAmount
+     *
+     * @return ProductChantierQuote
+     */
+    public function setTotalAmount($totalAmount = null)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return int|null
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
+    }
+
+    /**
+     * Set generatedTurnover.
+     *
+     * @param string|null $generatedTurnover
+     *
+     * @return ProductChantierQuote
+     */
+    public function setGeneratedTurnover($generatedTurnover = null)
+    {
+        $this->generatedTurnover = $generatedTurnover;
+
+        return $this;
+    }
+
+    /**
+     * Get generatedTurnover.
+     *
+     * @return string|null
+     */
+    public function getGeneratedTurnover()
+    {
+        return $this->generatedTurnover;
+    }
+
+    /**
+     * Set tonnage.
+     *
+     * @param string|null $tonnage
+     *
+     * @return ProductChantierQuote
+     */
+    public function setTonnage($tonnage = null)
+    {
+        $this->tonnage = $tonnage;
+
+        return $this;
+    }
+
+    /**
+     * Get tonnage.
+     *
+     * @return string|null
+     */
+    public function getTonnage()
+    {
+        return $this->tonnage;
     }
 }

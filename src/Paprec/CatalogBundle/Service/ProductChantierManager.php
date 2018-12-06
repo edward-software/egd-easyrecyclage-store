@@ -139,10 +139,13 @@ class ProductChantierManager
      */
     public function calculatePrice($postalCode, $unitPrice, $qtty) {
         $postalCodeManager = $this->container->get('paprec_catalog.postal_code_manager');
+        $numberManager = $this->container->get('paprec_catalog.number_manager');
+
 
         $ratePostalCode = $postalCodeManager->getRateByPostalCodeDivision($postalCode, 'CHANTIER');
 
-        return $unitPrice * $qtty * $ratePostalCode;
+        // avant d'effectuer la multiplication, on dénormalise les valeurs qui sont normalisés en base
+        return $numberManager->denormalize($unitPrice) * $qtty * $numberManager->denormalize($ratePostalCode);
     }
 
 }

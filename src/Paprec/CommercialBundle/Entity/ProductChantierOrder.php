@@ -135,9 +135,9 @@ class ProductChantierOrder
     private $orderStatus;
 
     /**
-     * @var float
+     * @var int
      *
-     * @ORM\Column(name="totalAmount", type="float", nullable=true)
+     * @ORM\Column(name="totalAmount", type="integer", nullable=true)
      */
     private $totalAmount;
 
@@ -598,30 +598,6 @@ class ProductChantierOrder
     }
 
     /**
-     * Set totalAmount.
-     *
-     * @param float|null $totalAmount
-     *
-     * @return ProductChantierOrder
-     */
-    public function setTotalAmount($totalAmount = null)
-    {
-        $this->totalAmount = $totalAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get totalAmount.
-     *
-     * @return float|null
-     */
-    public function getTotalAmount()
-    {
-        return $this->totalAmount;
-    }
-
-    /**
      * Set paymentMethod.
      *
      * @param string|null $paymentMethod
@@ -895,5 +871,29 @@ class ProductChantierOrder
     public function getAccessConditions()
     {
         return $this->accessConditions;
+    }
+
+    /**
+     * Set totalAmount.
+     *
+     * @param int|null $totalAmount
+     *
+     * @return ProductChantierOrder
+     */
+    public function setTotalAmount($totalAmount = null)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return int|null
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
     }
 }

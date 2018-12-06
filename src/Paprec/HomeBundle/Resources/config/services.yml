@@ -16,7 +16,7 @@ parameters:
     - PENDING
     - INVOICED
 
-  paprec_home.ticket_file.general_path: "%kernel.root_dir%/data/ticketFile"
+  paprec_home.ticket_file.general_path: "%kernel.root_dir%/../var/files/ticketFile"
   paprec_home.ticket.recipient: "support@eggers-digital.com"
 
 services:

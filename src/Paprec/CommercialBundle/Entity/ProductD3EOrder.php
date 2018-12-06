@@ -135,9 +135,9 @@ class ProductD3EOrder
     private $orderStatus;
 
     /**
-     * @var float
+     * @var int
      *
-     * @ORM\Column(name="totalAmount", type="float", nullable=true)
+     * @ORM\Column(name="totalAmount", type="integer", nullable=true)
      */
     private $totalAmount;
 
@@ -598,30 +598,6 @@ class ProductD3EOrder
     }
 
     /**
-     * Set totalAmount.
-     *
-     * @param float|null $totalAmount
-     *
-     * @return ProductD3EOrder
-     */
-    public function setTotalAmount($totalAmount = null)
-    {
-        $this->totalAmount = $totalAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get totalAmount.
-     *
-     * @return float|null
-     */
-    public function getTotalAmount()
-    {
-        return $this->totalAmount;
-    }
-
-    /**
      * Set paymentMethod.
      *
      * @param string|null $paymentMethod
@@ -895,5 +871,29 @@ class ProductD3EOrder
     public function getBusinessLine()
     {
         return $this->businessLine;
+    }
+
+    /**
+     * Set totalAmount.
+     *
+     * @param int|null $totalAmount
+     *
+     * @return ProductD3EOrder
+     */
+    public function setTotalAmount($totalAmount = null)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return int|null
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
     }
 }

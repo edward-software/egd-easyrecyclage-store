@@ -6,8 +6,6 @@
 
 {% block stylesheets %}
 
-    <link rel="stylesheet" type="text/css"
-          href="{{ asset('/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
 {% endblock %}
 
 {% block content_title %}
@@ -98,7 +96,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.DateCallBack'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ callBack.dateCallBack is empty ? "" : callBack.dateCallBack|localizeddate('short', 'none', app.request.locale) }} {{ callBack.timeCallBack }}
+                                        {{ callBack.dateCallBack is empty ? "" : callBack.dateCallBack|localizeddate('short', 'none', app.request.locale) }} à {{ callBack.timeCallBack|date('H\\Hs',"Europe/Paris") }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
@@ -149,11 +147,6 @@
 {% endblock %}
 
         {% block javascripts %}
-            <!-- DATA TABLES JS -->
-            <script type="text/javascript"
-                    src="{{ asset('/assets/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-            <script type="text/javascript"
-                    src="{{ asset('/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
             <script>
                 $(function () {
 

@@ -649,4 +649,40 @@ class Agency
     {
         return $this->quoteRequestNonCorporates;
     }
+
+    /**
+     * Add priceListLineD3E.
+     *
+     * @param \Paprec\CatalogBundle\Entity\PriceListLineD3E $priceListLineD3E
+     *
+     * @return Agency
+     */
+    public function addPriceListLineD3E(\Paprec\CatalogBundle\Entity\PriceListLineD3E $priceListLineD3E)
+    {
+        $this->priceListLineD3Es[] = $priceListLineD3E;
+
+        return $this;
+    }
+
+    /**
+     * Remove priceListLineD3E.
+     *
+     * @param \Paprec\CatalogBundle\Entity\PriceListLineD3E $priceListLineD3E
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removePriceListLineD3E(\Paprec\CatalogBundle\Entity\PriceListLineD3E $priceListLineD3E)
+    {
+        return $this->priceListLineD3Es->removeElement($priceListLineD3E);
+    }
+
+    /**
+     * Get priceListLineD3Es.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPriceListLineD3Es()
+    {
+        return $this->priceListLineD3Es;
+    }
 }

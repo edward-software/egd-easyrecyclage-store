@@ -170,7 +170,6 @@ class ProductChantierOrderManager
 
     /**
      * Calcule le montant total d'un ProductChantierOrder
-     * TODO relier le ProductChantierOrder aux PostalCodes pour calculer avec le coefficient multiplicateur du postalCode
      * @param ProductChantierOrder $productChantierOrder
      * @return float|int
      */
@@ -178,6 +177,7 @@ class ProductChantierOrderManager
     {
         $totalAmount = 0;
         foreach ($productChantierOrder->getProductChantierOrderLines() as $productChantierOrderLine) {
+            // Ici, c'est une addition de valeur normalisée donc on retourne la somme telle quelle qui sera bien normalisée
             $totalAmount += $this->calculateTotalLine($productChantierOrderLine);
         }
         return $totalAmount;
@@ -186,6 +186,8 @@ class ProductChantierOrderManager
 
     /**
      * Retourne le montant total d'une ProductChantierOrderLine
+     * La valeur de retour est normalisée
+     *
      * @param ProductChantierOrder $productChantierOrder
      * @param ProductChantierOrderLine $productChantierOrderLine
      * @return float|int
@@ -193,8 +195,16 @@ class ProductChantierOrderManager
     public function calculateTotalLine(ProductChantierOrderLine $productChantierOrderLine)
     {
         $productChantierManager = $this->container->get('paprec_catalog.product_chantier_manager');
+        $numberManager = $this->container->get('paprec_catalog.number_manager');
 
-        return $productChantierManager->calculatePrice($productChantierOrderLine->getProductChantierOrder()->getPostalCode(), $productChantierOrderLine->getUnitPrice(), $productChantierOrderLine->getQuantity());
+        // on normalise le résultat retourné
+        return $numberManager->normalize(
+            $productChantierManager->calculatePrice(
+                $productChantierOrderLine->getProductChantierOrder()->getPostalCode(),
+                $productChantierOrderLine->getUnitPrice(),
+                $productChantierOrderLine->getQuantity()
+            )
+        );
     }
 
 }

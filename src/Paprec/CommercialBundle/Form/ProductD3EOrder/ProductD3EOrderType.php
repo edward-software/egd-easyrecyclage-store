@@ -54,7 +54,6 @@ class ProductD3EOrderType extends AbstractType
             ->add('orderStatus', ChoiceType::class, array(
                 "choices" => $options['status'],
             ))
-            ->add('totalAmount', TextType::class)
             ->add('associatedInvoice', FileType::class, array(
                 'multiple' => false,
                 'data_class' => null

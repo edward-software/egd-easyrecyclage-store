@@ -370,6 +370,8 @@ class CartManager
     {
         $productDIManager = $this->container->get('paprec_catalog.product_di_manager');
         $categoryManager = $this->container->get('paprec_catalog.category_manager');
+        $numberManager = $this->container->get('paprec_catalog.number_manager');
+
 
 
         $sum = 0;
@@ -386,7 +388,7 @@ class CartManager
                 $sum += $productDIManager->calculatePrice($postalCode, $productDICategory->getUnitPrice(), $productsCategory['qtty']);
             }
         }
-        return $sum;
+        return $numberManager->normalize($sum);
     }
 
     /**
@@ -447,6 +449,7 @@ class CartManager
     {
         $productChantierManager = $this->container->get('paprec_catalog.product_chantier_manager');
         $categoryManager = $this->container->get('paprec_catalog.category_manager');
+        $numberManager = $this->container->get('paprec_catalog.number_manager');
 
         $sum = 0;
         foreach ($productsCategories as $productsCategory) {
@@ -462,7 +465,9 @@ class CartManager
                 $sum += $productChantierManager->calculatePrice($postalCode, $productChantierCategory->getUnitPrice(), $productsCategory['qtty']);
             }
         }
-        return $sum;
+
+        // on normalize la somme pour l'afficher avec le formatAmount twig
+        return $numberManager->normalize($sum);
     }
 
 
@@ -476,7 +481,7 @@ class CartManager
     public function loadCartD3E($id)
     {
         $cart = $this->get($id);
-        $productD3EManager = $this->container->get('paprec_catalog.product_D3E_manager');
+        $productD3EManager = $this->container->get('paprec_catalog.product_d3e_manager');
         $priceListD3EManager = $this->container->get('paprec_catalog.price_list_d3e_manager');
 
         /**
@@ -510,9 +515,10 @@ class CartManager
 
     private function calculateSumD3E($products, $postalCode)
     {
-        $postalCodeManager = $this->container->get('paprec_catalog.postal_code_manager');
+        $numberManager = $this->container->get('paprec_catalog.number_manager');
+
         $priceListD3EManager = $this->container->get('paprec_catalog.price_list_d3e_manager');
-        $productD3EManager = $this->container->get('paprec_catalog.product_D3E_manager');
+        $productD3EManager = $this->container->get('paprec_catalog.product_d3e_manager');
 
         $sum = 0;
         foreach ($products as $product) {
@@ -521,6 +527,6 @@ class CartManager
 
             $sum += $productD3EManager->calculatePrice($productD3E, $postalCode, $unitPrice, $product['qtty'], $product['optHandling'], $product['optSerialNumberStmt'], $product['optDestruction']);
         }
-        return $sum;
+        return $numberManager->normalize($sum)  ;
     }
 }

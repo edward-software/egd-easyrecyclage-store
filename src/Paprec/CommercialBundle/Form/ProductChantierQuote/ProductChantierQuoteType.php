@@ -56,7 +56,6 @@ class ProductChantierQuoteType extends AbstractType
             ->add('quoteStatus', ChoiceType::class, array(
                 "choices" => $options['status'],
             ))
-            ->add('totalAmount', TextType::class)
             ->add('generatedTurnover', TextType::class)
             ->add('summary', TextareaType::class)
             ->add('frequency', ChoiceType::class, array(

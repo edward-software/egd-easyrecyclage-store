@@ -297,7 +297,7 @@ class ContactUsController extends Controller
     public function downloadAttachedFilesAction(ContactUs $contactUs)
     {
         $path = $this->getParameter('paprec_commercial.contact_us.files_path');
-        $zipname = 'demandeContacts.zip';
+        $zipname = 'demandeContacts' . $contactUs->getId() . '.zip';
         $zip = new ZipArchive;
         $zip->open($zipname, ZipArchive::CREATE);
         $cpt = 1;

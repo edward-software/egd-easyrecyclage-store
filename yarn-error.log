@@ -1,43 +1,52 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.12.3/libexec/bin/yarn.js add --dev @makeusabrew/bootbox
+  /usr/local/bin/node /mnt/c/Program Files (x86)/Yarn/bin/yarn.js
 
 PATH: 
-  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin
+  /home/flaine/bin:/home/flaine/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files (x86)/Intel/iCLS Client:/mnt/c/Program Files/Intel/iCLS Client:/mnt/c/Windows/System32:/mnt/c/Windows:/mnt/c/Windows/System32/wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/IPT:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/IPT:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/nodejs:/mnt/c/Program Files (x86)/Yarn/bin:/mnt/c/Windows/System32/OpenSSH:/mnt/c/Program Files/Intel/WiFi/bin:/mnt/c/Program Files/Common Files/Intel/WirelessCommon:/mnt/c/Ruby25-x64/bin:/mnt/c/Users/frede/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/frede/AppData/Roaming/npm:/snap/bin
 
 Yarn version: 
-  1.12.3
+  1.10.1
 
 Node version: 
-  8.9.1
+  10.12.0
 
 Platform: 
-  darwin x64
+  linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@makeusabrew%2fbootbox: Not found
-      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.12.3/libexec/lib/cli.js:65894:18)
-      at Request.self.callback (/usr/local/Cellar/yarn/1.12.3/libexec/lib/cli.js:129018:22)
-      at emitTwo (events.js:126:13)
-      at Request.emit (events.js:214:7)
-      at Request.<anonymous> (/usr/local/Cellar/yarn/1.12.3/libexec/lib/cli.js:129990:10)
-      at emitOne (events.js:116:13)
-      at Request.emit (events.js:211:7)
-      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.12.3/libexec/lib/cli.js:129912:12)
-      at Object.onceWrapper (events.js:313:30)
-      at emitNone (events.js:111:20)
+  SyntaxError: /mnt/c/Users/frede/Documents/projects/paprec/egd-easyrecyclage-store/package.json: Unexpected token } in JSON at position 746
+      at JSON.parse (<anonymous>)
+      at /mnt/c/Program Files (x86)/Yarn/lib/cli.js:1136:59
+      at Generator.next (<anonymous>)
+      at step (/mnt/c/Program Files (x86)/Yarn/lib/cli.js:98:30)
+      at /mnt/c/Program Files (x86)/Yarn/lib/cli.js:109:13
 
 npm manifest: 
   {
-    "devDependencies": {
-      "@fortawesome/fontawesome-free": "^5.5.0",
-      "@symfony/webpack-encore": "^0.22.2",
+    "name": "egd-easyrecyclage-store",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "git@github.com:eggers-digital/egd-easyrecyclage-store.git",
+    "author": "Frederic LAINE <frederic.laine@eggers-digital.com>",
+    "license": "MIT",
+    "dependencies": {
+      "datatables.net-rowreorder-bs4": "^1.2.5",
       "bootstrap": "^4.1.3",
+      "datatables.net": "^1.10.19",
       "datatables.net-bs4": "^1.10.19",
+      "datatables.net-buttons": "^1.5.4",
       "datatables.net-buttons-bs4": "^1.5.4",
+      "datatables.net-dt": "^1.10.19",
+      "datatables.net-select": "^1.2.7",
       "datatables.net-select-bs4": "^1.2.7",
       "jquery": "^3.3.1",
-      "node-sass": "^4.10.0",
+      "@fortawesome/fontawesome-free": "^5.5.0",
+      "sweetalert2": "^7.30.0",
       "popper.js": "^1.14.6",
+    },
+    "devDependencies": {
+      "@symfony/webpack-encore": "^0.22.2",
+      "node-sass": "^4.10.0",
       "sass-loader": "^7.0.1"
     }
   }
@@ -2090,10 +2099,35 @@ Lockfile:
       datatables.net-buttons "1.5.4"
       jquery ">=1.7"
   
-  datatables.net-buttons@1.5.4:
+  datatables.net-buttons@1.5.4, datatables.net-buttons@^1.5.4:
     version "1.5.4"
     resolved "https://registry.yarnpkg.com/datatables.net-buttons/-/datatables.net-buttons-1.5.4.tgz#806c249e0858ea6cafccad433f4dd7736c0b1464"
     integrity sha512-xfo/23sGVXQW0kj2jLH6PzkhnXv+yGPrUXh7/ZT7xvCL1sNt8MLLf0tPLyrWynyeaew+Qvx5NBZer4MLxmisyw==
+    dependencies:
+      datatables.net "^1.10.15"
+      jquery ">=1.7"
+  
+  datatables.net-dt@^1.10.19:
+    version "1.10.19"
+    resolved "https://registry.yarnpkg.com/datatables.net-dt/-/datatables.net-dt-1.10.19.tgz#fc668e4942ac6e331be2707975d0f33e01afb60f"
+    integrity sha512-joFHYjLYvr9VnC9Fx3e+8jtXnQ/fP/mPFWt9p0NhZ3Zm5N0jlYyWhJQbnLkihOLuDcDFMaGdBQSvmIdTVdgGyw==
+    dependencies:
+      datatables.net "1.10.19"
+      jquery ">=1.7"
+  
+  datatables.net-rowreorder-bs4@^1.2.5:
+    version "1.2.5"
+    resolved "https://registry.yarnpkg.com/datatables.net-rowreorder-bs4/-/datatables.net-rowreorder-bs4-1.2.5.tgz#bacbdb96bfb122bd5d5bf1beaca3a30f6eb57f20"
+    integrity sha512-ORiIMto3bXcfm7kLiJnOMKIQPQXTeJ4kUERS32pE1AglOodtxIqKiLQ1uB4pcyw7+YmM10i2mOEa0A0FbggJ4g==
+    dependencies:
+      datatables.net-bs4 "^1.10.15"
+      datatables.net-rowreorder "1.2.5"
+      jquery ">=1.7"
+  
+  datatables.net-rowreorder@1.2.5:
+    version "1.2.5"
+    resolved "https://registry.yarnpkg.com/datatables.net-rowreorder/-/datatables.net-rowreorder-1.2.5.tgz#2582f02fb08b9e11744d6a9dc9cdda9953f6f611"
+    integrity sha512-FHFnEkOpbMk2BJCnRqi4A7lGE3VdiyHEnLRGVEieYH/7ohmJxgrhxHdWratXK4IMs8OvKw51epFeaAaMmXNlZQ==
     dependencies:
       datatables.net "^1.10.15"
       jquery ">=1.7"
@@ -2107,7 +2141,7 @@ Lockfile:
       datatables.net-select "1.2.7"
       jquery ">=1.7"
   
-  datatables.net-select@1.2.7:
+  datatables.net-select@1.2.7, datatables.net-select@^1.2.7:
     version "1.2.7"
     resolved "https://registry.yarnpkg.com/datatables.net-select/-/datatables.net-select-1.2.7.tgz#7d5badfca49c438f8b51df04483d8d77857e917c"
     integrity sha512-C3XDi7wpruGjDXV36dc9hN/FrAX9GOFvBZ7+KfKJTBNkGFbbhdzHS91SMeGiwRXPYivAyxfPTcVVndVaO83uBQ==
@@ -2115,7 +2149,7 @@ Lockfile:
       datatables.net "^1.10.15"
       jquery ">=1.7"
   
-  datatables.net@1.10.19, datatables.net@^1.10.15:
+  datatables.net@1.10.19, datatables.net@^1.10.15, datatables.net@^1.10.19:
     version "1.10.19"
     resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-1.10.19.tgz#97a1ed41c85e62d61040603481b59790a172dd1f"
     integrity sha512-+ljXcI6Pj3PTGy5pesp3E5Dr3x3AV45EZe0o1r0gKENN2gafBKXodVnk2ypKwl2tTmivjxbkiqoWnipTefyBTA==
@@ -6331,6 +6365,11 @@ Lockfile:
       stable "~0.1.6"
       unquote "~1.1.1"
       util.promisify "~1.0.0"
+  
+  sweetalert2@^7.30.0:
+    version "7.30.0"
+    resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-7.30.0.tgz#7d5c7019eb2548a271aad6a098f3e062a31727d5"
+    integrity sha512-xKLV4r0hSu8GfzXZT/6ctPRjWCB+DiXdfdIH4LVWIzSdh0Ws41Ljnd2V/qRSExT5BUvp7eU/UUnra3MATHn5Cw==
   
   tapable@^1.0.0, tapable@^1.1.0:
     version "1.1.1"

@@ -56,7 +56,7 @@
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label">{{ 'Catalog.PostalCode.Rate'|trans }}</label>
                                 <label class="col-form-label col-md-8">
-                                    {{ postalCode.rate }}
+                                    {{ postalCode.rate|formatAmount(null, app.request.locale) }}
                                 </label>
                             </div>
                         </div>

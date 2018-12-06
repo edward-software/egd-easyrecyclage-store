@@ -413,7 +413,7 @@ class QuoteRequestNonCorporateController extends Controller
     public function downloadAttachedFilesAction(QuoteRequestNonCorporate $quoteRequestNonCorporate)
     {
         $path = $this->getParameter('paprec_commercial.quote_request.files_path');
-        $zipname = 'demandeDevisNonEntreprise.zip';
+        $zipname = 'demandeDevisNonEntreprise-'.$quoteRequestNonCorporate->getId() . '.zip';
         $zip = new ZipArchive;
         $zip->open($zipname, ZipArchive::CREATE);
         $cpt = 1;

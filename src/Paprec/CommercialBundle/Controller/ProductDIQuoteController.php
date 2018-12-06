@@ -34,6 +34,7 @@ class ProductDIQuoteController extends Controller
      */
     public function loadListAction(Request $request)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
         $return = array();
 
         $filters = $request->get('filters');
@@ -72,6 +73,14 @@ class ProductDIQuoteController extends Controller
         }
 
         $datatable = $this->get('goondi_tools.datatable')->generateTable($cols, $queryBuilder, $pageSize, $start, $orders, $columns, $filters);
+        // Reformatage de certaines données
+        $tmp = array();
+        foreach ($datatable['data'] as $data) {
+            $line = $data;
+            $line['totalAmount'] = $numberManager->formatAmount($data['totalAmount'], null, $request->getLocale());
+            $tmp[] = $line;
+        }
+        $datatable['data'] = $tmp;
 
         $return['recordsTotal'] = $datatable['recordsTotal'];
         $return['recordsFiltered'] = $datatable['recordsTotal'];

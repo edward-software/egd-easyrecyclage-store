@@ -188,9 +188,16 @@ class ProductDIQuoteManager
      */
     public function calculateTotalLine(ProductDIQuoteLine $productDIQuoteLine)
     {
+        $numberManager = $this->container->get('paprec_catalog.number_manager');
         $productDIManager = $this->container->get('paprec_catalog.product_di_manager');
 
-        return $productDIManager->calculatePrice($productDIQuoteLine->getProductDIQuote()->getPostalCode(), $productDIQuoteLine->getUnitPrice(), $productDIQuoteLine->getQuantity());
+        return $numberManager->normalize(
+            $productDIManager->calculatePrice(
+                $productDIQuoteLine->getProductDIQuote()->getPostalCode(),
+                $productDIQuoteLine->getUnitPrice(),
+                $productDIQuoteLine->getQuantity()
+            )
+        );
     }
 
 }

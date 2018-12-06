@@ -74,7 +74,7 @@ class ProductD3EQuoteManager
         }
         return false;
     }
-    
+
     /**
      * Ajoute une productD3EQuoteLine à un productD3EQuote
      * @param ProductD3EQuote $productD3EQuote
@@ -162,7 +162,7 @@ class ProductD3EQuoteManager
      */
     public function addLineFromCart(ProductD3EQuote $productD3EQuote, $productId, $qtty, $optHandling, $optSerialNumberStmt, $optDestruction)
     {
-        $productD3EManager = $this->container->get('paprec_catalog.product_D3E_manager');
+        $productD3EManager = $this->container->get('paprec_catalog.product_d3e_manager');
 
         try {
             $productD3E = $productD3EManager->get($productId);
@@ -204,17 +204,20 @@ class ProductD3EQuoteManager
      */
     public function calculateTotalLine(ProductD3EQuoteLine $productD3EQuoteLine)
     {
+        $numberManager = $this->container->get('paprec_catalog.number_manager');
+        $productD3EManager = $this->container->get('paprec_catalog.product_d3e_manager');
 
-        $productD3EManager = $this->container->get('paprec_catalog.product_D3E_manager');
-
-        return $productD3EManager->calculatePrice(
-            $productD3EQuoteLine->getProductD3E(),
-            $productD3EQuoteLine->getProductD3EQuote()->getPostalCode(),
-            $productD3EQuoteLine->getUnitPrice(),
-            $productD3EQuoteLine->getQuantity(),
-            $productD3EQuoteLine->getOptHandling(),
-            $productD3EQuoteLine->getOptSerialNumberStmt(),
-            $productD3EQuoteLine->getOptDestruction()
-        );    }
+        return $numberManager->normalize(
+            $productD3EManager->calculatePrice(
+                $productD3EQuoteLine->getProductD3E(),
+                $productD3EQuoteLine->getProductD3EQuote()->getPostalCode(),
+                $productD3EQuoteLine->getUnitPrice(),
+                $productD3EQuoteLine->getQuantity(),
+                $productD3EQuoteLine->getOptHandling(),
+                $productD3EQuoteLine->getOptSerialNumberStmt(),
+                $productD3EQuoteLine->getOptDestruction()
+            )
+        );
+    }
 
 }

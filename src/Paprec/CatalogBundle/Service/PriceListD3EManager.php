@@ -87,6 +87,7 @@ class PriceListD3EManager
         foreach ($priceListD3E->getPriceListLineD3Es() as $priceListLineD3E) {
             $postalCodes = str_replace(' ', '', $priceListLineD3E->getPostalCodes());
             $postalCodesArray = explode(',', $postalCodes);
+
             foreach ($postalCodesArray as $pC) {
                 //on teste juste les deux premiers caractères pour avoir le code du département
                 if (substr($pC, 0, 2) == substr($postalCodeQuote, 0, 2)) {
@@ -101,6 +102,7 @@ class PriceListD3EManager
                 $return = $ligne->getPrice();
             }
         }
+
         return $return;
     }
 }

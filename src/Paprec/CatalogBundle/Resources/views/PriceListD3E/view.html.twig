@@ -5,8 +5,6 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css"
-          href="{{ asset('/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
 
 {% endblock %}
 
@@ -113,7 +111,7 @@
                                         <td>{{ priceListLineD3E.agency }}</td>
                                         <td>{{ priceListLineD3E.minQuantity }}</td>
                                         <td>{{ priceListLineD3E.maxQuantity }}</td>
-                                        <td>{{ priceListLineD3E.price }}</td>
+                                        <td>{{ priceListLineD3E.price|formatAmount(null, app.request.locale) }}</td>
                                         <td class="text-center">
                                             <a href="{{ path('paprec_catalog_priceListD3E_editLine', {id: priceListD3E.id, lineId: priceListLineD3E.id }) }}"
                                                class="btn btn-sm btn-warning mx-1">
@@ -147,13 +145,6 @@
 {% endblock %}
 
         {% block javascripts %}
-
-            <!-- DATA TABLES JS -->
-            <script type="text/javascript"
-                    src="{{ asset('/assets/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-            <script type="text/javascript"
-                    src="{{ asset('/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-
             <script>
 
                 $(function () {
@@ -188,6 +179,10 @@
                             }
 
                         },
+                        "columnDefs": [{
+                            "targets": 6,
+                            "orderable": false
+                        }],
                         "drawCallback": function () {
                             $('.dataTables_paginate > .pagination').addClass('pagination-sm');
                         },

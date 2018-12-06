@@ -52,10 +52,15 @@ class PriceListLineD3E
     private $maxQuantity;
 
     /**
-     * @var float
+     * @var int
      *
-     * @ORM\Column(name="price", type="float")
+     * @ORM\Column(name="price", type="integer")
      * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/^\d{1,6}((\.|\,)\d{1,2})?$/",
+     *     match=true,
+     *     message="la valeur doit être un nombre entre 0 et 999 999,99 ('.' autorisé)"
+     * )
      */
     private $price;
 
@@ -154,30 +159,6 @@ class PriceListLineD3E
     }
 
     /**
-     * Set price.
-     *
-     * @param float $price
-     *
-     * @return PriceListLineD3E
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * Get price.
-     *
-     * @return float
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
      * Set priceListD3E.
      *
      * @param \Paprec\CatalogBundle\Entity\PriceListD3E|null $priceListD3E
@@ -223,5 +204,29 @@ class PriceListLineD3E
     public function getAgency()
     {
         return $this->agency;
+    }
+
+    /**
+     * Set price.
+     *
+     * @param int $price
+     *
+     * @return PriceListLineD3E
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price.
+     *
+     * @return int
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 }

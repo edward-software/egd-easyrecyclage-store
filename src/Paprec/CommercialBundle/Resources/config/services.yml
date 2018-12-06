@@ -47,8 +47,8 @@ services:
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
 parameters:
-  paprec_commercial.quote_request.files_path: "%kernel.root_dir%/../var/files"
-  paprec_commercial.contact_us.files_path: "%kernel.root_dir%/../var/files"
+  paprec_commercial.quote_request.files_path: "%kernel.root_dir%/../var/files/quoteRequests"
+  paprec_commercial.contact_us.files_path: "%kernel.root_dir%/../var/files/contactUs"
 
   paprec_commercial.product_chantier_order.files_path: "%kernel.root_dir%/../var/files/invoices"
   paprec_commercial.product_d3e_order.files_path: "%kernel.root_dir%/../var/files/invoices"

@@ -5,12 +5,7 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css"
-          href="{{ asset('/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" type="text/css"
-          href="{{ asset('/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
-    <link rel="stylesheet" type="text/css"
-          href="{{ asset('/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}">
+
 {% endblock %}
 
 {% block content_title %}
@@ -118,21 +113,6 @@
 {% endblock %}
 
 {% block javascripts %}
-
-    <!-- DATA TABLES JS -->
-    <script type="text/javascript"
-            src="{{ asset('/assets/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('/assets/vendor/datatables.net-select/js/dataTables.select.min.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('/assets/vendor/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
-
     <script>
         $(function () {
 
@@ -149,7 +129,7 @@
                         "next": "{{ 'General.Datatable.Next'|trans }}",
                     }
                 },
-                dom: 'B<"ml-2">f<"ml-auto">lrti<"ml-auto">p',
+                dom: '<"row"Bf<"ml-auto">l><"row"rt><"row"i<"ml-auto">sp>',
                 buttons: [
                     {
                         text: '{{ 'General.Remove'|trans }}',
@@ -218,7 +198,7 @@
                         "next": "{{ 'General.Datatable.Next'|trans }}",
                     }
                 },
-                dom: 'B<"ml-2">f<"ml-auto">lrti<"ml-auto">p',
+                dom: '<"row"Bf<"ml-auto">l><"row"rt><"row"i<"ml-auto">sp>',
                 buttons: [
                     {
                         text: '{{ 'General.Remove'|trans }}',
@@ -244,6 +224,7 @@
                 "processing": true,
                 "serverSide": true,
                 "lengthMenu": [[5, 10, 20, 50], [5, 10, 20, 50]],
+                "iDisplayLength": 20,
                 "ajax": "{{ path('paprec_commercial_contactUs_loadList', {typeContactUs: 'CHANTIER'}) }}",
                 "columns": [
                     {"data": "id"},
@@ -286,7 +267,7 @@
                         "next": "{{ 'General.Datatable.Next'|trans }}",
                     }
                 },
-                dom: 'B<"ml-2">f<"ml-auto">lrti<"ml-auto">p',
+                dom: '<"row"Bf<"ml-auto">l><"row"rt><"row"i<"ml-auto">sp>',
                 buttons: [
                     {
                         text: '{{ 'General.Remove'|trans }}',
@@ -312,6 +293,7 @@
                 "processing": true,
                 "serverSide": true,
                 "lengthMenu": [[5, 10, 20, 50], [5, 10, 20, 50]],
+                "iDisplayLength": 20,
                 "ajax": "{{ path('paprec_commercial_contactUs_loadList', {typeContactUs: 'D3E'}) }}",
                 "columns": [
                     {"data": "id"},

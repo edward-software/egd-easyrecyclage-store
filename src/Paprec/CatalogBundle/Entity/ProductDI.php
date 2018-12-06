@@ -62,7 +62,7 @@ class ProductDI
     private $description;
 
     /**
-     * @var float
+     * @var string
      * Le volume du produit
      * @ORM\Column(name="capacity", type="string", length=10)
      * @Assert\NotBlank()
