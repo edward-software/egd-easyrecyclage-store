@@ -590,11 +590,6 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@fortawesome/fontawesome-free@^5.5.0":
-  version "5.5.0"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.5.0.tgz#0c6c53823d04457ae669cd19567b8a21dbb4fcfd"
-  integrity sha512-p4lu0jfj5QN013ddArh99r3OXZ/fp9rbovs62LfaO70OMBsAXxtNd0lAq/97fitrscR0fqfd+/a5KNcp6Sh/0A==
-
 "@symfony/webpack-encore@^0.22.2":
   version "0.22.2"
   resolved "https://registry.yarnpkg.com/@symfony/webpack-encore/-/webpack-encore-0.22.2.tgz#036cffc86e2f4da2a194b5eabc2409c4ffe0d31b"
@@ -1618,6 +1613,11 @@ component-emitter@^1.2.1:
   resolved "https://registry.yarnpkg.com/component-emitter/-/component-emitter-1.2.1.tgz#137918d6d78283f7df7a6b7c5a63e140e69425e6"
   integrity sha1-E3kY1teCg/ffemt8WmPhQOaUJeY=
 
+components-font-awesome@^5.0.6:
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/components-font-awesome/-/components-font-awesome-5.4.2.tgz#67e9068ba55fad361c2e928f14570d44ed9a9e09"
+  integrity sha512-uftrn6yK9sQz/oOWotndo/c3h70xBclNCb3P6uOVQPMlc0/MBmnlDh6kKzfX8QM388PAmbEpn7Zrw0SctIOD2Q==
+
 compressible@~2.0.14:
   version "2.0.15"
   resolved "https://registry.yarnpkg.com/compressible/-/compressible-2.0.15.tgz#857a9ab0a7e5a07d8d837ed43fe2defff64fe212"
@@ -2056,6 +2056,23 @@ datatables.net-dt@^1.10.19:
   integrity sha512-joFHYjLYvr9VnC9Fx3e+8jtXnQ/fP/mPFWt9p0NhZ3Zm5N0jlYyWhJQbnLkihOLuDcDFMaGdBQSvmIdTVdgGyw==
   dependencies:
     datatables.net "1.10.19"
+    jquery ">=1.7"
+
+datatables.net-rowreorder-bs4@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/datatables.net-rowreorder-bs4/-/datatables.net-rowreorder-bs4-1.2.5.tgz#bacbdb96bfb122bd5d5bf1beaca3a30f6eb57f20"
+  integrity sha512-ORiIMto3bXcfm7kLiJnOMKIQPQXTeJ4kUERS32pE1AglOodtxIqKiLQ1uB4pcyw7+YmM10i2mOEa0A0FbggJ4g==
+  dependencies:
+    datatables.net-bs4 "^1.10.15"
+    datatables.net-rowreorder "1.2.5"
+    jquery ">=1.7"
+
+datatables.net-rowreorder@1.2.5, datatables.net-rowreorder@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/datatables.net-rowreorder/-/datatables.net-rowreorder-1.2.5.tgz#2582f02fb08b9e11744d6a9dc9cdda9953f6f611"
+  integrity sha512-FHFnEkOpbMk2BJCnRqi4A7lGE3VdiyHEnLRGVEieYH/7ohmJxgrhxHdWratXK4IMs8OvKw51epFeaAaMmXNlZQ==
+  dependencies:
+    datatables.net "^1.10.15"
     jquery ">=1.7"
 
 datatables.net-select-bs4@^1.2.7:
@@ -3625,10 +3642,27 @@ isstream@~0.1.2:
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
   integrity sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
 
+jquery-sortable@^0.9.13:
+  version "0.9.13"
+  resolved "https://registry.yarnpkg.com/jquery-sortable/-/jquery-sortable-0.9.13.tgz#1cbfb655013a0747370571f06e22f524a00ffba2"
+  integrity sha1-HL+2VQE6B0c3BXHwbiL1JKAP+6I=
+  dependencies:
+    jquery "^2.1.2"
+
+jquery-ui@^1.12.1:
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/jquery-ui/-/jquery-ui-1.12.1.tgz#bcb4045c8dd0539c134bc1488cdd3e768a7a9e51"
+  integrity sha1-vLQEXI3QU5wTS8FIjN0+dop6nlE=
+
 jquery@>=1.7, jquery@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
   integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
+
+jquery@^2.1.2:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
+  integrity sha1-LInWiJterFIqfuoywUUhVZxsvwI=
 
 js-base64@^2.1.8:
   version "2.4.9"
