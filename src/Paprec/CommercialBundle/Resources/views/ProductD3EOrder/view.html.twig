@@ -349,8 +349,14 @@
 
                         var url = "{{ path("paprec_commercial_productD3EOrder_remove", {id: productD3EOrder.id}) }}";
 
-                        bootbox.confirm("{{ 'Commercial.ProductD3EOrder.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.ProductD3EOrder.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });
@@ -360,14 +366,22 @@
                         orderLineId = $(this).data('id');
                         var url = "{{ path("paprec_commercial_productD3EOrder_removeLine", {id: productD3EOrder.id, orderLineId: 'orderLineIdTmp'}) }}".replace('orderLineIdTmp', orderLineId);
 
-                        bootbox.confirm("{{ 'Commercial.ProductD3EOrderLine.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.ProductD3EOrderLine.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });
+
+
                     });
 
-                    $('#formAddInvoiceSubmitButton').on('click', function() {
+                    $('#formAddInvoiceSubmitButton').on('click', function () {
                         $('#formAddInvoice').submit();
                     })
                 });

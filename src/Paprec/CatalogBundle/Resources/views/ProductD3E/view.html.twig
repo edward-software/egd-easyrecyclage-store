@@ -305,8 +305,14 @@
 
                     var url = "{{ path("paprec_catalog_productD3E_remove", {id: productD3E.id}) }}";
 
-                    bootbox.confirm("{{ 'Catalog.ProductD3E.Confirm-remove'|trans }}", function (result) {
-                        if (result === true) {
+                    Swal({
+                        title: "{{ 'General.Confirm'|trans }}",
+                        text: "{{ 'Catalog.ProductD3E.Confirm-remove'|trans }}",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ 'General.Yes'|trans }}",
+                        cancelButtonText: "{{ 'General.No'|trans }}"
+                    }).then((result) => {
+                        if (result.value) {
                             $(location).attr('href', url);
                         }
                     });
@@ -357,12 +363,17 @@
 
                 $('.removePictureButton').on('click', function () {
                     picId = $(this).data('id');
-                    bootbox.confirm("{{ 'Catalog.ProductD3E.Confirm-remove-picture'|trans }}", function (result) {
-                        if (result === true) {
+                    Swal({
+                        title: "{{ 'General.Confirm'|trans }}",
+                        text: "{{ 'Catalog.ProductD3E.Confirm-remove-picture'|trans }}",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ 'General.Yes'|trans }}",
+                        cancelButtonText: "{{ 'General.No'|trans }}"
+                    }).then((result) => {
+                        if (result.value) {
                             var url = "{{ path("paprec_catalog_productD3E_removePicture", {id: productD3E.id, pictureID: 'pictureTmp'}) }}";
                             url = url.replace('pictureTmp', picId);
-                            $(location).attr('href', url);
-                        }
+                            $(location).attr('href', url);                        }
                     });
                 });
 

@@ -155,8 +155,14 @@
 
                         var url = "{{ path("paprec_user_user_remove", {id: user.id}) }}";
 
-                        bootbox.confirm("{{ 'User.User.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'User.User.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });
@@ -167,8 +173,14 @@
 
                         var url = "{{ path("paprec_user_user_sendAccess", {id: user.id}) }}";
 
-                        bootbox.confirm("{{ 'User.User.Confirm-send-access'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'User.User.Confirm-send-access'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });

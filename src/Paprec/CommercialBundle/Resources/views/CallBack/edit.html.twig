@@ -77,8 +77,14 @@
 
                 var url = "{{ path("paprec_commercial_callBack_view", {id: callBack.id}) }}";
 
-                bootbox.confirm("{{ 'Commercial.CallBack.Confirm-cancel'|trans }}", function (result) {
-                    if (result === true) {
+                Swal({
+                    title: "{{ 'General.Confirm'|trans }}",
+                    text: "{{ 'Commercial.CallBack.Confirm-cancel'|trans }}",
+                    showCancelButton: true,
+                    confirmButtonText: "{{ 'General.Yes'|trans }}",
+                    cancelButtonText: "{{ 'General.No'|trans }}"
+                }).then((result) => {
+                    if (result.value) {
                         $(location).attr('href', url);
                     }
                 });

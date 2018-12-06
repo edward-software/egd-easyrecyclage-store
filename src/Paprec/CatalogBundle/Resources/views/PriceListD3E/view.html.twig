@@ -16,6 +16,9 @@
 
 
     <div class="col-md-12">
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger">{{ ('Catalog.PriceListD3E.Error.' ~ flashMessage)|trans }}</div>
+        {% endfor %}
         <!-- CARD -->
         <div class="card">
             <div class="card-header">
@@ -157,8 +160,14 @@
 
                         var url = "{{ path("paprec_catalog_priceListD3E_remove", {id: priceListD3E.id}) }}";
 
-                        bootbox.confirm("{{ 'Catalog.PriceListD3E.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Catalog.PriceListD3E.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });
@@ -226,8 +235,14 @@
 
                     $('.removePriceListD3ELineButton').on('click', function () {
                         id = $(this).data('id');
-                        bootbox.confirm("{{ 'Catalog.PriceListLineD3E.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Catalog.PriceListLineD3E.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 var url = "{{ path("paprec_catalog_priceListD3E_removeLine", {id: priceListD3E.id, lineId: 'lineTmp'}) }}";
                                 url = url.replace('lineTmp', id);
                                 $(location).attr('href', url);

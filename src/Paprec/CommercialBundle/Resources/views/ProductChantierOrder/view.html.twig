@@ -344,19 +344,31 @@
 
                         var url = "{{ path("paprec_commercial_productChantierOrder_remove", {id: productChantierOrder.id}) }}";
 
-                        bootbox.confirm("{{ 'Commercial.ProductChantierOrder.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.ProductChantierOrder.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });
-
                     });
+
                     $('.commercialProductChantierOrderLineRemoveButton').on('click', function () {
                         orderLineId = $(this).data('id');
                         var url = "{{ path("paprec_commercial_productChantierOrder_removeLine", {id: productChantierOrder.id, orderLineId: 'orderLineIdTmp'}) }}".replace('orderLineIdTmp', orderLineId);
 
-                        bootbox.confirm("{{ 'Commercial.ProductChantierOrderLine.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.ProductChantierOrderLine.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });

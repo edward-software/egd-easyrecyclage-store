@@ -486,8 +486,14 @@
 
                     var url = "{{ path("paprec_catalog_productChantier_remove", {id: productChantier.id}) }}";
 
-                    bootbox.confirm("{{ 'Catalog.ProductChantier.Confirm-remove'|trans }}", function (result) {
-                        if (result === true) {
+                    Swal({
+                        title: "{{ 'General.Confirm'|trans }}",
+                        text: "{{ 'Catalog.ProductChantier.Confirm-remove'|trans }}",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ 'General.Yes'|trans }}",
+                        cancelButtonText: "{{ 'General.No'|trans }}"
+                    }).then((result) => {
+                        if (result.value) {
                             $(location).attr('href', url);
                         }
                     });
@@ -539,21 +545,33 @@
 
                 $('.removePictureButton').on('click', function () {
                     picId = $(this).data('id');
-                    bootbox.confirm("{{ 'Catalog.ProductChantier.Confirm-remove-picture'|trans }}", function (result) {
-                        if (result === true) {
+                    Swal({
+                        title: "{{ 'General.Confirm'|trans }}",
+                        text: "{{ 'Catalog.ProductChantier.Confirm-remove-picture'|trans }}",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ 'General.Yes'|trans }}",
+                        cancelButtonText: "{{ 'General.No'|trans }}"
+                    }).then((result) => {
+                        if (result.value) {
                             var url = "{{ path("paprec_catalog_productChantier_removePicture", {id: productChantier.id, pictureID: 'pictureTmp'}) }}";
                             url = url.replace('pictureTmp', picId);
                             $(location).attr('href', url);
                         }
                     });
-                })
+                });
 
 
                 // Change le type de la Picture en PilotPicture
                 $('.setPilotPictureButton').on('click', function () {
                     picId = $(this).data('id');
-                    bootbox.confirm("{{ 'Catalog.ProductChantier.Confirm-set_pilot'|trans }}", function (result) {
-                        if (result === true) {
+                    Swal({
+                        title: "{{ 'General.Confirm'|trans }}",
+                        text: "{{ 'Catalog.ProductChantier.Confirm-set_pilot'|trans }}",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ 'General.Yes'|trans }}",
+                        cancelButtonText: "{{ 'General.No'|trans }}"
+                    }).then((result) => {
+                        if (result.value) {
                             var url = "{{ path("paprec_catalog_productChantier_setPilotPicture", {id: productChantier.id, pictureID: 'pictureTmp'}) }}";
                             url = url.replace('pictureTmp', picId);
                             $(location).attr('href', url);
@@ -564,8 +582,15 @@
                 // Change le type de PilotPicture en Picture
                 $('.setPictureButton').on('click', function () {
                     picId = $(this).data('id');
-                    bootbox.confirm("{{ 'Catalog.ProductChantier.Confirm-set_picture'|trans }}", function (result) {
-                        if (result === true) {
+
+                    Swal({
+                        title: "{{ 'General.Confirm'|trans }}",
+                        text: "{{ 'Catalog.ProductChantier.Confirm-set_picture'|trans }}",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ 'General.Yes'|trans }}",
+                        cancelButtonText: "{{ 'General.No'|trans }}"
+                    }).then((result) => {
+                        if (result.value) {
                             var url = "{{ path("paprec_catalog_productChantier_setPicture", {id: productChantier.id, pictureID: 'pictureTmp'}) }}";
                             url = url.replace('pictureTmp', picId);
                             $(location).attr('href', url);
@@ -578,8 +603,14 @@
                     productChantierCategoryId = $(this).data('id');
                     var url = "{{ path("paprec_catalog_productChantier_removeCategory", {id: productChantier.id, productChantierCategoryId: 'productChantierCategoryIdTmp'}) }}".replace('productChantierCategoryIdTmp', productChantierCategoryId);
 
-                    bootbox.confirm("{{ 'Catalog.ProductChantierCategory.Confirm-remove'|trans }}", function (result) {
-                        if (result === true) {
+                    Swal({
+                        title: "{{ 'General.Confirm'|trans }}",
+                        text: "{{ 'Catalog.ProductChantierCategory.Confirm-remove'|trans }}",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ 'General.Yes'|trans }}",
+                        cancelButtonText: "{{ 'General.No'|trans }}"
+                    }).then((result) => {
+                        if (result.value) {
                             $(location).attr('href', url);
                         }
                     });

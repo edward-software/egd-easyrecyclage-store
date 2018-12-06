@@ -294,8 +294,14 @@
 
                         var url = "{{ path("paprec_commercial_productDIQuote_remove", {id: productDIQuote.id}) }}";
 
-                        bootbox.confirm("{{ 'Commercial.ProductDIQuote.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.ProductDIQuote.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });
@@ -305,11 +311,19 @@
                         quoteLineId = $(this).data('id');
                         var url = "{{ path("paprec_commercial_productDIQuote_removeLine", {id: productDIQuote.id, quoteLineId: 'quoteLineIdTmp'}) }}".replace('quoteLineIdTmp', quoteLineId);
 
-                        bootbox.confirm("{{ 'Commercial.ProductDIQuoteLine.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.ProductDIQuoteLine.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });
+
                     });
 
                 });

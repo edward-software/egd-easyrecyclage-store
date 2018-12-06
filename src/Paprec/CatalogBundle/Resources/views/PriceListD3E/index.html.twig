@@ -15,6 +15,9 @@
 {% block main_content %}
     <div class="row">
         <div class="col-md-12">
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="alert alert-danger">{{ ('Catalog.PriceListD3E.Error.' ~ flashMessage.var)|trans}} : {{ flashMessage.msg }}</div>
+            {% endfor %}
             <!-- BOX -->
             <div class="card">
                 <div class="card-header">
@@ -84,8 +87,14 @@
                                 });
                                 var url = "{{ path("paprec_catalog_priceListD3E_removeMany", {ids: '0000'}) }}".replace('0000', rowIds.join(','));
 
-                                bootbox.confirm("{{ 'General.Confirm-remove'|trans }}", function (result) {
-                                    if (result === true) {
+                                Swal({
+                                    title: "{{ 'General.Confirm'|trans }}",
+                                    text: "{{ 'General.Confirm-remove'|trans }}",
+                                    showCancelButton: true,
+                                    confirmButtonText: "{{ 'General.Yes'|trans }}",
+                                    cancelButtonText: "{{ 'General.No'|trans }}"
+                                }).then((result) => {
+                                    if (result.value) {
                                         $(location).attr('href', url);
                                     }
                                 });

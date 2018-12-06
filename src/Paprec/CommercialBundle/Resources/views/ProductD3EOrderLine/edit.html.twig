@@ -101,8 +101,14 @@
 
                 var url = "{{ path("paprec_commercial_productD3EOrder_view", { id: productD3EOrder.id }) }}";
 
-                bootbox.confirm("{{ 'Commercial.ProductD3EOrder.Confirm-cancel'|trans }}", function (result) {
-                    if (result === true) {
+                Swal({
+                    title: "{{ 'General.Confirm'|trans }}",
+                    text: "{{ 'Commercial.ProductD3EOrder.Confirm-cancel'|trans }}",
+                    showCancelButton: true,
+                    confirmButtonText: "{{ 'General.Yes'|trans }}",
+                    cancelButtonText: "{{ 'General.No'|trans }}"
+                }).then((result) => {
+                    if (result.value) {
                         $(location).attr('href', url);
                     }
                 });

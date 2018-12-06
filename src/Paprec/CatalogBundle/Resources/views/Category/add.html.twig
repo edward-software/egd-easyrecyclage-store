@@ -113,11 +113,18 @@
 
                 var url = "{{ path("paprec_catalog_category_index") }}";
 
-                bootbox.confirm("{{ 'Catalog.Category.Confirm-cancel'|trans }}", function (result) {
-                    if (result === true) {
+                Swal({
+                    title: "{{ 'General.Confirm'|trans }}",
+                    text: "{{ 'Catalog.Category.Confirm-cancel'|trans }}",
+                    showCancelButton: true,
+                    confirmButtonText: "{{ 'General.Yes'|trans }}",
+                    cancelButtonText: "{{ 'General.No'|trans }}"
+                }).then((result) => {
+                    if (result.value) {
                         $(location).attr('href', url);
                     }
                 });
+
 
             });
 

@@ -291,8 +291,14 @@
 
                         var url = "{{ path("paprec_commercial_quoteRequestNonCorporate_remove", {id: quoteRequestNonCorporate.id}) }}";
 
-                        bootbox.confirm("{{ 'Commercial.QuoteRequestNonCorporate.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.QuoteRequestNonCorporate.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });

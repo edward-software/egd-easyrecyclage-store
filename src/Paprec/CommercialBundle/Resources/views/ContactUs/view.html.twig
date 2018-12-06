@@ -122,7 +122,7 @@
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.CartContent'|trans }}</label>
                                     <label class="col-form-label">
                                         {% for content in contactUs.cartContent %}
-                                            Id produit : {{ content['pId'] }} Quantité : {{ content['qtty']}}
+                                            Produit n° {{ content['pId'] }} : {{ content['qtty']}}<br>
                                         {% endfor %}
                                     </label>
                                 </div>
@@ -167,8 +167,14 @@
 
                         var url = "{{ path("paprec_commercial_contactUs_remove", {id: contactUs.id}) }}";
 
-                        bootbox.confirm("{{ 'Commercial.ContactUs.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.ContactUs.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });

@@ -77,8 +77,14 @@
 
                 var url = "{{ path("paprec_commercial_contactUs_view", {id: contactUs.id}) }}";
 
-                bootbox.confirm("{{ 'Commercial.ContactUs.Confirm-cancel'|trans }}", function (result) {
-                    if (result === true) {
+                Swal({
+                    title: "{{ 'General.Confirm'|trans }}",
+                    text: "{{ 'Commercial.ContactUs.Confirm-cancel'|trans }}",
+                    showCancelButton: true,
+                    confirmButtonText: "{{ 'General.Yes'|trans }}",
+                    cancelButtonText: "{{ 'General.No'|trans }}"
+                }).then((result) => {
+                    if (result.value) {
                         $(location).attr('href', url);
                     }
                 });

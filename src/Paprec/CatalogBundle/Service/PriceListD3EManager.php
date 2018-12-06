@@ -11,6 +11,8 @@ namespace Paprec\CatalogBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\ORMException;
 use Exception;
 use Paprec\CatalogBundle\Entity\PriceListD3E;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -27,7 +29,8 @@ class PriceListD3EManager
         $this->container = $container;
     }
 
-    public function get($priceListD3E){
+    public function get($priceListD3E)
+    {
         $id = $priceListD3E;
         if ($priceListD3E instanceof PriceListD3E) {
             $id = $priceListD3E->getId();
@@ -72,6 +75,34 @@ class PriceListD3EManager
     }
 
     /**
+     * Vérifie si il existe des ProductD3E qui sont liés au priceListD3E
+     * Retourne vrai s'il y en a, faux sinon
+     *
+     * @param $priceListD3EId
+     * @return bool
+     * @throws Exception
+     */
+    public function hasRelatedProductD3E($priceListD3EId)
+    {
+        try {
+            $query = $this->em
+                ->getRepository(PriceListD3E::class)
+                ->createQueryBuilder('pl')
+                ->select('COUNT(pl)')
+                ->innerJoin('PaprecCatalogBundle:ProductD3E', 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 'pl.id = p.priceListD3E')
+                ->where('pl.id = :priceListId')
+                ->andWhere('p.deleted is null')
+                ->setParameter('priceListId', $priceListD3EId);
+            return ($query->getQuery()->getSingleScalarResult() > 0);
+        } catch (ORMException $e) {
+            throw new Exception($e->getMessage(), 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+
+    }
+
+    /**
      * Fonction qui récupère le prix la priceListLineD3E qui correspond à la grille, au code postal et à la quantité en param
      *
      * @param PriceListD3E $priceListD3E
@@ -79,7 +110,8 @@ class PriceListD3EManager
      * @param $qtty
      * @return int
      */
-    public function getUnitPriceByPostalCodeQtty(PriceListD3E $priceListD3E, $postalCodeQuote, $qtty) {
+    public function getUnitPriceByPostalCodeQtty(PriceListD3E $priceListD3E, $postalCodeQuote, $qtty)
+    {
         $lignesPostalCodeMatch = array();
         $return = 0;
 

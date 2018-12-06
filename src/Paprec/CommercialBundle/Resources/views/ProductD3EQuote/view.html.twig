@@ -298,8 +298,14 @@
 
                         var url = "{{ path("paprec_commercial_productD3EQuote_remove", {id: productD3EQuote.id}) }}";
 
-                        bootbox.confirm("{{ 'Commercial.ProductD3EQuote.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.ProductD3EQuote.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });
@@ -309,8 +315,14 @@
                         quoteLineId = $(this).data('id');
                         var url = "{{ path("paprec_commercial_productD3EQuote_removeLine", {id: productD3EQuote.id, quoteLineId: 'quoteLineIdTmp'}) }}".replace('quoteLineIdTmp', quoteLineId);
 
-                        bootbox.confirm("{{ 'Commercial.ProductD3EQuoteLine.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.ProductD3EQuoteLine.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });

@@ -90,8 +90,14 @@
 
                 var url = "{{ path("paprec_commercial_businessLine_view", {id: businessLine.id}) }}";
 
-                bootbox.confirm("{{ 'Commercial.BusinessLine.Confirm-cancel'|trans }}", function (result) {
-                    if (result === true) {
+                Swal({
+                    title: "{{ 'General.Confirm'|trans }}",
+                    text: "{{ 'Commercial.BusinessLine.Confirm-cancel'|trans }}",
+                    showCancelButton: true,
+                    confirmButtonText: "{{ 'General.Yes'|trans }}",
+                    cancelButtonText: "{{ 'General.No'|trans }}"
+                }).then((result) => {
+                    if (result.value) {
                         $(location).attr('href', url);
                     }
                 });

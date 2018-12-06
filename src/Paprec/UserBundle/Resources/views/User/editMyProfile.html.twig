@@ -126,9 +126,15 @@
 
             $('.user-user-cancel-button').on('click', function () {
 
-                bootbox.confirm("{{ 'User.User.Confirm-cancel'|trans }}", function (result) {
-                    if (result === true) {
-                        window.history.back();
+                Swal({
+                    title: "{{ 'General.Confirm'|trans }}",
+                    text: "{{ 'User.User.Confirm-cancel'|trans }}",
+                    showCancelButton: true,
+                    confirmButtonText: "{{ 'General.Yes'|trans }}",
+                    cancelButtonText: "{{ 'General.No'|trans }}"
+                }).then((result) => {
+                    if (result.value) {
+                        $(location).attr('href', url);
                     }
                 });
 

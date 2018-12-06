@@ -50,7 +50,8 @@ class PrinceListD3EController extends Controller
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
 
         $queryBuilder->select(array('g'))
-            ->from('PaprecCatalogBundle:PriceListD3E', 'g');
+            ->from('PaprecCatalogBundle:PriceListD3E', 'g')
+            ->where('g.deleted is null');
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
             if (substr($search['value'], 0, 1) == '#') {
@@ -146,7 +147,6 @@ class PrinceListD3EController extends Controller
 
         $priceListD3EManager = $this->get('paprec_catalog.price_list_d3e_manager');
         $priceListD3EManager->isDeleted($priceListD3E, true);
-        $priceListLineD3E = new PriceListLineD3E();
 
 
         return $this->render('PaprecCatalogBundle:PriceListD3E:view.html.twig', array(
@@ -225,12 +225,22 @@ class PrinceListD3EController extends Controller
     /**
      * @Route("/priceListD3E/remove/{id}", name="paprec_catalog_priceListD3E_remove")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Exception
      */
     public function removeAction(Request $request, PriceListD3E $priceListD3E)
     {
+        $priceListD3EManager = $this->get('paprec_catalog.price_list_d3e_manager');
+
         $em = $this->getDoctrine()->getManager();
-        $priceListD3E->setDeleted(new \DateTime());
-        $em->flush();
+        if (!$priceListD3EManager->hasRelatedProductD3E($priceListD3E->getId())) {
+            $priceListD3E->setDeleted(new \DateTime());
+            $em->flush();
+        } else {
+            $this->get('session')->getFlashBag()->add('error', 'priceListHasRelatedProduct');
+            return $this->redirectToRoute('paprec_catalog_priceListD3E_view', array(
+                'id' => $priceListD3E->getId()
+            ));
+        }
 
         return $this->redirectToRoute('paprec_catalog_priceListD3E_index');
     }
@@ -238,9 +248,12 @@ class PrinceListD3EController extends Controller
     /**
      * @Route("/priceListD3E/removeMany/{ids}", name="paprec_catalog_priceListD3E_removeMany")
      * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Exception
      */
     public function removeManyAction(Request $request)
     {
+        $priceListD3EManager = $this->get('paprec_catalog.price_list_d3e_manager');
+
         $ids = $request->get('ids');
 
         if (!$ids) {
@@ -252,24 +265,33 @@ class PrinceListD3EController extends Controller
         $ids = explode(',', $ids);
 
         if (is_array($ids) && count($ids)) {
-            $priceListD3Es = $em->getRepository('PriceListD3E.php')->findById($ids);
+            $priceListD3Es = $em->getRepository('PaprecCatalogBundle:PriceListD3E')->findById($ids);
+            $listUndeletable= '';
             foreach ($priceListD3Es as $priceListD3E) {
-                $priceListD3E->setDeleted(new \DateTime);
+                if (!$priceListD3EManager->hasRelatedProductD3E($priceListD3E->getId())) {
+                    $priceListD3E->setDeleted(new \DateTime);
+                } else {
+                    $listUndeletable  .=  "\"". $priceListD3E->getName() . "\" ";
+                }
             }
-            $em->flush();
+            if ($listUndeletable !== null && $listUndeletable !== '') {
+                $this->get('session')->getFlashBag()->add('error', array('var' =>'priceListsHaveRelatedProduct', 'msg' => $listUndeletable));
+                return $this->redirectToRoute('paprec_catalog_priceListD3E_index');
+            } else {
+                $em->flush();
+            }
         }
-
         return $this->redirectToRoute('paprec_catalog_priceListD3E_index');
     }
 
     /**
- * @Route("/priceListD3E/{id}/addLine", name="paprec_catalog_priceListD3E_addLine")
- * @Method("POST")
- * @Security("has_role('ROLE_ADMIN')")
- */
+     * @Route("/priceListD3E/{id}/addLine", name="paprec_catalog_priceListD3E_addLine")
+     * @Method("POST")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
     public function addLineAction(Request $request, PriceListD3E $priceListD3E)
     {
-        $numberManager  = $this->get('paprec_catalog.number_manager');
+        $numberManager = $this->get('paprec_catalog.number_manager');
 
         $priceListLineD3E = new PriceListLineD3E();
         $form = $this->createForm(PriceListLineD3EType::class, $priceListLineD3E);
@@ -306,7 +328,7 @@ class PrinceListD3EController extends Controller
      */
     public function editLineAction(Request $request, PriceListD3E $priceListD3E)
     {
-        $numberManager  = $this->get('paprec_catalog.number_manager');
+        $numberManager = $this->get('paprec_catalog.number_manager');
 
         $em = $this->getDoctrine()->getManager();
         $lineId = $request->get('lineId');
@@ -350,7 +372,7 @@ class PrinceListD3EController extends Controller
         $lineId = $request->get('lineId');
 
         $priceListLineD3Es = $priceListD3E->getPriceListLineD3Es();
-        foreach($priceListLineD3Es as $priceListLineD3E) {
+        foreach ($priceListLineD3Es as $priceListLineD3E) {
             if ($priceListLineD3E->getId() == $lineId) {
                 $priceListD3E->setDateUpdate(new \DateTime());
                 $em->remove($priceListLineD3E);

@@ -87,8 +87,14 @@
 
                         var url = "{{ path("paprec_catalog_customizableArea_remove", {id: customizableArea.id}) }}";
 
-                        bootbox.confirm("{{ 'Catalog.CustomizableArea.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Catalog.CustomizableArea.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });

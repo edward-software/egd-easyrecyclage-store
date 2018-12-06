@@ -77,8 +77,14 @@
 
                         var url = "{{ path("paprec_catalog_postalCode_remove", {id: postalCode.id}) }}";
 
-                        bootbox.confirm("{{ 'Catalog.PostalCode.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Catalog.PostalCode.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });

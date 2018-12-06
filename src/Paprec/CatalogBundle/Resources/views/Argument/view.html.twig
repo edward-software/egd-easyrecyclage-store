@@ -93,8 +93,15 @@
 
                         var url = "{{ path("paprec_catalog_argument_remove", {id: argument.id}) }}";
 
-                        bootbox.confirm("{{ 'Catalog.Argument.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Catalog.Argument.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });

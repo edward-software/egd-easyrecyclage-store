@@ -294,8 +294,14 @@
 
                         var url = "{{ path("paprec_commercial_productChantierQuote_remove", {id: productChantierQuote.id}) }}";
 
-                        bootbox.confirm("{{ 'Commercial.ProductChantierQuote.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.ProductChantierQuote.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });
@@ -305,8 +311,14 @@
                         quoteLineId = $(this).data('id');
                         var url = "{{ path("paprec_commercial_productChantierQuote_removeLine", {id: productChantierQuote.id, quoteLineId: 'quoteLineIdTmp'}) }}".replace('quoteLineIdTmp', quoteLineId);
 
-                        bootbox.confirm("{{ 'Commercial.ProductChantierQuoteLine.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.ProductChantierQuoteLine.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });

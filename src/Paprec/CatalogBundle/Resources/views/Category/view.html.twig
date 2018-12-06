@@ -178,8 +178,14 @@
 
                         var url = "{{ path("paprec_catalog_category_remove", {id: category.id}) }}";
 
-                        bootbox.confirm("{{ 'Catalog.Category.Confirm-remove'|trans }}", function (result) {
-                            if (result === true) {
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Catalog.Category.Confirm-remove'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
                                 $(location).attr('href', url);
                             }
                         });
@@ -205,8 +211,15 @@
 
                 function removeProductDICategory(id, productDICategoryId) {
                     var url = "{{ path('paprec_catalog_category_removeProductDICategory', {id: 'categoryId', productDICategoryId: 'productDICategoryId'}) }}"
-                    bootbox.confirm("{{ 'Catalog.Category.Confirm-remove-pc'|trans }}", function (result) {
-                        if (result === true) {
+
+                    Swal({
+                        title: "{{ 'General.Confirm'|trans }}",
+                        text: "{{ 'Catalog.Category.Confirm-remove-pc'|trans }}",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ 'General.Yes'|trans }}",
+                        cancelButtonText: "{{ 'General.No'|trans }}"
+                    }).then((result) => {
+                        if (result.value) {
                             url = url.replace('categoryId', id);
                             url = url.replace('productDICategoryId', productDICategoryId);
                             $(location).attr('href', url);
@@ -217,13 +230,21 @@
 
                 function removeProductChantierCategory(id, productChantierCategoryId) {
                     var url = "{{ path('paprec_catalog_category_removeProductChantierCategory', {id: 'categoryId', productChantierCategoryId: 'productChantierCategoryId'}) }}"
-                    bootbox.confirm("{{ 'Catalog.Category.Confirm-remove-pc'|trans }}", function (result) {
-                        if (result === true) {
+                    Swal({
+                        title: "{{ 'General.Confirm'|trans }}",
+                        text: "{{ 'Catalog.Category.Confirm-remove-pc'|trans }}",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ 'General.Yes'|trans }}",
+                        cancelButtonText: "{{ 'General.No'|trans }}"
+                    }).then((result) => {
+                        if (result.value) {
                             url = url.replace('categoryId', id);
                             url = url.replace('productChantierCategoryId', productChantierCategoryId);
                             $(location).attr('href', url);
                         }
                     });
+
+
                 }
 
 

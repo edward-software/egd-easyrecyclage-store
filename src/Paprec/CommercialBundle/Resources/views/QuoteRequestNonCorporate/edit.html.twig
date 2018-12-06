@@ -150,11 +150,18 @@
 
                 var url = "{{ path("paprec_commercial_quoteRequestNonCorporate_view", {id: quoteRequestNonCorporate.id}) }}";
 
-                bootbox.confirm("{{ 'Commercial.QuoteRequestNonCorporate.Confirm-cancel'|trans }}", function (result) {
-                    if (result === true) {
+                Swal({
+                    title: "{{ 'General.Confirm'|trans }}",
+                    text: "{{ 'Commercial.QuoteRequestNonCorporate.Confirm-cancel'|trans }}",
+                    showCancelButton: true,
+                    confirmButtonText: "{{ 'General.Yes'|trans }}",
+                    cancelButtonText: "{{ 'General.No'|trans }}"
+                }).then((result) => {
+                    if (result.value) {
                         $(location).attr('href', url);
                     }
                 });
+
 
             });
 

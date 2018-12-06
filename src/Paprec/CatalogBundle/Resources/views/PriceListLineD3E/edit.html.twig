@@ -112,8 +112,14 @@
 
                 var url = "{{ path("paprec_catalog_priceListD3E_view", {id: priceListD3E.id}) }}";
 
-                bootbox.confirm("{{ 'Catalog.PriceListD3E.Confirm-cancel'|trans }}", function (result) {
-                    if (result === true) {
+                Swal({
+                    title: "{{ 'General.Confirm'|trans }}",
+                    text: "{{ 'Catalog.ProductD3E.Confirm-cancel'|trans }}",
+                    showCancelButton: true,
+                    confirmButtonText: "{{ 'General.Yes'|trans }}",
+                    cancelButtonText: "{{ 'General.No'|trans }}"
+                }).then((result) => {
+                    if (result.value) {
                         $(location).attr('href', url);
                     }
                 });
