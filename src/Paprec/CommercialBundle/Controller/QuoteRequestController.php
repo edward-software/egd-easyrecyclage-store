@@ -400,7 +400,7 @@ class QuoteRequestController extends Controller
     public function downloadAttachedFilesAction(QuoteRequest $quoteRequest)
     {
         $path = $this->getParameter('paprec_commercial.quote_request.files_path');
-        $zipname = 'file.zip';
+        $zipname = 'demandeDevis-'. $quoteRequest->getId() .'.zip';
         $zip = new ZipArchive;
         $zip->open($zipname, ZipArchive::CREATE);
         $cpt = 1;

@@ -515,7 +515,7 @@ class ProductDIController extends Controller
      */
     public function addCategoryAction(Request $request, ProductDI $productDI)
     {
-
+        $numberManager = $this->get('paprec_catalog.number_manager');
         $em = $this->getDoctrine()->getManager();
         $productDICategoryRepo = $em->getRepository('PaprecCatalogBundle:ProductDICategory');
 
@@ -537,6 +537,7 @@ class ProductDIController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $productDICategory = $form->getData();
+            $productDICategory->setUnitPrice($numberManager->normalize($productDICategory->getUnitPrice()));
             $productDICategory->setProductDI($productDI);
             $productDI->addProductDICategory($productDICategory);
             $productDI->setDateUpdate(new \DateTime());
@@ -562,6 +563,7 @@ class ProductDIController extends Controller
      */
     public function editCategoryAction(Request $request, ProductDI $productDI, ProductDICategory $productDICategory)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
         $em = $this->getDoctrine()->getManager();
 
         if ($productDI->getDeleted() !== null) {
@@ -572,6 +574,7 @@ class ProductDIController extends Controller
             throw new NotFoundHttpException();
         }
 
+        $productDICategory->setUnitPrice($numberManager->denormalize($productDICategory->getUnitPrice()));
 
         $form = $this->createForm(\Paprec\CatalogBundle\Form\ProductDICategoryEditType::class, $productDICategory);
 
@@ -579,6 +582,8 @@ class ProductDIController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $productDICategory = $form->getData();
+            $productDICategory->setUnitPrice($numberManager->normalize($productDICategory->getUnitPrice()));
+
             $em->flush();
 
             return $this->redirectToRoute('paprec_catalog_productDI_view', array(

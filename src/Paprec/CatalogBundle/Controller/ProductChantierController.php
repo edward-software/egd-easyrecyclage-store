@@ -523,7 +523,7 @@ class ProductChantierController extends Controller
      */
     public function addCategoryAction(Request $request, ProductChantier $productChantier)
     {
-
+        $numberManager = $this->get('paprec_catalog.number_manager');
         $em = $this->getDoctrine()->getManager();
         $productChantierCategoryRepo = $em->getRepository('PaprecCatalogBundle:ProductChantierCategory');
 
@@ -545,6 +545,7 @@ class ProductChantierController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $productChantierCategory = $form->getData();
+            $productChantierCategory->setUnitPrice($numberManager->normalize($productChantierCategory->getUnitPrice()));
             $productChantierCategory->setProductChantier($productChantier);
             $productChantier->addProductChantierCategory($productChantierCategory);
             $productChantier->setDateUpdate(new \DateTime());
@@ -570,6 +571,8 @@ class ProductChantierController extends Controller
      */
     public function editCategoryAction(Request $request, ProductChantier $productChantier, ProductChantierCategory $productChantierCategory)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
+
         $em = $this->getDoctrine()->getManager();
 
         if ($productChantier->getDeleted() !== null) {
@@ -580,6 +583,7 @@ class ProductChantierController extends Controller
             throw new NotFoundHttpException();
         }
 
+        $productChantierCategory->setUnitPrice($numberManager->denormalize($productChantierCategory->getUnitPrice()));
 
         $form = $this->createForm(ProductChantierCategoryEditType::class, $productChantierCategory);
 
@@ -587,6 +591,8 @@ class ProductChantierController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $productChantierCategory = $form->getData();
+            $productChantierCategory->setUnitPrice($numberManager->normalize($productChantierCategory->getUnitPrice()));
+
             $em->flush();
 
             return $this->redirectToRoute('paprec_catalog_productChantier_view', array(

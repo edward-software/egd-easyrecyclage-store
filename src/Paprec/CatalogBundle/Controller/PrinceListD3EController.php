@@ -269,6 +269,8 @@ class PrinceListD3EController extends Controller
  */
     public function addLineAction(Request $request, PriceListD3E $priceListD3E)
     {
+        $numberManager  = $this->get('paprec_catalog.number_manager');
+
         $priceListLineD3E = new PriceListLineD3E();
         $form = $this->createForm(PriceListLineD3EType::class, $priceListLineD3E);
 
@@ -278,10 +280,12 @@ class PrinceListD3EController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $priceListLineD3E = $form->getData();
             $priceListLineD3E->setPriceListD3E($priceListD3E);
+            $priceListD3E->addPriceListLineD3E($priceListLineD3E);
+
+            $priceListLineD3E->setPrice($numberManager->normalize($priceListLineD3E->getPrice()));
             if ($priceListLineD3E->getMaxQuantity() == null) {
                 $priceListLineD3E->setMaxQuantity($priceListLineD3E->getMinQuantity());
             }
-            $priceListD3E->addPriceListLineD3E($priceListLineD3E);
             $em->flush();
 
             return $this->redirectToRoute('paprec_catalog_priceListD3E_view', array(
@@ -302,16 +306,20 @@ class PrinceListD3EController extends Controller
      */
     public function editLineAction(Request $request, PriceListD3E $priceListD3E)
     {
+        $numberManager  = $this->get('paprec_catalog.number_manager');
 
         $em = $this->getDoctrine()->getManager();
         $lineId = $request->get('lineId');
         $priceListLineD3E = $em->getRepository(PriceListLineD3E::class)->find($lineId);
+        $priceListLineD3E->setPrice($numberManager->denormalize($priceListLineD3E->getPrice()));
+
         $form = $this->createForm(PriceListLineD3EType::class, $priceListLineD3E);
 
         $form->handleRequest($request);
         if ($form->isValid()) {
             $priceListLineD3E = $form->getData();
 
+            $priceListLineD3E->setPrice($numberManager->normalize($priceListLineD3E->getPrice()));
             if ($priceListLineD3E->getMaxQuantity() == null) {
                 $priceListLineD3E->setMaxQuantity($priceListLineD3E->getMinQuantity());
             }

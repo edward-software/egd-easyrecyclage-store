@@ -135,7 +135,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductChantierQuote.TotalAmount'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ productChantierQuote.totalAmount }}
+                                        {{ productChantierQuote.totalAmount|formatAmount(null, app.request.locale) }}
                                     </label>
                                 </div>
                             </div>
@@ -237,9 +237,9 @@
                                         <td>{{ productChantierQuoteLine.id }}</td>
                                         <td>{{ productChantierQuoteLine.productName }}</td>
                                         <td>{{ productChantierQuoteLine.categoryName }}</td>
-                                        <td>{{ productChantierQuoteLine.unitPrice }}</td>
+                                        <td>{{ productChantierQuoteLine.unitPrice|formatAmount(null, app.request.locale) }}</td>
                                         <td>{{ productChantierQuoteLine.quantity }}</td>
-                                        <td>{{ productChantierQuoteLine.totalAmount }}</td>
+                                        <td>{{ productChantierQuoteLine.totalAmount|formatAmount(null, app.request.locale) }}</td>
                                         <td class="text-center">
                                             <a href="{{ path('paprec_commercial_productChantierQuote_editLine', {id: productChantierQuote.id, quoteLineId: productChantierQuoteLine.id}) }}"
                                                class="btn btn-sm btn-warning btn-sm mx-1"

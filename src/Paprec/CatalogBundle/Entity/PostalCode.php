@@ -35,10 +35,15 @@ class PostalCode
     private $code;
 
     /**
-     * @var float
+     * @var int
      *
-     * @ORM\Column(name="rate", type="float")
+     * @ORM\Column(name="rate", type="integer")
      * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/^\d{1,2}((\.|\,)\d{1,2})?$/",
+     *     match=true,
+     *     message="la valeur doit être un nombre entre 0 et 99,99 (ou 99.99)"
+     * )
      */
     private $rate;
 
@@ -73,30 +78,7 @@ class PostalCode
     {
         return $this->id;
     }
-
-    /**
-     * Set rate
-     *
-     * @param float $rate
-     * @return PostalCode
-     */
-    public function setRate($rate)
-    {
-        $this->rate = $rate;
-
-        return $this;
-    }
-
-    /**
-     * Get rate
-     *
-     * @return float 
-     */
-    public function getRate()
-    {
-        return $this->rate;
-    }
-
+    
     /**
      * Set division.
      *
@@ -166,5 +148,31 @@ class PostalCode
     public function getCode()
     {
         return $this->code;
+    }
+
+
+
+    /**
+     * Set rate.
+     *
+     * @param int $rate
+     *
+     * @return PostalCode
+     */
+    public function setRate($rate)
+    {
+        $this->rate = $rate;
+
+        return $this;
+    }
+
+    /**
+     * Get rate.
+     *
+     * @return int
+     */
+    public function getRate()
+    {
+        return $this->rate;
     }
 }

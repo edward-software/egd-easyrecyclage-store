@@ -11,6 +11,7 @@ namespace DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Paprec\CatalogBundle\Entity\Category;
+use Paprec\CatalogBundle\Entity\PostalCode;
 use Paprec\CatalogBundle\Entity\PriceListD3E;
 use Paprec\CatalogBundle\Entity\PriceListLineD3E;
 use Paprec\CatalogBundle\Entity\ProductChantier;
@@ -58,7 +59,7 @@ class DevFixtures extends Fixture
             $product = new ProductDI();
             $product->setName('Product DI ' . $i);
             $product->setDescription('Description du product DI ' . $i);
-            $product->setCapacity(mt_rand(10, 200));
+            $product->setCapacity('' . mt_rand(10, 200));
             $product->setCapacityUnit('L');
             $product->setDimensions('100x100x100');
             $product->setAvailablePostalCodes('92150, 75015');
@@ -75,7 +76,7 @@ class DevFixtures extends Fixture
             $product = new ProductChantier();
             $product->setName('Product Chantier ' . $i);
             $product->setDescription('Description du product Chantier ' . $i);
-            $product->setCapacity(mt_rand(10, 200));
+            $product->setCapacity('' . mt_rand(10, 200));
             $product->setCapacityUnit('L');
             $product->setDimensions('100x100x100');
             $product->setAvailablePostalCodes('92150, 75015');
@@ -92,9 +93,9 @@ class DevFixtures extends Fixture
         $productD3E1 = new ProductD3E();
         $productD3E1->setName('Contenant, Collecte et Traitement');
         $productD3E1->setDescription('Mise à disposition des contenants, collecte de ceux-ci et traitement des déchets contenus');
-        $productD3E1->setCoefHandling(mt_rand(1, 4));
-        $productD3E1->setCoefDestruction(mt_rand(1, 4));
-        $productD3E1->setCoefSerialNumberStmt(mt_rand(1, 4));
+        $productD3E1->setCoefHandling(mt_rand(100, 200));
+        $productD3E1->setCoefDestruction(mt_rand(100, 200));
+        $productD3E1->setCoefSerialNumberStmt(mt_rand(100, 200));
         $productD3E1->setAvailablePostalCodes('92150, 75015');
         $productD3E1->setPosition(1);
         $productD3E1->setIsDisplayed(true);
@@ -104,9 +105,9 @@ class DevFixtures extends Fixture
         $productD3E2 = new ProductD3E();
         $productD3E2->setName('Collecte et Traitement');
         $productD3E2->setDescription('Collecte de ceux-ci et traitement des déchets contenus');
-        $productD3E2->setCoefHandling(mt_rand(1, 4));
-        $productD3E2->setCoefDestruction(mt_rand(1, 4));
-        $productD3E2->setCoefSerialNumberStmt(mt_rand(1, 4));
+        $productD3E2->setCoefHandling(mt_rand(100, 200));
+        $productD3E2->setCoefDestruction(mt_rand(100, 200));
+        $productD3E2->setCoefSerialNumberStmt(mt_rand(100, 200));
         $productD3E2->setAvailablePostalCodes('92150, 75015');
         $productD3E2->setPosition(2);
         $productD3E2->setIsDisplayed(true);
@@ -310,6 +311,26 @@ class DevFixtures extends Fixture
         $manager->persist($businessLine3);
 
         /**
+         * Création des postalCodes
+         */
+        $postalCode1 = new PostalCode();
+        $postalCode1->setDivision('DI');
+        $postalCode1->setCode('92*');
+        $postalCode1->setRate(mt_rand(100,200));
+        $manager->persist($postalCode1);
+
+        $postalCode1 = new PostalCode();
+        $postalCode1->setDivision('CHANTIER');
+        $postalCode1->setCode('92*');
+        $postalCode1->setRate(mt_rand(100,200));
+        $manager->persist($postalCode1);
+
+        $postalCode1 = new PostalCode();
+        $postalCode1->setDivision('D3E');
+        $postalCode1->setCode('92*');
+        $postalCode1->setRate(mt_rand(100,200));
+        $manager->persist($postalCode1);
+        /**
          * On flush une première fois pour créer les référentiels et pouvoir les récupérer ensuite dans des repository->find()
          */
         $manager->flush();
@@ -326,7 +347,7 @@ class DevFixtures extends Fixture
             foreach ($categoriesDI as $categoryDI) {
                 $productDICategory = new ProductDICategory();
                 $productDICategory->setPosition($cpt);
-                $productDICategory->setUnitPrice(mt_rand(10, 100));
+                $productDICategory->setUnitPrice(mt_rand(1000, 10000));
                 $productDICategory->setProductDI($productDI);
                 $productDICategory->setCategory($categoryDI);
                 $manager->persist($productDICategory);
@@ -346,7 +367,7 @@ class DevFixtures extends Fixture
             foreach ($categoriesChantier as $categoryChantier) {
                 $productChantierCategory = new ProductChantierCategory();
                 $productChantierCategory->setPosition($cpt);
-                $productChantierCategory->setUnitPrice(mt_rand(10, 100));
+                $productChantierCategory->setUnitPrice(mt_rand(1000, 10000));
                 $productChantierCategory->setProductChantier($productChantier);
                 $productChantierCategory->setCategory($categoryChantier);
                 $manager->persist($productChantierCategory);
@@ -365,7 +386,7 @@ class DevFixtures extends Fixture
             $priceListLineD3E1->setMinQuantity(1);
             $priceListLineD3E1->setMaxQuantity(10);
             $priceListLineD3E1->setAgency($agency1);
-            $priceListLineD3E1->setPrice(mt_rand(10, 20));
+            $priceListLineD3E1->setPrice(mt_rand(1000, 2000));
             $priceListLineD3E1->setPriceListD3E($priceListD3E);
             $manager->persist($priceListLineD3E1);
 
@@ -374,7 +395,7 @@ class DevFixtures extends Fixture
             $priceListLineD3E2->setMinQuantity(11);
             $priceListLineD3E2->setMaxQuantity(20);
             $priceListLineD3E2->setAgency($agency1);
-            $priceListLineD3E2->setPrice(mt_rand(20, 30));
+            $priceListLineD3E2->setPrice(mt_rand(2000, 3000));
             $priceListLineD3E2->setPriceListD3E($priceListD3E);
             $manager->persist($priceListLineD3E2);
 
@@ -383,7 +404,7 @@ class DevFixtures extends Fixture
             $priceListLineD3E3->setMinQuantity(21);
             $priceListLineD3E3->setMaxQuantity(100);
             $priceListLineD3E3->setAgency($agency1);
-            $priceListLineD3E3->setPrice(mt_rand(30, 40));
+            $priceListLineD3E3->setPrice(mt_rand(3000, 4000));
             $priceListLineD3E3->setPriceListD3E($priceListD3E);
             $manager->persist($priceListLineD3E3);
 

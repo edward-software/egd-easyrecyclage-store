@@ -25,7 +25,7 @@ services:
     class: Paprec\CatalogBundle\Service\ProductChantierManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
-  paprec_catalog.product_D3E_manager:
+  paprec_catalog.product_d3e_manager:
     class: Paprec\CatalogBundle\Service\ProductD3EManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
@@ -33,13 +33,25 @@ services:
     class: Paprec\CatalogBundle\Service\PriceListD3EManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
+  paprec_catalog.number_manager:
+    class: Paprec\CatalogBundle\Service\NumberManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
+
+  twig.formatAmount:
+    class: Paprec\CatalogBundle\Twig\Extension\FormatAmountExtension
+    public: false
+    arguments: ["@service_container"]
+    tags:
+      - { name: twig.extension }
+
 parameters:
 
-  paprec_catalog.category.picto_path: "%kernel.root_dir%/../web/uploads/pictos"
-  paprec_catalog.argument.picto_path: "%kernel.root_dir%/../web/uploads/pictos"
-  paprec_catalog.product.di.picto_path: "%kernel.root_dir%/../web/uploads/pictos"
-  paprec_catalog.product.chantier.picto_path: "%kernel.root_dir%/../web/uploads/pictos"
-  paprec_catalog.product.d3e.picto_path: "%kernel.root_dir%/../web/uploads/pictos"
+  paprec_catalog.category.picto_path: "%kernel.root_dir%/../var/files/pictos"
+  paprec_catalog.argument.picto_path: "%kernel.root_dir%/../var/files/pictos"
+  paprec_catalog.product.di.picto_path: "%kernel.root_dir%/../var/files/pictos"
+  paprec_catalog.product.chantier.picto_path: "%kernel.root_dir%/../var/files/pictos"
+  paprec_catalog.product.d3e.picto_path: "%kernel.root_dir%/../var/files/pictos"
 
   paprec_types_picture:
     - PICTO

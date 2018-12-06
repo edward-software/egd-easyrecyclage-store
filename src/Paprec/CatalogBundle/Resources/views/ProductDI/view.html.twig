@@ -424,7 +424,7 @@
                                     <tr>
                                         <td>{{ productDICategory.id }}</td>
                                         <td>{{ productDICategory.category }}</td>
-                                        <td>{{ productDICategory.unitPrice }}</td>
+                                        <td>{{ productDICategory.unitPrice|formatAmount(null, app.request.locale) }}</td>
                                         <td class="text-center">
                                             <a href="{{ path('paprec_catalog_productDI_editCategory', {id: productDI.id, productDICategoryId: productDICategory.id}) }}"
                                                class="btn btn-sm btn-warning btn-sm mx-1"

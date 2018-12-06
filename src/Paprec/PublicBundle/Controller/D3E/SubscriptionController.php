@@ -81,7 +81,7 @@ class SubscriptionController extends Controller
     public function step1Action(Request $request, $cartUuid)
     {
         $cartManager = $this->get('paprec.cart_manager');
-        $productD3EManager = $this->get('paprec_catalog.product_D3E_manager');
+        $productD3EManager = $this->get('paprec_catalog.product_d3e_manager');
 
 
         $cart = $cartManager->get($cartUuid);

@@ -428,7 +428,7 @@
                                     <tr>
                                         <td>{{ productChantierCategory.id }}</td>
                                         <td>{{ productChantierCategory.category }}</td>
-                                        <td>{{ productChantierCategory.unitPrice }}</td>
+                                        <td>{{ productChantierCategory.unitPrice|formatAmount(null, app.request.locale) }}</td>
                                         <td class="text-center">
                                             <a href="{{ path('paprec_catalog_productChantier_editCategory', {id: productChantier.id, productChantierCategoryId: productChantierCategory.id}) }}"
                                                class="btn btn-sm btn-warning btn-sm mx-1"

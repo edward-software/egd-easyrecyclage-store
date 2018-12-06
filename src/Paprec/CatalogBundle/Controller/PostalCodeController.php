@@ -30,6 +30,8 @@ class PostalCodeController extends Controller
      */
     public function loadListAction(Request $request)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
+
         $return = array();
 
         $filters = $request->get('filters');
@@ -66,6 +68,15 @@ class PostalCodeController extends Controller
 
         $datatable = $this->get('goondi_tools.datatable')->generateTable($cols, $queryBuilder, $pageSize, $start, $orders, $columns, $filters);
 
+        // Reformatage de certaines données
+        $tmp = array();
+        foreach ($datatable['data'] as $data) {
+            $line = $data;
+            $line['rate'] = $numberManager->formatAmount($data['rate'], null, $request->getLocale());
+            $tmp[] = $line;
+        }
+        $datatable['data'] = $tmp;
+
         $return['recordsTotal'] = $datatable['recordsTotal'];
         $return['recordsFiltered'] = $datatable['recordsTotal'];
         $return['data'] = $datatable['data'];
@@ -89,8 +100,7 @@ class PostalCodeController extends Controller
 
         $queryBuilder->select(array('p'))
             ->from('PaprecCatalogBundle:PostalCode', 'p')
-            ->where('p.deleted IS NULL')
-        ;
+            ->where('p.deleted IS NULL');
 
         $postalCodes = $queryBuilder->getQuery()->getResult();
 
@@ -109,19 +119,19 @@ class PostalCodeController extends Controller
         $phpExcelObject->setActiveSheetIndex(0);
 
         $i = 2;
-        foreach($postalCodes as $postalCode) {
+        foreach ($postalCodes as $postalCode) {
 
             $phpExcelObject->setActiveSheetIndex(0)
-                ->setCellValue('A'.$i, $postalCode->getId())
-                ->setCellValue('B'.$i, $postalCode->getCode())
-                ->setCellValue('C'.$i, $postalCode->getDivision())
-                ->setCellValue('D'.$i, $postalCode->getRate());
+                ->setCellValue('A' . $i, $postalCode->getId())
+                ->setCellValue('B' . $i, $postalCode->getCode())
+                ->setCellValue('C' . $i, $postalCode->getDivision())
+                ->setCellValue('D' . $i, $postalCode->getRate());
             $i++;
         }
 
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
 
-        $fileName = 'PaprecEasyRecyclage-Extraction-Codes-Postaux-'.date('Y-m-d').'.xlsx';
+        $fileName = 'PaprecEasyRecyclage-Extraction-Codes-Postaux-' . date('Y-m-d') . '.xlsx';
 
         // create the response
         $response = $this->container->get('phpexcel')->createStreamedResponse($writer);
@@ -159,11 +169,12 @@ class PostalCodeController extends Controller
      */
     public function addAction(Request $request)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
 
         $postalCode = new PostalCode();
 
         $divisions = array();
-        foreach($this->getParameter('paprec_divisions') as $division) {
+        foreach ($this->getParameter('paprec_divisions') as $division) {
             $divisions[$division] = $division;
         }
 
@@ -176,6 +187,7 @@ class PostalCodeController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $postalCode = $form->getData();
+            $postalCode->setRate($numberManager->normalize($postalCode->getRate()));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($postalCode);
@@ -199,13 +211,16 @@ class PostalCodeController extends Controller
      */
     public function editAction(Request $request, PostalCode $postalCode)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
         $postalCodeManager = $this->get('paprec_catalog.postal_code_manager');
         $postalCodeManager->isDeleted($postalCode, true);
 
         $divisions = array();
-        foreach($this->getParameter('paprec_divisions') as $division) {
+        foreach ($this->getParameter('paprec_divisions') as $division) {
             $divisions[$division] = $division;
         }
+
+        $postalCode->setRate($numberManager->denormalize($postalCode->getRate()));
 
         $form = $this->createForm(PostalCodeType::class, $postalCode, array(
             'division' => $divisions
@@ -216,6 +231,9 @@ class PostalCodeController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $postalCode = $form->getData();
+//            $postalCode->setRate($numberManager->normalize($postalCode->getRate()));
+
+            $postalCode->setRate($numberManager->normalize($postalCode->getRate()));
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
@@ -254,7 +272,7 @@ class PostalCodeController extends Controller
     {
         $ids = $request->get('ids');
 
-        if(! $ids) {
+        if (!$ids) {
             throw new NotFoundHttpException();
         }
 
@@ -262,9 +280,9 @@ class PostalCodeController extends Controller
 
         $ids = explode(',', $ids);
 
-        if(is_array($ids) && count($ids)) {
+        if (is_array($ids) && count($ids)) {
             $postalCodes = $em->getRepository('PaprecCatalogBundle:PostalCode')->findById($ids);
-            foreach ($postalCodes as $postalCode){
+            foreach ($postalCodes as $postalCode) {
                 $postalCode->setDeleted(new \DateTime);
             }
             $em->flush();

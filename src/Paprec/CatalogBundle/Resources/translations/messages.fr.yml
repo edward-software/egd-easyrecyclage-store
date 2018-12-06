@@ -1,6 +1,13 @@
 Catalog:
 
     Bundle-name:                    Gestion Catalogue
+    Products:                       Produits
+    Settings:                       Paramétrage
+    PriceList:                      Grilles tarifaires
+    DI:                             DI
+    D3E:                            D3E
+    CHANTIER:                       Chantier
+
     Category:
         Categories:                 Catégories
         List:                       Liste des catégories

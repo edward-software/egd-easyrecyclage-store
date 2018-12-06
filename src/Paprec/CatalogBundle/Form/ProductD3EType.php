@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,9 +23,9 @@ class ProductD3EType extends AbstractType
             ->add('name')
             ->add('description', TextareaType::class)
             ->add('reference')
-            ->add('coefHandling')
-            ->add('coefSerialNumberStmt')
-            ->add('coefDestruction')
+            ->add('coefHandling', TextType::class)
+            ->add('coefSerialNumberStmt', TextType::class)
+            ->add('coefDestruction', TextType::class)
             ->add('position')
             ->add('availablePostalCodes', TextareaType::class)
             ->add('isDisplayed', ChoiceType::class, array(

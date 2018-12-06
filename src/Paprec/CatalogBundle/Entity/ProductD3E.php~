@@ -71,29 +71,26 @@ class ProductD3E
     private $reference;
 
     /**
-     * @var float
+     * @var int
      * Le coef de manutention
-     * @ORM\Column(name="coefHandling", type="float")
+     * @ORM\Column(name="coefHandling", type="integer")
      * @Assert\NotBlank()
-     * @Assert\Type(type="float")
      */
     private $coefHandling;
 
     /**
-     * @var float
+     * @var int
      * Le coef de relevé de numéro de série
-     * @ORM\Column(name="coefSerialNumberStmt", type="float")
+     * @ORM\Column(name="coefSerialNumberStmt", type="integer")
      * @Assert\NotBlank()
-     * @Assert\Type(type="float")
      */
     private $coefSerialNumberStmt;
 
     /**
-     * @var float
+     * @var int
      * Le coef de destruction par broyage
-     * @ORM\Column(name="coefDestruction", type="float")
+     * @ORM\Column(name="coefDestruction", type="integer")
      * @Assert\NotBlank()
-     * @Assert\Type(type="float")
      */
     private $coefDestruction;
 
@@ -321,78 +318,6 @@ class ProductD3E
     public function getReference()
     {
         return $this->reference;
-    }
-
-    /**
-     * Set coefHandling.
-     *
-     * @param float $coefHandling
-     *
-     * @return ProductD3E
-     */
-    public function setCoefHandling($coefHandling)
-    {
-        $this->coefHandling = $coefHandling;
-
-        return $this;
-    }
-
-    /**
-     * Get coefHandling.
-     *
-     * @return float
-     */
-    public function getCoefHandling()
-    {
-        return $this->coefHandling;
-    }
-
-    /**
-     * Set coefSerialNumberStmt.
-     *
-     * @param float $coefSerialNumberStmt
-     *
-     * @return ProductD3E
-     */
-    public function setCoefSerialNumberStmt($coefSerialNumberStmt)
-    {
-        $this->coefSerialNumberStmt = $coefSerialNumberStmt;
-
-        return $this;
-    }
-
-    /**
-     * Get coefSerialNumberStmt.
-     *
-     * @return float
-     */
-    public function getCoefSerialNumberStmt()
-    {
-        return $this->coefSerialNumberStmt;
-    }
-
-    /**
-     * Set coefDestruction.
-     *
-     * @param float $coefDestruction
-     *
-     * @return ProductD3E
-     */
-    public function setCoefDestruction($coefDestruction)
-    {
-        $this->coefDestruction = $coefDestruction;
-
-        return $this;
-    }
-
-    /**
-     * Get coefDestruction.
-     *
-     * @return float
-     */
-    public function getCoefDestruction()
-    {
-        return $this->coefDestruction;
     }
 
     /**
@@ -624,4 +549,5 @@ class ProductD3E
     {
         return $this->priceListD3E;
     }
+
 }

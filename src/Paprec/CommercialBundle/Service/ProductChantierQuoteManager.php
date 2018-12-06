@@ -175,6 +175,7 @@ class ProductChantierQuoteManager
     {
         $totalAmount = 0;
         foreach ($productChantierQuote->getProductChantierQuoteLines() as $productChantierQuoteLine) {
+            // Ici, c'est une addition de valeur normalisée donc on retourne la somme telle quelle qui sera bien normalisée
             $totalAmount += $this->calculateTotalLine($productChantierQuoteLine);
         }
         return $totalAmount;
@@ -189,10 +190,15 @@ class ProductChantierQuoteManager
      */
     public function calculateTotalLine(ProductChantierQuoteLine $productChantierQuoteLine)
     {
+        $numberManager = $this->container->get('paprec_catalog.number_manager');
         $productChantierManager = $this->container->get('paprec_catalog.product_chantier_manager');
 
-        return $productChantierManager->calculatePrice($productChantierQuoteLine->getProductChantierQuote()->getPostalCode(), $productChantierQuoteLine->getUnitPrice(), $productChantierQuoteLine->getQuantity());
-
+        return $numberManager->normalize(
+            $productChantierManager->calculatePrice(
+                $productChantierQuoteLine->getProductChantierQuote()->getPostalCode(),
+                $productChantierQuoteLine->getUnitPrice(),
+                $productChantierQuoteLine->getQuantity())
+        );
     }
 
 }

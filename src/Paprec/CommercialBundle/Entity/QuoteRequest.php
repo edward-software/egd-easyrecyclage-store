@@ -127,9 +127,9 @@ class QuoteRequest
 
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="generatedTurnover", type="float", nullable=true)
+     * @ORM\Column(name="generatedTurnover", type="string", length=20, nullable=true)
      */
     private $generatedTurnover;
 
@@ -172,9 +172,9 @@ class QuoteRequest
     private $frequency;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="tonnage", type="float", nullable=true)
+     * @ORM\Column(name="tonnage", type="string", length=50, nullable=true)
      */
     private $tonnage;
 
@@ -512,29 +512,7 @@ class QuoteRequest
         return $this->attachedFiles;
     }
 
-    /**
-     * Set generatedTurnover.
-     *
-     * @param float|null $generatedTurnover
-     *
-     * @return QuoteRequest
-     */
-    public function setGeneratedTurnover($generatedTurnover = null)
-    {
-        $this->generatedTurnover = $generatedTurnover;
 
-        return $this;
-    }
-
-    /**
-     * Get generatedTurnover.
-     *
-     * @return float|null
-     */
-    public function getGeneratedTurnover()
-    {
-        return $this->generatedTurnover;
-    }
 
     /**
      * Set division.
@@ -656,29 +634,6 @@ class QuoteRequest
         return $this->frequency;
     }
 
-    /**
-     * Set tonnage.
-     *
-     * @param float|null $tonnage
-     *
-     * @return QuoteRequest
-     */
-    public function setTonnage($tonnage = null)
-    {
-        $this->tonnage = $tonnage;
-
-        return $this;
-    }
-
-    /**
-     * Get tonnage.
-     *
-     * @return float|null
-     */
-    public function getTonnage()
-    {
-        return $this->tonnage;
-    }
 
     /**
      * Set kookaburaNumber.
@@ -774,5 +729,53 @@ class QuoteRequest
     public function getFunction()
     {
         return $this->function;
+    }
+
+    /**
+     * Set generatedTurnover.
+     *
+     * @param string|null $generatedTurnover
+     *
+     * @return QuoteRequest
+     */
+    public function setGeneratedTurnover($generatedTurnover = null)
+    {
+        $this->generatedTurnover = $generatedTurnover;
+
+        return $this;
+    }
+
+    /**
+     * Get generatedTurnover.
+     *
+     * @return string|null
+     */
+    public function getGeneratedTurnover()
+    {
+        return $this->generatedTurnover;
+    }
+
+    /**
+     * Set tonnage.
+     *
+     * @param string|null $tonnage
+     *
+     * @return QuoteRequest
+     */
+    public function setTonnage($tonnage = null)
+    {
+        $this->tonnage = $tonnage;
+
+        return $this;
+    }
+
+    /**
+     * Get tonnage.
+     *
+     * @return string|null
+     */
+    public function getTonnage()
+    {
+        return $this->tonnage;
     }
 }

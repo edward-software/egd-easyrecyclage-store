@@ -60,16 +60,16 @@ class ProductChantierOrderLine
     private $categoryName;
 
     /**
-     * @var float
+     * @var int
      *
-     * @ORM\Column(name="unitPrice", type="float")
+     * @ORM\Column(name="unitPrice", type="integer")
      */
     private $unitPrice;
 
     /**
-     * @var float
+     * @var int
      *
-     * @ORM\Column(name="totalAmount", type="float")
+     * @ORM\Column(name="totalAmount", type="integer")
      */
     private $totalAmount;
 
@@ -251,54 +251,6 @@ class ProductChantierOrderLine
     }
 
     /**
-     * Set unitPrice.
-     *
-     * @param float $unitPrice
-     *
-     * @return ProductChantierOrderLine
-     */
-    public function setUnitPrice($unitPrice)
-    {
-        $this->unitPrice = $unitPrice;
-
-        return $this;
-    }
-
-    /**
-     * Get unitPrice.
-     *
-     * @return float
-     */
-    public function getUnitPrice()
-    {
-        return $this->unitPrice;
-    }
-
-    /**
-     * Set totalAmount.
-     *
-     * @param float $totalAmount
-     *
-     * @return ProductChantierOrderLine
-     */
-    public function setTotalAmount($totalAmount)
-    {
-        $this->totalAmount = $totalAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get totalAmount.
-     *
-     * @return float
-     */
-    public function getTotalAmount()
-    {
-        return $this->totalAmount;
-    }
-
-    /**
      * Set quantity.
      *
      * @param int $quantity
@@ -392,5 +344,53 @@ class ProductChantierOrderLine
     public function getProductChantierOrder()
     {
         return $this->productChantierOrder;
+    }
+
+    /**
+     * Set unitPrice.
+     *
+     * @param int $unitPrice
+     *
+     * @return ProductChantierOrderLine
+     */
+    public function setUnitPrice($unitPrice)
+    {
+        $this->unitPrice = $unitPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get unitPrice.
+     *
+     * @return int
+     */
+    public function getUnitPrice()
+    {
+        return $this->unitPrice;
+    }
+
+    /**
+     * Set totalAmount.
+     *
+     * @param int $totalAmount
+     *
+     * @return ProductChantierOrderLine
+     */
+    public function setTotalAmount($totalAmount)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return int
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
     }
 }

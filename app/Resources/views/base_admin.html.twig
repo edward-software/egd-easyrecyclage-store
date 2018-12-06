@@ -4,7 +4,56 @@
     <meta charset="UTF-8"/>
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    <style>
+        {# TODO AJOUTER DANS CUSTOMCSS CF CYRIL#}
+        .dropdown-submenu {
+            position: relative;
+        }
 
+        .dropdown-submenu > .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -6px;
+            margin-left: -1px;
+            -webkit-border-radius: 0 6px 6px 6px;
+            -moz-border-radius: 0 6px 6px 6px;
+            border-radius: 0 6px 6px 6px;
+        }
+
+        .dropdown-submenu:hover > .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-submenu > .dropdown-item:after {
+            display: block;
+            content: " ";
+            float: right;
+            width: 0;
+            height: 0;
+            border-color: transparent;
+            border-style: solid;
+            border-width: 5px 0 5px 5px;
+            border-left-color: #cccccc;
+            margin-top: 5px;
+            margin-right: -10px;
+        }
+
+        .dropdown-submenu:hover > a:after {
+            border-left-color: #ffffff;
+        }
+
+        .dropdown-submenu.pull-left {
+            float: none;
+        }
+
+        .dropdown-submenu.pull-left > .dropdown-menu {
+            left: -100%;
+            margin-left: 10px;
+            -webkit-border-radius: 6px 0 6px 6px;
+            -moz-border-radius: 6px 0 6px 6px;
+            border-radius: 6px 0 6px 6px;
+        }
+    </style>
 
     {% block stylesheets %}{% endblock %}
     {#<link rel="icon" type="image/png" href="{{ paprec_public_site_url }}/wp-content/themes/bst-master/images/logo/picto_feuille.png">#}
@@ -30,23 +79,37 @@
                             <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownCatalog">
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_productDI'|length) == 'paprec_catalog_productDI' %} active{% endif %}"
-                               href="{{ path('paprec_catalog_productDI_index') }}">{{ 'Catalog.ProductDI.ProductDIs'|trans }}</a>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_productChantier'|length) == 'paprec_catalog_productChantier' %} active{% endif %}"
-                               href="{{ path('paprec_catalog_productChantier_index') }}">{{ 'Catalog.ProductChantier.ProductChantiers'|trans }}</a>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_productD3E'|length) == 'paprec_catalog_productD3E' %} active{% endif %}"
-                               href="{{ path('paprec_catalog_productD3E_index') }}">{{ 'Catalog.ProductD3E.ProductD3Es'|trans }}</a>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_priceListD3E'|length) == 'paprec_catalog_priceListD3E' %} active{% endif %}"
-                               href="{{ path('paprec_catalog_priceListD3E_index') }}">{{ 'Catalog.PriceListD3E.PriceListD3Es'|trans }}</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_category'|length) == 'paprec_catalog_category' %} active{% endif %}"
-                               href="{{ path('paprec_catalog_category_index') }}">{{ 'Catalog.Category.Categories'|trans }}</a>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_argument'|length) == 'paprec_catalog_argument' %} active{% endif %}"
-                               href="{{ path('paprec_catalog_argument_index') }}">{{ 'Catalog.Argument.Arguments'|trans }}</a>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_postalCode'|length) == 'paprec_catalog_postalCode' %} active{% endif %}"
-                               href="{{ path('paprec_catalog_postalCode_index') }}">{{ 'Catalog.PostalCode.PostalCodes'|trans }}</a>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_customizableArea'|length) == 'paprec_catalog_customizableArea' %} active{% endif %}"
-                               href="{{ path('paprec_catalog_customizableArea_index') }}">{{ 'Catalog.CustomizableArea.CustomizableAreas'|trans }}</a>
+                            <div class="dropdown-submenu">
+                                <div tabindex="-1" class="dropdown-item">{{ 'Catalog.Products'|trans }}</div>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_productDI'|length) == 'paprec_catalog_productDI' %} active{% endif %}"
+                                       href="{{ path('paprec_catalog_productDI_index') }}">{{ 'Catalog.DI'|trans }}</a>
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_productChantier'|length) == 'paprec_catalog_productChantier' %} active{% endif %}"
+                                       href="{{ path('paprec_catalog_productChantier_index') }}">{{ 'Catalog.CHANTIER'|trans }}</a>
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_productD3E'|length) == 'paprec_catalog_productD3E' %} active{% endif %}"
+                                       href="{{ path('paprec_catalog_productD3E_index') }}">{{ 'Catalog.D3E'|trans }}</a>
+                                </div>
+                            </div>
+                            <div class="dropdown-submenu">
+                                <div tabindex="-1" class="dropdown-item">{{ 'Catalog.PriceList'|trans }}</div>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_priceListD3E'|length) == 'paprec_catalog_priceListD3E' %} active{% endif %}"
+                                       href="{{ path('paprec_catalog_priceListD3E_index') }}">{{ 'Catalog.D3E'|trans }}</a>
+                                </div>
+                            </div>
+                            <div class="dropdown-submenu">
+                                <div tabindex="-1" class="dropdown-item">{{ 'Catalog.Settings'|trans }}</div>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_category'|length) == 'paprec_catalog_category' %} active{% endif %}"
+                                       href="{{ path('paprec_catalog_category_index') }}">{{ 'Catalog.Category.Categories'|trans }}</a>
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_argument'|length) == 'paprec_catalog_argument' %} active{% endif %}"
+                                       href="{{ path('paprec_catalog_argument_index') }}">{{ 'Catalog.Argument.Arguments'|trans }}</a>
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_postalCode'|length) == 'paprec_catalog_postalCode' %} active{% endif %}"
+                                       href="{{ path('paprec_catalog_postalCode_index') }}">{{ 'Catalog.PostalCode.PostalCodes'|trans }}</a>
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_customizableArea'|length) == 'paprec_catalog_customizableArea' %} active{% endif %}"
+                                       href="{{ path('paprec_catalog_customizableArea_index') }}">{{ 'Catalog.CustomizableArea.CustomizableAreas'|trans }}</a>
+                                </div>
+                            </div>
                         </div>
                     </li>
                 {% endif %}
@@ -59,31 +122,48 @@
                             <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownCommercial">
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_agence'|length) == 'paprec_commercial_agence' %} active{% endif %}"
-                               href="{{ path('paprec_commercial_agence_index') }}">{{ 'Commercial.Agency.Agencies'|trans }}</a>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_businessLine'|length) == 'paprec_commercial_businessLine' %} active{% endif %}"
-                               href="{{ path('paprec_commercial_businessLine_index') }}">{{ 'Commercial.BusinessLine.BusinessLines'|trans }}</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_contactUs'|length) == 'paprec_commercial_contactUs' %} active{% endif %}"
-                               href="{{ path('paprec_commercial_contactUs_index') }}">{{ 'Commercial.ContactUs.ContactUss'|trans }}</a>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_callBack'|length) == 'paprec_commercial_callBack' %} active{% endif %}"
-                               href="{{ path('paprec_commercial_callBack_index') }}">{{ 'Commercial.CallBack.CallBacks'|trans }}</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_quoteRequest'|length) == 'paprec_commercial_quoteRequest' and  app.request.get('_route')|slice(0, 'paprec_commercial_quoteRequestNonCorporate'|length) != 'paprec_commercial_quoteRequestNonCorporate' %} active{% endif %}"
-                               href="{{ path('paprec_commercial_quoteRequest_index') }}">{{ 'Commercial.QuoteRequest.QuoteRequests'|trans }}</a>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_quoteRequestNonCorporate'|length) == 'paprec_commercial_quoteRequestNonCorporate' %} active{% endif %}"
-                               href="{{ path('paprec_commercial_quoteRequestNonCorporate_index') }}">{{ 'Commercial.QuoteRequestNonCorporate.QuoteRequestNonCorporates'|trans }}</a>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productDIQuote'|length) == 'paprec_commercial_productDIQuote' %} active{% endif %}"
-                               href="{{ path('paprec_commercial_productDIQuote_index') }}">{{ 'Commercial.ProductDIQuote.ProductDIQuotes'|trans }}</a>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productChantierQuote'|length) == 'paprec_commercial_productChantierQuote' %} active{% endif %}"
-                               href="{{ path('paprec_commercial_productChantierQuote_index') }}">{{ 'Commercial.ProductChantierQuote.ProductChantierQuotes'|trans }}</a>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productD3EQuote'|length) == 'paprec_commercial_productD3EQuote' %} active{% endif %}"
-                               href="{{ path('paprec_commercial_productD3EQuote_index') }}">{{ 'Commercial.ProductD3EQuote.ProductD3EQuotes'|trans }}</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productChantierOrder'|length) == 'paprec_commercial_productChantierOrder' %} active{% endif %}"
-                               href="{{ path('paprec_commercial_productChantierOrder_index') }}">{{ 'Commercial.ProductChantierOrder.ProductChantierOrders'|trans }}</a>
-                            <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productChantierOrder'|length) == 'paprec_commercial_productD3EOrder' %} active{% endif %}"
-                               href="{{ path('paprec_commercial_productD3EOrder_index') }}">{{ 'Commercial.ProductD3EOrder.ProductD3EOrders'|trans }}</a>
+                            <div class="dropdown-submenu">
+                                <div tabindex="-1" class="dropdown-item">{{ 'Commercial.Orders'|trans }}</div>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productChantierOrder'|length) == 'paprec_commercial_productChantierOrder' %} active{% endif %}"
+                                       href="{{ path('paprec_commercial_productChantierOrder_index') }}">{{ 'Commercial.CHANTIER'|trans }}</a>
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productChantierOrder'|length) == 'paprec_commercial_productD3EOrder' %} active{% endif %}"
+                                       href="{{ path('paprec_commercial_productD3EOrder_index') }}">{{ 'Commercial.D3E'|trans }}</a>
+                                </div>
+                            </div>
+                            <div class="dropdown-submenu">
+                                <div tabindex="-1" class="dropdown-item">{{ 'Commercial.Quotes'|trans }}</div>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productDIQuote'|length) == 'paprec_commercial_productDIQuote' %} active{% endif %}"
+                                       href="{{ path('paprec_commercial_productDIQuote_index') }}">{{ 'Commercial.DI'|trans }}</a>
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productChantierQuote'|length) == 'paprec_commercial_productChantierQuote' %} active{% endif %}"
+                                       href="{{ path('paprec_commercial_productChantierQuote_index') }}">{{ 'Commercial.CHANTIER'|trans }}</a>
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productD3EQuote'|length) == 'paprec_commercial_productD3EQuote' %} active{% endif %}"
+                                       href="{{ path('paprec_commercial_productD3EQuote_index') }}">{{ 'Commercial.D3E'|trans }}</a>
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_quoteRequest'|length) == 'paprec_commercial_quoteRequest' and  app.request.get('_route')|slice(0, 'paprec_commercial_quoteRequestNonCorporate'|length) != 'paprec_commercial_quoteRequestNonCorporate' %} active{% endif %}"
+                                       href="{{ path('paprec_commercial_quoteRequest_index') }}">{{ 'Commercial.CorpQuoteRequests'|trans }}</a>
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_quoteRequestNonCorporate'|length) == 'paprec_commercial_quoteRequestNonCorporate' %} active{% endif %}"
+                                       href="{{ path('paprec_commercial_quoteRequestNonCorporate_index') }}">{{ 'Commercial.NonCorpQuoteRequests'|trans }}</a>
+                                </div>
+                            </div>
+                            <div class="dropdown-submenu">
+                                <div tabindex="-1" class="dropdown-item">{{ 'Commercial.Requests'|trans }}</div>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_contactUs'|length) == 'paprec_commercial_contactUs' %} active{% endif %}"
+                                       href="{{ path('paprec_commercial_contactUs_index') }}">{{ 'Commercial.Contact'|trans }}</a>
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_callBack'|length) == 'paprec_commercial_callBack' %} active{% endif %}"
+                                       href="{{ path('paprec_commercial_callBack_index') }}">{{ 'Commercial.Callback'|trans }}</a>
+                                </div>
+                            </div>
+                            <div class="dropdown-submenu">
+                                <div tabindex="-1" class="dropdown-item">{{ 'Commercial.Settings'|trans }}</div>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_agence'|length) == 'paprec_commercial_agence' %} active{% endif %}"
+                                       href="{{ path('paprec_commercial_agence_index') }}">{{ 'Commercial.Agency.Agencies'|trans }}</a>
+                                    <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_businessLine'|length) == 'paprec_commercial_businessLine' %} active{% endif %}"
+                                       href="{{ path('paprec_commercial_businessLine_index') }}">{{ 'Commercial.BusinessLine.BusinessLines'|trans }}</a>
+                                </div>
+                            </div>
                         </div>
                     </li>
                 {% endif %}

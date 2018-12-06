@@ -31,7 +31,7 @@
         <div class="right">
             <br>
             <span>
-                {% if loadedCart and loadedCart is not empty %}{{ loadedCart['sum'] }}{% else %}0{% endif %}€
+                {% if loadedCart and loadedCart is not empty %}{{ loadedCart['sum']|formatAmount(null, app.request.locale) }}{% else %}0{% endif %}€
             </span> HT
         </div>
         <div class="clearfix"></div>
