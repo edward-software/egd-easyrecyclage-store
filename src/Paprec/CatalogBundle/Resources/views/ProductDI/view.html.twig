@@ -476,8 +476,8 @@
 {% endblock %}
 
     {% block javascripts %}
-        <script type="text/javascript"
-                src="{{ asset('/assets/vendor/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
+        {#<script type="text/javascript"#}
+                {#src="{{ asset('/assets/vendor/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>#}
         <script>
             $(function () {
 
@@ -485,8 +485,14 @@
 
                     var url = "{{ path("paprec_catalog_productDI_remove", {id: productDI.id}) }}";
 
-                    bootbox.confirm("{{ 'Catalog.ProductDI.Confirm-remove'|trans }}", function (result) {
-                        if (result === true) {
+                    Swal({
+                        title: "{{ 'General.Confirm'|trans }}",
+                        text: "{{ 'Catalog.ProductDI.Confirm-remove'|trans }}",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ 'General.Yes'|trans }}",
+                        cancelButtonText: "{{ 'General.No'|trans }}"
+                    }).then((result) => {
+                        if (result.value) {
                             $(location).attr('href', url);
                         }
                     });
@@ -537,8 +543,14 @@
 
                 $('.removePictureButton').on('click', function () {
                     picId = $(this).data('id');
-                    bootbox.confirm("{{ 'Catalog.ProductDI.Confirm-remove-picture'|trans }}", function (result) {
-                        if (result === true) {
+                    Swal({
+                        title: "{{ 'General.Confirm'|trans }}",
+                        text: "{{ 'Catalog.ProductDI.Confirm-remove-picture'|trans }}",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ 'General.Yes'|trans }}",
+                        cancelButtonText: "{{ 'General.No'|trans }}"
+                    }).then((result) => {
+                        if (result.value) {
                             var url = "{{ path("paprec_catalog_productDI_removePicture", {id: productDI.id, pictureID: 'pictureTmp'}) }}";
                             url = url.replace('pictureTmp', picId);
                             $(location).attr('href', url);
@@ -550,8 +562,14 @@
                 // Change le type de la Picture en PilotPicture
                 $('.setPilotPictureButton').on('click', function () {
                     picId = $(this).data('id');
-                    bootbox.confirm("{{ 'Catalog.ProductDI.Confirm-set_pilot'|trans }}", function (result) {
-                        if (result === true) {
+                    Swal({
+                        title: "{{ 'General.Confirm'|trans }}",
+                        text: "{{ 'Catalog.ProductDI.Confirm-set_pilot'|trans }}",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ 'General.Yes'|trans }}",
+                        cancelButtonText: "{{ 'General.No'|trans }}"
+                    }).then((result) => {
+                        if (result.value) {
                             var url = "{{ path("paprec_catalog_productDI_setPilotPicture", {id: productDI.id, pictureID: 'pictureTmp'}) }}";
                             url = url.replace('pictureTmp', picId);
                             $(location).attr('href', url);
@@ -562,8 +580,14 @@
                 // Change dle type de PilotPicture en Picture
                 $('.setPictureButton').on('click', function () {
                     picId = $(this).data('id');
-                    bootbox.confirm("{{ 'Catalog.ProductDI.Confirm-set_picture'|trans }}", function (result) {
-                        if (result === true) {
+                    Swal({
+                        title: "{{ 'General.Confirm'|trans }}",
+                        text: "{{ 'Catalog.ProductDI.Confirm-set_picture'|trans }}",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ 'General.Yes'|trans }}",
+                        cancelButtonText: "{{ 'General.No'|trans }}"
+                    }).then((result) => {
+                        if (result.value) {
                             var url = "{{ path("paprec_catalog_productDI_setPicture", {id: productDI.id, pictureID: 'pictureTmp'}) }}";
                             url = url.replace('pictureTmp', picId);
                             $(location).attr('href', url);
@@ -574,9 +598,14 @@
                 $('.catalogProductDICategoryRemoveButton').on('click', function () {
                     productDICategoryId = $(this).data('id');
                     var url = "{{ path("paprec_catalog_productDI_removeCategory", {id: productDI.id, productDICategoryId: 'productDICategoryIdTmp'}) }}".replace('productDICategoryIdTmp', productDICategoryId);
-
-                    bootbox.confirm("{{ 'Catalog.ProductDICategory.Confirm-remove'|trans }}", function (result) {
-                        if (result === true) {
+                    Swal({
+                        title: "{{ 'General.Confirm'|trans }}",
+                        text: "{{ 'Catalog.ProductDICategory.Confirm-remove'|trans }}",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ 'General.Yes'|trans }}",
+                        cancelButtonText: "{{ 'General.No'|trans }}"
+                    }).then((result) => {
+                        if (result.value) {
                             $(location).attr('href', url);
                         }
                     });

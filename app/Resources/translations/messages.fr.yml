@@ -11,6 +11,7 @@ General:
   Name:                     Nom
   SystemError:              Erreur système
   Users:                    Utilisateurs
+  Confirm:                  Confirmation
   Confirm-remove:           Confirmez-vous la suppression ?
   In-progress:              En cours
   Archiving:                Archivé

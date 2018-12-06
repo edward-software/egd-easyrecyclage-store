@@ -14,12 +14,13 @@
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /vendor/
+/node_modules/
 /web/bundles/
+/web/build/
 /.idea
 /web/uploads/files/*
 /web/uploads/pictos/*
 /web/uploads/pictures/*
-/web/assets/vendor/
 /app/data/offer/notice/*
 /app/data/offer/tmp/*
 /app/data/ticketFile/*
