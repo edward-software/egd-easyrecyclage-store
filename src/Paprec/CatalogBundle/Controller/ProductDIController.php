@@ -347,7 +347,7 @@ class ProductDIController extends Controller
             'types' => $types
         ));
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -355,7 +355,6 @@ class ProductDIController extends Controller
             $picture = $form->getData();
 
             if ($picture->getPath() instanceof UploadedFile) {
-
                 $pic = $picture->getPath();
                 $pictoFileName = md5(uniqid()) . '.' . $pic->guessExtension();
 

@@ -345,7 +345,6 @@ class ProductChantierController extends Controller
      */
     public function addPictureAction(Request $request, ProductChantier $productChantier)
     {
-
         $picture = new Picture();
         foreach ($this->getParameter('paprec_types_picture') as $type) {
             $types[$type] = $type;
@@ -355,23 +354,24 @@ class ProductChantierController extends Controller
             'types' => $types
         ));
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $picture = $form->getData();
             $productChantier->setDateUpdate(new \DateTime());
+            $picture = $form->getData();
 
             if ($picture->getPath() instanceof UploadedFile) {
                 $pic = $picture->getPath();
                 $pictoFileName = md5(uniqid()) . '.' . $pic->guessExtension();
 
-                $pic->move($this->getParameter('paprec_catalog.product.di.picto_path'), $pictoFileName);
+                $pic->move($this->getParameter('paprec_catalog.product.chantier.picto_path'), $pictoFileName);
 
                 $picture->setPath($pictoFileName);
                 $picture->setType($request->get('type'));
                 $picture->setProductChantier($productChantier);
                 $productChantier->addPicture($picture);
+                $em->persist($picture);
                 $em->flush();
             }
 
