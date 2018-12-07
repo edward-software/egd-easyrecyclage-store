@@ -148,15 +148,19 @@
                 $('#regularForm').submit();
             });
 
-            $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function() {
+            $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function () {
                 html = "";
                 for (var i = 0; i < this.files.length; i++) {
                     var lastModified = new Date(this.files[i].lastModified);
-                    html += this.files[i].name + " " + new Intl.DateTimeFormat('en-GB').format(lastModified) + " <a href=\"#\">x</a><br>";
+                    html += this.files[i].name + " " + new Intl.DateTimeFormat('en-GB').format(lastModified) + " <button data-name=\"" + this.files[i].name + "\"class=\"removeFileButton\">x</button><br>";
                     $('#listFiles').html(html);
                 }
             });
 
+            $('.removeFileButton').on('click', function () {
+                console.log('salut');
+                alert($(this).data('name'));
+            });
         });
     </script>
 
