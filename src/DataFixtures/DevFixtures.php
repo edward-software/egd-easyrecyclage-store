@@ -263,8 +263,8 @@ class DevFixtures extends Fixture
         $agency1->setPostalCode('92150');
         $agency1->setCity('SURESNES');
         $agency1->setPhone('0156438765');
-        $agency1->setLatitude(48.8667);
-        $agency1->setLongitude(2.2333);
+        $agency1->setLatitude(48.8681378);
+        $agency1->setLongitude(2.2271627999999737);
         $agency1->setIsDisplayed(true);
         $manager->persist($agency1);
 
@@ -275,8 +275,8 @@ class DevFixtures extends Fixture
         $agency2->setPostalCode('44000');
         $agency2->setCity('NANTES');
         $agency2->setPhone('0256438765');
-        $agency2->setLatitude(47.2173);
-        $agency2->setLongitude(-1.5534);
+        $agency2->setLatitude(47.2133021);
+        $agency2->setLongitude(-1.5582154999999602);
         $agency2->setIsDisplayed(true);
         $manager->persist($agency2);
 
@@ -287,8 +287,8 @@ class DevFixtures extends Fixture
         $agency3->setPostalCode('13000');
         $agency3->setCity('MARSEILLE');
         $agency3->setPhone('0456438765');
-        $agency3->setLatitude(43.3);
-        $agency3->setLongitude(5.4);
+        $agency3->setLatitude(43.29727159999999);
+        $agency3->setLongitude(5.380121099999997);
         $agency3->setIsDisplayed(true);
         $manager->persist($agency3);
 

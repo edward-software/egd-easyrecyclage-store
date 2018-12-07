@@ -133,7 +133,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductDIQuote.TotalAmount'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ productDIQuote.totalAmount|formatAmount(null, app.request.locale) }}
+                                        {{ productDIQuote.totalAmount|formatAmount('EUR', app.request.locale) }}
                                     </label>
                                 </div>
                             </div>
@@ -235,9 +235,9 @@
                                         <td>{{ productDIQuoteLine.id }}</td>
                                         <td>{{ productDIQuoteLine.productName }}</td>
                                         <td>{{ productDIQuoteLine.categoryName }}</td>
-                                        <td>{{ productDIQuoteLine.unitPrice|formatAmount(null, app.request.locale) }}</td>
+                                        <td>{{ productDIQuoteLine.unitPrice|formatAmount('EUR', app.request.locale) }}</td>
                                         <td>{{ productDIQuoteLine.quantity }}</td>
-                                        <td>{{ productDIQuoteLine.totalAmount|formatAmount(null, app.request.locale) }}</td>
+                                        <td>{{ productDIQuoteLine.totalAmount|formatAmount('EUR', app.request.locale) }}</td>
                                         <td class="text-center">
                                             <a href="{{ path('paprec_commercial_productDIQuote_editLine', {id: productDIQuote.id, quoteLineId: productDIQuoteLine.id}) }}"
                                                class="btn btn-sm btn-warning btn-sm mx-1"

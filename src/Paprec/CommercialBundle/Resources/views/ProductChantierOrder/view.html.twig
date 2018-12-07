@@ -141,7 +141,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductChantierOrder.TotalAmount'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ productChantierOrder.totalAmount|formatAmount(null, app.request.locale) }}
+                                        {{ productChantierOrder.totalAmount|formatAmount('EUR', app.request.locale) }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
@@ -285,9 +285,9 @@
                                         <td>{{ productChantierOrderLine.id }}</td>
                                         <td>{{ productChantierOrderLine.productName }}</td>
                                         <td>{{ productChantierOrderLine.categoryName }}</td>
-                                        <td>{{ productChantierOrderLine.unitPrice|formatAmount(null, app.request.locale) }}</td>
+                                        <td>{{ productChantierOrderLine.unitPrice|formatAmount('EUR', app.request.locale) }}</td>
                                         <td>{{ productChantierOrderLine.quantity }}</td>
-                                        <td>{{ productChantierOrderLine.totalAmount|formatAmount(null, app.request.locale) }}</td>
+                                        <td>{{ productChantierOrderLine.totalAmount|formatAmount('EUR', app.request.locale) }}</td>
                                         <td class="text-center">
                                             <a href="{{ path('paprec_commercial_productChantierOrder_editLine', {id: productChantierOrder.id, orderLineId: productChantierOrderLine.id}) }}"
                                                class="btn btn-sm btn-warning btn-sm mx-1"

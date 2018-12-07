@@ -55,7 +55,7 @@
                         </div>
                         <div class="right">
                             À PARTIR DE
-                            <span>{{ productD3EQuote.totalAmount }}€</span>
+                            <span>{{ productD3EQuote.totalAmount|formatAmount(null, app.request.locale) }}€</span>
                         </div>
                     </div>
 

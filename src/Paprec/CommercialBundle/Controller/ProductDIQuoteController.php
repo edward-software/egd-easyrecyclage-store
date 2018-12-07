@@ -77,7 +77,7 @@ class ProductDIQuoteController extends Controller
         $tmp = array();
         foreach ($datatable['data'] as $data) {
             $line = $data;
-            $line['totalAmount'] = $numberManager->formatAmount($data['totalAmount'], null, $request->getLocale());
+            $line['totalAmount'] = $numberManager->formatAmount($data['totalAmount'], 'EUR', $request->getLocale());
             $tmp[] = $line;
         }
         $datatable['data'] = $tmp;

@@ -16,6 +16,16 @@ use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends Controller
 {
+
+    /**
+     * @Route("/", name="paprec_public_devis_home")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function redirectToIndexAction() {
+        return $this->redirectToRoute('paprec_public_corp_home_index');
+    }
+
     /**
      * @Route("/step0/{cartUuid}", defaults={"cartUuid"=null}, name="paprec_public_corp_home_index")
      * @param Request $request

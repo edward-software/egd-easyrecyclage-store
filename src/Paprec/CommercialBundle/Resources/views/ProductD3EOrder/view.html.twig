@@ -141,7 +141,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EOrder.TotalAmount'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ productD3EOrder.totalAmount|formatAmount(null, app.request.locale) }}
+                                        {{ productD3EOrder.totalAmount|formatAmount('EUR', app.request.locale) }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
@@ -286,12 +286,12 @@
                                     <tr>
                                         <td>{{ productD3EOrderLine.id }}</td>
                                         <td>{{ productD3EOrderLine.productName }}</td>
-                                        <td>{{ productD3EOrderLine.unitPrice|formatAmount(null, app.request.locale) }}</td>
+                                        <td>{{ productD3EOrderLine.unitPrice|formatAmount('EUR', app.request.locale) }}</td>
                                         <td>{{ productD3EOrderLine.quantity }}</td>
                                         <td>{% if productD3EOrderLine.optHandling == 1 %}Oui{% else %}Non{% endif %}</td>
                                         <td>{% if productD3EOrderLine.optSerialNumberStmt == 1 %}Oui{% else %}Non{% endif %}</td>
                                         <td>{% if productD3EOrderLine.optDestruction == 1 %}Oui{% else %}Non{% endif %}</td>
-                                        <td>{{ productD3EOrderLine.totalAmount|formatAmount(null, app.request.locale) }}</td>
+                                        <td>{{ productD3EOrderLine.totalAmount|formatAmount('EUR', app.request.locale) }}</td>
                                         <td class="text-center">
                                             <a href="{{ path('paprec_commercial_productD3EOrder_editLine', {id: productD3EOrder.id, orderLineId: productD3EOrderLine.id}) }}"
                                                class="btn btn-sm btn-warning btn-sm mx-1"

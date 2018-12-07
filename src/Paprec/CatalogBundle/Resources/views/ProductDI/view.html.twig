@@ -96,19 +96,6 @@
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Catalog.ProductDI.Categories'|trans }}</label>
-                                    <label class="row no-gutters justify-content-md-left col-md-8">
-                                        {% for productDICategory in productDI.productDICategories %}
-                                            {% if productDICategory.category.deleted is null %}
-                                                <div class="col-md-6">
-                                                    <a class="btn btn-sm btn-outline-primary w-75 my-2"
-                                                       href="{{ path('paprec_catalog_category_view', {id: productDICategory.category.id}) }}">{{ productDICategory.category }}</a>
-                                                </div>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </label>
-                                </div>
-                                <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Catalog.ProductDI.IsDisplayed'|trans }}</label>
                                     <label class="col-form-label col-md-8">
                                         {% if productDI.isDisplayed == 1 %}Oui{% else %}Non{% endif %}
@@ -422,8 +409,8 @@
                                 {% for productDICategory in productDI.productDICategories %}
                                     <tr>
                                         <td>{{ productDICategory.id }}</td>
-                                        <td>{{ productDICategory.category }}</td>
-                                        <td>{{ productDICategory.unitPrice|formatAmount(null, app.request.locale) }}</td>
+                                        <td><a href="{{ path('paprec_catalog_category_view', {id: productDICategory.category.id}) }}">{{ productDICategory.category }}</a></td>
+                                        <td>{{ productDICategory.unitPrice|formatAmount('EUR', app.request.locale) }}</td>
                                         <td class="text-center">
                                             <a href="{{ path('paprec_catalog_productDI_editCategory', {id: productDI.id, productDICategoryId: productDICategory.id}) }}"
                                                class="btn btn-sm btn-warning btn-sm mx-1"

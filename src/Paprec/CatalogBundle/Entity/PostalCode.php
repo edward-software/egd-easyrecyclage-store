@@ -29,7 +29,7 @@ class PostalCode
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/^\d{2}(\*|(?:\d{3}))$/",
-     *     message="Les codes postaux doivent être des nombres de taille 2 suivis d'un *  ou 5 (75*, 92150)"
+     *     message="Les codes postaux doivent être aux formats : 75* ou 92150"
      * )
      */
     private $code;

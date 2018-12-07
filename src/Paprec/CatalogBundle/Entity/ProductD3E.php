@@ -122,7 +122,7 @@ class ProductD3E
      * @Assert\Regex(
      *     pattern="/^(\d{2}(\*|(?:\d{3}))(,\s*)?)+$/",
      *     match=true,
-     *     message="Les codes postaux doivent être des nombres séparés par des virgules, de taille 2 suivis d'une étoile  ou 5 . (ex: 75*, 92150, 36*)"
+     *     message="Les codes postaux doivent être des nombres séparés par des virgules. (ex: 75*, 92150, 36*)"
      * )
      */
     private $availablePostalCodes;
