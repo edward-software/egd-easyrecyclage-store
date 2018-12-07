@@ -120,7 +120,7 @@ class DevFixtures extends Fixture
         $productD3E3->setCoefHandling(mt_rand(100, 200));
         $productD3E3->setCoefDestruction(mt_rand(100, 200));
         $productD3E3->setCoefSerialNumberStmt(mt_rand(100, 200));
-        $productD3E3->setAvailablePostalCodes(m'92150, 75015');
+        $productD3E3->setAvailablePostalCodes('92150, 75015');
         $productD3E3->setPosition(1);
         $productD3E3->setIsDisplayed(true);
         $productD3E3->setIsPayableOnline(true);
