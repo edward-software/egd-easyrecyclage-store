@@ -80,7 +80,7 @@
                         <div class="step__title">{{ 'Public.Home.Location'|trans }}</div>
                     </div>
                     <div class="step__right">
-                       <input class="input" type="text" name="locationSelect"
+                        <input class="input" type="text" name="locationSelect"
                                id="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}>
                     </div>
                     <div class="step__agency">
@@ -97,9 +97,11 @@
                             <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
                             {% for key,division in divisions %}
                                 {% if key == cart.division %}
-                                    <option value="{{ key }}" selected="selected" style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
+                                    <option value="{{ key }}" selected="selected"
+                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
                                 {% else %}
-                                    <option value="{{ key }}" style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
+                                    <option value="{{ key }}"
+                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
                                 {% endif %}
                             {% endfor %}
                         </select>
@@ -210,9 +212,11 @@
                                                     {% if cart.displayedProducts and displayedProduct != '' %}
                                                         <div class="infoproduct">
                                                             <div class="left">
-                                                                <img src="{% if displayedProduct.pilotPictures | length > 0 %}{{ asset('/uploads/pictos/' ~ displayedProduct.pilotPictures[0].path) }}{% endif %}"
-                                                                     alt="#" class="mainpicture">
-                                                                <br>
+                                                                {% if displayedProduct.pilotPictures | length > 0 %}
+                                                                    <img src="{{ asset('/uploads/pictos/' ~ displayedProduct.pilotPictures[0].path) }}"
+                                                                         alt="#" class="mainpicture">
+                                                                    <br>
+                                                                {% endif %}
                                                                 {% if displayedProduct.getPicturesPictures() %}
                                                                     {% for picture in displayedProduct.getPicturesPictures() %}
                                                                         <img src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
@@ -302,7 +306,7 @@
                             <a href="{{ path('paprec_public_home_callBackForm', {cartUuid: cart.id }) }}"
                                class="button margint10 button--grey">ÊTRE RAPPELÉ</a>
                             <a href="{{ path('paprec_public_corp_Chantier_subscription_step2', {cartUuid: cart.id}) }}"
-                               class="button button--green">{{ ('Public.Step1.NextStep' ~ cart.type|capitalize)|trans  }}
+                               class="button button--green">{{ ('Public.Step1.NextStep' ~ cart.type|capitalize)|trans }}
                             </a>
                         </div>
 

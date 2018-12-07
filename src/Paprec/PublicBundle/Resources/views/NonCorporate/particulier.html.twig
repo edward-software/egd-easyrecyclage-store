@@ -86,7 +86,9 @@
                         fournir des photos (.jpg, .png, .tiff)
                         ou autres fichiers (.pdf, .doc, .xls)
                     </div>
+                    <div id="listFiles">
 
+                    </div>
                     {{ form_label(form.attachedFiles, "TÉLÉCHARGER DES PIÈCES JOINTES OU DES PHOTOS", {'label_attr': {'class': 'button button--bordered'}}) }}
                     {{ form_widget(form.attachedFiles, {'attr': {'class': 'input-file'}}) }}
 
@@ -144,6 +146,17 @@
 
             $('#groupFormSubmitButton').on('click', function () {
                 $('#regularForm').submit();
+            });
+
+            $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function() {
+                html = "";
+
+                for (var i = 0; i < this.files.length; i++) {
+                    var lastModified = new Date(this.files[i].lastModified);
+                    html += this.files[i].name + " " + new Intl.DateTimeFormat('en-GB').format(lastModified) + " <a href=\"#\">x</a><br>";
+                    $('#listFiles').html(html);
+                }
+
             });
 
         });

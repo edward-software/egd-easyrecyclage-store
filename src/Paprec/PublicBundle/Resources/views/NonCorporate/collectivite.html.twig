@@ -151,11 +151,10 @@
             $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function() {
                 html = "";
                 for (var i = 0; i < this.files.length; i++) {
-                    html += "<span> " + this.files[i].name + "<span><br>";
-                    console.dir(this.files[i])
+                    var lastModified = new Date(this.files[i].lastModified);
+                    html += this.files[i].name + " " + new Intl.DateTimeFormat('en-GB').format(lastModified) + " <a href=\"#\">x</a><br>";
                     $('#listFiles').html(html);
                 }
-
             });
 
         });
