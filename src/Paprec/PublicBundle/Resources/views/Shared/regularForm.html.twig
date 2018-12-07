@@ -35,7 +35,8 @@
                     <div class="step__right">
                         <input class="input" type="text"
                                id="locationSelect"
-                               name="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}>
+                               name="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}
+                               placeholder="{{ 'Public.Cart.PostalCode'|trans }}">
                     </div>
                     {% if cart.latitude and cart.latitude != '' and cart.longitude and cart.longitude != '' and cart.division and cart.division != '' %}
                         <div class="step__agency"
@@ -242,7 +243,7 @@
 
             });
 
-            $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function() {
+            $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function () {
                 html = "";
 
                 for (var i = 0; i < this.files.length; i++) {

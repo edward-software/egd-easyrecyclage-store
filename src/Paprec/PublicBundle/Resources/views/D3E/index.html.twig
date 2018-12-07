@@ -39,8 +39,9 @@
                         <div class="step__title">{{ 'Public.Home.Location'|trans }}</div>
                     </div>
                     <div class="step__right">
-                       <input class="input" type="text" name="locationSelect"
-                               id="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}>
+                        <input class="input" type="text" name="locationSelect"
+                               id="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}
+                               placeholder="{{ 'Public.Cart.PostalCode'|trans }}">
                     </div>
                     <div class="step__agency">
 
@@ -56,9 +57,11 @@
                             <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
                             {% for key,division in divisions %}
                                 {% if key == cart.division %}
-                                    <option value="{{ key }}" selected="selected" style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
+                                    <option value="{{ key }}" selected="selected"
+                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
                                 {% else %}
-                                    <option value="{{ key }}" style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
+                                    <option value="{{ key }}"
+                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
                                 {% endif %}
                             {% endfor %}
                         </select>

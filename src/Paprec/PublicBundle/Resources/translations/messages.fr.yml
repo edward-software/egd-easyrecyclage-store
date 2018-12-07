@@ -23,6 +23,7 @@ Public:
     3MinOrder:                    Je commande en ligne en 3 minutes
     FillForm:                     Je remplis un formulaire
     QuoteRequest:                 J'établis un devis
+    PostalCode:                   Code postal
 
   Step1:
     NextStepQuote:                Valider votre besoin

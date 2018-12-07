@@ -34,7 +34,8 @@
                     </div>
                     <div class="step__right">
                         <input class="input" type="text"
-                               id="locationSelect" autocomplete="off">
+                               id="locationSelect" autocomplete="off"
+                               placeholder="{{ 'Public.Cart.PostalCode'|trans }}">
                         {{ form_errors(form.postalCode) }}
 
                     </div>
@@ -148,7 +149,7 @@
                 $('#regularForm').submit();
             });
 
-            $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function() {
+            $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function () {
                 html = "";
 
                 for (var i = 0; i < this.files.length; i++) {

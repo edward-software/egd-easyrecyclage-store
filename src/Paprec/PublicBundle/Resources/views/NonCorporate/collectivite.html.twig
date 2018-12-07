@@ -34,7 +34,8 @@
                     </div>
                     <div class="step__right">
                         <input class="input" type="text"
-                               id="locationSelect" autocomplete="off">
+                               id="locationSelect" autocomplete="off"
+                               placeholder="{{ 'Public.Cart.PostalCode'|trans }}">
                         {{ form_errors(form.postalCode) }}
 
                     </div>
@@ -152,15 +153,20 @@
                 html = "";
                 for (var i = 0; i < this.files.length; i++) {
                     var lastModified = new Date(this.files[i].lastModified);
-                    html += this.files[i].name + " " + new Intl.DateTimeFormat('en-GB').format(lastModified) + " <button data-name=\"" + this.files[i].name + "\"class=\"removeFileButton\">x</button><br>";
+                    html += this.files[i].name + " " + new Intl.DateTimeFormat('en-GB').format(lastModified) + " <a href=\"javascript:void(0);\" data-name=\"" + this.files[i].name + "\" class=\"removeFileButton\">x</a><br>";
                     $('#listFiles').html(html);
+                    var that = this;
                 }
+
+                // $('.removeFileButton').on('click', function () {
+                //     var idx;
+                //     files = Array.from(that.files);
+                //     found = files.some(function (item, index) { f = index; return item.name === $(this).data('name')});
+                //     files.splice(idx, 1);
+                //     console.dir(files);
+                // });
             });
 
-            $('.removeFileButton').on('click', function () {
-                console.log('salut');
-                alert($(this).data('name'));
-            });
         });
     </script>
 

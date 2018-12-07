@@ -81,7 +81,8 @@
                     </div>
                     <div class="step__right">
                         <input class="input" type="text" name="locationSelect"
-                               id="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}>
+                               id="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}
+                               placeholder="{{ 'Public.Cart.PostalCode'|trans }}">
                     </div>
                     <div class="step__agency">
 
