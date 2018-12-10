@@ -18,10 +18,12 @@ class ProductChantierOrderDeliveryType extends AbstractType
     {
         $builder
             ->add('installationDate', DateType::class, array(
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'html5' => false
             ))
             ->add('removalDate', DateType::class, array(
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'html5' => false
             ))
             ->add('domainType', ChoiceType::class, array(
                 'choices' => array(

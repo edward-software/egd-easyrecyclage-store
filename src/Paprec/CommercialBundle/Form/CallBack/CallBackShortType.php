@@ -37,12 +37,14 @@ class CallBackShortType extends AbstractType
             ->add('phone', TextType::class)
             ->add('function', TextType::class)
             ->add('dateCallBack', DateType::class, array(
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'html5' => false,
             ))
-        ->add('timeCallBack', TimeType::class, array(
-            'widget' => 'single_text',
-            'input' => 'string'
-        ));
+            ->add('timeCallBack', TimeType::class, array(
+                'widget' => 'single_text',
+                'input' => 'string',
+                'html5' => false
+            ));
     }
 
     /**

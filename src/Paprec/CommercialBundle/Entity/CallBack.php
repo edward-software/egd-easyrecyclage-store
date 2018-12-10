@@ -91,6 +91,11 @@ class CallBack
      *
      * @ORM\Column(name="phone", type="string", length=255)
      * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/^((\+)?33|0)[1-9](\d{2}){4}$/",
+     *     match=true,
+     *     message="Le n° de téléphone doit être au format français (ex: +33601020304, 0601020304)"
+     * )
      */
     private $phone;
 
@@ -112,7 +117,7 @@ class CallBack
      * @var \DateTime
      *
      * @ORM\Column(name="dateCallBack", type="datetime")
-     * @Assert\GreaterThan("today")
+     * @Assert\GreaterThan("today", message="La date doit être supérieure à la date du jour")
      * @Assert\NotBlank()
      */
     private $dateCallBack;

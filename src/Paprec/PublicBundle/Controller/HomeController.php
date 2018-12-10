@@ -343,6 +343,7 @@ class HomeController extends Controller
         $form = $this->createForm(CallBackShortType::class, $callBack);
 
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
