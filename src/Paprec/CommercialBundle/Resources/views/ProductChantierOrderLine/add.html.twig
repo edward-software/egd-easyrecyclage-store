@@ -17,7 +17,7 @@
         <input type="hidden" id="submitFormInput" name="submitForm" value="">
         <input type="hidden" id="selectedProductInput" name="selectedProductId" value="">
 
-        <div class="col-md-12">
+        <div class="col-md-7">
             <!-- BOX -->
             <div class="card">
                 <div class="card-header">
@@ -52,9 +52,9 @@
                                         {{ form_errors(form.category) }}
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group no-gutters">
                                     <label class="form-label">{{ 'Commercial.ProductChantierOrderLine.Quantity'|trans }}</label>
-                                    <div class="form-content">
+                                    <div class="form-content col-md-6">
                                         {{ form_widget(form.quantity, {'attr': {'class': 'form-control'}}) }}
                                         {{ form_errors(form.quantity) }}
                                     </div>

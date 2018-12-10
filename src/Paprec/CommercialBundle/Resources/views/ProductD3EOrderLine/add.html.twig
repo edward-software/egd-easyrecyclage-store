@@ -32,7 +32,7 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    <div class="col-md-12">
+                    <div class="col-md-7">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title">{{ 'Commercial.ProductD3EOrder.Informations'|trans }}</h5>
@@ -46,9 +46,9 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group no-gutters">
                                     <label class="form-label">{{ 'Commercial.ProductD3EOrderLine.Quantity'|trans }}</label>
-                                    <div class="form-content">
+                                    <div class="form-content col-md-6">
                                         {{ form_widget(form.quantity, {'attr': {'class': 'form-control'}}) }}
                                         {{ form_errors(form.quantity) }}
                                     </div>

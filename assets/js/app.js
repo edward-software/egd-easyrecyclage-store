@@ -16,6 +16,7 @@ import 'jquery-sortable';
 import 'jquery-ui';
 import 'jquery-ui/ui/widgets/sortable';
 import 'jquery-ui/ui/disable-selection';
+import ''
 
 import Swal from 'sweetalert2';
 global.Swal = Swal;

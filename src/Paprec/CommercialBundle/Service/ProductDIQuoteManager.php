@@ -95,6 +95,11 @@ class ProductDIQuoteManager
         if ($currentQuoteLine) {
             $quantity = $productDIQuoteLine->getQuantity() + $currentQuoteLine->getQuantity();
             $currentQuoteLine->setQuantity($quantity);
+
+            //On recalcule le montant total de la ligne ainsi que celui du devis complet
+            $totalLine = $this->calculateTotalLine($currentQuoteLine);
+            $currentQuoteLine->setTotalAmount($totalLine);
+            $this->em->flush();
         } else {
             $productDIQuoteLine->setProductDIQuote($productDIQuote);
             $productDIQuote->addProductDIQuoteLine($productDIQuoteLine);
@@ -109,12 +114,12 @@ class ProductDIQuoteManager
             $productDIQuoteLine->setCategoryName($productDIQuoteLine->getCategory()->getName());
 
             $this->em->persist($productDIQuoteLine);
-        }
 
-        //On recalcule le montant total de la ligne ainsi que celui du devis complet
-        $totalLine = $this->calculateTotalLine($productDIQuoteLine);
-        $productDIQuoteLine->setTotalAmount($totalLine);
-        $this->em->flush();
+            //On recalcule le montant total de la ligne ainsi que celui du devis complet
+            $totalLine = $this->calculateTotalLine($productDIQuoteLine);
+            $productDIQuoteLine->setTotalAmount($totalLine);
+            $this->em->flush();
+        }
 
         $total = $this->calculateTotal($productDIQuote);
         $productDIQuote->setTotalAmount($total);
