@@ -36,7 +36,8 @@
                         <a href="{{ path("paprec_commercial_contactUs_edit", {id: contactUs.id}) }}"
                            class="btn btn-sm btn-warning"><i
                                     class="fa fa-xs fa-edit"></i> {{ 'Commercial.ContactUs.Edit'|trans }}</a>
-                        <a id="commmecialContactUsRemoveButton_" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
+                        <a id="commmecialContactUsRemoveButton_" href="javascript:void(0);"
+                           class="btn btn-sm btn-danger"><i
                                     class="fa fa-xs fa-trash"></i> {{ 'Commercial.ContactUs.Remove'|trans }}</a>
                     </div>
                 </h4>
@@ -108,7 +109,8 @@
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.AttachedFiles'|trans }}</label>
                                     <label class="col-form-label">
                                         {% if contactUs.attachedFiles %}
-                                            <a href="{{ path('paprec_commercial_contactUs_downloadAttachedFiles', {id: contactUs.id}) }}"><i class="fa fa-download"></i></a>
+                                            <a href="{{ path('paprec_commercial_contactUs_downloadAttachedFiles', {id: contactUs.id}) }}"><i
+                                                        class="fa fa-download"></i></a>
                                         {% endif %}
                                     </label>
                                 </div>
@@ -122,7 +124,26 @@
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.CartContent'|trans }}</label>
                                     <label class="col-form-label">
                                         {% for content in contactUs.cartContent %}
-                                            Produit n° {{ content['pId'] }} : {{ content['qtty']}}<br>
+                                            {% if contactUs.division == 'DI' %}
+                                                <a href="{{ path('paprec_catalog_productDI_view', {id: content['pId']}) }}">Produit
+                                                    n° {{ content['pId'] }}</a> : {{ content['qtty'] }}<br>
+                                            {% elseif contactUs.division == 'CHANTIER' %}
+                                                <a href="{{ path('paprec_catalog_productChantier_view', {id: content['pId']}) }}">Produit
+                                                    n° {{ content['pId'] }}</a> : {{ content['qtty'] }}<br>
+                                            {% else %}
+                                                <a href="{{ path('paprec_catalog_productD3E_view', {id: content['pId']}) }}">Produit
+                                                    n° {{ content['pId'] }}</a> : {{ content['qtty'] }}
+                                                {% set optHandling = content['optHandling'] %}
+                                                {% set optSerialNumberStmt = content['optSerialNumberStmt'] %}
+                                                {% set optDestruction = content['optDestruction'] %}
+                                                {% if optHandling == 1 or optSerialNumberStmt == 1 or optDestruction == 1 %}
+                                                    (options :
+                                                    {% if optSerialNumberStmt == 1 %} "Relevé" {% endif %}
+                                                    {% if optHandling == 1 %} "Manutention" {% endif %}
+                                                    {% if optDestruction == 1 %} "Destruction" {% endif %}
+                                                    ) <br>
+                                                {% endif %}
+                                            {% endif %}
                                         {% endfor %}
                                     </label>
                                 </div>

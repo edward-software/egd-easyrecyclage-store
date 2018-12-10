@@ -300,13 +300,44 @@ class DevFixtures extends Fixture
         $businessLine1->setDivision('CHANTIER');
         $manager->persist($businessLine1);
 
+        $businessLine1 = new BusinessLine();
+        $businessLine1->setName('Génie civil');
+        $businessLine1->setDivision('CHANTIER');
+        $manager->persist($businessLine1);
+
+        $businessLine1 = new BusinessLine();
+        $businessLine1->setName('Agriculture');
+        $businessLine1->setDivision('CHANTIER');
+        $manager->persist($businessLine1);
+
+
+        $businessLine2 = new BusinessLine();
+        $businessLine2->setName('Banque/Assurance');
+        $businessLine2->setDivision('D3E');
+        $manager->persist($businessLine2);
+
         $businessLine2 = new BusinessLine();
         $businessLine2->setName('Informatique');
         $businessLine2->setDivision('D3E');
         $manager->persist($businessLine2);
 
+        $businessLine2 = new BusinessLine();
+        $businessLine2->setName('Grande distribution');
+        $businessLine2->setDivision('D3E');
+        $manager->persist($businessLine2);
+
+        $businessLine3 = new BusinessLine();
+        $businessLine3->setName('Metallurgie');
+        $businessLine3->setDivision('DI');
+        $manager->persist($businessLine3);
+
         $businessLine3 = new BusinessLine();
         $businessLine3->setName('Menuiserie');
+        $businessLine3->setDivision('DI');
+        $manager->persist($businessLine3);
+
+        $businessLine3 = new BusinessLine();
+        $businessLine3->setName('Automobile');
         $businessLine3->setDivision('DI');
         $manager->persist($businessLine3);
 

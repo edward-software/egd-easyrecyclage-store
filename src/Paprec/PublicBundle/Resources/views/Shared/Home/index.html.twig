@@ -167,6 +167,13 @@
                 $(location).attr('href', url);
             }
 
+            // On force l'input d'un nombre pour chercher par code postal
+            $('#locationSelect').keypress(function(key) {
+                if(key.charCode < 48 || key.charCode > 57) {
+                    return false;
+                }
+            });
+
             // google.maps.event.addDomListener(window, 'load', function () {
             // Si l'on met ce listener, l'autocomplete est initialisé 1fois/1000
             initializeAutocomplete('locationSelect');
@@ -179,6 +186,8 @@
 
                 $(location).attr('href', url);
             });
+
+
 
             {# Quand on sélectionne une frequence dans les radioButtons, on recharge la page en envoyant la location, division, frequence#}
             {# cela na nous faire naviguer vers le SubscriptionController de la division choisie #}
