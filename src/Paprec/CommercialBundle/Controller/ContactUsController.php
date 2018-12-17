@@ -41,7 +41,8 @@ class ContactUsController extends Controller
         $orders = $request->get('order');
         $search = $request->get('search');
         $columns = $request->get('columns');
-        // Récupération du type de catégorie souhaité (DI, CHANTIER, D3E)
+
+        // Récupération du type de catégorie souhaité (DI, CHANTIER, D3E ou '')
         $typeContactUs = $request->get('typeContactUs');
 
         $cols['id'] = array('label' => 'id', 'id' => 'o.id', 'method' => array('getId'));
@@ -53,11 +54,17 @@ class ContactUsController extends Controller
 
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
 
-        $queryBuilder->select(array('o'))
-            ->from('PaprecCommercialBundle:ContactUs', 'o')
-            ->where('o.deleted IS NULL')
-            ->andWhere('o.division LIKE \'%' . $typeContactUs . '%\''); // Récupération des ContactUss du type voulu
-
+        if ($typeContactUs === '') {
+            $queryBuilder->select(array('o'))
+                ->from('PaprecCommercialBundle:ContactUs', 'o')
+                ->where('o.deleted IS NULL')
+                ->andWhere('o.division is NULL'); // Récupération des ContactUss qui n'ont pas de division
+        } else  {
+            $queryBuilder->select(array('o'))
+                ->from('PaprecCommercialBundle:ContactUs', 'o')
+                ->where('o.deleted IS NULL')
+                ->andWhere('o.division LIKE \'%' . $typeContactUs . '%\''); // Récupération des ContactUss du type voulu
+        }
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
             if (substr($search['value'], 0, 1) == '#') {

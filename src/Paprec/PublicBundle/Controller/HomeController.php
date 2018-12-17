@@ -261,15 +261,14 @@ class HomeController extends Controller
 
     /**
      * Formulaire "Contactez-nous"
-     * @Route("/contactForm/{cartUuid}", name="paprec_public_home_contactForm")
+     * @Route("/contact/{cartUuid}", defaults={"cartUuid"=null}, name="paprec_public_home_contactForm")
      * @param Request $request
      * @throws \Exception
      */
     public function contactFormAction(Request $request, $cartUuid)
     {
-        $cartManager = $this->get('paprec.cart_manager');
+        $cart = null;
 
-        $cart = $cartManager->get($cartUuid);
 
         $contactUs = new ContactUs();
         $form = $this->createForm(ContactUsShortType::class, $contactUs);
@@ -280,14 +279,19 @@ class HomeController extends Controller
 
             $contactUs = $form->getData();
             $contactUs->setTreatmentStatus('CREATED');
-            $contactUs->setDivision($cart->getDivision());
-            $contactUs->setCartContent($cart->getContent());
+
+            if($cartUuid) {
+                $cartManager = $this->get('paprec.cart_manager');
+                $cart = $cartManager->get($cartUuid);
+                $contactUs->setDivision($cart->getDivision());
+                $contactUs->setCartContent($cart->getContent());
+            }
 
             $files = array();
             foreach ($contactUs->getAttachedFiles() as $uploadedFile) {
                 if ($uploadedFile instanceof UploadedFile) {
                     /**
-                     * On place le file uploadé dans le dossier web/files
+                     * On place le file uploadé dans le dossier var/files/contactUs
                      * et on ajoute le nom du fichier md5 dans le tableau $files
                      */
                     $uploadedFileName = md5(uniqid()) . '.' . $uploadedFile->guessExtension();
@@ -301,23 +305,30 @@ class HomeController extends Controller
             $em->flush();
 
             return $this->redirectToRoute('paprec_public_home_contactConfirm', array(
-                'cartUuid' => $cart->getId(),
                 'contactUsId' => $contactUs->getId()
             ));
         }
-        return $this->render('@PaprecPublic/Shared/contactForm.html.twig', array(
-            'form' => $form->createView(),
-            'cart' => $cart
-        ));
+
+        if ($cart) {
+            return $this->render('@PaprecPublic/Shared/contactFormFromCart.html.twig', array(
+                'form' => $form->createView(),
+                'cart' => $cart
+            ));
+        } else {
+            return $this->render('@PaprecPublic/Shared/contactForm.html.twig', array(
+                'form' => $form->createView(),
+                'cart' => $cart
+            ));
+        }
     }
 
     /**
      * IHM de confirmation de prise en compte de la demande "Demande de contact"
-     * @Route("/contactConfirm/{cartUuid}/{contactUsId}", name="paprec_public_home_contactConfirm")
+     * @Route("/contactConfirm/{contactUsId}", name="paprec_public_home_contactConfirm")
      * @param Request $request
      * @throws \Exception
      */
-    public function contactConfirmAction(Request $request, $cartUuid, $contactUsId)
+    public function contactConfirmAction(Request $request, $contactUsId)
     {
         $em = $this->getDoctrine()->getManager();
         $contactUs = $em->getRepository('PaprecCommercialBundle:ContactUs')->find($contactUsId);

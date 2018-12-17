@@ -133,7 +133,7 @@ class ContactUs
     /**
      * @var array|null
      *
-     * @ORM\Column(name="division", type="string")
+     * @ORM\Column(name="division", type="string", nullable=true)
      */
     private $division;
 
@@ -477,30 +477,7 @@ class ContactUs
     {
         return $this->attachedFiles;
     }
-
-    /**
-     * Set division.
-     *
-     * @param string $division
-     *
-     * @return ContactUs
-     */
-    public function setDivision($division)
-    {
-        $this->division = $division;
-
-        return $this;
-    }
-
-    /**
-     * Get division.
-     *
-     * @return string
-     */
-    public function getDivision()
-    {
-        return $this->division;
-    }
+    
 
     /**
      * Set cartContent.
@@ -526,4 +503,28 @@ class ContactUs
         return $this->cartContent;
     }
 
+
+    /**
+     * Set division.
+     *
+     * @param string|null $division
+     *
+     * @return ContactUs
+     */
+    public function setDivision($division = null)
+    {
+        $this->division = $division;
+
+        return $this;
+    }
+
+    /**
+     * Get division.
+     *
+     * @return string|null
+     */
+    public function getDivision()
+    {
+        return $this->division;
+    }
 }

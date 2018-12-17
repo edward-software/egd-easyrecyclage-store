@@ -394,8 +394,9 @@ Commercial:
     ContactUss:                 Demandes de contact
     List:                       Liste des demandes de contact
     ListChantiers:              Division chantier
-    ListD3Es:                   Division D3Es
+    ListD3Es:                   Division D3E
     ListDIs:                    Division DI
+    ListOthers:                 Autres demandes
     Date-creation:              Date de création
     Date-crea:                  Date de créa.
     Date-update:                Date de mise à jour
