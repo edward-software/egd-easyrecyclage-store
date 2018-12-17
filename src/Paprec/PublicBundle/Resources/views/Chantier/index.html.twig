@@ -36,11 +36,22 @@
             <form action="#" class="main">
                 <div class="step">
                     <div class="step__left">
-                        <div class="step__title">{{ 'Public.Home.Location'|trans }}</div>
+                        <div class="step__title">{{ 'Public.Home.Recycle'|trans }}</div>
                     </div>
                     <div class="step__right">
-                       <input class="input" type="text" name="locationSelect"
-                               id="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}>
+                        <select class="input" id="divisionSelect"
+                                data-url="{{ path('paprec_public_corp_home_addDivision', {cartUuid: cart.id , division: 'divisionTmp'}) }}"
+                                style="color:{% if cart.division == 'DI' %}#95c220{% elseif cart.division == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">
+                            <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
+                            {% for key,division in divisions %}
+                                {% if key == cart.division %}
+                                    <option value="{{ key }}" selected="selected">{{ division }}</option>
+                                {% else %}
+                                    <option value="{{ key }}"
+                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="step__agency">
 
@@ -48,20 +59,12 @@
                 </div>
                 <div class="step">
                     <div class="step__left">
-                        <div class="step__title">{{ 'Public.Home.Recycle'|trans }}</div>
+                        <div class="step__title">{{ 'Public.Home.Location'|trans }}</div>
                     </div>
                     <div class="step__right">
-                        <select class="input" id="divisionSelect"
-                                data-url="{{ path('paprec_public_corp_home_addDivision', {cartUuid: cart.id , division: 'divisionTmp'}) }}">
-                            <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
-                            {% for key,division in divisions %}
-                                {% if key == cart.division %}
-                                    <option value="{{ key }}" selected="selected" style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
-                                {% else %}
-                                    <option value="{{ key }}" style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% else %}#b8369a{% endif %};">{{ division }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
+                        <input class="input" type="text" name="locationSelect"
+                               id="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}>
+
                         <br>
                         <div id="frequencyRadioBox"
                              data-url="{{ path('paprec_public_corp_home_addFrequency', {cartUuid: cart.id, frequency: 'frequencyTmp' }) }}">

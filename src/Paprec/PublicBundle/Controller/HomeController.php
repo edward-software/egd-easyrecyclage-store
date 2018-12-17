@@ -40,7 +40,7 @@ class HomeController extends Controller
         foreach ($this->getParameter('paprec_divisions_select') as $division => $divisionLong) {
             $divisions[$division] = $divisionLong;
         }
-        $step = "l";
+        $step = "d";
 
         if (!$cartUuid) {
             $cart = $cartManager->create(90);
@@ -54,8 +54,8 @@ class HomeController extends Controller
 
             /**
              * step définie le prochain champ à afficher
-             * Par défaut on est à la step l (location)
-             * Quand l est définie on passe à l'étape d puis f
+             * Par défaut on est à la step d (division)
+             * Quand d est définie on passe à l'étape l puis f
              * si on choisit "Régulier", on passe en étape r
              */
             //            $divisions = $this->getParameter('paprec_divisions');
@@ -63,10 +63,10 @@ class HomeController extends Controller
             foreach ($this->getParameter('paprec_divisions_select') as $division => $divisionLong) {
                 $divisions[$division] = $divisionLong;
             }
-            if ($cart->getLocation() && $cart->getLocation() !== '') {
-                $step = "d";
-            }
             if ($cart->getDivision() && $cart->getDivision() !== '') {
+                $step = "l";
+            }
+            if ($cart->getLocation() && $cart->getLocation() !== '') {
                 $step = "f";
             }
             if ($cart->getFrequency() && $cart->getFrequency() !== '') {
