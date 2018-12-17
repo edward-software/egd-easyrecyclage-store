@@ -5,6 +5,7 @@ Error: File to import not found or unreadable: ~bootstrap/scss/bootstrap.
 1: @import "~bootstrap/scss/bootstrap";
 2: @import "~eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css";
 3: @import "~components-font-awesome/css/fontawesome-all.min.css";
+4: @import "~blueimp-file-upload/css/jquery.fileupload.css";
 
 Backtrace:
 public.scss:1
@@ -50,4 +51,4 @@ C:/Ruby25-x64/bin/scss:23:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: File to import not found or unreadable: ~bootstrap/scss/bootstrap.\A         on line 1 of public.scss\A \A 1: @import \"~bootstrap/scss/bootstrap\";\A 2: @import \"~eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css\";\A 3: @import \"~components-font-awesome/css/fontawesome-all.min.css\";"; }
+  content: "Error: File to import not found or unreadable: ~bootstrap/scss/bootstrap.\A         on line 1 of public.scss\A \A 1: @import \"~bootstrap/scss/bootstrap\";\A 2: @import \"~eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css\";\A 3: @import \"~components-font-awesome/css/fontawesome-all.min.css\";\A 4: @import \"~blueimp-file-upload/css/jquery.fileupload.css\";"; }

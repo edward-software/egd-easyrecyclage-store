@@ -6,6 +6,7 @@
   "author": "Frederic LAINE <frederic.laine@eggers-digital.com>",
   "license": "MIT",
   "dependencies": {
+    "blueimp-file-upload": "^9.28.0",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "moment": "^2.22.2"
   },
