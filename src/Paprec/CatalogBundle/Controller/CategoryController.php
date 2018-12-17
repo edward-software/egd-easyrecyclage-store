@@ -51,7 +51,6 @@ class CategoryController extends Controller
         $cols['id'] = array('label' => 'id', 'id' => 'c.id', 'method' => array('getId'));
         $cols['name'] = array('label' => 'name', 'id' => 'c.name', 'method' => array('getName'));
         $cols['description'] = array('label' => 'description', 'id' => 'c.description', 'method' => array('getDescription'));
-        $cols['division'] = array('label' => 'division', 'id' => 'c.division', 'method' => array('getDivision'));
         $cols['position'] = array('label' => 'position', 'id' => 'c.position', 'method' => array('getPosition'));
         $cols['enabled'] = array('label' => 'enabled', 'id' => 'c.enabled', 'method' => array('getEnabled'));
         $cols['dateCreation'] = array('label' => 'dateCreation', 'id' => 'c.dateCreation', 'method' => array('getDateCreation'), 'filter' => array(array('name' => 'format', 'args' => array('Y-m-d H:i:s'))));
@@ -72,14 +71,22 @@ class CategoryController extends Controller
                 $queryBuilder->andWhere($queryBuilder->expr()->orx(
                     $queryBuilder->expr()->like('c.name', '?1'),
                     $queryBuilder->expr()->like('c.description', '?1'),
-                    $queryBuilder->expr()->like('c.division', '?1'),
                     $queryBuilder->expr()->like('c.position', '?1'),
+                    $queryBuilder->expr()->like('c.enabled', '?1'),
                     $queryBuilder->expr()->like('c.dateCreation', '?1')
                 ))->setParameter(1, '%' . $search['value'] . '%');
             }
         }
 
         $datatable = $this->get('goondi_tools.datatable')->generateTable($cols, $queryBuilder, $pageSize, $start, $orders, $columns, $filters);
+        // Reformatage de certaines données
+        $tmp = array();
+        foreach ($datatable['data'] as $data) {
+            $line = $data;
+            $line['enabled'] = ($line['enabled'] === true) ? 'Oui' : 'Non';
+            $tmp[] = $line;
+        }
+        $datatable['data'] = $tmp;
 
         $return['recordsTotal'] = $datatable['recordsTotal'];
         $return['recordsFiltered'] = $datatable['recordsTotal'];
