@@ -47,8 +47,7 @@ class QuoteRequest
     /**
      * @var string
      *
-     * @ORM\Column(name="businessName", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="businessName", type="string", length=255, nullable=true)
      */
     private $businessName;
 
@@ -300,30 +299,7 @@ class QuoteRequest
     {
         return $this->deleted;
     }
-
-    /**
-     * Set businessName.
-     *
-     * @param string $businessName
-     *
-     * @return QuoteRequest
-     */
-    public function setBusinessName($businessName)
-    {
-        $this->businessName = $businessName;
-
-        return $this;
-    }
-
-    /**
-     * Get businessName.
-     *
-     * @return string
-     */
-    public function getBusinessName()
-    {
-        return $this->businessName;
-    }
+    
 
     /**
      * Set civility.
@@ -782,5 +758,29 @@ class QuoteRequest
     public function getTonnage()
     {
         return $this->tonnage;
+    }
+
+    /**
+     * Set businessName.
+     *
+     * @param string|null $businessName
+     *
+     * @return QuoteRequest
+     */
+    public function setBusinessName($businessName = null)
+    {
+        $this->businessName = $businessName;
+
+        return $this;
+    }
+
+    /**
+     * Get businessName.
+     *
+     * @return string|null
+     */
+    public function getBusinessName()
+    {
+        return $this->businessName;
     }
 }

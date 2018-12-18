@@ -1,0 +1,122 @@
+{% extends "@PaprecCommercial/Common/emails/base_email.html.twig" %}
+
+ {% block picto_header %}
+     <a href="{{ paprec_public_site_url }}" target="_blank">
+         {#<img alt="Logo" src="{{ absolute_url('build/static/logo.png') }}"  width="100px" height="100px" style="display: block; font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">#}
+         LOGO COURRIER
+     </a>
+ {% endblock %}
+
+{% block title_header %}
+    Vous avez une nouvelle demande
+{% endblock %}
+
+{% block subtitle_header %}
+    Formulaire Contactez-nous - N° {{ contactUs.id }}
+{% endblock %}
+
+{% block main_content %}
+    <tr>
+        Détail de la demande N° {{ contactUs.id }}
+        - {{ contactUs.dateCreation|date('d/m/Y H:i:s') }}
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ContactUs.BusinessName'|trans }}
+        </td>
+        <td class="value">
+            {{ contactUs.businessName }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ContactUs.Civility'|trans }}
+        </td>
+        <td class="value">
+            {{ contactUs.civility }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ContactUs.LastName'|trans }}
+        </td>
+        <td class="value">
+            {{ contactUs.lastName }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ContactUs.FirstName'|trans }}
+        </td>
+        <td class="value">
+            {{ contactUs.firstName }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ContactUs.Function'|trans }}
+        </td>
+        <td class="value">
+            {{ contactUs.function }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ContactUs.Email'|trans }}
+        </td>
+        <td class="value">
+            {{ contactUs.email }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ContactUs.Phone'|trans }}
+        </td>
+        <td class="value">
+            {{ contactUs.phone }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ContactUs.Need'|trans }}
+        </td>
+        <td class="value">
+            {{ contactUs.need }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ContactUs.AttachedFiles'|trans }}
+        </td>
+        <td class="value">
+            {% if contactUs.attachedFiles %}
+                <a href="{{ absolute_url(path('paprec_commercial_contactUs_downloadAttachedFiles', {id: contactUs.id})) }}">Pièces
+                    jointes</a>
+            {% endif %}
+        </td>
+    </tr>
+{% endblock %}
+
+{% block footer %}
+    <tr>
+        <td>
+            Merci de répondre à cette demande sous 48h.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="{{ absolute_url(path("paprec_commercial_contactUs_edit", {id: contactUs.id})) }}">
+                Mettre à jour le statut
+            </a>
+        </td>
+    </tr>
+{% endblock %}
+
+{% block sub_footer %}
+    <tr>
+        <td>
+            Cet email est un message automatique
+        </td>
+    </tr>
+{% endblock %}
+

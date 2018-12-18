@@ -1,0 +1,81 @@
+{% extends "@PaprecCommercial/Common/emails/base_email.html.twig" %}
+
+ {% block picto_header %}
+     <a href="{{ paprec_public_site_url }}" target="_blank">
+         {#<img alt="Logo" src="{{ absolute_url('build/static/logo.png') }}"  width="100px" height="100px" style="display: block; font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">#}
+         LOGO COURRIER
+     </a>
+ {% endblock %}
+
+{% block title_header %}
+    Merci pour votre demande
+{% endblock %}
+
+{% block subtitle_header %}
+    Formulaire {{ quoteRequestNonCorporate.customerType }} - N° {{ quoteRequestNonCorporate.id }}
+{% endblock %}
+
+{% block main_content %}
+    <tr>
+        <td>
+            {{ quoteRequestNonCorporate.civility }} {{ quoteRequestNonCorporate.firstName }} {{ quoteRequestNonCorporate.lastName }}
+            ,
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Nous vous remercions pour votre demande et de l'intérêt que vous nous
+            portez.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Rappel de votre besoin :
+            <br>
+            {{ quoteRequestNonCorporate.need }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Nos équipes commerciales dédiées
+            aux {{ quoteRequestNonCorporate.customerType }}
+            reviendront vers vous dans les plus proches délais.
+            <br>
+            Cordialement
+            <br>
+            L'équipe Paprec - EasyRecyclage
+            <br>
+            <a href="www.easyrecyclage.com">www.easyrecyclage.com</a>
+            <br>
+            <a href="#">Découvrez nos équipements</a>
+            <a href="#">Trouvez une agence</a>
+        </td>
+    </tr>
+{% endblock %}
+
+{% block footer %}
+    <tr>
+        <td>
+            Logo Paprec
+        </td>
+        <td>
+            Retrouvez-nous
+        </td>
+        <td>
+            Logos réseaux
+        </td>
+    </tr>
+{% endblock %}
+
+{% block sub_footer %}
+    <tr>
+        <td>
+            Cet email est un message automatique, veuillez ne pas y répondre.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            © 2018 Paprec Group
+        </td>
+    </tr>
+{% endblock %}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+</head>
+<body>
+
+
+<table>
+    <!-- Header Logo + "Recycler devient facile" -->
+    <tr>
+        <td>
+            <!--[if (gte mso 9)|(IE)]>
+            <table>
+                <tr>
+                    <td>
+            <![endif]-->
+            <table>
+                <tr>
+                    <td>
+                        <a href="{{ paprec_public_site_url }}" target="_blank">
+                            <img alt="Logo" src="{{ absolute_url('build/static/logo.png') }}" width="100px"
+                                 height="100px"
+                                 style="display: block; font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;"
+                                 border="0">
+                        </a>
+                    </td>
+                    <td>
+                        RECYCLER DEVIENT FACILE
+                    </td>
+                </tr>
+            </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+        </td>
+    </tr>
+    <!-- Sub Header Merci pour votre demande  -->
+    <tr>
+        <td>
+            <!--[if (gte mso 9)|(IE)]>
+            <table>
+                <tr>
+                    <td>
+            <![endif]-->
+            <table>
+                <tr>
+                    <td>
+                        {% block picto_header %}{% endblock %}
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {% block title_header %}{% endblock %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {% block subtitle_header %}{% endblock %}
+
+                    </td>
+                </tr>
+            </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+        </td>
+    </tr>
+    <!-- CONTENT -->
+    <tr>
+        <td>
+            <!--[if (gte mso 9)|(IE)]>
+            <table>
+                <tr>
+                    <td>
+            <![endif]-->
+            <table>
+                {% block main_content %}{% endblock %}
+            </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+        </td>
+    </tr>
+    <!-- FOOTER  -->
+    <tr>
+        <td>
+            <!--[if (gte mso 9)|(IE)]>
+            <table>
+                <tr>
+                    <td>
+            <![endif]-->
+            <table>
+                {% block footer %} {% endblock %}
+            </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+        </td>
+    </tr>
+    <!-- Mentions + message automatique -->
+    <tr>
+        <td>
+            <!--[if (gte mso 9)|(IE)]>
+            <table>
+                <tr>
+                    <td>
+            <![endif]-->
+            <table>
+                {% block sub_footer %}{% endblock %}
+            </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

@@ -4,6 +4,7 @@ imports:
 - { resource: services.yml }
 - { resource: twig.yml }
 - { resource: ivoryckeditor.yml }
+- { resource: snappy.yml }
 - { resource: "@GoondiToolsBundle/Resources/config/services.yml" }
 - { resource: "@PaprecHomeBundle/Resources/config/services.yml" }
 - { resource: "@PaprecUserBundle/Resources/config/services.yml" }

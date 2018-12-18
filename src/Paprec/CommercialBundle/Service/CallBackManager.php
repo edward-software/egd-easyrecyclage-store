@@ -11,7 +11,9 @@ namespace Paprec\CommercialBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\ORMException;
 use Exception;
+use Grpc\Call;
 use Paprec\CommercialBundle\Entity\CallBack;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -72,5 +74,88 @@ class CallBackManager
 
         }
         return false;
+    }
+
+
+    /**
+     * Envoie un mail à la personne ayant fait une demande de rappel
+     *
+     * @param CallBack $callBack
+     * @throws Exception
+     */
+    public function sendConfirmRequestEmail(CallBack $callBack)
+    {
+
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+            $rcptTo = $callBack->getEmail();
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Votre demande de rappel N°' . $callBack->getId())
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/CallBack/emails/sendConfirmRequestEmail.html.twig',
+                        array(
+                            'callBack' => $callBack
+                        )
+                    ),
+                    'text/html'
+                );
+            if ($this->container->get('mailer')->send($message)) {
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendConfirmCallBack', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+
+
+    /**
+     * Envoie un mail à l'assistant de la direction commerciale avec les données du formulaire de demande de rappel
+     *
+     * @param CallBack $callBack
+     * @return $callBack
+     * @throws Exception
+     */
+    public function sendNewRequestEmail(CallBack $callBack)
+    {
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+
+            // TODO Appeler une fonction de UserManager qui retourne l'user qui s'occupe des demandes de Rappel
+            // TODO $rcptTo = $user->getEmail()
+            $rcptTo = 'frederic.laine@eggers-digital.com';
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Nouvelle demande de rappel N°' . $callBack->getId())
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/CallBack/emails/sendNewRequestEmail.html.twig',
+                        array(
+                            'callBack' => $callBack
+                        )
+                    ),
+                    'text/html'
+                );
+
+            if ($this->container->get('mailer')->send($message)) {
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendNewCallBack', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
     }
 }

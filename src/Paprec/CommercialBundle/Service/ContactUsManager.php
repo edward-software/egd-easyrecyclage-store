@@ -11,6 +11,7 @@ namespace Paprec\CommercialBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\ORMException;
 use Exception;
 use Paprec\CommercialBundle\Entity\ContactUs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -72,5 +73,86 @@ class ContactUsManager
 
         }
         return false;
+    }
+
+    /**
+     * Envoie un mail à la personne ayant fait une demande de contact
+     * @param ContactUs $contactUs
+     * @throws Exception
+     */
+    public function sendConfirmRequestEmail(ContactUs $contactUs)
+    {
+
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+            $rcptTo = $contactUs->getEmail();
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Votre demande de contact N°' . $contactUs->getId())
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ContactUs/emails/sendConfirmRequestEmail.html.twig',
+                        array(
+                            'contactUs' => $contactUs
+                        )
+                    ),
+                    'text/html'
+                );
+            if ($this->container->get('mailer')->send($message)) {
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendConfirmContactUs', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+
+
+    /**
+     * Envoie un mail à l'assistant de la direction commerciale avec les données du formulaire de demande de contact
+     *
+     * @param ContactUs $contactUs
+     * @return bool
+     * @throws Exception
+     */
+    public function sendNewRequestEmail(ContactUs $contactUs)
+    {
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+
+            // TODO Appeler une fonction de UserManager qui retourne l'user qui s'occupe des demandes de Contact en fonction de la division s'il y en a une
+            // TODO $rcptTo = $user->getEmail()
+            $rcptTo = 'frederic.laine@eggers-digital.com';
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Nouvelle demande de contact N°' . $contactUs->getId())
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ContactUs/emails/sendNewRequestEmail.html.twig',
+                        array(
+                            'contactUs' => $contactUs
+                        )
+                    ),
+                    'text/html'
+                );
+
+            if ($this->container->get('mailer')->send($message)) {
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendNewContactUs', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
     }
 }

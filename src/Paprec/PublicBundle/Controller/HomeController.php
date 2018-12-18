@@ -194,6 +194,8 @@ class HomeController extends Controller
      */
     public function regularFormAction(Request $request, $cartUuid)
     {
+        $quoteRequestManger =$this->get('paprec_commercial.quote_request_manager');
+
         $cartManager = $this->get('paprec.cart_manager');
 
         $divisions = array();
@@ -232,11 +234,16 @@ class HomeController extends Controller
             $em->persist($quoteRequest);
             $em->flush();
 
-            return $this->redirectToRoute('paprec_public_home_regularConfirm', array(
-                'cartUuid' => $cart->getId(),
-                'quoteRequestId' => $quoteRequest->getId()
-            ));
+            $sendNewQuoteRequest = $quoteRequestManger->sendNewRequestEmail($quoteRequest);
+
+            if ($sendNewQuoteRequest) {
+                return $this->redirectToRoute('paprec_public_home_regularConfirm', array(
+                    'cartUuid' => $cart->getId(),
+                    'quoteRequestId' => $quoteRequest->getId()
+                ));
+            }
         }
+
         return $this->render('@PaprecPublic/Shared/regularForm.html.twig', array(
             'form' => $form->createView(),
             'cart' => $cart,
@@ -267,8 +274,9 @@ class HomeController extends Controller
      */
     public function contactFormAction(Request $request, $cartUuid)
     {
-        $cart = null;
+        $contactUsManager = $this->get('paprec_commercial.contact_us_manager');
 
+        $cart = null;
 
         $contactUs = new ContactUs();
         $form = $this->createForm(ContactUsShortType::class, $contactUs);
@@ -304,9 +312,14 @@ class HomeController extends Controller
             $em->persist($contactUs);
             $em->flush();
 
-            return $this->redirectToRoute('paprec_public_home_contactConfirm', array(
-                'contactUsId' => $contactUs->getId()
-            ));
+            $sendConfirmEmail = $contactUsManager->sendConfirmRequestEmail($contactUs);
+            $sendNewRequestEmail = $contactUsManager->sendNewRequestEmail($contactUs);
+
+            if ($sendConfirmEmail && $sendNewRequestEmail) {
+                return $this->redirectToRoute('paprec_public_home_contactConfirm', array(
+                    'contactUsId' => $contactUs->getId()
+                ));
+            }
         }
 
         if ($cart) {
@@ -340,12 +353,15 @@ class HomeController extends Controller
 
     /**
      * Formulaire "Etre rappelé"
+     *
      * @Route("/callBackForm/{cartUuid}", name="paprec_public_home_callBackForm")
      * @param Request $request
      * @throws \Exception
      */
     public function callBackFormAction(Request $request, $cartUuid)
     {
+        $callBackManager = $this->get('paprec_commercial.call_back_manager');
+
         $cartManager = $this->get('paprec.cart_manager');
 
         $cart = $cartManager->get($cartUuid);
@@ -366,10 +382,15 @@ class HomeController extends Controller
             $em->persist($callBack);
             $em->flush();
 
-            return $this->redirectToRoute('paprec_public_home_callBackConfirm', array(
-                'cartUuid' => $cart->getId(),
-                'callBackId' => $callBack->getId()
-            ));
+            $sendConfirmEmail = $callBackManager->sendConfirmRequestEmail($callBack);
+            $sendNewRequestEmail = $callBackManager->sendNewRequestEmail($callBack);
+
+            if ($sendConfirmEmail && $sendNewRequestEmail) {
+                return $this->redirectToRoute('paprec_public_home_callBackConfirm', array(
+                    'cartUuid' => $cart->getId(),
+                    'callBackId' => $callBack->getId()
+                ));
+            }
         }
         return $this->render('@PaprecPublic/Shared/callBackForm.html.twig', array(
             'form' => $form->createView(),
@@ -379,6 +400,7 @@ class HomeController extends Controller
 
     /**
      * IHM de confirmation de prise en compte de la demande "Etre rappelé"
+     *
      * @Route("/callBackConfirm/{cartUuid}/{callBackId}", name="paprec_public_home_callBackConfirm")
      * @param Request $request
      * @throws \Exception

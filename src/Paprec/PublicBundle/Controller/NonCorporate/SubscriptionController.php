@@ -19,13 +19,14 @@ class SubscriptionController extends Controller
      */
     public function groupeStep0Action(Request $request)
     {
+        $quoteRequestNonCorporateManager = $this->get('paprec_commercialquote_request_non_corporate_manager');
 
         $quoteRequestNonCorporate = new QuoteRequestNonCorporate();
         $form = $this->createForm(QuoteRequestNonCorporateGroupeType::class, $quoteRequestNonCorporate);
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $quoteRequestNonCorporate = $form->getData();
@@ -49,11 +50,15 @@ class SubscriptionController extends Controller
             $em->persist($quoteRequestNonCorporate);
             $em->flush();
 
-            return $this->redirectToRoute('paprec_public_non_corporate_subscription_groupe_step1', array(
-                'quoteRequestId' => $quoteRequestNonCorporate->getId()
-            ));
-        }
+            $sendConfirmEmail = $quoteRequestNonCorporateManager->sendConfirmRequestEmail($quoteRequestNonCorporate);
+            $sendNewRequestEmail = $quoteRequestNonCorporateManager->sendNewRequestEmail($quoteRequestNonCorporate);
 
+            if ($sendConfirmEmail && $sendNewRequestEmail) {
+                return $this->redirectToRoute('paprec_public_non_corporate_subscription_groupe_step1', array(
+                    'quoteRequestId' => $quoteRequestNonCorporate->getId()
+                ));
+            }
+        }
 
 
         return $this->render('@PaprecPublic/NonCorporate/groupeReseau.html.twig', array(
@@ -80,13 +85,14 @@ class SubscriptionController extends Controller
      */
     public function collectiviteStep0Action(Request $request)
     {
+        $quoteRequestNonCorporateManager = $this->get('paprec_commercialquote_request_non_corporate_manager');
 
         $quoteRequestNonCorporate = new QuoteRequestNonCorporate();
         $form = $this->createForm(QuoteRequestNonCorporateShortType::class, $quoteRequestNonCorporate);
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $quoteRequestNonCorporate = $form->getData();
@@ -110,12 +116,15 @@ class SubscriptionController extends Controller
             $em->persist($quoteRequestNonCorporate);
             $em->flush();
 
-            return $this->redirectToRoute('paprec_public_non_corporate_subscription_collectivite_step1', array(
-                'quoteRequestId' => $quoteRequestNonCorporate->getId()
-            ));
+            $sendConfirmEmail = $quoteRequestNonCorporateManager->sendConfirmRequestEmail($quoteRequestNonCorporate);
+            $sendNewRequestEmail = $quoteRequestNonCorporateManager->sendNewRequestEmail($quoteRequestNonCorporate);
+
+            if ($sendConfirmEmail && $sendNewRequestEmail) {
+                return $this->redirectToRoute('paprec_public_non_corporate_subscription_collectivite_step1', array(
+                    'quoteRequestId' => $quoteRequestNonCorporate->getId()
+                ));
+            }
         }
-
-
 
         return $this->render('@PaprecPublic/NonCorporate/collectivite.html.twig', array(
             'form' => $form->createView()
@@ -141,13 +150,14 @@ class SubscriptionController extends Controller
      */
     public function particulierStep0Action(Request $request)
     {
+        $quoteRequestNonCorporateManager = $this->get('paprec_commercialquote_request_non_corporate_manager');
 
         $quoteRequestNonCorporate = new QuoteRequestNonCorporate();
         $form = $this->createForm(QuoteRequestNonCorporateShortType::class, $quoteRequestNonCorporate);
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $quoteRequestNonCorporate = $form->getData();
@@ -171,11 +181,15 @@ class SubscriptionController extends Controller
             $em->persist($quoteRequestNonCorporate);
             $em->flush();
 
-            return $this->redirectToRoute('paprec_public_non_corporate_subscription_particulier_step1', array(
-                'quoteRequestId' => $quoteRequestNonCorporate->getId()
-            ));
-        }
+            $sendConfirmEmail = $quoteRequestNonCorporateManager->sendConfirmRequestEmail($quoteRequestNonCorporate);
+            $sendNewRequestEmail = $quoteRequestNonCorporateManager->sendNewRequestEmail($quoteRequestNonCorporate);
 
+            if ($sendConfirmEmail && $sendNewRequestEmail) {
+                return $this->redirectToRoute('paprec_public_non_corporate_subscription_particulier_step1', array(
+                    'quoteRequestId' => $quoteRequestNonCorporate->getId()
+                ));
+            }
+        }
 
 
         return $this->render('@PaprecPublic/NonCorporate/particulier.html.twig', array(

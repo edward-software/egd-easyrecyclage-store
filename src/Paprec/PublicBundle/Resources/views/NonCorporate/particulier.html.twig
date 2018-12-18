@@ -45,8 +45,7 @@
                         <div class="step__title">Je suis</div>
                     </div>
                     <div class="step__right step__right--small">
-                        {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductDIQuote.BusinessName'|trans}}) }}
-                        {{ form_errors(form.businessName) }}
+                        {% do form.businessName.setRendered() %}
 
                         {{ form_widget(form.civility, {'attr': {'class': 'input--radio'}}) }}
                         {{ form_errors(form.civility) }}

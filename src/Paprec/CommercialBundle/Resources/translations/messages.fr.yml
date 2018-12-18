@@ -362,6 +362,7 @@ Commercial:
     AttachedFiles:              Fichiers en PJ
     PhonePlaceholder:           Numéro de téléphone
     FunctionPlaceholder:        Fonction (facultatif)
+    CollectivitePlaceholder:    Nom de collectivité / nom de syndicat
     Function:                   Fonction
     Need:                       Le besoin
     NeedPlaceholder:            Votre besoin

@@ -33,6 +33,11 @@ class QuoteRequestNonCorporateEditType extends AbstractType
             ))
             ->add('division', ChoiceType::class, array(
                 "choices" => $options['division'],
+                "multiple" => false,
+                "required" => false,
+                "expanded" => false,
+                'empty_data' => null,
+
             ))
             ->add('frequency', ChoiceType::class, array(
                 'choices'  => array(

@@ -1,0 +1,120 @@
+{% extends "@PaprecCommercial/Common/emails/base_email.html.twig" %}
+
+ {% block picto_header %}
+     <a href="{{ paprec_public_site_url }}" target="_blank">
+         {#<img alt="Logo" src="{{ absolute_url('build/static/logo.png') }}"  width="100px" height="100px" style="display: block; font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">#}
+         LOGO PHONE
+     </a>
+ {% endblock %}
+
+{% block title_header %}
+    Vous avez une nouvelle demande
+{% endblock %}
+
+{% block subtitle_header %}
+    Formulaire Être rappelé - N° {{ quoteRequest.id }}
+{% endblock %}
+
+{% block main_content %}
+    <tr>
+        Détail de la demande N° {{ quoteRequest.id }}
+        - {{ quoteRequest.dateCreation|date('d/m/Y H:i:s') }}
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.CallBack.BusinessName'|trans }}
+        </td>
+        <td class="value">
+            {{ callBack.businessName }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.CallBack.Civility'|trans }}
+        </td>
+        <td class="value">
+            {{ callBack.civility }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.CallBack.LastName'|trans }}
+        </td>
+        <td class="value">
+            {{ callBack.lastName }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.CallBack.FirstName'|trans }}
+        </td>
+        <td class="value">
+            {{ callBack.firstName }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.CallBack.Function'|trans }}
+        </td>
+        <td class="value">
+            {{ callBack.function }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.CallBack.Email'|trans }}
+        </td>
+        <td class="value">
+            {{ callBack.email }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.CallBack.Phone'|trans }}
+        </td>
+        <td class="value">
+            {{ callBack.phone }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+           Date de rappel souhaitée
+        </td>
+        <td class="value">
+            {{ callBack.dateCallBack|localizeddate('full', 'none', app.request.locale) }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            Créneau horaire souhaité
+        </td>
+        <td class="value">
+            {{ callBack.timeCallBack|date('H\\Hs',"Europe/Paris") }}
+        </td>
+    </tr>
+
+{% endblock %}
+
+{% block footer %}
+    <tr>
+        <td>
+            Pensez à rappeler cet internaute le jour J.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="{{ absolute_url(path("paprec_commercial_callBack_edit", {id: callBack.id})) }}">
+                Mettre à jour le statut
+            </a>
+        </td>
+    </tr>
+{% endblock %}
+
+{% block sub_footer %}
+    <tr>
+        <td>
+            Cet email est un message automatique
+        </td>
+    </tr>
+{% endblock %}
+
