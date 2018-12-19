@@ -185,7 +185,7 @@
                                                      id="productCheckboxPicto_{{ product.id }}_{{ category.id }}"
                                                      style="{% if product.pictos| length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
                                                     {{ product.name }}
-                                                    <br>{{ product.capacity }}{{ product.capacityUnit }}
+                                                    <br>{{ product.capacity|nl2br }}{{ product.capacityUnit }}
                                                     {% for items in cart.content %}
                                                         {% if items['cId'] == category.id and items['pId'] == product.id %}
                                                             <span class="number">{{ items['qtty'] }}</span>
@@ -244,7 +244,7 @@
                                                                 </div>
                                                                 <div class="infoproduct__dimensiontitle">{{ 'Public.Cart.Dimensions'|trans }}</div>
                                                                 <div class="infoproduct__dimension">
-                                                                    {{ displayedProduct.dimensions }}
+                                                                    {{ displayedProduct.dimensions|nl2br }}
                                                                 </div>
 
                                                                 {% set qtty = '' %}
