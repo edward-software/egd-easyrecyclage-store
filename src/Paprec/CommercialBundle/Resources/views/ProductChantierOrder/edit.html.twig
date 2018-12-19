@@ -243,6 +243,45 @@
 
             });
 
+            /**
+             * Gestion des datepickers
+             */
+            var now = new Date();
+            // On définit arbitrairement la date maximum pour le rappel à dans 3 mois
+            maxDate = moment(now);
+            maxDate.add(3, 'months');
+            $('#paprec_commercialbundle_productchantierorder_installationDate').datetimepicker({
+                locale: 'fr',
+                format: 'L',
+                minDate: now,
+                maxDate: maxDate,
+                icons:
+                    {
+                        up: 'fa fa-angle-up',
+                        down: 'fa fa-angle-down',
+                        date: 'fa fa-calendar',
+                        time: 'fa fa-clock',
+                        next: 'fa fa-angle-right',
+                        previous: 'fa fa-angle-left'
+                    },
+            });
+
+            $('#paprec_commercialbundle_productchantierorder_removalDate').datetimepicker({
+                locale: 'fr',
+                format: 'L',
+                minDate: now,
+                maxDate: maxDate,
+                icons:
+                    {
+                        up: 'fa fa-angle-up',
+                        down: 'fa fa-angle-down',
+                        date: 'fa fa-calendar',
+                        time: 'fa fa-clock',
+                        next: 'fa fa-angle-right',
+                        previous: 'fa fa-angle-left'
+                    },
+            });
+
         });
     </script>
 {% endblock %}

@@ -220,11 +220,11 @@
                                                                     {{ displayedProduct.name }}
                                                                 </div>
                                                                 <div class="infoproduct__desc">
-                                                                    {{ displayedProduct.description }}
+                                                                    {{ displayedProduct.description|nl2br }}
                                                                 </div>
                                                                 <div class="infoproduct__satisfaction">
                                                                     {% for argument in displayedProduct.arguments %}
-                                                                        {{ argument.description }}
+                                                                        {{ argument.description|nl2br }}
                                                                     {% endfor %}
                                                                     Facilite le pré-tri
                                                                     <br>
