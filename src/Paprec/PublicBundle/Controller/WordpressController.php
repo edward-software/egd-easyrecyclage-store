@@ -36,7 +36,7 @@ class WordpressController extends Controller
             ));
         } elseif ($slug == 'header-menu') {
             foreach($bodyResponse['items'] as $item) {
-                $shortlinks[] = array(
+                $headers[] = array(
                     'id' => $item['ID'],
                     'title' => $item['title'],
                     'url' => $item['url']
@@ -45,18 +45,18 @@ class WordpressController extends Controller
 
 
             return $this->render('@PaprecPublic/Menu/headersMenu.html.twig', array(
-                'response' => $shortlinks
+                'response' => $headers
             ));
         } elseif ($slug == 'footer-menu') {
             foreach($bodyResponse['items'] as $item) {
                 if ($item['menu_item_parent'] == '0') {
-                    $shortlinks[$item['ID']] = array(
+                    $footers[$item['ID']] = array(
                         'id' => $item['ID'],
                         'title' => $item['title'],
                         'url' => $item['url']
                     );
                 } else {
-                    $shortlinks[$item['menu_item_parent']]['submenus'][] = array(
+                    $footers[$item['menu_item_parent']]['submenus'][] = array(
                         'id' => $item['ID'],
                         'title' => $item['title'],
                         'url' => $item['url']
@@ -66,7 +66,20 @@ class WordpressController extends Controller
 
 
             return $this->render('@PaprecPublic/Menu/footersMenu.html.twig', array(
-                'response' => $shortlinks
+                'response' => $footers
+            ));
+        } elseif ($slug == 'quicklinksmenu-footer') {
+            foreach($bodyResponse['items'] as $item) {
+                $quicklinksmenus[] = array(
+                    'id' => $item['ID'],
+                    'title' => $item['title'],
+                    'url' => $item['url']
+                );
+            }
+
+
+            return $this->render('@PaprecPublic/Menu/headersMenu.html.twig', array(
+                'response' => $quicklinksmenus
             ));
         }
 

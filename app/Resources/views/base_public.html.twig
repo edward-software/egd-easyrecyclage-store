@@ -98,20 +98,16 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-
-            <div class="footer__copyright">EasyRecyclage est une marque de Paprec Group • V.3 © 2018 - Tous droits
-                résevrés
-            </div>
         </div>
-
         <div class="footer__social">
-            <ul>
-                <li><a href="#">Contactez-nous</a></li>
-                <li><a href="#">Mentions légales</a></li>
-                <li><a href="#">Suivez-nous</a></li>
+            <ul class="menu">
+                {{ render(controller('PaprecPublicBundle:Wordpress:getMenuFromWP', {'slug': 'quicklinksmenu-footer'})) }}
             </ul>
         </div>
         <div class="clearfix"></div>
+        <div class="footer__copyright">
+            EasyRecyclage est une marque de Paprec Group • V.3 © 2018 - Tous droits résevrés
+        </div>
     </div>
 </footer>
 <!-- /footer -->
