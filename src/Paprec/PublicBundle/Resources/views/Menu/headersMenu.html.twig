@@ -1,5 +1,26 @@
 {% autoescape false %}
-{% for link in response %}
-    <li><a href="{{ link['url'] }}">{{ link['title'] }}</a></li>
-{% endfor %}
+    {% for link in items %}
+        <li class="menu-item menu-item-type-post_type menu-item-object-page {% if link['submenus']|length > 0  %}menu-item-has-children {% endif %}">
+            <a href="{{ link['url'] }}">{{ link['title'] }}</a>
+            <div class="submenu__title">{{ link['title'] }}</div>
+            {% if link['submenus']|length > 0 %}
+                <ul class="sub-menu">
+                    {% for submenu in link['submenus'] %}
+                        <li>
+                            <a href="{{ submenu['url'] }}">{{ submenu['title'] }}</a>
+                            {% if submenu['submenus']|length > 0 %}
+                                <ul class="sub-menu">
+                                    {% for subsubmenu in submenu['submenus'] %}
+                                        <li>
+                                            <a href="{{ submenu['url'] }}">{{ submenu['title'] }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
 {% endautoescape %}

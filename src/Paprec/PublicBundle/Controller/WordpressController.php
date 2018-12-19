@@ -22,41 +22,95 @@ class WordpressController extends Controller
         $bodyResponse = json_decode($response->getBody(), true);
 
         if ($slug == 'shortlinks-menu') {
-            foreach($bodyResponse['items'] as $item) {
-                $shortlinks[] = array(
-                    'id' => $item['ID'],
-                    'title' => $item['title'],
-                    'url' => $item['url']
-                );
-            }
 
-
-            return $this->render('@PaprecPublic/Menu/shortlinksMenu.html.twig', array(
-                'response' => $shortlinks
-            ));
-        } elseif ($slug == 'header-menu') {
-            foreach($bodyResponse['items'] as $item) {
-                $headers[] = array(
-                    'id' => $item['ID'],
-                    'title' => $item['title'],
-                    'url' => $item['url']
-                );
-            }
-
-
-            return $this->render('@PaprecPublic/Menu/headersMenu.html.twig', array(
-                'response' => $headers
-            ));
-        } elseif ($slug == 'footer-menu') {
-            foreach($bodyResponse['items'] as $item) {
-                if ($item['menu_item_parent'] == '0') {
-                    $footers[$item['ID']] = array(
+            $shortlinks = array();
+            if (isset($bodyResponse['items']) && is_array($bodyResponse['items']) && count($bodyResponse['items'])) {
+                foreach ($bodyResponse['items'] as $item) {
+                    $shortlinks[] = array(
                         'id' => $item['ID'],
                         'title' => $item['title'],
                         'url' => $item['url']
                     );
-                } else {
-                    $footers[$item['menu_item_parent']]['submenus'][] = array(
+                }
+            }
+            return $this->render('@PaprecPublic/Menu/shortlinksMenu.html.twig', array(
+                'items' => $shortlinks
+            ));
+
+        } elseif ($slug == 'header-menu') {
+
+            $headers = array();
+            if (isset($bodyResponse['items']) && is_array($bodyResponse['items']) && count($bodyResponse['items'])) {
+                foreach ($bodyResponse['items'] as $item) {
+                    if ($item['menu_item_parent'] != null && $item['menu_item_parent'] == '0') {
+                        $headers[$item['ID']] = array(
+                            'id' => $item['ID'],
+                            'title' => $item['title'],
+                            'url' => $item['url'],
+                            'submenus' => array()
+                        );
+                    } elseif ($item['menu_item_parent'] !== null && $item['menu_item_parent'] != '') {
+                        // teste si le numéro du parent est dans le premier niveau de menu
+                        if (array_key_exists($item['menu_item_parent'], $headers)) {
+                            $headers[$item['menu_item_parent']]['submenus'][$item['ID']] = array(
+                                'id' => $item['ID'],
+                                'title' => $item['title'],
+                                'url' => $item['url'],
+                                'submenus' => array()
+                            );
+                        } else {
+                            foreach ($headers as $key => $menu) {
+                                if (isset($menu['submenus']) && is_array($menu['submenus']) && count($menu['submenus'])) {
+                                    if (array_key_exists($item['menu_item_parent'], $menu['submenus'])) {
+                                        $headers[$key]['submenus'][$item['menu_item_parent']]['submenus'][$item['ID']] = array(
+                                            'id' => $item['ID'],
+                                            'title' => $item['title'],
+                                            'url' => $item['url']
+                                        );
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+            }
+            return $this->render('@PaprecPublic/Menu/headersMenu.html.twig', array(
+                'items' => $headers
+            ));
+        } elseif ($slug == 'footer-menu') {
+
+            $footers = array();
+            if (isset($bodyResponse['items']) && is_array($bodyResponse['items']) && count($bodyResponse['items'])) {
+                foreach ($bodyResponse['items'] as $item) {
+                    if ($item['menu_item_parent'] == '0') {
+                        $footers[$item['ID']] = array(
+                            'id' => $item['ID'],
+                            'title' => $item['title'],
+                            'url' => $item['url'],
+                            'submenus' => array()
+                        );
+                    } else {
+                        $footers[$item['menu_item_parent']]['submenus'][$item['ID']] = array(
+                            'id' => $item['ID'],
+                            'title' => $item['title'],
+                            'url' => $item['url']
+                        );
+                    }
+                }
+            }
+
+
+            return $this->render('@PaprecPublic/Menu/footersMenu.html.twig', array(
+                'items' => $footers
+            ));
+        } elseif ($slug == 'quicklinksmenu-footer') {
+
+            $quicklinksmenus = array();
+            if (isset($bodyResponse['items']) && is_array($bodyResponse['items']) && count($bodyResponse['items'])) {
+                foreach ($bodyResponse['items'] as $item) {
+                    $quicklinksmenus[] = array(
                         'id' => $item['ID'],
                         'title' => $item['title'],
                         'url' => $item['url']
@@ -65,21 +119,8 @@ class WordpressController extends Controller
             }
 
 
-            return $this->render('@PaprecPublic/Menu/footersMenu.html.twig', array(
-                'response' => $footers
-            ));
-        } elseif ($slug == 'quicklinksmenu-footer') {
-            foreach($bodyResponse['items'] as $item) {
-                $quicklinksmenus[] = array(
-                    'id' => $item['ID'],
-                    'title' => $item['title'],
-                    'url' => $item['url']
-                );
-            }
-
-
-            return $this->render('@PaprecPublic/Menu/headersMenu.html.twig', array(
-                'response' => $quicklinksmenus
+            return $this->render('@PaprecPublic/Menu/quicklinksMenu.html.twig', array(
+                'items' => $quicklinksmenus
             ));
         }
 
