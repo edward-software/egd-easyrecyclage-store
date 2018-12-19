@@ -28,6 +28,7 @@
     "doctrine/orm": "^2.5",
     "egeloen/ckeditor-bundle": "^6.0",
     "friendsofsymfony/user-bundle": "~2.0",
+    "guzzlehttp/guzzle": "^6.3",
     "iio/libmergepdf": "^4.0",
     "incenteev/composer-parameter-handler": "^2.0",
     "knplabs/knp-paginator-bundle": "^2.8",

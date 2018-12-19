@@ -7,7 +7,26 @@
 {#{% block stylesheets %}#}
 
 {#{% endblock %}#}
+{% block whoare %}
+    <div class="whoare">
+        <div class="wrapper">
+            <div class="righter">
+                <div class="whoare__title">Je suis</div>
 
+                <a href="{{ path('paprec_public_corp_home_index') }}"
+                   class="whoare__cta {% if app.request.get('_route')|slice(0, 'paprec_public_corp'|length) == 'paprec_public_corp' %} active{% endif %}">Entreprise<br>&
+                    administration</a>
+                <a href="{{ path('paprec_public_non_corporate_subscription_groupe_step0') }}"
+                   class="whoare__cta {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_groupe'|length) == 'paprec_public_non_corporate_subscription_groupe' %} active{% endif %}">Groupe<br>&
+                    réseaux</a>
+                <a href="{{ path('paprec_public_non_corporate_subscription_collectivite_step0') }}"
+                   class="whoare__cta whoare__cta--center {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_collectivite'|length) == 'paprec_public_non_corporate_subscription_collectivite' %} active{% endif %}">Collectivité</a>
+                <a href="{{ path('paprec_public_non_corporate_subscription_particulier_step0') }}"
+                   class="whoare__cta whoare__cta--center {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_particulier'|length) == 'paprec_public_non_corporate_subscription_particulier' %} active{% endif %}">Particulier</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 {% block main_content %}
     <section>
         <div class="wrapper">

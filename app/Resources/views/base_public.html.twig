@@ -1,4 +1,4 @@
-    <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,23 +6,21 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('build/public.css') }}">
     <link rel="stylesheet" href="{{ paprec_public_site_url }}/wp-content/themes/paprec/style.css?ver=1.0">
     <link rel="stylesheet" href="{{ paprec_public_site_url }}/wp-content/themes/paprec/css/styles.css?te=fesg">
-    <link rel="stylesheet" href="{{ asset('build/public.css') }}">
 
     {% block stylesheets %}{% endblock %}
 
 </head>
-<body class="home page-template-default page page-id-2 logged-in page-d-exemple tunnel">
+<body class="page-template-default page page-id-2 logged-in page-d-exemple tunnel">
 
 <header class="header">
     <div class="header__shortlinks">
         <div class="wrapper">
             <nav role="navigation">
                 <ul>
-                    <li><a href="#">Le blog</a></li>
-                    <li class="header__contactlink"><a href="#"><span>Contactez</span>nous</a></li>
-                    <li class="header__storelink"><a href="#"><span>Trouvez</span>votre agence</a></li>
+                    {{ render(controller('PaprecPublicBundle:Wordpress:getMenuFromWP', {'slug': 'shortlinks-menu'})) }}
                 </ul>
             </nav>
         </div>
@@ -30,11 +28,11 @@
 
     <div class="wrapper">
         <div class="header__menu">
+
             <a class="header__cta">Recyclez<br>vos déchets</a>
             <ul>
-                <li><a href="#">Notre savoir-faire</a></li>
-                <li><a href="#">Nos filières</a></li>
-                <li><a href="#">Études de cas</a></li>
+                {{ render(controller('PaprecPublicBundle:Wordpress:getMenuFromWP', {'slug': 'header-menu'})) }}
+
             </ul>
         </div>
         <a href="{{ paprec_public_site_url }}" class="header__logo">
@@ -49,25 +47,27 @@
             <h2>Votre solution <span>EasyRecyclage</span> personalisée</h2>
         </div>
     </div>
+    {% block whoare %}
+        <div class="whoare">
+            <div class="wrapper">
+                <div class="righter">
+                    <div class="whoare__title">Je suis</div>
 
-    <div class="whoare">
-        <div class="wrapper">
-            <div class="righter">
-                <div class="whoare__title">Je suis</div>
-
-                <a href="{{ path('paprec_public_corp_home_index') }}"
-                   class="whoare__cta {% if app.request.get('_route')|slice(0, 'paprec_public_corp'|length) == 'paprec_public_corp' %} active{% endif %}">Entreprise<br>&
-                    administration</a>
-                <a href="{{ path('paprec_public_non_corporate_subscription_groupe_step0') }}"
-                   class="whoare__cta {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_groupe'|length) == 'paprec_public_non_corporate_subscription_groupe' %} active{% endif %}">Groupe<br>&
-                    réseaux</a>
-                <a href="{{ path('paprec_public_non_corporate_subscription_collectivite_step0') }}"
-                   class="whoare__cta whoare__cta--center {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_collectivite'|length) == 'paprec_public_non_corporate_subscription_collectivite' %} active{% endif %}">Collectivité</a>
-                <a href="{{ path('paprec_public_non_corporate_subscription_particulier_step0') }}"
-                   class="whoare__cta whoare__cta--center {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_particulier'|length) == 'paprec_public_non_corporate_subscription_particulier' %} active{% endif %}">Particulier</a>
+                    <a href="{{ path('paprec_public_corp_home_index') }}"
+                       class="whoare__cta {% if app.request.get('_route')|slice(0, 'paprec_public_corp'|length) == 'paprec_public_corp' %} active{% endif %}">Entreprise<br>&
+                        administration</a>
+                    <a href="{{ path('paprec_public_non_corporate_subscription_groupe_step0') }}"
+                       class="whoare__cta {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_groupe'|length) == 'paprec_public_non_corporate_subscription_groupe' %} active{% endif %}">Groupe<br>&
+                        réseaux</a>
+                    <a href="{{ path('paprec_public_non_corporate_subscription_collectivite_step0') }}"
+                       class="whoare__cta whoare__cta--center {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_collectivite'|length) == 'paprec_public_non_corporate_subscription_collectivite' %} active{% endif %}">Collectivité</a>
+                    <a href="{{ path('paprec_public_non_corporate_subscription_particulier_step0') }}"
+                       class="whoare__cta whoare__cta--center {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_particulier'|length) == 'paprec_public_non_corporate_subscription_particulier' %} active{% endif %}">Particulier</a>
+                </div>
             </div>
         </div>
-    </div>
+    {% endblock %}
+
     {% block main_content %}
         <!-- section -->
 
@@ -92,48 +92,8 @@
         <div class="footer__mid">
             <div>
                 <div class="footer__links">
-                    <h3>Trouvez votre solution pour recyclez vos déchets</h3>
-                    <ul>
-                        <li><a href="#">Solutions entreprise &amp; déchets non dangereux</a></li>
-                        <li><a href="#">Solutions entreprise &amp; déchets de chantier</a></li>
-                        <li><a href="#">Solutions entreprise &amp; déchets électriques et électroniques</a></li>
-                        <li><a href="#">Solutions entreprise &amp; déchets 5 flux</a></li>
-                        <li><a href="#">Solutions grand compte</a></li>
-                        <li><a href="#">Solutions collectivité</a></li>
-                        <li><a href="#">Solutions particulier</a></li>
-                    </ul>
-                </div>
-                <div class="footer__links">
-                    <h3>Trouvez votre agence Paprec</h3>
-                    <ul>
-                        <li><a href="#">Agences d’Île-de-France</a></li>
-                        <li><a href="#">Agences du Nord, Normandie, Centre et Est</a></li>
-                        <li><a href="#">Agences du Grand Ouest</a></li>
-                        <li><a href="#">Agences d’Auvergne, Méditerranée et Rhône-Alpes</a></li>
-                        <li><a href="#">Agences du Sud-Ouest</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div>
-                <div class="footer__links">
-                    <h3>Tout savoir sur les prestations</h3>
-                    <ul>
-                        <li><a href="#">Guide de quantités de déchets</a></li>
-                        <li><a href="#">Conditions d’accès et de livraison</a></li>
-                        <li><a href="#">Moyens de paiement</a></li>
-                        <li><a href="#">Conditions générales de ventes</a></li>
-                        <li><a href="#">Conditions générales d’utilisation</a></li>
-                        <li><a href="#">F.A.Q.</a></li>
-                    </ul>
-                </div>
-                <div class="footer__links">
-                    <h3>Trouvez votre spécialiste recyclage</h3>
-                    <ul>
-                        <li><a href="#">Agences de papiers, cartons, déchets industriels et de bureaux</a></li>
-                        <li><a href="#">Agences de plastiques</a></li>
-                        <li><a href="#">Agences d’équipements électriques et électroniques</a></li>
-                        <li><a href="#">Agences de ferrailles, métaux et VHU</a></li>
-                        <li><a href="#">Agences de chantiers</a></li>
+                    <ul class="menu">
+                        {{ render(controller('PaprecPublicBundle:Wordpress:getMenuFromWP', {'slug': 'footer-menu'})) }}
                     </ul>
                 </div>
             </div>
