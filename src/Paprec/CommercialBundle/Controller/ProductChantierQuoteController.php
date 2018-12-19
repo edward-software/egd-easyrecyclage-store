@@ -434,4 +434,28 @@ class ProductChantierQuoteController extends Controller
             'id' => $productChantierQuote->getId()
         ));
     }
+
+    /**
+     * @Route("/productChantierQuote/{id}/sendGeneratedQuote", name="paprec_commercial_productChantierQuote_sendGeneratedQuote")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws \Exception
+     */
+    public function sendGeneratedQuoteAction(ProductChantierQuote $productChantierQuote)
+    {
+        $productChantierQuoteManager = $this->get('paprec_commercial.product_chantier_quote_manager');
+        $productChantierQuoteManager->isDeleted($productChantierQuote, true);
+
+
+        $sendQuote = $productChantierQuoteManager->sendGeneratedQuoteEmail($productChantierQuote);
+        if ($sendQuote) {
+            $this->get('session')->getFlashBag()->add('success', 'generatedQuoteSent');
+        } else {
+            $this->get('session')->getFlashBag()->add('error', 'generatedQuoteNotSent');
+        }
+
+        return $this->redirectToRoute('paprec_commercial_productChantierQuote_view', array(
+            'id' => $productChantierQuote->getId()
+        ));
+    }
 }

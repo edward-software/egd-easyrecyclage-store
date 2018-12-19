@@ -88,8 +88,12 @@ class QuoteRequestNonCorporateManager
             $from = $this->container->getParameter('paprec_email_sender');
             $rcptTo = $quoteRequestNonCorporate->getEmail();
 
+            if ($rcptTo == null || $rcptTo == '') {
+                return false;
+            }
+
             $message = \Swift_Message::newInstance()
-                ->setSubject('Votre demande de devis ' . $quoteRequestNonCorporate->getCustomerType() . ' N°' . $quoteRequestNonCorporate->getId())
+                ->setSubject('Easy-Recyclage : Votre demande de devis ' . $quoteRequestNonCorporate->getCustomerType() . ' N°' . $quoteRequestNonCorporate->getId())
                 ->setFrom($from)
                 ->setTo($rcptTo)
                 ->setBody(
@@ -130,7 +134,7 @@ class QuoteRequestNonCorporateManager
             $rcptTo = 'frederic.laine@eggers-digital.com';
 
             $message = \Swift_Message::newInstance()
-                ->setSubject('Nouvelle demande de devis : ' . $quoteRequestNonCorporate->getCustomerType() . ' ' . $quoteRequestNonCorporate->getId())
+                ->setSubject('Easy-Recyclage : Nouvelle demande de devis : ' . $quoteRequestNonCorporate->getCustomerType() . ' ' . $quoteRequestNonCorporate->getId())
                 ->setFrom($from)
                 ->setTo($rcptTo)
                 ->setBody(
@@ -154,4 +158,61 @@ class QuoteRequestNonCorporateManager
             throw new Exception($e->getMessage(), $e->getCode());
         }
     }
+
+    /**
+     * Envoi à l'internante du devis uploadé par le manager
+     *
+     * @param QuoteRequestNonCorporate $quoteRequestNonCorporate
+     * @return bool
+     * @throws Exception
+     */
+    public function sendAssociatedQuoteMail(QuoteRequestNonCorporate $quoteRequestNonCorporate) {
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+
+            $rcptTo = $quoteRequestNonCorporate->getEmail();
+
+            if ($rcptTo == null || $rcptTo == '') {
+                return false;
+            }
+
+            $pdfFilename = date('Y-m-d') . '-EasyRecyclage-Devis-' . $quoteRequestNonCorporate->getId() . '.pdf';
+
+            if ($quoteRequestNonCorporate->getAssociatedQuote()) {
+                $filename = $quoteRequestNonCorporate->getAssociatedQuote();
+                $path = $this->container->getParameter('paprec_commercial.quote_request.files_path');
+                $pdfFile = $path . '/' . $filename;
+            } else {
+                return false;
+            }
+
+            $attachment = \Swift_Attachment::newInstance(file_get_contents($pdfFile), $pdfFilename, 'application/pdf');
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Easy-Recyclage : Votre devis')
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/QuoteRequestNonCorporate/emails/sendAssociatedQuoteEmail.html.twig',
+                        array(
+                            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
+                        )
+                    ),
+                    'text/html'
+                )
+                ->attach($attachment);
+
+            if ($this->container->get('mailer')->send($message)) {
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendNewQuoteRequest', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
 }

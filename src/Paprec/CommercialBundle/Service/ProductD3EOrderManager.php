@@ -11,7 +11,9 @@ namespace Paprec\CommercialBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\ORMException;
 use Exception;
+use Knp\Snappy\Pdf;
 use Paprec\CommercialBundle\Entity\ProductD3EOrder;
 use Paprec\CommercialBundle\Entity\ProductD3EOrderLine;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -221,4 +223,209 @@ class ProductD3EOrderManager
         ), 2);
     }
 
+    /**
+     * Envoie un mail au responsable D3E avec les données de la commande D3E
+     *
+     * @param ProductD3EOrder $productD3EOrder
+     * @return bool
+     * @throws Exception
+     */
+    public function sendNewProductD3EOrderEmail(ProductD3EOrder $productD3EOrder)
+    {
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+
+            // TODO Appeler une fonction de UserManager qui retourne l'user qui s'occupe des devis D3E
+            // TODO $rcptTo = $user->getEmail()
+            $rcptTo = 'frederic.laine@eggers-digital.com';
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Easy-Recyclage : Nouvelle commande D3E - N°' . $productD3EOrder->getId())
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductD3EOrder/emails/sendNewOrderEmail.html.twig',
+                        array(
+                            'productD3EOrder' => $productD3EOrder
+                        )
+                    ),
+                    'text/html'
+                );
+
+            if ($this->container->get('mailer')->send($message)) {
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendNewProductD3EOrder', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * Envoi à l'internante de la facture uploadée par le manager
+     *
+     * @param ProductD3EOrder $productD3EOrder
+     * @return bool
+     * @throws Exception
+     */
+    public function sendAssociatedInvoiceMail(ProductD3EOrder $productD3EOrder) {
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+
+            $rcptTo = $productD3EOrder->getEmail();
+
+            if ($rcptTo == null || $rcptTo == '') {
+                return false;
+            }
+
+            $pdfFilename = date('Y-m-d') . '-EasyRecyclage-Facture-D3E-'  . $productD3EOrder->getId() . '.pdf';
+
+            if ($productD3EOrder->getAssociatedInvoice()) {
+                $filename = $productD3EOrder->getAssociatedInvoice();
+                $path = $this->container->getParameter('paprec_commercial.product_d3e_order.files_path');
+                $pdfFile = $path . '/' . $filename;
+            } else {
+                return false;
+            }
+
+            $attachment = \Swift_Attachment::newInstance(file_get_contents($pdfFile), $pdfFilename, 'application/pdf');
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Easy-Recyclage : Votre facture pour déchets D3E')
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductD3EOrder/emails/sendAssociatedInvoiceEmail.html.twig',
+                        array(
+                            'productD3EOrder' => $productD3EOrder
+                        )
+                    ),
+                    'text/html'
+                )
+                ->attach($attachment);
+
+            if ($this->container->get('mailer')->send($message)) {
+
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendNewProductD3EOrder', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * Envoi un récapitulatif de commande au client
+     *
+     * @param ProductD3EOrder $productD3EOrder
+     * @return bool
+     * @throws Exception
+     */
+    public function sendOrderSummaryEmail(ProductD3EOrder $productD3EOrder)
+    {
+
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+            $rcptTo = $productD3EOrder->getEmail();
+
+            if ($rcptTo == null || $rcptTo == '') {
+                return false;
+            }
+
+            $pdfFilename = date('Y-m-d') . '-EasyRecyclage-Récapitulatif-Commande-' . $productD3EOrder->getId() . '.pdf';
+
+            $pdfFile = $this->generateOrderSummaryPDF($productD3EOrder);
+
+            if (!$pdfFile) {
+                return false;
+            }
+
+            $attachment = \Swift_Attachment::newInstance(file_get_contents($pdfFile), $pdfFilename, 'application/pdf');
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Easy-Recyclage : Votre récapitulatif de commande N°' . $productD3EOrder->getId())
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductD3EOrder/emails/sendOrderSummaryEmail.html.twig',
+                        array(
+                            'productD3EOrder' => $productD3EOrder
+                        )
+                    ),
+                    'text/html'
+                )
+                ->attach($attachment);
+
+            if ($this->container->get('mailer')->send($message)) {
+                if(file_exists($pdfFile)) {
+                    unlink($pdfFile);
+                }
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendOrderSummaryProductD3EOrder', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * Génère le récapitulatif de commande au format PDF et retoune le nom du fichier généré (placé dans /data/tmp)
+     *
+     * @param ProductD3EOrder $productD3EOrder
+     * @return bool|string
+     * @throws Exception
+     */
+    public function generateOrderSummaryPDF(ProductD3EOrder $productD3EOrder)
+    {
+        try {
+            $pdfTmpFolder = $this->container->getParameter('paprec_commercial.data_tmp_directory');
+
+            if (!is_dir($pdfTmpFolder)) {
+                mkdir($pdfTmpFolder, 0755, true);
+            }
+
+            $filename = $pdfTmpFolder . '/' . md5(uniqid()) . '.pdf';
+
+            $snappy = new Pdf($this->container->getParameter('wkhtmltopdf_path'));
+            $snappy->generateFromHtml(
+                array(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductD3EOrder/PDF/orderSummary.html.twig',
+                        array(
+                            'productD3EOrder' => $productD3EOrder
+                        )
+                    )
+                ),
+                $filename
+            );
+
+            /**
+             * Concaténation des notices
+             */
+            $pdfArray = array();
+            $pdfArray[] = $filename;
+
+            if (!file_exists($filename)) {
+                return false;
+            }
+            return $filename;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToGenerateOrderSummaryProductD3EOrder', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
 }

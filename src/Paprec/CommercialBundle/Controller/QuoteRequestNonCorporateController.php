@@ -190,7 +190,7 @@ class QuoteRequestNonCorporateController extends Controller
      */
     public function viewAction(Request $request, QuoteRequestNonCorporate $quoteRequestNonCorporate)
     {
-        $quoteRequestNonCorporateManager = $this->get('paprec_commercialquote_request_non_corporate_manager');
+        $quoteRequestNonCorporateManager = $this->get('paprec_commercial.quote_request_non_corporate_manager');
         $quoteRequestNonCorporateManager->isDeleted($quoteRequestNonCorporate, true);
 
         $form = $this->createForm(QuoteRequestNonCorporateAssociatedQuoteType::class, $quoteRequestNonCorporate);
@@ -208,7 +208,7 @@ class QuoteRequestNonCorporateController extends Controller
      */
     public function editAction(Request $request, QuoteRequestNonCorporate $quoteRequestNonCorporate)
     {
-        $quoteRequestNonCorporateManager = $this->get('paprec_commercialquote_request_non_corporate_manager');
+        $quoteRequestNonCorporateManager = $this->get('paprec_commercial.quote_request_non_corporate_manager');
         $quoteRequestNonCorporateManager->isDeleted($quoteRequestNonCorporate, true);
 
         $status = array();
@@ -373,7 +373,7 @@ class QuoteRequestNonCorporateController extends Controller
                 'id' => $quoteRequestNonCorporate->getId()
             ));
         }
-        return $this->render('PaprecCommercialBundle:QuoteRequest:view.html.twig', array(
+        return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate:view.html.twig', array(
             'quoteRequestNonCorporate' => $quoteRequestNonCorporate,
             'formAddAssociatedQuote' => $form->createView()
         ));
@@ -433,6 +433,31 @@ class QuoteRequestNonCorporateController extends Controller
         header('Content-Length: ' . filesize($zipname));
         readfile($zipname);
         unlink($zipname);
+    }
+
+    /**
+     * @Route("/quoteRequestNonCorporate/{id}/sendAsssociatedQuote", name="paprec_commercial_quoteRequestNonCorporate_sendAssociatedQuote")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     */
+    public function sendAssociatedQuoteAction(QuoteRequestNonCorporate $quoteRequestNonCorporate)
+    {
+        $quoteRequestNonCorporateManager = $this->get('paprec_commercial.quote_request_non_corporate_manager');
+        $quoteRequestNonCorporateManager->isDeleted($quoteRequestNonCorporate, true);
+
+        if ($quoteRequestNonCorporate->getAssociatedQuote() == null) {
+            $this->get('session')->getFlashBag()->add('error', 'noUploadedQuoteFound');
+        } else {
+            $sendQuote = $quoteRequestNonCorporateManager->sendAssociatedQuoteMail($quoteRequestNonCorporate);
+            if($sendQuote) {
+                $this->get('session')->getFlashBag()->add('success', 'associatedQuoteSent');
+            } else {
+                $this->get('session')->getFlashBag()->add('error', 'associatedQuoteNotSent');
+            }
+        }
+        return $this->redirectToRoute('paprec_commercial_quoteRequestNonCorporate_view', array(
+            'id' => $quoteRequestNonCorporate->getId()
+        ));
     }
 
 }

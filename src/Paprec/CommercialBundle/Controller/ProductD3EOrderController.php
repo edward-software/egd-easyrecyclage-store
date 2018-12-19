@@ -487,7 +487,7 @@ class ProductD3EOrderController extends Controller
      * @Route("/productD3EOrder/{id}/downloadAssociatedInvoice", name="paprec_commercial_productD3EOrder_downloadAssociatedInvoice")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function downloadAssociatedQuoteAction(ProductD3EOrder $productD3EOrder)
+    public function downloadAssociatedInvoiceAction(ProductD3EOrder $productD3EOrder)
     {
         $filename = $productD3EOrder->getAssociatedInvoice();
         $path = $this->getParameter('paprec_commercial.product_d3e_order.files_path');
@@ -507,5 +507,31 @@ class ProductD3EOrderController extends Controller
             readfile($file);
             exit;
         }
+    }
+
+    /**
+     * @Route("/productD3EOrder/{id}/sendAsssociatedInvoice", name="paprec_commercial_productD3EOrder_sendAssociatedInvoice")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws Exception
+     */
+    public function sendAssociatedInvoiceAction(ProductD3EOrder $productD3EOrder)
+    {
+        $productD3EOrderManager = $this->get('paprec_commercial.product_d3e_order_manager');
+        $productD3EOrderManager->isDeleted($productD3EOrder, true);
+
+        if ($productD3EOrder->getAssociatedInvoice() == null) {
+            $this->get('session')->getFlashBag()->add('error', 'noUploadedInvoiceFound');
+        } else {
+            $sendInvoice = $productD3EOrderManager->sendAssociatedInvoiceMail($productD3EOrder);
+            if($sendInvoice) {
+                $this->get('session')->getFlashBag()->add('success', 'associatedInvoiceSent');
+            } else {
+                $this->get('session')->getFlashBag()->add('error', 'associatedInvoiceNotSent');
+            }
+        }
+        return $this->redirectToRoute('paprec_commercial_productD3EOrder_view', array(
+            'id' => $productD3EOrder->getId()
+        ));
     }
 }

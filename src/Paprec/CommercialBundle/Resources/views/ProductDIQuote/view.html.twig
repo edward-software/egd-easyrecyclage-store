@@ -19,7 +19,7 @@
         <!-- FLASH MESSAGE -->
         <div class="view-box">
 
-            {% for flashMessage in app.session.flashbag.get('errors') %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
                 <div class="alert alert-danger">{{ ('Commercial.ProductDIQuote.Error.' ~ flashMessage)|trans }}</div>
             {% endfor %}
 
@@ -33,10 +33,14 @@
                 <h4>
                     <i class="fa fa-xs fa-productDIQuote"></i> {{ 'Commercial.ProductDIQuote.View'|trans }}
                     <div class="float-right">
+                        <a id="sendGeneratedQuoteButton" href="javascript:void(0);" class="btn btn-sm btn-success"><i
+                                    class="fa fa-xs fa-envelope"></i> {{ 'Commercial.ProductDIQuote.Send-quote'|trans }}
+                        </a>
                         <a href="{{ path("paprec_commercial_productDIQuote_edit", {id: productDIQuote.id}) }}"
                            class="btn btn-sm btn-warning"><i
                                     class="fa fa-xs fa-edit"></i> {{ 'Commercial.ProductDIQuote.Edit'|trans }}</a>
-                        <a id="commmecialProductDIQuoteRemoveButton_" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
+                        <a id="commmecialProductDIQuoteRemoveButton" href="javascript:void(0);"
+                           class="btn btn-sm btn-danger"><i
                                     class="fa fa-xs fa-trash"></i> {{ 'Commercial.ProductDIQuote.Remove'|trans }}</a>
                     </div>
                 </h4>
@@ -207,7 +211,8 @@
                                 {{ 'Commercial.ProductDIQuote.ProductsList'|trans }}
                                 <div class="float-right">
 
-                                    <a href="{{ path('paprec_commercial_productDIQuote_addLine', {id: productDIQuote.id}) }}" class="btn btn-sm btn-outline-primary">
+                                    <a href="{{ path('paprec_commercial_productDIQuote_addLine', {id: productDIQuote.id}) }}"
+                                       class="btn btn-sm btn-outline-primary">
                                         <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductDIQuote.AddLine'|trans }}
                                     </a>
                                 </div>
@@ -290,7 +295,7 @@
             <script>
                 $(function () {
 
-                    $('#commmecialProductDIQuoteRemoveButton_').on('click', function () {
+                    $('#commmecialProductDIQuoteRemoveButton').on('click', function () {
 
                         var url = "{{ path("paprec_commercial_productDIQuote_remove", {id: productDIQuote.id}) }}";
 
@@ -325,6 +330,22 @@
                         });
 
                     });
+
+                    $('#sendGeneratedQuoteButton').on('click', function () {
+                        var url = "{{ path("paprec_commercial_productDIQuote_sendGeneratedQuote", {id: productDIQuote.id}) }}";
+
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.ProductDIQuote.Confirm-send-quote'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
+                                $(location).attr('href', url);
+                            }
+                        });
+                    })
 
                 });
             </script>

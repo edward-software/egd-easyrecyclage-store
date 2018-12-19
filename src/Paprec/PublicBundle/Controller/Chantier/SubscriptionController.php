@@ -133,7 +133,7 @@ class SubscriptionController extends Controller
         $cart = $cartManager->get($cartUuid);
         $type = $cart->getType();
 
-        $postalCode =$cart->getPostalCode();
+        $postalCode = $cart->getPostalCode();
         $city = $cart->getCity();
 
         // si l'utilisateur est dans "J'établis un devis" alors on créé un devis Chantier
@@ -159,14 +159,22 @@ class SubscriptionController extends Controller
                 $em->flush();
 
                 // On récupère tous les produits ajoutés au Cart
-                foreach ($cart->getContent() as $item) {
-                    $productChantierQuoteManager->addLineFromCart($productChantierQuote, $item['pId'], $item['qtty'], $item['cId']);
+                if ($cart->getContent() !== null) {
+                    foreach ($cart->getContent() as $item) {
+                        $productChantierQuoteManager->addLineFromCart($productChantierQuote, $item['pId'], $item['qtty'], $item['cId']);
+                    }
                 }
 
-                return $this->redirectToRoute('paprec_public_corp_Chantier_subscription_step3', array(
-                    'cartUuid' => $cart->getId(),
-                    'quoteId' => $productChantierQuote->getId()
-                ));
+                // Envois du mail d'alerte au responsable de division et envoi du devis au client
+                $sendNewProductChantierQuoteMail = $productChantierQuoteManager->sendNewProductChantierQuoteEmail($productChantierQuote);
+                $sendGeneratedQuoteMail = $productChantierQuoteManager->sendGeneratedQuoteEmail($productChantierQuote);
+
+                if ($sendNewProductChantierQuoteMail && $sendGeneratedQuoteMail) {
+                    return $this->redirectToRoute('paprec_public_corp_Chantier_subscription_step3', array(
+                        'cartUuid' => $cart->getId(),
+                        'quoteId' => $productChantierQuote->getId()
+                    ));
+                }
 
             }
         } else { // sinon on créé une commande Chantier
@@ -191,14 +199,21 @@ class SubscriptionController extends Controller
                 $em->flush();
 
                 // On récupère tous les produits ajoutés au Cart
-                foreach ($cart->getContent() as $item) {
-                    $productChantierOrderManager->addLineFromCart($productChantierOrder, $item['pId'], $item['qtty'], $item['cId']);
+                if ($cart->getContent() !== null) {
+                    foreach ($cart->getContent() as $item) {
+                        $productChantierOrderManager->addLineFromCart($productChantierOrder, $item['pId'], $item['qtty'], $item['cId']);
+                    }
                 }
 
-                return $this->redirectToRoute('paprec_public_corp_Chantier_subscription_step4', array(
-                    'cartUuid' => $cart->getId(),
-                    'orderId' => $productChantierOrder->getId()
-                ));
+                $sendNewProductChantierOrder = $productChantierOrderManager->sendNewProductChantierOrderEmail($productChantierOrder);
+                $sendOrderSummaryEmail = $productChantierOrderManager->sendOrderSummaryEmail($productChantierOrder);
+
+                if ($sendNewProductChantierOrder && $sendOrderSummaryEmail) {
+                    return $this->redirectToRoute('paprec_public_corp_Chantier_subscription_step4', array(
+                        'cartUuid' => $cart->getId(),
+                        'orderId' => $productChantierOrder->getId()
+                    ));
+                }
             }
 
         }
@@ -388,12 +403,13 @@ class SubscriptionController extends Controller
      * Retourne le twig des agences proches
      * @Route("/chantier/loadNearbyAgencies/{cartUuid}", name="paprec_public_corp_Chantier_subscription_loadNearbyAgencies", condition="request.isXmlHttpRequest()")
      */
-    public function loadNearbyAgenciesAction(Request $request, $cartUuid) {
+    public function loadNearbyAgenciesAction(Request $request, $cartUuid)
+    {
         $cartManager = $this->get('paprec.cart_manager');
         $agencyManager = $this->get('paprec_commercial.agency_manager');
 
         $cart = $cartManager->get($cartUuid);
-        $distance  = 50;
+        $distance = 50;
         $nbAgencies = $agencyManager->getNearbyAgencies($cart->getLongitude(), $cart->getLatitude(), 'CHANTIER', $distance);
 
         return $this->render('@PaprecPublic/Shared/partial/nearbyAgencies.html.twig', array(

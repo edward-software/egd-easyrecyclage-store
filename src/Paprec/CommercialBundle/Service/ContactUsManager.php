@@ -88,7 +88,7 @@ class ContactUsManager
             $rcptTo = $contactUs->getEmail();
 
             $message = \Swift_Message::newInstance()
-                ->setSubject('Votre demande de contact N°' . $contactUs->getId())
+                ->setSubject('Easy-Recyclage : Votre demande de contact N°' . $contactUs->getId())
                 ->setFrom($from)
                 ->setTo($rcptTo)
                 ->setBody(
@@ -131,7 +131,7 @@ class ContactUsManager
             $rcptTo = 'frederic.laine@eggers-digital.com';
 
             $message = \Swift_Message::newInstance()
-                ->setSubject('Nouvelle demande de contact N°' . $contactUs->getId())
+                ->setSubject('Easy-Recyclage : Nouvelle demande de contact N°' . $contactUs->getId())
                 ->setFrom($from)
                 ->setTo($rcptTo)
                 ->setBody(

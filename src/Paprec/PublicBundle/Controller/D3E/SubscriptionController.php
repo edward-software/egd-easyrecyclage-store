@@ -108,7 +108,7 @@ class SubscriptionController extends Controller
 
     /**
      * Etape "Mes coordonnées"
-     * où l'on créé le devis où la quote au submit du formulaire
+     * où l'on créé le devis où la commande au submit du formulaire
      *
      * @Route("/D3E/step2/{cartUuid}", name="paprec_public_corp_D3E_subscription_step2")
      * @throws \Exception
@@ -146,14 +146,23 @@ class SubscriptionController extends Controller
                 $em->flush();
 
                 // On récupère tous les produits ajoutés au Cart
-                foreach ($cart->getContent() as $item) {
-                    $productD3EQuoteManager->addLineFromCart($productD3EQuote, $item['pId'], $item['qtty'], $item['optHandling'], $item['optSerialNumberStmt'], $item['optDestruction']);
+                if ($cart->getContent() !== null) {
+                    foreach ($cart->getContent() as $item) {
+                        $productD3EQuoteManager->addLineFromCart($productD3EQuote, $item['pId'], $item['qtty'], $item['optHandling'], $item['optSerialNumberStmt'], $item['optDestruction']);
+                    }
                 }
 
-                return $this->redirectToRoute('paprec_public_corp_D3E_subscription_step3', array(
-                    'cartUuid' => $cart->getId(),
-                    'quoteId' => $productD3EQuote->getId()
-                ));
+                //Envois du mail d'alerte au responsable de division et du mail avec le devis au client
+                $sendNewProductD3EQuoteMail = $productD3EQuoteManager->sendNewProductD3EQuoteEmail($productD3EQuote);
+                $sendGeneratedQuoteMail = $productD3EQuoteManager->sendGeneratedQuoteEmail($productD3EQuote);
+
+                if ($sendNewProductD3EQuoteMail && $sendGeneratedQuoteMail) {
+
+                    return $this->redirectToRoute('paprec_public_corp_D3E_subscription_step3', array(
+                        'cartUuid' => $cart->getId(),
+                        'quoteId' => $productD3EQuote->getId()
+                    ));
+                }
 
             }
         } else { // sinon on créé une commande D3E
@@ -178,14 +187,21 @@ class SubscriptionController extends Controller
                 $em->flush();
 
                 // On récupère tous les produits ajoutés au Cart
-                foreach ($cart->getContent() as $item) {
-                    $productD3EOrderManager->addLineFromCart($productD3EOrder, $item['pId'], $item['qtty'], $item['optHandling'], $item['optSerialNumberStmt'], $item['optDestruction']);
+                if ($cart->getContent() !== null) {
+                    foreach ($cart->getContent() as $item) {
+                        $productD3EOrderManager->addLineFromCart($productD3EOrder, $item['pId'], $item['qtty'], $item['optHandling'], $item['optSerialNumberStmt'], $item['optDestruction']);
+                    }
                 }
 
-                return $this->redirectToRoute('paprec_public_corp_D3E_subscription_step4', array(
-                    'cartUuid' => $cart->getId(),
-                    'orderId' => $productD3EOrder->getId()
-                ));
+                $sendNewProductD3EOrderMail = $productD3EOrderManager->sendNewProductD3EOrderEmail($productD3EOrder);
+                $sendOrderSummaryEmail = $productD3EOrderManager->sendOrderSummaryEmail($productD3EOrder);
+
+                if ($sendNewProductD3EOrderMail && $sendOrderSummaryEmail) {
+                    return $this->redirectToRoute('paprec_public_corp_D3E_subscription_step4', array(
+                        'cartUuid' => $cart->getId(),
+                        'orderId' => $productD3EOrder->getId()
+                    ));
+                }
             }
 
         }
@@ -340,7 +356,7 @@ class SubscriptionController extends Controller
      * @Route("/D3E/loadCart/{cartUuid}", name="paprec_public_corp_D3E_subscription_loadCart", condition="request.isXmlHttpRequest()")
      * @throws \Exception
      */
-    public function  loadCartAction(Request $request, $cartUuid)
+    public function loadCartAction(Request $request, $cartUuid)
     {
         $cartManager = $this->get('paprec.cart_manager');
 
@@ -356,12 +372,13 @@ class SubscriptionController extends Controller
      * Retourne le twig des agences proches
      * @Route("/D3E/loadNearbyAgencies/{cartUuid}", name="paprec_public_corp_D3E_subscription_loadNearbyAgencies", condition="request.isXmlHttpRequest()")
      */
-    public function loadNearbyAgenciesAction(Request $request, $cartUuid) {
+    public function loadNearbyAgenciesAction(Request $request, $cartUuid)
+    {
         $cartManager = $this->get('paprec.cart_manager');
         $agencyManager = $this->get('paprec_commercial.agency_manager');
 
         $cart = $cartManager->get($cartUuid);
-        $distance  = 50;
+        $distance = 50;
         $nbAgencies = $agencyManager->getNearbyAgencies($cart->getLongitude(), $cart->getLatitude(), 'D3E', $distance);
 
         return $this->render('@PaprecPublic/Shared/partial/nearbyAgencies.html.twig', array(

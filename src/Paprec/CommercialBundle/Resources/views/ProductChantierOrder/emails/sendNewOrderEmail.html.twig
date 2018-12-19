@@ -1,0 +1,105 @@
+{% extends "@PaprecCommercial/Common/emails/base_email.html.twig" %}
+
+ {% block picto_header %}
+     <a href="{{ paprec_public_site_url }}" target="_blank">
+         {#<img alt="Logo" src="{{ absolute_url('build/static/logo.png') }}"  width="100px" height="100px" style="display: block; font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">#}
+         LOGO
+     </a>
+ {% endblock %}
+
+{% block title_header %}
+    Nouvelle commande pour déchets de chantier
+{% endblock %}
+
+{% block subtitle_header %}
+    Commande Chantier - N° {{ productChantierOrder.id }}
+{% endblock %}
+
+{% block main_content %}
+    <tr>
+        Détail de la demande N° {{ productChantierOrder.id }} - {{ productChantierOrder.dateCreation|date('d/m/Y H:i:s') }}
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ProductChantierOrder.BusinessName'|trans }}
+        </td>
+        <td class="value">
+            {{ productChantierOrder.businessName }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ProductChantierOrder.BusinessLine'|trans }}
+        </td>
+        <td class="value">
+            {{ productChantierOrder.businessLine.name }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ProductChantierOrder.Civility'|trans }}
+        </td>
+        <td class="value">
+            {{ productChantierOrder.civility }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ProductChantierOrder.LastName'|trans }}
+        </td>
+        <td class="value">
+            {{ productChantierOrder.lastName }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ProductChantierOrder.FirstName'|trans }}
+        </td>
+        <td class="value">
+            {{ productChantierOrder.firstName }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ProductChantierOrder.Function'|trans }}
+        </td>
+        <td class="value">
+            {{ productChantierOrder.function }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ProductChantierOrder.Email'|trans }}
+        </td>
+        <td class="value">
+            {{ productChantierOrder.email }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ProductChantierOrder.Phone'|trans }}
+        </td>
+        <td class="value">
+            {{ productChantierOrder.phone }}
+        </td>
+    </tr>
+{% endblock %}
+
+{% block footer %}
+    <tr>
+        <td>
+            <a href="{{ absolute_url(path("paprec_commercial_productChantierOrder_view", {id: productChantierOrder.id})) }}">
+                Consulter la commande
+            </a>
+        </td>
+    </tr>
+{% endblock %}
+
+{% block sub_footer %}
+    <tr>
+        <td>
+            Cet email est un message automatique
+        </td>
+    </tr>
+{% endblock %}
+

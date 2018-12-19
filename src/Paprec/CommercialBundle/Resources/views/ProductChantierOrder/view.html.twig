@@ -19,7 +19,7 @@
         <!-- FLASH MESSAGE -->
         <div class="view-box">
 
-            {% for flashMessage in app.session.flashbag.get('errors') %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
                 <div class="alert alert-danger">{{ ('Commercial.ProductChantierOrder.Error.' ~ flashMessage)|trans }}</div>
             {% endfor %}
 
@@ -33,6 +33,9 @@
                 <h4>
                     <i class="fa fa-xs fa-productChantierOrder"></i> {{ 'Commercial.ProductChantierOrder.View'|trans }}
                     <div class="float-right">
+                        <a id="sendInvoiceButton" href="javascript:void(0);" class="btn btn-sm btn-success"><i
+                                    class="fa fa-xs fa-envelope"></i> {{ 'Commercial.ProductD3EOrder.SendInvoice'|trans }}
+                        </a>
                         <a href="{{ path("paprec_commercial_productChantierOrder_edit", {id: productChantierOrder.id}) }}"
                            class="btn btn-sm btn-warning"><i
                                     class="fa fa-xs fa-edit"></i> {{ 'Commercial.ProductChantierOrder.Edit'|trans }}</a>
@@ -378,6 +381,21 @@
                         $('#formAddInvoice').submit();
                     })
 
+                    $('#sendInvoiceButton').on('click', function () {
+                        var url = "{{ path("paprec_commercial_productChantierOrder_sendAssociatedInvoice", {id: productChantierOrder.id}) }}";
+
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.ProductChantierOrder.Confirm-send-invoice'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
+                                $(location).attr('href', url);
+                            }
+                        });
+                    })
                 });
             </script>
         {% endblock %}

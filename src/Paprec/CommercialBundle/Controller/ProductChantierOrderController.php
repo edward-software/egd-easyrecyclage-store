@@ -493,7 +493,7 @@ class ProductChantierOrderController extends Controller
      * @Route("/productChantierOrder/{id}/downloadAssociatedInvoice", name="paprec_commercial_productChantierOrder_downloadAssociatedInvoice")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function downloadAssociatedInvoiceAction( ProductChantierOrder $productChantierOrder)
+    public function downloadAssociatedInvoiceAction(ProductChantierOrder $productChantierOrder)
     {
         $filename = $productChantierOrder->getAssociatedInvoice();
         $path = $this->getParameter('paprec_commercial.product_chantier_order.files_path');
@@ -502,7 +502,7 @@ class ProductChantierOrderController extends Controller
 
         $newFilename = "Commande-Chantier-" . $productChantierOrder->getId() . '-Facture.' . $extension;
 
-        if(file_exists($file)) {
+        if (file_exists($file)) {
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
             header('Content-Disposition: attachment; filename="' . basename($newFilename) . '"');
@@ -513,5 +513,31 @@ class ProductChantierOrderController extends Controller
             readfile($file);
             exit;
         }
+    }
+
+    /**
+     * @Route("/productChantierOrder/{id}/sendAsssociatedInvoice", name="paprec_commercial_productChantierOrder_sendAssociatedInvoice")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws Exception
+     */
+    public function sendAssociatedInvoiceAction(ProductChantierOrder $productChantierOrder)
+    {
+        $productChantierOrderManager = $this->get('paprec_commercial.product_chantier_order_manager');
+        $productChantierOrderManager->isDeleted($productChantierOrder, true);
+
+        if ($productChantierOrder->getAssociatedInvoice() == null) {
+            $this->get('session')->getFlashBag()->add('error', 'noUploadedInvoiceFound');
+        } else {
+            $sendInvoice = $productChantierOrderManager->sendAssociatedInvoiceMail($productChantierOrder);
+            if ($sendInvoice) {
+                $this->get('session')->getFlashBag()->add('success', 'associatedInvoiceSent');
+            } else {
+                $this->get('session')->getFlashBag()->add('error', 'associatedInvoiceNotSent');
+            }
+        }
+        return $this->redirectToRoute('paprec_commercial_productChantierOrder_view', array(
+            'id' => $productChantierOrder->getId()
+        ));
     }
 }

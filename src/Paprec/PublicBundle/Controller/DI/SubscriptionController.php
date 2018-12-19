@@ -66,7 +66,6 @@ class SubscriptionController extends Controller
         $cart = $cartManager->get($cartUuid);
 
 
-
         $productDIQuote = new productDIQuote();
         $productDIQuote->setCity($cart->getCity());
         $productDIQuote->setPostalCode($cart->getPostalCode());
@@ -87,16 +86,23 @@ class SubscriptionController extends Controller
             $em->flush();
 
             // On récupère tous les produits ajoutés au Cart
-            foreach ($cart->getContent() as $item) {
-                $productDIQuoteManager->addLineFromCart($productDIQuote, $item['pId'], $item['qtty'], $item['cId']);
+            if ($cart->getContent() !== null) {
+                foreach ($cart->getContent() as $item) {
+                    $productDIQuoteManager->addLineFromCart($productDIQuote, $item['pId'], $item['qtty'], $item['cId']);
+                }
             }
 
+            //Envois du mail d'alerte au responsable de division et du mail avec le devis au client
+            $sendNewProductDIQuoteMail = $productDIQuoteManager->sendNewProductDIQuoteEmail($productDIQuote);
+            $sendGeneratedQuoteMail = $productDIQuoteManager->sendGeneratedQuoteEmail($productDIQuote);
 
-            return $this->redirectToRoute('paprec_public_corp_DI_subscription_step3', array(
-                'cartUuid' => $cart->getId(),
-                'quoteId' => $productDIQuote->getId()
-            ));
 
+            if ($sendNewProductDIQuoteMail && $sendGeneratedQuoteMail) {
+                return $this->redirectToRoute('paprec_public_corp_DI_subscription_step3', array(
+                    'cartUuid' => $cart->getId(),
+                    'quoteId' => $productDIQuote->getId()
+                ));
+            }
         }
 
 
@@ -207,12 +213,13 @@ class SubscriptionController extends Controller
      * Retourne le twig des agences proches
      * @Route("/di/loadNearbyAgencies/{cartUuid}", name="paprec_public_corp_DI_subscription_loadNearbyAgencies", condition="request.isXmlHttpRequest()")
      */
-    public function loadNearbyAgenciesAction(Request $request, $cartUuid) {
+    public function loadNearbyAgenciesAction(Request $request, $cartUuid)
+    {
         $cartManager = $this->get('paprec.cart_manager');
         $agencyManager = $this->get('paprec_commercial.agency_manager');
 
         $cart = $cartManager->get($cartUuid);
-        $distance  = 50;
+        $distance = 50;
         $nbAgencies = $agencyManager->getNearbyAgencies($cart->getLongitude(), $cart->getLatitude(), 'DI', $distance);
 
         return $this->render('@PaprecPublic/Shared/partial/nearbyAgencies.html.twig', array(

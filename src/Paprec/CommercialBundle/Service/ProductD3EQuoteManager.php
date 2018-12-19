@@ -11,7 +11,9 @@ namespace Paprec\CommercialBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\ORMException;
 use Exception;
+use Knp\Snappy\Pdf;
 use Paprec\CommercialBundle\Entity\ProductD3EQuote;
 use Paprec\CommercialBundle\Entity\ProductD3EQuoteLine;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -220,4 +222,154 @@ class ProductD3EQuoteManager
         );
     }
 
+    /**
+     * Envoie un mail au responsable D3E avec les données du du devis D3E
+     *
+     * @param ProductD3EQuote $productD3EQuote
+     * @return bool
+     * @throws Exception
+     */
+    public function sendNewProductD3EQuoteEmail(ProductD3EQuote $productD3EQuote)
+    {
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+
+            // TODO Appeler une fonction de UserManager qui retourne l'user qui s'occupe des devis D3E
+            // TODO $rcptTo = $user->getEmail()
+            $rcptTo = 'frederic.laine@eggers-digital.com';
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Easy-Recyclage : Nouveau devis D3E - N°' . $productD3EQuote->getId())
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductD3EQuote/emails/sendNewQuoteEmail.html.twig',
+                        array(
+                            'productD3EQuote' => $productD3EQuote
+                        )
+                    ),
+                    'text/html'
+                );
+
+            if ($this->container->get('mailer')->send($message)) {
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendNewProductD3EQuote', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * Envoie du devis généré au client
+     *
+     * @param ProductD3EQuote $productD3EQuote
+     * @return bool
+     * @throws Exception
+     */
+    public function sendGeneratedQuoteEmail(ProductD3EQuote $productD3EQuote)
+    {
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+
+
+            $rcptTo = $productD3EQuote->getEmail();
+
+            if ($rcptTo == null || $rcptTo == '') {
+                return false;
+            }
+
+            $pdfFilename = date('Y-m-d') . '-EasyRecyclage-Devis-' . $productD3EQuote->getId() . '.pdf';
+
+            $pdfFile = $this->generatePDF($productD3EQuote);
+
+            if (!$pdfFile) {
+                return false;
+            }
+
+            $attachment = \Swift_Attachment::newInstance(file_get_contents($pdfFile), $pdfFilename, 'application/pdf');
+
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Easy-Recyclage : Votre devis de prestation régulière pour déchets non dangereux')
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductD3EQuote/emails/sendGeneratedQuoteEmail.html.twig',
+                        array(
+                            'productD3EQuote' => $productD3EQuote
+                        )
+                    ),
+                    'text/html'
+                )
+                ->attach($attachment);
+
+            if ($this->container->get('mailer')->send($message)) {
+                if(file_exists($pdfFile)) {
+                    unlink($pdfFile);
+                }
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendGeneratedProductD3EQuote', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * Génère le devis au format PDF et retoune le nom du fichier généré (placé dans /data/tmp)
+     *
+     * @param ProductD3EQuote $productD3EQuote
+     * @return bool|string
+     * @throws Exception
+     */
+    public function generatePDF(ProductD3EQuote $productD3EQuote)
+    {
+        try {
+            $pdfTmpFolder = $this->container->getParameter('paprec_commercial.data_tmp_directory');
+
+            if (!is_dir($pdfTmpFolder)) {
+                mkdir($pdfTmpFolder, 0755, true);
+            }
+
+            $filename = $pdfTmpFolder . '/' . md5(uniqid()) . '.pdf';
+
+            $snappy = new Pdf($this->container->getParameter('wkhtmltopdf_path'));
+            $snappy->generateFromHtml(
+                array(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductD3EQuote/PDF/quote.html.twig',
+                        array(
+                            'productD3EQuote' => $productD3EQuote
+                        )
+                    )
+                ),
+                $filename
+            );
+
+            /**
+             * Concaténation des notices
+             */
+            $pdfArray = array();
+            $pdfArray[] = $filename;
+
+            if (!file_exists($filename)) {
+                return false;
+            }
+            return $filename;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToGenerateProductD3EQuote', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
 }

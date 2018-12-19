@@ -428,4 +428,28 @@ class ProductD3EQuoteController extends Controller
             'id' => $productD3EQuote->getId()
         ));
     }
+
+    /**
+     * @Route("/productD3EQuote/{id}/sendGeneratedQuote", name="paprec_commercial_productD3EQuote_sendGeneratedQuote")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws \Exception
+     */
+    public function sendGeneratedQuoteAction(ProductD3EQuote $productD3EQuote)
+    {
+        $productD3EQuoteManager = $this->get('paprec_commercial.product_d3e_quote_manager');
+        $productD3EQuoteManager->isDeleted($productD3EQuote, true);
+
+
+        $sendQuote = $productD3EQuoteManager->sendGeneratedQuoteEmail($productD3EQuote);
+        if ($sendQuote) {
+            $this->get('session')->getFlashBag()->add('success', 'generatedQuoteSent');
+        } else {
+            $this->get('session')->getFlashBag()->add('error', 'generatedQuoteNotSent');
+        }
+
+        return $this->redirectToRoute('paprec_commercial_productD3EQuote_view', array(
+            'id' => $productD3EQuote->getId()
+        ));
+    }
 }

@@ -11,7 +11,9 @@ namespace Paprec\CommercialBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\ORMException;
 use Exception;
+use Knp\Snappy\Pdf;
 use Paprec\CommercialBundle\Entity\ProductChantierQuote;
 use Paprec\CommercialBundle\Entity\ProductChantierQuoteLine;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -86,6 +88,7 @@ class ProductChantierQuoteManager
         // On check s'il existe déjà une ligne pour ce produit, pour l'incrémenter
         $currentQuoteLine = $this->em->getRepository('PaprecCommercialBundle:ProductChantierQuoteLine')->findOneBy(
             array(
+                'productChantierQuote' => $productChantierQuote,
                 'productChantier' => $productChantierQuoteLine->getProductChantier(),
                 'category' => $productChantierQuoteLine->getCategory()
             )
@@ -94,6 +97,11 @@ class ProductChantierQuoteManager
         if ($currentQuoteLine) {
             $quantity = $productChantierQuoteLine->getQuantity() + $currentQuoteLine->getQuantity();
             $currentQuoteLine->setQuantity($quantity);
+
+            //On recalcule le montant total de la ligne ainsi que celui du devis complet
+            $totalLine = $this->calculateTotalLine($currentQuoteLine);
+            $currentQuoteLine->setTotalAmount($totalLine);
+            $this->em->flush();
         } else {
             $productChantierQuoteLine->setProductChantierQuote($productChantierQuote);
             $productChantierQuote->addProductChantierQuoteLine($productChantierQuoteLine);
@@ -108,12 +116,12 @@ class ProductChantierQuoteManager
             $productChantierQuoteLine->setCategoryName($productChantierQuoteLine->getCategory()->getName());
 
             $this->em->persist($productChantierQuoteLine);
-        }
 
-        //On recalcule le montant total de la ligne ainsi que celui du devis complet
-        $totalLine = $this->calculateTotalLine($productChantierQuoteLine);
-        $productChantierQuoteLine->setTotalAmount($totalLine);
-        $this->em->flush();
+            //On recalcule le montant total de la ligne ainsi que celui du devis complet
+            $totalLine = $this->calculateTotalLine($productChantierQuoteLine);
+            $productChantierQuoteLine->setTotalAmount($totalLine);
+            $this->em->flush();
+        }
 
         $total = $this->calculateTotal($productChantierQuote);
         $productChantierQuote->setTotalAmount($total);
@@ -201,4 +209,156 @@ class ProductChantierQuoteManager
         );
     }
 
+    /**
+     * Envoie un mail au responsable Chantier avec les données du devis Chantier
+     *
+     * @param ProductChantierQuote $productChantierQuote
+     * @return bool
+     * @throws Exception
+     */
+    public function sendNewProductChantierQuoteEmail(ProductChantierQuote $productChantierQuote)
+    {
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+
+            // TODO Appeler une fonction de UserManager qui retourne l'user qui s'occupe des devis Chantier
+            // TODO $rcptTo = $user->getEmail()
+            $rcptTo = 'frederic.laine@eggers-digital.com';
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Easy-Recyclage : Nouveau devis Chantier - N°' . $productChantierQuote->getId())
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductChantierQuote/emails/sendNewQuoteEmail.html.twig',
+                        array(
+                            'productChantierQuote' => $productChantierQuote
+                        )
+                    ),
+                    'text/html'
+                );
+
+            if ($this->container->get('mailer')->send($message)) {
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendNewProductChantierQuote', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+
+
+    /**
+     * Envoie du devis généré au client
+     *
+     * @param ProductChantierQuote $productChantierQuote
+     * @return bool
+     * @throws Exception
+     */
+    public function sendGeneratedQuoteEmail(ProductChantierQuote $productChantierQuote)
+    {
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+
+
+            $rcptTo = $productChantierQuote->getEmail();
+
+            if ($rcptTo == null || $rcptTo == '') {
+                return false;
+            }
+
+            $pdfFilename = date('Y-m-d') . '-EasyRecyclage-Devis-' . $productChantierQuote->getId() . '.pdf';
+
+            $pdfFile = $this->generatePDF($productChantierQuote);
+
+            if (!$pdfFile) {
+                return false;
+            }
+
+            $attachment = \Swift_Attachment::newInstance(file_get_contents($pdfFile), $pdfFilename, 'application/pdf');
+
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Easy-Recyclage : Votre devis de prestation régulière pour déchets non dangereux')
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductChantierQuote/emails/sendGeneratedQuoteEmail.html.twig',
+                        array(
+                            'productChantierQuote' => $productChantierQuote
+                        )
+                    ),
+                    'text/html'
+                )
+                ->attach($attachment);
+
+            if ($this->container->get('mailer')->send($message)) {
+                if(file_exists($pdfFile)) {
+                    unlink($pdfFile);
+                }
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendGeneratedProductChantierQuote', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * Génère le devis au format PDF et retoune le nom du fichier généré (placé dans /data/tmp)
+     *
+     * @param ProductChantierQuote $productChantierQuote
+     * @return bool|string
+     * @throws Exception
+     */
+    public function generatePDF(ProductChantierQuote $productChantierQuote)
+    {
+        try {
+            $pdfTmpFolder = $this->container->getParameter('paprec_commercial.data_tmp_directory');
+
+            if (!is_dir($pdfTmpFolder)) {
+                mkdir($pdfTmpFolder, 0755, true);
+            }
+
+            $filename = $pdfTmpFolder . '/' . md5(uniqid()) . '.pdf';
+
+            $snappy = new Pdf($this->container->getParameter('wkhtmltopdf_path'));
+            $snappy->generateFromHtml(
+                array(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductChantierQuote/PDF/quote.html.twig',
+                        array(
+                            'productChantierQuote' => $productChantierQuote
+                        )
+                    )
+                ),
+                $filename
+            );
+
+            /**
+             * Concaténation des notices
+             */
+            $pdfArray = array();
+            $pdfArray[] = $filename;
+
+            if (!file_exists($filename)) {
+                return false;
+            }
+            return $filename;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToGenerateProductChantierQuote', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
 }

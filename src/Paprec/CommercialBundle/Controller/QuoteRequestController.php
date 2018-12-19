@@ -380,7 +380,7 @@ class QuoteRequestController extends Controller
 
         $newFilename = "Demande-Devis-" . $quoteRequest->getId() . '-Devis-Associe.' . $extension;
 
-        if(file_exists($file)) {
+        if (file_exists($file)) {
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
             header('Content-Disposition: attachment; filename="' . basename($newFilename) . '"');
@@ -400,7 +400,7 @@ class QuoteRequestController extends Controller
     public function downloadAttachedFilesAction(QuoteRequest $quoteRequest)
     {
         $path = $this->getParameter('paprec_commercial.quote_request.files_path');
-        $zipname = 'demandeDevis-'. $quoteRequest->getId() .'.zip';
+        $zipname = 'demandeDevis-' . $quoteRequest->getId() . '.zip';
         $zip = new ZipArchive;
         $zip->open($zipname, ZipArchive::CREATE);
         $cpt = 1;
@@ -422,4 +422,28 @@ class QuoteRequestController extends Controller
         unlink($zipname);
     }
 
+    /**
+     * @Route("/quoteRequest/{id}/sendAsssociatedQuote", name="paprec_commercial_quoteRequest_sendAssociatedQuote")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     */
+    public function sendAssociatedQuoteAction(QuoteRequest $quoteRequest)
+    {
+        $quoteRequestManager = $this->get('paprec_commercial.quote_request_manager');
+        $quoteRequestManager->isDeleted($quoteRequest, true);
+
+        if ($quoteRequest->getAssociatedQuote() == null) {
+            $this->get('session')->getFlashBag()->add('error', 'noUploadedQuoteFound');
+        } else {
+            $sendQuote = $quoteRequestManager->sendAssociatedQuoteMail($quoteRequest);
+            if($sendQuote) {
+                $this->get('session')->getFlashBag()->add('success', 'associatedQuoteSent');
+            } else {
+                $this->get('session')->getFlashBag()->add('error', 'associatedQuoteNotSent');
+            }
+        }
+        return $this->redirectToRoute('paprec_commercial_quoteRequest_view', array(
+            'id' => $quoteRequest->getId()
+        ));
+    }
 }

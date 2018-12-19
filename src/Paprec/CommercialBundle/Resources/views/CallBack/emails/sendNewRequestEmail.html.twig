@@ -12,13 +12,13 @@
 {% endblock %}
 
 {% block subtitle_header %}
-    Formulaire Être rappelé - N° {{ quoteRequest.id }}
+    Formulaire Être rappelé - N° {{ callBack.id }}
 {% endblock %}
 
 {% block main_content %}
     <tr>
-        Détail de la demande N° {{ quoteRequest.id }}
-        - {{ quoteRequest.dateCreation|date('d/m/Y H:i:s') }}
+        Détail de la demande N° {{ callBack.id }}
+        - {{ callBack.dateCreation|date('d/m/Y H:i:s') }}
     </tr>
     <tr>
         <td class="label">

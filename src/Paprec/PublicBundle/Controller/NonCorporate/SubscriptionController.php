@@ -19,7 +19,7 @@ class SubscriptionController extends Controller
      */
     public function groupeStep0Action(Request $request)
     {
-        $quoteRequestNonCorporateManager = $this->get('paprec_commercialquote_request_non_corporate_manager');
+        $quoteRequestNonCorporateManager = $this->get('paprec_commercial.quote_request_non_corporate_manager');
 
         $quoteRequestNonCorporate = new QuoteRequestNonCorporate();
         $form = $this->createForm(QuoteRequestNonCorporateGroupeType::class, $quoteRequestNonCorporate);
@@ -85,7 +85,7 @@ class SubscriptionController extends Controller
      */
     public function collectiviteStep0Action(Request $request)
     {
-        $quoteRequestNonCorporateManager = $this->get('paprec_commercialquote_request_non_corporate_manager');
+        $quoteRequestNonCorporateManager = $this->get('paprec_commercial.quote_request_non_corporate_manager');
 
         $quoteRequestNonCorporate = new QuoteRequestNonCorporate();
         $form = $this->createForm(QuoteRequestNonCorporateShortType::class, $quoteRequestNonCorporate);
@@ -150,7 +150,7 @@ class SubscriptionController extends Controller
      */
     public function particulierStep0Action(Request $request)
     {
-        $quoteRequestNonCorporateManager = $this->get('paprec_commercialquote_request_non_corporate_manager');
+        $quoteRequestNonCorporateManager = $this->get('paprec_commercial.quote_request_non_corporate_manager');
 
         $quoteRequestNonCorporate = new QuoteRequestNonCorporate();
         $form = $this->createForm(QuoteRequestNonCorporateShortType::class, $quoteRequestNonCorporate);

@@ -11,7 +11,10 @@ namespace Paprec\CommercialBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\ORMException;
 use Exception;
+use Knp\Snappy\Pdf;
+use Paprec\CatalogBundle\Entity\ProductChantier;
 use Paprec\CommercialBundle\Entity\ProductChantierOrder;
 use Paprec\CommercialBundle\Entity\ProductChantierOrderLine;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -207,4 +210,209 @@ class ProductChantierOrderManager
         );
     }
 
+    /**
+     * Envoie un mail au responsable Chantier avec les données de la commande Chantier
+     *
+     * @param ProductChantierOrder $productChantierOrder
+     * @return bool
+     * @throws Exception
+     */
+    public function sendNewProductChantierOrderEmail(ProductChantierOrder $productChantierOrder)
+    {
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+
+            // TODO Appeler une fonction de UserManager qui retourne l'user qui s'occupe des commandes Chantier
+            // TODO $rcptTo = $user->getEmail()
+            $rcptTo = 'frederic.laine@eggers-digital.com';
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Easy-Recyclage : Nouvelle commande Chantier - N°' . $productChantierOrder->getId())
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductChantierOrder/emails/sendNewOrderEmail.html.twig',
+                        array(
+                            'productChantierOrder' => $productChantierOrder
+                        )
+                    ),
+                    'text/html'
+                );
+
+            if ($this->container->get('mailer')->send($message)) {
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendNewProductChantierOrder', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * Envoi à l'internante de la facture uploadée par le manager
+     *
+     * @param ProductChantierOrder $productChantierOrder
+     * @return bool
+     * @throws Exception
+     */
+    public function sendAssociatedInvoiceMail(ProductChantierOrder $productChantierOrder) {
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+
+            $rcptTo = $productChantierOrder->getEmail();
+
+            if ($rcptTo == null || $rcptTo == '') {
+                return false;
+            }
+
+            $pdfFilename = date('Y-m-d') . '-EasyRecyclage-Facture-Chantier-'  . $productChantierOrder->getId() . '.pdf';
+
+            if ($productChantierOrder->getAssociatedInvoice()) {
+                $filename = $productChantierOrder->getAssociatedInvoice();
+                $path = $this->container->getParameter('paprec_commercial.product_chantier_order.files_path');
+                $pdfFile = $path . '/' . $filename;
+            } else {
+                return false;
+            }
+
+            $attachment = \Swift_Attachment::newInstance(file_get_contents($pdfFile), $pdfFilename, 'application/pdf');
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Easy-Recyclage : Votre facture pour déchets de chantier')
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductChantierOrder/emails/sendAssociatedInvoiceEmail.html.twig',
+                        array(
+                            'productChantierOrder' => $productChantierOrder
+                        )
+                    ),
+                    'text/html'
+                )
+                ->attach($attachment);
+
+            if ($this->container->get('mailer')->send($message)) {
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendNewProductChantierOrder', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+
+    /**
+     * Envoi un récapitulatif de commande au client
+     *
+     * @param ProductChantierOrder $productChantierOrder
+     * @return bool
+     * @throws Exception
+     */
+    public function sendOrderSummaryEmail(ProductChantierOrder $productChantierOrder)
+    {
+
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+            $rcptTo = $productChantierOrder->getEmail();
+
+            if ($rcptTo == null || $rcptTo == '') {
+                return false;
+            }
+
+            $pdfFilename = date('Y-m-d') . '-EasyRecyclage-Récapitulatif-Commande-' . $productChantierOrder->getId() . '.pdf';
+
+            $pdfFile = $this->generateOrderSummaryPDF($productChantierOrder);
+
+            if (!$pdfFile) {
+                return false;
+            }
+
+            $attachment = \Swift_Attachment::newInstance(file_get_contents($pdfFile), $pdfFilename, 'application/pdf');
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Easy-Recyclage : Votre récapitulatif de commande N°' . $productChantierOrder->getId())
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductChantierOrder/emails/sendOrderSummaryEmail.html.twig',
+                        array(
+                            'productChantierOrder' => $productChantierOrder
+                        )
+                    ),
+                    'text/html'
+                )
+            ->attach($attachment);
+
+            if ($this->container->get('mailer')->send($message)) {
+                if(file_exists($pdfFile)) {
+                    unlink($pdfFile);
+                }
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendOrderSummaryProductChantierOrder', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * Génère le récapitulatif de commande au format PDF et retoune le nom du fichier généré (placé dans /data/tmp)
+     *
+     * @param ProductChantierOrder $productChantierOrder
+     * @return bool|string
+     * @throws Exception
+     */
+    public function generateOrderSummaryPDF(ProductChantierOrder $productChantierOrder)
+    {
+        try {
+            $pdfTmpFolder = $this->container->getParameter('paprec_commercial.data_tmp_directory');
+
+            if (!is_dir($pdfTmpFolder)) {
+                mkdir($pdfTmpFolder, 0755, true);
+            }
+
+            $filename = $pdfTmpFolder . '/' . md5(uniqid()) . '.pdf';
+
+            $snappy = new Pdf($this->container->getParameter('wkhtmltopdf_path'));
+            $snappy->generateFromHtml(
+                array(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductChantierOrder/PDF/orderSummary.html.twig',
+                        array(
+                            'productChantierOrder' => $productChantierOrder
+                        )
+                    )
+                ),
+                $filename
+            );
+
+            /**
+             * Concaténation des notices
+             */
+            $pdfArray = array();
+            $pdfArray[] = $filename;
+
+            if (!file_exists($filename)) {
+                return false;
+            }
+            return $filename;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToGenerateOrderSummaryProductChantierOrder', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
 }

@@ -19,7 +19,7 @@
         <!-- FLASH MESSAGE -->
         <div class="view-box">
 
-            {% for flashMessage in app.session.flashbag.get('errors') %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
                 <div class="alert alert-danger">{{ ('Commercial.QuoteRequest.Error.' ~ flashMessage)|trans }}</div>
             {% endfor %}
 
@@ -31,8 +31,11 @@
         <div class="card">
             <div class="card-header">
                 <h4>
-                    <i class="fa fa-xs fa-quoteRequest"></i> {{ 'Commercial.QuoteRequest.View'|trans }}
+                    <i class="fa fa-xs fa-folder"></i> {{ 'Commercial.QuoteRequest.View'|trans }}
                     <div class="float-right">
+                        <a id="sendQuoteButton" href="javascript:void(0);" class="btn btn-sm btn-success"><i
+                                    class="fa fa-xs fa-envelope"></i> {{ 'Commercial.QuoteRequest.SendQuote'|trans }}
+                        </a>
                         <a href="{{ path("paprec_commercial_quoteRequest_edit", {id: quoteRequest.id}) }}"
                            class="btn btn-sm btn-warning"><i
                                     class="fa fa-xs fa-edit"></i> {{ 'Commercial.QuoteRequest.Edit'|trans }}</a>
@@ -307,10 +310,27 @@
                         });
 
                     });
+
+                    $('#formAddAssociatedQuoteSubmitButton').on('click', function () {
+                        $('#formAddAssociatedQuote').submit();
+                    });
+
+                    $('#sendQuoteButton').on('click', function () {
+                        var url = "{{ path("paprec_commercial_quoteRequest_sendAssociatedQuote", {id: quoteRequest.id}) }}";
+
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.QuoteRequest.Confirm-send-quote'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
+                                $(location).attr('href', url);
+                            }
+                        });
+                    })
                 });
 
-                $('#formAddAssociatedQuoteSubmitButton').on('click', function () {
-                    $('#formAddAssociatedQuote').submit();
-                })
             </script>
         {% endblock %}

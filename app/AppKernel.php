@@ -20,13 +20,13 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new \Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new \Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Goondi\ToolsBundle\GoondiToolsBundle(),
             new Paprec\HomeBundle\PaprecHomeBundle(),
             new Paprec\UserBundle\PaprecUserBundle(),
             new Paprec\CatalogBundle\PaprecCatalogBundle(),
             new Paprec\CommercialBundle\PaprecCommercialBundle(),
             new Paprec\PublicBundle\PaprecPublicBundle(),
-            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

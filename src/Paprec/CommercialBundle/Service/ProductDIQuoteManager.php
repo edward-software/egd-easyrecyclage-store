@@ -11,7 +11,9 @@ namespace Paprec\CommercialBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\ORMException;
 use Exception;
+use Knp\Snappy\Pdf;
 use Paprec\CommercialBundle\Entity\ProductDIQuote;
 use Paprec\CommercialBundle\Entity\ProductDIQuoteLine;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -205,4 +207,155 @@ class ProductDIQuoteManager
         );
     }
 
+
+    /**
+     * Envoie un mail au responsable DI avec les données du du devis DI
+     *
+     * @param ProductDIQuote $productDIQuote
+     * @return bool
+     * @throws Exception
+     */
+    public function sendNewProductDIQuoteEmail(ProductDIQuote $productDIQuote)
+    {
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+
+            // TODO Appeler une fonction de UserManager qui retourne l'user qui s'occupe des devis DI
+            // TODO $rcptTo = $user->getEmail()
+            $rcptTo = 'frederic.laine@eggers-digital.com';
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Easy-Recyclage : Nouveau devis DI - N°' . $productDIQuote->getId())
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductDIQuote/emails/sendNewQuoteEmail.html.twig',
+                        array(
+                            'productDIQuote' => $productDIQuote
+                        )
+                    ),
+                    'text/html'
+                );
+
+            if ($this->container->get('mailer')->send($message)) {
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendNewProductDIQuote', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * Envoie du devis généré au client
+     *
+     * @param ProductDIQuote $productDIQuote
+     * @return bool
+     * @throws Exception
+     */
+    public function sendGeneratedQuoteEmail(ProductDIQuote $productDIQuote)
+    {
+        try {
+            $from = $this->container->getParameter('paprec_email_sender');
+
+
+            $rcptTo = $productDIQuote->getEmail();
+
+            if ($rcptTo == null || $rcptTo == '') {
+                return false;
+            }
+
+            $pdfFilename = date('Y-m-d') . '-EasyRecyclage-Devis-' . $productDIQuote->getId() . '.pdf';
+
+            $pdfFile = $this->generatePDF($productDIQuote);
+
+            if (!$pdfFile) {
+                return false;
+            }
+
+            $attachment = \Swift_Attachment::newInstance(file_get_contents($pdfFile), $pdfFilename, 'application/pdf');
+
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Easy-Recyclage : Votre devis de prestation régulière pour déchets non dangereux')
+                ->setFrom($from)
+                ->setTo($rcptTo)
+                ->setBody(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductDIQuote/emails/sendGeneratedQuoteEmail.html.twig',
+                        array(
+                            'productDIQuote' => $productDIQuote
+                        )
+                    ),
+                    'text/html'
+                )
+                ->attach($attachment);
+
+            if ($this->container->get('mailer')->send($message)) {
+                if(file_exists($pdfFile)) {
+                    unlink($pdfFile);
+                }
+                return true;
+            }
+            return false;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToSendGeneratedProductDIQuote', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * Génère le devis au format PDF et retoune le nom du fichier généré (placé dans /data/tmp)
+     *
+     * @param ProductDIQuote $productDIQuote
+     * @return bool|string
+     * @throws Exception
+     */
+    public function generatePDF(ProductDIQuote $productDIQuote)
+    {
+        try {
+            $pdfTmpFolder = $this->container->getParameter('paprec_commercial.data_tmp_directory');
+
+            if (!is_dir($pdfTmpFolder)) {
+                mkdir($pdfTmpFolder, 0755, true);
+            }
+
+            $filename = $pdfTmpFolder . '/' . md5(uniqid()) . '.pdf';
+
+            $snappy = new Pdf($this->container->getParameter('wkhtmltopdf_path'));
+            $snappy->generateFromHtml(
+                array(
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductDIQuote/PDF/quote.html.twig',
+                        array(
+                            'productDIQuote' => $productDIQuote
+                        )
+                    )
+                ),
+                $filename
+            );
+
+            /**
+             * Concaténation des notices
+             */
+            $pdfArray = array();
+            $pdfArray[] = $filename;
+
+            if (!file_exists($filename)) {
+                return false;
+            }
+            return $filename;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToGenerateProductDIQuote', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
 }

@@ -434,4 +434,29 @@ class ProductDIQuoteController extends Controller
             'id' => $productDIQuote->getId()
         ));
     }
+
+    /**
+     * @Route("/productDIQuote/{id}/sendGeneratedQuote", name="paprec_commercial_productDIQuote_sendGeneratedQuote")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws \Exception
+     */
+    public function sendGeneratedQuoteAction(ProductDIQuote $productDIQuote)
+    {
+        $productDIQuoteManager = $this->get('paprec_commercial.product_di_quote_manager');
+        $productDIQuoteManager->isDeleted($productDIQuote, true);
+
+
+        $sendQuote = $productDIQuoteManager->sendGeneratedQuoteEmail($productDIQuote);
+        if ($sendQuote) {
+            $this->get('session')->getFlashBag()->add('success', 'generatedQuoteSent');
+        } else {
+            $this->get('session')->getFlashBag()->add('error', 'generatedQuoteNotSent');
+        }
+
+        return $this->redirectToRoute('paprec_commercial_productDIQuote_view', array(
+            'id' => $productDIQuote->getId()
+        ));
+    }
+
 }

@@ -33,6 +33,8 @@
                 <h4>
                     <i class="fa fa-xs fa-productChantierQuote"></i> {{ 'Commercial.ProductChantierQuote.View'|trans }}
                     <div class="float-right">
+                        <a id="sendGeneratedQuoteButton" href="javascript:void(0);" class="btn btn-sm btn-success"><i
+                                    class="fa fa-xs fa-envelope"></i> {{ 'Commercial.ProductD3EQuote.Send-quote'|trans }}
                         <a href="{{ path("paprec_commercial_productChantierQuote_edit", {id: productChantierQuote.id}) }}"
                            class="btn btn-sm btn-warning"><i
                                     class="fa fa-xs fa-edit"></i> {{ 'Commercial.ProductChantierQuote.Edit'|trans }}</a>
@@ -324,6 +326,22 @@
                         });
                     });
 
+
+                    $('#sendGeneratedQuoteButton').on('click', function () {
+                        var url = "{{ path("paprec_commercial_productChantierQuote_sendGeneratedQuote", {id: productChantierQuote.id}) }}";
+
+                        Swal({
+                            title: "{{ 'General.Confirm'|trans }}",
+                            text: "{{ 'Commercial.ProductChantierQuote.Confirm-send-quote'|trans }}",
+                            showCancelButton: true,
+                            confirmButtonText: "{{ 'General.Yes'|trans }}",
+                            cancelButtonText: "{{ 'General.No'|trans }}"
+                        }).then((result) => {
+                            if (result.value) {
+                                $(location).attr('href', url);
+                            }
+                        });
+                    })
                 });
             </script>
         {% endblock %}

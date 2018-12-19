@@ -96,6 +96,7 @@ Commercial:
     Informations-FO:            Informations Front Office
     Informations-BO:            Informations Back Office
     System-informations:        Informations système
+    Send-quote:                 Envoyer le devis au client
     Export:                     Exporter les devis DI
     View:                       Visualiser le devis DI
     Edit:                       Modifier le devis DI
@@ -106,6 +107,11 @@ Commercial:
     Cancel:                     Annuler
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
     Confirm-remove:             Etes-vous sûr de vouloir supprimer ce devis DI ?
+    Confirm-send-quote:         Etes-vous sûr de vouloir envoyer le devis au client ?
+    Error:
+      generatedQuoteNotSent:    Erreur lors de la génération et l'envoi du devis.
+    Success:
+      generatedQuoteSent:       Le devis a bien été généré et envoyé au client.
 
   ProductDIQuoteLine:
     ProductName:                Produit
@@ -149,6 +155,7 @@ Commercial:
     Informations-FO:            Informations Front Office
     Informations-BO:            Informations Back Office
     System-informations:        Informations système
+    Send-quote:                 Envoyer le devis au client
     Export:                     Exporter les devis Chantier
     View:                       Visualiser le devis Chantier
     Edit:                       Modifier le devis Chantier
@@ -159,6 +166,11 @@ Commercial:
     Cancel:                     Annuler
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
     Confirm-remove:             Etes-vous sûr de vouloir supprimer ce devis Chantier ?
+    Confirm-send-quote:         Etes-vous sûr de vouloir envoyer le devis au client ?
+    Error:
+      generatedQuoteNotSent:    Erreur lors de la génération et l'envoi du devis.
+    Success:
+      generatedQuoteSent:       Le devis a bien été généré et envoyé au client.
 
   ProductChantierQuoteLine:
     ProductName:                Produit
@@ -202,6 +214,7 @@ Commercial:
     Informations-FO:            Informations Front Office
     Informations-BO:            Informations Back Office
     System-informations:        Informations système
+    Send-quote:                 Envoyer le devis au client
     Export:                     Exporter les devis D3E
     View:                       Visualiser le devis D3E
     Edit:                       Modifier le devis D3E
@@ -212,6 +225,11 @@ Commercial:
     Cancel:                     Annuler
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
     Confirm-remove:             Etes-vous sûr de vouloir supprimer ce devis D3E ?
+    Confirm-send-quote:         Etes-vous sûr de vouloir envoyer le devis au client ?
+    Error:
+      generatedQuoteNotSent:    Erreur lors de la génération et l'envoi du devis.
+    Success:
+      generatedQuoteSent:       Le devis a bien été généré et envoyé au client.
 
   ProductD3EQuoteLine:
     ProductName:                Produit
@@ -261,6 +279,7 @@ Commercial:
     Informations-BO:            Informations Back Office
     Informations-Delivery:      Informations de livraison
     System-informations:        Informations système
+    SendInvoice:                Envoyer la facture au client
     Export:                     Exporter les commandes Chantier
     View:                       Visualiser la commande Chantier
     Edit:                       Modifier la commande Chantier
@@ -272,6 +291,12 @@ Commercial:
     Cancel:                     Annuler
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
     Confirm-remove:             Etes-vous sûr de vouloir supprimer cette commande Chantier ?
+    Confirm-send-invoice:       Etes-vous sûr de vouloir envoyer la facture au client ?
+    Error:
+      associatedInvoiceNotSent: Erreur lors de l'envoi par mail de facture au client.
+      noUploadedInvoiceFound:   Vous devez d'abord ajouter une facture pour pouvoir l'envoyer par mail au client.
+    Success:
+      associatedInvoiceSent:    La facture associée a été envoyée par mail au client.
 
   ProductChantierOrderLine:
     ProductName:                Produit
@@ -316,6 +341,7 @@ Commercial:
     Informations-BO:            Informations Back Office
     Informations-Delivery:      Informations de livraison
     System-informations:        Informations système
+    SendInvoice:                Envoyer la facture au client
     Export:                     Exporter les commandes D3E
     View:                       Visualiser la commande D3E
     Edit:                       Modifier la commande D3E
@@ -327,6 +353,12 @@ Commercial:
     Cancel:                     Annuler
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
     Confirm-remove:             Etes-vous sûr de vouloir supprimer cette commande D3E ?
+    Confirm-send-invoice:       Etes-vous sûr de vouloir envoyer la facture au client ?
+    Error:
+      associatedInvoiceNotSent: Erreur lors de l'envoi par mail de facture au client.
+      noUploadedInvoiceFound:   Vous devez d'abord ajouter une facture pour pouvoir l'envoyer par mail au client.
+    Success:
+      associatedInvoiceSent:    La facture associée a été envoyée par mail au client.
 
   ProductD3EOrderLine:
     ProductName:                Produit
@@ -383,6 +415,7 @@ Commercial:
     Informations-BO:            Informations Back Office
     System-informations:        Informations système
     Export:                     Exporter les demandes de devis
+    SendQuote:                  Envoyer le devis au client
     View:                       Visualiser la demande de devis
     Edit:                       Modifier la demande de devis
     Remove:                     Supprimer la demande de devis
@@ -390,6 +423,12 @@ Commercial:
     Cancel:                     Annuler
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
     Confirm-remove:             Etes-vous sûr de vouloir supprimer cette demande de devis ?
+    Confirm-send-quote:         Etes-vous sûr de vouloir envoyer le devis au client ?
+    Error:
+      associatedQuoteNotSent:   Erreur lors de l'envoi par mail du devis au client.
+      noUploadedQuoteFound:     Vous devez d'abord ajouter un devis pour pouvoir l'envoyer par mail au client.
+    Success:
+      associatedQuoteSent:      Le devis associé a été envoyé par mail au client.
 
   ContactUs:
     ContactUss:                 Demandes de contact
@@ -502,6 +541,7 @@ Commercial:
     Informations-FO:            Informations Front Office
     Informations-BO:            Informations Back Office
     System-informations:        Informations système
+    SendQuote:                  Envoyer le devis au client
     Export:                     Exporter les demandes de devis
     View:                       Visualiser la demande de devis
     Edit:                       Modifier la demande de devis
@@ -510,3 +550,9 @@ Commercial:
     Cancel:                     Annuler
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
     Confirm-remove:             Etes-vous sûr de vouloir supprimer cette demande de devis ?
+    Confirm-send-quote:         Etes-vous sûr de vouloir envoyer le devis au client ?
+    Error:
+      associatedQuoteNotSent:   Erreur lors de l'envoi par mail du devis au client.
+      noUploadedQuoteFound:     Vous devez d'abord ajouter un devis pour pouvoir l'envoyer par mail au client.
+    Success:
+      associatedQuoteSent:      Le devis associé a été envoyé par mail au client.

@@ -91,7 +91,7 @@ class CallBackManager
             $rcptTo = $callBack->getEmail();
 
             $message = \Swift_Message::newInstance()
-                ->setSubject('Votre demande de rappel N°' . $callBack->getId())
+                ->setSubject('Easy-Recyclage : Votre demande de rappel N°' . $callBack->getId())
                 ->setFrom($from)
                 ->setTo($rcptTo)
                 ->setBody(
@@ -134,7 +134,7 @@ class CallBackManager
             $rcptTo = 'frederic.laine@eggers-digital.com';
 
             $message = \Swift_Message::newInstance()
-                ->setSubject('Nouvelle demande de rappel N°' . $callBack->getId())
+                ->setSubject('Easy-Recyclage : Nouvelle demande de rappel N°' . $callBack->getId())
                 ->setFrom($from)
                 ->setTo($rcptTo)
                 ->setBody(
