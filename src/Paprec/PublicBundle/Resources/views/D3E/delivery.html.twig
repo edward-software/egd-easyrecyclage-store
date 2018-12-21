@@ -147,13 +147,15 @@
              * Gestion des datepickers
              */
             var now = new Date();
+            minDate = moment(now);
+            minDate.add(2, "days");
             // On définit arbitrairement la date maximum pour le rappel à dans 3 mois
             maxDate = moment(now);
             maxDate.add(3, 'months');
             $('#paprec_commercialbundle_productd3eorderdelivery_installationDate').datetimepicker({
                 locale: 'fr',
                 format: 'L',
-                minDate: now,
+                minDate: minDate,
                 maxDate: maxDate,
                 icons:
                     {
@@ -169,7 +171,7 @@
             $('#paprec_commercialbundle_productd3eorderdelivery_removalDate').datetimepicker({
                 locale: 'fr',
                 format: 'L',
-                minDate: now,
+                minDate: minDate,
                 maxDate: maxDate,
                 icons:
                     {
