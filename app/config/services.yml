@@ -13,6 +13,7 @@ parameters:
         DI: Mes déchets d'entreprise
         CHANTIER: Mes déchets de chantier
         D3E: Mes déchets électriques et électroniques
+        5FLUX: Mes déchets de bureau - 5 flux
 
 
 services:
