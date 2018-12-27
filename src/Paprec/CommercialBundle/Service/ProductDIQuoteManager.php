@@ -332,7 +332,7 @@ class ProductDIQuoteManager
             $snappy->generateFromHtml(
                 array(
                     $this->container->get('templating')->render(
-                        '@PaprecCommercial/ProductDIQuote/PDF/quote.html.twig',
+                        '@PaprecCommercial/ProductDIQuote/PDF/quotePDF.html.twig',
                         array(
                             'productDIQuote' => $productDIQuote
                         )

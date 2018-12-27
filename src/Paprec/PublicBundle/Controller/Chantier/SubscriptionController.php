@@ -412,7 +412,7 @@ class SubscriptionController extends Controller
         $distance = $this->getParameter('paprec_distance_nearby_agencies');
         $nbAgencies = $agencyManager->getNearbyAgencies($cart->getLongitude(), $cart->getLatitude(), 'CHANTIER', $distance);
 
-        return $this->render('@PaprecPublic/Shared/partial/nearbyAgencies.html.twig', array(
+        return $this->render('@PaprecPublic/Common/partial/nearbyAgenciesPartial.html.twig', array(
             'nbAgencies' => $nbAgencies,
             'distance' => $distance
         ));

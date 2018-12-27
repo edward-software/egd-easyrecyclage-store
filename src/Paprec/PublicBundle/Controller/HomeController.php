@@ -77,7 +77,7 @@ class HomeController extends Controller
                     $step = "r";
                     // On renvoit ce Cart au twig, ainsi la personne peut "Remplir un formulaire" et abandonner le Cart
                     // Ou bien "d'estimer son besoin en 3 minutes" et on navigue vers la step1 en passant le Cart
-                    return $this->render('@PaprecPublic/Shared/Home/index.html.twig', array(
+                    return $this->render('@PaprecPublic/Common/Home/index.html.twig', array(
                         'divisions' => $divisions,
                         'step' => $step,
                         'cart' => $cart
@@ -103,7 +103,7 @@ class HomeController extends Controller
             }
         }
 
-        return $this->render('@PaprecPublic/Shared/Home/index.html.twig', array(
+        return $this->render('@PaprecPublic/Common/Home/index.html.twig', array(
             'divisions' => $divisions,
             'step' => $step,
             'cart' => $cart
@@ -244,7 +244,7 @@ class HomeController extends Controller
             }
         }
 
-        return $this->render('@PaprecPublic/Shared/regularForm.html.twig', array(
+        return $this->render('@PaprecPublic/Common/regularForm.html.twig', array(
             'form' => $form->createView(),
             'cart' => $cart,
             'divisions' => $divisions
@@ -261,7 +261,7 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $quoteRequest = $em->getRepository('PaprecCommercialBundle:QuoteRequest')->find($quoteRequestId);
-        return $this->render('@PaprecPublic/Shared/regularConfirm.html.twig', array(
+        return $this->render('@PaprecPublic/Common/regularConfirm.html.twig', array(
             'quoteRequest' => $quoteRequest
         ));
     }
@@ -323,12 +323,12 @@ class HomeController extends Controller
         }
 
         if ($cart) {
-            return $this->render('@PaprecPublic/Shared/contactFormFromCart.html.twig', array(
+            return $this->render('@PaprecPublic/Common/contactFormFromCart.html.twig', array(
                 'form' => $form->createView(),
                 'cart' => $cart
             ));
         } else {
-            return $this->render('@PaprecPublic/Shared/contactForm.html.twig', array(
+            return $this->render('@PaprecPublic/Common/contactForm.html.twig', array(
                 'form' => $form->createView(),
                 'cart' => $cart
             ));
@@ -345,7 +345,7 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $contactUs = $em->getRepository('PaprecCommercialBundle:ContactUs')->find($contactUsId);
-        return $this->render('@PaprecPublic/Shared/contactConfirm.html.twig', array(
+        return $this->render('@PaprecPublic/Common/contactConfirm.html.twig', array(
             'contactUs' => $contactUs
         ));
     }
@@ -392,7 +392,7 @@ class HomeController extends Controller
                 ));
             }
         }
-        return $this->render('@PaprecPublic/Shared/callBackForm.html.twig', array(
+        return $this->render('@PaprecPublic/Common/callBackForm.html.twig', array(
             'form' => $form->createView(),
             'cart' => $cart
         ));
@@ -412,7 +412,7 @@ class HomeController extends Controller
 
         $cart = $cartManager->get($cartUuid);
         $callBack = $em->getRepository('PaprecCommercialBundle:CallBack')->find($callBackId);
-        return $this->render('@PaprecPublic/Shared/callBackConfirm.html.twig', array(
+        return $this->render('@PaprecPublic/Common/callBackConfirm.html.twig', array(
             'callBack' => $callBack,
             'cart' => $cart
         ));

@@ -346,7 +346,7 @@ class ProductD3EQuoteManager
             $snappy->generateFromHtml(
                 array(
                     $this->container->get('templating')->render(
-                        '@PaprecCommercial/ProductD3EQuote/PDF/quote.html.twig',
+                        '@PaprecCommercial/ProductD3EQuote/PDF/quotePDF.html.twig',
                         array(
                             'productD3EQuote' => $productD3EQuote
                         )

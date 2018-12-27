@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class WordpressController extends Controller
+class CommonController extends Controller
 {
 
 

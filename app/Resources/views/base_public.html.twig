@@ -22,7 +22,7 @@
         <div class="wrapper">
             <nav role="navigation">
                 <ul>
-                    {{ render(controller('PaprecPublicBundle:Wordpress:getMenuFromWP', {'slug': 'shortlinks-menu'})) }}
+                    {{ render(controller('PaprecPublicBundle:Common:getMenuFromWP', {'slug': 'shortlinks-menu'})) }}
                 </ul>
             </nav>
         </div>
@@ -33,7 +33,7 @@
 
             <a class="header__cta">Recyclez<br>vos déchets</a>
             <ul class="menu">
-                {{ render(controller('PaprecPublicBundle:Wordpress:getMenuFromWP', {'slug': 'header-menu'})) }}
+                {{ render(controller('PaprecPublicBundle:Common:getMenuFromWP', {'slug': 'header-menu'})) }}
             </ul>
         </div>
         <a href="{{ paprec_public_site_url }}" class="header__logo">
@@ -94,7 +94,7 @@
             <div>
                 <div class="footer__links">
                     <ul class="menu">
-                        {{ render(controller('PaprecPublicBundle:Wordpress:getMenuFromWP', {'slug': 'footer-menu'})) }}
+                        {{ render(controller('PaprecPublicBundle:Common:getMenuFromWP', {'slug': 'footer-menu'})) }}
                     </ul>
                 </div>
             </div>
@@ -102,7 +102,7 @@
         </div>
         <div class="footer__social">
             <ul class="menu">
-                {{ render(controller('PaprecPublicBundle:Wordpress:getMenuFromWP', {'slug': 'quicklinksmenu-footer'})) }}
+                {{ render(controller('PaprecPublicBundle:Common:getMenuFromWP', {'slug': 'quicklinksmenu-footer'})) }}
             </ul>
         </div>
         <div class="clearfix"></div>

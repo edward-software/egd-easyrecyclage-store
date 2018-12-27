@@ -335,7 +335,7 @@ class ProductChantierQuoteManager
             $snappy->generateFromHtml(
                 array(
                     $this->container->get('templating')->render(
-                        '@PaprecCommercial/ProductChantierQuote/PDF/quote.html.twig',
+                        '@PaprecCommercial/ProductChantierQuote/PDF/quotePDF.html.twig',
                         array(
                             'productChantierQuote' => $productChantierQuote
                         )
