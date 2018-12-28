@@ -15,7 +15,30 @@ class SubscriptionController extends Controller
 {
 
     /**
-     * @Route("/di/step1/{cartUuid}", name="paprec_public_corp_DI_subscription_step1")
+     * @Route("/di/step0/{cartUuid}", name="paprec_public_corp_di_subscription_step0")
+     * @throws \Exception
+     */
+    public function step0Action(Request $request, $cartUuid)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+        $cart = $cartManager->get($cartUuid);
+
+        // Pour alimenter le "select" des types de déchets
+        $divisions = array();
+        foreach ($this->getParameter('paprec_divisions_select') as $division => $divisionLong) {
+            $divisions[$division] = $divisionLong;
+        }
+
+        return $this->render('@PaprecPublic/DI/index.html.twig', array(
+            'divisions' => $divisions,
+            'cart' => $cart,
+
+        ));
+    }
+
+
+    /**
+     * @Route("/di/step1/{cartUuid}", name="paprec_public_corp_di_subscription_step1")
      */
     public function step1Action(Request $request, $cartUuid)
     {
@@ -55,7 +78,7 @@ class SubscriptionController extends Controller
 
     /**
      * Etape du formulaire des informations contact
-     * @Route("/di/step2/{cartUuid}", name="paprec_public_corp_DI_subscription_step2")
+     * @Route("/di/step2/{cartUuid}", name="paprec_public_corp_di_subscription_step2")
      * @throws \Exception
      */
     public function step2Action(Request $request, $cartUuid)
@@ -98,7 +121,7 @@ class SubscriptionController extends Controller
 
 
             if ($sendNewProductDIQuoteMail && $sendGeneratedQuoteMail) {
-                return $this->redirectToRoute('paprec_public_corp_DI_subscription_step3', array(
+                return $this->redirectToRoute('paprec_public_corp_di_subscription_step3', array(
                     'cartUuid' => $cart->getId(),
                     'quoteId' => $productDIQuote->getId()
                 ));
@@ -113,7 +136,7 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * @Route("/di/step3/{cartUuid}/{quoteId}", name="paprec_public_corp_DI_subscription_step3")
+     * @Route("/di/step3/{cartUuid}/{quoteId}", name="paprec_public_corp_di_subscription_step3")
      */
     public function step3Action(Request $request, $cartUuid, $quoteId)
     {
@@ -131,7 +154,7 @@ class SubscriptionController extends Controller
 
 
     /**
-     * @Route("/di/addDisplayedCategory/{cartUuid}/{categoryId}", name="paprec_public_corp_DI_subscription_addDisplayedCategory")
+     * @Route("/di/addDisplayedCategory/{cartUuid}/{categoryId}", name="paprec_public_corp_di_subscription_addDisplayedCategory")
      * @throws \Exception
      */
     public function addDisplayedCategoryAction(Request $request, $cartUuid, $categoryId)
@@ -141,14 +164,14 @@ class SubscriptionController extends Controller
         // On ajoute ou on supprime la catégorie sélecionnée au tableau des displayedCategories du Cart
         $cart = $cartManager->addOrRemoveDisplayedCategory($cartUuid, $categoryId);
 
-        return $this->redirectToRoute('paprec_public_corp_DI_subscription_step1', array(
+        return $this->redirectToRoute('paprec_public_corp_di_subscription_step1', array(
             'cartUuid' => $cart->getId()
         ));
     }
 
     /**
      * Ajoute au cart un displayedProduct avec en key => value( categoryId => productId)
-     * @Route("/di/addOrRemoveDisplayedProduct/{cartUuid}/{categoryId}/{productId}", name="paprec_public_corp_DI_subscription_addOrRemoveDisplayedProduct")
+     * @Route("/di/addOrRemoveDisplayedProduct/{cartUuid}/{categoryId}/{productId}", name="paprec_public_corp_di_subscription_addOrRemoveDisplayedProduct")
      * @throws \Exception
      */
     public function addOrRemoveDisplayedProductAction(Request $request, $cartUuid, $categoryId, $productId)
@@ -158,14 +181,14 @@ class SubscriptionController extends Controller
         // On ajoute ou on supprime le produit sélecionné au tableau des displayedCategories du Cart
         $cart = $cartManager->addOrRemoveDisplayedProduct($cartUuid, $categoryId, $productId);
 
-        return $this->redirectToRoute('paprec_public_corp_DI_subscription_step1', array(
+        return $this->redirectToRoute('paprec_public_corp_di_subscription_step1', array(
             'cartUuid' => $cart->getId()
         ));
     }
 
     /**
      * Ajoute au cart un product
-     * @Route("/di/addContent/{cartUuid}/{categoryId}/{productId}/{quantity}", name="paprec_public_corp_DI_subscription_addContent")
+     * @Route("/di/addContent/{cartUuid}/{categoryId}/{productId}/{quantity}", name="paprec_public_corp_di_subscription_addContent")
      * @throws \Exception
      */
     public function addContentAction(Request $request, $cartUuid, $categoryId, $productId, $quantity)
@@ -180,7 +203,7 @@ class SubscriptionController extends Controller
 
     /**
      * Ajoute au cart un displayedProduct avec en key => value( categoryId => productId)
-     * @Route("/di/removeContent/{cartUuid}/{categoryId}/{productId}", name="paprec_public_corp_DI_subscription_removeContent")
+     * @Route("/di/removeContent/{cartUuid}/{categoryId}/{productId}", name="paprec_public_corp_di_subscription_removeContent")
      * @throws \Exception
      */
     public function removeContentAction(Request $request, $cartUuid, $categoryId, $productId)
@@ -195,7 +218,7 @@ class SubscriptionController extends Controller
 
     /**
      * Retourne le twig du cart avec les produits dans celui-ci ainsi que le montant total
-     * @Route("/di/loadCart/{cartUuid}", name="paprec_public_corp_DI_subscription_loadCart", condition="request.isXmlHttpRequest()")
+     * @Route("/di/loadCart/{cartUuid}", name="paprec_public_corp_di_subscription_loadCart", condition="request.isXmlHttpRequest()")
      */
     public function loadCartAction(Request $request, $cartUuid)
     {
@@ -211,7 +234,7 @@ class SubscriptionController extends Controller
 
     /**
      * Retourne le twig des agences proches
-     * @Route("/di/loadNearbyAgencies/{cartUuid}", name="paprec_public_corp_DI_subscription_loadNearbyAgencies", condition="request.isXmlHttpRequest()")
+     * @Route("/di/loadNearbyAgencies/{cartUuid}", name="paprec_public_corp_di_subscription_loadNearbyAgencies", condition="request.isXmlHttpRequest()")
      */
     public function loadNearbyAgenciesAction(Request $request, $cartUuid)
     {

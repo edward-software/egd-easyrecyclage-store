@@ -35,23 +35,23 @@
                     <div class="step__right">
                         <select class="input" id="divisionSelect"
                                 data-url="{{ path('paprec_public_corp_home_addDivision', {cartUuid: cart.id , division: 'divisionTmp'}) }}"
-                                style="color:{% if cart.division == 'DI' %}#95c220{% elseif cart.division == 'CHANTIER' %}#e59437{% elseif cart.division == 'D3E' %}#b8369a{% elseif cart.division == '5FLUX' %}#04A4CC{% endif %};">
+                                style="color:{% if cart.division == 'DI' %}#95c220{% elseif cart.division == 'CHANTIER' %}#e59437{% elseif cart.division == 'D3E' %}#b8369a{% elseif cart.division == '5FLUX' %}#2B6AB3{% endif %};">
                             <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
                             {% for key,division in divisions %}
                                 {% if key == cart.division %}
                                     <option value="{{ key }}" selected="selected">{{ division }}</option>
                                 {% else %}
                                     <option value="{{ key }}"
-                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% elseif key == 'D3E' %}#b8369a{% else %}#04A4CC{% endif %};">{{ division }}</option>
+                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% elseif key == 'D3E' %}#b8369a{% else %}#2B6AB3{% endif %};">{{ division }}</option>
                                 {% endif %}
                             {% endfor %}
                         </select>
                     </div>
                     {% if cart.latitude and cart.latitude != '' and cart.longitude and cart.longitude != '' and cart.division and cart.division != '' %}
                         <div class="step__agency"
-                             data-url="{% if cart.division == 'DI' %} {{ path('paprec_public_corp_DI_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}
-                          {% elseif cart.division == 'D3E' %}} {{ path('paprec_public_corp_D3E_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}
-                           {% else %} {{ path('paprec_public_corp_Chantier_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}{% endif %}">
+                             data-url="{% if cart.division == 'DI' %} {{ path('paprec_public_corp_di_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}
+                          {% elseif cart.division == 'D3E' %}} {{ path('paprec_public_corp_d3e_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}
+                           {% else %} {{ path('paprec_public_corp_chantier_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}{% endif %}">
 
                         </div>
                     {% endif %}
@@ -70,7 +70,7 @@
                              data-url="{{ path('paprec_public_corp_home_addFrequency', {cartUuid: cart.id, frequency: 'frequencyTmp' }) }}">
                             <input class="input__radio" type="radio" id="ponctualRadio" name="frequencyRadio"
                                    value="ponctual" {% if cart.frequency == 'ponctual' %}checked{% endif %}>
-                            <label for="ponctualRadio">{{ 'Public.Cart.Ponctal'|trans }}</label>
+                            <label for="ponctualRadio">{{ 'Public.Cart.Ponctual'|trans }}</label>
 
                             <input class="input__radio" type="radio" id="regularRadio" name="frequencyRadio"
                                    value="regular" {% if cart.frequency == 'regular' %}checked{% endif %}>

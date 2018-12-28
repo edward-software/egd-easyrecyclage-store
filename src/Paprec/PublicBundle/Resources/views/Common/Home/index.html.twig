@@ -1,4 +1,4 @@
-{% extends "::base_public.html.twig" %}
+{% extends "@PaprecPublic/Common/Base/base_index.html.twig" %}
 
 {#{% block title %}#}
 
@@ -7,133 +7,34 @@
 {#{% block stylesheets %}#}
 
 {#{% endblock %}#}
-{% block whoare %}
-    <div class="whoare">
-        <div class="wrapper">
-            <div class="righter">
-                <div class="whoare__title">Je suis</div>
 
-                <a href="{{ path('paprec_public_corp_home_index') }}"
-                   class="whoare__cta {% if app.request.get('_route')|slice(0, 'paprec_public_corp'|length) == 'paprec_public_corp' %} active{% endif %}">Entreprise<br>&
-                    administration</a>
-                <a href="{{ path('paprec_public_non_corporate_subscription_groupe_step0') }}"
-                   class="whoare__cta {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_groupe'|length) == 'paprec_public_non_corporate_subscription_groupe' %} active{% endif %}">Groupe<br>&
-                    réseaux</a>
-                <a href="{{ path('paprec_public_non_corporate_subscription_collectivite_step0') }}"
-                   class="whoare__cta whoare__cta--center {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_collectivite'|length) == 'paprec_public_non_corporate_subscription_collectivite' %} active{% endif %}">Collectivité</a>
-                <a href="{{ path('paprec_public_non_corporate_subscription_particulier_step0') }}"
-                   class="whoare__cta whoare__cta--center {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_particulier'|length) == 'paprec_public_non_corporate_subscription_particulier' %} active{% endif %}">Particulier</a>
-            </div>
-        </div>
-    </div>
+{% block sidebar %}
+    {# Définition des menus affichés dans la sidebar #}
+    {% set besoin = 'active' %}
+    {% set coordonnees = '' %}
+    {% set offre = '' %}
+    {{ parent() }}
 {% endblock %}
-{% block main_content %}
-    <section>
-        <div class="wrapper">
-            <div class="sidebar">
-                <div class="recap active">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">01</span>Mon besoin
-                    </div>
-                </div>
 
-                <div class="recap">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">02</span>Mes coordonnées
-                    </div>
-
-                </div>
-
-                <div class="recap">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">03</span>Mon offre
-                    </div>
-
-                </div>
-            </div>
-
-            <form action="#" class="main">
-                <div class="step">
-                    <div class="step__left">
-                        <div class="step__title">{{ 'Public.Home.Recycle'|trans }}</div>
-                    </div>
-                    <div class="step__right">
-                        <select class="input" id="divisionSelect"
-                                data-url="{{ path('paprec_public_corp_home_addDivision', {cartUuid: cart.id , division: 'divisionTmp'}) }}"
-                                style="color:{% if cart.division == 'DI' %}#95c220{% elseif cart.division == 'CHANTIER' %}#e59437{% elseif cart.division == 'D3E' %}#b8369a{% elseif cart.division == '5FLUX' %}#04A4CC{% endif %};">
-                            <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
-                            {% for key,division in divisions %}
-                                {% if key == cart.division %}
-                                    <option value="{{ key }}" selected="selected"
-                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% elseif key == 'D3E' %}#b8369a{% else %}#04A4CC{% endif %};">{{ division }}</option>
-                                {% else %}
-                                    <option value="{{ key }}"
-                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% elseif key == 'D3E' %}#b8369a{% else %}#04A4CC{% endif %};">{{ division }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                    </div>
-                    {% if cart.latitude and cart.latitude != '' and cart.longitude and cart.longitude != '' and cart.division and cart.division != '' %}
-                        <div class="step__agency"
-                             data-url="{% if cart.division == 'DI' %} {{ path('paprec_public_corp_DI_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}
-                          {% elseif cart.division == 'D3E' %} {{ path('paprec_public_corp_D3E_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}
-                           {% else %} {{ path('paprec_public_corp_Chantier_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}{% endif %}">
-
-                        </div>
-                    {% endif %}
-                </div>
-                {% if step != 'd' %}
-
-                    <div class="step">
-                        <div class="step__left">
-                            <div class="step__title">{{ 'Public.Home.Location'|trans }}</div>
-                        </div>
-                        <div class="step__right">
-                            <div class="step__right">
-                                <input class="input" type="text" id="locationSelect"
-                                       name="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}
-                                       placeholder="{{ 'Public.Cart.PostalCode'|trans }}">
-                                {% if (step == 'f' or step == 'r') and (cart and cart.division == '5FLUX') %}
-                                    <a class="button button--grey"
-                                       href="http://www.easyrecyclage.com">{{ 'Public.Cart.3MinOrder'|trans }}</a>
-                                {% elseif step == 'f' or step == 'r' and cart.division != '5FLUX' %}
-                                    <br>
-                                    <div id="frequencyRadioBox"
-                                         data-url="{{ path('paprec_public_corp_home_addFrequency', {cartUuid: cart.id, frequency: 'frequencyTmp' }) }}">
-                                        <input class="input__radio" type="radio" id="ponctualRadio"
-                                               name="frequencyRadio"
-                                               value="ponctual" {% if cart.frequency == 'ponctual' %}checked{% endif %}>
-                                        <label for="ponctualRadio">{{ 'Public.Cart.Ponctal'|trans }}</label>
-
-                                        <input class="input__radio" type="radio" id="regularRadio" name="frequencyRadio"
-                                               value="regular" {% if cart.frequency == 'regular' %}checked{% endif %}>
-                                        <label for="regularRadio">{{ 'Public.Cart.Regular'|trans }}</label>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    {% if step == 'r' %}
-                                        {% if cart and cart.division == 'DI' %}
-                                            <a class="button button--grey"
-                                               href="{{ path('paprec_public_corp_DI_subscription_step1', {cartUuid: cart.id}) }}">{{ 'Public.Cart.NeedEstimation'|trans }}</a>
-                                        {% endif %}
-                                        <a class="button button--grey"
-                                           href="{{ path('paprec_public_home_regularForm', {cartUuid: cart.id}) }}">{{ 'Public.Cart.FillForm'|trans }}</a>
-                                    {% endif %}
-
-                                {% endif %}
-
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-
-
-            </form>
-        </div>
-
-        <div class="clearfix"></div>
-    </section>
-
+{% block division_selected %}
+    {% if step != 'd' %}
+        {{ parent() }}
+    {% endif %}
 {% endblock %}
+
+{% block cinq_flux %}
+    {% if (step is defined and (step == 'f' or step == 'r')) and (cart.division is defined and cart.division == '5FLUX') %}
+        <a class="button button--grey"
+           href="http://www.easyrecyclage.com">{{ 'Public.Cart.3MinOrder'|trans }}</a>
+    {% endif %}
+{% endblock %}
+
+{% block frequency %}
+    {% if (step == 'f' or step == 'r') and (cart.division is defined and cart.division != '5FLUX') %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 
 {% block javascripts %}
     {#<script type="text/javascript"#}

@@ -133,4 +133,27 @@ class CommonController extends Controller
             throw new Exception($e->getMessage(), $e->getCode());
         }
     }
+
+    /**
+     * @param $label
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getCTAsBottomAction($label, $cartUuid, $division, $stepBack = '', $nextStep = '', $idSubmit = '') {
+        return $this->render('@PaprecPublic/Common/partial/ctaBottomPartial.html.twig', array(
+            'cartUuid' => $cartUuid,
+            'label' => $label,
+            'stepBack' => $stepBack,
+            'nextStep' => $nextStep,
+            'division' => $division,
+            'idSubmit' => $idSubmit
+        ));
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getSideBarInfoAction() {
+        return $this->render('@PaprecPublic/Common/partial/sidebarInfoPartial.html.twig');
+    }
 }
+

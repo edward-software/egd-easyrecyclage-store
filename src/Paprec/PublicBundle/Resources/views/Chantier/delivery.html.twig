@@ -1,4 +1,4 @@
-{% extends "::base_public.html.twig" %}
+{% extends "@PaprecPublic/Common/Base/base_stepper.html.twig" %}
 
 {#{% block title %}#}
 
@@ -9,131 +9,68 @@
 {#{% endblock %}#}
 {% block whoare %}
 {% endblock %}
-{% block main_content %}
-    <!-- section -->
-    <section>
-        <div class="wrapper">
-            <div class="sidebar">
-                <div class="recap passed">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">01</span>Mon besoin
-                    </div>
-                    <div id="loadedCartPanel">
 
+{% block sidebar %}
+    {# Définition des menus affichés dans la sidebar #}
+    {% set besoin = 'passed' %}
+    {% set coordonnees = 'passed' %}
+    {% set livraison = 'active' %}
+    {% set paiement = '' %}
+    {{ parent() }}
+{% endblock %}
+{% block main_content_stepper %}
+    <form id="deliveryForm" action="" method="post">
+        <div class="step">
+            <div class="bold">
+                {% if productChantierOrder.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productChantierOrder.firstName }} {{ productChantierOrder.lastName }}
+                ,
+            </div>
+            <div class="recaptitle">Vous pouvez maintenant nous indiquer vos préférences de livraison.</div>
+            <div>
+                <div class="step__delivery">
+                    <div class="title">
+                        Sélectionnez une date de pose
                     </div>
+                    <div class="desc">
+                        Nous pouvons intervenir <span>à partir de 48h ouvrées</span> dès lors que vous
+                        passez votre commande.
+                    </div>
+                    {{ form_widget(form.installationDate, {'attr': {'class': 'input'}}) }}
+                    {{ form_errors(form.installationDate) }}
                 </div>
-
-                <div class="recap passed">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">02</span>Mes coordonnées
+                <div class="step__delivery">
+                    <div class="title">
+                        Sélectionnez une date d’enlèvement
                     </div>
-
+                    <div class="desc">
+                        Vous ne pouvez garder votre matériel que <span>10 jours maximum</span>.
+                    </div>
+                    {{ form_widget(form.removalDate, {'attr': {'class': 'input'}}) }}
+                    {{ form_errors(form.removalDate) }}
                 </div>
+                <div class="step__delivery">
+                    <div class="title">
+                        Indiquez vos conditions d’accès
+                    </div>
+                    {{ form_widget(form.domainType, {'attr': {'class': 'input__radio'}}) }}
+                    {{ form_errors(form.domainType) }}
+                    <div class="clearfix"></div>
+                    {{ form_widget(form.accessConditions, {'attr': {'class': 'input input--full input--bordered', 'rows': '10', 'placeholder': 'Commercial.ProductChantierOrder.AccessConditionsPlaceholder'|trans}}) }}
+                    {{ form_errors(form.accessConditions) }}
 
-                <div class="recap active">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">03</span>Ma livraison
-                    </div>
-
-                </div>
-                <div class="recap">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">04</span>Mon paiement
-                    </div>
-
-                </div>
-                <div class="guide">
-                    <div class="guide__title">
-                        EASYRECYCLAGE,
-                        <br>
-                        C’EST SIMPLE ET RAPIDE
-                    </div>
-                    <div class="guide__step">
-                        Sélectionnez
-                        <br>
-                        vos déchets
-                    </div>
-                    <div class="guide__step">
-                        Validez
-                        <br>
-                        votre devis
-                    </div>
-                    <div class="guide__step">
-                        Triez vos déchets,
-                        <br>
-                        nous les collectons
-                        <br>
-                        et les valorisons
-                    </div>
                 </div>
             </div>
-            <div class="main">
-                <form id="deliveryForm" action="" method="post" class="main">
-                    <div class="step">
-                        <div class="bold">
-                            {% if productChantierOrder.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productChantierOrder.firstName }} {{ productChantierOrder.lastName }}
-                            ,
-                        </div>
-                        <div class="recaptitle">Vous pouvez maintenant nous indiquer vos préférences de livraison.</div>
-                        <div>
-                            <div class="step__delivery">
-                                <div class="title">
-                                    Sélectionnez une date de pose
-                                </div>
-                                <div class="desc">
-                                    Nous pouvons intervenir <span>à partir de 48h ouvrées</span> dès lors que vous
-                                    passez votre commande.
-                                </div>
-                                {{ form_widget(form.installationDate, {'attr': {'class': 'input'}}) }}
-                                {{ form_errors(form.installationDate) }}
-                            </div>
-                            <div class="step__delivery">
-                                <div class="title">
-                                    Sélectionnez une date d’enlèvement
-                                </div>
-                                <div class="desc">
-                                    Vous ne pouvez garder votre matériel que <span>10 jours maximum</span>.
-                                </div>
-                                {{ form_widget(form.removalDate, {'attr': {'class': 'input'}}) }}
-                                {{ form_errors(form.removalDate) }}
-                            </div>
-                            <div class="step__delivery">
-                                <div class="title">
-                                    Indiquez vos conditions d’accès
-                                </div>
-                                {{ form_widget(form.domainType, {'attr': {'class': 'input__radio'}}) }}
-                                {{ form_errors(form.domainType) }}
-                                <div class="clearfix"></div>
-                                {{ form_widget(form.accessConditions, {'attr': {'class': 'input input--full input--bordered', 'rows': '10', 'placeholder': 'Commercial.ProductChantierOrder.AccessConditionsPlaceholder'|trans}}) }}
-                                {{ form_errors(form.accessConditions) }}
-
-                            </div>
-                        </div>
-                        <div class="notice">
-                            Besoin d’une <span>information complémentaire</span> ? Vous souhaitez nous en parler ?
-                        </div>
-                        <div class="step__left">
-                            <a href="#" class="back">Retour</a>
-                        </div>
-                        <div class="step__right">
-                            <a href="{{ path('paprec_public_home_contactForm', {cartUuid: cart.id}) }}"
-                               class="button margint10 button--grey">CONTACTEZ-NOUS</a>
-                            <a href="{{ path('paprec_public_home_callBackForm', {cartUuid: cart.id }) }}"
-                               class="button margint10 button--grey">ÊTRE RAPPELÉ</a>
-                            <a href="javascript:void(0);" id="deliveryFormSubmitButton"
-                               class="button margint10 button--green">VALIDER VOTRE COMMANDE</a>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    {{ form_rest(form) }}
-                </form>
-            </div>
-
-
-            <div class="clearfix"></div>
+            {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
+                'label': cart.type == 'quote' ? 'AccessYourOffer' : 'GoToDelivery',
+                'cartUuid': cart.id,
+                'division': cart.division,
+                'stepBack': 'step2',
+                'nextStep': 'step5',
+                'idSubmit': 'deliveryFormSubmitButton'
+            })) }}
         </div>
-    </section>
-    <!-- /section -->
+        {{ form_rest(form) }}
+    </form>
 {% endblock %}
 
 {% block javascripts %}
@@ -141,8 +78,7 @@
         $(function () {
             reloadCart();
             $('body').addClass('tunnel--orange');
-
-
+            
             /**
              * Gestion des datepickers
              */
@@ -196,7 +132,7 @@
             function reloadCart() {
                 $.ajax({
                     type: "GET",
-                    url: "{{ path('paprec_public_corp_Chantier_subscription_loadCart', {cartUuid: cart.id}) }}",
+                    url: "{{ path('paprec_public_corp_chantier_subscription_loadCart', {cartUuid: cart.id}) }}",
                     contentType: "html",
                     success: function (response) {
                         // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar

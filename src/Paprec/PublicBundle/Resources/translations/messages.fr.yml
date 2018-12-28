@@ -7,11 +7,13 @@ Public:
     Recycle:                      Je recycle
 
   Cart:
+    Back:                         Retour
+    BackHome:                     Retour à la page d'accueil
     Prestations:                  Mes prestations
     NoPrestation:                 Aucune prestation ajoutée
     ContactDetails:               Mes coordonnées
     Offer:                        Mon offre
-    Ponctal:                      Ponctuel
+    Ponctual:                     Ponctuel
     Regular:                      Régulier
     ChooseTrash:                  Sélectionnez vos déchets
     Qtty:                         Quantité
@@ -24,6 +26,15 @@ Public:
     FillForm:                     Je remplis un formulaire
     QuoteRequest:                 J'établis un devis
     PostalCode:                   Code postal
+    ValidateNeed:                 Valider votre besoin
+    AccessYourOffer:              Accéder à votre offre
+    GoToDelivery:                 Aller à la livraison
+    MyTrash:                      Mes déchets
+    ToCollect:                    à collecter
+    MyServices:                   Mes prestations
+    MyContainers:                 Mes contenants
+    Pay:                          Payer
+    Validate:                     Valider
 
   Step1:
     NextStepQuote:                Valider votre besoin

@@ -82,14 +82,14 @@
                     <div class="step__right">
                         <select class="input" id="divisionSelect"
                                 data-url="{{ path('paprec_public_corp_home_addDivision', {cartUuid: cart.id , division: 'divisionTmp'}) }}"
-                                style="color:{% if cart.division == 'DI' %}#95c220{% elseif cart.division == 'CHANTIER' %}#e59437{% elseif cart.division == 'D3E' %}#b8369a{% elseif cart.division == '5FLUX' %}#04A4CC{% endif %};">
+                                style="color:{% if cart.division == 'DI' %}#95c220{% elseif cart.division == 'CHANTIER' %}#e59437{% elseif cart.division == 'D3E' %}#b8369a{% elseif cart.division == '5FLUX' %}#2B6AB3{% endif %};">
                             <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
                             {% for key,division in divisions %}
                                 {% if key == cart.division %}
                                     <option value="{{ key }}" selected="selected">{{ division }}</option>
                                 {% else %}
                                     <option value="{{ key }}"
-                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% elseif key == 'D3E' %}#b8369a{% else %}#04A4CC{% endif %};">{{ division }}</option>
+                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% elseif key == 'D3E' %}#b8369a{% else %}#2B6AB3{% endif %};">{{ division }}</option>
                                 {% endif %}
                             {% endfor %}
                         </select>
@@ -111,7 +111,7 @@
                              data-url="{{ path('paprec_public_corp_home_addFrequency', {cartUuid: cart.id, frequency: 'frequencyTmp' }) }}">
                             <input class="input__radio" type="radio" id="ponctualRadio" name="frequencyRadio"
                                    value="ponctual" {% if cart.frequency == 'ponctual' %}checked{% endif %}>
-                            <label for="ponctualRadio">{{ 'Public.Cart.Ponctal'|trans }}</label>
+                            <label for="ponctualRadio">{{ 'Public.Cart.Ponctual'|trans }}</label>
 
                             <input class="input__radio" type="radio" id="regularRadio" name="frequencyRadio"
                                    value="regular" {% if cart.frequency == 'regular' %}checked{% endif %}>
@@ -119,9 +119,9 @@
                         </div>
                         <div class="clearfix"></div>
                         <a class="button button--grey"
-                           href="{{ path('paprec_public_corp_D3E_subscription_setOrder', {cartUuid: cart.id}) }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
+                           href="{{ path('paprec_public_corp_d3e_subscription_setOrder', {cartUuid: cart.id}) }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
                         <a class="button button--grey"
-                           href="{{ path('paprec_public_corp_D3E_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
+                           href="{{ path('paprec_public_corp_d3e_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
                     </div>
                 </div>
                 <div class="step">
@@ -163,7 +163,7 @@
                                         </div>
                                         <div class="right">
                                             <div class="infoproduct__close"
-                                                 data-url="{{ path('paprec_public_corp_D3E_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: displayedProduct.id}) }}"
+                                                 data-url="{{ path('paprec_public_corp_d3e_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: displayedProduct.id}) }}"
                                                  id="infoProductClose_{{ displayedProduct.id }}"></div>
                                             <div class="infoproduct__title">
                                                 QUANTIFIEZ VOTRE BESOIN
@@ -243,7 +243,7 @@
                            class="button margint10 button--grey">CONTACTEZ-NOUS</a>
                         <a href="{{ path('paprec_public_home_callBackForm', {cartUuid: cart.id }) }}"
                            class="button margint10 button--grey">ÊTRE RAPPELÉ</a>
-                        <a href="{{ path('paprec_public_corp_D3E_subscription_step2', {cartUuid: cart.id}) }}"
+                        <a href="{{ path('paprec_public_corp_d3e_subscription_step2', {cartUuid: cart.id}) }}"
                            class="button margint10 button--green">{{ ('Public.Step1.NextStep' ~ cart.type|capitalize)|trans }}
                         </a>
                     </div>
@@ -362,7 +362,7 @@
 
             function addOrRemoveDisplayedProduct(productId) {
                 {% autoescape'js' %}
-                url = "{{ path('paprec_public_corp_D3E_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: 'productTmp'}) }}"
+                url = "{{ path('paprec_public_corp_d3e_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: 'productTmp'}) }}"
                     .replace('productTmp', productId);
                 $(location).attr('href', url);
                 {% endautoescape %}
@@ -378,7 +378,7 @@
                 optDestruction = $('#optDestructionProductSelect_' + productId).prop('checked') ? 1 : 0;
                 $.ajax({
                     type: "POST",
-                    url: "{{ path('paprec_public_corp_D3E_subscription_addContent', {cartUuid: cart.id, productId: 'productTmp', quantity: 'quantityTmp', optHandling: 'optHandlingTmp', optSerialNumberStmt: 'optSerialNumberStmtTmp', optDestruction: 'optDestructionTmp'}) }}"
+                    url: "{{ path('paprec_public_corp_d3e_subscription_addContent', {cartUuid: cart.id, productId: 'productTmp', quantity: 'quantityTmp', optHandling: 'optHandlingTmp', optSerialNumberStmt: 'optSerialNumberStmtTmp', optDestruction: 'optDestructionTmp'}) }}"
                         .replace('productTmp', productId)
                         .replace('quantityTmp', qtty)
                         .replace('optHandlingTmp', optHandling)
@@ -405,7 +405,7 @@
             function reloadCart() {
                 $.ajax({
                     type: "GET",
-                    url: "{{ path('paprec_public_corp_D3E_subscription_loadCart', {cartUuid: cart.id}) }}",
+                    url: "{{ path('paprec_public_corp_d3e_subscription_loadCart', {cartUuid: cart.id}) }}",
                     contentType: "html",
                     success: function (response) {
                         // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
@@ -417,7 +417,7 @@
                             $.ajax({
                                 type: "GET",
                                 dataType: "json",
-                                url: "{{ path('paprec_public_corp_D3E_subscription_removeContent', {cartUuid: cart.id, productId: 'productTmp'}) }}"
+                                url: "{{ path('paprec_public_corp_d3e_subscription_removeContent', {cartUuid: cart.id, productId: 'productTmp'}) }}"
                                     .replace('productTmp', productId),
                                 success: function (response) {
                                     removeBadge(productId);
@@ -439,7 +439,7 @@
             function reloadNearbyAgencies() {
                 $.ajax({
                     type: "GET",
-                    url: "{{ path('paprec_public_corp_D3E_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}",
+                    url: "{{ path('paprec_public_corp_d3e_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}",
                     contentType: "html",
                     success: function (response) {
                         // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar

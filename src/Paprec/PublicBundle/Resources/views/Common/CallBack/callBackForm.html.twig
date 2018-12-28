@@ -144,13 +144,13 @@
                 division = $("#divisionType").val();
                 if (division === 'DI') {
                     $('body').addClass('tunnel--green');
-                    urlLoadCart = "{{ path('paprec_public_corp_DI_subscription_loadCart', {cartUuid: cart.id}) }}";
+                    urlLoadCart = "{{ path('paprec_public_corp_di_subscription_loadCart', {cartUuid: cart.id}) }}";
                 } else if (division === 'CHANTIER') {
                     $('body').addClass('tunnel--orange');
-                    urlLoadCart = "{{ path('paprec_public_corp_Chantier_subscription_loadCart', {cartUuid: cart.id}) }}";
+                    urlLoadCart = "{{ path('paprec_public_corp_chantier_subscription_loadCart', {cartUuid: cart.id}) }}";
                 } else {
                     $('body').addClass('tunnel--purple');
-                    urlLoadCart = "{{ path('paprec_public_corp_D3E_subscription_loadCart', {cartUuid: cart.id}) }}";
+                    urlLoadCart = "{{ path('paprec_public_corp_d3e_subscription_loadCart', {cartUuid: cart.id}) }}";
                 }
             }
 
