@@ -66,16 +66,16 @@
             </div>
         {% endfor %}
 
-        <a href="#" class="backtohome button button--green">{{ ('Public.Cart.BackHome'|trans)|upper }}</a>
+        <a href="{{ paprec_public_site_url }}" class="backtohome button button--green">{{ ('Public.Cart.BackHome'|trans)|upper }}</a>
 
-        <div class="notice notice--left">
-            Besoin d’une <span>information complémentaire</span> ? Vous souhaitez nous en parler ?
-        </div>
-
-        <a href="{{ path('paprec_public_home_contactForm', {cartUuid: cart.id}) }}"
-           class="button margint10 button--grey">CONTACTEZ-NOUS</a>
-        <a href="{{ path('paprec_public_home_callBackForm', {cartUuid: cart.id }) }}"
-           class="button margint10 button--grey">ÊTRE RAPPELÉ</a>
+        {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
+            'label': 'Validate',
+            'cartUuid': cart.id,
+            'division': cart.division,
+            'stepBack': '',
+            'nextStep': '',
+            'idSubmit': ''
+        })) }}
     </div>
 {% endblock %}
 

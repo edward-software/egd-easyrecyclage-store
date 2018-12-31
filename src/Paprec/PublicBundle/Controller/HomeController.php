@@ -270,6 +270,10 @@ class HomeController extends Controller
         $contactUsManager = $this->get('paprec_commercial.contact_us_manager');
 
         $cart = null;
+        if ($cartUuid) {
+            $cartManager = $this->get('paprec.cart_manager');
+            $cart = $cartManager->get($cartUuid);
+        }
 
         $contactUs = new ContactUs();
         $form = $this->createForm(ContactUsShortType::class, $contactUs);

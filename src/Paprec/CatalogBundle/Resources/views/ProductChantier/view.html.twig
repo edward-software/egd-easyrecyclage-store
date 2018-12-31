@@ -88,7 +88,7 @@
                                             {% if argument.deleted is null %}
                                                 <div class="col-md-6">
                                                     <a class="btn btn-sm btn-outline-primary w-75 my-2"
-                                                       href="{{ path('paprec_catalog_argument_view', {id: argument.id}) }}">{{ argument }}</a>
+                                                       href="{{ path('paprec_catalog_argument_view', {id: argument.id}) }}">{{ argument|slice(0,30) }}</a>
                                                 </div>
                                             {% endif %}
                                         {% endfor %}

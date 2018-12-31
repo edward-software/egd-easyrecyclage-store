@@ -12,7 +12,12 @@
     {# Définition des menus affichés dans la sidebar #}
     {% set besoin = 'active' %}
     {% set coordonnees = '' %}
-    {% set offre = '' %}
+    {% if cart.type == 'order' %}
+        {% set livraison = '' %}
+        {% set paiement = '' %}
+    {% elseif cart.type == 'quote' %}
+        {% set offre = '' %}
+    {% endif %}
     {{ parent() }}
 {% endblock %}
 
@@ -31,7 +36,6 @@
 {% block products_panel %}
     {% if cart.displayedCategories %}
         {{ parent() }}
-
     {% endif %}
 {% endblock %}
 
@@ -120,22 +124,11 @@
                                         <div class="infoproduct__desc">
                                             {{ displayedProduct.description|nl2br }}
                                         </div>
-                                        <div class="infoproduct__satisfaction">
-                                            {% for argument in displayedProduct.arguments %}
+                                        {% for argument in displayedProduct.arguments|slice(0, 2) %}
+                                            <div class="{% if loop.index == 1 %}infoproduct__satisfaction{% elseif loop.index == 2 %}infoproduct__tri{% endif %}">
                                                 {{ argument.description|nl2br }}
-                                            {% endfor %}
-                                            Facilite le pré-tri
-                                            <br>
-                                            Facilité de
-                                            <pose></pose>
-                                            <br>
-                                            et d’enlèvement
-                                        </div>
-                                        <div class="infoproduct__tri">
-                                            Tri selectif
-                                            <br>
-                                            Facilite le pré-tri
-                                        </div>
+                                            </div>
+                                        {% endfor %}
                                         <div class="clearfix"></div>
                                         <div class="infoproduct__disclamer">
                                             Forfait recyclage clé en main
@@ -185,6 +178,7 @@
 {% endblock %}
 
 {% block cta_bottom_panel %}
+    <div class="step">
         {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
             'label': 'ValidateNeed',
             'cartUuid': cart.id,
@@ -193,6 +187,7 @@
             'nextStep': 'step2',
             'idSubmit': ''
         })) }}
+    </div>
 {% endblock %}
 
 

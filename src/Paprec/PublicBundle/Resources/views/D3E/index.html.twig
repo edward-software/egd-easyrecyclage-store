@@ -1,95 +1,39 @@
-{% extends "::base_public.html.twig" %}
+{% extends "@PaprecPublic/Common/Base/base_index.html.twig" %}
 
-{#{% block title %}#}
+{% block sidebar %}
+    {# Définition des menus affichés dans la sidebar #}
+    {% set besoin = 'active' %}
+    {% set coordonnees = '' %}
+    {% set offre = '' %}
+    {{ parent() }}
+{% endblock %}
 
-{#{% endblock %}#}
+{% block sidebar_info %}
+    {{ render(controller('PaprecPublicBundle:Common:getSideBarInfo')) }}
+{% endblock %}
 
-{#{% block stylesheets %}#}
 
-{#{% endblock %}#}
-
-{% block main_content %}
-    <section>
-        <div class="wrapper">
-            <div class="sidebar">
-                <div class="recap active">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">01</span>Mon besoin
-                    </div>
-                </div>
-
-                <div class="recap">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">02</span>Mes coordonnées
-                    </div>
-
-                </div>
-
-                <div class="recap">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">03</span>Mon offre
-                    </div>
-
-                </div>
-            </div>
-
-            <form action="#" class="main">
-                <div class="step">
-                    <div class="step__left">
-                        <div class="step__title">{{ 'Public.Home.Recycle'|trans }}</div>
-                    </div>
-                    <div class="step__right">
-                        <select class="input" id="divisionSelect"
-                                data-url="{{ path('paprec_public_corp_home_addDivision', {cartUuid: cart.id , division: 'divisionTmp'}) }}"
-                                style="color:{% if cart.division == 'DI' %}#95c220{% elseif cart.division == 'CHANTIER' %}#e59437{% elseif cart.division == 'D3E' %}#b8369a{% elseif cart.division == '5FLUX' %}#2B6AB3{% endif %};">
-                            <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
-                            {% for key,division in divisions %}
-                                {% if key == cart.division %}
-                                    <option value="{{ key }}" selected="selected">{{ division }}</option>
-                                {% else %}
-                                    <option value="{{ key }}"
-                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% elseif key == 'D3E' %}#b8369a{% else %}#2B6AB3{% endif %};">{{ division }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="step__agency">
-
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step__left">
-                        <div class="step__title">{{ 'Public.Home.Location'|trans }}</div>
-                    </div>
-                    <div class="step__right">
-                        <input class="input" type="text" name="locationSelect"
-                               id="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}
-                               placeholder="{{ 'Public.Cart.PostalCode'|trans }}">
-
-                        <br>
-                        <div id="frequencyRadioBox"
-                             data-url="{{ path('paprec_public_corp_home_addFrequency', {cartUuid: cart.id, frequency: 'frequencyTmp' }) }}">
-                            <input class="input__radio" type="radio" id="ponctualRadio" name="frequencyRadio"
-                                   value="ponctual" {% if cart.frequency == 'ponctual' %}checked{% endif %}>
-                            <label for="ponctualRadio">{{ 'Public.Cart.Ponctual'|trans }}</label>
-
-                            <input class="input__radio" type="radio" id="regularRadio" name="frequencyRadio"
-                                   value="regular" {% if cart.frequency == 'regular' %}checked{% endif %}>
-                            <label for="regularRadio">{{ 'Public.Cart.Regular'|trans }}</label>
-                        </div>
-                        <div class="clearfix"></div>
-                        <a class="button button--grey"
-                           href="{{ path('paprec_public_corp_d3e_subscription_setOrder', {cartUuid: cart.id}) }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
-                        <a class="button button--grey"
-                           href="{{ path('paprec_public_corp_d3e_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
-                    </div>
-                </div>
-            </form>
-        </div>
-
+{% block cta_panel %}
+    <div>
+        <a class="step__tab"
+           href="{{ path('paprec_public_corp_d3e_subscription_setOrder', {cartUuid: cart.id}) }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
+        <a class="step__tab"
+           href="{{ path('paprec_public_corp_d3e_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
         <div class="clearfix"></div>
-    </section>
+    </div>
+{% endblock %}
 
+{% block cta_bottom_panel %}
+    <div class="step">
+        {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
+            'label': 'ValidateNeed',
+            'cartUuid': cart.id,
+            'division': cart.division,
+            'stepBack': '',
+            'nextStep': 'step2',
+            'idSubmit': ''
+        })) }}
+    </div>
 {% endblock %}
 
 {% block javascripts %}

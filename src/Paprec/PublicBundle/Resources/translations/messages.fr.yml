@@ -20,6 +20,7 @@ Public:
     Dimensions:                   Dimensions
     AddToCartQuote:               Ajouter au devis
     AddToCartOrder:               Ajouter au panier
+    SendNeed:                     Envoyer votre besoin
     NoProduct:                    Aucune prestation ajoutée
     NeedEstimation:               J'estime mon besoin en 3 minutes
     3MinOrder:                    Je commande en ligne en 3 minutes

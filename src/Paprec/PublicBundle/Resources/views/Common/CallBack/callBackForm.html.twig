@@ -1,4 +1,4 @@
-{% extends "::base_public.html.twig" %}
+{% extends "@PaprecPublic/Common/Base/base_stepper.html.twig" %}
 
 {#{% block title %}#}
 
@@ -8,88 +8,65 @@
 
 {#{% endblock %}#}
 
-{% block main_content %}
-    <!-- section -->
+{% block sidebar %}
+    {# Définition des menus affichés dans la sidebar #}
+    {% set besoin = 'active' %}
+    {% set confirmation = '' %}
+    {{ parent() }}
+{% endblock %}
+
+{% block main_content_stepper %}
     <input type="hidden" id="divisionType" value="{{ cart.division }}">
 
-    <section>
-        <div class="wrapper">
-            <div class="sidebar">
-                <div class="recap active">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">01</span>Mon besoin
-                    </div>
-                    <div id="loadedCartPanel">
-
-                    </div>
-                </div>
-
-                <div class="recap">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">02</span>Ma confirmation
-                    </div>
-
-                </div>
-
+    <form id="callBackForm" action="#" class="main" method="post" enctype="multipart/form-data">
+        <div class="step">
+            <div class="step__left">
+                <div class="step__title">Je suis</div>
             </div>
-            <form id="callBackForm" action="#" class="main" method="post" enctype="multipart/form-data">
-                <div class="step">
-                    <div class="step__left">
-                        <div class="step__title">Je suis</div>
-                    </div>
-                    <div class="step__right step__right--small">
-                        {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.BusinessName'|trans}}) }}
-                        {{ form_errors(form.businessName) }}
+            <div class="step__right step__right--small">
+                {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.BusinessName'|trans}}) }}
+                {{ form_errors(form.businessName) }}
 
-                        {{ form_widget(form.civility, {'attr': {'class': 'input--radio'}}) }}
-                        {{ form_errors(form.civility) }}
+                {{ form_widget(form.civility, {'attr': {'class': 'input--radio'}}) }}
+                {{ form_errors(form.civility) }}
 
-                        <div class="clearfix step--marginfield"></div>
+                <div class="clearfix step--marginfield"></div>
 
-                        {{ form_widget(form.lastName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.CallBack.LastName'|trans}}) }}
-                        {{ form_errors(form.lastName) }}
-                        {{ form_widget(form.firstName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.CallBack.FirstName'|trans}}) }}
-                        {{ form_errors(form.firstName) }}
+                {{ form_widget(form.lastName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.CallBack.LastName'|trans}}) }}
+                {{ form_errors(form.lastName) }}
+                {{ form_widget(form.firstName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.CallBack.FirstName'|trans}}) }}
+                {{ form_errors(form.firstName) }}
 
-                        {{ form_widget(form.email, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.Email'|trans}}) }}
-                        {{ form_errors(form.email) }}
+                {{ form_widget(form.email, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.Email'|trans}}) }}
+                {{ form_errors(form.email) }}
 
-                        {{ form_widget(form.phone, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.PhonePlaceholder'|trans}}) }}
-                        {{ form_errors(form.phone) }}
+                {{ form_widget(form.phone, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.PhonePlaceholder'|trans}}) }}
+                {{ form_errors(form.phone) }}
 
-                        {{ form_widget(form.function, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.FunctionPlaceholder'|trans}}) }}
-                        {{ form_errors(form.function) }}
+                {{ form_widget(form.function, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.FunctionPlaceholder'|trans}}) }}
+                {{ form_errors(form.function) }}
 
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="step">
-                    <div class="step__left">
-                        <div class="step__title">Date et heure de rappel</div>
-                    </div>
-                    <div class="step__right step__right--small">
-                        {{ form_widget(form.dateCallBack, {'attr': {'class': 'input input--mid'}}) }}
-                        {{ form_errors(form.dateCallBack) }}
-                        {{ form_widget(form.timeCallBack, {'attr': {'class': 'input input--mid'}}) }}
-                        {{ form_errors(form.timeCallBack) }}
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="step">
-                    <a href="javascript:void(0);" id="callBackFormSubmitButton" class="button button--green">
-                        ENVOYER VOTRE BESOIN
-                    </a>
-                </div>
-                {{ form_rest(form) }}
-
-            </form>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
         </div>
-
-
-        <div class="clearfix"></div>
-    </section>
-    <!-- /section -->
+        <div class="step">
+            <div class="step__left">
+                <div class="step__title">Date et heure de rappel</div>
+            </div>
+            <div class="step__right step__right--small">
+                {{ form_widget(form.dateCallBack, {'attr': {'class': 'input input--mid'}}) }}
+                {{ form_errors(form.dateCallBack) }}
+                {{ form_widget(form.timeCallBack, {'attr': {'class': 'input input--mid'}}) }}
+                {{ form_errors(form.timeCallBack) }}
+            </div>
+            <div class="clearfix"></div>
+            <a href="javascript:void(0);" id="callBackFormSubmitButton" class="button button--green">
+                {{ ('Public.Cart.SendNeed'|trans)|upper }}
+            </a>
+        </div>
+        {{ form_rest(form) }}
+    </form>
 {% endblock %}
 
 {% block javascripts %}
@@ -104,7 +81,7 @@
             /**
              * Gestion des datepickers
              */
-            // On ne peut choisir une date de rappel qu'à partir d'aujourd'hui
+                // On ne peut choisir une date de rappel qu'à partir d'aujourd'hui
             var now = new Date();
 
             // On définit arbitrairement la date maximum pour le rappel à dans 3 mois
@@ -136,7 +113,6 @@
                         down: 'fa fa-angle-down',
                     },
             });
-
 
 
             // On récupère la valeur du champ hidden divisionType et on applique au body la couleur de la division choisie

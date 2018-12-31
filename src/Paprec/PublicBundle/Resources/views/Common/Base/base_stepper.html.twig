@@ -31,6 +31,14 @@
                             </div>
                         </div>
                     {% endif %}
+                    {% if confirmation is defined %}
+                        {% set cptStep = cptStep + 1 %}
+                        <div class="recap {{ confirmation }}">
+                            <div class="recap__step">
+                                <span class="recap__stepNumber">0{{ cptStep }}</span>Ma confirmation
+                            </div>
+                        </div>
+                    {% endif %}
                     {% if coordonnees is defined %}
                         {% set cptStep = cptStep + 1 %}
                         <div class="recap {{ coordonnees }}">

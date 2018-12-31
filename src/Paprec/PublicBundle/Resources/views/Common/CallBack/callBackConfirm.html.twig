@@ -1,4 +1,4 @@
-{% extends "::base_public.html.twig" %}
+{% extends "@PaprecPublic/Common/Base/base_stepper.html.twig" %}
 
 {#{% block title %}#}
 
@@ -7,73 +7,41 @@
 {#{% block stylesheets %}#}
 
 {#{% endblock %}#}
+{% block whoare %}
+{% endblock %}
 
-{% block main_content %}
-    <!-- section -->
-    <       >
-        <input type="hidden" id="divisionType" value="{{ cart.division }}">
-        <div class="wrapper">
-            <div class="sidebar">
-                <div class="recap passed">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">01</span>Mon besoin
-                    </div>
-                </div>
+{% block sidebar %}
+    {# Définition des menus affichés dans la sidebar #}
+    {% set besoin = 'passed' %}
+    {% set confirmation = 'active' %}
+    {{ parent() }}
+{% endblock %}
 
-                <div class="recap active">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">02</span>Ma confirmation
-                    </div>
+{% block sidebar_info %}
+    {{ render(controller('PaprecPublicBundle:Common:getSideBarInfo')) }}
+{% endblock %}
 
-                </div>
-                <div class="guide">
-                    <div class="guide__title">
-                        EASYRECYCLAGE,
-                        <br>
-                        C’EST SIMPLE ET RAPIDE
-                    </div>
-                    <div class="guide__step">
-                        Sélectionnez
-                        <br>
-                        vos déchets
-                    </div>
-                    <div class="guide__step">
-                        Validez
-                        <br>
-                        votre devis
-                    </div>
-                    <div class="guide__step">
-                        Triez vos déchets,
-                        <br>
-                        nous les collectons
-                        <br>
-                        et les valorisons
-                    </div>
-                </div>
+{% block main_content_stepper %}
+    <input type="hidden" id="divisionType" value="{{ cart.division }}">
+
+    <div class="step">
+        <div class="step__sucess">
+            <div class="title">MERCI POUR VOTRE CONFIANCE !</div>
+            <div class="content">Votre demande a bien été prise en compte par nos agences.
             </div>
-            <div class="main">
-                <div class="step">
-                    <div class="step__sucess">
-                        <div class="title">MERCI POUR VOTRE CONFIANCE !</div>
-                        <div class="content">Votre demande a bien été prise en compte par nos agences.
-                        </div>
-                    </div>
-                    <div class="bold">{% if callBack.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ callBack.firstName }} {{ callBack.lastName  }},</div>
-
-
-                    <div class="greennotice">
-                        L’agence en charge de votre demande vous recontactera sous 48h par e-mail ou téléphone.
-                    </div>
-
-                    <a href="{{ paprec_public_site_url }}" class="backtohome button button--green">RETOUR À LA PAGE D’ACCUEIL</a>
-
-                </div>
-            </div>
-
-            <div class="clearfix"></div>
         </div>
-    </section>
-    <!-- /section -->
+        <div class="bold">{% if callBack.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ callBack.firstName }} {{ callBack.lastName }}
+            ,
+        </div>
+
+
+        <div class="greennotice">
+            L’agence en charge de votre demande vous recontactera sous 48h par e-mail ou téléphone.
+        </div>
+
+        <a href="{{ paprec_public_site_url }}" class="backtohome button button--green">{{ 'Public.Cart.BackHome'|trans }}</a>
+
+    </div>
 {% endblock %}
 
 {% block javascripts %}
