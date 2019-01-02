@@ -1,0 +1,87 @@
+{# BASE COMMUNE A TOUTES LES PAGES DU TUNNEL #}
+{# Comprend la sidebar, la division main #}
+
+{% extends "::base_public.html.twig" %}
+
+{#{% block title %}#}
+
+{#{% endblock %}#}
+
+{#{% block stylesheets %}#}
+
+{#{% endblock %}#}
+
+{% block main_content %}
+
+    <section>
+        <div class="wrapper">
+            {% block sidebar %}
+                <div class="sidebar">
+
+                    {% set cptStep = 0 %}
+
+                    {% if besoin is defined %}
+                        {% set cptStep = cptStep + 1 %}
+                        <div class="recap {{ besoin }}">
+                            <div class="recap__step">
+                                <span class="recap__stepNumber">0{{ cptStep }}</span>Mon besoin
+                            </div>
+                            <div id="loadedCartPanel">
+
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if confirmation is defined %}
+                        {% set cptStep = cptStep + 1 %}
+                        <div class="recap {{ confirmation }}">
+                            <div class="recap__step">
+                                <span class="recap__stepNumber">0{{ cptStep }}</span>Ma confirmation
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if coordonnees is defined %}
+                        {% set cptStep = cptStep + 1 %}
+                        <div class="recap {{ coordonnees }}">
+                            <div class="recap__step">
+                                <span class="recap__stepNumber">0{{ cptStep }}</span>Mes coordonnées
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if offre is defined %}
+                        {% set cptStep = cptStep + 1 %}
+                        <div class="recap {{ offre }}">
+                            <div class="recap__step">
+                                <span class="recap__stepNumber">0{{ cptStep }}</span>Mon offre
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if livraison is defined %}
+                        {% set cptStep = cptStep + 1 %}
+                        <div class="recap {{ livraison }}">
+                            <div class="recap__step">
+                                <span class="recap__stepNumber">0{{ cptStep }}</span>Ma livraison
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if paiement is defined %}
+                        {% set cptStep = cptStep + 1 %}
+                        <div class="recap {{ paiement }}">
+                            <div class="recap__step">
+                                <span class="recap__stepNumber">0{{ cptStep }}</span>Mon paiement
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% block sidebar_info %}
+
+                    {% endblock %}
+                </div>
+            {% endblock %}
+            <div class="main">
+                {% block main_content_stepper %}
+                {% endblock %}
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+{% endblock %}

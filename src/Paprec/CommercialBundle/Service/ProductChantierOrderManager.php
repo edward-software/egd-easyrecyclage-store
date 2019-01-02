@@ -389,7 +389,7 @@ class ProductChantierOrderManager
             $snappy->generateFromHtml(
                 array(
                     $this->container->get('templating')->render(
-                        '@PaprecCommercial/ProductChantierOrder/PDF/orderSummary.html.twig',
+                        '@PaprecCommercial/ProductChantierOrder/PDF/orderSummaryPDF.html.twig',
                         array(
                             'productChantierOrder' => $productChantierOrder
                         )

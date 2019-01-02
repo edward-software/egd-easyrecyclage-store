@@ -12,27 +12,13 @@
     {{ render(controller('PaprecPublicBundle:Common:getSideBarInfo')) }}
 {% endblock %}
 
-
 {% block cta_panel %}
     <div>
         <a class="step__tab"
-           href="{{ path('paprec_public_corp_chantier_subscription_setOrder', {cartUuid: cart.id}) }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
+           href="{{ path('paprec_public_corp_di_subscription_step1', {cartUuid: cart.id}) }}">{{ 'Public.Cart.NeedEstimation'|trans }}</a>
         <a class="step__tab"
-           href="{{ path('paprec_public_corp_chantier_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
+           href="{{ path('paprec_public_home_contactForm', {cartUuid: cart.id}) }}">{{ 'Public.Cart.FillForm'|trans }}</a>
         <div class="clearfix"></div>
-    </div>
-{% endblock %}
-
-{% block cta_bottom_panel %}
-    <div class="step">
-        {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
-            'label': 'ValidateNeed',
-            'cartUuid': cart.id,
-            'division': cart.division,
-            'stepBack': '',
-            'nextStep': 'step2',
-            'idSubmit': ''
-        })) }}
     </div>
 {% endblock %}
 
@@ -44,9 +30,8 @@
         $(function () {
 
 
-            reloadCart();
             loadedPage();
-            reloadNearbyAgencies()
+            reloadNearbyAgencies();
 
             function initializeAutocomplete(id) {
                 var element = document.getElementById(id);
@@ -120,50 +105,14 @@
 
             // Au chargement, on applique au body la couleur de la division DI
             function loadedPage() {
-                $('body').addClass('tunnel--orange');
+                $('body').addClass('tunnel--green');
             }
 
-            // Rechargement de l'HTML du Cart
-            function reloadCart() {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ path('paprec_public_corp_chantier_subscription_loadCart', {cartUuid: cart.id}) }}",
-                    contentType: "html",
-                    success: function (response) {
-                        // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
-                        var htmlToDisplay = response.trim();
-                        $("#loadedCartPanel").html(htmlToDisplay);
-                        // On ajoute un listener sur les "x" dans la liste des produits dans le Cart
-                        $(".buttonDeleteProduct").click(function () {
-                            productCategory = (this.id).replace('buttonDeleteProduct_', '').split('_', 2);
-                            productId = productCategory[0];
-                            categoryId = productCategory[1];
-                            $.ajax({
-                                type: "GET",
-                                dataType: "json",
-                                url: "{{ path('paprec_public_corp_chantier_subscription_removeContent', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
-                                    .replace('categoryTmp', categoryId)
-                                    .replace('productTmp', productId),
-                                success: function (response) {
-                                    removeBadge(productId, categoryId);
-                                    reloadCart();
-                                },
-                                error: function (errorThrown) {
-                                    console.log(errorThrown);
-                                }
-                            });
-                        })
-                    },
-                    error: function (errorThrown) {
-                        console.log(errorThrown);
-                    }
-                });
-            }
 
             function reloadNearbyAgencies() {
                 $.ajax({
                     type: "GET",
-                    url: "{{ path('paprec_public_corp_chantier_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}",
+                    url: "{{ path('paprec_public_corp_di_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}",
                     contentType: "html",
                     success: function (response) {
                         // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar

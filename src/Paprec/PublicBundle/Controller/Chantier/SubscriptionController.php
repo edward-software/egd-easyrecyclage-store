@@ -16,7 +16,7 @@ class SubscriptionController extends Controller
 {
 
     /**
-     * @Route("/chantier/step0/{cartUuid}", name="paprec_public_corp_Chantier_subscription_step0")
+     * @Route("/chantier/step0/{cartUuid}", name="paprec_public_corp_chantier_subscription_step0")
      * @throws \Exception
      */
     public function step0Action(Request $request, $cartUuid)
@@ -38,7 +38,7 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * @Route("/chantier/setOrder/{cartUuid}", name="paprec_public_corp_Chantier_subscription_setOrder")
+     * @Route("/chantier/setOrder/{cartUuid}", name="paprec_public_corp_chantier_subscription_setOrder")
      * @throws \Exception
      */
     public function setOrderAction(Request $request, $cartUuid)
@@ -49,13 +49,13 @@ class SubscriptionController extends Controller
         $cart->setType('order');
         $em->flush();
 
-        return $this->redirectToRoute('paprec_public_corp_Chantier_subscription_step1', array(
+        return $this->redirectToRoute('paprec_public_corp_chantier_subscription_step1', array(
             'cartUuid' => $cart->getId()
         ));
     }
 
     /**
-     * @Route("/chantier/setQuote/{cartUuid}", name="paprec_public_corp_Chantier_subscription_setQuote")
+     * @Route("/chantier/setQuote/{cartUuid}", name="paprec_public_corp_chantier_subscription_setQuote")
      * @throws \Exception
      */
     public function setQuoteAction(Request $request, $cartUuid)
@@ -66,7 +66,7 @@ class SubscriptionController extends Controller
         $cart->setType('quote');
         $em->flush();
 
-        return $this->redirectToRoute('paprec_public_corp_Chantier_subscription_step1', array(
+        return $this->redirectToRoute('paprec_public_corp_chantier_subscription_step1', array(
             'cartUuid' => $cart->getId()
         ));
     }
@@ -75,7 +75,7 @@ class SubscriptionController extends Controller
      * Etape "Mon besoin", choix des produits et ajout au Cart
      *
      * On passe le $type en paramère qui correspond à 'order' (commande) ou 'quote'(devis)
-     * @Route("/chantier/step1/{cartUuid}", name="paprec_public_corp_Chantier_subscription_step1")
+     * @Route("/chantier/step1/{cartUuid}", name="paprec_public_corp_chantier_subscription_step1")
      * @throws \Exception
      */
     public function step1Action(Request $request, $cartUuid)
@@ -121,7 +121,7 @@ class SubscriptionController extends Controller
      * Etape "Mes coordonnées"
      * où l'on créé le devis où la quote au submit du formulaire
      *
-     * @Route("/chantier/step2/{cartUuid}", name="paprec_public_corp_Chantier_subscription_step2")
+     * @Route("/chantier/step2/{cartUuid}", name="paprec_public_corp_chantier_subscription_step2")
      * @throws \Exception
      */
     public function step2Action(Request $request, $cartUuid)
@@ -170,7 +170,7 @@ class SubscriptionController extends Controller
                 $sendGeneratedQuoteMail = $productChantierQuoteManager->sendGeneratedQuoteEmail($productChantierQuote);
 
                 if ($sendNewProductChantierQuoteMail && $sendGeneratedQuoteMail) {
-                    return $this->redirectToRoute('paprec_public_corp_Chantier_subscription_step3', array(
+                    return $this->redirectToRoute('paprec_public_corp_chantier_subscription_step3', array(
                         'cartUuid' => $cart->getId(),
                         'quoteId' => $productChantierQuote->getId()
                     ));
@@ -209,7 +209,7 @@ class SubscriptionController extends Controller
                 $sendOrderSummaryEmail = $productChantierOrderManager->sendOrderSummaryEmail($productChantierOrder);
 
                 if ($sendNewProductChantierOrder && $sendOrderSummaryEmail) {
-                    return $this->redirectToRoute('paprec_public_corp_Chantier_subscription_step4', array(
+                    return $this->redirectToRoute('paprec_public_corp_chantier_subscription_step4', array(
                         'cartUuid' => $cart->getId(),
                         'orderId' => $productChantierOrder->getId()
                     ));
@@ -226,7 +226,7 @@ class SubscriptionController extends Controller
     /**
      * Etape "Mon offre" qui récapitule le de vis créé par l'utilisateur
      *
-     * @Route("/chantier/step3/{cartUuid}/{quoteId}", name="paprec_public_corp_Chantier_subscription_step3")
+     * @Route("/chantier/step3/{cartUuid}/{quoteId}", name="paprec_public_corp_chantier_subscription_step3")
      */
     public function step3Action(Request $request, $cartUuid, $quoteId)
     {
@@ -246,7 +246,7 @@ class SubscriptionController extends Controller
     /**
      * Etape "Ma livraison" qui est encore un formulaire complétant les infos du productChantierOrder
      *
-     * @Route("/chantier/step4/{cartUuid}/{orderId}", name="paprec_public_corp_Chantier_subscription_step4")
+     * @Route("/chantier/step4/{cartUuid}/{orderId}", name="paprec_public_corp_chantier_subscription_step4")
      */
     public function step4Action(Request $request, $cartUuid, $orderId)
     {
@@ -265,7 +265,7 @@ class SubscriptionController extends Controller
             $em->merge($productChantierOrder);
             $em->flush();
 
-            return $this->redirectToRoute('paprec_public_corp_Chantier_subscription_step5', array(
+            return $this->redirectToRoute('paprec_public_corp_chantier_subscription_step5', array(
                 'cartUuid' => $cart->getId(),
                 'orderId' => $productChantierOrder->getId()
             ));
@@ -281,7 +281,7 @@ class SubscriptionController extends Controller
     /**
      * Etape "Mon paiement" qui est encore un formulaire complétant les infos du productChantierOrder
      *
-     * @Route("/chantier/step5/{cartUuid}/{orderId}", name="paprec_public_corp_Chantier_subscription_step5")
+     * @Route("/chantier/step5/{cartUuid}/{orderId}", name="paprec_public_corp_chantier_subscription_step5")
      */
     public function step5Action(Request $request, $cartUuid, $orderId)
     {
@@ -300,7 +300,7 @@ class SubscriptionController extends Controller
 //            $em->merge($productChantierOrder);
 //            $em->flush();
 //
-//            return $this->redirectToRoute(paprec_public_corp_Chantier_subscription_step5, array(
+//            return $this->redirectToRoute(paprec_public_corp_chantier_subscription_step5, array(
 //                'cartUuid' => $cart->getId(),
 //                'orderId' => $productChantierOrder->getId()
 //            ));
@@ -316,7 +316,7 @@ class SubscriptionController extends Controller
     /**
      * Au clic sur une catégorie, on l'ajoute ou on la supprime des catégories affichées
      *
-     * @Route("/chantier/addDisplayedCategory/{cartUuid}/{categoryId}", name="paprec_public_corp_Chantier_subscription_addDisplayedCategory")
+     * @Route("/chantier/addDisplayedCategory/{cartUuid}/{categoryId}", name="paprec_public_corp_chantier_subscription_addDisplayedCategory")
      * @throws \Exception
      */
     public function addDisplayedCategoryAction(Request $request, $cartUuid, $categoryId)
@@ -326,7 +326,7 @@ class SubscriptionController extends Controller
         // On ajoute ou on supprime la catégorie sélecionnée au tableau des displayedCategories du Cart
         $cart = $cartManager->addOrRemoveDisplayedCategory($cartUuid, $categoryId);
 
-        return $this->redirectToRoute('paprec_public_corp_Chantier_subscription_step1', array(
+        return $this->redirectToRoute('paprec_public_corp_chantier_subscription_step1', array(
             'cartUuid' => $cart->getId()
         ));
     }
@@ -334,7 +334,7 @@ class SubscriptionController extends Controller
     /**
      * Ajoute au cart un displayedProduct avec en key => value( categoryId => productId)
      *
-     * @Route("/chantier/addOrRemoveDisplayedProduct/{cartUuid}/{categoryId}/{productId}", name="paprec_public_corp_Chantier_subscription_addOrRemoveDisplayedProduct")
+     * @Route("/chantier/addOrRemoveDisplayedProduct/{cartUuid}/{categoryId}/{productId}", name="paprec_public_corp_chantier_subscription_addOrRemoveDisplayedProduct")
      * @throws \Exception
      */
     public function addOrRemoveDisplayedProductAction(Request $request, $cartUuid, $categoryId, $productId)
@@ -344,7 +344,7 @@ class SubscriptionController extends Controller
         // On ajoute ou on supprime le produit sélecionné au tableau des displayedCategories du Cart
         $cart = $cartManager->addOrRemoveDisplayedProduct($cartUuid, $categoryId, $productId);
 
-        return $this->redirectToRoute('paprec_public_corp_Chantier_subscription_step1', array(
+        return $this->redirectToRoute('paprec_public_corp_chantier_subscription_step1', array(
             'cartUuid' => $cart->getId()
         ));
     }
@@ -352,7 +352,7 @@ class SubscriptionController extends Controller
     /**
      * Ajoute au cart un Product avec sa quantité et  sa catégorie
      *
-     * @Route("/chantier/addContent/{cartUuid}/{categoryId}/{productId}/{quantity}", name="paprec_public_corp_Chantier_subscription_addContent")
+     * @Route("/chantier/addContent/{cartUuid}/{categoryId}/{productId}/{quantity}", name="paprec_public_corp_chantier_subscription_addContent")
      * @throws \Exception
      */
     public function addContentAction(Request $request, $cartUuid, $categoryId, $productId, $quantity)
@@ -368,7 +368,7 @@ class SubscriptionController extends Controller
     /**
      * Supprime un Product du contenu du Cart
      *
-     * @Route("/chantier/removeContent/{cartUuid}/{categoryId}/{productId}", name="paprec_public_corp_Chantier_subscription_removeContent")
+     * @Route("/chantier/removeContent/{cartUuid}/{categoryId}/{productId}", name="paprec_public_corp_chantier_subscription_removeContent")
      * @throws \Exception
      */
     public function removeContentAction(Request $request, $cartUuid, $categoryId, $productId)
@@ -384,7 +384,7 @@ class SubscriptionController extends Controller
     /**
      * Retourne le twig.html du cart avec les produits dans celui-ci ainsi que le montant total
      *
-     * @Route("/chantier/loadCart/{cartUuid}", name="paprec_public_corp_Chantier_subscription_loadCart", condition="request.isXmlHttpRequest()")
+     * @Route("/chantier/loadCart/{cartUuid}", name="paprec_public_corp_chantier_subscription_loadCart", condition="request.isXmlHttpRequest()")
      * @throws \Exception
      */
     public function loadCartAction(Request $request, $cartUuid)
@@ -401,7 +401,7 @@ class SubscriptionController extends Controller
 
     /**
      * Retourne le twig des agences proches
-     * @Route("/chantier/loadNearbyAgencies/{cartUuid}", name="paprec_public_corp_Chantier_subscription_loadNearbyAgencies", condition="request.isXmlHttpRequest()")
+     * @Route("/chantier/loadNearbyAgencies/{cartUuid}", name="paprec_public_corp_chantier_subscription_loadNearbyAgencies", condition="request.isXmlHttpRequest()")
      */
     public function loadNearbyAgenciesAction(Request $request, $cartUuid)
     {
@@ -409,10 +409,10 @@ class SubscriptionController extends Controller
         $agencyManager = $this->get('paprec_commercial.agency_manager');
 
         $cart = $cartManager->get($cartUuid);
-        $distance = 50;
+        $distance = $this->getParameter('paprec_distance_nearby_agencies');
         $nbAgencies = $agencyManager->getNearbyAgencies($cart->getLongitude(), $cart->getLatitude(), 'CHANTIER', $distance);
 
-        return $this->render('@PaprecPublic/Shared/partial/nearbyAgencies.html.twig', array(
+        return $this->render('@PaprecPublic/Common/partial/nearbyAgenciesPartial.html.twig', array(
             'nbAgencies' => $nbAgencies,
             'distance' => $distance
         ));

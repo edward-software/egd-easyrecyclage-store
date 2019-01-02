@@ -1,0 +1,161 @@
+{% extends "@PaprecPublic/Common/Base/base_stepper.html.twig" %}
+
+{#{% block title %}#}
+
+{#{% endblock %}#}
+
+{#{% block stylesheets %}#}
+
+{#{% endblock %}#}
+
+{% block sidebar %}
+    {# Définition des menus affichés dans la sidebar #}
+    {% set besoin = 'active' %}
+    {% set confirmation = '' %}
+    {{ parent() }}
+{% endblock %}
+
+{% block main_content_stepper %}
+    <input type="hidden" id="divisionType" value="{{ cart.division }}">
+
+    <form id="callBackForm" action="#" class="main" method="post" enctype="multipart/form-data">
+        <div class="step">
+            <div class="step__left">
+                <div class="step__title">Je suis</div>
+            </div>
+            <div class="step__right step__right--small">
+                {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.BusinessName'|trans}}) }}
+                {{ form_errors(form.businessName) }}
+
+                {{ form_widget(form.civility, {'attr': {'class': 'input--radio'}}) }}
+                {{ form_errors(form.civility) }}
+
+                <div class="clearfix step--marginfield"></div>
+
+                {{ form_widget(form.lastName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.CallBack.LastName'|trans}}) }}
+                {{ form_errors(form.lastName) }}
+                {{ form_widget(form.firstName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.CallBack.FirstName'|trans}}) }}
+                {{ form_errors(form.firstName) }}
+
+                {{ form_widget(form.email, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.Email'|trans}}) }}
+                {{ form_errors(form.email) }}
+
+                {{ form_widget(form.phone, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.PhonePlaceholder'|trans}}) }}
+                {{ form_errors(form.phone) }}
+
+                {{ form_widget(form.function, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.FunctionPlaceholder'|trans}}) }}
+                {{ form_errors(form.function) }}
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="step">
+            <div class="step__left">
+                <div class="step__title">Date et heure de rappel</div>
+            </div>
+            <div class="step__right step__right--small">
+                {{ form_widget(form.dateCallBack, {'attr': {'class': 'input input--mid'}}) }}
+                {{ form_errors(form.dateCallBack) }}
+                {{ form_widget(form.timeCallBack, {'attr': {'class': 'input input--mid'}}) }}
+                {{ form_errors(form.timeCallBack) }}
+            </div>
+            <div class="clearfix"></div>
+            <a href="javascript:void(0);" id="callBackFormSubmitButton" class="button button--green">
+                {{ ('Public.Cart.SendNeed'|trans)|upper }}
+            </a>
+        </div>
+        {{ form_rest(form) }}
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function () {
+            var division;
+            var urlLoadCart;
+
+            loadedPage();
+            reloadCart();
+
+            /**
+             * Gestion des datepickers
+             */
+                // On ne peut choisir une date de rappel qu'à partir d'aujourd'hui
+            var now = new Date();
+
+            // On définit arbitrairement la date maximum pour le rappel à dans 3 mois
+            maxDate = moment(now);
+            maxDate.add(3, 'months');
+
+            $('#paprec_commercialbundle_callBack_dateCallBack').datetimepicker({
+                locale: 'fr',
+                format: 'L',
+                minDate: now,
+                maxDate: maxDate,
+                icons:
+                    {
+                        up: 'fa fa-angle-up',
+                        down: 'fa fa-angle-down',
+                        date: 'fa fa-calendar',
+                        time: 'fa fa-clock',
+                        next: 'fa fa-angle-right',
+                        previous: 'fa fa-angle-left'
+                    },
+            });
+
+            $('#paprec_commercialbundle_callBack_timeCallBack').datetimepicker({
+                locale: 'fr',
+                format: 'LT',
+                icons:
+                    {
+                        up: 'fa fa-angle-up',
+                        down: 'fa fa-angle-down',
+                    },
+            });
+
+
+            // On récupère la valeur du champ hidden divisionType et on applique au body la couleur de la division choisie
+            function loadedPage() {
+                division = $("#divisionType").val();
+                if (division === 'DI') {
+                    $('body').addClass('tunnel--green');
+                    urlLoadCart = "{{ path('paprec_public_corp_di_subscription_loadCart', {cartUuid: cart.id}) }}";
+                } else if (division === 'CHANTIER') {
+                    $('body').addClass('tunnel--orange');
+                    urlLoadCart = "{{ path('paprec_public_corp_chantier_subscription_loadCart', {cartUuid: cart.id}) }}";
+                } else {
+                    $('body').addClass('tunnel--purple');
+                    urlLoadCart = "{{ path('paprec_public_corp_d3e_subscription_loadCart', {cartUuid: cart.id}) }}";
+                }
+            }
+
+
+            $('#callBackFormSubmitButton').on('click', function () {
+                // avant de submit, on convertit la date au format yyyy-mm-dd
+                $('#paprec_commercialbundle_callBack_dateCallBack').val($('#paprec_commercialbundle_callBack_dateCallBack').val().split('/').reverse().join('-'));
+                $('#callBackForm').submit();
+            });
+
+            // Rechargement de l'HTML du Cart
+            function reloadCart() {
+                $.ajax({
+                    type: "GET",
+                    url: urlLoadCart,
+                    contentType: "html",
+                    success: function (response) {
+                        // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
+                        var htmlToDisplay = response.trim();
+                        $("#loadedCartPanel").html(htmlToDisplay);
+                        //on supprime les croix dans le panier
+                        $('.buttonDeleteProduct').remove();
+                    },
+                    error: function (errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
+            }
+        });
+    </script>
+
+{% endblock %}

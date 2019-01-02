@@ -1,5 +1,13 @@
 {% extends "@PaprecPublic/Common/Base/base_index.html.twig" %}
 
+{#{% block title %}#}
+
+{#{% endblock %}#}
+
+{#{% block stylesheets %}#}
+
+{#{% endblock %}#}
+
 {% block sidebar %}
     {# Définition des menus affichés dans la sidebar #}
     {% set besoin = 'active' %}
@@ -8,45 +16,39 @@
     {{ parent() }}
 {% endblock %}
 
-{% block sidebar_info %}
-    {{ render(controller('PaprecPublicBundle:Common:getSideBarInfo')) }}
+{% block division_selected %}
+    {% if step != 'd' %}
+        {{ parent() }}
+    {% endif %}
 {% endblock %}
 
-
-{% block cta_panel %}
-    <div>
-        <a class="step__tab"
-           href="{{ path('paprec_public_corp_chantier_subscription_setOrder', {cartUuid: cart.id}) }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
-        <a class="step__tab"
-           href="{{ path('paprec_public_corp_chantier_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
-        <div class="clearfix"></div>
-    </div>
+{% block cinq_flux %}
+    {% if (step is defined and (step == 'f' or step == 'r')) and (cart.division is defined and cart.division == '5FLUX') %}
+        <a class="button button--grey"
+           href="http://www.easyrecyclage.com">{{ 'Public.Cart.3MinOrder'|trans }}</a>
+    {% endif %}
 {% endblock %}
 
-{% block cta_bottom_panel %}
-    <div class="step">
-        {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
-            'label': 'ValidateNeed',
-            'cartUuid': cart.id,
-            'division': cart.division,
-            'stepBack': '',
-            'nextStep': 'step2',
-            'idSubmit': ''
-        })) }}
-    </div>
+{% block frequency %}
+    {% if (step == 'f' or step == 'r') and (cart.division is defined and cart.division != '5FLUX') %}
+        {{ parent() }}
+    {% endif %}
 {% endblock %}
+
 
 {% block javascripts %}
+    {#<script type="text/javascript"#}
+    {#src="https://vicopo.selfbuild.fr/api.min.js"></script>#}
+    <!-- Include Google Maps JS API -->
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
     </script>
+
     <script>
         $(function () {
 
-
-            reloadCart();
+            reloadNearbyAgencies();
             loadedPage();
-            reloadNearbyAgencies()
 
             function initializeAutocomplete(id) {
                 var element = document.getElementById(id);
@@ -63,14 +65,13 @@
             // Fonction appelée lorsque l'on choisit une proposition de l'autocomplete Google
             function onPlaceChanged() {
                 var loc = $('#locationSelect').val();
-                // On init les variables car si un champ manque, on se retrouve avec city/%20/long dans l'url et non city//long
                 var place = this.getPlace();
+                // On init les variables car si un champ manque, on se retrouve avec city/%20/long dans l'url et non city//long
                 var city = " ";
                 var postalCode = " ";
-                var long = " ";
-                var lat = " ";
-                lat = place.geometry.location.lat();
-                long = place.geometry.location.lng();
+
+                var lat = place.geometry.location.lat();
+                var long = place.geometry.location.lng();
                 for (var i in place.address_components) {
                     var component = place.address_components[i];
                     for (var j in component.types) {  // Some types are ["country", "political"]
@@ -93,6 +94,13 @@
                 $(location).attr('href', url);
             }
 
+            // On force l'input d'un nombre pour chercher par code postal
+            $('#locationSelect').keypress(function (key) {
+                if (key.charCode < 48 || key.charCode > 57) {
+                    return false;
+                }
+            });
+
             // google.maps.event.addDomListener(window, 'load', function () {
             // Si l'on met ce listener, l'autocomplete est initialisé 1fois/1000
             initializeAutocomplete('locationSelect');
@@ -106,6 +114,8 @@
                 $(location).attr('href', url);
             });
 
+
+
             {# Quand on sélectionne une frequence dans les radioButtons, on recharge la page en envoyant la location, division, frequence#}
             {# cela na nous faire naviguer vers le SubscriptionController de la division choisie #}
             $('#frequencyRadioBox').change(function () {
@@ -117,53 +127,26 @@
 
             });
 
-
-            // Au chargement, on applique au body la couleur de la division DI
+            // On récupère la valeur du champ divisionSelect et on applique au body la couleur de la division choisie
             function loadedPage() {
-                $('body').addClass('tunnel--orange');
-            }
-
-            // Rechargement de l'HTML du Cart
-            function reloadCart() {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ path('paprec_public_corp_chantier_subscription_loadCart', {cartUuid: cart.id}) }}",
-                    contentType: "html",
-                    success: function (response) {
-                        // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
-                        var htmlToDisplay = response.trim();
-                        $("#loadedCartPanel").html(htmlToDisplay);
-                        // On ajoute un listener sur les "x" dans la liste des produits dans le Cart
-                        $(".buttonDeleteProduct").click(function () {
-                            productCategory = (this.id).replace('buttonDeleteProduct_', '').split('_', 2);
-                            productId = productCategory[0];
-                            categoryId = productCategory[1];
-                            $.ajax({
-                                type: "GET",
-                                dataType: "json",
-                                url: "{{ path('paprec_public_corp_chantier_subscription_removeContent', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
-                                    .replace('categoryTmp', categoryId)
-                                    .replace('productTmp', productId),
-                                success: function (response) {
-                                    removeBadge(productId, categoryId);
-                                    reloadCart();
-                                },
-                                error: function (errorThrown) {
-                                    console.log(errorThrown);
-                                }
-                            });
-                        })
-                    },
-                    error: function (errorThrown) {
-                        console.log(errorThrown);
+                var division = $('#divisionSelect').val();
+                if (division) {
+                    if (division === 'DI') {
+                        $('body').addClass('tunnel--green');
+                    } else if (division === 'CHANTIER') {
+                        $('body').addClass('tunnel--orange');
+                    } else if (division === 'D3E') {
+                        $('body').addClass('tunnel--purple');
                     }
-                });
+                }
             }
 
+            // Récupération du nombre d'agences proches
             function reloadNearbyAgencies() {
+                url = $('.step__agency').data('url');
                 $.ajax({
                     type: "GET",
-                    url: "{{ path('paprec_public_corp_chantier_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}",
+                    url: url,
                     contentType: "html",
                     success: function (response) {
                         // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar

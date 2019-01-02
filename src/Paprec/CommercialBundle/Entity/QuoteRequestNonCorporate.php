@@ -47,8 +47,7 @@ class QuoteRequestNonCorporate
     /**
      * @var string
      *
-     * @ORM\Column(name="businessName", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="businessName", type="string", length=255, nullable=true)
      */
     private $businessName;
 
@@ -106,7 +105,7 @@ class QuoteRequestNonCorporate
      * @ORM\Column(name="function", type="string", length=255, nullable=true)
      */
     private $function;
-    
+
     /**
      * @var string
      *
@@ -209,7 +208,7 @@ class QuoteRequestNonCorporate
      *
      *  RELATIONS
      *
-    ########################### */
+     * ########################### */
 
     /**
      * @ORM\ManyToOne(targetEntity="Paprec\UserBundle\Entity\User", inversedBy="quoteRequestNonCorporates", cascade={"all"})
@@ -314,30 +313,6 @@ class QuoteRequestNonCorporate
     public function getDeleted()
     {
         return $this->deleted;
-    }
-
-    /**
-     * Set businessName.
-     *
-     * @param string $businessName
-     *
-     * @return QuoteRequestNonCorporate
-     */
-    public function setBusinessName($businessName)
-    {
-        $this->businessName = $businessName;
-
-        return $this;
-    }
-
-    /**
-     * Get businessName.
-     *
-     * @return string
-     */
-    public function getBusinessName()
-    {
-        return $this->businessName;
     }
 
     /**
@@ -654,7 +629,6 @@ class QuoteRequestNonCorporate
     }
 
 
-
     /**
      * Set kookaburaNumber.
      *
@@ -845,5 +819,29 @@ class QuoteRequestNonCorporate
     public function getTonnage()
     {
         return $this->tonnage;
+    }
+
+    /**
+     * Set businessName.
+     *
+     * @param string|null $businessName
+     *
+     * @return QuoteRequestNonCorporate
+     */
+    public function setBusinessName($businessName = null)
+    {
+        $this->businessName = $businessName;
+
+        return $this;
+    }
+
+    /**
+     * Get businessName.
+     *
+     * @return string|null
+     */
+    public function getBusinessName()
+    {
+        return $this->businessName;
     }
 }

@@ -22,15 +22,18 @@
 {% endblock %}
 
 {% block main_content_stepper %}
+    <input type="hidden" id="divisionType" value="{{ cart.division }}">
+
     <div class="step">
         <div class="step__sucess">
             <div class="title">MERCI POUR VOTRE CONFIANCE !</div>
             <div class="content">Votre demande a bien été prise en compte par nos agences.
             </div>
         </div>
-        <div class="bold">{% if quoteRequest.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ quoteRequest.firstName }} {{ quoteRequest.lastName }}
+        <div class="bold">{% if callBack.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ callBack.firstName }} {{ callBack.lastName }}
             ,
         </div>
+
 
         <div class="greennotice">
             L’agence en charge de votre demande vous recontactera sous 48h par e-mail ou téléphone.
@@ -43,7 +46,20 @@
 
 {% block javascripts %}
     <script>
+        $(function () {
+            loadedPage();
 
+            function loadedPage() {
+                division = $("#divisionType").val();
+                if (division === 'DI') {
+                    $('body').addClass('tunnel--green');
+                } else if (division === 'CHANTIER') {
+                    $('body').addClass('tunnel--orange');
+                } else {
+                    $('body').addClass('tunnel--purple');
+                }
+            }
+        });
     </script>
 
 {% endblock %}

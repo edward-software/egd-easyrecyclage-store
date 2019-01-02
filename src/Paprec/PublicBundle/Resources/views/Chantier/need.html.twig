@@ -1,4 +1,4 @@
-{% extends "::base_public.html.twig" %}
+{% extends "@PaprecPublic/Common/Base/base_need.html.twig" %}
 
 {#{% block title %}#}
 
@@ -8,324 +8,202 @@
 
 {#{% endblock %}#}
 
-{% block main_content %}
-    <section>
-        <div class="wrapper">
-            <div class="sidebar">
-                <div class="recap active">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">01</span>Mon besoin
-                    </div>
-                    <div id="loadedCartPanel">
+{% block sidebar %}
+    {# Définition des menus affichés dans la sidebar #}
+    {% set besoin = 'active' %}
+    {% set coordonnees = '' %}
+    {% if cart.type == 'order' %}
+        {% set livraison = '' %}
+        {% set paiement = '' %}
+    {% elseif cart.type == 'quote' %}
+        {% set offre = '' %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}
 
-                    </div>
-                </div>
+{% block cta_panel %}
+    <div>
+        <a class="step__tab{% if cart.type == 'order' %} active{% endif %}"
+           href="{{ path('paprec_public_corp_chantier_subscription_setOrder', {cartUuid: cart.id}) }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
+        <a class="step__tab{% if cart.type == 'quote' %} active{% endif %}"
+           href="{{ path('paprec_public_corp_chantier_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}
 
-                <div class="recap">
-                    <div class="recap__step">
-                        <span class="recap__stepNumber">02</span>Mes coordonnées
-                    </div>
+{# FIN step categories et products #}
+{# DEBUT affichage des contenants #}
+{% block products_panel %}
+    {% if cart.displayedCategories %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
 
-                </div>
-                {% if cart.type == 'quote' %}
-                    <div class="recap">
-                        <div class="recap__step">
-                            <span class="recap__stepNumber">03</span>Mon offre
-                        </div>
 
-                    </div>
-                {% else %}
-                    <div class="recap">
-                        <div class="recap__step">
-                            <span class="recap__stepNumber">03</span>Ma livraison
-                        </div>
 
-                    </div>
-                    <div class="recap">
-                        <div class="recap__step">
-                            <span class="recap__stepNumber">04</span>Mon paiement
-                        </div>
+{% block product_step_title %}
+    {{ 'Public.Cart.MyContainers'|trans }}
+{% endblock %}
 
-                    </div>
+{% block products %}
+
+    {% for category in categories %}
+        {# pour chaque catégorie, si elle fait partie des displayedCategories
+        alors lui ouvre son step_wrapper #}
+        {% if category.id in cart.displayedCategories %}
+            {% set countProductsInCategory = 0 %}
+            {% for items in cart.content %}
+                {% if items['cId'] == category.id %}
+                    {% set countProductsInCategory = countProductsInCategory + 1 %}
                 {% endif %}
-                <div class="guide">
-                    <div class="guide__title">
-                        EASYRECYCLAGE,
-                        <br>
-                        C’EST SIMPLE ET RAPIDE
-                    </div>
-                    <div class="guide__step">
-                        Sélectionnez
-                        <br>
-                        vos déchets
-                    </div>
-                    <div class="guide__step">
-                        Validez
-                        <br>
-                        votre devis
-                    </div>
-                    <div class="guide__step">
-                        Triez vos déchets,
-                        <br>
-                        nous les collectons
-                        <br>
-                        et les valorisons
-                    </div>
-                </div>
+            {% endfor %}
+            <div class="step__wrappertop open"
+                 id="productsWrapper_{{ category.id }}">
+                {{ category.name }}
+                {% if countProductsInCategory > 1 %}
+                    <span>{{ countProductsInCategory }} contenants séléctionnés</span>
+                {% endif %}
+                {% if countProductsInCategory ==     1 %}
+                    <span>{{ countProductsInCategory }} contenant séléctionné</span>
+                {% endif %}
             </div>
-
-            <form action="#" class="main">
-                <div class="step">
-                    <div class="step__left">
-                        <div class="step__title">{{ 'Public.Home.Recycle'|trans }}</div>
-                    </div>
-                    <div class="step__right">
-                        <select class="input" id="divisionSelect"
-                                data-url="{{ path('paprec_public_corp_home_addDivision', {cartUuid: cart.id , division: 'divisionTmp'}) }}"
-                                style="color:{% if cart.division == 'DI' %}#95c220{% elseif cart.division == 'CHANTIER' %}#e59437{% elseif cart.division == 'D3E' %}#b8369a{% elseif cart.division == '5FLUX' %}#04A4CC{% endif %};">
-                            <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
-                            {% for key,division in divisions %}
-                                {% if key == cart.division %}
-                                    <option value="{{ key }}" selected="selected">{{ division }}</option>
-                                {% else %}
-                                    <option value="{{ key }}"
-                                            style="color:{% if key == 'DI' %}#95c220{% elseif key == 'CHANTIER' %}#e59437{% elseif key == 'D3E' %}#b8369a{% else %}#04A4CC{% endif %};">{{ division }}</option>
+            {% for key, products in productsCategories %}
+                {# pour chaque productCategory (categoryId => Products[],
+                 on affiche le tableau de produits si ils font partie de la catégorie courante #}
+                {% if key == category.id %}
+                    {% set cpt = 5 %}
+                    {# On instantie la variable qui va prendre le produit à afficher#}
+                    {% set displayedProduct = "" %}
+                    {% for product in products %}
+                        {% if (cpt%5 == 0) %}
+                            <div class="first-row">
+                        {% endif %}
+                        {% if product.id in cart.displayedProducts and category.id in cart.displayedProducts|keys %}
+                            {% set displayedProduct = product %}
+                        {% endif %}
+                        <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts and category.id in cart.displayedProducts|keys %}  active {% endif %}"
+                             id="productCheckboxPicto_{{ product.id }}_{{ category.id }}"
+                             style="{% if product.pictos| length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
+                            {{ product.name }}
+                            <br>{{ product.capacity }}{{ product.capacityUnit }}
+                            {% for items in cart.content %}
+                                {% if items['cId'] == category.id and items['pId'] == product.id %}
+                                    <span class="number">{{ items['qtty'] }}</span>
                                 {% endif %}
                             {% endfor %}
-                        </select>
-                    </div>
-                    <div class="step__agency">
 
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step__left">
-                        <div class="step__title">{{ 'Public.Home.Location'|trans }}</div>
-                    </div>
-                    <div class="step__right">
-                        <input class="input" type="text" name="locationSelect"
-                               id="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}
-                               placeholder="{{ 'Public.Cart.PostalCode'|trans }}">
-
-                        <br>
-                        <div id="frequencyRadioBox"
-                             data-url="{{ path('paprec_public_corp_home_addFrequency', {cartUuid: cart.id, frequency: 'frequencyTmp' }) }}">
-                            <input class="input__radio" type="radio" id="ponctualRadio" name="frequencyRadio"
-                                   value="ponctual" {% if cart.frequency == 'ponctual' %}checked{% endif %}>
-                            <label for="ponctualRadio">{{ 'Public.Cart.Ponctal'|trans }}</label>
-
-                            <input class="input__radio" type="radio" id="regularRadio" name="frequencyRadio"
-                                   value="regular" {% if cart.frequency == 'regular' %}checked{% endif %}>
-                            <label for="regularRadio">{{ 'Public.Cart.Regular'|trans }}</label>
                         </div>
-                        <div class="clearfix"></div>
-                        <a class="button button--grey"
-                           href="{{ path('paprec_public_corp_Chantier_subscription_setOrder', {cartUuid: cart.id}) }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
-                        <a class="button button--grey"
-                           href="{{ path('paprec_public_corp_Chantier_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
-                    </div>
-                </div>
-                <!-- FIN step 0 (Location, division et frequency -->
+                        {% set cpt = cpt + 1 %}
 
-                <!-- DEBUT step  categories et products -->
-                <div class="step">
-                    <div class="step__left">
-                        <div class="step__title">
-                            Mes déchets
-                            <br>
-                            à collecter
-                        </div>
-                    </div>
-                    <div class="step__right">
-                        <div class="first-row">
-                            {% for category in categories %}
-                                <div class="checkboxPicto categoryCheckboxPicto"
-                                     id="categoryCheckboxPicto_{{ category.id }}"
-                                     data-url="{{ path('paprec_public_corp_Chantier_subscription_addDisplayedCategory', {cartUuid: cart.id, categoryId: 'categoryTmp'}) }}"
-                                     style="background-image: url({{ asset('/uploads/pictos/' ~ category.picto) }})">
-                                    {{ category.name }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-
-                </div>
-                <!-- FIN step categories et products -->
-                <!-- DEBUT affichage des contenants -->
-                {% if cart.displayedCategories %}
-                    <div class="step">
-                        <div class="step__left">
-                            <div class="step__title">
-                                Mes contenants
+                        {% if ((cpt%5 == 0) and (cpt > 5)) or loop.last %}
                             </div>
-                        </div>
-                        <div class="step__right">
-                            {% for category in categories %}
-                                {# pour chaque catégorie, si elle fait partie des displayedCategories
-                                alors lui ouvre son step_wrapper #}
-                                {% if category.id in cart.displayedCategories %}
-                                    {% set countProductsInCategory = 0 %}
-                                    {% for items in cart.content %}
-                                        {% if items['cId'] == category.id %}
-                                            {% set countProductsInCategory = countProductsInCategory + 1 %}
+                            {% if cart.displayedProducts and displayedProduct != '' %}
+                                <div class="infoproduct">
+                                    <div class="left">
+                                        {% if displayedProduct.pilotPictures | length > 0 %}
+                                            <img src="{{ asset('/uploads/pictos/' ~ displayedProduct.pilotPictures[0].path) }}"
+                                                 alt="#" class="mainpicture">
+                                            <br>
                                         {% endif %}
-                                    {% endfor %}
-                                    <div class="step__wrappertop open"
-                                         id="productsWrapper_{{ category.id }}">
-                                        {{ category.name }}
-                                        {% if countProductsInCategory > 1 %}
-                                            <span>{{ countProductsInCategory }} contenants séléctionnés</span>
-                                        {% endif %}
-                                        {% if countProductsInCategory ==     1 %}
-                                            <span>{{ countProductsInCategory }} contenant séléctionné</span>
-                                        {% endif %}
-                                    </div>
-                                    {% for key, products in productsCategories %}
-                                        {# pour chaque productCategory (categoryId => Products[],
-                                         on affiche le tableau de produits si ils font partie de la catégorie courante #}
-                                        {% if key == category.id %}
-                                            {% set cpt = 5 %}
-                                            {# On instantie la variable qui va prendre le produit à afficher#}
-                                            {% set displayedProduct = "" %}
-                                            {% for product in products %}
-                                                {% if (cpt%5 == 0) %}
-                                                    <div class="first-row">
-                                                {% endif %}
-                                                {% if product.id in cart.displayedProducts and category.id in cart.displayedProducts|keys %}
-                                                    {% set displayedProduct = product %}
-                                                {% endif %}
-                                                <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts and category.id in cart.displayedProducts|keys %}  active {% endif %}"
-                                                     id="productCheckboxPicto_{{ product.id }}_{{ category.id }}"
-                                                     style="{% if product.pictos| length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
-                                                    {{ product.name }}
-                                                    <br>{{ product.capacity }}{{ product.capacityUnit }}
-                                                    {% for items in cart.content %}
-                                                        {% if items['cId'] == category.id and items['pId'] == product.id %}
-                                                            <span class="number">{{ items['qtty'] }}</span>
-                                                        {% endif %}
-                                                    {% endfor %}
-
-                                                </div>
-                                                {% set cpt = cpt + 1 %}
-
-                                                {% if ((cpt%5 == 0) and (cpt > 5)) or loop.last %}
-                                                    </div>
-                                                    {% if cart.displayedProducts and displayedProduct != '' %}
-                                                        <div class="infoproduct">
-                                                            <div class="left">
-                                                                {% if displayedProduct.pilotPictures | length > 0 %}
-                                                                    <img src="{{ asset('/uploads/pictos/' ~ displayedProduct.pilotPictures[0].path) }}"
-                                                                         alt="#" class="mainpicture">
-                                                                    <br>
-                                                                {% endif %}
-                                                                {% if displayedProduct.getPicturesPictures() %}
-                                                                    {% for picture in displayedProduct.getPicturesPictures() %}
-                                                                        <img src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
-                                                                             class="thumb"
-                                                                             alt="#">
-                                                                    {% endfor %}
-                                                                {% endif %}
-
-                                                            </div>
-                                                            <div class="right">
-                                                                <div class="infoproduct__close"
-                                                                     data-url="{{ path('paprec_public_corp_Chantier_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
-                                                                     id="infoProductClose_{{ displayedProduct.id }}_{{ category.id }}"></div>
-                                                                <div class="infoproduct__title">
-                                                                    {{ displayedProduct.name }}
-                                                                </div>
-                                                                <div class="infoproduct__desc">
-                                                                    {{ displayedProduct.description|nl2br }}
-                                                                </div>
-                                                                <div class="infoproduct__satisfaction">
-                                                                    {% for argument in displayedProduct.arguments %}
-                                                                        {{ argument.description|nl2br }}
-                                                                    {% endfor %}
-                                                                    Facilite le pré-tri
-                                                                    <br>
-                                                                    Facilité de
-                                                                    <pose></pose>
-                                                                    <br>
-                                                                    et d’enlèvement
-                                                                </div>
-                                                                <div class="infoproduct__tri">
-                                                                    Tri selectif
-                                                                    <br>
-                                                                    Facilite le pré-tri
-                                                                </div>
-                                                                <div class="clearfix"></div>
-                                                                <div class="infoproduct__disclamer">
-                                                                    Forfait recyclage clé en main
-                                                                </div>
-                                                                <a href="#" class="infoproduct__esti">Estimer mon volume de déchets</a>
-                                                                <div class="infoproduct__dimensiontitle">{{ 'Public.Cart.Dimensions'|trans }}</div>
-                                                                <div class="infoproduct__dimension">
-                                                                    {{ displayedProduct.dimensions|nl2br }}
-                                                                </div>
-
-                                                                <div class="infoproduct__engagment">
-                                                                    <input type="checkbox" id="engagment">
-                                                                    <label for="engagment">Je m'engage à respecter le type de déchets prévu</label>
-                                                                </div>
-
-                                                                <a href="#" class="infoproduct__more">En savoir plus sur le produit</a>
-                                                                {% set qtty = '' %}
-                                                                {% for items in cart.content %}
-                                                                    {% if items['cId'] == category.id and items['pId'] == displayedProduct.id %}
-                                                                        {% set qtty = items['qtty'] %}
-                                                                    {% endif %}
-                                                                {% endfor %}
-                                                                <div class="infoproduct__qtytitle">{{ 'Public.Cart.Qtty'|trans }}</div>
-
-                                                                <select name=""
-                                                                        id="quantityProducSelect_{{ displayedProduct.id }}_{{ category.id }}"
-                                                                        class="infoproduct__qty">
-                                                                    {% for i in 1..10 %}
-                                                                        {% if i == qtty %}
-                                                                            <option value="{{ i }}"
-                                                                                    selected="selected">{{ i }}</option>
-                                                                        {% else %}
-                                                                            <option value="{{ i }}">{{ i }}</option>
-
-                                                                        {% endif %}
-                                                                    {% endfor %}
-                                                                </select>
-                                                                <div class="button button--lightgreen addToCartSubmitButton"
-                                                                     id="addToCartSubmitButton_{{ displayedProduct.id }}_{{ category.id }}">{{ ('Public.Cart.AddToCart' ~ cart.type|capitalize)|trans }}
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                        </div>
-                                                        {% set displayedProduct = '' %}
-                                                    {% endif %}
-                                                    <div class="clearfix"></div>
-                                                {% endif %}
+                                        {% if displayedProduct.getPicturesPictures() %}
+                                            {% for picture in displayedProduct.getPicturesPictures() %}
+                                                <img src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
+                                                     class="thumb"
+                                                     alt="#">
                                             {% endfor %}
                                         {% endif %}
-                                    {% endfor %}
 
+                                    </div>
+                                    <div class="right">
+                                        <div class="infoproduct__close"
+                                             data-url="{{ path('paprec_public_corp_chantier_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
+                                             id="infoProductClose_{{ displayedProduct.id }}_{{ category.id }}"></div>
+                                        <div class="infoproduct__title">
+                                            {{ displayedProduct.name }}
+                                        </div>
+                                        <div class="infoproduct__desc">
+                                            {{ displayedProduct.description|nl2br }}
+                                        </div>
+                                        {% for argument in displayedProduct.arguments|slice(0, 2) %}
+                                            <div class="{% if loop.index == 1 %}infoproduct__satisfaction{% elseif loop.index == 2 %}infoproduct__tri{% endif %}">
+                                                {{ argument.description|nl2br }}
+                                            </div>
+                                        {% endfor %}
+                                        <div class="clearfix"></div>
+                                        <div class="infoproduct__disclamer">
+                                            Forfait recyclage clé en main
+                                        </div>
+                                        <div class="infoproduct__dimensiontitle">{{ 'Public.Cart.Dimensions'|trans }}</div>
+                                        <div class="infoproduct__dimension">
+                                            {{ displayedProduct.dimensions|nl2br }}
+                                        </div>
+
+                                        <a href="#" class="infoproduct__esti">Estimer mon volume de déchets</a>
+                                        <div class="infoproduct__dimensiontitle">{{ 'Public.Cart.Dimensions'|trans }}</div>
+                                        <div class="infoproduct__dimension">
+                                            {{ displayedProduct.dimensions|nl2br }}
+                                        </div>
+
+                                        <div class="infoproduct__engagment">
+                                            <input type="checkbox" id="engagment">
+                                            <label for="engagment">Je m'engage à respecter le type de déchets prévu</label>
+                                        </div>
+
+                                        <a href="#" class="infoproduct__more">En savoir plus sur le produit</a>
+
+
+                                        {% set qtty = '' %}
+                                        {% for items in cart.content %}
+                                            {% if items['cId'] == category.id and items['pId'] == displayedProduct.id %}
+                                                {% set qtty = items['qtty'] %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        <div class="infoproduct__qtytitle">{{ 'Public.Cart.Qtty'|trans }}</div>
+
+                                        <select name=""
+                                                id="quantityProducSelect_{{ displayedProduct.id }}_{{ category.id }}"
+                                                class="infoproduct__qty">
+                                            {% for i in 1..10 %}
+                                                {% if i == qtty %}
+                                                    <option value="{{ i }}"
+                                                            selected="selected">{{ i }}</option>
+                                                {% else %}
+                                                    <option value="{{ i }}">{{ i }}</option>
+
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <div class="button button--lightgreen addToCartSubmitButton"
+                                             id="addToCartSubmitButton_{{ displayedProduct.id }}_{{ category.id }}">{{ ('Public.Cart.AddToCart' ~ cart.type|capitalize)|trans }}
+                                        </div>
+
+                                    </div>
                                     <div class="clearfix"></div>
-                                {% endif %}
-                            {% endfor %}
-
-                            <a href="{{ path('paprec_public_home_contactForm', {cartUuid: cart.id}) }}"
-                               class="button margint10 button--grey">CONTACTEZ-NOUS</a>
-                            <a href="{{ path('paprec_public_home_callBackForm', {cartUuid: cart.id }) }}"
-                               class="button margint10 button--grey">ÊTRE RAPPELÉ</a>
-                            <a href="{{ path('paprec_public_corp_Chantier_subscription_step2', {cartUuid: cart.id}) }}"
-                               class="button margint10 button--green">{{ ('Public.Step1.NextStep' ~ cart.type|capitalize)|trans }}
-                            </a>
-                        </div>
-                    </div>
+                                </div>
+                                {% set displayedProduct = '' %}
+                            {% endif %}
+                            <div class="clearfix"></div>
+                        {% endif %}
+                    {% endfor %}
                 {% endif %}
-            </form>
-        </div>
-        <div class="clearfix"></div>
-    </section>
-
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
 {% endblock %}
+
+{% block cta_bottom_panel %}
+    <div class="step">
+        {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
+            'label': 'ValidateNeed',
+            'cartUuid': cart.id,
+            'division': cart.division,
+            'stepBack': '',
+            'nextStep': 'step2',
+            'idSubmit': ''
+        })) }}
+    </div>
+{% endblock %}
+
 
 {% block javascripts %}
     <script type="text/javascript"
@@ -431,7 +309,7 @@
 
             function addOrRemoveDisplayedProduct(productId, categoryId) {
                 {% autoescape'js' %}
-                url = "{{ path('paprec_public_corp_Chantier_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
+                url = "{{ path('paprec_public_corp_chantier_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
                     .replace('categoryTmp', categoryId)
                     .replace('productTmp', productId);
                 $(location).attr('href', url);
@@ -463,7 +341,7 @@
                 qtty = $('#quantityProducSelect_' + productId + '_' + categoryId).val();
                 $.ajax({
                     type: "POST",
-                    url: "{{ path('paprec_public_corp_Chantier_subscription_addContent', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp', quantity: 'quantityTmp'}) }}"
+                    url: "{{ path('paprec_public_corp_chantier_subscription_addContent', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp', quantity: 'quantityTmp'}) }}"
                         .replace('categoryTmp', categoryId)
                         .replace('productTmp', productId)
                         .replace('quantityTmp', qtty),
@@ -488,7 +366,7 @@
             function reloadCart() {
                 $.ajax({
                     type: "GET",
-                    url: "{{ path('paprec_public_corp_Chantier_subscription_loadCart', {cartUuid: cart.id}) }}",
+                    url: "{{ path('paprec_public_corp_chantier_subscription_loadCart', {cartUuid: cart.id}) }}",
                     contentType: "html",
                     success: function (response) {
                         // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
@@ -502,7 +380,7 @@
                             $.ajax({
                                 type: "GET",
                                 dataType: "json",
-                                url: "{{ path('paprec_public_corp_Chantier_subscription_removeContent', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
+                                url: "{{ path('paprec_public_corp_chantier_subscription_removeContent', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
                                     .replace('categoryTmp', categoryId)
                                     .replace('productTmp', productId),
                                 success: function (response) {
@@ -526,7 +404,7 @@
             function reloadNearbyAgencies() {
                 $.ajax({
                     type: "GET",
-                    url: "{{ path('paprec_public_corp_Chantier_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}",
+                    url: "{{ path('paprec_public_corp_chantier_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}",
                     contentType: "html",
                     success: function (response) {
                         // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar

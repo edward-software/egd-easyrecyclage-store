@@ -402,7 +402,7 @@ class ProductD3EOrderManager
             $snappy->generateFromHtml(
                 array(
                     $this->container->get('templating')->render(
-                        '@PaprecCommercial/ProductD3EOrder/PDF/orderSummary.html.twig',
+                        '@PaprecCommercial/ProductD3EOrder/PDF/orderSummaryPDF.html.twig',
                         array(
                             'productD3EOrder' => $productD3EOrder
                         )
