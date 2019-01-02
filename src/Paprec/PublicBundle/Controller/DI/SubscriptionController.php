@@ -228,7 +228,8 @@ class SubscriptionController extends Controller
         $loadedCart = $cartManager->loadCartDI($cartUuid);
 
         return $this->render('@PaprecPublic/DI/partial/cartPartial.html.twig', array(
-            'loadedCart' => $loadedCart
+            'loadedCart' => $loadedCart,
+            'cartUuid' => $cartUuid
         ));
     }
 

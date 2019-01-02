@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block sidebar %}
+    <div class="contact-details-form"></div>
     {# Définition des menus affichés dans la sidebar #}
     {% set besoin = 'passed' %}
     {% set coordonnees = 'active' %}
@@ -24,6 +25,7 @@
 {% endblock %}
 {% block main_content_stepper %}
     <form id="contactDetailsForm" action="" method="post">
+        <input type="hidden" id="divisionType" value="{{ cart.division }}">
         <div class="step">
             <div class="step__left">
                 <div class="step__title">Je suis</div>
@@ -86,36 +88,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        $(function () {
-            reloadCart();
-            $('body').addClass('tunnel--orange');
-
-
-            $('#contactDetailsFormSubmitButton').on('click', function () {
-                $('#contactDetailsForm').submit();
-            });
-
-            // Rechargement de l'HTML du Cart
-            function reloadCart() {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ path('paprec_public_corp_chantier_subscription_loadCart', {cartUuid: cart.id}) }}",
-                    contentType: "html",
-                    success: function (response) {
-                        // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
-                        var htmlToDisplay = response.trim();
-                        $("#loadedCartPanel").html(htmlToDisplay);
-                        //on supprime les croix dans le panier
-                        $('.buttonDeleteProduct').remove();
-                    },
-                    error: function (errorThrown) {
-                        console.log(errorThrown);
-                    }
-                });
-            }
-        });
-    </script>
-
 
 {% endblock %}

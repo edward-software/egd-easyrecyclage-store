@@ -23,7 +23,7 @@
                     {% for category in categories %}
                         <div class="checkboxPicto categoryCheckboxPicto"
                              id="categoryCheckboxPicto_{{ category.id }}"
-                             data-url="{{ path('paprec_public_corp_' ~ cart.division|lower ~ '_subscription_addDisplayedCategory', {cartUuid: cart.id, categoryId: 'categoryTmp'}) }}"
+                             data-url="{{ path('paprec_public_corp_' ~ cart.division|lower ~ '_subscription_addDisplayedCategory', {cartUuid: cart.id, categoryId: category.id}) }}"
                              style="background-image: url({{ asset('/uploads/pictos/' ~ category.picto) }})">
                             {{ category.name }}
                         </div>

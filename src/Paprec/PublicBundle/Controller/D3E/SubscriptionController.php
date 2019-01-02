@@ -364,7 +364,8 @@ class SubscriptionController extends Controller
         $loadedCart = $cartManager->loadCartD3E($cartUuid);
 
         return $this->render('@PaprecPublic/D3E/partial/cartPartial.html.twig', array(
-            'loadedCart' => $loadedCart
+            'loadedCart' => $loadedCart,
+            'cartUuid' => $cartUuid
         ));
     }
 

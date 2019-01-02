@@ -9,6 +9,7 @@
 {#{% endblock %}#}
 
 {% block sidebar %}
+    <div class="contact-form"></div>
     {# Définition des menus affichés dans la sidebar #}
     {% set besoin = 'active' %}
     {% set confirmation = '' %}
@@ -81,22 +82,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        $(function () {
-
-            $('#contactFormSubmitButton').on('click', function () {
-                $('#contactForm').submit();
-            });
-
-            $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function () {
-                html = "";
-                for (var i = 0; i < this.files.length; i++) {
-                    var lastModified = new Date(this.files[i].lastModified);
-                    html += this.files[i].name + " " + new Intl.DateTimeFormat('en-GB').format(lastModified) + " <a href=\"#\">x</a><br>";
-                    $('#listFiles').html(html);
-                }
-            });
-        });
-    </script>
 
 {% endblock %}

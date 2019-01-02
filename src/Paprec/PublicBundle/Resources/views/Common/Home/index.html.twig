@@ -10,6 +10,7 @@
 
 {% block sidebar %}
     {# Définition des menus affichés dans la sidebar #}
+    <div class="home-index"></div>
     {% set besoin = 'active' %}
     {% set coordonnees = '' %}
     {% set offre = '' %}
@@ -37,128 +38,8 @@
 
 
 {% block javascripts %}
-    {#<script type="text/javascript"#}
-    {#src="https://vicopo.selfbuild.fr/api.min.js"></script>#}
     <!-- Include Google Maps JS API -->
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
     </script>
-
-    <script>
-        $(function () {
-
-            reloadNearbyAgencies();
-            loadedPage();
-
-            function initializeAutocomplete(id) {
-                var element = document.getElementById(id);
-                var options = {
-                    types: ['(regions)'],
-                    componentRestrictions: {country: "fr"}
-                };
-                if (element) {
-                    var autocomplete = new google.maps.places.Autocomplete(element, options);
-                    google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChanged);
-                }
-            }
-
-            // Fonction appelée lorsque l'on choisit une proposition de l'autocomplete Google
-            function onPlaceChanged() {
-                var loc = $('#locationSelect').val();
-                var place = this.getPlace();
-                // On init les variables car si un champ manque, on se retrouve avec city/%20/long dans l'url et non city//long
-                var city = " ";
-                var postalCode = " ";
-
-                var lat = place.geometry.location.lat();
-                var long = place.geometry.location.lng();
-                for (var i in place.address_components) {
-                    var component = place.address_components[i];
-                    for (var j in component.types) {  // Some types are ["country", "political"]
-                        if (component.types[j] === 'postal_code') {
-                            postalCode = component.long_name;
-                        }
-                        if (component.types[j] === 'locality') {
-                            city = component.long_name;
-                        }
-                    }
-                }
-                {% autoescape'js' %}
-                url = "{{ path('paprec_public_corp_home_addLocation', {cartUuid: cart.id, location: 'locationTmp', city: 'cityTmp', postalCode: 'postalCodeTmp', long: 'longTmp', lat:'latTmp' }) }}"
-                    .replace('locationTmp', loc)
-                    .replace('cityTmp', city)
-                    .replace('postalCodeTmp', postalCode)
-                    .replace('longTmp', long)
-                    .replace('latTmp', lat);
-                {% endautoescape %}
-                $(location).attr('href', url);
-            }
-
-            // On force l'input d'un nombre pour chercher par code postal
-            $('#locationSelect').keypress(function (key) {
-                if (key.charCode < 48 || key.charCode > 57) {
-                    return false;
-                }
-            });
-
-            // google.maps.event.addDomListener(window, 'load', function () {
-            // Si l'on met ce listener, l'autocomplete est initialisé 1fois/1000
-            initializeAutocomplete('locationSelect');
-
-            {# Quand on sélectionne une division dans le select, on recharge en envoyant la location et la division #}
-            $("#divisionSelect").on('change', function () {
-                {% autoescape'js' %}
-                url = $(this).data('url').replace('divisionTmp', this.value);
-                {% endautoescape %}
-
-                $(location).attr('href', url);
-            });
-
-
-
-            {# Quand on sélectionne une frequence dans les radioButtons, on recharge la page en envoyant la location, division, frequence#}
-            {# cela na nous faire naviguer vers le SubscriptionController de la division choisie #}
-            $('#frequencyRadioBox').change(function () {
-                frequency = $("input[name='frequencyRadio']:checked").val();
-                {% autoescape'js' %}
-                url = $(this).data('url').replace('frequencyTmp', frequency);
-                {% endautoescape %}
-                $(location).attr('href', url);
-
-            });
-
-            // On récupère la valeur du champ divisionSelect et on applique au body la couleur de la division choisie
-            function loadedPage() {
-                var division = $('#divisionSelect').val();
-                if (division) {
-                    if (division === 'DI') {
-                        $('body').addClass('tunnel--green');
-                    } else if (division === 'CHANTIER') {
-                        $('body').addClass('tunnel--orange');
-                    } else if (division === 'D3E') {
-                        $('body').addClass('tunnel--purple');
-                    }
-                }
-            }
-
-            // Récupération du nombre d'agences proches
-            function reloadNearbyAgencies() {
-                url = $('.step__agency').data('url');
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    contentType: "html",
-                    success: function (response) {
-                        // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
-                        var htmlToDisplay = response.trim();
-                        $(".step__agency").html(htmlToDisplay);
-                    },
-                    error: function (errorThrown) {
-                        console.log(errorThrown);
-                    }
-                });
-            }
-        });
-    </script>
-
 {% endblock %}

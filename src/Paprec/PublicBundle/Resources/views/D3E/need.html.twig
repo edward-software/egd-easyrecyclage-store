@@ -9,6 +9,7 @@
 {#{% endblock %}#}
 
 {% block sidebar %}
+    <div class="need-form d3e-need-form"></div>
     {# Définition des menus affichés dans la sidebar #}
     {% set besoin = 'active' %}
     {% set coordonnees = '' %}
@@ -48,6 +49,7 @@
         {% endif %}
         <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts %}  active {% endif %}"
              id="productCheckboxPicto_{{ product.id }}"
+             data-url="{{ path('paprec_public_corp_d3e_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: product.id}) }}"
              style="{% if product.pictos|length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
             {{ product.name }}
             {% for items in cart.content %}
@@ -125,6 +127,7 @@
                         <br>
 
                         <div class="button button--lightgreen addToCartSubmitButton"
+                             data-url="{{ path('paprec_public_corp_d3e_subscription_addContent', {cartUuid: cart.id, productId: displayedProduct.id, quantity: 'quantityTmp', optHandling: 'optHandlingTmp', optSerialNumberStmt: 'optSerialNumberStmtTmp', optDestruction: 'optDestructionTmp'}) }}"
                              id="addToCartSubmitButton_{{ displayedProduct.id }}">{{ ('Public.Cart.AddToCart' ~ cart.type|capitalize)|trans }}
                         </div>
                     </div>
@@ -165,195 +168,4 @@
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
     </script>
-    <script>
-        $(function () {
-
-            reloadCart();
-            loadedPage();
-            reloadNearbyAgencies()
-
-            function initializeAutocomplete(id) {
-                var element = document.getElementById(id);
-                var options = {
-                    types: ['(regions)'],
-                    componentRestrictions: {country: "fr"}
-                };
-                if (element) {
-                    var autocomplete = new google.maps.places.Autocomplete(element, options);
-                    google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChanged);
-                }
-            }
-
-            // Fonction appelée lorsque l'on choisit une proposition de l'autocomplete Google
-            function onPlaceChanged() {
-                var loc = $('#locationSelect').val();
-                // On init les variables car si un champ manque, on se retrouve avec city/%20/long dans l'url et non city//long
-                var place = this.getPlace();
-                var city = " ";
-                var postalCode = " ";
-                var long = " ";
-                var lat = " ";
-                lat = place.geometry.location.lat();
-                long = place.geometry.location.lng();
-                for (var i in place.address_components) {
-                    var component = place.address_components[i];
-                    for (var j in component.types) {  // Some types are ["country", "political"]
-                        if (component.types[j] === 'postal_code') {
-                            postalCode = component.long_name;
-                        }
-                        if (component.types[j] === 'locality') {
-                            city = component.long_name;
-                        }
-                    }
-                }
-                {% autoescape'js' %}
-                url = "{{ path('paprec_public_corp_home_addLocation', {cartUuid: cart.id, location: 'locationTmp', city: 'cityTmp', postalCode: 'postalCodeTmp', long: 'longTmp', lat:'latTmp' }) }}"
-                    .replace('locationTmp', loc)
-                    .replace('cityTmp', city)
-                    .replace('postalCodeTmp', postalCode)
-                    .replace('longTmp', long)
-                    .replace('latTmp', lat);
-                {% endautoescape %}
-                $(location).attr('href', url);
-            }
-
-
-            // google.maps.event.addDomListener(window, 'load', function () {
-            // Si l'on met ce listener, l'autocomplete est initialisé 1fois/1000
-            initializeAutocomplete('locationSelect');
-
-            {# Quand on sélectionne une division dans le select, on recharge en envoyant la location et la division #}
-            $("#divisionSelect").on('change', function () {
-                {% autoescape'js' %}
-                url = $(this).data('url').replace('divisionTmp', this.value);
-                {% endautoescape %}
-
-                $(location).attr('href', url);
-            });
-
-            {# Quand on sélectionne une frequence dans les radioButtons, on recharge la page en envoyant la location, division, frequence#}
-            {# cela na nous faire naviguer vers le SubscriptionController de la division choisie #}
-            $('#frequencyRadioBox').change(function () {
-                frequency = $("input[name='frequencyRadio']:checked").val();
-                {% autoescape'js' %}
-                url = $(this).data('url').replace('frequencyTmp', frequency);
-                {% endautoescape %}
-                $(location).attr('href', url);
-
-            });
-
-            // Au chargement, on applique au body la couleur de la division D3E
-            function loadedPage() {
-                $('body').addClass('tunnel--purple');
-
-            }
-
-            // Au clic sur la croix de l'infoproduct, on supprime le produit des displayedProduct
-            $('.productCheckboxPicto').click(function () {
-                //on récupère la fin de l'id contenant : productId
-                productId = (this.id).replace('productCheckboxPicto_', '');
-                addOrRemoveDisplayedProduct(productId);
-            });
-
-            // Au clic sur la croix de l'infoproduit, on l'ajoute où on la supprime du displayedProduct du cart
-            $('.infoproduct__close').click(function () {
-                //on récupère la fin de l'id contenant : productId
-                productId = (this.id).replace('infoProductClose_', '').split('_', 2);
-                addOrRemoveDisplayedProduct(productId);
-            });
-
-            function addOrRemoveDisplayedProduct(productId) {
-                {% autoescape'js' %}
-                url = "{{ path('paprec_public_corp_d3e_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: 'productTmp'}) }}"
-                    .replace('productTmp', productId);
-                $(location).attr('href', url);
-                {% endautoescape %}
-            }
-
-
-            $('.addToCartSubmitButton').click(function () {
-                // Récupération des infos du produits à ajouter au panier
-                productId = (this.id).replace('addToCartSubmitButton_', '');
-                qtty = $('#quantityProducSelect_' + productId).val();
-                optHandling = $('#optHandlingProductSelect_' + productId).prop('checked') ? 1 : 0;
-                optSerialNumberStmt = $('#optSerialNumberStmtProductSelect_' + productId).prop('checked') ? 1 : 0;
-                optDestruction = $('#optDestructionProductSelect_' + productId).prop('checked') ? 1 : 0;
-                $.ajax({
-                    type: "POST",
-                    url: "{{ path('paprec_public_corp_d3e_subscription_addContent', {cartUuid: cart.id, productId: 'productTmp', quantity: 'quantityTmp', optHandling: 'optHandlingTmp', optSerialNumberStmt: 'optSerialNumberStmtTmp', optDestruction: 'optDestructionTmp'}) }}"
-                        .replace('productTmp', productId)
-                        .replace('quantityTmp', qtty)
-                        .replace('optHandlingTmp', optHandling)
-                        .replace('optSerialNumberStmtTmp', optSerialNumberStmt)
-                        .replace('optDestructionTmp', optDestruction),
-                    success: function (response) {
-                        // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
-                        // addOrRemoveDisplayedProduct(productId, categoryId);
-                        removeBadge(productId);
-                        $('#productCheckboxPicto_' + productId).prepend("<span class=\"number\">" + qtty + "<span");
-                        reloadCart()
-                    },
-                    error: function (errorThrown) {
-                        console.log(errorThrown);
-                    }
-                });
-            });
-
-            function removeBadge(productId) {
-                $('#productCheckboxPicto_' + productId).find('span.number').remove();
-            }
-
-            // Rechargement de l'HTML du Cart
-            function reloadCart() {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ path('paprec_public_corp_d3e_subscription_loadCart', {cartUuid: cart.id}) }}",
-                    contentType: "html",
-                    success: function (response) {
-                        // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
-                        var htmlToDisplay = response.trim();
-                        $("#loadedCartPanel").html(htmlToDisplay);
-                        // On ajoute un listener sur les "x" dans la liste des produits dans le Cart
-                        $(".buttonDeleteProduct").click(function () {
-                            productId = (this.id).replace('buttonDeleteProduct_', '');
-                            $.ajax({
-                                type: "GET",
-                                dataType: "json",
-                                url: "{{ path('paprec_public_corp_d3e_subscription_removeContent', {cartUuid: cart.id, productId: 'productTmp'}) }}"
-                                    .replace('productTmp', productId),
-                                success: function (response) {
-                                    removeBadge(productId);
-                                    reloadCart();
-                                },
-                                error: function (errorThrown) {
-                                    console.log(errorThrown);
-                                }
-                            });
-                        })
-                    },
-                    error: function (errorThrown) {
-                        console.log(errorThrown);
-                    }
-                });
-            }
-
-            // Récupération du nombre d'agences proches
-            function reloadNearbyAgencies() {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ path('paprec_public_corp_d3e_subscription_loadNearbyAgencies', {cartUuid: cart.id}) }}",
-                    contentType: "html",
-                    success: function (response) {
-                        // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
-                        var htmlToDisplay = response.trim();
-                        $(".step__agency").html(htmlToDisplay);
-                    },
-                    error: function (errorThrown) {
-                        console.log(errorThrown);
-                    }
-                });
-            }
-        });
-    </script>
-
 {% endblock %}

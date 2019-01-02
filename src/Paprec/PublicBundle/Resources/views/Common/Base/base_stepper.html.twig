@@ -26,9 +26,12 @@
                             <div class="recap__step">
                                 <span class="recap__stepNumber">0{{ cptStep }}</span>Mon besoin
                             </div>
-                            <div id="loadedCartPanel">
-
-                            </div>
+                            {% if cart is defined and cart.division is not null %}
+                                <div id="loadedCartPanel"
+                                     data-division="{{ cart.division }}"
+                                     data-url="{{ path('paprec_public_corp_' ~ cart.division|lower ~ '_subscription_loadCart', {cartUuid: cart.id}) }}">
+                                </div>
+                            {% endif %}
                         </div>
                     {% endif %}
                     {% if confirmation is defined %}

@@ -10,7 +10,8 @@
 
                     <div class="quantity">x {{ cartLine['qtty'] }}</div>
                     <div class="title">{{ cartLine['pName'] }} • {{ cartLine['pCapacity'] }}</div>
-                    <div class="delete buttonDeleteProduct" id="buttonDeleteProduct_{{ key }}"></div>
+                    <div class="delete buttonDeleteProduct" id="buttonDeleteProduct_{{ key }}"
+                         data-url="{{ path('paprec_public_corp_di_subscription_removeContent', {cartUuid: cartUuid, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"></div>
                     <div class="info">{{ cartLine['cName'] }}
                         • {% if cartLine['frequency'] == 'ponctual' %}{{ 'Public.Cart.Ponctual'|trans }}{% else %}{{ 'Public.Cart.Regular'|trans }}{% endif %}
                     </div>

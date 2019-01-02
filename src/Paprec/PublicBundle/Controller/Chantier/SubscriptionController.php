@@ -395,7 +395,8 @@ class SubscriptionController extends Controller
         $loadedCart = $cartManager->loadCartChantier($cartUuid);
 
         return $this->render('@PaprecPublic/Chantier/partial/cartPartial.html.twig', array(
-            'loadedCart' => $loadedCart
+            'loadedCart' => $loadedCart,
+            'cartUuid' => $cartUuid
         ));
     }
 

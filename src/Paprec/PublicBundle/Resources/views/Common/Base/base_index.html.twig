@@ -21,6 +21,7 @@
 {% endblock %}
 
 {% block main_content_stepper %}
+    <div class="test"></div>
     <form action="#">
         <div class="step">
             <div class="step__left">
@@ -52,6 +53,7 @@
                     <div class="step__right">
                         <input class="input" type="text" id="locationSelect"
                                name="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}
+                               data-url="{{ path('paprec_public_corp_home_addLocation', {cartUuid: cart.id, location: 'locationTmp', city: 'cityTmp', postalCode: 'postalCodeTmp', long: 'longTmp', lat:'latTmp' }) }}"
                                placeholder="{{ 'Public.Cart.PostalCode'|trans }}">
                         {% block cinq_flux %}
 
@@ -80,7 +82,7 @@
         {% block cta_panel %} {% endblock %}
 
         {% block main_content_index %}
-        {% block cta_bottom_panel %} {% endblock %}
+            {% block cta_bottom_panel %} {% endblock %}
         {% endblock %}
 
     </form>

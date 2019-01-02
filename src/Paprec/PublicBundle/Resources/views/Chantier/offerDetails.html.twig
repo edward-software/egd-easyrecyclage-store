@@ -23,6 +23,7 @@
 {% endblock %}
 
 {% block main_content_stepper %}
+    <input type="hidden" id="divisionType" value="{{ cart.division }}">
     <div class="step">
         <div class="step__sucess">
             <div class="title">MERCI POUR VOTRE CONFIANCE !</div>
@@ -80,10 +81,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        $(function () {
-            $('body').addClass('tunnel--orange');
-        });
-    </script>
 
 {% endblock %}

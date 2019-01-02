@@ -44,21 +44,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        $(function () {
-            loadedPage();
-
-            function loadedPage() {
-                division = $("#divisionType").val();
-                if (division === 'DI') {
-                    $('body').addClass('tunnel--green');
-                } else if (division === 'CHANTIER') {
-                    $('body').addClass('tunnel--orange');
-                } else {
-                    $('body').addClass('tunnel--purple');
-                }
-            }
-        });
-    </script>
 
 {% endblock %}
