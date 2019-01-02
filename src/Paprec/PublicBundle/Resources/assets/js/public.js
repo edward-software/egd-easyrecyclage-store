@@ -290,7 +290,6 @@ $(function () {
                 url: url,
                 success: function (response) {
                     // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
-                    // addOrRemoveDisplayedProduct(productId, categoryId);
                     removeBadge(productId, categoryId);
                     $('#productCheckboxPicto_' + productId + '_' + categoryId).prepend("<span class=\"number\">" + qtty + "<span");
                     reloadCart()
@@ -325,7 +324,6 @@ $(function () {
                 url: url,
                 success: function (response) {
                     // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
-                    // addOrRemoveDisplayedProduct(productId, categoryId);
                     removeBadge(productId);
                     $('#productCheckboxPicto_' + productId).prepend("<span class=\"number\">" + qtty + "<span");
                     reloadCart()
@@ -466,17 +464,6 @@ $(function () {
  ***************************************************************/
 
 /**
- * @param productId
- * @param categoryId
- */
-function addOrRemoveDisplayedProduct(productId, categoryId) {
-    var url = "{{ path('paprec_public_corp_di_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: 'categoryTmp', productId: 'productTmp'}) }}"
-        .replace('categoryTmp', categoryId)
-        .replace('productTmp', productId);
-    $(location).attr('href', url);
-}
-
-/**
  * Récupération du nombre d'agences proches
  */
 function reloadNearbyAgencies() {
@@ -518,14 +505,13 @@ function reloadCart(readonly) {
             } else {
                 // On ajoute un listener sur les "x" dans la liste des produits dans le Cart
                 $(".buttonDeleteProduct").click(function () {
-                    var urlRemove = $('.buttonDeleteProduct').data('url');
+                    var urlRemove = $(this).data('url');
                     if (division === 'D3E') {
                         productId = (this.id).replace('buttonDeleteProduct_', '');
                         $.ajax({
                             type: "GET",
                             dataType: "json",
-                            url: "{{ path('paprec_public_corp_d3e_subscription_removeContent', {cartUuid: cart.id, productId: 'productTmp'}) }}"
-                                .replace('productTmp', productId),
+                            url: urlRemove.replace('productTmp', productId),
                             success: function (response) {
                                 removeBadgeD3E(productId);
                                 reloadCart();
