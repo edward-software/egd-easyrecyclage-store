@@ -158,13 +158,6 @@
                                 {% if cart.displayedProducts and displayedProduct != '' %}
                                     <div class="infoproduct">
                                         <div class="left">
-                                            {{ displayedProduct.description|nl2br }}
-
-                                        </div>
-                                        <div class="right">
-                                            <div class="infoproduct__close"
-                                                 data-url="{{ path('paprec_public_corp_D3E_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: displayedProduct.id}) }}"
-                                                 id="infoProductClose_{{ displayedProduct.id }}"></div>
                                             <div class="infoproduct__title">
                                                 QUANTIFIEZ VOTRE BESOIN
                                             </div>
@@ -190,9 +183,9 @@
                                                     {% endif %}
                                                 {% endif %}
                                             {% endfor %}
+                                            <br>
 
                                             <div class="infoproduct__qtytitle">{{ 'Public.Cart.Qtty'|trans }}</div>
-
                                             <select name=""
                                                     id="quantityProducSelect_{{ displayedProduct.id }}"
                                                     class="infoproduct__qty">
@@ -206,6 +199,8 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             </select>
+                                            <br><br>
+
                                             <div class="-align-right">
                                                 <input type="checkbox"
                                                        id="optHandlingProductSelect_{{ displayedProduct.id }}"
@@ -222,9 +217,20 @@
                                                         {% if optDestruction is defined and optDestruction == '1' %} checked{% endif %}>
                                                 {{ 'Commercial.ProductD3EOrderLine.OptDestruction'|trans }}<br>
                                             </div>
+                                            <br>
 
                                             <div class="button button--lightgreen addToCartSubmitButton"
                                                  id="addToCartSubmitButton_{{ displayedProduct.id }}">{{ ('Public.Cart.AddToCart' ~ cart.type|capitalize)|trans }}
+                                            </div>
+                                        </div>
+                                        <div class="right">
+                                            <div class="infoproduct__close"
+                                                 data-url="{{ path('paprec_public_corp_D3E_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: displayedProduct.id}) }}"
+                                                 id="infoProductClose_{{ displayedProduct.id }}"></div>
+
+                                            <div class="infoproduct__wrapperdesc">
+                                                <div class="infoproduct__title">Descriptif de la prestation</div>
+                                                {{ displayedProduct.description|nl2br }}
                                             </div>
 
                                         </div>
