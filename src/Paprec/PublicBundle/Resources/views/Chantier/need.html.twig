@@ -146,13 +146,15 @@
                                             {{ displayedProduct.dimensions|nl2br }}
                                         </div>
 
+                                        {% if displayedProduct.reference is not null %}
+                                            <a href="{{ displayedProduct.reference }}"
+                                               class="infoproduct__more">{{ 'Public.Cart.LearMore'|trans }}</a>
+                                        {% endif %}
+
                                         <div class="infoproduct__engagment">
                                             <input type="checkbox" id="engagment">
-                                            <label for="engagment">Je m'engage à respecter le type de déchets prévu</label>
+                                            <label for="engagment">{{ 'Public.Cart.Engagment'|trans }}</label>
                                         </div>
-
-                                        <a href="#" class="infoproduct__more">En savoir plus sur le produit</a>
-
 
                                         {% set qtty = '' %}
                                         {% for items in cart.content %}

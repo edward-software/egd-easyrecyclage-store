@@ -336,6 +336,21 @@ class CategoryController extends Controller
     }
 
     /**
+     * Supprimme un fichier du sytème de fichiers
+     *
+     * @param $path
+     */
+    public function removeFile($path)
+    {
+        $fs = new Filesystem();
+        try {
+            $fs->remove($path);
+        } catch (IOException $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
      * @Route("/category/removeMany/{ids}", name="paprec_catalog_category_removeMany")
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -363,21 +378,6 @@ class CategoryController extends Controller
         }
 
         return $this->redirectToRoute('paprec_catalog_category_index');
-    }
-
-    /**
-     * Supprimme un fichier du sytème de fichiers
-     *
-     * @param $path
-     */
-    public function removeFile($path)
-    {
-        $fs = new Filesystem();
-        try {
-            $fs->remove($path);
-        } catch (IOException $e) {
-            throw new Exception($e->getMessage());
-        }
     }
 
     /**
@@ -489,7 +489,7 @@ class CategoryController extends Controller
 
                 foreach ($changedCategories as $position => $categoryId) {
                     $category = $repoCategory->find($categoryId);
-                    $category->setPosition($position+1);
+                    $category->setPosition($position + 1);
                 }
                 $em->flush();
             }

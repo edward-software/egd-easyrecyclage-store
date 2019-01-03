@@ -21,15 +21,15 @@
             <div class="card-header">
                 <h4>
                     <i class="fa fa-xs fa-folder"></i> {{ 'Catalog.CustomizableArea.View'|trans }}
-                    <div class="float-right">
-                        <a href="{{ path("paprec_catalog_customizableArea_edit", {id: customizableArea.id}) }}"
-                           class="btn btn-sm btn-warning"><i
-                                    class="fa fa-xs fa-edit"></i> {{ 'Catalog.CustomizableArea.Edit'|trans }}</a>
-                        <a id="catalogCustomizableAreaRemoveButton" href="javascript:void(0);"
-                           class="btn btn-sm btn-danger"><i
-                                    class="fa fa-xs fa-trash"></i> {{ 'Catalog.CustomizableArea.Remove'|trans }}</a>
-                    </div>
                 </h4>
+                <div class="float-right">
+                    <a href="{{ path("paprec_catalog_customizableArea_edit", {id: customizableArea.id}) }}"
+                       class="btn btn-sm btn-warning"><i
+                                class="fa fa-xs fa-edit"></i> {{ 'Catalog.CustomizableArea.Edit'|trans }}</a>
+                    <a id="catalogCustomizableAreaRemoveButton" href="javascript:void(0);"
+                       class="btn btn-sm btn-danger"><i
+                                class="fa fa-xs fa-trash"></i> {{ 'Catalog.CustomizableArea.Remove'|trans }}</a>
+                </div>
                 <div class="float-left">
                     <a href="{{ path('paprec_catalog_customizableArea_index') }}" class="btn btn-sm btn-default"><i
                                 class="fa fa-xs fa-chevron-left"></i> {{ 'Catalog.CustomizableArea.List'|trans }}</a>

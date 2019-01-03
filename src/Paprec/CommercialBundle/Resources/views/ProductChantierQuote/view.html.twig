@@ -32,19 +32,23 @@
             <div class="card-header">
                 <h4>
                     <i class="fa fa-xs fa-productChantierQuote"></i> {{ 'Commercial.ProductChantierQuote.View'|trans }}
-                    <div class="float-right">
-                        <a id="sendGeneratedQuoteButton" href="javascript:void(0);" class="btn btn-sm btn-success"><i
-                                    class="fa fa-xs fa-envelope"></i> {{ 'Commercial.ProductD3EQuote.Send-quote'|trans }}
-                        <a href="{{ path("paprec_commercial_productChantierQuote_edit", {id: productChantierQuote.id}) }}"
-                           class="btn btn-sm btn-warning"><i
-                                    class="fa fa-xs fa-edit"></i> {{ 'Commercial.ProductChantierQuote.Edit'|trans }}</a>
-                        <a id="commmecialProductChantierQuoteRemoveButton_" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
-                                    class="fa fa-xs fa-trash"></i> {{ 'Commercial.ProductChantierQuote.Remove'|trans }}</a>
-                    </div>
                 </h4>
+                <div class="float-right">
+                    <a id="sendGeneratedQuoteButton" href="javascript:void(0);" class="btn btn-sm btn-success"><i
+                                class="fa fa-xs fa-envelope"></i> {{ 'Commercial.ProductD3EQuote.Send-quote'|trans }}
+                    </a>
+                    <a href="{{ path("paprec_commercial_productChantierQuote_edit", {id: productChantierQuote.id}) }}"
+                       class="btn btn-sm btn-warning"><i
+                                class="fa fa-xs fa-edit"></i> {{ 'Commercial.ProductChantierQuote.Edit'|trans }}</a>
+                    <a id="commmecialProductChantierQuoteRemoveButton_" href="javascript:void(0);"
+                       class="btn btn-sm btn-danger"><i
+                                class="fa fa-xs fa-trash"></i> {{ 'Commercial.ProductChantierQuote.Remove'|trans }}
+                    </a>
+                </div>
                 <div class="float-left">
                     <a href="{{ path('paprec_commercial_productChantierQuote_index') }}" class="btn btn-sm btn-default"><i
-                                class="fa fa-xs fa-chevron-left"></i> {{ 'Commercial.ProductChantierQuote.List'|trans }}</a>
+                                class="fa fa-xs fa-chevron-left"></i> {{ 'Commercial.ProductChantierQuote.List'|trans }}
+                    </a>
                 </div>
             </div>
             <div class="card-body">
@@ -209,7 +213,8 @@
                                 {{ 'Commercial.ProductChantierQuote.ProductsList'|trans }}
                                 <div class="float-right">
 
-                                    <a href="{{ path('paprec_commercial_productChantierQuote_addLine', {id: productChantierQuote.id}) }}" class="btn btn-sm btn-outline-primary">
+                                    <a href="{{ path('paprec_commercial_productChantierQuote_addLine', {id: productChantierQuote.id}) }}"
+                                       class="btn btn-sm btn-outline-primary">
                                         <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductChantierQuote.AddLine'|trans }}
                                     </a>
                                 </div>

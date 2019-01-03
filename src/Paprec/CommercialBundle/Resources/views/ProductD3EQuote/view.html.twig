@@ -32,16 +32,16 @@
             <div class="card-header">
                 <h4>
                     <i class="fa fa-xs fa-productD3EQuote"></i> {{ 'Commercial.ProductD3EQuote.View'|trans }}
-                    <div class="float-right">
-                        <a id="sendGeneratedQuoteButton" href="javascript:void(0);" class="btn btn-sm btn-success"><i
-                                    class="fa fa-xs fa-envelope"></i> {{ 'Commercial.ProductD3EQuote.Send-quote'|trans }}
-                        <a href="{{ path("paprec_commercial_productD3EQuote_edit", {id: productD3EQuote.id}) }}"
-                           class="btn btn-sm btn-warning"><i
-                                    class="fa fa-xs fa-edit"></i> {{ 'Commercial.ProductD3EQuote.Edit'|trans }}</a>
-                        <a id="commmecialProductD3EQuoteRemoveButton_" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
-                                    class="fa fa-xs fa-trash"></i> {{ 'Commercial.ProductD3EQuote.Remove'|trans }}</a>
-                    </div>
                 </h4>
+                <div class="float-right">
+                    <a id="sendGeneratedQuoteButton" href="javascript:void(0);" class="btn btn-sm btn-success"><i
+                                class="fa fa-xs fa-envelope"></i> {{ 'Commercial.ProductD3EQuote.Send-quote'|trans }}</a>
+                    <a href="{{ path("paprec_commercial_productD3EQuote_edit", {id: productD3EQuote.id}) }}"
+                       class="btn btn-sm btn-warning"><i
+                                class="fa fa-xs fa-edit"></i> {{ 'Commercial.ProductD3EQuote.Edit'|trans }}</a>
+                    <a id="commmecialProductD3EQuoteRemoveButton_" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
+                                class="fa fa-xs fa-trash"></i> {{ 'Commercial.ProductD3EQuote.Remove'|trans }}</a>
+                </div>
                 <div class="float-left">
                     <a href="{{ path('paprec_commercial_productD3EQuote_index') }}" class="btn btn-sm btn-default"><i
                                 class="fa fa-xs fa-chevron-left"></i> {{ 'Commercial.ProductD3EQuote.List'|trans }}</a>

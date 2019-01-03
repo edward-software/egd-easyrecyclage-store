@@ -32,20 +32,20 @@
             <div class="card-header">
                 <h4>
                     <i class="fa fa-xs fa-quoteRequestNonCorporate"></i> {{ 'Commercial.QuoteRequestNonCorporate.View'|trans }}
-                    <div class="float-right">
-                        <a id="sendQuoteButton" href="javascript:void(0);" class="btn btn-sm btn-success"><i
-                                    class="fa fa-xs fa-envelope"></i> {{ 'Commercial.QuoteRequestNonCorporate.SendQuote'|trans }}
-                        </a>
-                        <a href="{{ path("paprec_commercial_quoteRequestNonCorporate_edit", {id: quoteRequestNonCorporate.id}) }}"
-                           class="btn btn-sm btn-warning"><i
-                                    class="fa fa-xs fa-edit"></i> {{ 'Commercial.QuoteRequestNonCorporate.Edit'|trans }}
-                        </a>
-                        <a id="commmecialQuoteRequestNonCorporateRemoveButton_" href="javascript:void(0);"
-                           class="btn btn-sm btn-danger"><i
-                                    class="fa fa-xs fa-trash"></i> {{ 'Commercial.QuoteRequestNonCorporate.Remove'|trans }}
-                        </a>
-                    </div>
                 </h4>
+                <div class="float-right">
+                    <a id="sendQuoteButton" href="javascript:void(0);" class="btn btn-sm btn-success"><i
+                                class="fa fa-xs fa-envelope"></i> {{ 'Commercial.QuoteRequestNonCorporate.SendQuote'|trans }}
+                    </a>
+                    <a href="{{ path("paprec_commercial_quoteRequestNonCorporate_edit", {id: quoteRequestNonCorporate.id}) }}"
+                       class="btn btn-sm btn-warning"><i
+                                class="fa fa-xs fa-edit"></i> {{ 'Commercial.QuoteRequestNonCorporate.Edit'|trans }}
+                    </a>
+                    <a id="commmecialQuoteRequestNonCorporateRemoveButton_" href="javascript:void(0);"
+                       class="btn btn-sm btn-danger"><i
+                                class="fa fa-xs fa-trash"></i> {{ 'Commercial.QuoteRequestNonCorporate.Remove'|trans }}
+                    </a>
+                </div>
                 <div class="float-left">
                     <a href="{{ path('paprec_commercial_quoteRequestNonCorporate_index') }}"
                        class="btn btn-sm btn-default"><i

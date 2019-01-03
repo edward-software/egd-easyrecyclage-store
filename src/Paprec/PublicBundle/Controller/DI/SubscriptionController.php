@@ -2,6 +2,7 @@
 
 namespace Paprec\PublicBundle\Controller\DI;
 
+use Doctrine\ORM\EntityNotFoundException;
 use Paprec\CommercialBundle\Entity\ProductDIQuote;
 use Paprec\CommercialBundle\Form\ProductDIQuote\ProductDIQuoteShortType;
 use Paprec\PublicBundle\Entity\Cart;
@@ -121,6 +122,7 @@ class SubscriptionController extends Controller
 
 
             if ($sendNewProductDIQuoteMail && $sendGeneratedQuoteMail) {
+
                 return $this->redirectToRoute('paprec_public_corp_di_subscription_step3', array(
                     'cartUuid' => $cart->getId(),
                     'quoteId' => $productDIQuote->getId()

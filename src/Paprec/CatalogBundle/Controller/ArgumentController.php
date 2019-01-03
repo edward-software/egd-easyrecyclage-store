@@ -50,8 +50,7 @@ class ArgumentController extends Controller
 
         $queryBuilder->select(array('a'))
             ->from('PaprecCatalogBundle:Argument', 'a')
-            ->where('a.deleted IS NULL')
-        ;
+            ->where('a.deleted IS NULL');
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
             if (substr($search['value'], 0, 1) == '#') {
@@ -109,18 +108,18 @@ class ArgumentController extends Controller
         $phpExcelObject->setActiveSheetIndex(0);
 
         $i = 2;
-        foreach($arguments as $argument) {
+        foreach ($arguments as $argument) {
 
             $phpExcelObject->setActiveSheetIndex(0)
-                ->setCellValue('A'.$i, $argument->getId())
-                ->setCellValue('B'.$i, $argument->getDescription())
-                ->setCellValue('C'.$i, $argument->getDateCreation()->format('Y-m-d'));
+                ->setCellValue('A' . $i, $argument->getId())
+                ->setCellValue('B' . $i, $argument->getDescription())
+                ->setCellValue('C' . $i, $argument->getDateCreation()->format('Y-m-d'));
             $i++;
         }
 
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
 
-        $fileName = 'PaprecEasyRecyclage-Extraction-Arguments-'.date('Y-m-d').'.xlsx';
+        $fileName = 'PaprecEasyRecyclage-Extraction-Arguments-' . date('Y-m-d') . '.xlsx';
 
         // create the response
         $response = $this->container->get('phpexcel')->createStreamedResponse($writer);
@@ -169,7 +168,7 @@ class ArgumentController extends Controller
             $argument = $form->getData();
             $argument->setDateCreation(new \DateTime);
 
-            if($argument->getPicto() instanceof UploadedFile) {
+            if ($argument->getPicto() instanceof UploadedFile) {
                 /**
                  * On place le picto uploadé dans le dossier web/uploads
                  * et on sauvegarde le nom du fichier dans la colonne 'picto" de l'argument
@@ -217,7 +216,7 @@ class ArgumentController extends Controller
             $argument = $form->getData();
             $argument->setDateUpdate(new \DateTime);
 
-            if($argument->getPicto() instanceof UploadedFile) {
+            if ($argument->getPicto() instanceof UploadedFile) {
                 /**
                  * On place le picto uploadé dans le dossier web/uploads
                  * et on sauvegarde le nom du fichier dans la colonne 'picto' de l'argument
@@ -256,42 +255,13 @@ class ArgumentController extends Controller
         $this->removeFile($this->getParameter('paprec_catalog.category.picto_path') . '/' . $argument->getPicto());
         $argument->setPicto();
         $argument->setDeleted(new \DateTime());
-        foreach($argument->getProductChantiers() as $productChantier) {
+        foreach ($argument->getProductChantiers() as $productChantier) {
             $argument->removeProductChantier($productChantier);
         }
-        foreach($argument->getProductDIs() as $productDI) {
+        foreach ($argument->getProductDIs() as $productDI) {
             $argument->removeProductChantier($productDI);
         }
         $em->flush();
-
-        return $this->redirectToRoute('paprec_catalog_argument_index');
-    }
-
-    /**
-     * @Route("/argument/removeMany/{ids}", name="paprec_catalog_argument_removeMany")
-     * @Security("has_role('ROLE_ADMIN')")
-     */
-    public function removeManyAction(Request $request)
-    {
-        $ids = $request->get('ids');
-
-        if(! $ids) {
-            throw new NotFoundHttpException();
-        }
-
-        $em = $this->getDoctrine()->getManager();
-
-        $ids = explode(',', $ids);
-
-        if(is_array($ids) && count($ids)) {
-            $arguments = $em->getRepository('PaprecCatalogBundle:Argument')->findById($ids);
-            foreach ($arguments as $argument){
-                $this->removeFile($this->getParameter('paprec_catalog.category.picto_path') . '/' . $argument->getPicto());
-                $argument->setPicto();
-                $argument->setDeleted(new \DateTime);
-            }
-            $em->flush();
-        }
 
         return $this->redirectToRoute('paprec_catalog_argument_index');
     }
@@ -309,5 +279,34 @@ class ArgumentController extends Controller
         } catch (IOException $e) {
             throw new Exception($e->getMessage());
         }
+    }
+
+    /**
+     * @Route("/argument/removeMany/{ids}", name="paprec_catalog_argument_removeMany")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function removeManyAction(Request $request)
+    {
+        $ids = $request->get('ids');
+
+        if (!$ids) {
+            throw new NotFoundHttpException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $ids = explode(',', $ids);
+
+        if (is_array($ids) && count($ids)) {
+            $arguments = $em->getRepository('PaprecCatalogBundle:Argument')->findById($ids);
+            foreach ($arguments as $argument) {
+                $this->removeFile($this->getParameter('paprec_catalog.category.picto_path') . '/' . $argument->getPicto());
+                $argument->setPicto();
+                $argument->setDeleted(new \DateTime);
+            }
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('paprec_catalog_argument_index');
     }
 }

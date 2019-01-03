@@ -32,19 +32,19 @@
             <div class="card-header">
                 <h4>
                     <i class="fa fa-xs fa-folder"></i> {{ 'Commercial.ProductD3EOrder.View'|trans }}
-                    <div class="float-right">
-                        <a id="sendInvoiceButton" href="javascript:void(0);" class="btn btn-sm btn-success"><i
-                                    class="fa fa-xs fa-envelope"></i> {{ 'Commercial.ProductD3EOrder.SendInvoice'|trans }}
-                        </a>
-                        <a href="{{ path("paprec_commercial_productD3EOrder_edit", {id: productD3EOrder.id}) }}"
-                           class="btn btn-sm btn-warning"><i
-                                    class="fa fa-xs fa-edit"></i> {{ 'Commercial.ProductD3EOrder.Edit'|trans }}</a>
-                        <a id="commmecialProductD3EOrderRemoveButton_" href="javascript:void(0);"
-                           class="btn btn-sm btn-danger"><i
-                                    class="fa fa-xs fa-trash"></i> {{ 'Commercial.ProductD3EOrder.Remove'|trans }}
-                        </a>
-                    </div>
                 </h4>
+                <div class="float-right">
+                    <a id="sendInvoiceButton" href="javascript:void(0);" class="btn btn-sm btn-success"><i
+                                class="fa fa-xs fa-envelope"></i> {{ 'Commercial.ProductD3EOrder.SendInvoice'|trans }}
+                    </a>
+                    <a href="{{ path("paprec_commercial_productD3EOrder_edit", {id: productD3EOrder.id}) }}"
+                       class="btn btn-sm btn-warning"><i
+                                class="fa fa-xs fa-edit"></i> {{ 'Commercial.ProductD3EOrder.Edit'|trans }}</a>
+                    <a id="commmecialProductD3EOrderRemoveButton_" href="javascript:void(0);"
+                       class="btn btn-sm btn-danger"><i
+                                class="fa fa-xs fa-trash"></i> {{ 'Commercial.ProductD3EOrder.Remove'|trans }}
+                    </a>
+                </div>
                 <div class="float-left">
                     <a href="{{ path('paprec_commercial_productD3EOrder_index') }}" class="btn btn-sm btn-default"><i
                                 class="fa fa-xs fa-chevron-left"></i> {{ 'Commercial.ProductD3EOrder.List'|trans }}

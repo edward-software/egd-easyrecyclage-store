@@ -24,15 +24,15 @@
             <div class="card-header">
                 <h4>
                     <i class="fa fa-xs fa-folder"></i> {{ 'Catalog.PriceListD3E.View'|trans }}
-                    <div class="float-right">
-                        <a href="{{ path("paprec_catalog_priceListD3E_edit", {id: priceListD3E.id}) }}"
-                           class="btn btn-sm btn-warning"><i
-                                    class="fa fa-xs fa-edit"></i> {{ 'Catalog.PriceListD3E.Edit'|trans }}</a>
-                        <a id="catalogPriceListD3ERemoveButton" href="javascript:void(0);"
-                           class="btn btn-sm btn-danger"><i
-                                    class="fa fa-xs fa-trash"></i> {{ 'Catalog.PriceListD3E.Remove'|trans }}</a>
-                    </div>
                 </h4>
+                <div class="float-right">
+                    <a href="{{ path("paprec_catalog_priceListD3E_edit", {id: priceListD3E.id}) }}"
+                       class="btn btn-sm btn-warning"><i
+                                class="fa fa-xs fa-edit"></i> {{ 'Catalog.PriceListD3E.Edit'|trans }}</a>
+                    <a id="catalogPriceListD3ERemoveButton" href="javascript:void(0);"
+                       class="btn btn-sm btn-danger"><i
+                                class="fa fa-xs fa-trash"></i> {{ 'Catalog.PriceListD3E.Remove'|trans }}</a>
+                </div>
                 <div class="float-left">
                     <a href="{{ path('paprec_catalog_priceListD3E_index') }}" class="btn btn-sm btn-default"><i
                                 class="fa fa-xs fa-chevron-left"></i> {{ 'Catalog.PriceListD3E.List'|trans }}</a>

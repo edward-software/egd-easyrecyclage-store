@@ -20,17 +20,17 @@
             <div class="card-header">
                 <h4>
                     <i class="fa fa-xs fa-folder"></i> {{ 'Home.Ticket.View'|trans }} #{{ ticket.id }}
-                    <div class="float-right">
-                        <a href="{{ path('paprec_home_ticket_add') }}" class="btn btn-sm btn-success"><i
-                                    class="fa fa-xs fa-plus"></i> {{ 'Home.Ticket.Add'|trans }}</a>
-                        <a href="{{ path("paprec_home_ticket_edit", {id: ticket.id}) }}" class="btn btn-sm btn-warning"><i
-                                    class="fa fa-xs fa-edit"></i> {{ 'Home.Ticket.Edit'|trans }}</a>
-                        <a href="javascript:void(0);" class="btn btn-sm btn-danger view-confirm-button"
-                           data-url="{{ path("paprec_home_ticket_remove", {id: ticket.id}) }}"
-                           data-text="{{ 'Home.Ticket.Confirm-remove'|trans }}"><i
-                                    class="fa fa-xs fa-trash"></i> {{ 'Home.Ticket.Remove'|trans }}</a>
-                    </div>
                 </h4>
+                <div class="float-right">
+                    <a href="{{ path('paprec_home_ticket_add') }}" class="btn btn-sm btn-success"><i
+                                class="fa fa-xs fa-plus"></i> {{ 'Home.Ticket.Add'|trans }}</a>
+                    <a href="{{ path("paprec_home_ticket_edit", {id: ticket.id}) }}" class="btn btn-sm btn-warning"><i
+                                class="fa fa-xs fa-edit"></i> {{ 'Home.Ticket.Edit'|trans }}</a>
+                    <a href="javascript:void(0);" class="btn btn-sm btn-danger view-confirm-button"
+                       data-url="{{ path("paprec_home_ticket_remove", {id: ticket.id}) }}"
+                       data-text="{{ 'Home.Ticket.Confirm-remove'|trans }}"><i
+                                class="fa fa-xs fa-trash"></i> {{ 'Home.Ticket.Remove'|trans }}</a>
+                </div>
                 <div class="float-left">
                     <a href="{{ path('paprec_home_ticket_index') }}" class="btn btn-sm btn-default"><i
                                 class="fa fa-xs fa-chevron-left"></i> {{ 'Home.Ticket.List'|trans }}</a>

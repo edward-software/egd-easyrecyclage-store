@@ -21,13 +21,13 @@
             <div class="card-header">
                 <h4>
                     <i class="fa fa-xs fa-folder"></i> {{ 'Catalog.Category.View'|trans }}
-                    <div class="float-right">
-                        <a href="{{ path("paprec_catalog_category_edit", {id: category.id}) }}" class="btn btn-sm btn-warning"><i
-                                    class="fa fa-xs fa-edit"></i> {{ 'Catalog.Category.Edit'|trans }}</a>
-                        <a id="catalogCategoryRemoveButton" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
-                                    class="fa fa-xs fa-trash"></i> {{ 'Catalog.Category.Remove'|trans }}</a>
-                    </div>
                 </h4>
+                <div class="float-right">
+                    <a href="{{ path("paprec_catalog_category_edit", {id: category.id}) }}" class="btn btn-sm btn-warning"><i
+                                class="fa fa-xs fa-edit"></i> {{ 'Catalog.Category.Edit'|trans }}</a>
+                    <a id="catalogCategoryRemoveButton" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
+                                class="fa fa-xs fa-trash"></i> {{ 'Catalog.Category.Remove'|trans }}</a>
+                </div>
                 <div class="float-left">
                     <a href="{{ path('paprec_catalog_category_index') }}" class="btn btn-sm btn-default"><i
                                 class="fa fa-xs fa-chevron-left"></i> {{ 'Catalog.Category.List'|trans }}</a>
