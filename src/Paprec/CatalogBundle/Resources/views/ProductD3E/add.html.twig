@@ -104,7 +104,7 @@
                                     <div class="form-label">{{ 'Catalog.ProductD3E.IsPayableOnline'|trans }}</div>
                                     <div class="form-content checkbox-list">
                                         {% for radio in form.isPayableOnline.children %}
-                                            <div class="form-radio">
+                                            <div class="form__radio">
                                                 {{ form_widget(radio) }}
                                                 {{ form_label(radio) }}
                                             </div>
@@ -115,7 +115,7 @@
                                     <div class="form-label">{{ 'Catalog.ProductD3E.IsDisplayed'|trans }}</div>
                                     <div class="form-content">
                                         {% for radio in form.isDisplayed.children %}
-                                            <div class="form-radio">
+                                            <div class="form__radio">
                                                 {{ form_widget(radio) }}
                                                 {{ form_label(radio) }}
                                             </div>

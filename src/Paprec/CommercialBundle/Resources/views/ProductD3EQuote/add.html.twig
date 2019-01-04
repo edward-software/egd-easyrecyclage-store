@@ -57,7 +57,7 @@
                                         <label class="form-label">{{ 'Commercial.ProductD3EQuote.Civility'|trans }}</label>
                                         <div class="form-content">
                                             {% for radio in form.civility.children %}
-                                                <div class="form-radio">
+                                                <div class="form__radio">
                                                     {{ form_widget(radio) }}
                                                     {{ form_label(radio) }}
                                                 </div>
@@ -165,7 +165,7 @@
                                         <label class="form-label">{{ 'Commercial.ProductD3EQuote.Frequency'|trans }}</label>
                                         <div class="form-content">
                                             {% for radio in form.frequency.children %}
-                                                <div class="form-radio">
+                                                <div class="form__radio">
                                                     {{ form_widget(radio) }}
                                                     {{ form_label(radio) }}
                                                 </div>
