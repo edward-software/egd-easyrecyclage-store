@@ -58,20 +58,27 @@
                                         {{ form_errors(form.description) }}
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <div class="form-label">{{ 'Catalog.Category.Enabled'|trans }}</div>
                                     <div class="form-content">
-                                        {{ form_widget(form.enabled) }}
-                                        {{ form_errors(form.enabled) }}
+                                        {% for radio in form.enabled.children %}
+                                            <div class="form-radio">
+                                                {{ form_widget(radio) }}
+                                                {{ form_label(radio) }}
+                                            </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="form-label">{{ 'Catalog.Category.Division'|trans }}</div>
                                     <div class="form-content checkbox-list">
-                                        {{ form_widget(form.division) }}
-                                        {{ form_errors(form.division) }}
+                                        {% for radio in form.division.children %}
+                                            <div class="form-radio">
+                                                {{ form_widget(radio) }}
+                                                {{ form_label(radio) }}
+                                            </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>

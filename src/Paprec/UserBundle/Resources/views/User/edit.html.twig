@@ -23,9 +23,9 @@
                         <i class="fa fa-xs fa-pencil-alt"></i> {{ 'User.User.Edit'|trans }} #{{ user.id }}
                     </h4>
                     <div class="float-right">
-                        <a href="javascript:void(0);" class="btn btn-success user-user-save-button"><i
+                        <a href="javascript:void(0);" class="btn btn-sm btn-success user-user-save-button"><i
                                     class="fa fa-xs fa-check"></i> {{ 'User.User.Save'|trans }}</a>
-                        <a href="javascript:void(0);" class="btn btn-danger user-user-cancel-button"><i
+                        <a href="javascript:void(0);" class="btn btn-sm btn-danger user-user-cancel-button"><i
                                     class="fa fa-xs fa-close"></i> {{ 'User.User.Cancel'|trans }}</a>
                     </div>
                 </div>
@@ -95,24 +95,36 @@
                                     <div class="form-group">
                                         <div class="form-label">{{ 'User.User.Enabled'|trans }}</div>
                                         <div class="form-content">
-                                            {{ form_widget(form.enabled) }}
-                                            {{ form_errors(form.enabled) }}
+                                            {% for radio in form.enabled.children %}
+                                                <div class="form-radio">
+                                                    {{ form_widget(radio) }}
+                                                    {{ form_label(radio) }}
+                                                </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="form-label">{{ 'User.User.Roles'|trans }}</div>
-                                        <div class="form-check form-check-inline">
-                                            {{ form_widget(form.roles) }}
-                                            {{ form_errors(form.roles) }}
+                                        <div class="form-content">
+                                            {% for checkbox in form.roles.children %}
+                                                <div class="form-check">
+                                                    {{ form_widget(checkbox) }}
+                                                    {{ form_label(checkbox)|nl2br }}
+                                                </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="form-label">{{ 'User.User.Divisions'|trans }}</div>
-                                        <div class="form-check form-check-inline">
-                                            {{ form_widget(form.divisions) }}
-                                            {{ form_errors(form.divisions) }}
+                                        <div class="form-content">
+                                            {% for checkbox in form.divisions.children %}
+                                                <div class="form-check">
+                                                    {{ form_widget(checkbox) }}
+                                                    {{ form_label(checkbox)|nl2br }}
+                                                </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </div>

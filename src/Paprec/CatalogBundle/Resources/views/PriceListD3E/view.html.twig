@@ -83,13 +83,13 @@
                         <div class="card-header">
                             <h5 class="card-title">
                                 {{ 'Catalog.PriceListLineD3E.PriceListLineD3Es'|trans }}
-                                <div class="float-right">
-                                    <a href="{{ path('paprec_catalog_priceListD3E_addLine', {id: priceListD3E.id}) }}" id="addPriceListD3ELineButton"
-                                       class="btn btn-sm btn-outline-primary">
-                                        <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.PriceListLineD3E.Add'|trans }}
-                                    </a>
-                                </div>
                             </h5>
+                            <div class="float-right">
+                                <a href="{{ path('paprec_catalog_priceListD3E_addLine', {id: priceListD3E.id}) }}" id="addPriceListD3ELineButton"
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.PriceListLineD3E.Add'|trans }}
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <table id="priceListLineD3EsDatatable"

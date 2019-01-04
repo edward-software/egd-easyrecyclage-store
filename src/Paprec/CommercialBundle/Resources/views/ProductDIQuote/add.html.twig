@@ -56,8 +56,12 @@
                                     <div class="form-group">
                                         <label class="form-label">{{ 'Commercial.ProductDIQuote.Civility'|trans }}</label>
                                         <div class="form-content">
-                                            {{ form_widget(form.civility, {'attr': {'class': 'form-control'}}) }}
-                                            {{ form_errors(form.civility) }}
+                                            {% for radio in form.civility.children %}
+                                                <div class="form-radio">
+                                                    {{ form_widget(radio) }}
+                                                    {{ form_label(radio) }}
+                                                </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -160,8 +164,12 @@
                                     <div class="form-group">
                                         <label class="form-label">{{ 'Commercial.ProductDIQuote.Frequency'|trans }}</label>
                                         <div class="form-content">
-                                            {{ form_widget(form.frequency, {'attr': {'class': 'form-control'}}) }}
-                                            {{ form_errors(form.frequency) }}
+                                            {% for radio in form.frequency.children %}
+                                                <div class="form-radio">
+                                                    {{ form_widget(radio) }}
+                                                    {{ form_label(radio) }}
+                                                </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </div>

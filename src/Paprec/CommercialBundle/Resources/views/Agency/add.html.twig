@@ -106,9 +106,13 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="form-label">{{ 'Commercial.Agency.IsDisplayed'|trans }}</div>
-                                    <div class="form-content checkbox-list">
-                                        {{ form_widget(form.isDisplayed, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.isDisplayed) }}
+                                    <div class="form-content">
+                                        {% for radio in form.isDisplayed.children %}
+                                            <div class="form-radio">
+                                                {{ form_widget(radio) }}
+                                                {{ form_label(radio) }}
+                                            </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
 

@@ -47,8 +47,12 @@
                                 <div class="form-group">
                                     <div class="form-label">{{ 'Catalog.Category.Division'|trans }}</div>
                                     <div class="form-content checkbox-list">
-                                        {{ form_widget(form.division, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.division) }}
+                                        {% for radio in form.division.children %}
+                                            <div class="form-radio">
+                                                {{ form_widget(radio) }}
+                                                {{ form_label(radio) }}
+                                            </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
 

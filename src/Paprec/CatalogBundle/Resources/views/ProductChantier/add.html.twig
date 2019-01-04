@@ -93,22 +93,34 @@
                                 <div class="form-group">
                                     <div class="form-label">{{ 'Catalog.ProductChantier.Arguments'|trans }}</div>
                                     <div class="form-content">
-                                        {{ form_widget(form.arguments, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.arguments) }}
+                                        {% for checkbox in form.arguments.children %}
+                                            <div class="form-check">
+                                                {{ form_widget(checkbox) }}
+                                                {{ form_label(checkbox)|nl2br }}
+                                            </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-label">{{ 'Catalog.ProductChantier.IsPayableOnline'|trans }}</div>
-                                    <div class="form-content checkbox-list">
-                                        {{ form_widget(form.isPayableOnline, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.isPayableOnline) }}
+                                    <div class="form-content">
+                                        {% for radio in form.isPayableOnline.children %}
+                                            <div class="form-radio">
+                                                {{ form_widget(radio) }}
+                                                {{ form_label(radio) }}
+                                            </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-label">{{ 'Catalog.ProductChantier.IsDisplayed'|trans }}</div>
-                                    <div class="form-content checkbox-list">
-                                        {{ form_widget(form.isDisplayed, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.isDisplayed) }}
+                                    <div class="form-content">
+                                        {% for radio in form.isDisplayed.children %}
+                                            <div class="form-radio">
+                                                {{ form_widget(radio) }}
+                                                {{ form_label(radio) }}
+                                            </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>

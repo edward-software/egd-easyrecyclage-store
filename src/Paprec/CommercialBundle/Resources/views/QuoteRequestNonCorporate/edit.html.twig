@@ -100,8 +100,12 @@
                                     <div class="form-group">
                                         <label class="form-label">{{ 'Commercial.QuoteRequestNonCorporate.Frequency'|trans }}</label>
                                         <div class="form-content">
-                                            {{ form_widget(form.frequency, {'attr': {'class': 'form-control'}}) }}
-                                            {{ form_errors(form.frequency) }}
+                                            {% for radio in form.frequency.children %}
+                                                <div class="form-radio">
+                                                    {{ form_widget(radio) }}
+                                                    {{ form_label(radio) }}
+                                                </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                     <div class="form-group">

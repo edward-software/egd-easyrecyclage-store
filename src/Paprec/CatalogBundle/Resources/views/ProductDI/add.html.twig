@@ -92,15 +92,23 @@
                                 <div class="form-group">
                                     <div class="form-label">{{ 'Catalog.ProductDI.Arguments'|trans }}</div>
                                     <div class="form-content">
-                                        {{ form_widget(form.arguments, {'attr': {'class': 'form-control'}}) }}
-                                        {{ form_errors(form.arguments) }}
+                                        {% for checkbox in form.arguments.children %}
+                                            <div class="form-check">
+                                                {{ form_widget(checkbox) }}
+                                                {{ form_label(checkbox)|nl2br }}
+                                            </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-label">{{ 'Catalog.ProductDI.IsDisplayed'|trans }}</div>
                                     <div class="form-content checkbox-list">
-                                        {{ form_widget(form.isDisplayed) }}
-                                        {{ form_errors(form.isDisplayed) }}
+                                        {% for radio in form.isDisplayed.children %}
+                                            <div class="form-radio">
+                                                {{ form_widget(radio) }}
+                                                {{ form_label(radio) }}
+                                            </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>
