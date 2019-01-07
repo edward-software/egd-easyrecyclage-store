@@ -123,6 +123,15 @@ class Cart
      */
     private $content;
 
+    /**
+     * Etape dans lequel se trouve le Cart (créé, division choisie, livraison,...)
+     *
+     * @var string
+     *
+     * @ORM\Column(name="step", type="string", length=255, nullable=true)
+     */
+    private $step;
+
 
     public function __construct()
     {
@@ -474,5 +483,29 @@ class Cart
     public function getDisabled()
     {
         return $this->disabled;
+    }
+
+    /**
+     * Set step.
+     *
+     * @param string|null $step
+     *
+     * @return Cart
+     */
+    public function setStep($step = null)
+    {
+        $this->step = $step;
+
+        return $this;
+    }
+
+    /**
+     * Get step.
+     *
+     * @return string|null
+     */
+    public function getStep()
+    {
+        return $this->step;
     }
 }

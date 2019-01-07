@@ -162,7 +162,6 @@
             // Fonction appelée lorsque l'on choisit une proposition de l'autocomplete Google
             function onPlaceChanged() {
                 var place = this.getPlace();
-                console.log(place);
                 $('#paprec_commercialbundle_agence_latitude').val(place.geometry.location.lat());
                 $('#paprec_commercialbundle_agence_longitude').val(place.geometry.location.lng());
                 $('#paprec_commercialbundle_agence_address').val(place.name);

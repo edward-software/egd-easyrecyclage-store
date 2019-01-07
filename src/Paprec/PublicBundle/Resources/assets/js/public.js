@@ -80,7 +80,6 @@ $(function () {
      * CONTACT FORM
      */
     if ($('.contact-form').is('div')) {
-        console.log('test');
         $('#contactFormSubmitButton').on('click', function () {
             $('#contactForm').submit();
         });

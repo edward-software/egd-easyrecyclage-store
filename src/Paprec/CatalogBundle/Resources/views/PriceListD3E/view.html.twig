@@ -85,7 +85,8 @@
                                 {{ 'Catalog.PriceListLineD3E.PriceListLineD3Es'|trans }}
                             </h5>
                             <div class="float-right">
-                                <a href="{{ path('paprec_catalog_priceListD3E_addLine', {id: priceListD3E.id}) }}" id="addPriceListD3ELineButton"
+                                <a href="{{ path('paprec_catalog_priceListD3E_addLine', {id: priceListD3E.id}) }}"
+                                   id="addPriceListD3ELineButton"
                                    class="btn btn-sm btn-outline-primary">
                                     <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.PriceListLineD3E.Add'|trans }}
                                 </a>
@@ -182,17 +183,17 @@
                             "infoEmpty": "{{ 'General.Datatable.No-records-available'|trans }}",
                             "search": "{{ 'General.Datatable.Search'|trans }}:",
                             "sProcessing": "{{ 'General.Datatable.Loading'|trans }}",
-        "paginate": {
-                        "previous": "{{ 'General.Datatable.Previous'|trans }}",
-                        "next": "{{ 'General.Datatable.Next'|trans }}",
-                    },
-"select": {
-                        "rows": {
-                            _: "%d lignes sélectionnées",
-                            0: "Aucune ligne sélectionnée",
-                            1: "1 ligne sélectionnée"
-                        }
-                    },
+                            "paginate": {
+                                "previous": "{{ 'General.Datatable.Previous'|trans }}",
+                                "next": "{{ 'General.Datatable.Next'|trans }}",
+                            },
+                            "select": {
+                                "rows": {
+                                    _: "%d lignes sélectionnées",
+                                    0: "Aucune ligne sélectionnée",
+                                    1: "1 ligne sélectionnée"
+                                }
+                            },
 
                         },
                         "columnDefs": [{
@@ -206,30 +207,14 @@
                         dom: 'f<"ml-auto">lrti<"ml-auto">p',
                     });
 
-                    {#$('#addPriceListD3ELineButton').on('click', function () {#}
-                        {#$.ajax({#}
-                            {#type: "GET",#}
-                            {#url: "{{ path('paprec_catalog_priceListD3E_addLine', {id: priceListD3E.id}) }}",#}
-                            {#contentType: "html",#}
-                            {#success: function (response) {#}
-                                {#// On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar#}
-                                {#var htmlToDisplay = response.trim();#}
-                                {#$("#priceListD3ELineModalContent").html(htmlToDisplay);#}
-                            {#},#}
-                            {#error: function (errorThrown) {#}
-                                {#console.log(errorThrown);#}
-                            {#}#}
-                        {#});#}
-                    {#});#}
 
                     $('.editPriceListD3ELineButton').on('click', function () {
                         id = $(this).data('id');
-                        console.log(id);
                         $.ajax({
                             type: "GET",
                             url: "{{ path('paprec_catalog_priceListD3E_edit', {id: priceListD3E.id, lineId: 'idLineTmp'}) }}".replace('idLineTmp', id),
                             contentType: "html",
-                            success: function(response) {
+                            success: function (response) {
                                 // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
                                 var htmlToDisplay = response.trim();
                                 $("#priceListD3ELineModalContent").html(htmlToDisplay);
