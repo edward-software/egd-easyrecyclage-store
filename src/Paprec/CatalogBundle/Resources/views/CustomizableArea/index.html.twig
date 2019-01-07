@@ -37,8 +37,8 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ 'Catalog.CustomizableArea.Division'|trans }}</th>
                             <th>{{ 'Catalog.CustomizableArea.Code'|trans }}</th>
+                            <th>{{ 'Catalog.CustomizableArea.Content'|trans }}</th>
                             <th>{{ 'Catalog.CustomizableArea.Date-crea'|trans }}</th>
                             <th></th>
                         </tr>
@@ -115,8 +115,8 @@
                 "ajax": "{{ path('paprec_catalog_customizableArea_loadList') }}",
                 "columns": [
                     {"data": "id"},
-                    {"data": "division"},
                     {"data": "code"},
+                    {"data": "content"},
                     {"data": "dateCreation"},
                     {"data": "id", "width": "10%", "bSortable": false}
                 ],

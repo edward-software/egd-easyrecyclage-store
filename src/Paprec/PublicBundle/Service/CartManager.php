@@ -45,7 +45,7 @@ class CartManager
             $cart = $this->em->getRepository('PaprecPublicBundle:Cart')->find($id);
 
             if ($cart === null || $this->isDisabled($cart)) {
-                throw new EntityNotFoundException('cartNotFound');
+                throw new EntityNotFoundException('cartNotFound', 404);
             }
 
             return $cart;

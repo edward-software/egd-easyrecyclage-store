@@ -17,11 +17,6 @@ class CustomizableAreaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('division', ChoiceType::class, array(
-                "choices" => $options['division'],
-                "expanded" => false,
-                "multiple" => false
-            ))
             ->add('content', CKEditorType::class, array(
                 'config_name' => 'basic_config',
                 'required' => true

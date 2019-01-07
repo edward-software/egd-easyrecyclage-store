@@ -73,4 +73,30 @@ class CustomizableAreaManager
         return false;
     }
 
+
+    /**
+     * @param $code
+     * @return array|object[]|CustomizableArea[]
+     * @throws Exception
+     */
+    public function getByCode($code) {
+        try {
+
+            $customizableArea = $this->em->getRepository('PaprecCatalogBundle:CustomizableArea')->findOneBy(array(
+                'code' => $code,
+                'isDisplayed' => true,
+                'deleted' => null
+            ));
+
+            if ($customizableArea === null) {
+                return null;
+            }
+
+            return $customizableArea;
+
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
 }

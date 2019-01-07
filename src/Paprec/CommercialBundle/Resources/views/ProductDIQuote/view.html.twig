@@ -209,14 +209,14 @@
                         <div class="card-header">
                             <h5>
                                 {{ 'Commercial.ProductDIQuote.ProductsList'|trans }}
-                                <div class="float-right">
-
-                                    <a href="{{ path('paprec_commercial_productDIQuote_addLine', {id: productDIQuote.id}) }}"
-                                       class="btn btn-sm btn-outline-primary">
-                                        <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductDIQuote.AddLine'|trans }}
-                                    </a>
-                                </div>
                             </h5>
+                            <div class="float-right">
+
+                                <a href="{{ path('paprec_commercial_productDIQuote_addLine', {id: productDIQuote.id}) }}"
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductDIQuote.AddLine'|trans }}
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <table id="productDIQuoteLinesDatatable"

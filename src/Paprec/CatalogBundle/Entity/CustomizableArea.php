@@ -3,14 +3,16 @@
 namespace Paprec\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
  * CustomizableArea
  *
- * @ORM\Table(name="customizable_area")
+ * @ORM\Table(name="customizableAreas")
  * @ORM\Entity(repositoryClass="Paprec\CatalogBundle\Repository\CustomizableAreaRepository")
+ * @UniqueEntity("code")
  */
 class CustomizableArea
 {
@@ -44,13 +46,6 @@ class CustomizableArea
      */
     private $deleted;
 
-    /**
-     * @var array|null
-     *
-     * @ORM\Column(name="division", type="string")
-     * @Assert\NotNull()
-     */
-    private $division;
 
     /**
      * @var string
@@ -161,30 +156,6 @@ class CustomizableArea
     public function getDeleted()
     {
         return $this->deleted;
-    }
-
-    /**
-     * Set division.
-     *
-     * @param string $division
-     *
-     * @return CustomizableArea
-     */
-    public function setDivision($division)
-    {
-        $this->division = $division;
-
-        return $this;
-    }
-
-    /**
-     * Get division.
-     *
-     * @return string
-     */
-    public function getDivision()
-    {
-        return $this->division;
     }
 
     /**

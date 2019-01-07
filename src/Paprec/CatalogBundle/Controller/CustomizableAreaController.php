@@ -39,7 +39,6 @@ class CustomizableAreaController extends Controller
         $columns = $request->get('columns');
 
         $cols['id'] = array('label' => 'id', 'id' => 'c.id', 'method' => array('getId'));
-        $cols['division'] = array('label' => 'division', 'id' => 'c.division', 'method' => array('getDivision'));
         $cols['code'] = array('label' => 'code', 'id' => 'c.code', 'method' => array('getCode'));
         $cols['dateCreation'] = array('label' => 'dateCreation', 'id' => 'c.dateCreation', 'method' => array('getDateCreation'), 'filter' => array(array('name' => 'format', 'args' => array('Y-m-d H:i:s'))));
 
@@ -57,7 +56,6 @@ class CustomizableAreaController extends Controller
                 ))->setParameter(1, substr($search['value'], 1));
             } else {
                 $queryBuilder->andWhere($queryBuilder->expr()->orx(
-                    $queryBuilder->expr()->like('c.division', '?1'),
                     $queryBuilder->expr()->like('c.code', '?1'),
                     $queryBuilder->expr()->like('c.dateCreation', '?1')
                 ))->setParameter(1, '%' . $search['value'] . '%');
@@ -100,8 +98,8 @@ class CustomizableAreaController extends Controller
 
         $phpExcelObject->setActiveSheetIndex(0)
             ->setCellValue('A1', 'ID')
-            ->setCellValue('B1', 'Division')
-            ->setCellValue('C1', 'Division')
+            ->setCellValue('B1', 'Code')
+            ->setCellValue('C1', 'Contenu')
             ->setCellValue('D1', 'Date Création');
 
         $phpExcelObject->getActiveSheet()->setTitle('Zones personalisables');
@@ -112,8 +110,8 @@ class CustomizableAreaController extends Controller
 
             $phpExcelObject->setActiveSheetIndex(0)
                 ->setCellValue('A'.$i, $customizableArea->getId())
-                ->setCellValue('B'.$i, $customizableArea->getDivision())
-                ->setCellValue('C'.$i, $customizableArea->getCode())
+                ->setCellValue('B'.$i, $customizableArea->getCode())
+                ->setCellValue('C'.$i, $customizableArea->getContent())
                 ->setCellValue('D'.$i, $customizableArea->getDateCreation()->format('Y-m-d'));
             $i++;
         }
@@ -165,13 +163,7 @@ class CustomizableAreaController extends Controller
     {
         $customizableArea = new CustomizableArea();
 
-        $divisions = array();
-        foreach($this->getParameter('paprec_divisions') as $division) {
-            $divisions[$division] = $division;
-        }
-        $form = $this->createForm(CustomizableAreaType::class, $customizableArea, array(
-            'division' => $divisions
-        ));
+        $form = $this->createForm(CustomizableAreaType::class, $customizableArea);
 
         $form->handleRequest($request);
 
@@ -204,13 +196,7 @@ class CustomizableAreaController extends Controller
         $customizableAreaManager = $this->get('paprec_catalog.customizable_area_manager');
         $customizableAreaManager->isDeleted($customizableArea, true);
 
-        $divisions = array();
-        foreach($this->getParameter('paprec_divisions') as $division) {
-            $divisions[$division] = $division;
-        }
-        $form = $this->createForm(CustomizableAreaType::class, $customizableArea, array(
-            'division' => $divisions
-        ));
+        $form = $this->createForm(CustomizableAreaType::class, $customizableArea);
 
         $form->handleRequest($request);
 

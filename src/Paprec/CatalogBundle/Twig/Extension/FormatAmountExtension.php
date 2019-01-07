@@ -22,7 +22,7 @@ class FormatAmountExtension extends \Twig_Extension
         );
     }
 
-    //TODO J'AI AJOUTER LE '=NULL' A CURRENCY POUR POUVOIR AFFICHER LE VAT_RATE DANS LES SETTINGS
+    //TODO J'AI AJOUTE LE '=NULL' A CURRENCY POUR POUVOIR AFFICHER LE VAT_RATE DANS LES SETTINGS
     public function formatAmount($amount, $currency = null, $locale, $type = null)
     {
         if ($type == 'PERCENTAGE') {
