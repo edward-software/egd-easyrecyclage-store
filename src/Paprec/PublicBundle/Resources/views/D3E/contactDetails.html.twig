@@ -28,7 +28,7 @@
         <input type="hidden" id="divisionType" value="{{ cart.division }}">
         <div class="step">
             <div class="step__left">
-                <div class="step__title">Je suis</div>
+                <div class="step__title">{{ 'Public.Home.IAm'|trans }}</div>
             </div>
             <div class="step__right step__right--small">
                 {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.BusinessName'|trans}}) }}

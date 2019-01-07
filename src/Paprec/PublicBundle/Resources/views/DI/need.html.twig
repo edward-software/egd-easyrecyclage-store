@@ -44,10 +44,9 @@
                  id="productsWrapper_{{ category.id }}">
                 {{ category.name }}
                 {% if countProductsInCategory > 1 %}
-                    <span>{{ countProductsInCategory }} contenants séléctionnés</span>
-                {% endif %}
-                {% if countProductsInCategory ==     1 %}
-                    <span>{{ countProductsInCategory }} contenant séléctionné</span>
+                    <span>{{ countProductsInCategory }} {{ 'Public.Cart.SelectedContainers'|trans }}</span>
+                {% elseif countProductsInCategory ==     1 %}
+                    <span>{{ countProductsInCategory }} {{ 'Public.Cart.SelectedContainer'|trans }}</span>
                 {% endif %}
             </div>
             {% for key, products in productsCategories %}
@@ -113,8 +112,7 @@
                                         {% endfor %}
                                         <div class="clearfix"></div>
                                         <div class="infoproduct__disclamer">
-                                            Forfait recyclage clé en main
-                                            <main></main>
+                                            {{ 'Public.Cart.Disclaimer'|trans }}
                                         </div>
                                         <a href="#"
                                            class="infoproduct__esti">{{ 'Public.Cart.EstimateTrashVolume'|trans }}</a>
@@ -125,9 +123,9 @@
 
                                         {% if displayedProduct.reference is not null %}
                                             <a href="{{ displayedProduct.reference }}"
-                                               class="infoproduct__more">{{ 'Public.Cart.LearMore'|trans }}</a>
+                                               class="infoproduct__more">{{ 'Public.Cart.LearnMore'|trans }}</a>
                                         {% endif %}
-                                        
+
                                         <div class="infoproduct__engagment">
                                             <input type="checkbox" id="engagment">
                                             <label for="engagment">{{ 'Public.Cart.Engagment'|trans }}</label>

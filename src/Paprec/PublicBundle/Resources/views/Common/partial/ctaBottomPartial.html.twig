@@ -10,9 +10,9 @@
 </div>
 <div {% if nextStep != '' or idSubmit != '' or stepBack != '' %}class="step__right"{% endif %}>
     <a href="{{ path('paprec_public_home_contactForm', {cartUuid: cartUuid}) }}"
-       class="button margint10 button--grey">CONTACTEZ-NOUS</a>
+       class="button margint10 button--grey">{{ 'Public.CTA.ContactUs'|trans|upper }}</a>
     <a href="{{ path('paprec_public_home_callBackForm', {cartUuid: cartUuid }) }}"
-       class="button margint10 button--grey">ÊTRE RAPPELÉ</a>
+       class="button margint10 button--grey">{{ 'Public.CTA.CallBack'|trans|upper }}</a>
     {% if idSubmit != '' or nextStep != '' %}
         <a
                 {% if idSubmit is defined and idSubmit is not null and idSubmit != '' %}

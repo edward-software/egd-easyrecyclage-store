@@ -24,35 +24,38 @@
         <input type="hidden" id="divisionType" value="{{ cart.division }}">
         <div class="step">
             <div class="bold">
-                {% if productD3EOrder.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productD3EOrder.firstName }} {{ productD3EOrder.lastName }}
+                {% if productD3EOrder.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productD3EOrder.firstName }} {{ productD3EOrder.lastName }}
                 ,
             </div>
             <div class="recaptitle">Vous pouvez maintenant nous indiquer vos préférences de livraison.</div>
             <div>
                 <div class="step__delivery">
                     <div class="title">
-                        Sélectionnez une date de pose
+                        {{ 'Public.Delivery.SelectInstallationDate'|trans }}
                     </div>
                     <div class="desc">
-                        Nous pouvons intervenir <span>à partir de 48h ouvrées</span> dès lors que vous
-                        passez votre commande.
+                        {% autoescape false %}
+                            {{ 'Public.Delivery.InstallationDateInfo'|trans }}
+                        {% endautoescape %}
                     </div>
                     {{ form_widget(form.installationDate, {'attr': {'class': 'input'}}) }}
                     {{ form_errors(form.installationDate) }}
                 </div>
                 <div class="step__delivery">
                     <div class="title">
-                        Sélectionnez une date d'enlèvement
+                        {{ 'Public.Delivery.SelectRemovalDate'|trans }}
                     </div>
                     <div class="desc">
-                        Vous ne pouvez garder votre matériel que <span>10 jours maximum</span>.
+                        {% autoescape false %}
+                            {{ 'Public.Delivery.RemovalDateInfo'|trans }}
+                        {% endautoescape %}
                     </div>
                     {{ form_widget(form.removalDate, {'attr': {'class': 'input'}}) }}
                     {{ form_errors(form.removalDate) }}
                 </div>
                 <div class="step__delivery">
                     <div class="title">
-                        Indiquez vos conditions d'accès
+                        {{ 'Public.Delivery.AccessConditions'|trans }}
                     </div>
                     {{ form_widget(form.domainType, {'attr': {'class': 'input__radio'}}) }}
                     {{ form_errors(form.domainType) }}
@@ -62,21 +65,14 @@
 
                 </div>
             </div>
-            <div class="notice">
-                Besoin d'une <span>information complémentaire</span> ? Vous souhaitez nous en parler ?
-            </div>
-            <div class="step__left">
-                <a href="#" class="back">Retour</a>
-            </div>
-            <div class="step__right">
-                <a href="{{ path('paprec_public_home_contactForm', {cartUuid: cart.id}) }}"
-                   class="button margint10 button--grey">CONTACTEZ-NOUS</a>
-                <a href="{{ path('paprec_public_home_callBackForm', {cartUuid: cart.id }) }}"
-                   class="button margint10 button--grey">ÊTRE RAPPELÉ</a>
-                <a href="javascript:void(0);" id="deliveryFormSubmitButton"
-                   class="button margint10 button--green">VALIDER VOTRE COMMANDE</a>
-            </div>
-            <div class="clearfix"></div>
+            {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
+                'label': 'ValidateOrder',
+                'cartUuid': cart.id,
+                'division': cart.division,
+                'stepBack': 'step2',
+                'nextStep': 'step5',
+                'idSubmit': 'deliveryFormSubmitButton'
+            })) }}
         </div>
         {{ form_rest(form) }}
     </form>

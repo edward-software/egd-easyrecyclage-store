@@ -26,31 +26,27 @@
     <input type="hidden" id="divisionType" value="{{ cart.division }}">
     <div class="step">
         <div class="step__sucess">
-            <div class="title">MERCI POUR VOTRE CONFIANCE !</div>
-            <div class="content">Votre demande a bien été prise en compte par nos agences et vous a été
-                envoyée par mail.
+            <div class="title">{{ 'Public.Confirm.Thanks'|trans|upper }}</div>
+            <div class="content">{{ 'Public.Confirm.RequestReceivedMail'|trans }}
             </div>
         </div>
-        <div class="bold">{% if productDIQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productDIQuote.firstName }} {{ productDIQuote.lastName }},
+        <div class="bold">{% if productDIQuote.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productDIQuote.firstName }} {{ productDIQuote.lastName }},
         </div>
 
-        <div class="recaptitle">Voici le récapitulatif de votre demande.</div>
+        <div class="recaptitle">{{ 'Public.Confirm.RecapOrder'|trans }}</div>
         <div class="greyrecap">
-            <div class="title">Forfait recyclage</div>
+            <div class="title">{{ 'Public.Cart.ForfaitRecyclage'|trans }}</div>
             <div class="info">
-                *comprend la mise à disposition du matériel,
-                <br>
-                la collecte et le traitement en centre de tri
+                {{ 'Public.Cart.Including2Lines'|trans|nl2br }}
             </div>
             <div class="right">
-                À PARTIR DE
+                {{ 'Public.Cart.From'|trans|upper }}
                 <span>{{ productDIQuote.totalAmount|formatAmount(null, app.request.locale) }}€</span>
             </div>
         </div>
 
         <div class="greennotice">
-            L'agence en charge de votre demande vous recontactera sous 48h par e-mail ou téléphone afin de
-            valider un devis.
+            {{ 'Public.Confirm.AgencyContactQuote'|trans }}
         </div>
         {% for productDIQuoteLine in productDIQuote.productDIQuoteLines %}
             <div class="recapproduct">

@@ -25,12 +25,10 @@
 
     <div class="recap__price">
         <div class="left">
-            Forfait
-            <br>
-            recyclage*
+            {{ 'Public.Cart.ForfaitRecyclage'|trans|nl2br }}
         </div>
         <div class="right">
-            à partir de
+            {{ 'Public.Cart.From'|trans }}
             <br>
             <span>
                 {% if loadedCart and loadedCart is not empty %}{{ loadedCart['sum']|formatAmount(null, app.request.locale) }}{% else %}0{% endif %}€
@@ -40,7 +38,5 @@
     </div>
 </div>
 <div class="recap__info">
-    *comprend la mise à disposition du
-    matériel, la collecte et le traitement
-    en centre de tri
+    {{ 'Public.Cart.Including'|trans|nl2br }}
 </div>

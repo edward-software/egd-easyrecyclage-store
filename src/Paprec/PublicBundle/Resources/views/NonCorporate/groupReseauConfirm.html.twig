@@ -24,16 +24,16 @@
 {% block main_content_stepper %}
     <div class="step">
         <div class="step__sucess">
-            <div class="title">MERCI POUR VOTRE CONFIANCE !</div>
-            <div class="content">Votre demande a bien été prise en compte par nos agences.
+            <div class="title">{{ 'Public.Confirm.Thanks'|trans|upper }}</div>
+            <div class="content">{{ 'Public.Confirm.RequestReceived'|trans }}
             </div>
         </div>
-        <div class="bold">{% if quoteRequest.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ quoteRequest.firstName }} {{ quoteRequest.lastName }}
+        <div class="bold">{% if quoteRequest.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ quoteRequest.firstName }} {{ quoteRequest.lastName }}
             ,
         </div>
 
         <div class="greennotice">
-            L'agence en charge de votre demande vous recontactera sous 48h par e-mail ou téléphone.
+            {{ 'Public.Confirm.AgencyContact'|trans }}
         </div>
 
         <a href="{{ paprec_public_site_url }}" class="backtohome button button--green">{{ 'Public.Cart.BackHome'|trans }}</a>

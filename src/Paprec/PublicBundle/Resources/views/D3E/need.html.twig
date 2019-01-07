@@ -66,7 +66,7 @@
                 <div class="infoproduct">
                     <div class="left">
                         <div class="infoproduct__title">
-                            QUANTIFIEZ VOTRE BESOIN
+                            {{ ('Public.Cart.QuantifyNeed'|trans)|upper }}
                         </div>
 
                         <div class="clearfix"></div>
@@ -137,7 +137,7 @@
                              id="infoProductClose_{{ displayedProduct.id }}"></div>
 
                         <div class="infoproduct__wrapperdesc">
-                            <div class="infoproduct__title">Descriptif de la prestation</div>
+                            <div class="infoproduct__title">{{ 'Public.Cart.ServiceDesc'|trans }}</div>
                             {{ displayedProduct.description|nl2br }}
                         </div>
 

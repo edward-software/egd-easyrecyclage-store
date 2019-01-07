@@ -23,50 +23,43 @@
     <form id="paymentForm" action="" method="post" class="main">
         <input type="hidden" id="divisionType" value="{{ cart.division }}">
         <div class="step">
-            <div class="bold">{% if productD3EOrder.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productD3EOrder.firstName }} {{ productD3EOrder.lastName }}
+            <div class="bold">{% if productD3EOrder.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productD3EOrder.firstName }} {{ productD3EOrder.lastName }}
                 ,
             </div>
-            <div class="recaptitle">Vous pouvez maintenant procéder au paiement de votre prestation.</div>
+            <div class="recaptitle">{{ 'Public.Payment.Title'|trans }}</div>
             <div class="choice">
 
-                <div class="choice__title">Sélectionnez un mode de paiement et de signature</div>
-                <input class="input__radio" type="radio" name="payment" id="cb"> <label for="cb">Payer en
-                    ligne
-                    via <span>carte bancaire</span></label>
+                <div class="choice__title">{{ 'Public.Payment.ChoiceTitle'|trans }}</div>
+                <input class="input__radio" type="radio" name="payment" id="cb"> <label
+                        for="cb">{% autoescape false %}{{ 'Public.Payment.CBPayment'|trans }}{% endautoescape %}</label>
                 <div class="clearfix"></div>
 
                 <div class="info">
-                    Si vous payez par carte bancaire, vous disposerez de votre prestation plus rapidemment
+                    {{ 'Public.Payment.CBInfo'|trans }}
                 </div>
             </div>
             <div class="choice">
                 <input class="input__radio" type="radio" name="payment" id="virement"> <label
-                        for="virement">Payer
-                    en ligne via <span>virement</span></label>
+                        for="virement">{% autoescape false %}{{ 'Public.Payment.VirementPayment'|trans }}{% endautoescape %}</label>
                 <div class="clearfix"></div>
             </div>
             <div class="choice">
                 <input class="input__radio" type="radio" name="sign" id="online"> <label for="online">
-                    Signer en
-                    ligne votre devis</label>
+                    {{ 'Public.Payment.OnlineSignature'|trans }}</label>
                 <div class="clearfix"></div>
 
                 <div class="info">
-                    La signature électronique est un procédé technique qui permet de conférer à l'écrit
-                    électronique la même valeur
-                    contractuelle que sur support papier. Ce procédé technique assure l'identification du
-                    signataire, l'intégrité du document
-                    et manifeste le consentement du signataire au document signé.
+                    {{ 'Public.Payment.OnlineSignatureInfo'|trans|nl2br }}
                 </div>
             </div>
             <div class="choice">
-                <input class="input__radio" type="radio" name="sign" id="offline"> <label for="offline">Télécharger
-                    le dossier et renvoyer-le par courrier</label>
+                <input class="input__radio" type="radio" name="sign" id="offline"> <label
+                        for="offline">{{ 'Public.Payment.DownloadAndSendMail'|trans }}</label>
                 <div class="clearfix"></div>
             </div>
 
 
-            <a href="#" class="backtohome button button--green">Valider</a>
+            <a href="#" class="backtohome button button--green">{{ 'Public.Cart.Validate'|trans }}</a>
 
             {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
                 'label': 'Validate',
@@ -78,7 +71,6 @@
             })) }}
 
         </div>
-        {#{{ form_rest(form) }}#}
     </form>
 {% endblock %}
 

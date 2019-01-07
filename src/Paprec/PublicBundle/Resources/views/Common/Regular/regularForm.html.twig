@@ -12,7 +12,7 @@
 {% block main_content_index %}
     <div class="step">
         <div class="step__left">
-            <div class="step__title">Je suis</div>
+            <div class="step__title">{{ 'Public.Home.IAm'|trans }}</div>
         </div>
         <div class="step__right step__right--small">
             {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductDIQuote.BusinessName'|trans}}) }}
@@ -43,7 +43,7 @@
     </div>
     <div class="step">
         <div class="step__left">
-            <div class="step__title">Mon besoin</div>
+            <div class="step__title">{{ 'Public.Home.MyNeed'|trans }}</div>
         </div>
         <div class="step__right step__right--small">
             {{ form_widget(form.need, {'attr': {'class': 'input input--full input--bordered', 'placeholder': 'Commercial.QuoteRequest.NeedPlaceholder'|trans}}) }}
@@ -52,9 +52,7 @@
         <div class="clearfix"></div>
     </div>
     <div class="step">
-        <div class="notice">Afin de mieux appréhender votre demande, vous pouvez si vous le souhaitez nous
-            fournir des photos (.jpg, .png, .tiff)
-            ou autres fichiers (.pdf, .doc, .xls)
+        <div class="notice">{{ 'Public.Home.FileUploadNotice'|trans }}
         </div>
         <div id="listFiles">
 

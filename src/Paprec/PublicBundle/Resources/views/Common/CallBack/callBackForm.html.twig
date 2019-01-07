@@ -22,7 +22,7 @@
     <form id="callBackForm" action="#" method="post" enctype="multipart/form-data">
         <div class="step">
             <div class="step__left">
-                <div class="step__title">Je suis</div>
+                <div class="step__title">{{ 'Public.Home.IAm'|trans }}</div>
             </div>
             <div class="step__right step__right--small">
                 {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.BusinessName'|trans}}) }}
