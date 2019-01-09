@@ -35,11 +35,13 @@
                 </h4>
                 <div class="float-right">
                     <a id="sendGeneratedQuoteButton" href="javascript:void(0);" class="btn btn-sm btn-success"><i
-                                class="fa fa-xs fa-envelope"></i> {{ 'Commercial.ProductD3EQuote.Send-quote'|trans }}</a>
+                                class="fa fa-xs fa-envelope"></i> {{ 'Commercial.ProductD3EQuote.Send-quote'|trans }}
+                    </a>
                     <a href="{{ path("paprec_commercial_productD3EQuote_edit", {id: productD3EQuote.id}) }}"
                        class="btn btn-sm btn-warning"><i
                                 class="fa fa-xs fa-edit"></i> {{ 'Commercial.ProductD3EQuote.Edit'|trans }}</a>
-                    <a id="commmecialProductD3EQuoteRemoveButton_" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
+                    <a id="commmecialProductD3EQuoteRemoveButton_" href="javascript:void(0);"
+                       class="btn btn-sm btn-danger"><i
                                 class="fa fa-xs fa-trash"></i> {{ 'Commercial.ProductD3EQuote.Remove'|trans }}</a>
                 </div>
                 <div class="float-left">
@@ -153,7 +155,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EQuote.GeneratedTurnover'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ productD3EQuote.generatedTurnover }}
+                                        {{ productD3EQuote.generatedTurnover|formatAmount('EUR', app.request.locale) }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
@@ -207,13 +209,13 @@
                         <div class="card-header">
                             <h5>
                                 {{ 'Commercial.ProductD3EQuote.ProductsList'|trans }}
-                                <div class="float-right">
-
-                                    <a href="{{ path('paprec_commercial_productD3EQuote_addLine', {id: productD3EQuote.id}) }}" class="btn btn-sm btn-outline-primary">
-                                        <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductD3EQuote.AddLine'|trans }}
-                                    </a>
-                                </div>
                             </h5>
+                            <div class="float-right">
+                                <a href="{{ path('paprec_commercial_productD3EQuote_addLine', {id: productD3EQuote.id}) }}"
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductD3EQuote.AddLine'|trans }}
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <table id="productD3EQuoteLinesDatatable"

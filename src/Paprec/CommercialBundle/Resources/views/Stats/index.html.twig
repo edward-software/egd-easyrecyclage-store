@@ -23,6 +23,23 @@
                     </h4>
                 </div>
                 <div class="card-body">
+
+                    <form id="statsFilterForm" class="form-inline my-5 align-items-center justify-content-center" method="POST">
+                        <div class="form-group">
+                            <label for="inputDateStart">Date de début</label>
+                            <input type="text" name="dateStart" autocomplete="off" class="ml-2 form-control datepicker"
+                                   id="inputDateStart" placeholder="Date de début" value="{{ dateStart|default('') }}">
+                        </div>
+
+                        <div class="mx-4 form-group">
+                            <label for="inputDateEnd form-label">Date de fin</label>
+                            <input type="text" name="dateEnd" autocomplete="off" class="ml-2 form-control datepicker"
+                                   id="inputDateEnd"
+                                   placeholder="Date de fin" value="{{ dateEnd|default('') }}">
+                        </div>
+
+                        <button type="submit" class="ml-4 btn btn-primary">Valider</button>
+                    </form>
                     {# ---------------------------------------PANIER-----------------------------------------#}
                     {# CARD SUR LES CARTS #}
 
@@ -69,7 +86,7 @@
                                 <thead>
                                 <tr class="d-flex">
                                     <th class="col-2"></th>
-                                    <td class="col text-center">Total</td>
+                                    <th class="col text-center">Total</th>
                                     {% for status in quoteStatusList %}
                                         <th class="col text-center">{{ ('Commercial.QuoteStatusList.' ~ status)|trans }}</th>
                                     {% endfor %}
@@ -235,7 +252,7 @@
                                 <thead>
                                 <tr class="d-flex">
                                     <th class="col-2"></th>
-                                    <td class="col text-center">Total</td>
+                                    <th class="col text-center">Total</th>
                                     {% for status in quoteStatusList %}
                                         <th class="col text-center">{{ ('Commercial.QuoteStatusList.' ~ status)|trans }}</th>
                                     {% endfor %}
@@ -320,7 +337,7 @@
                                 <thead>
                                 <tr class="d-flex">
                                     <th class="col-2"></th>
-                                    <td class="col text-center">Total</td>
+                                    <th class="col text-center">Total</th>
                                     {% for status in orderStatusList %}
                                         <th class="col text-center">{{ ('Commercial.OrderStatusList.' ~ status)|trans }}</th>
                                     {% endfor %}
@@ -452,5 +469,38 @@
 {% endblock %}
 
 {% block javascripts %}
+
+    <script>
+        $(function () {
+            $('#inputDateStart').datetimepicker({
+                locale: 'fr',
+                format: 'L',
+                icons:
+                    {
+                        up: 'fa fa-angle-up',
+                        down: 'fa fa-angle-down',
+                        date: 'fa fa-calendar',
+                        time: 'fa fa-clock',
+                        next: 'fa fa-angle-right',
+                        previous: 'fa fa-angle-left'
+                    },
+            });
+
+            $('#inputDateEnd').datetimepicker({
+                locale: 'fr',
+                format: 'L',
+                icons:
+                    {
+                        up: 'fa fa-angle-up',
+                        down: 'fa fa-angle-down',
+                        date: 'fa fa-calendar',
+                        time: 'fa fa-clock',
+                        next: 'fa fa-angle-right',
+                        previous: 'fa fa-angle-left'
+                    },
+            });
+        })
+
+    </script>
 
 {% endblock %}
