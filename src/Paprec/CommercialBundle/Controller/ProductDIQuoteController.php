@@ -206,6 +206,7 @@ class ProductDIQuoteController extends Controller
      */
     public function addAction(Request $request)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
 
         $productDIQuote = new ProductDIQuote();
 
@@ -223,6 +224,7 @@ class ProductDIQuoteController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $productDIQuote = $form->getData();
+            $productDIQuote->setGeneratedTurnover($numberManager->normalize($productDIQuote->getGeneratedTurnover()));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($productDIQuote);
@@ -247,6 +249,7 @@ class ProductDIQuoteController extends Controller
      */
     public function editAction(Request $request, ProductDIQuote $productDIQuote)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
         $productDIQuoteManager = $this->get('paprec_commercial.product_di_quote_manager');
         $productDIQuoteManager->isDeleted($productDIQuote, true);
 
@@ -254,6 +257,9 @@ class ProductDIQuoteController extends Controller
         foreach ($this->getParameter('paprec_quote_status') as $s) {
             $status[$s] = $s;
         }
+
+        $productDIQuote->setGeneratedTurnover($numberManager->denormalize($productDIQuote->getGeneratedTurnover()));
+
 
         $form = $this->createForm(ProductDIQuoteType::class, $productDIQuote, array(
             'status' => $status
@@ -264,6 +270,8 @@ class ProductDIQuoteController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $productDIQuote = $form->getData();
+            $productDIQuote->setGeneratedTurnover($numberManager->normalize($productDIQuote->getGeneratedTurnover()));
+
             $productDIQuote->setDateUpdate(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();

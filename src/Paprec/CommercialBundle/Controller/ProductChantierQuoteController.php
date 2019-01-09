@@ -206,6 +206,7 @@ class ProductChantierQuoteController extends Controller
      */
     public function addAction(Request $request)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
 
         $productChantierQuote = new ProductChantierQuote();
 
@@ -223,6 +224,7 @@ class ProductChantierQuoteController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $productChantierQuote = $form->getData();
+            $productChantierQuote->setGeneratedTurnover($numberManager->normalize($productChantierQuote->getGeneratedTurnover()));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($productChantierQuote);
@@ -247,6 +249,7 @@ class ProductChantierQuoteController extends Controller
      */
     public function editAction(Request $request, ProductChantierQuote $productChantierQuote)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
         $productChantierQuoteManager = $this->get('paprec_commercial.product_chantier_quote_manager');
         $productChantierQuoteManager->isDeleted($productChantierQuote, true);
 
@@ -254,6 +257,8 @@ class ProductChantierQuoteController extends Controller
         foreach ($this->getParameter('paprec_quote_status') as $s) {
             $status[$s] = $s;
         }
+
+        $productChantierQuote->setGeneratedTurnover($numberManager->denormalize($productChantierQuote->getGeneratedTurnover()));
 
         $form = $this->createForm(ProductChantierQuoteType::class, $productChantierQuote, array(
             'status' => $status
@@ -264,6 +269,8 @@ class ProductChantierQuoteController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $productChantierQuote = $form->getData();
+            $productChantierQuote->setGeneratedTurnover($numberManager->normalize($productChantierQuote->getGeneratedTurnover()));
+
             $productChantierQuote->setDateUpdate(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();

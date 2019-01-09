@@ -205,6 +205,7 @@ class ProductD3EQuoteController extends Controller
      */
     public function addAction(Request $request)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
 
         $productD3EQuote = new ProductD3EQuote();
 
@@ -222,6 +223,7 @@ class ProductD3EQuoteController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $productD3EQuote = $form->getData();
+            $productD3EQuote->setGeneratedTurnover($numberManager->normalize($productD3EQuote->getGeneratedTurnover()));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($productD3EQuote);
@@ -246,6 +248,7 @@ class ProductD3EQuoteController extends Controller
      */
     public function editAction(Request $request, ProductD3EQuote $productD3EQuote)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
         $productD3EQuoteManager = $this->get('paprec_commercial.product_d3e_quote_manager');
         $productD3EQuoteManager->isDeleted($productD3EQuote, true);
 
@@ -253,6 +256,8 @@ class ProductD3EQuoteController extends Controller
         foreach ($this->getParameter('paprec_quote_status') as $s) {
             $status[$s] = $s;
         }
+
+        $productD3EQuote->setGeneratedTurnover($numberManager->denormalize($productD3EQuote->getGeneratedTurnover()));
 
         $form = $this->createForm(ProductD3EQuoteType::class, $productD3EQuote, array(
             'status' => $status
@@ -263,6 +268,8 @@ class ProductD3EQuoteController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $productD3EQuote = $form->getData();
+            $productD3EQuote->setGeneratedTurnover($numberManager->normalize($productD3EQuote->getGeneratedTurnover()));
+
             $productD3EQuote->setDateUpdate(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();

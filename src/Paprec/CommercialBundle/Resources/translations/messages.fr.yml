@@ -556,3 +556,29 @@ Commercial:
       noUploadedQuoteFound:     Vous devez d'abord ajouter un devis pour pouvoir l'envoyer par mail au client.
     Success:
       associatedQuoteSent:      Le devis associé a été envoyé par mail au client.
+
+  Stats:
+    Stats:                      Statistiques
+    Cart:                       Statistiques sur les paniers
+    Quote:
+      DI:                       Statistiques sur les devis DI
+      CHANTIER:                 Statistiques sur les devis Chantier
+      D3E:                      Statistiques sur les devis D3E
+
+    Order:
+      CHANTIER:                 Statistiques sur les commandes Chantier
+      D3E:                      Statistiques sur les commandes D3E
+
+  QuoteStatusList:
+    CREATED:                    Créé
+    PENDING:                    En attente
+    PROCESSING:                 En traitement
+    CLOSED:                     Validé
+
+  OrderStatusList:
+    CREATED:                    Créée
+    PENDING:                    En attente
+    PROCESSING:                 En traitement
+    INVOICED:                   Facture envoyée
+    CANCELED:                   Annulée
+

@@ -62,6 +62,7 @@ class CartManager
      * @param bool $throwException
      * @return bool
      * @throws EntityNotFoundException
+     * @throws Exception
      */
     public function isDisabled(Cart $cart, $throwException = false)
     {
