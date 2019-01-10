@@ -96,7 +96,7 @@
                                         <a href="{{ path('paprec_commercial_stats_export', {type: type}) }}">
                                             <i class="fa fa-file-csv"></i>
                                         </a>
-                                        Total
+                                        {{ 'Commercial.Stats.Total'|trans }}
                                     </th>
                                     {% for status in quoteStatusList %}
                                         <th class="col text-center">
@@ -186,7 +186,12 @@
                                 <thead>
                                 <tr class="d-flex">
                                     <th class="col-2"></th>
-                                    <th class="col text-center">{{ 'Commercial.Stats.Total'|trans }}</th>
+                                    <th class="col text-center">
+                                        <a href="{{ path('paprec_commercial_stats_export', {type: type}) }}">
+                                            <i class="fa fa-file-csv"></i>
+                                        </a>
+                                        {{ 'Commercial.Stats.Total'|trans }}
+                                    </th>
                                     {% for status in quoteStatusList %}
                                         <th class="col text-center">
                                             <a href="{{ path('paprec_commercial_stats_export', {type: type, status: status, dateStart: dateStartParam, dateEnd: dateEndParam}) }}">
@@ -275,7 +280,12 @@
                                 <thead>
                                 <tr class="d-flex">
                                     <th class="col-2"></th>
-                                    <th class="col text-center">{{ 'Commercial.Stats.Total'|trans }}</th>
+                                    <th class="col text-center">
+                                        <a href="{{ path('paprec_commercial_stats_export', {type: type}) }}">
+                                            <i class="fa fa-file-csv"></i>
+                                        </a>
+                                        {{ 'Commercial.Stats.Total'|trans }}
+                                    </th>
                                     {% for status in quoteStatusList %}
                                         <th class="col text-center">
                                             <a href="{{ path('paprec_commercial_stats_export', {type: type, status: status, dateStart: dateStartParam, dateEnd: dateEndParam}) }}">
@@ -366,7 +376,12 @@
                                 <thead>
                                 <tr class="d-flex">
                                     <th class="col-2"></th>
-                                    <th class="col text-center">{{ 'Commercial.Stats.Total'|trans }}</th>
+                                    <th class="col text-center">
+                                        <a href="{{ path('paprec_commercial_stats_export', {type: type}) }}">
+                                            <i class="fa fa-file-csv"></i>
+                                        </a>
+                                        {{ 'Commercial.Stats.Total'|trans }}
+                                    </th>
                                     {% for status in orderStatusList %}
                                         <th class="col text-center">
                                             <a href="{{ path('paprec_commercial_stats_export', {type: type, status: status, dateStart: dateStartParam, dateEnd: dateEndParam}) }}">
@@ -441,7 +456,12 @@
                                 <thead>
                                 <tr class="d-flex">
                                     <th class="col-2"></th>
-                                    <th class="col text-center">{{ 'Commercial.Stats.Total'|trans }}</th>
+                                    <th class="col text-center">
+                                        <a href="{{ path('paprec_commercial_stats_export', {type: type}) }}">
+                                            <i class="fa fa-file-csv"></i>
+                                        </a>
+                                        {{ 'Commercial.Stats.Total'|trans }}
+                                    </th>
                                     {% for status in orderStatusList %}
                                         <th class="col text-center">
                                             <a href="{{ path('paprec_commercial_stats_export', {type: type, status: status, dateStart: dateStartParam, dateEnd: dateEndParam}) }}">
