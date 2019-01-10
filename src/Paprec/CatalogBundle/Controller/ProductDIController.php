@@ -27,7 +27,7 @@ class ProductDIController extends Controller
 {
     /**
      * @Route("/productDI", name="paprec_catalog_productDI_index")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function indexAction()
     {
@@ -36,7 +36,7 @@ class ProductDIController extends Controller
 
     /**
      * @Route("/productDI/loadList", name="paprec_catalog_productDI_loadList")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function loadListAction(Request $request)
     {
@@ -89,7 +89,7 @@ class ProductDIController extends Controller
 
     /**
      * @Route("/productDI/export",  name="paprec_catalog_productDI_export")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function exportAction()
     {
@@ -166,7 +166,7 @@ class ProductDIController extends Controller
 
     /**
      * @Route("/productDI/view/{id}",  name="paprec_catalog_productDI_view")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function viewAction(Request $request, ProductDI $productDI)
     {
@@ -197,7 +197,7 @@ class ProductDIController extends Controller
 
     /**
      * @Route("/productDI/add",  name="paprec_catalog_productDI_add")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function addAction(Request $request)
     {
@@ -228,7 +228,7 @@ class ProductDIController extends Controller
 
     /**
      * @Route("/productDI/edit/{id}",  name="paprec_catalog_productDI_edit")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws \Exception
      */
@@ -262,7 +262,7 @@ class ProductDIController extends Controller
 
     /**
      * @Route("/productDI/remove/{id}", name="paprec_catalog_productDI_remove")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeAction(Request $request, ProductDI $productDI)
     {
@@ -285,7 +285,7 @@ class ProductDIController extends Controller
 
     /**
      * @Route("/productDI/removeMany/{ids}", name="paprec_catalog_productDI_removeMany")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeManyAction(Request $request)
     {
@@ -334,7 +334,7 @@ class ProductDIController extends Controller
     /**
      * @Route("/productDI/addPicture/{id}/{type}", name="paprec_catalog_productDI_addPicture")
      * @Method("POST")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function addPictureAction(Request $request, ProductDI $productDI)
     {
@@ -381,7 +381,7 @@ class ProductDIController extends Controller
     /**
      * @Route("/productDI/editPicture/{id}/{pictureID}", name="paprec_catalog_productDI_editPicture")
      * @Method("POST")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function editPictureAction(Request $request, ProductDI $productDI)
     {
@@ -432,7 +432,7 @@ class ProductDIController extends Controller
 
     /**
      * @Route("/productDI/removePicture/{id}/{pictureID}", name="paprec_catalog_productDI_removePicture")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removePictureAction(Request $request, ProductDI $productDI)
     {
@@ -459,7 +459,7 @@ class ProductDIController extends Controller
 
     /**
      * @Route("/productDI/setPilotPicture/{id}/{pictureID}", name="paprec_catalog_productDI_setPilotPicture")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function setPilotPictureAction(Request $request, ProductDI $productDI)
     {
@@ -484,7 +484,7 @@ class ProductDIController extends Controller
 
     /**
      * @Route("/productDI/setPicture/{id}/{pictureID}", name="paprec_catalog_productDI_setPicture")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function setPictureAction(Request $request, ProductDI $productDI)
     {
@@ -509,7 +509,7 @@ class ProductDIController extends Controller
 
     /**
      * @Route("/productDI/{id}/addCategory", name="paprec_catalog_productDI_addCategory")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Exception
      */
     public function addCategoryAction(Request $request, ProductDI $productDI)
@@ -556,7 +556,7 @@ class ProductDIController extends Controller
 
     /**
      * @Route("/productDI/{id}/editCategory/{productDICategoryId}", name="paprec_catalog_productDI_editCategory")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @ParamConverter("productDI", options={"id" = "id"})
      * @ParamConverter("productDICategory", options={"id" = "productDICategoryId"})
      */
@@ -599,7 +599,7 @@ class ProductDIController extends Controller
 
     /**
      * @Route("/productDI/{id}/removeCategory/{productDICategoryId}", name="paprec_catalog_productDI_removeCategory")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @ParamConverter("productDI", options={"id" = "id"})
      * @ParamConverter("productDICategory", options={"id" = "productDICategoryId"})
      */

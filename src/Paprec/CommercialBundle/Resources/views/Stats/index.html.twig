@@ -24,7 +24,8 @@
                 </div>
                 <div class="card-body">
 
-                    <form id="statsFilterForm" class="form-inline my-5 align-items-center justify-content-center" method="POST">
+                    <form id="statsFilterForm" class="form-inline my-5 align-items-center justify-content-center"
+                          method="POST">
                         <div class="form-group">
                             <label for="inputDateStart">Date de début</label>
                             <input type="text" name="dateStart" autocomplete="off" class="ml-2 form-control datepicker"
@@ -40,6 +41,10 @@
 
                         <button type="submit" class="ml-4 btn btn-primary">Valider</button>
                     </form>
+                    {# On définit les dates pour les exports Excel, si pas de dates choisies alors on mettra 0 dans l'url#}
+                    {% set dateStartParam = (dateStart is empty) ? '0' : dateStart|date('Y-d-m') %}
+                    {% set dateEndParam = (dateEnd is empty) ? '0' : dateEnd|date('Y-d-m') %}
+
                     {# ---------------------------------------PANIER-----------------------------------------#}
                     {# CARD SUR LES CARTS #}
 
@@ -80,15 +85,26 @@
                             </h5>
                         </div>
                         <div class="card-body">
+                            {% set type = 'productDIQuote' %}
                             <table id="quoteDIStatsTable"
                                    class="table table-striped table-bordered table-hover"
                                    cellpadding="0" cellspacing="0" border="0" width="100%">
                                 <thead>
                                 <tr class="d-flex">
                                     <th class="col-2"></th>
-                                    <th class="col text-center">Total</th>
+                                    <th class="col text-center">
+                                        <a href="{{ path('paprec_commercial_stats_export', {type: type}) }}">
+                                            <i class="fa fa-file-csv"></i>
+                                        </a>
+                                        Total
+                                    </th>
                                     {% for status in quoteStatusList %}
-                                        <th class="col text-center">{{ ('Commercial.QuoteStatusList.' ~ status)|trans }}</th>
+                                        <th class="col text-center">
+                                            <a href="{{ path('paprec_commercial_stats_export', {type: type, status: status, dateStart: dateStartParam, dateEnd: dateEndParam}) }}">
+                                                <i class="fa fa-file-csv"></i>
+                                            </a>
+                                            {{ ('Commercial.QuoteStatusList.' ~ status)|trans }}
+                                        </th>
                                     {% endfor %}
                                 </tr>
                                 </thead>
@@ -163,15 +179,21 @@
                             </h5>
                         </div>
                         <div class="card-body">
+                            {% set type = 'productChantierQuote' %}
                             <table id="quoteChantierStatsTable"
                                    class="table table-striped table-bordered table-hover"
                                    cellpadding="0" cellspacing="0" border="0" width="100%">
                                 <thead>
                                 <tr class="d-flex">
                                     <th class="col-2"></th>
-                                    <th class="col text-center">Total</th>
+                                    <th class="col text-center">{{ 'Commercial.Stats.Total'|trans }}</th>
                                     {% for status in quoteStatusList %}
-                                        <th class="col text-center">{{ ('Commercial.QuoteStatusList.' ~ status)|trans }}</th>
+                                        <th class="col text-center">
+                                            <a href="{{ path('paprec_commercial_stats_export', {type: type, status: status, dateStart: dateStartParam, dateEnd: dateEndParam}) }}">
+                                                <i class="fa fa-file-csv"></i>
+                                            </a>
+                                            {{ ('Commercial.QuoteStatusList.' ~ status)|trans }}
+                                        </th>
                                     {% endfor %}
                                 </tr>
                                 </thead>
@@ -246,15 +268,21 @@
                             </h5>
                         </div>
                         <div class="card-body">
+                            {% set type = 'productD3EQuote' %}
                             <table id="quoteD3EStatsTable"
                                    class="table table-striped table-bordered table-hover"
                                    cellpadding="0" cellspacing="0" border="0" width="100%">
                                 <thead>
                                 <tr class="d-flex">
                                     <th class="col-2"></th>
-                                    <th class="col text-center">Total</th>
+                                    <th class="col text-center">{{ 'Commercial.Stats.Total'|trans }}</th>
                                     {% for status in quoteStatusList %}
-                                        <th class="col text-center">{{ ('Commercial.QuoteStatusList.' ~ status)|trans }}</th>
+                                        <th class="col text-center">
+                                            <a href="{{ path('paprec_commercial_stats_export', {type: type, status: status, dateStart: dateStartParam, dateEnd: dateEndParam}) }}">
+                                                <i class="fa fa-file-csv"></i>
+                                            </a>
+                                            {{ ('Commercial.QuoteStatusList.' ~ status)|trans }}
+                                        </th>
                                     {% endfor %}
                                 </tr>
                                 </thead>
@@ -331,15 +359,21 @@
                             </h5>
                         </div>
                         <div class="card-body">
+                            {% set type = 'productChantierOrder' %}
                             <table id="orderChantierStatsTable"
                                    class="table table-striped table-bordered table-hover"
                                    cellpadding="0" cellspacing="0" border="0" width="100%">
                                 <thead>
                                 <tr class="d-flex">
                                     <th class="col-2"></th>
-                                    <th class="col text-center">Total</th>
+                                    <th class="col text-center">{{ 'Commercial.Stats.Total'|trans }}</th>
                                     {% for status in orderStatusList %}
-                                        <th class="col text-center">{{ ('Commercial.OrderStatusList.' ~ status)|trans }}</th>
+                                        <th class="col text-center">
+                                            <a href="{{ path('paprec_commercial_stats_export', {type: type, status: status, dateStart: dateStartParam, dateEnd: dateEndParam}) }}">
+                                                <i class="fa fa-file-csv"></i>
+                                            </a>
+                                            {{ ('Commercial.OrderStatusList.' ~ status)|trans }}
+                                        </th>
                                     {% endfor %}
                                 </tr>
                                 </thead>
@@ -400,15 +434,21 @@
                             </h5>
                         </div>
                         <div class="card-body">
+                            {% set type = 'productD3EOrder' %}
                             <table id="orderD3EStatsTable"
                                    class="table table-striped table-bordered table-hover"
                                    cellpadding="0" cellspacing="0" border="0" width="100%">
                                 <thead>
                                 <tr class="d-flex">
                                     <th class="col-2"></th>
-                                    <th class="col text-center">Total</th>
+                                    <th class="col text-center">{{ 'Commercial.Stats.Total'|trans }}</th>
                                     {% for status in orderStatusList %}
-                                        <th class="col text-center">{{ ('Commercial.OrderStatusList.' ~ status)|trans }}</th>
+                                        <th class="col text-center">
+                                            <a href="{{ path('paprec_commercial_stats_export', {type: type, status: status, dateStart: dateStartParam, dateEnd: dateEndParam}) }}">
+                                                <i class="fa fa-file-csv"></i>
+                                            </a>
+                                            {{ ('Commercial.OrderStatusList.' ~ status)|trans }}
+                                        </th>
                                     {% endfor %}
                                 </tr>
                                 </thead>
@@ -460,7 +500,6 @@
                             </table>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

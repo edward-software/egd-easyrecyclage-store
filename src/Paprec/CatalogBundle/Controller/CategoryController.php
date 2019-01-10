@@ -23,7 +23,7 @@ class CategoryController extends Controller
 {
     /**
      * @Route("/category/", name="paprec_catalog_category_index")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function indexAction()
     {
@@ -33,7 +33,7 @@ class CategoryController extends Controller
     /**
      * LoadList modifiée pour passer en parametre le type de Catégorie que l'on veut (DI ou CHANTIER)
      * @Route("/category/loadList/{typeCategory}", name="paprec_catalog_category_loadList")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function loadListAction(Request $request)
     {
@@ -100,7 +100,7 @@ class CategoryController extends Controller
 
     /**
      * @Route("/category/export", name="paprec_catalog_category_export")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function exportAction(Request $request)
     {
@@ -170,7 +170,7 @@ class CategoryController extends Controller
 
     /**
      * @Route("/category/view/{id}", name="paprec_catalog_category_view")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function viewAction(Request $request, Category $category)
     {
@@ -184,7 +184,7 @@ class CategoryController extends Controller
 
     /**
      * @Route("/category/add", name="paprec_catalog_category_add")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function addAction(Request $request)
     {
@@ -236,7 +236,7 @@ class CategoryController extends Controller
 
     /**
      * @Route("/category/enableMany/{ids}", name="paprec_catalog_category_enableMany")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function enableManyAction(Request $request)
     {
@@ -265,7 +265,7 @@ class CategoryController extends Controller
 
     /**
      * @Route("/category/edit/{id}", name="paprec_catalog_category_edit")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function editAction(Request $request, Category $category)
     {
@@ -320,7 +320,7 @@ class CategoryController extends Controller
 
     /**
      * @Route("/category/remove/{id}", name="paprec_catalog_category_remove")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeAction(Request $request, Category $category)
     {
@@ -352,7 +352,7 @@ class CategoryController extends Controller
 
     /**
      * @Route("/category/removeMany/{ids}", name="paprec_catalog_category_removeMany")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeManyAction(Request $request)
     {
@@ -383,7 +383,7 @@ class CategoryController extends Controller
     /**
      * On met à jour les positions des ProductDICategories en fonction de l'ordre du JQuery Sortable
      * @Route("/category/{id}/moveProductDICategory", name="paprec_catalog_category_moveProductDICategory")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function moveProductDICategoryAction(Request $request, Category $category)
     {
@@ -413,7 +413,7 @@ class CategoryController extends Controller
     /**
      * On met à jour les positions des ProductChantierCategories en fonction de l'ordre du JQuery Sortable
      * @Route("/category/{id}/moveProductChantierCategory", name="paprec_catalog_category_moveProductChantierCategory")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function moveProductChantierCategoryAction(Request $request, Category $category)
     {
@@ -442,7 +442,7 @@ class CategoryController extends Controller
 
     /**
      * @Route("/category/{id}/removeProductChantierCategory/{productChantierCategoryId}", name="paprec_catalog_category_removeProductChantierCategory")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeProductChantierCategory(Request $request, Category $category, ProductChantierCategory $productChantierCategoryId)
     {
@@ -457,7 +457,7 @@ class CategoryController extends Controller
 
     /**
      * @Route("/category/{id}/removeProductDICategory/{productDICategoryId}", name="paprec_catalog_category_removeProductDICategory")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeProductDICategory(Request $request, Category $category, ProductDICategory $productDICategoryId)
     {
@@ -475,7 +475,7 @@ class CategoryController extends Controller
      * Fonction appelée lorsque l'on réordonne les catégories dans 'index'
      * On reçoit en param un tableau [position => categoryID]
      * @Route("/category/orderCategories", name="paprec_catalog_category_orderCategories")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function orderCategories(Request $request)
     {

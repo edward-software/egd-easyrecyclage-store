@@ -560,6 +560,7 @@ Commercial:
   Stats:
     Stats:                      Statistiques
     Cart:                       Statistiques sur les paniers
+    Total:                      Total
     Quote:
       DI:                       Statistiques sur les devis DI
       CHANTIER:                 Statistiques sur les devis Chantier

@@ -20,7 +20,7 @@ class ArgumentController extends Controller
 {
     /**
      * @Route("/argument",  name="paprec_catalog_argument_index")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function indexAction()
     {
@@ -29,7 +29,7 @@ class ArgumentController extends Controller
 
     /**
      * @Route("/argument/loadList",  name="paprec_catalog_argument_loadList")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function loadListAction(Request $request)
     {
@@ -78,7 +78,7 @@ class ArgumentController extends Controller
 
     /**
      * @Route("/argument/export",  name="paprec_catalog_argument_export")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function exportAction()
     {
@@ -139,7 +139,7 @@ class ArgumentController extends Controller
 
     /**
      * @Route("/argument/view/{id}",  name="paprec_catalog_argument_view")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function viewAction(Request $request, Argument $argument)
@@ -154,7 +154,7 @@ class ArgumentController extends Controller
 
     /**
      * @Route("/argument/add",  name="paprec_catalog_argument_add")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function addAction(Request $request)
     {
@@ -198,7 +198,7 @@ class ArgumentController extends Controller
 
     /**
      * @Route("/argument/edit/{id}",  name="paprec_catalog_argument_edit")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws \Exception
      */
@@ -246,7 +246,7 @@ class ArgumentController extends Controller
 
     /**
      * @Route("/argument/remove/{id}", name="paprec_catalog_argument_remove")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeAction(Request $request, Argument $argument)
     {
@@ -283,7 +283,7 @@ class ArgumentController extends Controller
 
     /**
      * @Route("/argument/removeMany/{ids}", name="paprec_catalog_argument_removeMany")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeManyAction(Request $request)
     {

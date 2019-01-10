@@ -21,7 +21,7 @@ class ProductChantierQuoteController extends Controller
 
     /**
      * @Route("/productChantierQuote", name="paprec_commercial_productChantierQuote_index")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function indexAction()
     {
@@ -30,7 +30,7 @@ class ProductChantierQuoteController extends Controller
 
     /**
      * @Route("/productChantierQuote/loadList", name="paprec_commercial_productChantierQuote_loadList")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function loadListAction(Request $request)
     {
@@ -94,11 +94,12 @@ class ProductChantierQuoteController extends Controller
     }
 
     /**
-     * @Route("/productChantierQuote/export", name="paprec_commercial_productChantierQuote_export")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Route("/productChantierQuote/export/{status}/{dateStart}/{dateEnd}", defaults={"status"=null, "dateStart"=null, "dateEnd"=null}, name="paprec_commercial_productChantierQuote_export")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
-    public function exportAction(Request $request)
+    public function exportAction(Request $request, $dateStart, $dateEnd, $status)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
 
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
 
@@ -107,6 +108,15 @@ class ProductChantierQuoteController extends Controller
         $queryBuilder->select(array('p'))
             ->from('PaprecCommercialBundle:ProductChantierQuote', 'p')
             ->where('p.deleted IS NULL');
+        if ($status != null && !empty($status)) {
+            $queryBuilder->andWhere('p.quoteStatus = :status')
+                ->setParameter('status', $status);
+        }
+        if ($dateStart != null && $dateEnd != null && !empty($dateStart) && !empty($dateEnd)) {
+            $queryBuilder->andWhere('p.dateCreation BETWEEN :dateStart AND :dateEnd')
+                ->setParameter('dateStart', $dateStart)
+                ->setParameter('dateEnd', $dateEnd);
+        }
 
         $productChantierQuotes = $queryBuilder->getQuery()->getResult();
 
@@ -155,8 +165,8 @@ class ProductChantierQuoteController extends Controller
                 ->setCellValue('J' . $i, $productChantierQuote->getCity())
                 ->setCellValue('K' . $i, $productChantierQuote->getPhone())
                 ->setCellValue('L' . $i, $productChantierQuote->getQuoteStatus())
-                ->setCellValue('M' . $i, $productChantierQuote->getTotalAmount())
-                ->setCellValue('N' . $i, $productChantierQuote->getGeneratedTurnover())
+                ->setCellValue('M' . $i, $numberManager->denormalize($productChantierQuote->getTotalAmount()))
+                ->setCellValue('N' . $i, $numberManager->denormalize($productChantierQuote->getGeneratedTurnover()))
                 ->setCellValue('O' . $i, $productChantierQuote->getAgency())
                 ->setCellValue('P' . $i, $productChantierQuote->getSummary())
                 ->setCellValue('Q' . $i, $productChantierQuote->getFrequency())
@@ -188,7 +198,7 @@ class ProductChantierQuoteController extends Controller
 
     /**
      * @Route("/productChantierQuote/view/{id}", name="paprec_commercial_productChantierQuote_view")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function viewAction(Request $request, ProductChantierQuote $productChantierQuote)
     {
@@ -202,7 +212,7 @@ class ProductChantierQuoteController extends Controller
 
     /**
      * @Route("/productChantierQuote/add", name="paprec_commercial_productChantierQuote_add")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function addAction(Request $request)
     {
@@ -243,7 +253,7 @@ class ProductChantierQuoteController extends Controller
 
     /**
      * @Route("/productChantierQuote/edit/{id}", name="paprec_commercial_productChantierQuote_edit")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws \Exception
      */
@@ -290,7 +300,7 @@ class ProductChantierQuoteController extends Controller
 
     /**
      * @Route("/productChantierQuote/remove/{id}", name="paprec_commercial_productChantierQuote_remove")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeAction(Request $request, ProductChantierQuote $productChantierQuote)
     {
@@ -304,7 +314,7 @@ class ProductChantierQuoteController extends Controller
 
     /**
      * @Route("/productChantierQuote/removeMany/{ids}", name="paprec_commercial_productChantierQuote_removeMany")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeManyAction(Request $request)
     {
@@ -331,7 +341,7 @@ class ProductChantierQuoteController extends Controller
 
     /**
      * @Route("/productChantierQuote/{id}/addLine", name="paprec_commercial_productChantierQuote_addLine")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function addLineAction(Request $request, ProductChantierQuote $productChantierQuote)
     {
@@ -373,7 +383,7 @@ class ProductChantierQuoteController extends Controller
 
     /**
      * @Route("/productChantierQuote/{id}/editLine/{quoteLineId}", name="paprec_commercial_productChantierQuote_editLine")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @ParamConverter("productChantierQuote", options={"id" = "id"})
      * @ParamConverter("productChantierQuoteLine", options={"id" = "quoteLineId"})
      */
@@ -411,7 +421,7 @@ class ProductChantierQuoteController extends Controller
 
     /**
      * @Route("/productChantierQuote/{id}/removeLine/{quoteLineId}", name="paprec_commercial_productChantierQuote_removeLine")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @ParamConverter("productChantierQuote", options={"id" = "id"})
      * @ParamConverter("productChantierQuoteLine", options={"id" = "quoteLineId"})
      */
@@ -444,7 +454,7 @@ class ProductChantierQuoteController extends Controller
 
     /**
      * @Route("/productChantierQuote/{id}/sendGeneratedQuote", name="paprec_commercial_productChantierQuote_sendGeneratedQuote")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws \Exception
      */

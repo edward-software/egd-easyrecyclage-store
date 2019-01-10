@@ -21,7 +21,7 @@ class ProductD3EQuoteController extends Controller
 
     /**
      * @Route("/productD3EQuote", name="paprec_commercial_productD3EQuote_index")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function indexAction()
     {
@@ -30,7 +30,7 @@ class ProductD3EQuoteController extends Controller
 
     /**
      * @Route("/productD3EQuote/loadList", name="paprec_commercial_productD3EQuote_loadList")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function loadListAction(Request $request)
     {
@@ -93,11 +93,12 @@ class ProductD3EQuoteController extends Controller
     }
 
     /**
-     * @Route("/productD3EQuote/export", name="paprec_commercial_productD3EQuote_export")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Route("/productD3EQuote/export/{status}/{dateStart}/{dateEnd}", defaults={"status"=null, "dateStart"=null, "dateEnd"=null}, name="paprec_commercial_productD3EQuote_export")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
-    public function exportAction(Request $request)
+    public function exportAction(Request $request, $dateStart, $dateEnd, $status)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
 
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
 
@@ -106,6 +107,15 @@ class ProductD3EQuoteController extends Controller
         $queryBuilder->select(array('p'))
             ->from('PaprecCommercialBundle:ProductD3EQuote', 'p')
             ->where('p.deleted IS NULL');
+        if ($status != null && !empty($status)) {
+            $queryBuilder->andWhere('p.quoteStatus = :status')
+                ->setParameter('status', $status);
+        }
+        if ($dateStart != null && $dateEnd != null && !empty($dateStart) && !empty($dateEnd)) {
+            $queryBuilder->andWhere('p.dateCreation BETWEEN :dateStart AND :dateEnd')
+                ->setParameter('dateStart', $dateStart)
+                ->setParameter('dateEnd', $dateEnd);
+        }
 
         $productD3EQuotes = $queryBuilder->getQuery()->getResult();
 
@@ -154,8 +164,8 @@ class ProductD3EQuoteController extends Controller
                 ->setCellValue('J' . $i, $productD3EQuote->getCity())
                 ->setCellValue('K' . $i, $productD3EQuote->getPhone())
                 ->setCellValue('L' . $i, $productD3EQuote->getQuoteStatus())
-                ->setCellValue('M' . $i, $productD3EQuote->getTotalAmount())
-                ->setCellValue('N' . $i, $productD3EQuote->getGeneratedTurnover())
+                ->setCellValue('M' . $i, $numberManager->denormalize($productD3EQuote->getTotalAmount()))
+                ->setCellValue('N' . $i, $numberManager->denormalize($productD3EQuote->getGeneratedTurnover()))
                 ->setCellValue('O' . $i, $productD3EQuote->getAgency())
                 ->setCellValue('P' . $i, $productD3EQuote->getSummary())
                 ->setCellValue('Q' . $i, $productD3EQuote->getFrequency())
@@ -187,7 +197,7 @@ class ProductD3EQuoteController extends Controller
 
     /**
      * @Route("/productD3EQuote/view/{id}", name="paprec_commercial_productD3EQuote_view")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function viewAction(Request $request, ProductD3EQuote $productD3EQuote)
     {
@@ -201,7 +211,7 @@ class ProductD3EQuoteController extends Controller
 
     /**
      * @Route("/productD3EQuote/add", name="paprec_commercial_productD3EQuote_add")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function addAction(Request $request)
     {
@@ -242,7 +252,7 @@ class ProductD3EQuoteController extends Controller
 
     /**
      * @Route("/productD3EQuote/edit/{id}", name="paprec_commercial_productD3EQuote_edit")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws \Exception
      */
@@ -289,7 +299,7 @@ class ProductD3EQuoteController extends Controller
 
     /**
      * @Route("/productD3EQuote/remove/{id}", name="paprec_commercial_productD3EQuote_remove")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeAction(Request $request, ProductD3EQuote $productD3EQuote)
     {
@@ -303,7 +313,7 @@ class ProductD3EQuoteController extends Controller
 
     /**
      * @Route("/productD3EQuote/removeMany/{ids}", name="paprec_commercial_productD3EQuote_removeMany")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeManyAction(Request $request)
     {
@@ -330,7 +340,7 @@ class ProductD3EQuoteController extends Controller
 
     /**
      * @Route("/productD3EQuote/{id}/addLine", name="paprec_commercial_productD3EQuote_addLine")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function addLineAction(Request $request, ProductD3EQuote $productD3EQuote)
     {
@@ -367,7 +377,7 @@ class ProductD3EQuoteController extends Controller
 
     /**
      * @Route("/productD3EQuote/{id}/editLine/{quoteLineId}", name="paprec_commercial_productD3EQuote_editLine")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @ParamConverter("productD3EQuote", options={"id" = "id"})
      * @ParamConverter("productD3EQuoteLine", options={"id" = "quoteLineId"})
      */
@@ -405,7 +415,7 @@ class ProductD3EQuoteController extends Controller
 
     /**
      * @Route("/productD3EQuote/{id}/removeLine/{quoteLineId}", name="paprec_commercial_productD3EQuote_removeLine")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @ParamConverter("productD3EQuote", options={"id" = "id"})
      * @ParamConverter("productD3EQuoteLine", options={"id" = "quoteLineId"})
      */
@@ -438,7 +448,7 @@ class ProductD3EQuoteController extends Controller
 
     /**
      * @Route("/productD3EQuote/{id}/sendGeneratedQuote", name="paprec_commercial_productD3EQuote_sendGeneratedQuote")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws \Exception
      */

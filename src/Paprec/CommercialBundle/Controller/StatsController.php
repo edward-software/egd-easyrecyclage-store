@@ -11,7 +11,7 @@ class StatsController extends Controller
 {
     /**
      * @Route("/stats", name="paprec_commercial_stats_index")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function indexAction(Request $request)
     {
@@ -280,5 +280,35 @@ class StatsController extends Controller
         return $orderStats;
     }
 
+    /**
+     * En fonction du type passsé, redirige vers la fonction exportAction() des controllers de devis ou de commande
+     * Exporte uniquement les devis/commandes répondant aux critères de status et de dates si non nulls
+     *
+     * @Route("/stats/export/{type}/{status}/{dateStart}/{dateEnd}", defaults={"status"=null, "dateEnd"=null, "dateStart"=null}, name="paprec_commercial_stats_export")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     */
+    public function exportAction($type, $status, $dateStart, $dateEnd)
+    {
+        if (!empty($dateStart)) {
+            if ($dateStart === '0') {
+                $dateStart = null;
+            } else {
+                $dateStart = join('-', array_reverse(explode('/', $dateStart)));
+            }
+        }
+        if (!empty($dateEnd)) {
+            if ($dateEnd === '0') {
+                $dateEnd = null;
+            } else {
+                $dateEnd = join('-', array_reverse(explode('/', $dateEnd)));
+            }
+        }
+
+        return $this->redirectToRoute('paprec_commercial_' . $type . '_export', array(
+            'dateStart' => $dateStart,
+            'dateEnd' => $dateEnd,
+            'status' => $status
+        ));
+    }
 
 }

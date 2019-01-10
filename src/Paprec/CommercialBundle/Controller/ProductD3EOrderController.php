@@ -28,7 +28,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder", name="paprec_commercial_productD3EOrder_index")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function indexAction()
     {
@@ -37,7 +37,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/loadList", name="paprec_commercial_productD3EOrder_loadList")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function loadListAction(Request $request)
     {
@@ -102,11 +102,12 @@ class ProductD3EOrderController extends Controller
     }
 
     /**
-     * @Route("/productD3EOrder/export", name="paprec_commercial_productD3EOrder_export")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Route("/productD3EOrder/export/{status}/{dateStart}/{dateEnd}", defaults={"status"=null, "dateStart"=null, "dateEnd"=null}, name="paprec_commercial_productD3EOrder_export")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
-    public function exportAction(Request $request)
+    public function exportAction(Request $request, $dateStart, $dateEnd, $status)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
 
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
 
@@ -115,6 +116,15 @@ class ProductD3EOrderController extends Controller
         $queryBuilder->select(array('p'))
             ->from('PaprecCommercialBundle:ProductD3EOrder', 'p')
             ->where('p.deleted IS NULL');
+        if ($status != null && !empty($status)) {
+            $queryBuilder->andWhere('p.orderStatus = :status')
+                ->setParameter('status', $status);
+        }
+        if ($dateStart != null && $dateEnd != null && !empty($dateStart) && !empty($dateEnd)) {
+            $queryBuilder->andWhere('p.dateCreation BETWEEN :dateStart AND :dateEnd')
+                ->setParameter('dateStart', $dateStart)
+                ->setParameter('dateEnd', $dateEnd);
+        }
 
         $productD3EOrders = $queryBuilder->getQuery()->getResult();
 
@@ -159,7 +169,7 @@ class ProductD3EOrderController extends Controller
                 ->setCellValue('J' . $i, $productD3EOrder->getCity())
                 ->setCellValue('K' . $i, $productD3EOrder->getPhone())
                 ->setCellValue('L' . $i, $productD3EOrder->getOrderStatus())
-                ->setCellValue('M' . $i, $productD3EOrder->getTotalAmount())
+                ->setCellValue('M' . $i, $numberManager->denormalize($productD3EOrder->getTotalAmount()))
                 ->setCellValue('N' . $i, $productD3EOrder->getPaymentMethod())
                 ->setCellValue('O' . $i, $productD3EOrder->getDateCreation()->format('Y-m-d'));
 
@@ -188,7 +198,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/view/{id}", name="paprec_commercial_productD3EOrder_view")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws Exception
      */
     public function viewAction(Request $request, ProductD3EOrder $productD3EOrder)
@@ -207,7 +217,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/edit/{id}", name="paprec_commercial_productD3EOrder_edit")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws Exception
      */
@@ -268,7 +278,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/remove/{id}", name="paprec_commercial_productD3EOrder_remove")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws Exception
      */
     public function removeAction(Request $request, ProductD3EOrder $productD3EOrder)
@@ -288,7 +298,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/removeMany/{ids}", name="paprec_commercial_productD3EOrder_removeMany")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws Exception
      */
     public function removeManyAction(Request $request)
@@ -336,7 +346,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/{id}/addLine", name="paprec_commercial_productD3EOrder_addLine")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function addLineAction(Request $request, ProductD3EOrder $productD3EOrder)
     {
@@ -374,7 +384,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/{id}/editLine/{orderLineId}", name="paprec_commercial_productD3EOrder_editLine")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @ParamConverter("productD3EOrder", options={"id" = "id"})
      * @ParamConverter("productD3EOrderLine", options={"id" = "orderLineId"})
      */
@@ -412,7 +422,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/{id}/removeLine/{orderLineId}", name="paprec_commercial_productD3EOrder_removeLine")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @ParamConverter("productD3EOrder", options={"id" = "id"})
      * @ParamConverter("productD3EOrderLine", options={"id" = "orderLineId"})
      */
@@ -446,7 +456,7 @@ class ProductD3EOrderController extends Controller
     /**
      * @Route("/productD3EOrder/addInvoice/{id}", name="paprec_commercial_productD3EOrder_addInvoice")
      * @Method("POST")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws Exception
      */
     public function addInvoiceAction(Request $request, ProductD3EOrder $productD3EOrder)
@@ -485,7 +495,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/{id}/downloadAssociatedInvoice", name="paprec_commercial_productD3EOrder_downloadAssociatedInvoice")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function downloadAssociatedInvoiceAction(ProductD3EOrder $productD3EOrder)
     {
@@ -511,7 +521,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/{id}/sendAsssociatedInvoice", name="paprec_commercial_productD3EOrder_sendAssociatedInvoice")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws Exception
      */

@@ -16,7 +16,7 @@ class CustomizableAreaController extends Controller
 {
     /**
      * @Route("/customizableArea",  name="paprec_catalog_customizableArea_index")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function indexAction()
     {
@@ -25,7 +25,7 @@ class CustomizableAreaController extends Controller
 
     /**
      * @Route("/customizableArea/loadList",  name="paprec_catalog_customizableArea_loadList")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function loadListAction(Request $request)
     {
@@ -75,7 +75,7 @@ class CustomizableAreaController extends Controller
 
     /**
      * @Route("/customizableArea/export",  name="paprec_catalog_customizableArea_export")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function exportAction()
     {
@@ -138,7 +138,7 @@ class CustomizableAreaController extends Controller
 
     /**
      * @Route("/customizableArea/view/{id}",  name="paprec_catalog_customizableArea_view")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function viewAction(Request $request, CustomizableArea $customizableArea)
     {
@@ -156,7 +156,7 @@ class CustomizableAreaController extends Controller
 
     /**
      * @Route("/customizableArea/add",  name="paprec_catalog_customizableArea_add")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Exception
      */
     public function addAction(Request $request)
@@ -188,7 +188,7 @@ class CustomizableAreaController extends Controller
 
     /**
      * @Route("/customizableArea/edit/{id}",  name="paprec_catalog_customizableArea_edit")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Exception
      */
     public function editAction(Request $request, CustomizableArea $customizableArea)
@@ -223,7 +223,7 @@ class CustomizableAreaController extends Controller
 
     /**
      * @Route("/customizableArea/remove/{id}", name="paprec_catalog_customizableArea_remove")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Exception
      */
     public function removeAction(Request $request, CustomizableArea $customizableArea)
@@ -239,7 +239,7 @@ class CustomizableAreaController extends Controller
 
     /**
      * @Route("/customizableArea/removeMany/{ids}", name="paprec_catalog_customizableArea_removeMany")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Exception
      */
     public function removeManyAction(Request $request)

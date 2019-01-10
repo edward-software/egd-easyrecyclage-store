@@ -23,7 +23,7 @@ class ProductD3EController extends Controller
 {
     /**
      * @Route("/productD3E", name="paprec_catalog_productD3E_index")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function indexAction()
     {
@@ -32,7 +32,7 @@ class ProductD3EController extends Controller
 
     /**
      * @Route("/productD3E/loadList", name="paprec_catalog_productD3E_loadList")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function loadListAction(Request $request)
     {
@@ -87,7 +87,7 @@ class ProductD3EController extends Controller
 
     /**
      * @Route("/productD3E/export",  name="paprec_catalog_productD3E_export")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function exportAction()
     {
@@ -166,7 +166,7 @@ class ProductD3EController extends Controller
 
     /**
      * @Route("/productD3E/view/{id}",  name="paprec_catalog_productD3E_view")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function viewAction(Request $request, ProductD3E $productD3E)
     {
@@ -197,7 +197,7 @@ class ProductD3EController extends Controller
 
     /**
      * @Route("/productD3E/add",  name="paprec_catalog_productD3E_add")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Exception
      */
     public function addAction(Request $request)
@@ -236,7 +236,7 @@ class ProductD3EController extends Controller
 
     /**
      * @Route("/productD3E/edit/{id}",  name="paprec_catalog_productD3E_edit")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws \Exception
      */
@@ -279,7 +279,7 @@ class ProductD3EController extends Controller
 
     /**
      * @Route("/productD3E/remove/{id}", name="paprec_catalog_productD3E_remove")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeAction(Request $request, ProductD3E $productD3E)
     {
@@ -302,7 +302,7 @@ class ProductD3EController extends Controller
 
     /**
      * @Route("/productD3E/removeMany/{ids}", name="paprec_catalog_productD3E_removeMany")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeManyAction(Request $request)
     {
@@ -351,7 +351,7 @@ class ProductD3EController extends Controller
     /**
      * @Route("/productD3E/addPicture/{id}/{type}", name="paprec_catalog_productD3E_addPicture")
      * @Method("POST")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function addPictureAction(Request $request, ProductD3E $productD3E)
     {
@@ -398,7 +398,7 @@ class ProductD3EController extends Controller
     /**
      * @Route("/productD3E/editPicture/{id}/{pictureID}", name="paprec_catalog_productD3E_editPicture")
      * @Method("POST")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function editPictureAction(Request $request, ProductD3E $productD3E) {
         $em = $this->getDoctrine()->getManager();
@@ -446,7 +446,7 @@ class ProductD3EController extends Controller
 
     /**
      * @Route("/productD3E/removePicture/{id}/{pictureID}", name="paprec_catalog_productD3E_removePicture")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removePictureAction(Request $request, ProductD3E $productD3E)
     {

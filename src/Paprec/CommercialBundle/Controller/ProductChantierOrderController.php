@@ -28,7 +28,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder", name="paprec_commercial_productChantierOrder_index")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function indexAction()
     {
@@ -37,7 +37,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/loadList", name="paprec_commercial_productChantierOrder_loadList")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function loadListAction(Request $request)
     {
@@ -102,11 +102,12 @@ class ProductChantierOrderController extends Controller
     }
 
     /**
-     * @Route("/productChantierOrder/export", name="paprec_commercial_productChantierOrder_export")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Route("/productChantierOrder/export/{status}/{dateStart}/{dateEnd}", defaults={"status"=null, "dateStart"=null, "dateEnd"=null}, name="paprec_commercial_productChantierOrder_export")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
-    public function exportAction(Request $request)
+    public function exportAction(Request $request, $dateStart, $dateEnd, $status)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
 
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
 
@@ -115,7 +116,15 @@ class ProductChantierOrderController extends Controller
         $queryBuilder->select(array('p'))
             ->from('PaprecCommercialBundle:ProductChantierOrder', 'p')
             ->where('p.deleted IS NULL');
-
+        if ($status != null && !empty($status)) {
+            $queryBuilder->andWhere('p.orderStatus = :status')
+                ->setParameter('status', $status);
+        }
+        if ($dateStart != null && $dateEnd != null && !empty($dateStart) && !empty($dateEnd)) {
+            $queryBuilder->andWhere('p.dateCreation BETWEEN :dateStart AND :dateEnd')
+                ->setParameter('dateStart', $dateStart)
+                ->setParameter('dateEnd', $dateEnd);
+        }
         $productChantierOrders = $queryBuilder->getQuery()->getResult();
 
         $phpExcelObject->getProperties()->setCreator("Paprec Easy Recyclage")
@@ -159,7 +168,7 @@ class ProductChantierOrderController extends Controller
                 ->setCellValue('J' . $i, $productChantierOrder->getCity())
                 ->setCellValue('K' . $i, $productChantierOrder->getPhone())
                 ->setCellValue('L' . $i, $productChantierOrder->getOrderStatus())
-                ->setCellValue('M' . $i, $productChantierOrder->getTotalAmount())
+                ->setCellValue('M' . $i, $numberManager->denormalize($productChantierOrder->getTotalAmount()))
                 ->setCellValue('N' . $i, $productChantierOrder->getPaymentMethod())
                 ->setCellValue('O' . $i, $productChantierOrder->getDateCreation()->format('Y-m-d'));
 
@@ -188,7 +197,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/view/{id}", name="paprec_commercial_productChantierOrder_view")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function viewAction(Request $request, ProductChantierOrder $productChantierOrder)
@@ -206,7 +215,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/edit/{id}", name="paprec_commercial_productChantierOrder_edit")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws Exception
      */
     public function editAction(Request $request, ProductChantierOrder $productChantierOrder)
@@ -266,7 +275,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/remove/{id}", name="paprec_commercial_productChantierOrder_remove")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws Exception
      */
     public function removeAction(Request $request, ProductChantierOrder $productChantierOrder)
@@ -286,7 +295,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/removeMany/{ids}", name="paprec_commercial_productChantierOrder_removeMany")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws Exception
      */
     public function removeManyAction(Request $request)
@@ -334,7 +343,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/{id}/addLine", name="paprec_commercial_productChantierOrder_addLine")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function addLineAction(Request $request, ProductChantierOrder $productChantierOrder)
     {
@@ -379,7 +388,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/{id}/editLine/{orderLineId}", name="paprec_commercial_productChantierOrder_editLine")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @ParamConverter("productChantierOrder", options={"id" = "id"})
      * @ParamConverter("productChantierOrderLine", options={"id" = "orderLineId"})
      */
@@ -417,7 +426,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/{id}/removeLine/{orderLineId}", name="paprec_commercial_productChantierOrder_removeLine")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @ParamConverter("productChantierOrder", options={"id" = "id"})
      * @ParamConverter("productChantierOrderLine", options={"id" = "orderLineId"})
      */
@@ -452,7 +461,7 @@ class ProductChantierOrderController extends Controller
     /**
      * @Route("/productChantierOrder/addInvoice/{id}", name="paprec_commercial_productChantierOrder_addInvoice")
      * @Method("POST")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws Exception
      */
     public function addInvoiceAction(Request $request, ProductChantierOrder $productChantierOrder)
@@ -491,7 +500,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/{id}/downloadAssociatedInvoice", name="paprec_commercial_productChantierOrder_downloadAssociatedInvoice")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function downloadAssociatedInvoiceAction(ProductChantierOrder $productChantierOrder)
     {
@@ -517,7 +526,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/{id}/sendAsssociatedInvoice", name="paprec_commercial_productChantierOrder_sendAssociatedInvoice")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws Exception
      */

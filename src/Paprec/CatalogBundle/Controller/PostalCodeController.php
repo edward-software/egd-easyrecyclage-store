@@ -17,7 +17,7 @@ class PostalCodeController extends Controller
 
     /**
      * @Route("/postalCode", name="paprec_catalog_postalCode_index")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function indexAction()
     {
@@ -26,7 +26,7 @@ class PostalCodeController extends Controller
 
     /**
      * @Route("/postalCode/loadList", name="paprec_catalog_postalCode_loadList")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function loadListAction(Request $request)
     {
@@ -89,7 +89,7 @@ class PostalCodeController extends Controller
 
     /**
      * @Route("/postalCode/export", name="paprec_catalog_postalCode_export")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function exportAction(Request $request)
     {
@@ -151,7 +151,7 @@ class PostalCodeController extends Controller
 
     /**
      * @Route("/postalCode/view/{id}", name="paprec_catalog_postalCode_view")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function viewAction(Request $request, PostalCode $postalCode)
     {
@@ -165,7 +165,7 @@ class PostalCodeController extends Controller
 
     /**
      * @Route("/postalCode/add", name="paprec_catalog_postalCode_add")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function addAction(Request $request)
     {
@@ -206,7 +206,7 @@ class PostalCodeController extends Controller
 
     /**
      * @Route("/postalCode/edit/{id}", name="paprec_catalog_postalCode_edit")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function editAction(Request $request, PostalCode $postalCode)
@@ -252,7 +252,7 @@ class PostalCodeController extends Controller
 
     /**
      * @Route("/postalCode/remove/{id}", name="paprec_catalog_postalCode_remove")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeAction(Request $request, PostalCode $postalCode)
     {
@@ -266,7 +266,7 @@ class PostalCodeController extends Controller
 
     /**
      * @Route("/postalCode/removeMany/{ids}", name="paprec_catalog_postalCode_removeMany")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function removeManyAction(Request $request)
     {

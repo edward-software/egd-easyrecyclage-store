@@ -30,59 +30,63 @@
                         </a>
                     </div>
                 </div>
-
                 <div class="card-body">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <h5>{{ 'Catalog.Category.ListDIs'|trans }}</h5>
+                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'DI') %}
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h5>{{ 'Catalog.Category.ListDIs'|trans }}</h5>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table id="categoriesDIListDatatable"
+                                       class="table table-striped table-bordered table-hover"
+                                       cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>{{ 'Catalog.Category.Name'|trans }}</th>
+                                        <th>{{ 'Catalog.Category.Description'|trans }}</th>
+                                        <th>{{ 'Catalog.Category.Position'|trans }}</th>
+                                        <th>{{ 'Catalog.Category.Enabled'|trans }}</th>
+                                        <th>{{ 'Catalog.Category.Date-crea'|trans }}</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <table id="categoriesDIListDatatable" class="table table-striped table-bordered table-hover"
-                                   cellpadding="0" cellspacing="0" border="0" width="100%">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>{{ 'Catalog.Category.Name'|trans }}</th>
-                                    <th>{{ 'Catalog.Category.Description'|trans }}</th>
-                                    <th>{{ 'Catalog.Category.Position'|trans }}</th>
-                                    <th>{{ 'Catalog.Category.Enabled'|trans }}</th>
-                                    <th>{{ 'Catalog.Category.Date-crea'|trans }}</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card mt-4">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <h5>{{ 'Catalog.Category.ListChantiers'|trans }}</h5>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'CHANTIER') %}
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h5>{{ 'Catalog.Category.ListChantiers'|trans }}</h5>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table id="categoriesChantierListDatatable"
+                                       class="table table-striped table-bordered table-hover"
+                                       cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>{{ 'Catalog.Category.Name'|trans }}</th>
+                                        <th>{{ 'Catalog.Category.Description'|trans }}</th>
+                                        <th>{{ 'Catalog.Category.Position'|trans }}</th>
+                                        <th>{{ 'Catalog.Category.Enabled'|trans }}</th>
+                                        <th>{{ 'Catalog.Category.Date-crea'|trans }}</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <table id="categoriesChantierListDatatable"
-                                   class="table table-striped table-bordered table-hover"
-                                   cellpadding="0" cellspacing="0" border="0" width="100%">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>{{ 'Catalog.Category.Name'|trans }}</th>
-                                    <th>{{ 'Catalog.Category.Description'|trans }}</th>
-                                    <th>{{ 'Catalog.Category.Position'|trans }}</th>
-                                    <th>{{ 'Catalog.Category.Enabled'|trans }}</th>
-                                    <th>{{ 'Catalog.Category.Date-crea'|trans }}</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
             <!-- /BOX -->
@@ -105,11 +109,11 @@
                     "infoEmpty": "{{ 'General.Datatable.No-records-available'|trans }}",
                     "search": "{{ 'General.Datatable.Search'|trans }}:",
                     "sProcessing": "{{ 'General.Datatable.Loading'|trans }}",
-"paginate": {
+                    "paginate": {
                         "previous": "{{ 'General.Datatable.Previous'|trans }}",
                         "next": "{{ 'General.Datatable.Next'|trans }}",
                     },
-"select": {
+                    "select": {
                         "rows": {
                             _: "%d lignes sélectionnées",
                             0: "Aucune ligne sélectionnée",
@@ -176,8 +180,7 @@
 
                     if (aData['enabled'] == true) {
                         $(nRow).find(':first-child').next().next().next().next().next().html('{{ 'General.Yes'|trans }}');
-                    }
-                    else {
+                    } else {
                         $(nRow).find(':first-child').next().next().next().next().next().html('{{ 'General.No'|trans }}');
                     }
 
@@ -208,7 +211,7 @@
                 var rowLength = table.rows.length;
 
                 // On commence l'itérateur à 1 pour exclure la ligne d'entête
-                for(var i=1; i<rowLength; i+=1){
+                for (var i = 1; i < rowLength; i += 1) {
                     var row = table.rows[i];
                     categories.push(row.id.replace('row_', ''))
                 }
@@ -234,11 +237,11 @@
                     "infoEmpty": "{{ 'General.Datatable.No-records-available'|trans }}",
                     "search": "{{ 'General.Datatable.Search'|trans }}:",
                     "sProcessing": "{{ 'General.Datatable.Loading'|trans }}",
-"paginate": {
+                    "paginate": {
                         "previous": "{{ 'General.Datatable.Previous'|trans }}",
                         "next": "{{ 'General.Datatable.Next'|trans }}",
                     },
-"select": {
+                    "select": {
                         "rows": {
                             _: "%d lignes sélectionnées",
                             0: "Aucune ligne sélectionnée",
@@ -304,8 +307,7 @@
 
                     if (aData['enabled'] == true) {
                         $(nRow).find(':first-child').next().next().next().next().next().html('{{ 'General.Yes'|trans }}');
-                    }
-                    else {
+                    } else {
                         $(nRow).find(':first-child').next().next().next().next().next().html('{{ 'General.No'|trans }}');
                     }
 
@@ -336,7 +338,7 @@
                 var rowLength = table.rows.length;
 
                 // On commence l'itérateur à 1 pour exclure la ligne d'entête
-                for(var i=1; i<rowLength; i+=1){
+                for (var i = 1; i < rowLength; i += 1) {
                     var row = table.rows[i];
                     categories.push(row.id.replace('row_', ''))
                 }

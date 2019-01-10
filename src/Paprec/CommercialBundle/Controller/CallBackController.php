@@ -17,7 +17,7 @@ class CallBackController extends Controller
 {
     /**
      * @Route("/callBack", name="paprec_commercial_callBack_index")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function indexAction()
     {
@@ -26,7 +26,7 @@ class CallBackController extends Controller
 
     /**
      * @Route("/callBack/loadList", name="paprec_commercial_callBack_loadList")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function loadListAction(Request $request)
     {
@@ -82,7 +82,7 @@ class CallBackController extends Controller
 
     /**
      * @Route("/callBack/export", name="paprec_commercial_callBack_export")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      */
     public function exportAction(Request $request)
     {
@@ -158,7 +158,7 @@ class CallBackController extends Controller
 
     /**
      * @Route("/callBack/view/{id}", name="paprec_commercial_callBack_view")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function viewAction(Request $request, CallBack $callBack)
@@ -173,7 +173,7 @@ class CallBackController extends Controller
 
     /**
      * @Route("/callBack/edit/{id}", name="paprec_commercial_callBack_edit")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws Exception
      */
     public function editAction(Request $request, CallBack $callBack)
@@ -214,7 +214,7 @@ class CallBackController extends Controller
 
     /**
      * @Route("/callBack/remove/{id}", name="paprec_commercial_callBack_remove")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws Exception
      */
     public function removeAction(Request $request, CallBack $callBack)
@@ -229,7 +229,7 @@ class CallBackController extends Controller
 
     /**
      * @Route("/callBack/removeMany/{ids}", name="paprec_commercial_callBack_removeMany")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
      * @throws Exception
      */
     public function removeManyAction(Request $request)
