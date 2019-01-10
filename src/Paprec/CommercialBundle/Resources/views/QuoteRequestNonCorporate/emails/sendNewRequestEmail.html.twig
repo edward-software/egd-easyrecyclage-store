@@ -20,22 +20,26 @@
         Détail de la demande N° {{ quoteRequestNonCorporate.id }}
         - {{ quoteRequestNonCorporate.dateCreation|date('d/m/Y H:i:s') }}
     </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.QuoteRequestNonCorporate.BusinessName'|trans }}
-        </td>
-        <td class="value">
-            {{ quoteRequestNonCorporate.businessName }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.QuoteRequestNonCorporate.LocationsNumber'|trans }}
-        </td>
-        <td class="value">
-            {{ quoteRequestNonCorporate.locationsNumber }}
-        </td>
-    </tr>
+    {% if quoteRequestNonCorporate.businessName %}
+        <tr>
+            <td class="label">
+                {{ 'Commercial.QuoteRequestNonCorporate.BusinessName'|trans }}
+            </td>
+            <td class="value">
+                {{ quoteRequestNonCorporate.businessName }}
+            </td>
+        </tr>
+    {% endif %}
+    {% if quoteRequestNonCorporate.locationsNumber %}
+        <tr>
+            <td class="label">
+                {{ 'Commercial.QuoteRequestNonCorporate.LocationsNumber'|trans }}
+            </td>
+            <td class="value">
+                {{ quoteRequestNonCorporate.locationsNumber }}
+            </td>
+        </tr>
+    {% endif %}
     <tr>
         <td class="label">
             {{ 'Commercial.QuoteRequestNonCorporate.Civility'|trans }}
@@ -58,14 +62,6 @@
         </td>
         <td class="value">
             {{ quoteRequestNonCorporate.firstName }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.QuoteRequestNonCorporate.Function'|trans }}
-        </td>
-        <td class="value">
-            {{ quoteRequestNonCorporate.function }}
         </td>
     </tr>
     <tr>

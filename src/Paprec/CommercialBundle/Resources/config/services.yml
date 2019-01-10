@@ -19,6 +19,7 @@ services:
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
   paprec_commercial.product_di_quote_manager:
+    public: true
     class: Paprec\CommercialBundle\Service\ProductDIQuoteManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 

@@ -8,16 +8,16 @@
  {% endblock %}
 
 {% block title_header %}
-    Nouveau devis pour déchets non dangereux (DI)
+    Un nouveau devis vient d'être établi
 {% endblock %}
 
 {% block subtitle_header %}
-    Devis DI - N° {{ productDIQuote.id }}
+    Devis Ponctuel - Mes déchets d'entreprise - N° {{ productDIQuote.id }}
 {% endblock %}
 
 {% block main_content %}
     <tr>
-        Détail de la demande N° {{ productDIQuote.id }} - {{ productDIQuote.dateCreation|date('d/m/Y H:i:s') }}
+        Détail ddu devis N° {{ productDIQuote.id }} - {{ productDIQuote.dateCreation|date('d/m/Y H:i:s') }}
     </tr>
     <tr>
         <td class="label">
@@ -29,34 +29,10 @@
     </tr>
     <tr>
         <td class="label">
-            {{ 'Commercial.ProductDIQuote.BusinessLine'|trans }}
+            Contact
         </td>
         <td class="value">
-            {{ productDIQuote.businessLine.name }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductDIQuote.Civility'|trans }}
-        </td>
-        <td class="value">
-            {{ productDIQuote.civility }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductDIQuote.LastName'|trans }}
-        </td>
-        <td class="value">
-            {{ productDIQuote.lastName }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductDIQuote.FirstName'|trans }}
-        </td>
-        <td class="value">
-            {{ productDIQuote.firstName }}
+            {% if productDIQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productDIQuote.lastName }} {{ productDIQuote.firstName }}
         </td>
     </tr>
     <tr>
@@ -65,6 +41,16 @@
         </td>
         <td class="value">
             {{ productDIQuote.function }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ProductDIQuote.Address'|trans }}
+        </td>
+        <td class="value">
+            {{ productDIQuote.address }}
+            <br>
+            {{ productDIQuote.postalCode }} {{ productDIQuote.city }}
         </td>
     </tr>
     <tr>
@@ -83,13 +69,40 @@
             {{ productDIQuote.phone }}
         </td>
     </tr>
+    {% for line in productDIQuote.productDIQuoteLines %}
+        <tr>
+            <td class="picto">
+                img
+            </td>
+            <td class="product">
+                {{ line.quantity }} x {{ line.productName }}
+                de {{ line.categoryName }}
+            </td>
+            <td class="price">
+                à partir de {{ line.totalAmount|formatAmount('EUR', app.request.locale) }}
+            </td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td>
+            TOTAL
+        </td>
+        <td>
+            à partir de {{ productDIQuote.totalAmount|formatAmount('EUR', app.request.locale) }}
+        </td>
+    </tr>
 {% endblock %}
 
 {% block footer %}
     <tr>
         <td>
+            Merci de répondre à cette demande sous 48h et d'importer le devis actualisé
+        </td>
+    </tr>
+    <tr>
+        <td>
             <a href="{{ absolute_url(path("paprec_commercial_productDIQuote_view", {id: productDIQuote.id})) }}">
-                Consulter le devis
+                Lien pour voir le devis et y importer le nouveau devis
             </a>
         </td>
     </tr>

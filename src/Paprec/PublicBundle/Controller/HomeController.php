@@ -187,7 +187,7 @@ class HomeController extends Controller
      */
     public function regularFormAction(Request $request, $cartUuid)
     {
-        $quoteRequestManger = $this->get('paprec_commercial.quote_request_manager');
+        $quoteRequestManager = $this->get('paprec_commercial.quote_request_manager');
 
         $cartManager = $this->get('paprec.cart_manager');
 
@@ -227,7 +227,7 @@ class HomeController extends Controller
             $em->persist($quoteRequest);
             $em->flush();
 
-            $sendNewQuoteRequest = $quoteRequestManger->sendNewRequestEmail($quoteRequest);
+            $sendNewQuoteRequest = $quoteRequestManager->sendNewRequestEmail($quoteRequest);
 
             if ($sendNewQuoteRequest) {
                 return $this->redirectToRoute('paprec_public_home_regularConfirm', array(
