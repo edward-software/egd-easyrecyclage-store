@@ -16,7 +16,10 @@ class CallBackEditType extends AbstractType
     {
         $builder
             ->add('treatmentStatus', ChoiceType::class, array(
-               'choices' => $options['status']
+                'choices' => $options['status'],
+                "choice_label" => function ($choiceValue, $key, $value) {
+                    return 'Commercial.TreatmentStatusList.' . $choiceValue;
+                }
             ));
     }
 

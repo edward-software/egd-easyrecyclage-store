@@ -110,7 +110,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.QuoteStatus'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ quoteRequest.quoteStatus }}
+                                        {{ ('Commercial.QuoteStatusList.' ~ quoteRequest.quoteStatus)|trans }}
                                     </label>
                                 </div>
 

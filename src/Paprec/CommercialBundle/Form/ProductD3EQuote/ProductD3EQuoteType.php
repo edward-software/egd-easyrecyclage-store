@@ -55,6 +55,9 @@ class ProductD3EQuoteType extends AbstractType
             ->add('phone', TextType::class)
             ->add('quoteStatus', ChoiceType::class, array(
                 "choices" => $options['status'],
+                "choice_label" => function ($choiceValue, $key, $value) {
+                    return 'Commercial.QuoteStatusList.' . $choiceValue;
+                }
             ))
             ->add('generatedTurnover', TextType::class)
             ->add('summary', TextareaType::class)

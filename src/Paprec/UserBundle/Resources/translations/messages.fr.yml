@@ -39,6 +39,6 @@ User:
 'No':                             Non
 'Yes':                            Oui
 'ROLE_ADMIN':                     Administrateur
-'ROLE_PARTNER':                   Partenaire
-'ROLE_SELLER':                    Commercial
-'ROLE_DISCOUNT_MANAGER':          Appliquer une remise
+'ROLE_MANAGER_DIVISION':          Manager de division
+'ROLE_SUPER_ADMIN':               Super administrateur
+'ROLE_PAPREC_USER':               Utilisateur Paprec

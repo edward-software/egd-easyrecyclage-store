@@ -583,3 +583,8 @@ Commercial:
     INVOICED:                   Facture envoyée
     CANCELED:                   Annulée
 
+  TreatmentStatusList:
+    CREATED:                    Créé
+    PENDING:                    En attente
+    PROCESSING:                 En traitement
+    CLOSED:                     Validé

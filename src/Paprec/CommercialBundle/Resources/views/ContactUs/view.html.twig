@@ -147,6 +147,12 @@
                                         {% endfor %}
                                     </label>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ContactUs.TreatmentStatus'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ ('Commercial.TreatmentStatusList.' ~ contactUs.treatmentStatus)|trans }}
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -53,6 +53,9 @@ class ProductChantierOrderType extends AbstractType
             ->add('phone', TextType::class)
             ->add('orderStatus', ChoiceType::class, array(
                 "choices" => $options['status'],
+                "choice_label" => function ($choiceValue, $key, $value) {
+                    return 'Commercial.OrderStatusList.' . $choiceValue;
+                }
             ))
             ->add('associatedInvoice', FileType::class, array(
                 'multiple' => false,

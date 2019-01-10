@@ -79,6 +79,7 @@ class ProductChantierQuoteController extends Controller
         foreach ($datatable['data'] as $data) {
             $line = $data;
             $line['totalAmount'] = $numberManager->formatAmount($data['totalAmount'], 'EUR', $request->getLocale());
+            $line['quoteStatus'] = $this->container->get('translator')->trans("Commercial.QuoteStatusList." . $data['quoteStatus']);
             $tmp[] = $line;
         }
 

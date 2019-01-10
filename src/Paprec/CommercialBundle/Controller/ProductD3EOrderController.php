@@ -87,6 +87,7 @@ class ProductD3EOrderController extends Controller
         foreach ($datatable['data'] as $data) {
             $line = $data;
             $line['totalAmount'] = $numberManager->formatAmount($data['totalAmount'], 'EUR', $request->getLocale());
+            $line['orderStatus'] = $this->container->get('translator')->trans("Commercial.OrderStatusList." . $data['orderStatus']);
             $tmp[] = $line;
         }
 
