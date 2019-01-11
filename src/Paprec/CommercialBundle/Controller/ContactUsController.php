@@ -82,6 +82,14 @@ class ContactUsController extends Controller
         }
 
         $datatable = $this->get('goondi_tools.datatable')->generateTable($cols, $queryBuilder, $pageSize, $start, $orders, $columns, $filters);
+        // Reformatage de certaines données
+        $tmp = array();
+        foreach ($datatable['data'] as $data) {
+            $line = $data;
+            $line['treatmentStatus'] = $this->container->get('translator')->trans("Commercial.TreatmentStatusList." . $data['treatmentStatus']);
+            $tmp[] = $line;
+        }
+        $datatable['data'] = $tmp;
 
         $return['recordsTotal'] = $datatable['recordsTotal'];
         $return['recordsFiltered'] = $datatable['recordsTotal'];

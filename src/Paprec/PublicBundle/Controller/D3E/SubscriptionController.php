@@ -212,7 +212,7 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Etape "Mon offre" qui récapitule le de vis créé par l'utilisateur
+     * Etape "Mon offre" qui récapitule le devis créé par l'utilisateur
      *
      * @Route("/D3E/step3/{cartUuid}/{quoteId}", name="paprec_public_corp_d3e_subscription_step3")
      */

@@ -233,10 +233,7 @@ class ProductD3EQuoteManager
     {
         try {
             $from = $this->container->getParameter('paprec_email_sender');
-
-            // TODO Appeler une fonction de UserManager qui retourne l'user qui s'occupe des devis D3E
-            // TODO $rcptTo = $user->getEmail()
-            $rcptTo = 'frederic.laine@eggers-digital.com';
+            $rcptTo = $this->container->getParameter('paprec_manager_d3e_email');
 
             $message = \Swift_Message::newInstance()
                 ->setSubject('Easy-Recyclage : Nouveau devis D3E - N°' . $productD3EQuote->getId())

@@ -90,10 +90,7 @@ class QuoteRequestManager
     {
         try {
             $from = $this->container->getParameter('paprec_email_sender');
-
-            // TODO Appeler une fonction de UserManager qui retourne l'user qui s'occupe de la division de la demande de prestation régulière
-            // TODO $rcptTo = $user->getEmail()
-            $rcptTo = 'frederic.laine@eggers-digital.com';
+            $rcptTo = $this->container->getParameter('paprec_manager_'.strtolower($quoteRequest->getDivision()).'_email');
 
             $message = \Swift_Message::newInstance()
                 ->setSubject('Easy-Recyclage : Nouvelle demande de prestation régulière ' . $quoteRequest->getDivision() .' N°' . $quoteRequest->getId())

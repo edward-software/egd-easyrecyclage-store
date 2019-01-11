@@ -128,10 +128,7 @@ class QuoteRequestNonCorporateManager
     {
         try {
             $from = $this->container->getParameter('paprec_email_sender');
-
-            // TODO Appeler une fonction de UserManager qui retourne l'user qui s'occupe de quoterRequestNonCorporate->getCustomerType()
-            // TODO $rcptTo = $user->getEmail()
-            $rcptTo = 'frederic.laine@eggers-digital.com';
+            $rcptTo = $this->container->getParameter('paprec_assistant_commercial_di_email');
 
             $message = \Swift_Message::newInstance()
                 ->setSubject('Easy-Recyclage : Nouvelle demande de devis : ' . $quoteRequestNonCorporate->getCustomerType() . ' ' . $quoteRequestNonCorporate->getId())

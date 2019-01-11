@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\ORMException;
 use Exception;
-use Grpc\Call;
 use Paprec\CommercialBundle\Entity\CallBack;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -116,7 +115,6 @@ class CallBackManager
     }
 
 
-
     /**
      * Envoie un mail à l'assistant de la direction commerciale avec les données du formulaire de demande de rappel
      *
@@ -128,10 +126,7 @@ class CallBackManager
     {
         try {
             $from = $this->container->getParameter('paprec_email_sender');
-
-            // TODO Appeler une fonction de UserManager qui retourne l'user qui s'occupe des demandes de Rappel
-            // TODO $rcptTo = $user->getEmail()
-            $rcptTo = 'frederic.laine@eggers-digital.com';
+            $rcptTo = $this->container->getParameter('paprec_assistant_commercial_di_email');
 
             $message = \Swift_Message::newInstance()
                 ->setSubject('Easy-Recyclage : Nouvelle demande de rappel N°' . $callBack->getId())
