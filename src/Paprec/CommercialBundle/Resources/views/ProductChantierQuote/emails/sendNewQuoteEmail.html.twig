@@ -8,16 +8,16 @@
  {% endblock %}
 
 {% block title_header %}
-    Nouveau devis pour déchets de chantier
+    Un nouveau devis vient d'être établi
 {% endblock %}
 
 {% block subtitle_header %}
-    Devis Chantier - N° {{ productChantierQuote.id }}
+    Devis Ponctuel - Mes déchets d'entreprise - N° {{ productChantierQuote.id }}
 {% endblock %}
 
 {% block main_content %}
     <tr>
-        Détail de la demande N° {{ productChantierQuote.id }} - {{ productChantierQuote.dateCreation|date('d/m/Y H:i:s') }}
+        Détail du devis N° {{ productChantierQuote.id }} - {{ productChantierQuote.dateCreation|date('d/m/Y H:i:s') }}
     </tr>
     <tr>
         <td class="label">
@@ -29,34 +29,10 @@
     </tr>
     <tr>
         <td class="label">
-            {{ 'Commercial.ProductChantierQuote.BusinessLine'|trans }}
+            Contact
         </td>
         <td class="value">
-            {{ productChantierQuote.businessLine.name }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductChantierQuote.Civility'|trans }}
-        </td>
-        <td class="value">
-            {{ productChantierQuote.civility }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductChantierQuote.LastName'|trans }}
-        </td>
-        <td class="value">
-            {{ productChantierQuote.lastName }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductChantierQuote.FirstName'|trans }}
-        </td>
-        <td class="value">
-            {{ productChantierQuote.firstName }}
+            {% if productChantierQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productChantierQuote.lastName }} {{ productChantierQuote.firstName }}
         </td>
     </tr>
     <tr>
@@ -65,6 +41,15 @@
         </td>
         <td class="value">
             {{ productChantierQuote.function }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ProductChantierQuote.Address'|trans }}
+        </td>
+        <td class="value">
+            {{ productChantierQuote.address }}<br>
+            {{ productChantierQuote.postalCode }} {{ productChantierQuote.city }}
         </td>
     </tr>
     <tr>
@@ -83,13 +68,44 @@
             {{ productChantierQuote.phone }}
         </td>
     </tr>
+    {% for productChantierQuoteLine in productChantierQuote.productChantierQuoteLines %}
+        <tr>
+            <td class="picto">
+                {% if productChantierQuoteLine.productDI.pictures|length > 0 %}
+                    <img src="{% if productChantierQuoteLine.productDI.pilotPictures|length > 0 %}{{ absolute_url('/uploads/pictos/' ~ productChantierQuoteLine.productDI.pilotPictures[0].path) }}{% endif %}"
+                         alt="#">
+                {% endif %}
+            </td>
+            <td class="product">
+                {{ productChantierQuoteLine.quantity }} x {{ productChantierQuoteLine.productName }}<br>
+                de {{ productChantierQuoteLine.categoryName }}
+            </td>
+            <td class="price">
+                à partir de {{ productChantierQuoteLine.totalAmount|formatAmount('EUR', app.request.locale) }}
+            </td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td></td>
+        <td>
+            TOTAL
+        </td>
+        <td>
+            à partir de {{ productChantierQuote.totalAmount|formatAmount('EUR', app.request.locale) }}
+        </td>
+    </tr>
 {% endblock %}
 
 {% block footer %}
     <tr>
         <td>
+            Merci de répondre à cette demande sous 48h et d'importer le devis actualisé
+        </td>
+    </tr>
+    <tr>
+        <td>
             <a href="{{ absolute_url(path("paprec_commercial_productChantierQuote_view", {id: productChantierQuote.id})) }}">
-                Consulter le devis
+                Lien pour voir le devis et y importer le nouveau devis
             </a>
         </td>
     </tr>

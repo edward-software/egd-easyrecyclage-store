@@ -17,7 +17,7 @@
 
 {% block main_content %}
     <tr>
-        Détail ddu devis N° {{ productDIQuote.id }} - {{ productDIQuote.dateCreation|date('d/m/Y H:i:s') }}
+        Détail du devis N° {{ productDIQuote.id }} - {{ productDIQuote.dateCreation|date('d/m/Y H:i:s') }}
     </tr>
     <tr>
         <td class="label">
@@ -48,8 +48,7 @@
             {{ 'Commercial.ProductDIQuote.Address'|trans }}
         </td>
         <td class="value">
-            {{ productDIQuote.address }}
-            <br>
+            {{ productDIQuote.address }}<br>
             {{ productDIQuote.postalCode }} {{ productDIQuote.city }}
         </td>
     </tr>
@@ -69,21 +68,25 @@
             {{ productDIQuote.phone }}
         </td>
     </tr>
-    {% for line in productDIQuote.productDIQuoteLines %}
+    {% for productDIQuoteLine in productDIQuote.productDIQuoteLines %}
         <tr>
             <td class="picto">
-                img
+                {% if productDIQuoteLine.productDI.pictures|length > 0 %}
+                    <img src="{% if productDIQuoteLine.productDI.pilotPictures|length > 0 %}{{ absolute_url('/uploads/pictos/' ~ productDIQuoteLine.productDI.pilotPictures[0].path) }}{% endif %}"
+                         alt="#">
+                {% endif %}
             </td>
             <td class="product">
-                {{ line.quantity }} x {{ line.productName }}
-                de {{ line.categoryName }}
+                {{ productDIQuoteLine.quantity }} x {{ productDIQuoteLine.productName }}<br>
+                de {{ productDIQuoteLine.categoryName }}
             </td>
             <td class="price">
-                à partir de {{ line.totalAmount|formatAmount('EUR', app.request.locale) }}
+                à partir de {{ productDIQuoteLine.totalAmount|formatAmount('EUR', app.request.locale) }}
             </td>
         </tr>
     {% endfor %}
     <tr>
+        <td></td>
         <td>
             TOTAL
         </td>

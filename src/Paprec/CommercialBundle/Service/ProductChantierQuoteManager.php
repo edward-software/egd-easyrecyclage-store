@@ -175,7 +175,6 @@ class ProductChantierQuoteManager
 
     /**
      * Calcule le montant total d'un ProductChantierQuote
-     * TODO relier le ProductChantierQuote aux PostalCodes pour calculer avec le coefficient multiplicateur du postalCode
      * @param ProductChantierQuote $productChantierQuote
      * @return float|int
      */

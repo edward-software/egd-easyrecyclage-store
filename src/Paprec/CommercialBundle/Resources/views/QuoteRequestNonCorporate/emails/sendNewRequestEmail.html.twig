@@ -45,7 +45,7 @@
             {{ 'Commercial.QuoteRequestNonCorporate.Civility'|trans }}
         </td>
         <td class="value">
-            {{ quoteRequestNonCorporate.civility }}
+            {% if quoteRequestNonCorporate.civility == 'M' %}Monsieur{% else %}Madame{% endif %}
         </td>
     </tr>
     <tr>

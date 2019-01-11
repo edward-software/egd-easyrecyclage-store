@@ -186,7 +186,6 @@ class ProductD3EOrderManager
 
     /**
      * Calcule le montant total d'un ProductD3EOrder
-     * TODO relier le ProductD3EOrder aux PostalCodes pour calculer avec le coefficient multiplicateur du postalCode
      * @param ProductD3EOrder $productD3EOrder
      * @return float|int
      */

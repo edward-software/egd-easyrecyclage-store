@@ -8,31 +8,90 @@
  {% endblock %}
 
 {% block title_header %}
-    Votre devis pour traitement des déchets non dangereux
+    Merci pour votre demande de devis
 {% endblock %}
 
 {% block subtitle_header %}
-    Devis Chantier - N° {{ productChantierQuote.id }}
+    <button>Devis au format PDF</button>
 {% endblock %}
 
 {% block main_content %}
     <tr>
-        <td>
-            {% if productChantierQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productChantierQuote.firstName }} {{ productChantierQuote.lastName }}
+        Détail du devis N° {{ productChantierQuote.id }} - {{ productChantierQuote.dateCreation|date('d/m/Y H:i:s') }}
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ProductChantierQuote.BusinessName'|trans }}
+        </td>
+        <td class="value">
+            {{ productChantierQuote.businessName }}
         </td>
     </tr>
     <tr>
+        <td class="label">
+            Contact
+        </td>
+        <td class="value">
+            {% if productChantierQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productChantierQuote.lastName }} {{ productChantierQuote.firstName }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ProductChantierQuote.Function'|trans }}
+        </td>
+        <td class="value">
+            {{ productChantierQuote.function }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ProductChantierQuote.Address'|trans }}
+        </td>
+        <td class="value">
+            {{ productChantierQuote.address }}<br>
+            {{ productChantierQuote.postalCode }} {{ productChantierQuote.city }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ProductChantierQuote.Email'|trans }}
+        </td>
+        <td class="value">
+            {{ productChantierQuote.email }}
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            {{ 'Commercial.ProductChantierQuote.Phone'|trans }}
+        </td>
+        <td class="value">
+            {{ productChantierQuote.phone }}
+        </td>
+    </tr>
+    {% for productChantierQuoteLine in productChantierQuote.productChantierQuoteLines %}
+        <tr>
+            <td class="picto">
+                {% if productChantierQuoteLine.productDI.pictures|length > 0 %}
+                    <img src="{% if productChantierQuoteLine.productDI.pilotPictures|length > 0 %}{{ absolute_url('/uploads/pictos/' ~ productChantierQuoteLine.productDI.pilotPictures[0].path) }}{% endif %}"
+                         alt="#">
+                {% endif %}
+            </td>
+            <td class="product">
+                {{ productChantierQuoteLine.quantity }} x {{ productChantierQuoteLine.productName }}<br>
+                de {{ productChantierQuoteLine.categoryName }}
+            </td>
+            <td class="price">
+                à partir de {{ productChantierQuoteLine.totalAmount|formatAmount('EUR', app.request.locale) }}
+            </td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td></td>
         <td>
-            Voici ci-joint le devis que vous avez réalisé le {{ productChantierQuote.dateCreation|localizeddate('full', 'none', app.request.locale) }}.
-            <br>
-            Cordialement
-            <br>
-            L'équipe Paprec - EasyRecyclage
-            <br>
-            <a href="www.easyrecyclage.com">www.easyrecyclage.com</a>
-            <br>
-            <a href="#">Découvrez nos équipements</a>
-            <a href="#">Trouvez une agence</a>
+            TOTAL
+        </td>
+        <td>
+            à partir de {{ productChantierQuote.totalAmount|formatAmount('EUR', app.request.locale) }}
         </td>
     </tr>
 {% endblock %}
@@ -40,13 +99,8 @@
 {% block footer %}
     <tr>
         <td>
-            Logo Paprec
-        </td>
-        <td>
-            Retrouvez-nous
-        </td>
-        <td>
-            Logos réseaux
+            L'agence en charge de votre demande vous recontactera sous 48h par e-mail ou téléphone afin de valider un
+            devis.
         </td>
     </tr>
 {% endblock %}
