@@ -22,6 +22,7 @@
 /web/uploads/pictos/*
 /web/uploads/pictures/*
 /app/data/offer/notice/*
+/app/data/tmp/*
 /app/data/offer/tmp/*
 /app/data/ticketFile/*
 # Backup entities generated with doctrine:generate:entities command

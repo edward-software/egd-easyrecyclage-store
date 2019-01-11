@@ -78,6 +78,85 @@ class ProductDIQuoteManager
     }
 
     /**
+     * Met à jour les montants totaux après l'édition d'une ligne
+     * @param ProductDIQuote $productDIQuote
+     * @param ProductDIQuoteLine $productDIQuoteLine
+     */
+    public function editLine(ProductDIQuote $productDIQuote, ProductDIQuoteLine $productDIQuoteLine)
+    {
+        $totalLine = $this->calculateTotalLine($productDIQuoteLine);
+        $productDIQuoteLine->setTotalAmount($totalLine);
+        $this->em->flush();
+
+        $total = $this->calculateTotal($productDIQuote);
+        $productDIQuote->setTotalAmount($total);
+        $this->em->flush();
+    }
+
+    /**
+     * Retourne le montant total d'une ProductDIQuoteLine
+     * @param ProductDIQuoteLine $productDIQuoteLine
+     * @return float|int
+     */
+    public function calculateTotalLine(ProductDIQuoteLine $productDIQuoteLine)
+    {
+        $numberManager = $this->container->get('paprec_catalog.number_manager');
+        $productDIManager = $this->container->get('paprec_catalog.product_di_manager');
+
+        return $numberManager->normalize(
+            $productDIManager->calculatePrice(
+                $productDIQuoteLine->getProductDIQuote()->getPostalCode(),
+                $productDIQuoteLine->getUnitPrice(),
+                $productDIQuoteLine->getQuantity()
+            )
+        );
+    }
+
+    /**
+     * Calcule le montant total d'un ProductDIQuote
+     * @param ProductDIQuote $productDIQuote
+     * @return float|int
+     */
+    public function calculateTotal(ProductDIQuote $productDIQuote)
+    {
+        $totalAmount = 0;
+        foreach ($productDIQuote->getProductDIQuoteLines() as $productDIQuoteLine) {
+            $totalAmount += $this->calculateTotalLine($productDIQuoteLine);
+        }
+        return $totalAmount;
+
+    }
+
+    /**
+     * Pour ajouter une productDIQuoteLine depuis le Cart, il faut d'abord retrouver le ProductDI
+     * @param ProductDIQuote $productDIQuote
+     * @param $productId
+     * @param $qtty
+     * @throws Exception
+     */
+    public function addLineFromCart(ProductDIQuote $productDIQuote, $productId, $qtty, $categoryId)
+    {
+        $productDIManager = $this->container->get('paprec_catalog.product_di_manager');
+        $categoryManager = $this->container->get('paprec_catalog.category_manager');
+
+        try {
+            $productDI = $productDIManager->get($productId);
+            $productDIQuoteLine = new ProductDIQuoteLine();
+            $category = $categoryManager->get($categoryId);
+
+
+            $productDIQuoteLine->setProductDI($productDI);
+            $productDIQuoteLine->setCategory($category);
+            $productDIQuoteLine->setQuantity($qtty);
+            $this->addLine($productDIQuote, $productDIQuoteLine);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+
+
+    }
+
+    /**
      * Ajoute une productQuoteDiLine à un productDIQuote
      * @param ProductDIQuote $productDIQuote
      * @param ProductDIQuoteLine $productDIQuoteLine
@@ -129,86 +208,6 @@ class ProductDIQuoteManager
     }
 
     /**
-     * Met à jour les montants totaux après l'édition d'une ligne
-     * @param ProductDIQuote $productDIQuote
-     * @param ProductDIQuoteLine $productDIQuoteLine
-     */
-    public function editLine(ProductDIQuote $productDIQuote, ProductDIQuoteLine $productDIQuoteLine)
-    {
-        $totalLine = $this->calculateTotalLine($productDIQuoteLine);
-        $productDIQuoteLine->setTotalAmount($totalLine);
-        $this->em->flush();
-
-        $total = $this->calculateTotal($productDIQuote);
-        $productDIQuote->setTotalAmount($total);
-        $this->em->flush();
-    }
-
-    /**
-     * Pour ajouter une productDIQuoteLine depuis le Cart, il faut d'abord retrouver le ProductDI
-     * @param ProductDIQuote $productDIQuote
-     * @param $productId
-     * @param $qtty
-     * @throws Exception
-     */
-    public function addLineFromCart(ProductDIQuote $productDIQuote, $productId, $qtty, $categoryId)
-    {
-        $productDIManager = $this->container->get('paprec_catalog.product_di_manager');
-        $categoryManager = $this->container->get('paprec_catalog.category_manager');
-
-        try {
-            $productDI = $productDIManager->get($productId);
-            $productDIQuoteLine = new ProductDIQuoteLine();
-            $category = $categoryManager->get($categoryId);
-
-
-            $productDIQuoteLine->setProductDI($productDI);
-            $productDIQuoteLine->setCategory($category);
-            $productDIQuoteLine->setQuantity($qtty);
-            $this->addLine($productDIQuote, $productDIQuoteLine);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
-        }
-
-
-    }
-
-    /**
-     * Calcule le montant total d'un ProductDIQuote
-     * @param ProductDIQuote $productDIQuote
-     * @return float|int
-     */
-    public function calculateTotal(ProductDIQuote $productDIQuote)
-    {
-        $totalAmount = 0;
-        foreach ($productDIQuote->getProductDIQuoteLines() as $productDIQuoteLine) {
-            $totalAmount += $this->calculateTotalLine($productDIQuoteLine);
-        }
-        return $totalAmount;
-
-    }
-
-    /**
-     * Retourne le montant total d'une ProductDIQuoteLine
-     * @param ProductDIQuoteLine $productDIQuoteLine
-     * @return float|int
-     */
-    public function calculateTotalLine(ProductDIQuoteLine $productDIQuoteLine)
-    {
-        $numberManager = $this->container->get('paprec_catalog.number_manager');
-        $productDIManager = $this->container->get('paprec_catalog.product_di_manager');
-
-        return $numberManager->normalize(
-            $productDIManager->calculatePrice(
-                $productDIQuoteLine->getProductDIQuote()->getPostalCode(),
-                $productDIQuoteLine->getUnitPrice(),
-                $productDIQuoteLine->getQuantity()
-            )
-        );
-    }
-
-
-    /**
      * Envoie un mail au responsable DI avec les données du du devis DI
      *
      * @param ProductDIQuote $productDIQuote
@@ -233,7 +232,8 @@ class ProductDIQuoteManager
                         )
                     ),
                     'text/html'
-                );
+                )
+            ->set;
 
             if ($this->container->get('mailer')->send($message)) {
                 return true;
@@ -293,7 +293,7 @@ class ProductDIQuoteManager
                 ->attach($attachment);
 
             if ($this->container->get('mailer')->send($message)) {
-                if(file_exists($pdfFile)) {
+                if (file_exists($pdfFile)) {
                     unlink($pdfFile);
                 }
                 return true;

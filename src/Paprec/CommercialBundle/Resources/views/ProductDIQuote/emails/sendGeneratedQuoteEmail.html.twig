@@ -68,21 +68,25 @@
             {{ productDIQuote.phone }}
         </td>
     </tr>
-    {% for line in productDIQuote.productDIQuoteLines %}
+    {% for productDIQuoteLine in productDIQuote.productDIQuoteLines %}
         <tr>
             <td class="picto">
-                img
+                {% if productDIQuoteLine.productDI.pictures|length > 0 %}
+                    <img src="{% if productDIQuoteLine.productDI.pilotPictures|length > 0 %}{{ absolute_url('/uploads/pictos/' ~ productDIQuoteLine.productDI.pilotPictures[0].path) }}{% endif %}"
+                         alt="#">
+                {% endif %}
             </td>
             <td class="product">
-                {{ line.quantity }} x {{ line.productName }}<br>
-                de {{ line.categoryName }}
+                {{ productDIQuoteLine.quantity }} x {{ productDIQuoteLine.productName }}<br>
+                de {{ productDIQuoteLine.categoryName }}
             </td>
             <td class="price">
-                à partir de {{ line.totalAmount|formatAmount('EUR', app.request.locale) }}
+                à partir de {{ productDIQuoteLine.totalAmount|formatAmount('EUR', app.request.locale) }}
             </td>
         </tr>
     {% endfor %}
     <tr>
+        <td></td>
         <td>
             TOTAL
         </td>
@@ -95,7 +99,8 @@
 {% block footer %}
     <tr>
         <td>
-            L'agence en charge de votre demande vous recontactera sous 48h par e-mail ou téléphone afin de valider un devis.
+            L'agence en charge de votre demande vous recontactera sous 48h par e-mail ou téléphone afin de valider un
+            devis.
         </td>
     </tr>
 {% endblock %}
