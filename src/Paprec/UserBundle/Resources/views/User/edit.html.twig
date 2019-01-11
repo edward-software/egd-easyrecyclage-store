@@ -131,8 +131,8 @@
                             </div>
                         </div>
                     </div>
+                    {# On render le password car si un manager modifie un admin, le cham ppassword ne s'affichera pas #}
                     {% do form.plainPassword.setRendered() %}
-
                     {{ form_rest(form) }}
                 </div>
             </div>
@@ -147,9 +147,6 @@
         </div>
         </div>
     </form>
-
-
-
 {% endblock %}
 
 {% block javascripts %}

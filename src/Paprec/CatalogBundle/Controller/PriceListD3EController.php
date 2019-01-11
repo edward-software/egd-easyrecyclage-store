@@ -20,7 +20,7 @@ class PriceListD3EController extends Controller
 
     /**
      * @Route("/priceListD3E",  name="paprec_catalog_priceListD3E_index")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'D3E' in user.getDivisions())")
      */
     public function indexAction()
     {
@@ -30,7 +30,7 @@ class PriceListD3EController extends Controller
 
     /**
      * @Route("/priceListD3E/loadList",  name="paprec_catalog_priceListD3E_loadList")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'D3E' in user.getDivisions())")
      */
     public function loadListAction(Request $request)
     {
@@ -79,7 +79,7 @@ class PriceListD3EController extends Controller
 
     /**
      * @Route("/priceListD3E/export",  name="paprec_catalog_priceListD3E_export")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'D3E' in user.getDivisions())")
      */
     public function exportAction()
     {
@@ -140,7 +140,7 @@ class PriceListD3EController extends Controller
 
     /**
      * @Route("/priceListD3E/view/{id}",  name="paprec_catalog_priceListD3E_view")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'D3E' in user.getDivisions())")
      */
     public function viewAction(Request $request, PriceListD3E $priceListD3E)
     {
@@ -156,7 +156,7 @@ class PriceListD3EController extends Controller
 
     /**
      * @Route("/priceListD3E/add",  name="paprec_catalog_priceListD3E_add")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'D3E' in user.getDivisions())")
      * @throws \Exception
      */
     public function addAction(Request $request)
@@ -188,7 +188,7 @@ class PriceListD3EController extends Controller
 
     /**
      * @Route("/priceListD3E/edit/{id}",  name="paprec_catalog_priceListD3E_edit")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'D3E' in user.getDivisions())")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws \Exception
      */
@@ -224,7 +224,7 @@ class PriceListD3EController extends Controller
 
     /**
      * @Route("/priceListD3E/remove/{id}", name="paprec_catalog_priceListD3E_remove")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'D3E' in user.getDivisions())")
      * @throws \Exception
      */
     public function removeAction(Request $request, PriceListD3E $priceListD3E)
@@ -247,7 +247,7 @@ class PriceListD3EController extends Controller
 
     /**
      * @Route("/priceListD3E/removeMany/{ids}", name="paprec_catalog_priceListD3E_removeMany")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'D3E' in user.getDivisions())")
      * @throws \Exception
      */
     public function removeManyAction(Request $request)
@@ -287,7 +287,7 @@ class PriceListD3EController extends Controller
     /**
      * @Route("/priceListD3E/{id}/addLine", name="paprec_catalog_priceListD3E_addLine")
      * @Method("POST")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'D3E' in user.getDivisions())")
      */
     public function addLineAction(Request $request, PriceListD3E $priceListD3E)
     {
@@ -324,7 +324,7 @@ class PriceListD3EController extends Controller
     /**
      * @Route("/priceListD3E/{id}/editLine/{lineId}", name="paprec_catalog_priceListD3E_editLine")
      * @Method("POST")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'D3E' in user.getDivisions())")
      */
     public function editLineAction(Request $request, PriceListD3E $priceListD3E)
     {
@@ -362,7 +362,7 @@ class PriceListD3EController extends Controller
 
     /**
      * @Route("/priceListD3E/removeLine/{id}/{lineId}", name="paprec_catalog_priceListD3E_removeLine")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'D3E' in user.getDivisions())")
      */
     public function removeLineAction(Request $request, PriceListD3E $priceListD3E)
     {
