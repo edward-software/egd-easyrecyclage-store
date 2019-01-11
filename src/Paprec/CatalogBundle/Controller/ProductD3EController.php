@@ -91,6 +91,7 @@ class ProductD3EController extends Controller
      */
     public function exportAction()
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
 
         $translator = $this->container->get('translator');
 
@@ -133,9 +134,9 @@ class ProductD3EController extends Controller
                 ->setCellValue('A' . $i, $productD3E->getId())
                 ->setCellValue('B' . $i, $productD3E->getName())
                 ->setCellValue('C' . $i, $productD3E->getDescription())
-                ->setCellValue('D' . $i, $productD3E->getCoefHandling())
-                ->setCellValue('E' . $i, $productD3E->getCoefSerialNumberStmt())
-                ->setCellValue('F' . $i, $productD3E->getCoefDestruction())
+                ->setCellValue('D' . $i, $numberManager->denormalize($productD3E->getCoefHandling()))
+                ->setCellValue('E' . $i, $numberManager->denormalize($productD3E->getCoefSerialNumberStmt()))
+                ->setCellValue('F' . $i, $numberManager->denormalize($productD3E->getCoefDestruction()))
                 ->setCellValue('G' . $i, $productD3E->getReference())
                 ->setCellValue('H' . $i, $productD3E->getIsDisplayed())
                 ->setCellValue('I' . $i, $productD3E->getPosition())

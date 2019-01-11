@@ -203,7 +203,7 @@
                     </li>
                 {% endif %}
 
-                {% if is_granted('ROLE_MANAGER_DIVISION') %}
+                {% if is_granted('ROLE_USER') %}
                     <li class="nav-item dropdown{% if app.request.get('_route')|slice(0, 'paprec_home_ticket'|length) == 'paprec_home_ticket' %} active{% endif %}">
                         <a href="#" class="dropdown-toggle nav-link" id="navbarDropdownHome" data-toggle="dropdown"
                            role="button" aria-haspopup="true"

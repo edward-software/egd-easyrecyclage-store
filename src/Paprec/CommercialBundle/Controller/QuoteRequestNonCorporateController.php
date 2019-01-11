@@ -104,6 +104,8 @@ class QuoteRequestNonCorporateController extends Controller
      */
     public function exportAction(Request $request)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
+
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
 
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
@@ -156,7 +158,7 @@ class QuoteRequestNonCorporateController extends Controller
                 ->setCellValue('G' . $i, $quoteRequestNonCorporate->getPhone())
                 ->setCellValue('H' . $i, $quoteRequestNonCorporate->getQuoteStatus())
                 ->setCellValue('I' . $i, $quoteRequestNonCorporate->getNeed())
-                ->setCellValue('J' . $i, $quoteRequestNonCorporate->getGeneratedTurnover())
+                ->setCellValue('J' . $i, $numberManager->denormalize($quoteRequestNonCorporate->getGeneratedTurnover()))
                 ->setCellValue('K' . $i, $quoteRequestNonCorporate->getDivision())
                 ->setCellValue('L' . $i, $quoteRequestNonCorporate->getPostalCode())
                 ->setCellValue('M' . $i, $quoteRequestNonCorporate->getCustomerType())
@@ -216,6 +218,8 @@ class QuoteRequestNonCorporateController extends Controller
      */
     public function editAction(Request $request, QuoteRequestNonCorporate $quoteRequestNonCorporate)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
+
         $quoteRequestNonCorporateManager = $this->get('paprec_commercial.quote_request_non_corporate_manager');
         $quoteRequestNonCorporateManager->isDeleted($quoteRequestNonCorporate, true);
 
@@ -228,6 +232,8 @@ class QuoteRequestNonCorporateController extends Controller
             $divisions[$division] = $division;
         }
 
+        $quoteRequestNonCorporate->setGeneratedTurnover($numberManager->denormalize($quoteRequestNonCorporate->getGeneratedTurnover()));
+
         $form = $this->createForm(QuoteRequestNonCorporateEditType::class, $quoteRequestNonCorporate, array(
             'status' => $status,
             'division' => $divisions
@@ -239,6 +245,8 @@ class QuoteRequestNonCorporateController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $quoteRequestNonCorporate = $form->getData();
+            $quoteRequestNonCorporate->setGeneratedTurnover($numberManager->normalize($quoteRequestNonCorporate->getGeneratedTurnover()));
+
             $quoteRequestNonCorporate->setDateUpdate(new \DateTime());
 
             if ($quoteRequestNonCorporate->getAssociatedQuote() instanceof UploadedFile) {

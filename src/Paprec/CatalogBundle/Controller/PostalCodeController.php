@@ -93,6 +93,7 @@ class PostalCodeController extends Controller
      */
     public function exportAction(Request $request)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
 
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
 
@@ -125,7 +126,7 @@ class PostalCodeController extends Controller
                 ->setCellValue('A' . $i, $postalCode->getId())
                 ->setCellValue('B' . $i, $postalCode->getCode())
                 ->setCellValue('C' . $i, $postalCode->getDivision())
-                ->setCellValue('D' . $i, $postalCode->getRate());
+                ->setCellValue('D' . $i, $numberManager->denormalize($postalCode->getRate()));
             $i++;
         }
 

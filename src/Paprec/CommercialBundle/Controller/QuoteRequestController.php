@@ -104,6 +104,7 @@ class QuoteRequestController extends Controller
      */
     public function exportAction(Request $request)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
 
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
 
@@ -156,7 +157,7 @@ class QuoteRequestController extends Controller
                 ->setCellValue('G' . $i, $quoteRequest->getPhone())
                 ->setCellValue('H' . $i, $quoteRequest->getQuoteStatus())
                 ->setCellValue('I' . $i, $quoteRequest->getNeed())
-                ->setCellValue('J' . $i, $quoteRequest->getGeneratedTurnover())
+                ->setCellValue('J' . $i, $numberManager->denormalize($quoteRequest->getGeneratedTurnover()))
                 ->setCellValue('K' . $i, $quoteRequest->getDivision())
                 ->setCellValue('L' . $i, $quoteRequest->getPostalCode())
                 ->setCellValue('M' . $i, $quoteRequest->getAgency())
@@ -212,6 +213,8 @@ class QuoteRequestController extends Controller
      */
     public function editAction(Request $request, QuoteRequest $quoteRequest)
     {
+        $numberManager = $this->get('paprec_catalog.number_manager');
+
         $quoteRequestManager = $this->get('paprec_commercial.quote_request_manager');
         $quoteRequestManager->isDeleted($quoteRequest, true);
 
@@ -219,6 +222,8 @@ class QuoteRequestController extends Controller
         foreach ($this->getParameter('paprec_quote_status') as $s) {
             $status[$s] = $s;
         }
+
+        $quoteRequest->setGeneratedTurnover($numberManager->denormalize($quoteRequest->getGeneratedTurnover()));
 
         $form = $this->createForm(QuoteRequestEditType::class, $quoteRequest, array(
             'status' => $status
@@ -229,6 +234,8 @@ class QuoteRequestController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $quoteRequest = $form->getData();
+            $quoteRequest->setGeneratedTurnover($numberManager->normalize($quoteRequest->getGeneratedTurnover()));
+
             $quoteRequest->setDateUpdate(new \DateTime());
 
             if ($quoteRequest->getAssociatedQuote() instanceof UploadedFile) {
