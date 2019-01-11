@@ -131,6 +131,8 @@
                             </div>
                         </div>
                     </div>
+                    {% do form.plainPassword.setRendered() %}
+
                     {{ form_rest(form) }}
                 </div>
             </div>
