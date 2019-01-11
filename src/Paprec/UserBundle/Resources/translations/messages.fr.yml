@@ -40,5 +40,5 @@ User:
 'Yes':                            Oui
 'ROLE_ADMIN':                     Administrateur
 'ROLE_MANAGER_DIVISION':          Manager de division
+'ROLE_COMMERCIAL_DIVISION':       Commercial
 'ROLE_SUPER_ADMIN':               Super administrateur
-'ROLE_PAPREC_USER':               Utilisateur Paprec

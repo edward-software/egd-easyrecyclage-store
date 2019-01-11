@@ -16,7 +16,7 @@ class AgencyController extends Controller
 {
     /**
      * @Route("/agency", name="paprec_commercial_agence_index")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function indexAction()
     {
@@ -25,7 +25,7 @@ class AgencyController extends Controller
 
     /**
      * @Route("/agency/loadList", name="paprec_commercial_agence_loadList")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function loadListAction(Request $request)
     {
@@ -80,7 +80,7 @@ class AgencyController extends Controller
 
     /**
      * @Route("/agency/export", name="paprec_commercial_agence_export")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function exportAction(Request $request)
     {
@@ -156,7 +156,7 @@ class AgencyController extends Controller
 
     /**
      * @Route("/agency/view/{id}", name="paprec_commercial_agence_view")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function viewAction(Request $request, Agency $agence)
     {
@@ -170,7 +170,7 @@ class AgencyController extends Controller
 
     /**
      * @Route("/agency/add", name="paprec_commercial_agence_add")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      * @throws \Exception
      */
     public function addAction(Request $request)
@@ -210,7 +210,7 @@ class AgencyController extends Controller
 
     /**
      * @Route("/agency/edit/{id}", name="paprec_commercial_agence_edit")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws \Exception
      */
@@ -252,7 +252,7 @@ class AgencyController extends Controller
 
     /**
      * @Route("/agency/remove/{id}", name="paprec_commercial_agence_remove")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function removeAction(Request $request, Agency $agence)
     {
@@ -267,7 +267,7 @@ class AgencyController extends Controller
 
     /**
      * @Route("/agency/removeMany/{ids}", name="paprec_commercial_agence_removeMany")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function removeManyAction(Request $request)
     {

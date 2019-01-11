@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="card-body">
-                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'DI') %}
+                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_COMMERCIAL_DIVISION', 'DI') %}
                         <div class="card">
                             <div class="card-header">
                                 <div class="card-title">
@@ -57,7 +57,7 @@
                             </div>
                         </div>
                     {% endif %}
-                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'CHANTIER') %}
+                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_COMMERCIAL_DIVISION', 'CHANTIER') %}
                         <div class="card mt-4">
                             <div class="card-header">
                                 <div class="card-title">
@@ -84,7 +84,7 @@
                             </div>
                         </div>
                     {% endif %}
-                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'D3E') %}
+                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_COMMERCIAL_DIVISION', 'D3E') %}
                         <div class="card mt-4">
                             <div class="card-header">
                                 <div class="card-title">

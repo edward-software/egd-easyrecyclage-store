@@ -24,7 +24,7 @@ class QuoteRequestController extends Controller
 {
     /**
      * @Route("/quoteRequest", name="paprec_commercial_quoteRequest_index")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function indexAction()
     {
@@ -33,7 +33,7 @@ class QuoteRequestController extends Controller
 
     /**
      * @Route("/quoteRequest/loadList", name="paprec_commercial_quoteRequest_loadList")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function loadListAction(Request $request)
     {
@@ -100,7 +100,7 @@ class QuoteRequestController extends Controller
 
     /**
      * @Route("/quoteRequest/export", name="paprec_commercial_quoteRequest_export")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function exportAction(Request $request)
     {
@@ -192,7 +192,7 @@ class QuoteRequestController extends Controller
 
     /**
      * @Route("/quoteRequest/view/{id}", name="paprec_commercial_quoteRequest_view")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function viewAction(Request $request, QuoteRequest $quoteRequest)
     {
@@ -208,7 +208,7 @@ class QuoteRequestController extends Controller
 
     /**
      * @Route("/quoteRequest/edit/{id}", name="paprec_commercial_quoteRequest_edit")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function editAction(Request $request, QuoteRequest $quoteRequest)
     {
@@ -261,7 +261,7 @@ class QuoteRequestController extends Controller
 
     /**
      * @Route("/quoteRequest/remove/{id}", name="paprec_commercial_quoteRequest_remove")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function removeAction(Request $request, QuoteRequest $quoteRequest)
     {
@@ -284,7 +284,7 @@ class QuoteRequestController extends Controller
 
     /**
      * @Route("/quoteRequest/removeMany/{ids}", name="paprec_commercial_quoteRequest_removeMany")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function removeManyAction(Request $request)
     {
@@ -336,7 +336,7 @@ class QuoteRequestController extends Controller
     /**
      * @Route("/quoteRequest/addAssociatedQuote/{id}", name="paprec_commercial_quoteRequest_addAssociatedQuote")
      * @Method("POST")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      * @throws Exception
      */
     public function addAssociatedQuoteAction(Request $request, QuoteRequest $quoteRequest)
@@ -377,7 +377,7 @@ class QuoteRequestController extends Controller
 
     /**
      * @Route("/quoteRequest/{id}/downloadAssociatedQuote", name="paprec_commercial_quoteRequest_downloadAssociatedQuote")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function downloadAssociatedQuoteAction(QuoteRequest $quoteRequest)
     {
@@ -403,7 +403,7 @@ class QuoteRequestController extends Controller
 
     /**
      * @Route("/quoteRequest/{id}/downloadAttachedFiles", name="paprec_commercial_quoteRequest_downloadAttachedFiles")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function downloadAttachedFilesAction(QuoteRequest $quoteRequest)
     {
@@ -432,7 +432,7 @@ class QuoteRequestController extends Controller
 
     /**
      * @Route("/quoteRequest/{id}/sendAsssociatedQuote", name="paprec_commercial_quoteRequest_sendAssociatedQuote")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function sendAssociatedQuoteAction(QuoteRequest $quoteRequest)

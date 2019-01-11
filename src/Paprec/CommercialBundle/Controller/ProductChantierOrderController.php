@@ -28,7 +28,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder", name="paprec_commercial_productChantierOrder_index")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function indexAction()
     {
@@ -37,7 +37,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/loadList", name="paprec_commercial_productChantierOrder_loadList")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function loadListAction(Request $request)
     {
@@ -104,7 +104,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/export/{status}/{dateStart}/{dateEnd}", defaults={"status"=null, "dateStart"=null, "dateEnd"=null}, name="paprec_commercial_productChantierOrder_export")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function exportAction(Request $request, $dateStart, $dateEnd, $status)
     {
@@ -198,7 +198,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/view/{id}", name="paprec_commercial_productChantierOrder_view")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'CHANTIER' in user.getDivisions())")
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function viewAction(Request $request, ProductChantierOrder $productChantierOrder)
@@ -216,7 +216,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/edit/{id}", name="paprec_commercial_productChantierOrder_edit")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'CHANTIER' in user.getDivisions())")
      * @throws Exception
      */
     public function editAction(Request $request, ProductChantierOrder $productChantierOrder)
@@ -276,7 +276,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/remove/{id}", name="paprec_commercial_productChantierOrder_remove")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'CHANTIER' in user.getDivisions())")
      * @throws Exception
      */
     public function removeAction(Request $request, ProductChantierOrder $productChantierOrder)
@@ -296,7 +296,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/removeMany/{ids}", name="paprec_commercial_productChantierOrder_removeMany")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'CHANTIER' in user.getDivisions())")
      * @throws Exception
      */
     public function removeManyAction(Request $request)
@@ -344,7 +344,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/{id}/addLine", name="paprec_commercial_productChantierOrder_addLine")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function addLineAction(Request $request, ProductChantierOrder $productChantierOrder)
     {
@@ -389,7 +389,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/{id}/editLine/{orderLineId}", name="paprec_commercial_productChantierOrder_editLine")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'CHANTIER' in user.getDivisions())")
      * @ParamConverter("productChantierOrder", options={"id" = "id"})
      * @ParamConverter("productChantierOrderLine", options={"id" = "orderLineId"})
      */
@@ -427,7 +427,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/{id}/removeLine/{orderLineId}", name="paprec_commercial_productChantierOrder_removeLine")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'CHANTIER' in user.getDivisions())")
      * @ParamConverter("productChantierOrder", options={"id" = "id"})
      * @ParamConverter("productChantierOrderLine", options={"id" = "orderLineId"})
      */
@@ -462,7 +462,7 @@ class ProductChantierOrderController extends Controller
     /**
      * @Route("/productChantierOrder/addInvoice/{id}", name="paprec_commercial_productChantierOrder_addInvoice")
      * @Method("POST")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'CHANTIER' in user.getDivisions())")
      * @throws Exception
      */
     public function addInvoiceAction(Request $request, ProductChantierOrder $productChantierOrder)
@@ -501,7 +501,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/{id}/downloadAssociatedInvoice", name="paprec_commercial_productChantierOrder_downloadAssociatedInvoice")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function downloadAssociatedInvoiceAction(ProductChantierOrder $productChantierOrder)
     {
@@ -527,7 +527,7 @@ class ProductChantierOrderController extends Controller
 
     /**
      * @Route("/productChantierOrder/{id}/sendAsssociatedInvoice", name="paprec_commercial_productChantierOrder_sendAssociatedInvoice")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'CHANTIER' in user.getDivisions())")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws Exception
      */

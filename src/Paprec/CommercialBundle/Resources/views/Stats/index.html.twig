@@ -78,7 +78,7 @@
 
                     {# ---------------------------------------DEVIS-----------------------------------------#}
                     {# CARD SUR LES DEVIS DI#}
-                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'DI') %}
+                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_COMMERCIAL_DIVISION', 'DI') %}
 
                         <div class="card">
                             <div class="card-header">
@@ -175,7 +175,7 @@
                         <br>
                     {% endif %}
                     {# CARD SUR LES DEVIS CHANTIER #}
-                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'CHANTIER') %}
+                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_COMMERCIAL_DIVISION', 'CHANTIER') %}
                         <div class="card">
                             <div class="card-header">
                                 <h5>
@@ -271,7 +271,7 @@
                         <br>
                     {% endif %}
                     {# CARD SUR LES DEVIS D3E #}
-                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'D3E') %}
+                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_COMMERCIAL_DIVISION', 'D3E') %}
                         <div class="card">
                             <div class="card-header">
                                 <h5>
@@ -368,7 +368,7 @@
                     {% endif %}
                     {# ---------------------------------------COMMANDE-----------------------------------------#}
                     {# CARD SUR LES COMMANDES CHANTIER #}
-                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'CHANTIER') %}
+                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_COMMERCIAL_DIVISION', 'CHANTIER') %}
                         <div class="card">
                             <div class="card-header">
                                 <h5>
@@ -450,7 +450,7 @@
                         <br>
                     {% endif %}
                     {# CARD SUR LES COMMANDES D3E #}
-                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'D3E') %}
+                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_COMMERCIAL_DIVISION', 'D3E') %}
                         <div class="card">
                             <div class="card-header">
                                 <h5>

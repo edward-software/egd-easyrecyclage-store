@@ -63,7 +63,6 @@
 <body>
 
 <div class="">
-
     <!-- Static navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="{{ path('paprec_home_dashboard') }}">Easy Recyclage</a>
@@ -123,8 +122,7 @@
                         </div>
                     </li>
                 {% endif %}
-
-                {% if is_granted('ROLE_MANAGER_DIVISION') %}
+                {% if is_granted('ROLE_COMMERCIAL_DIVISION') %}
                     <li class="nav-item dropdown{% if app.request.get('_route')|slice(0, 'paprec_commercial'|length) == 'paprec_commercial' %} active{% endif %}">
                         <a href="#" class="dropdown-toggle nav-link" id="navbarDropdownCommercial"
                            data-toggle="dropdown"
@@ -132,15 +130,15 @@
                             <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownCommercial">
-                            {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'CHANTIER') or paprec_has_access('ROLE_MANAGER_DIVISION', 'D3E') %}
+                            {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_COMMERCIAL_DIVISION', 'CHANTIER') or paprec_has_access('ROLE_MANAGER_DIVISION', 'D3E') %}
                                 <div class="dropdown-submenu">
                                     <div tabindex="-1" class="dropdown-item">{{ 'Commercial.Orders'|trans }}</div>
                                     <div class="dropdown-menu">
-                                        {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'CHANTIER') %}
+                                        {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_COMMERCIAL_DIVISION', 'CHANTIER') %}
                                             <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productChantierOrder'|length) == 'paprec_commercial_productChantierOrder' %} active{% endif %}"
                                                href="{{ path('paprec_commercial_productChantierOrder_index') }}">{{ 'Commercial.CHANTIER'|trans }}</a>
                                         {% endif %}
-                                        {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'D3E') %}
+                                        {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_COMMERCIAL_DIVISION', 'D3E') %}
                                             <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productChantierOrder'|length) == 'paprec_commercial_productD3EOrder' %} active{% endif %}"
                                                href="{{ path('paprec_commercial_productD3EOrder_index') }}">{{ 'Commercial.D3E'|trans }}</a>
                                         {% endif %}
@@ -150,15 +148,15 @@
                             <div class="dropdown-submenu">
                                 <div tabindex="-1" class="dropdown-item">{{ 'Commercial.Quotes'|trans }}</div>
                                 <div class="dropdown-menu">
-                                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'DI') %}
+                                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_COMMERCIAL_DIVISION', 'DI') %}
                                         <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productDIQuote'|length) == 'paprec_commercial_productDIQuote' %} active{% endif %}"
                                            href="{{ path('paprec_commercial_productDIQuote_index') }}">{{ 'Commercial.DI'|trans }}</a>
                                     {% endif %}
-                                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'CHANTIER') %}
+                                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_COMMERCIAL_DIVISION', 'CHANTIER') %}
                                         <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productChantierQuote'|length) == 'paprec_commercial_productChantierQuote' %} active{% endif %}"
                                            href="{{ path('paprec_commercial_productChantierQuote_index') }}">{{ 'Commercial.CHANTIER'|trans }}</a>
                                     {% endif %}
-                                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'D3E') %}
+                                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_COMMERCIAL_DIVISION', 'D3E') %}
                                         <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_commercial_productD3EQuote'|length) == 'paprec_commercial_productD3EQuote' %} active{% endif %}"
                                            href="{{ path('paprec_commercial_productD3EQuote_index') }}">{{ 'Commercial.D3E'|trans }}</a>
                                     {% endif %}

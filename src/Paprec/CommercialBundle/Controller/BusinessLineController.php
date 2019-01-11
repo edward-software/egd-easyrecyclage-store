@@ -16,7 +16,7 @@ class BusinessLineController extends Controller
 {
     /**
      * @Route("/businessLine", name="paprec_commercial_businessLine_index")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function indexAction()
     {
@@ -25,7 +25,7 @@ class BusinessLineController extends Controller
 
     /**
      * @Route("/businessLine/loadList", name="paprec_commercial_businessLine_loadList")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function loadListAction(Request $request)
     {
@@ -79,7 +79,7 @@ class BusinessLineController extends Controller
 
     /**
      * @Route("/businessLine/export", name="paprec_commercial_businessLine_export")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function exportAction(Request $request)
     {
@@ -142,7 +142,7 @@ class BusinessLineController extends Controller
 
     /**
      * @Route("/businessLine/view/{id}", name="paprec_commercial_businessLine_view")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function viewAction(Request $request, BusinessLine $businessLine)
@@ -157,7 +157,7 @@ class BusinessLineController extends Controller
 
     /**
      * @Route("/businessLine/add", name="paprec_commercial_businessLine_add")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function addAction(Request $request)
     {
@@ -196,7 +196,7 @@ class BusinessLineController extends Controller
 
     /**
      * @Route("/businessLine/edit/{id}", name="paprec_commercial_businessLine_edit")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function editAction(Request $request, BusinessLine $businessLine)
@@ -236,7 +236,7 @@ class BusinessLineController extends Controller
 
     /**
      * @Route("/businessLine/remove/{id}", name="paprec_commercial_businessLine_remove")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function removeAction(Request $request, BusinessLine $businessLine)
     {
@@ -250,7 +250,7 @@ class BusinessLineController extends Controller
 
     /**
      * @Route("/businessLine/removeMany/{ids}", name="paprec_commercial_businessLine_removeMany")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function removeManyAction(Request $request)
     {

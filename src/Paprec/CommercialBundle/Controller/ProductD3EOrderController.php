@@ -28,7 +28,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder", name="paprec_commercial_productD3EOrder_index")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'D3E' in user.getDivisions())")
      */
     public function indexAction()
     {
@@ -37,7 +37,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/loadList", name="paprec_commercial_productD3EOrder_loadList")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'D3E' in user.getDivisions())")
      */
     public function loadListAction(Request $request)
     {
@@ -104,7 +104,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/export/{status}/{dateStart}/{dateEnd}", defaults={"status"=null, "dateStart"=null, "dateEnd"=null}, name="paprec_commercial_productD3EOrder_export")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'D3E' in user.getDivisions())")
      */
     public function exportAction(Request $request, $dateStart, $dateEnd, $status)
     {
@@ -199,7 +199,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/view/{id}", name="paprec_commercial_productD3EOrder_view")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'D3E' in user.getDivisions())")
      * @throws Exception
      */
     public function viewAction(Request $request, ProductD3EOrder $productD3EOrder)
@@ -218,7 +218,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/edit/{id}", name="paprec_commercial_productD3EOrder_edit")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'D3E' in user.getDivisions())")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws Exception
      */
@@ -279,7 +279,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/remove/{id}", name="paprec_commercial_productD3EOrder_remove")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'D3E' in user.getDivisions())")
      * @throws Exception
      */
     public function removeAction(Request $request, ProductD3EOrder $productD3EOrder)
@@ -299,7 +299,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/removeMany/{ids}", name="paprec_commercial_productD3EOrder_removeMany")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'D3E' in user.getDivisions())")
      * @throws Exception
      */
     public function removeManyAction(Request $request)
@@ -347,7 +347,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/{id}/addLine", name="paprec_commercial_productD3EOrder_addLine")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'D3E' in user.getDivisions())")
      */
     public function addLineAction(Request $request, ProductD3EOrder $productD3EOrder)
     {
@@ -385,7 +385,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/{id}/editLine/{orderLineId}", name="paprec_commercial_productD3EOrder_editLine")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'D3E' in user.getDivisions())")
      * @ParamConverter("productD3EOrder", options={"id" = "id"})
      * @ParamConverter("productD3EOrderLine", options={"id" = "orderLineId"})
      */
@@ -423,7 +423,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/{id}/removeLine/{orderLineId}", name="paprec_commercial_productD3EOrder_removeLine")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'D3E' in user.getDivisions())")
      * @ParamConverter("productD3EOrder", options={"id" = "id"})
      * @ParamConverter("productD3EOrderLine", options={"id" = "orderLineId"})
      */
@@ -457,7 +457,7 @@ class ProductD3EOrderController extends Controller
     /**
      * @Route("/productD3EOrder/addInvoice/{id}", name="paprec_commercial_productD3EOrder_addInvoice")
      * @Method("POST")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'D3E' in user.getDivisions())")
      * @throws Exception
      */
     public function addInvoiceAction(Request $request, ProductD3EOrder $productD3EOrder)
@@ -496,7 +496,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/{id}/downloadAssociatedInvoice", name="paprec_commercial_productD3EOrder_downloadAssociatedInvoice")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'D3E' in user.getDivisions())")
      */
     public function downloadAssociatedInvoiceAction(ProductD3EOrder $productD3EOrder)
     {
@@ -522,7 +522,7 @@ class ProductD3EOrderController extends Controller
 
     /**
      * @Route("/productD3EOrder/{id}/sendAsssociatedInvoice", name="paprec_commercial_productD3EOrder_sendAssociatedInvoice")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'D3E' in user.getDivisions())")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws Exception
      */

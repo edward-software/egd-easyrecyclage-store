@@ -21,7 +21,7 @@ class ProductDIQuoteController extends Controller
 
     /**
      * @Route("/productDIQuote", name="paprec_commercial_productDIQuote_index")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'DI' in user.getDivisions())")
      */
     public function indexAction()
     {
@@ -30,7 +30,7 @@ class ProductDIQuoteController extends Controller
 
     /**
      * @Route("/productDIQuote/loadList", name="paprec_commercial_productDIQuote_loadList")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'DI' in user.getDivisions())")
      */
     public function loadListAction(Request $request)
     {
@@ -95,7 +95,7 @@ class ProductDIQuoteController extends Controller
 
     /**
      * @Route("/productDIQuote/export/{status}/{dateStart}/{dateEnd}", defaults={"status"=null, "dateStart"=null, "dateEnd"=null}, name="paprec_commercial_productDIQuote_export")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'DI' in user.getDivisions())")
      */
     public function exportAction(Request $request, $dateStart, $dateEnd, $status)
     {
@@ -198,7 +198,7 @@ class ProductDIQuoteController extends Controller
 
     /**
      * @Route("/productDIQuote/view/{id}", name="paprec_commercial_productDIQuote_view")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'DI' in user.getDivisions())")
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function viewAction(Request $request, ProductDIQuote $productDIQuote)
@@ -213,7 +213,7 @@ class ProductDIQuoteController extends Controller
 
     /**
      * @Route("/productDIQuote/add", name="paprec_commercial_productDIQuote_add")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'DI' in user.getDivisions())")
      */
     public function addAction(Request $request)
     {
@@ -254,7 +254,7 @@ class ProductDIQuoteController extends Controller
 
     /**
      * @Route("/productDIQuote/edit/{id}", name="paprec_commercial_productDIQuote_edit")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'DI' in user.getDivisions())")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws \Exception
      */
@@ -302,7 +302,7 @@ class ProductDIQuoteController extends Controller
 
     /**
      * @Route("/productDIQuote/remove/{id}", name="paprec_commercial_productDIQuote_remove")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'DI' in user.getDivisions())")
      */
     public function removeAction(Request $request, ProductDIQuote $productDIQuote)
     {
@@ -316,7 +316,7 @@ class ProductDIQuoteController extends Controller
 
     /**
      * @Route("/productDIQuote/removeMany/{ids}", name="paprec_commercial_productDIQuote_removeMany")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'DI' in user.getDivisions())")
      */
     public function removeManyAction(Request $request)
     {
@@ -343,7 +343,7 @@ class ProductDIQuoteController extends Controller
 
     /**
      * @Route("/productDIQuote/{id}/addLine", name="paprec_commercial_productDIQuote_addLine")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'DI' in user.getDivisions())")
      */
     public function addLineAction(Request $request, ProductDIQuote $productDIQuote)
     {
@@ -385,7 +385,7 @@ class ProductDIQuoteController extends Controller
 
     /**
      * @Route("/productDIQuote/{id}/editLine/{quoteLineId}", name="paprec_commercial_productDIQuote_editLine")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'DI' in user.getDivisions())")
      * @ParamConverter("productDIQuote", options={"id" = "id"})
      * @ParamConverter("productDIQuoteLine", options={"id" = "quoteLineId"})
      */
@@ -423,7 +423,7 @@ class ProductDIQuoteController extends Controller
 
     /**
      * @Route("/productDIQuote/{id}/removeLine/{quoteLineId}", name="paprec_commercial_productDIQuote_removeLine")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'DI' in user.getDivisions())")
      * @ParamConverter("productDIQuote", options={"id" = "id"})
      * @ParamConverter("productDIQuoteLine", options={"id" = "quoteLineId"})
      */
@@ -456,7 +456,7 @@ class ProductDIQuoteController extends Controller
 
     /**
      * @Route("/productDIQuote/{id}/sendGeneratedQuote", name="paprec_commercial_productDIQuote_sendGeneratedQuote")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_COMMERCIAL_DIVISION') and 'DI' in user.getDivisions())")
      * @throws \Doctrine\ORM\EntityNotFoundException
      * @throws \Exception
      */

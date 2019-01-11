@@ -20,7 +20,7 @@ class ContactUsController extends Controller
 {
     /**
      * @Route("/contactUs", name="paprec_commercial_contactUs_index")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function indexAction()
     {
@@ -29,7 +29,7 @@ class ContactUsController extends Controller
 
     /**
      * @Route("/contactUs/loadList", name="paprec_commercial_contactUs_loadList")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function loadListAction(Request $request)
     {
@@ -95,7 +95,7 @@ class ContactUsController extends Controller
 
     /**
      * @Route("/contactUs/export", name="paprec_commercial_contactUs_export")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function exportAction(Request $request)
     {
@@ -172,7 +172,7 @@ class ContactUsController extends Controller
 
     /**
      * @Route("/contactUs/view/{id}", name="paprec_commercial_contactUs_view")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function viewAction(Request $request, ContactUs $contactUs)
@@ -187,7 +187,7 @@ class ContactUsController extends Controller
 
     /**
      * @Route("/contactUs/edit/{id}", name="paprec_commercial_contactUs_edit")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      * @throws Exception
      */
     public function editAction(Request $request, ContactUs $contactUs)
@@ -228,7 +228,7 @@ class ContactUsController extends Controller
 
     /**
      * @Route("/contactUs/remove/{id}", name="paprec_commercial_contactUs_remove")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      * @throws Exception
      */
     public function removeAction(Request $request, ContactUs $contactUs)
@@ -248,7 +248,7 @@ class ContactUsController extends Controller
 
     /**
      * @Route("/contactUs/removeMany/{ids}", name="paprec_commercial_contactUs_removeMany")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      * @throws Exception
      */
     public function removeManyAction(Request $request)
@@ -299,7 +299,7 @@ class ContactUsController extends Controller
 
     /**
      * @Route("/contactUs/{id}/downloadAttachedFiles", name="paprec_commercial_contactUs_downloadAttachedFiles")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_COMMERCIAL_DIVISION')")
      */
     public function downloadAttachedFilesAction(ContactUs $contactUs)
     {

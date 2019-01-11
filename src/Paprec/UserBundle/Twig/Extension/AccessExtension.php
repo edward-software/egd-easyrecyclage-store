@@ -29,13 +29,17 @@ class AccessExtension extends \Twig_Extension
     }
 
 
+    /**
+     * @param $role
+     * @param null $division
+     * @return bool
+     */
     public function hasAccess($role, $division = null)
     {
         $token = $this->token->getToken();
         if ($token->isAuthenticated() && $token->getUser()) {
             if ($division && $division != null) {
-                if (!in_array($role, $token->getUser()->getRoles())) {
-
+                if(!$this->container->get('security.authorization_checker')->isGranted($role)) {
                     return false;
                 }
                 if (!in_array($division, $token->getUser()->getDivisions())) {

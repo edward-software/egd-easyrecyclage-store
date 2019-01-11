@@ -27,7 +27,7 @@ class ProductChantierController extends Controller
 {
     /**
      * @Route("/productChantier", name="paprec_catalog_productChantier_index")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function indexAction()
     {
@@ -36,7 +36,7 @@ class ProductChantierController extends Controller
 
     /**
      * @Route("/productChantier/loadList", name="paprec_catalog_productChantier_loadList")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function loadListAction(Request $request)
     {
@@ -89,7 +89,7 @@ class ProductChantierController extends Controller
 
     /**
      * @Route("/productChantier/export",  name="paprec_catalog_productChantier_export")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function exportAction()
     {
@@ -166,7 +166,7 @@ class ProductChantierController extends Controller
 
     /**
      * @Route("/productChantier/view/{id}",  name="paprec_catalog_productChantier_view")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function viewAction(Request $request, ProductChantier $productChantier)
     {
@@ -197,7 +197,7 @@ class ProductChantierController extends Controller
 
     /**
      * @Route("/productChantier/add",  name="paprec_catalog_productChantier_add")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function addAction(Request $request)
     {
@@ -229,7 +229,7 @@ class ProductChantierController extends Controller
 
     /**
      * @Route("/productChantier/edit/{id}",  name="paprec_catalog_productChantier_edit")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function editAction(Request $request, ProductChantier $productChantier)
     {
@@ -266,7 +266,7 @@ class ProductChantierController extends Controller
 
     /**
      * @Route("/productChantier/remove/{id}", name="paprec_catalog_productChantier_remove")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function removeAction(Request $request, ProductChantier $productChantier)
     {
@@ -289,7 +289,7 @@ class ProductChantierController extends Controller
 
     /**
      * @Route("/productChantier/removeMany/{ids}", name="paprec_catalog_productChantier_removeMany")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function removeManyAction(Request $request)
     {
@@ -341,7 +341,7 @@ class ProductChantierController extends Controller
     /**
      * @Route("/productChantier/addPicture/{id}/{type}", name="paprec_catalog_productChantier_addPicture")
      * @Method("POST")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function addPictureAction(Request $request, ProductChantier $productChantier)
     {
@@ -388,7 +388,7 @@ class ProductChantierController extends Controller
     /**
      * @Route("/productChantier/editPicture/{id}/{pictureID}", name="paprec_catalog_productChantier_editPicture")
      * @Method("POST")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function editPictureAction(Request $request, ProductChantier $productChantier)
     {
@@ -439,7 +439,7 @@ class ProductChantierController extends Controller
 
     /**
      * @Route("/productChantier/removePicture/{id}/{pictureID}", name="paprec_catalog_productChantier_removePicture")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      * @throws Exception
      */
     public function removePictureAction(Request $request, ProductChantier $productChantier)
@@ -468,7 +468,7 @@ class ProductChantierController extends Controller
 
     /**
      * @Route("/productChantier/setPilotPicture/{id}/{pictureID}", name="paprec_catalog_productChantier_setPilotPicture")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function setPilotPictureAction(Request $request, ProductChantier $productChantier)
     {
@@ -493,7 +493,7 @@ class ProductChantierController extends Controller
 
     /**
      * @Route("/productChantier/setPicture/{id}/{pictureID}", name="paprec_catalog_productChantier_setPicture")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
     public function setPictureAction(Request $request, ProductChantier $productChantier)
     {
@@ -518,7 +518,7 @@ class ProductChantierController extends Controller
 
     /**
      * @Route("/productChantier/{id}/addCategory", name="paprec_catalog_productChantier_addCategory")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      * @throws Exception
      */
     public function addCategoryAction(Request $request, ProductChantier $productChantier)
@@ -565,7 +565,7 @@ class ProductChantierController extends Controller
 
     /**
      * @Route("/productChantier/{id}/editCategory/{productChantierCategoryId}", name="paprec_catalog_productChantier_editCategory")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      * @ParamConverter("productChantier", options={"id" = "id"})
      * @ParamConverter("productChantierCategory", options={"id" = "productChantierCategoryId"})
      */
@@ -609,7 +609,7 @@ class ProductChantierController extends Controller
 
     /**
      * @Route("/productChantier/{id}/removeCategory/{productChantierCategoryId}", name="paprec_catalog_productChantier_removeCategory")
-     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MANAGER_DIVISION')")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      * @ParamConverter("productChantier", options={"id" = "id"})
      * @ParamConverter("productChantierCategory", options={"id" = "productChantierCategoryId"})
      */

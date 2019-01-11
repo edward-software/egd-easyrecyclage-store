@@ -42,6 +42,7 @@ class User extends BaseUser
 
     /**
      * @var string
+     * @Assert\NotBlank()
      * @Assert\Email(
      *      message = "L'email '{{ value }}' n'a pas un format valide",
      *      checkMX = true
