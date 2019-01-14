@@ -62,7 +62,7 @@
                                     <div class="form-label">{{ 'Catalog.Category.Enabled'|trans }}</div>
                                     <div class="form-content">
                                         {% for radio in form.enabled.children %}
-                                            <div class="form__radio">
+                                            <div class="form__check ml-4">
                                                 {{ form_widget(radio) }}
                                                 {{ form_label(radio) }}
                                             </div>
@@ -74,7 +74,7 @@
                                     <div class="form-label">{{ 'Catalog.Category.Division'|trans }}</div>
                                     <div class="form-content checkbox-list">
                                         {% for radio in form.division.children %}
-                                            <div class="form__radio">
+                                            <div class="form__check ml-4">
                                                 {{ form_widget(radio) }}
                                                 {{ form_label(radio) }}
                                             </div>

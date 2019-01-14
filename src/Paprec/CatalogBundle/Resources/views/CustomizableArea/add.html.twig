@@ -54,7 +54,7 @@
                                     <div class="form-label">{{ 'Catalog.CustomizableArea.IsDisplayed'|trans }}</div>
                                     <div class="form-content">
                                         {% for radio in form.isDisplayed.children %}
-                                            <div class="form__radio">
+                                            <div class="form__check ml-4">
                                                 {{ form_widget(radio) }}
                                                 {{ form_label(radio) }}
                                             </div>

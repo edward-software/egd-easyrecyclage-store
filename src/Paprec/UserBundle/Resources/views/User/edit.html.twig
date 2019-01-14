@@ -96,7 +96,7 @@
                                         <div class="form-label">{{ 'User.User.Enabled'|trans }}</div>
                                         <div class="form-content">
                                             {% for radio in form.enabled.children %}
-                                                <div class="form__radio">
+                                                <div class="form__check ml-4">
                                                     {{ form_widget(radio) }}
                                                     {{ form_label(radio) }}
                                                 </div>
@@ -108,7 +108,7 @@
                                         <div class="form-label">{{ 'User.User.Roles'|trans }}</div>
                                         <div class="form-content">
                                             {% for checkbox in form.roles.children %}
-                                                <div class="form__check">
+                                                <div class="form__check ml-4">
                                                     {{ form_widget(checkbox) }}
                                                     {{ form_label(checkbox)|nl2br }}
                                                 </div>
@@ -120,7 +120,7 @@
                                         <div class="form-label">{{ 'User.User.Divisions'|trans }}</div>
                                         <div class="form-content">
                                             {% for checkbox in form.divisions.children %}
-                                                <div class="form__check">
+                                                <div class="form__check ml-4">
                                                     {{ form_widget(checkbox) }}
                                                     {{ form_label(checkbox)|nl2br }}
                                                 </div>

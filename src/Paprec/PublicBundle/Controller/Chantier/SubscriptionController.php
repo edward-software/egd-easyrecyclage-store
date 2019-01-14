@@ -128,7 +128,6 @@ class SubscriptionController extends Controller
     {
         $type = $request->get('type');
         $cartManager = $this->get('paprec.cart_manager');
-        $productChantierQuoteManager = $this->get('paprec_commercial.product_chantier_quote_manager');
 
         $cart = $cartManager->get($cartUuid);
         $type = $cart->getType();

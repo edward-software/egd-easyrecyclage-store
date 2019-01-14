@@ -133,30 +133,17 @@ $(function () {
         var maxDate = moment(now);
         maxDate.add(3, 'months');
 
-        $('#paprec_commercialbundle_callBack_dateCallBack').datetimepicker({
-            locale: 'fr',
-            format: 'L',
-            minDate: now,
-            maxDate: maxDate,
-            icons:
-                {
-                    up: 'fa fa-angle-up',
-                    down: 'fa fa-angle-down',
-                    date: 'fa fa-calendar',
-                    time: 'fa fa-clock',
-                    next: 'fa fa-angle-right',
-                    previous: 'fa fa-angle-left'
-                },
+        $('#paprec_commercialbundle_callBack_dateCallBack').datepicker({
+            option: $.datepicker.regional["fr"],
+            minDate: +1,
+            maxDate: "+1M",
         });
 
-        $('#paprec_commercialbundle_callBack_timeCallBack').datetimepicker({
-            locale: 'fr',
-            format: 'LT',
-            icons:
-                {
-                    up: 'fa fa-angle-up',
-                    down: 'fa fa-angle-down',
-                },
+        $('#paprec_commercialbundle_callBack_timeCallBack').timepicker({
+            timeFormat: 'H:mm',
+            minTime: '9',
+            maxTime: '19',
+            scrollbar: true
         });
 
 
@@ -345,6 +332,7 @@ $(function () {
         });
     }
 
+
     /*******************************************************************************************************************
      * CHANTIER ET D3E DELIVERY FORM
      */
@@ -364,37 +352,22 @@ $(function () {
          * CHANTIER
          */
         if ($('.chantier-delivery-form').is('div')) {
-            $('#paprec_commercialbundle_productchantierorderdelivery_installationDate').datetimepicker({
-                locale: 'fr',
-                format: 'L',
-                minDate: minDate,
-                maxDate: maxDate,
-                icons:
-                    {
-                        up: 'fa fa-angle-up',
-                        down: 'fa fa-angle-down',
-                        date: 'fa fa-calendar',
-                        time: 'fa fa-clock',
-                        next: 'fa fa-angle-right',
-                        previous: 'fa fa-angle-left'
-                    },
+            var installationDate = $('#paprec_commercialbundle_productchantierorderdelivery_installationDate').datepicker({
+                option: $.datepicker.regional["fr"],
+                minDate: +2,
+                maxDate: "+2M",
+            }).on("change", function () {
+                removalDate.datepicker("option", "minDate", getDate(this));
             });
 
-            $('#paprec_commercialbundle_productchantierorderdelivery_removalDate').datetimepicker({
-                locale: 'fr',
-                format: 'L',
-                minDate: minDate,
-                maxDate: maxDate,
-                icons:
-                    {
-                        up: 'fa fa-angle-up',
-                        down: 'fa fa-angle-down',
-                        date: 'fa fa-calendar',
-                        time: 'fa fa-clock',
-                        next: 'fa fa-angle-right',
-                        previous: 'fa fa-angle-left'
-                    },
+            var removalDate = $('#paprec_commercialbundle_productchantierorderdelivery_removalDate').datepicker({
+                option: $.datepicker.regional["fr"],
+                minDate: +2,
+                maxDate: "+2M"
+            }).on("change", function () {
+                installationDate.datepicker("option", "maxDate", getDate(this));
             });
+
 
             $('#deliveryFormSubmitButton').on('click', function () {
                 // avant de submit, on convertit la date au format yyyy-mm-dd
@@ -408,38 +381,21 @@ $(function () {
          * D3E
          */
         if ($('.d3e-delivery-form').is('div')) {
-            $('#paprec_commercialbundle_productd3eorderdelivery_installationDate').datetimepicker({
-                locale: 'fr',
-                format: 'L',
-                minDate: minDate,
-                maxDate: maxDate,
-                icons:
-                    {
-                        up: 'fa fa-angle-up',
-                        down: 'fa fa-angle-down',
-                        date: 'fa fa-calendar',
-                        time: 'fa fa-clock',
-                        next: 'fa fa-angle-right',
-                        previous: 'fa fa-angle-left'
-                    },
+            var installationDate = $('#paprec_commercialbundle_productd3eorderdelivery_installationDate').datepicker({
+                option: $.datepicker.regional["fr"],
+                minDate: +2,
+                maxDate: "+2M",
+            }).on("change", function () {
+                removalDate.datepicker("option", "minDate", getDate(this));
             });
 
-            $('#paprec_commercialbundle_productd3eorderdelivery_removalDate').datetimepicker({
-                locale: 'fr',
-                format: 'L',
-                minDate: minDate,
-                maxDate: maxDate,
-                icons:
-                    {
-                        up: 'fa fa-angle-up',
-                        down: 'fa fa-angle-down',
-                        date: 'fa fa-calendar',
-                        time: 'fa fa-clock',
-                        next: 'fa fa-angle-right',
-                        previous: 'fa fa-angle-left'
-                    },
+            var removalDate = $('#paprec_commercialbundle_productd3eorderdelivery_removalDate').datepicker({
+                option: $.datepicker.regional["fr"],
+                minDate: +2,
+                maxDate: "+2M"
+            }).on("change", function () {
+                installationDate.datepicker("option", "maxDate", getDate(this));
             });
-
 
             $('#deliveryFormSubmitButton').on('click', function () {
                 $('#paprec_commercialbundle_productd3eorderdelivery_installationDate').val($('#paprec_commercialbundle_productd3eorderdelivery_installationDate').val().split('/').reverse().join('-'));
@@ -461,6 +417,21 @@ $(function () {
 /****************************************************************
  * FUNCTIONS
  ***************************************************************/
+
+/**
+ * Récupération de la date d'un datepicker jquery-ui
+ * @param element
+ * @returns {*|*|null}
+ */
+function getDate(element) {
+    var date;
+    try {
+        date = $.datepicker.parseDate("dd/mm/yy", element.value);
+    } catch (error) {
+        date = null;
+    }
+    return date;
+}
 
 /**
  * Récupération du nombre d'agences proches
