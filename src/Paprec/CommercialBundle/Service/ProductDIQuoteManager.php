@@ -232,8 +232,7 @@ class ProductDIQuoteManager
                         )
                     ),
                     'text/html'
-                )
-            ->set;
+                );
 
             if ($this->container->get('mailer')->send($message)) {
                 return true;
