@@ -27,7 +27,7 @@
                             <div class="recap__step">
                                 <span class="recap__stepNumber">0{{ cptStep }}</span>Mon besoin
                             </div>
-                            {% if cart is defined and cart.division is not null %}
+                            {% if cart is defined and cart.division is not null and cart.division != '5FLUX' %}
                                 <div id="loadedCartPanel"
                                      data-division="{{ cart.division }}"
                                      data-url="{{ path('paprec_public_corp_' ~ cart.division|lower ~ '_subscription_loadCart', {cartUuid: cart.id}) }}">
