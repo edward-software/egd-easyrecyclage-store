@@ -19,6 +19,19 @@ class StatsController extends Controller
         $totalOrderStatus = array();
         $dateStart = $request->get('dateStart');
         $dateEnd = $request->get('dateEnd');
+        $dateStartSql = null;
+        $dateEndSql = null;
+
+        if (!empty($dateStart)) {
+            if ($dateStart !== '0') {
+                $dateStartSql = join('-', array_reverse(explode('/', $dateStart)));
+            }
+        }
+        if (!empty($dateEnd)) {
+            if ($dateEnd !== '0') {
+                $dateEndSql = join('-', array_reverse(explode('/', $dateEnd)));
+            }
+        }
 
         /**
          * Récupération des statuts possibles des devis et commandes
@@ -57,7 +70,9 @@ class StatsController extends Controller
             'totalQuoteStatus' => $totalQuoteStatus,
             'totalOrderStatus' => $totalOrderStatus,
             'dateStart' => $dateStart,
-            'dateEnd' => $dateEnd
+            'dateEnd' => $dateEnd,
+            'dateStartSql' => $dateStartSql,
+            'dateEndSql' => $dateEndSql
         ));
     }
 

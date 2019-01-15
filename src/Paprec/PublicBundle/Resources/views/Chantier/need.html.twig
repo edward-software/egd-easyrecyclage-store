@@ -169,10 +169,10 @@
                                                 {% endif %}
                                             {% endfor %}
                                         </select>
-                                        <div class="button button--lightgreen addToCartSubmitButton"
+                                        <button class="button button--lightgreen addToCartSubmitButton"
                                              data-url="{{ path('paprec_public_corp_chantier_subscription_addContent', {cartUuid: cart.id, categoryId: category.id, productId: displayedProduct.id, quantity: 'quantityTmp'}) }}"
-                                             id="addToCartSubmitButton_{{ displayedProduct.id }}_{{ category.id }}" {% if cart.content is null %} disabled{% endif %}>{{ ('Public.Cart.AddToCart' ~ cart.type|capitalize)|trans }}
-                                        </div>
+                                             id="addToCartSubmitButton_{{ displayedProduct.id }}_{{ category.id }}" disabled>{{ ('Public.Cart.AddToCart' ~ cart.type|capitalize)|trans }}
+                                        </button>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>

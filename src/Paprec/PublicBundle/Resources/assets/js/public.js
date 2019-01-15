@@ -143,7 +143,9 @@ $(function () {
             timeFormat: 'H:mm',
             minTime: '9',
             maxTime: '19',
-            scrollbar: true
+            interval: 60,
+            scrollbar: true,
+            dynamic: false
         });
 
 
@@ -158,27 +160,44 @@ $(function () {
      * COLLECTIVITE FORM
      */
     if ($('.collectivite-form').is('div')) {
+        var files = [];
+
+        $('.test').on('click', function () {
+            console.dir(files);
+        });
+
         $('#groupFormSubmitButton').on('click', function () {
             $('#regularForm').submit();
         });
 
-        // $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function () {
-        //     var html = "";
-        //     for (var i = 0; i < this.files.length; i++) {
-        //         var lastModified = new Date(this.files[i].lastModified);
-        //         html += this.files[i].name + " " + new Intl.DateTimeFormat('en-GB').format(lastModified) + " <a href=\"javascript:void(0);\" data-name=\"" + this.files[i].name + "\" class=\"removeFileButton\">x</a><br>";
-        //         $('#listFiles').html(html);
-        //         var that = this;
-        //     }
-        //
-        //     $('.removeFileButton').on('click', function () {
-        //         var idx;
-        //         var files = Array.from(that.files);
-        //         var found = files.some(function (item, index) { f = index; return item.name === $(this).data('name')});
-        //         files.splice(idx, 1);
-        //         console.dir(files);
-        //     });
-        // });
+        /**
+         * TODO Mettre cette fonction commune à tous les quoteRequestNonCorporate
+         * Il faudrait envoyer la variable "files" au submit en fait
+         */
+        $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function () {
+            var that = this;
+            var html = "";
+            for (var i = 0; i < this.files.length; i++) {
+                var lastModified = new Date(this.files[i].lastModified);
+                html += this.files[i].name + " " + new Intl.DateTimeFormat('en-GB').format(lastModified) + " <a href=\"javascript:void(0);\" data-name=\"" + this.files[i].name + "\" class=\"removeFileButton\">x</a><br>";
+                $('#listFiles').html(html);
+            }
+            files = Array.from(that.files);
+
+            $('.removeFileButton').on('click', function () {
+                var idx;
+                var fileName = $(this).data('name');
+                var f;
+                console.dir($(this).data('name'));
+                var found = files.some(function (item, index) {
+                    f = index;
+                    return item.name === fileName
+                });
+                if (found) {
+                    files.splice(f, 1);
+                }
+            });
+        });
     }
 
     /*******************************************************************************************************************
@@ -239,6 +258,16 @@ $(function () {
             var url = $(this).data('url');
             $(location).attr('href', url);
         });
+
+        $('#engagment').on('change', function () {
+            if ($(this).prop('checked')) {
+                $('.addToCartSubmitButton').removeAttr('disabled');
+            }
+            else {
+                $('.addToCartSubmitButton').attr('disabled','disabled');
+            }
+        });
+
     }
 
     /*******************************************************************************************************************
