@@ -317,7 +317,12 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <div class="form-label">{{ 'Catalog.Picture.Path'|trans }}</div>
+                                                    <div class="form-label">
+                                                        {{ 'Catalog.Picture.Path'|trans }}
+                                                        <span id="uploadPictureSizeInfo">
+
+                                                        </span>
+                                                    </div>
                                                     <div class="form-content">
                                                         {{ form_widget(formAddPicture.path, {'attr': {'class': 'form-control'}}) }}
                                                         {{ form_errors(formAddPicture.path) }}
@@ -357,7 +362,12 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <div class="form-label">{{ 'Catalog.Picture.Path'|trans }}</div>
+                                                    <div class="form-label">
+                                                        {{ 'Catalog.Picture.Path'|trans }}
+                                                        <span id="editPictureSizeInfo">
+
+                                                        </span>
+                                                    </div>
                                                     <div class="form-content">
                                                         {{ form_widget(formEditPicture.path, {'attr': {'class': 'form-control'}}) }}
                                                         {{ form_errors(formEditPicture.path) }}
@@ -413,7 +423,9 @@
                                 {% for productChantierCategory in productChantier.productChantierCategories %}
                                     <tr>
                                         <td>{{ productChantierCategory.id }}</td>
-                                        <td><a href="{{ path('paprec_catalog_category_view', {id: productChantierCategory.category.id}) }}">{{ productChantierCategory.category }}</a></td>
+                                        <td>
+                                            <a href="{{ path('paprec_catalog_category_view', {id: productChantierCategory.category.id}) }}">{{ productChantierCategory.category }}</a>
+                                        </td>
                                         <td>{{ productChantierCategory.unitPrice|formatAmount('EUR', app.request.locale) }}</td>
                                         <td class="text-center">
                                             <a href="{{ path('paprec_catalog_productChantier_editCategory', {id: productChantier.id, productChantierCategoryId: productChantierCategory.id}) }}"
@@ -499,17 +511,22 @@
                 $('#uploadPictureModal').on('show.bs.modal', function (e) {
                     var type = $(e.relatedTarget).data('type');
                     var actionUrl = "{{ path("paprec_catalog_productChantier_addPicture", {id: productChantier.id, type: 'typeTmp'}) }}";
+                    var sizeInfo = document.getElementById('uploadPictureSizeInfo');
+
                     actionUrl = actionUrl.replace('typeTmp', type);
                     document.formAddPicture.action = actionUrl;
                     switch (type) {
                         case 'Picto':
                             type = "{{ 'Catalog.ProductChantier.Picto'|trans }}";
+                            sizeInfo.innerText = '(125 x 120 pixels)';
                             break;
                         case 'PilotPicture':
                             type = "{{ 'Catalog.ProductChantier.PilotPicture'|trans }}";
+                            sizeInfo.innerText = '(277 x 395 pixels)';
                             break;
                         default:
                             type = "{{ 'Catalog.ProductChantier.Pictures'|trans }}";
+                            sizeInfo.innerText = '(60 x 60 pixels)';
                             break;
                     }
                     var title = document.getElementById('uploadPictureModalTitle');
@@ -522,9 +539,24 @@
                     var pictureID = $(e.relatedTarget).data('id');
                     var type = $(e.relatedTarget).data('type');
                     var actionUrl = "{{ path("paprec_catalog_productChantier_editPicture", {id: productChantier.id, pictureID: 'pictureTmp'}) }}";
-                    // actionUrl = actionUrl.replace('typeTmp', type);
+                    var sizeInfo = document.getElementById('editPictureSizeInfo');
+
                     actionUrl = actionUrl.replace('pictureTmp', pictureID);
                     document.formEditPicture.action = actionUrl;
+                    switch (type) {
+                        case 'Picto':
+                            type = "{{ 'Catalog.ProductChantier.Picto'|trans }}";
+                            sizeInfo.innerText = '(125 x 120 pixels)';
+                            break;
+                        case 'PilotPicture':
+                            type = "{{ 'Catalog.ProductChantier.PilotPicture'|trans }}";
+                            sizeInfo.innerText = '(277 x 395 pixels)';
+                            break;
+                        default:
+                            type = "{{ 'Catalog.ProductChantier.Pictures'|trans }}";
+                            sizeInfo.innerText = '(60 x 60 pixels)';
+                            break;
+                    }
                     var title = document.getElementById('editPictureModalTitle');
                     title.innerText = type;
                 });

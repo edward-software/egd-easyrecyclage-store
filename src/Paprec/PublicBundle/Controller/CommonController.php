@@ -138,14 +138,15 @@ class CommonController extends Controller
      * @param $label
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getCTAsBottomAction($label, $cartUuid, $division, $stepBack = '', $nextStep = '', $idSubmit = '') {
+    public function getCTAsBottomAction($label, $cartUuid, $division, $stepBack = '', $nextStep = '', $idSubmit = '', $cartEmpty = false) {
         return $this->render('@PaprecPublic/Common/partial/ctaBottomPartial.html.twig', array(
             'cartUuid' => $cartUuid,
             'label' => $label,
             'stepBack' => $stepBack,
             'nextStep' => $nextStep,
             'division' => $division,
-            'idSubmit' => $idSubmit
+            'idSubmit' => $idSubmit,
+            'cartEmpty' => $cartEmpty
         ));
     }
 

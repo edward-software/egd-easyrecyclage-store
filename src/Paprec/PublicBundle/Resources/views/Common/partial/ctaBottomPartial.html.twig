@@ -20,7 +20,7 @@
                 {% elseif nextStep is defined and nextStep is not null and nextStep != '' %}
                     href="{{ path('paprec_public_corp_' ~ division|lower ~'_subscription_' ~ nextStep, {cartUuid: cartUuid }) }}"
                 {% endif %}
-                class="button margint10 button--green">{{ (('Public.Cart.' ~ label)|trans)|upper }}</a>
+                class="button margint10 button--green {% if cartEmpty %}disabled{% endif %}">{{ (('Public.Cart.' ~ label)|trans)|upper }}</a>
     {% endif %}
     {#{% if stepBack is defined and stepBack is not null and stepBack != '' %}#}
 </div>

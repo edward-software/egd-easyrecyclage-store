@@ -167,7 +167,8 @@ class SubscriptionController extends Controller
         $cart = $cartManager->addOrRemoveDisplayedCategory($cartUuid, $categoryId);
 
         return $this->redirectToRoute('paprec_public_corp_di_subscription_step1', array(
-            'cartUuid' => $cart->getId()
+            'cartUuid' => $cart->getId(),
+            '_fragment' => 'anchor1'
         ));
     }
 
@@ -184,7 +185,9 @@ class SubscriptionController extends Controller
         $cart = $cartManager->addOrRemoveDisplayedProduct($cartUuid, $categoryId, $productId);
 
         return $this->redirectToRoute('paprec_public_corp_di_subscription_step1', array(
-            'cartUuid' => $cart->getId()
+            'cartUuid' => $cart->getId(),
+            '_fragment' => 'anchor1'
+
         ));
     }
 

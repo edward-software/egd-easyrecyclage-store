@@ -313,7 +313,12 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <div class="form-label">{{ 'Catalog.Picture.Path'|trans }}</div>
+                                                    <div class="form-label">
+                                                        {{ 'Catalog.Picture.Path'|trans }}
+                                                        <span id="uploadPictureSizeInfo">
+
+                                                        </span>
+                                                    </div>
                                                     <div class="form-content">
                                                         {{ form_widget(formAddPicture.path, {'attr': {'class': 'form-control'}}) }}
                                                         {{ form_errors(formAddPicture.path) }}
@@ -353,7 +358,12 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <div class="form-label">{{ 'Catalog.Picture.Path'|trans }}</div>
+                                                    <div class="form-label">
+                                                        {{ 'Catalog.Picture.Path'|trans }}
+                                                        <span id="editPictureSizeInfo">
+
+                                                        </span>
+                                                    </div>
                                                     <div class="form-content">
                                                         {{ form_widget(formEditPicture.path, {'attr': {'class': 'form-control'}}) }}
                                                         {{ form_errors(formEditPicture.path) }}
@@ -495,17 +505,22 @@
                 $('#uploadPictureModal').on('show.bs.modal', function (e) {
                     var type = $(e.relatedTarget).data('type');
                     var actionUrl = "{{ path("paprec_catalog_productDI_addPicture", {id: productDI.id, type: 'typeTmp'}) }}";
+                    var sizeInfo = document.getElementById('uploadPictureSizeInfo');
+
                     actionUrl = actionUrl.replace('typeTmp', type);
                     document.formAddPicture.action = actionUrl;
                     switch (type) {
                         case 'Picto':
                             type = "{{ 'Catalog.ProductDI.Picto'|trans }}";
+                            sizeInfo.innerText = '(125 x 120 pixels)';
                             break;
                         case 'PilotPicture':
                             type = "{{ 'Catalog.ProductDI.PilotPicture'|trans }}";
+                            sizeInfo.innerText = '(277 x 395 pixels)';
                             break;
                         default:
                             type = "{{ 'Catalog.ProductDI.Pictures'|trans }}";
+                            sizeInfo.innerText = '(60 x 60 pixels)';
                             break;
                     }
                     var title = document.getElementById('uploadPictureModalTitle');
@@ -518,9 +533,24 @@
                     var pictureID = $(e.relatedTarget).data('id');
                     var type = $(e.relatedTarget).data('type');
                     var actionUrl = "{{ path("paprec_catalog_productDI_editPicture", {id: productDI.id, pictureID: 'pictureTmp'}) }}";
-                    // actionUrl = actionUrl.replace('typeTmp', type);
+                    var sizeInfo = document.getElementById('editPictureSizeInfo');
+
                     actionUrl = actionUrl.replace('pictureTmp', pictureID);
                     document.formEditPicture.action = actionUrl;
+                    switch (type) {
+                        case 'Picto':
+                            type = "{{ 'Catalog.ProductDI.Picto'|trans }}";
+                            sizeInfo.innerText = '(125 x 120 pixels)';
+                            break;
+                        case 'PilotPicture':
+                            type = "{{ 'Catalog.ProductDI.PilotPicture'|trans }}";
+                            sizeInfo.innerText = '(277 x 395 pixels)';
+                            break;
+                        default:
+                            type = "{{ 'Catalog.ProductDI.Pictures'|trans }}";
+                            sizeInfo.innerText = '(60 x 60 pixels)';
+                            break;
+                    }
                     var title = document.getElementById('editPictureModalTitle');
                     title.innerText = type;
                 });

@@ -169,10 +169,10 @@
                                                 {% endif %}
                                             {% endfor %}
                                         </select>
-                                        <button class="button button--lightgreen addToCartSubmitButton"
+                                        <div class="button button--lightgreen addToCartSubmitButton"
                                              data-url="{{ path('paprec_public_corp_chantier_subscription_addContent', {cartUuid: cart.id, categoryId: category.id, productId: displayedProduct.id, quantity: 'quantityTmp'}) }}"
                                              id="addToCartSubmitButton_{{ displayedProduct.id }}_{{ category.id }}" disabled>{{ ('Public.Cart.AddToCart' ~ cart.type|capitalize)|trans }}
-                                        </button>
+                                        </div>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -195,7 +195,8 @@
             'division': cart.division,
             'stepBack': '',
             'nextStep': 'step2',
-            'idSubmit': ''
+            'idSubmit': '',
+            'cartEmpty': cart.content is empty
         })) }}
     </div>
 {% endblock %}

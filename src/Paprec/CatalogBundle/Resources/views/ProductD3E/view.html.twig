@@ -129,7 +129,7 @@
                                             <div class="float-right">
                                                 <button class="btn btn-sm btn-outline-primary"
                                                         data-target="#uploadPictureModal" data-toggle="modal"
-                                                        data-type="PICTO" id="openModalUploadPicture">
+                                                        data-type="Picto" id="openModalUploadPicture">
                                                     <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductD3E.AddPicture'|trans }}
                                                 </button>
                                             </div>
@@ -200,7 +200,12 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <div class="form-label">{{ 'Catalog.Picture.Path'|trans }}</div>
+                                                <div class="form-label">
+                                                    {{ 'Catalog.Picture.Path'|trans }}
+                                                    <span id="uploadPictureSizeInfo">
+
+                                                    </span>
+                                                </div>
                                                 <div class="form-content">
                                                     {{ form_widget(formAddPicture.path, {'attr': {'class': 'form-control'}}) }}
                                                     {{ form_errors(formAddPicture.path) }}
@@ -241,7 +246,12 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <div class="form-label">{{ 'Catalog.Picture.Path'|trans }}</div>
+                                                <div class="form-label">
+                                                    {{ 'Catalog.Picture.Path'|trans }}
+                                                    <span id="editPictureSizeInfo">
+
+                                                    </span>
+                                                </div>
                                                 <div class="form-content">
                                                     {{ form_widget(formEditPicture.path, {'attr': {'class': 'form-control'}}) }}
                                                     {{ form_errors(formEditPicture.path) }}
@@ -332,18 +342,13 @@
                 $('#uploadPictureModal').on('show.bs.modal', function (e) {
                     var type = $(e.relatedTarget).data('type');
                     var actionUrl = "{{ path("paprec_catalog_productD3E_addPicture", {id: productD3E.id, type: 'typeTmp'}) }}";
+                    var sizeInfo = document.getElementById('uploadPictureSizeInfo');
+
                     actionUrl = actionUrl.replace('typeTmp', type);
                     document.formAddPicture.action = actionUrl;
-                    switch (type) {
-                        case 'Picto':
-                            type = "{{ 'Catalog.ProductD3E.Picto'|trans }}";
-                            break;
-                            {#case 'PilotPicture':#}
-                            {#type = "{{ 'Catalog.ProductD3E.PilotPicture'|trans }}";#}
-                            {#break;#}
-                        default:
-                            type = "{{ 'Catalog.ProductD3E.Pictures'|trans }}";
-                            break;
+                    if (type === 'Picto') {
+                        type = "{{ 'Catalog.ProductD3E.Picto'|trans }}";
+                        sizeInfo.innerText = '(125 x 120 pixels)';
                     }
                     var title = document.getElementById('uploadPictureModalTitle');
                     title.innerText = type;
@@ -355,8 +360,14 @@
                     var pictureID = $(e.relatedTarget).data('id');
                     var type = $(e.relatedTarget).data('type');
                     var actionUrl = "{{ path("paprec_catalog_productD3E_editPicture", {id: productD3E.id, pictureID: 'pictureTmp'}) }}";
+                    var sizeInfo = document.getElementById('editPictureSizeInfo');
+
                     actionUrl = actionUrl.replace('pictureTmp', pictureID);
                     document.formEditPicture.action = actionUrl;
+                    if (type === 'Picto') {
+                        type = "{{ 'Catalog.ProductD3E.Picto'|trans }}";
+                        sizeInfo.innerText = '(125 x 120 pixels)';
+                    }
                     var title = document.getElementById('editPictureModalTitle');
                     title.innerText = type;
                 });
@@ -373,7 +384,8 @@
                         if (result.value) {
                             var url = "{{ path("paprec_catalog_productD3E_removePicture", {id: productD3E.id, pictureID: 'pictureTmp'}) }}";
                             url = url.replace('pictureTmp', picId);
-                            $(location).attr('href', url);                        }
+                            $(location).attr('href', url);
+                        }
                     });
                 });
 

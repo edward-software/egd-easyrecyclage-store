@@ -156,7 +156,6 @@
                                              data-url="{{ path('paprec_public_corp_di_subscription_addContent', {cartUuid: cart.id, categoryId: category.id, productId: displayedProduct.id, quantity: 'quantityTmp'}) }}"
                                              id="addToCartSubmitButton_{{ displayedProduct.id }}_{{ category.id }}" disabled>{{ 'Public.Cart.AddToCartQuote'|trans }}
                                         </button>
-
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -179,7 +178,8 @@
             'division': cart.division,
             'stepBack': '',
             'nextStep': 'step2',
-            'idSubmit': ''
+            'idSubmit': '',
+            'cartEmpty': cart.content is empty
         })) }}
     </div>
 {% endblock %}
