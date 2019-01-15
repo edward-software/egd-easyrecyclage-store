@@ -125,7 +125,7 @@ class ContactUsManager
     {
         try {
             $from = $this->container->getParameter('paprec_email_sender');
-            $rcptTo = $this->container->getParameter('paprec_assistant_commercial_di_email');
+            $rcptTo = $this->container->getParameter('paprec_assistant_commercial_email');
 
             $message = \Swift_Message::newInstance()
                 ->setSubject('Easy-Recyclage : Nouvelle demande de contact N°' . $contactUs->getId())
