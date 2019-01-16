@@ -262,9 +262,8 @@ $(function () {
         $('#engagment').on('change', function () {
             if ($(this).prop('checked')) {
                 $('.addToCartSubmitButton').removeAttr('disabled');
-            }
-            else {
-                $('.addToCartSubmitButton').attr('disabled','disabled');
+            } else {
+                $('.addToCartSubmitButton').attr('disabled', 'disabled');
             }
         });
 
@@ -281,11 +280,14 @@ $(function () {
         });
 
         // Au clic sur un wrapper, on l'affiche ou on le cache
-        $('.step__wrappertop').click(function () {
-            if ($('.step__wrappertop').hasClass('open')) {
-                $('.step__wrappertop').removeClass('open')
+        $('.step__wrappertop').click(function (e) {
+            var idWrapper = this.id.replace('step__wrappertop_', '');
+            if ($(this).hasClass('open')) {
+                $(this).removeClass('open');
+                $('#productsWrapper_' + idWrapper).fadeOut('fast');
             } else {
-                $('.step__wrappertop').addClass('open');
+                $(this).addClass('open');
+                $('#productsWrapper_' + idWrapper).fadeIn('fast');
             }
         });
 
@@ -307,7 +309,7 @@ $(function () {
                     // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
                     removeBadge(productId, categoryId);
                     $('#productCheckboxPicto_' + productId + '_' + categoryId).prepend("<span class=\"number\">" + qtty + "<span");
-                    reloadCart()
+                    reloadCart();
                 },
                 error: function (errorThrown) {
                     console.log(errorThrown);
