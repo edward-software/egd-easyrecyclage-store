@@ -30,7 +30,7 @@
 {% endblock %}
 
 {% block division_selected %}
-    {% if step != 'd' %}
+    {% if step != 'd' and (cart.division is defined and cart.division != '5FLUX') %}
         {{ parent() }}
     {% endif %}
 {% endblock %}
@@ -38,7 +38,7 @@
 {% block cinq_flux %}
     {% if (step is defined and (step == 'f' or step == 'r')) and (cart.division is defined and cart.division == '5FLUX') %}
         <a class="button button--grey"
-           href="http://www.easyrecyclage.com">{{ 'Public.Cart.3MinOrder'|trans }}</a>
+           href="{{ paprec_easyrecyclage_5flux_url }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
     {% endif %}
 {% endblock %}
 

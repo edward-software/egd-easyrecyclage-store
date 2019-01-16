@@ -164,7 +164,7 @@ class SubscriptionController extends Controller
                     }
                 }
 
-                // Envois du mail d'alerte au responsable de division et envoi du devis au client
+                // Envoi du mail d'alerte au responsable de division et envoi du devis au client
                 $sendNewProductChantierQuoteMail = $productChantierQuoteManager->sendNewProductChantierQuoteEmail($productChantierQuote);
                 $sendGeneratedQuoteMail = $productChantierQuoteManager->sendGeneratedQuoteEmail($productChantierQuote);
 
@@ -223,7 +223,7 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Etape "Mon offre" qui récapitule le de vis créé par l'utilisateur
+     * Etape "Mon offre" qui récapitule le devis créé par l'utilisateur
      *
      * @Route("/chantier/step3/{cartUuid}/{quoteId}", name="paprec_public_corp_chantier_subscription_step3")
      */
