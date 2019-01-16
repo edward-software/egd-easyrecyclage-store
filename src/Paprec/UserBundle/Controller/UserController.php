@@ -5,7 +5,7 @@ namespace Paprec\UserBundle\Controller;
 use Paprec\UserBundle\Form\UserMyProfileType;
 use Paprec\UserBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Paprec\UserBundle\Entity\User;

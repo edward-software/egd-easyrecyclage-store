@@ -394,14 +394,13 @@
                         <div class="card-header">
                             <h5>
                                 {{ 'Catalog.ProductDI.CategoriesList'|trans }}
-                                <div class="float-right">
-
-                                    <a href="{{ path('paprec_catalog_productDI_addCategory', {id: productDI.id}) }}"
-                                       class="btn btn-sm btn-outline-primary">
-                                        <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductDI.AddCategory'|trans }}
-                                    </a>
-                                </div>
                             </h5>
+                            <div class="float-right">
+                                <a href="{{ path('paprec_catalog_productDI_addCategory', {id: productDI.id}) }}"
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductDI.AddCategory'|trans }}
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <table id="productDICategorysDatatable"
@@ -419,7 +418,9 @@
                                 {% for productDICategory in productDI.productDICategories %}
                                     <tr>
                                         <td>{{ productDICategory.id }}</td>
-                                        <td><a href="{{ path('paprec_catalog_category_view', {id: productDICategory.category.id}) }}">{{ productDICategory.category }}</a></td>
+                                        <td>
+                                            <a href="{{ path('paprec_catalog_category_view', {id: productDICategory.category.id}) }}">{{ productDICategory.category }}</a>
+                                        </td>
                                         <td>{{ productDICategory.unitPrice|formatAmount('EUR', app.request.locale) }}</td>
                                         <td class="text-center">
                                             <a href="{{ path('paprec_catalog_productDI_editCategory', {id: productDI.id, productDICategoryId: productDICategory.id}) }}"

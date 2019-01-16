@@ -58,4 +58,11 @@ parameters:
     - PICTURE
     - PILOTPICTURE
 
+  paprec_customizable_area_codes:
+    - collectivite_form
+    - groupe_form
+    - particulier_form
+    - entreprise_form
+    - regular_form
+
 

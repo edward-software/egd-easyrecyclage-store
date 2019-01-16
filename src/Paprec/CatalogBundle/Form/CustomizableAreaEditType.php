@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CustomizableAreaType extends AbstractType
+class CustomizableAreaEditType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -20,11 +20,7 @@ class CustomizableAreaType extends AbstractType
                 'config_name' => 'basic_config',
                 'required' => true
             ))
-            ->add('code', ChoiceType::class, array(
-                "choices" => $options['codes'],
-                "multiple" => false,
-                "expanded" => false,
-            ))
+
             ->add('isDisplayed', ChoiceType::class, array(
                 "choices" => array(
                     'Non' => 0,
@@ -40,8 +36,7 @@ class CustomizableAreaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CatalogBundle\Entity\CustomizableArea',
-            'codes' => null
+            'data_class' => 'Paprec\CatalogBundle\Entity\CustomizableArea'
         ));
     }
 
@@ -50,7 +45,7 @@ class CustomizableAreaType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'paprec_catalogbundle_customizablearea';
+        return 'paprec_catalogbundle_customizableareaedit';
     }
 
 

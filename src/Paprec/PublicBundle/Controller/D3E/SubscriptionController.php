@@ -7,7 +7,7 @@ use Paprec\CommercialBundle\Entity\ProductD3EQuote;
 use Paprec\CommercialBundle\Form\ProductD3EOrder\ProductD3EOrderDeliveryType;
 use Paprec\CommercialBundle\Form\ProductD3EOrder\ProductD3EOrderShortType;
 use Paprec\CommercialBundle\Form\ProductD3EQuote\ProductD3EQuoteShortType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

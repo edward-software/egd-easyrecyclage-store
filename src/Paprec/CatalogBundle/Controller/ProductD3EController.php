@@ -7,7 +7,7 @@ use Paprec\CatalogBundle\Entity\ProductD3E;
 use Paprec\CatalogBundle\Form\PictureProductType;
 use Paprec\CatalogBundle\Form\ProductD3EType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;

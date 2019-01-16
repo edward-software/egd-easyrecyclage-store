@@ -11,7 +11,7 @@ use Paprec\CommercialBundle\Form\ProductD3EOrder\ProductD3EOrderLineEditType;
 use Paprec\CommercialBundle\Form\ProductD3EOrder\ProductD3EOrderType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Exception\IOException;

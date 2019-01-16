@@ -5,7 +5,7 @@ namespace Paprec\CommercialBundle\Controller;
 use Exception;
 use Paprec\CommercialBundle\Entity\CallBack;
 use Paprec\CommercialBundle\Form\CallBack\CallBackEditType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;

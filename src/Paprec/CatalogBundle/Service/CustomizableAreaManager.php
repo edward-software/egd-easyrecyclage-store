@@ -76,10 +76,11 @@ class CustomizableAreaManager
 
     /**
      * @param $code
-     * @return array|object[]|CustomizableArea[]
+     * @return object|CustomizableArea|null
      * @throws Exception
      */
-    public function getByCode($code) {
+    public function getByCode($code)
+    {
         try {
 
             $customizableArea = $this->em->getRepository('PaprecCatalogBundle:CustomizableArea')->findOneBy(array(
@@ -97,6 +98,31 @@ class CustomizableAreaManager
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode());
         }
+    }
+
+    /**
+     * Renvoie les codes définis dans les parameters qui ne sont pas déjà associés à un CustomizableAera existant
+     * @return array
+     */
+    public function getUnallocated()
+    {
+        $unallocatedCodes = array();
+        $allocatedCodes = $this->em->getRepository('PaprecCatalogBundle:CustomizableArea')->findAll();
+
+        foreach ($this->container->getParameter('paprec_customizable_area_codes') as $c) {
+            $allocated = false;
+            if ($allocatedCodes != null && is_array($allocatedCodes) && count($allocatedCodes)) {
+                foreach ($allocatedCodes as $code) {
+                    if ($code->getCode() == $c) {
+                        $allocated = true;
+                    }
+                }
+            }
+            if (!$allocated) {
+                $unallocatedCodes[$c] = $c;
+            }
+        }
+        return $unallocatedCodes;
     }
 
 }

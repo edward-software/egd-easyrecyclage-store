@@ -4,7 +4,7 @@ namespace Paprec\CommercialBundle\Controller;
 
 use Paprec\CommercialBundle\Entity\BusinessLine;
 use Paprec\CommercialBundle\Form\BusinessLine\BusinessLineType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;

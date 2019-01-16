@@ -7,7 +7,7 @@ use Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate;
 use Paprec\CommercialBundle\Form\QuoteRequestNonCorporate\QuoteRequestNonCorporateAssociatedQuoteType;
 use Paprec\CommercialBundle\Form\QuoteRequestNonCorporate\QuoteRequestNonCorporateEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Exception\IOException;

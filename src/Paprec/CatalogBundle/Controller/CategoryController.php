@@ -6,7 +6,7 @@ use Paprec\CatalogBundle\Entity\Category;
 use Paprec\CatalogBundle\Entity\ProductChantierCategory;
 use Paprec\CatalogBundle\Entity\ProductDICategory;
 use Paprec\CatalogBundle\Form\CategoryType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;

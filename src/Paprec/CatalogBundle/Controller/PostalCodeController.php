@@ -4,7 +4,7 @@ namespace Paprec\CatalogBundle\Controller;
 
 use Paprec\CatalogBundle\Entity\PostalCode;
 use Paprec\CatalogBundle\Form\PostalCodeType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;

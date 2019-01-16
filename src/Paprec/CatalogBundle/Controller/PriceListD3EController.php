@@ -7,7 +7,7 @@ use Paprec\CatalogBundle\Entity\PriceListLineD3E;
 use Paprec\CatalogBundle\Form\PriceListD3EType;
 use Paprec\CatalogBundle\Form\PriceListLineD3EType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;

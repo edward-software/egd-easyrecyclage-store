@@ -6,7 +6,7 @@ namespace Paprec\PublicBundle\Controller\NonCorporate;
 use Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate;
 use Paprec\CommercialBundle\Form\QuoteRequestNonCorporate\QuoteRequestNonCorporateGroupeType;
 use Paprec\CommercialBundle\Form\QuoteRequestNonCorporate\QuoteRequestNonCorporateShortType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;

@@ -3,10 +3,11 @@
 namespace Paprec\CatalogBundle\Controller;
 
 use Paprec\CatalogBundle\Entity\CustomizableArea;
+use Paprec\CatalogBundle\Form\CustomizableAreaEditType;
 use Paprec\CatalogBundle\Form\CustomizableAreaType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -162,8 +163,13 @@ class CustomizableAreaController extends Controller
     public function addAction(Request $request)
     {
         $customizableArea = new CustomizableArea();
+        $customizableAreaManager = $this->get('paprec_catalog.customizable_area_manager');
 
-        $form = $this->createForm(CustomizableAreaType::class, $customizableArea);
+        $codes = $customizableAreaManager->getUnallocated();
+
+        $form = $this->createForm(CustomizableAreaType::class, $customizableArea, array(
+            'codes' => $codes
+        ));
 
         $form->handleRequest($request);
 
@@ -196,7 +202,7 @@ class CustomizableAreaController extends Controller
         $customizableAreaManager = $this->get('paprec_catalog.customizable_area_manager');
         $customizableAreaManager->isDeleted($customizableArea, true);
 
-        $form = $this->createForm(CustomizableAreaType::class, $customizableArea);
+        $form = $this->createForm(CustomizableAreaEditType::class, $customizableArea);
 
         $form->handleRequest($request);
 

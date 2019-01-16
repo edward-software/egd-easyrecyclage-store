@@ -398,14 +398,13 @@
                         <div class="card-header">
                             <h5>
                                 {{ 'Catalog.ProductChantier.CategoriesList'|trans }}
-                                <div class="float-right">
-
-                                    <a href="{{ path('paprec_catalog_productChantier_addCategory', {id: productChantier.id}) }}"
-                                       class="btn btn-sm btn-outline-primary">
-                                        <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductChantier.AddCategory'|trans }}
-                                    </a>
-                                </div>
                             </h5>
+                            <div class="float-right">
+                                <a href="{{ path('paprec_catalog_productChantier_addCategory', {id: productChantier.id}) }}"
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductChantier.AddCategory'|trans }}
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <table id="productChantierCategorysDatatable"
