@@ -25,15 +25,20 @@
 
 {% block cta_bottom_panel %}
     <div class="step">
-        {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
-            'label': 'ValidateNeed',
-            'cartUuid': cart.id,
-            'division': cart.division,
-            'stepBack': '',
-            'nextStep': '',
-            'idSubmit': '',
-            'cartEmpty': cart.content is empty
-        })) }}
+        <div class="step__left">
+            &nbsp;
+        </div>
+        <div class="step__right">
+            {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
+                'label': 'ValidateNeed',
+                'cartUuid': cart.id,
+                'division': cart.division,
+                'stepBack': '',
+                'nextStep': '',
+                'idSubmit': '',
+                'cartEmpty': cart.content is empty
+            })) }}
+        </div>
     </div>
 {% endblock %}
 

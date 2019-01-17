@@ -197,6 +197,21 @@ class SubscriptionController extends Controller
         ));
     }
 
+// TODO SUPPRIMER FONCTION UNE FOIS TOUS LES MAILS OK
+
+//    /**
+//     * @Route("/testmail/{objectId}", name="paprec_public_non_corporate_subscription_test_mail")
+//     * @throws \Exception
+//     */
+//    public function testMailAction(Request $request, $objectId)
+//    {
+//        $em = $this->getDoctrine()->getManager();
+//        $productD3EQuote = $em->getRepository('PaprecCommercialBundle:ProductD3EQuote')->find($objectId);
+//        return $this->render('@PaprecCommercial/ProductD3EQuote/emails/sendNewQuoteEmail.html.twig', array(
+//            'productD3EQuote' => $productD3EQuote
+//        ));
+//    }
+
     /**
      * @Route("/particulier/step1/{quoteRequestId}", name="paprec_public_non_corporate_subscription_particulier_step1")
      * @throws \Exception

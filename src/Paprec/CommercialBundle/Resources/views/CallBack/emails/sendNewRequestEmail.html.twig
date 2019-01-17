@@ -8,7 +8,7 @@
  {% endblock %}
 
 {% block title_header %}
-    Vous avez une nouvelle demande
+    Vous avez une nouvelle demande de rappel
 {% endblock %}
 
 {% block subtitle_header %}
@@ -16,83 +16,114 @@
 {% endblock %}
 
 {% block main_content %}
-    <tr>
-        Détail de la demande N° {{ callBack.id }}
-        - {{ callBack.dateCreation|date('d/m/Y H:i:s') }}
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.CallBack.BusinessName'|trans }}
-        </td>
-        <td class="value">
-            {{ callBack.businessName }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.CallBack.Civility'|trans }}
-        </td>
-        <td class="value">
-            {{ callBack.civility }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.CallBack.LastName'|trans }}
-        </td>
-        <td class="value">
-            {{ callBack.lastName }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.CallBack.FirstName'|trans }}
-        </td>
-        <td class="value">
-            {{ callBack.firstName }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.CallBack.Function'|trans }}
-        </td>
-        <td class="value">
-            {{ callBack.function }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.CallBack.Email'|trans }}
-        </td>
-        <td class="value">
-            {{ callBack.email }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.CallBack.Phone'|trans }}
-        </td>
-        <td class="value">
-            {{ callBack.phone }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-           Date de rappel souhaitée
-        </td>
-        <td class="value">
-            {{ callBack.dateCallBack|localizeddate('full', 'none', app.request.locale) }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            Créneau horaire souhaité
-        </td>
-        <td class="value">
-            {{ callBack.timeCallBack|date('H\\Hs',"Europe/Paris") }}
-        </td>
-    </tr>
-
+    <table class="newRequestEmailTable" border="0" cellpadding="0" cellspacing="0" width="80%"
+           style="margin-left: 10%; margin-bottom: 15px; margin-top: 20px;">
+        <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.6);">
+            <td>
+                Détail de la demande N° {{ callBack.id }}
+                - {{ callBack.dateCreation|date('d/m/Y H:i') }}
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label">
+                    {{ 'Commercial.CallBack.BusinessName'|trans }} : &nbsp;
+                </div>
+                <div class="value">
+                    {{ callBack.businessName }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label">
+                    {{ 'Commercial.CallBack.Civility'|trans }} : &nbsp;
+                </div>
+                <div class="value">
+                    {% if callBack.civility == 'M' %}Monsieur{% else %}Madame{% endif %}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label">
+                    {{ 'Commercial.CallBack.LastName'|trans }} :&nbsp;
+                </div>
+                <div class="value">
+                    {{ callBack.lastName }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label">
+                    {{ 'Commercial.CallBack.FirstName'|trans }} :&nbsp;
+                </div>
+                <div class="value">
+                    {{ callBack.firstName }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label">
+                    {{ 'Commercial.CallBack.Function'|trans }} :&nbsp;
+                </div>
+                <div class="value">
+                    {{ callBack.function }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label">
+                    {{ 'Commercial.CallBack.Email'|trans }} :&nbsp;
+                </div>
+                <div class="value">
+                    {{ callBack.email }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label">
+                    {{ 'Commercial.CallBack.Phone'|trans }} :&nbsp;
+                </div>
+                <div class="value">
+                    {{ callBack.phone }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label">
+                    Date de rappel souhaitée :&nbsp;
+                </div>
+                <div class="value">
+                    {{ callBack.dateCallBack|localizeddate('full', 'none', app.request.locale) }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label">
+                    Créneau horaire souhaité :&nbsp;
+                </div>
+                <div class="value">
+                    {{ callBack.timeCallBack|date('H\\Hs',"Europe/Paris") }}
+                </div>
+            </td>
+        </tr>
+    </table>
 {% endblock %}
 
 {% block footer %}
@@ -104,7 +135,9 @@
     <tr>
         <td>
             <a href="{{ absolute_url(path("paprec_commercial_callBack_edit", {id: callBack.id})) }}">
-                Mettre à jour le statut
+                <button class="btn btn-green" style="margin: 5px 0px 15px 0px;">
+                    Mettre à jour le statut
+                </button>
             </a>
         </td>
     </tr>

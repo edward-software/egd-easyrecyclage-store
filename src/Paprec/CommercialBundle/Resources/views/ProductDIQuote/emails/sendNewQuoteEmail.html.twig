@@ -16,84 +16,140 @@
 {% endblock %}
 
 {% block main_content %}
-    <tr>
-        Détail du devis N° {{ productDIQuote.id }} - {{ productDIQuote.dateCreation|date('d/m/Y H:i:s') }}
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductDIQuote.BusinessName'|trans }}
-        </td>
-        <td class="value">
-            {{ productDIQuote.businessName }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            Contact
-        </td>
-        <td class="value">
-            {% if productDIQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productDIQuote.lastName }} {{ productDIQuote.firstName }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductDIQuote.Function'|trans }}
-        </td>
-        <td class="value">
-            {{ productDIQuote.function }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductDIQuote.Address'|trans }}
-        </td>
-        <td class="value">
-            {{ productDIQuote.address }}<br>
-            {{ productDIQuote.postalCode }} {{ productDIQuote.city }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductDIQuote.Email'|trans }}
-        </td>
-        <td class="value">
-            {{ productDIQuote.email }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductDIQuote.Phone'|trans }}
-        </td>
-        <td class="value">
-            {{ productDIQuote.phone }}
-        </td>
-    </tr>
-    {% for productDIQuoteLine in productDIQuote.productDIQuoteLines %}
-        <tr>
-            <td class="picto">
-                {% if productDIQuoteLine.productDI.pictures|length > 0 %}
-                    <img src="{% if productDIQuoteLine.productDI.pilotPictures|length > 0 %}{{ absolute_url('/uploads/pictos/' ~ productDIQuoteLine.productDI.pilotPictures[0].path) }}{% endif %}"
-                         alt="#">
-                {% endif %}
-            </td>
-            <td class="product">
-                {{ productDIQuoteLine.quantity }} x {{ productDIQuoteLine.productName }}<br>
-                de {{ productDIQuoteLine.categoryName }}
-            </td>
-            <td class="price">
-                à partir de {{ productDIQuoteLine.totalAmount|formatAmount('EUR', app.request.locale) }}
+    <table class="newRequestEmailTable" border="0" cellpadding="0" cellspacing="0" width="80%"
+           style="margin-left: 10%; margin-bottom: 15px; margin-top: 20px;text-align: right">
+        <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.6); text-align: center">
+            <td style="padding-bottom: 10px">
+                Détail du devis N° {{ productDIQuote.id }} - {{ productDIQuote.dateCreation|date('d/m/Y H:i') }}
             </td>
         </tr>
-    {% endfor %}
-    <tr>
-        <td></td>
-        <td>
-            TOTAL
-        </td>
-        <td>
-            à partir de {{ productDIQuote.totalAmount|formatAmount('EUR', app.request.locale) }}
-        </td>
-    </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label">
+                    {{ 'Commercial.ProductDIQuote.BusinessName'|trans }} : &nbsp;
+                </div>
+                <div class="value">
+                    {{ productDIQuote.businessName }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label">
+                    Contact : &nbsp;
+                </div>
+                <div class="value">
+                    {% if productDIQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productDIQuote.lastName }} {{ productDIQuote.firstName }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label">
+                    {{ 'Commercial.ProductDIQuote.Function'|trans }} :&nbsp;
+                </div>
+                <div class="value">
+                    {{ productDIQuote.function }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label">
+                    {{ 'Commercial.ProductDIQuote.Address'|trans }} :&nbsp;
+                </div>
+                <div class="value">
+                    {{ productDIQuote.address }}
+                    <br>
+                    {{ productDIQuote.postalCode }} {{ productDIQuote.city }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label">
+                    {{ 'Commercial.ProductDIQuote.Email'|trans }} :&nbsp;
+                </div>
+                <div class="value">
+                    {{ productDIQuote.email }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label">
+                    {{ 'Commercial.ProductDIQuote.Phone'|trans }} :&nbsp;
+                </div>
+                <div class="value">
+                    {{ productDIQuote.phone }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="80%"
+           style="margin-left: 10%; margin-bottom: 15px; margin-top: 20px;">
+        <tr>
+            <td colspan="3" style="text-align: center; padding-bottom: 5px;">
+                Composition du devis :
+            </td>
+        </tr>
+        <tr>
+            <td class="greyrecap" colspan="3">
+                <div class="title">
+                    {{ 'Public.Cart.ForfaitRecyclage'|trans }}
+                </div>
+                <div class="info">
+                    {{ 'Public.Cart.Including2Lines'|trans|nl2br }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        {% for productDIQuoteLine in productDIQuote.productDIQuoteLines %}
+            <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.6);">
+                <td class="picto" style="text-align:center;">
+                    {% if productDIQuoteLine.productDI.pictures|length > 0 %}
+                        <img src="{% if productDIQuoteLine.productDI.pilotPictures|length > 0 %}{{ absolute_url('/uploads/pictos/' ~ productDIQuoteLine.productDI.pilotPictures[0].path) }}{% endif %}"
+                             alt="#" style="height: 75px">
+                    {% endif %}
+                </td>
+                <td class="product" style="padding-left: 15%">
+                    {{ productDIQuoteLine.quantity }} x {{ productDIQuoteLine.productName }}<br>
+                    de {{ productDIQuoteLine.categoryName }}
+                </td>
+                <td class="price" style="display: inline-flex; float: right; margin-right: 10px; line-height: 75px;">
+                    à partir de
+                    <div class="value bigger-value">
+                        &nbsp; {{ productDIQuoteLine.totalAmount|formatAmount('EUR', app.request.locale) }}</div>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="padding-left: 15%">
+                <div class="value bigger-value" style="font-size: 1.3em;line-height: 75px;">TOTAL</div>
+            </td>
+            <td style="display: inline-flex; float: right; margin-right: 10px; line-height: 75px">
+                à partir de
+                <div class="value bigger-value">&nbsp; {{ productDIQuote.totalAmount|formatAmount('EUR', app.request.locale) }}</div>
+            </td>
+        </tr>
+    </table>
+
 {% endblock %}
 
 {% block footer %}
@@ -105,7 +161,9 @@
     <tr>
         <td>
             <a href="{{ absolute_url(path("paprec_commercial_productDIQuote_view", {id: productDIQuote.id})) }}">
-                Lien pour voir le devis et y importer le nouveau devis
+                <button class="btn btn-green" style="margin: 5px 0px 15px 0px;">
+                    Lien pour voir le devis et y importer le nouveau devis
+                </button>
             </a>
         </td>
     </tr>

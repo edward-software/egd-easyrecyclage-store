@@ -446,12 +446,10 @@ class CallBack
         return $this->dateCallBack;
     }
 
+
     /**
-     * Set cartContent.
-     *
-     * @param json|null $cartContent
-     *
-     * @return CallBack
+     * @param null $cartContent
+     * @return $this
      */
     public function setCartContent($cartContent = null)
     {
@@ -460,10 +458,9 @@ class CallBack
         return $this;
     }
 
+
     /**
-     * Get cartContent.
-     *
-     * @return json|null
+     * @return array|null
      */
     public function getCartContent()
     {
