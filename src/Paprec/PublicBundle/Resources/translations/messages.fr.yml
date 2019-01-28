@@ -4,6 +4,7 @@ Public:
   CancelSubscription:             En modifiant cette valeur, vous allez perdre votre devis en cours. Etes-vous sûr de vouloir continuer ?
   Home:
     Location:                     Je me situe
+    Title:                        Paprec - EasyRecyclage
     Recycle:                      Je recycle
     MyNeed:                       Mon besoin
     IAm:                          Je suis

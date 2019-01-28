@@ -257,14 +257,14 @@
                         <div class="card-header">
                             <h5>
                                 {{ 'Commercial.ProductD3EOrder.ProductsList'|trans }}
-                                <div class="float-right">
-
-                                    <a href="{{ path('paprec_commercial_productD3EOrder_addLine', {id: productD3EOrder.id}) }}"
-                                       class="btn btn-sm btn-outline-primary">
-                                        <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductD3EOrder.AddLine'|trans }}
-                                    </a>
-                                </div>
                             </h5>
+                            <div class="float-right">
+
+                                <a href="{{ path('paprec_commercial_productD3EOrder_addLine', {id: productD3EOrder.id}) }}"
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-xs fa-plus"></i> {{ 'Commercial.ProductD3EOrder.AddLine'|trans }}
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <table id="productD3EOrderLinesDatatable"
@@ -287,7 +287,7 @@
                                 <tbody>
                                 {% for productD3EOrderLine in productD3EOrder.productD3EOrderLines %}
                                     <tr>
-                                        <td>{{ productD3EOrderLine.id }}</td>
+                                        <td>{{ productD3EOrderLine.id|formatId(6) }}</td>
                                         <td>{{ productD3EOrderLine.productName }}</td>
                                         <td>{{ productD3EOrderLine.unitPrice|formatAmount('EUR', app.request.locale) }}</td>
                                         <td>{{ productD3EOrderLine.quantity }}</td>
@@ -298,12 +298,12 @@
                                         <td class="text-center">
                                             <a href="{{ path('paprec_commercial_productD3EOrder_editLine', {id: productD3EOrder.id, orderLineId: productD3EOrderLine.id}) }}"
                                                class="btn btn-sm btn-warning btn-sm mx-1"
-                                               data-id="{{ productD3EOrderLine.id }}">
+                                               data-id="{{ productD3EOrderLine.id|formatId(6) }}">
                                                 <i class="fa fa-xs fa-edit"></i>
                                             </a>
                                             <a href="#"
                                                class="btn btn-sm btn-danger btn-sm commercialProductD3EOrderLineRemoveButton"
-                                               data-id="{{ productD3EOrderLine.id }}">
+                                               data-id="{{ productD3EOrderLine.id|formatId(6) }}">
                                                 <i class="fa fa-xs fa-trash"></i>
                                             </a>
                                         </td>

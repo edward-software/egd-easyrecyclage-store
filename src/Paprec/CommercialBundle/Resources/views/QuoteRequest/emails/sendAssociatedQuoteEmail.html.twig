@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block subtitle_header %}
-    Formulaire Prestation régulière {{ quoteRequest.division }} - N° {{ quoteRequest.id }}
+    Formulaire Prestation régulière {{ quoteRequest.division }} - N° {{ quoteRequest.id|formatId(6) }}
 {% endblock %}
 
 {% block main_content %}

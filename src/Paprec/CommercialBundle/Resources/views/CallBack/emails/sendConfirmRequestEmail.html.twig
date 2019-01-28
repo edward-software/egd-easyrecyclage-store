@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block subtitle_header %}
-    Formulaire Être rappelé - N° {{ callBack.id }}
+    Formulaire Être rappelé - N° {{ callBack.id|formatId(6) }}
 {% endblock %}
 
 {% block main_content %}

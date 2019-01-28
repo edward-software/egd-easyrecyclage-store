@@ -19,7 +19,7 @@
         <div class="card">
             <div class="card-header">
                 <h4>
-                    <i class="fa fa-xs fa-folder"></i> {{ 'Home.Ticket.View'|trans }} #{{ ticket.id }}
+                    <i class="fa fa-xs fa-folder"></i> {{ 'Home.Ticket.View'|trans }} #{{ ticket.id|formatId(6) }}
                 </h4>
                 <div class="float-right">
                     <a href="{{ path('paprec_home_ticket_add') }}" class="btn btn-sm btn-success"><i
@@ -174,7 +174,7 @@
                                     <a href="{{ path('paprec_home_ticket_ticketFile_download', {id: ticketFile.id}) }}"
                                        class="btn btn-sm"
                                        target="_blank">{{ 'Home.Ticket.Ticket-file.Download-ticket-file'|trans }}
-                                        #{{ ticketFile.id }}</a>
+                                        #{{ ticketFile.id|formatId(6) }}</a>
 
                                 {% endif %}
 

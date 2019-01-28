@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block subtitle_header %}
-    Formulaire Être rappelé - N° {{ callBack.id }}
+    Formulaire Être rappelé - N° {{ callBack.id|formatId(6) }}
 {% endblock %}
 
 {% block main_content %}
@@ -20,7 +20,7 @@
            style="margin-left: 10%; margin-bottom: 15px; margin-top: 20px;">
         <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.6);">
             <td>
-                Détail de la demande N° {{ callBack.id }}
+                Détail de la demande N° {{ callBack.id|formatId(6) }}
                 - {{ callBack.dateCreation|date('d/m/Y H:i') }}
             </td>
         </tr>

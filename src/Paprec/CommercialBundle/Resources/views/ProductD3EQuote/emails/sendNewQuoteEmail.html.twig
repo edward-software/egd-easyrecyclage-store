@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block subtitle_header %}
-    Devis Ponctuel - Mes déchets D3E - N° {{ productD3EQuote.id }}
+    Devis Ponctuel - Mes déchets D3E - N° {{ productD3EQuote.id|formatId(6) }}
 {% endblock %}
 
 {% block main_content %}
@@ -19,7 +19,7 @@
            style="margin-left: 10%; margin-bottom: 15px; margin-top: 20px;text-align: right">
         <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.6); text-align: center">
             <td style="padding-bottom: 10px">
-                Détail du devis N° {{ productD3EQuote.id }} - {{ productD3EQuote.dateCreation|date('d/m/Y H:i') }}
+                Détail du devis N° {{ productD3EQuote.id|formatId(6) }} - {{ productD3EQuote.dateCreation|date('d/m/Y H:i') }}
             </td>
         </tr>
         <tr>

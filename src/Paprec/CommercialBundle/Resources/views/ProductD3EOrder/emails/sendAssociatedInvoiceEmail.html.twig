@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block subtitle_header %}
-    Commande D3E - N° {{ productD3EOrder.id }}
+    Commande D3E - N° {{ productD3EOrder.id|formatId(6) }}
 {% endblock %}
 
 {% block main_content %}

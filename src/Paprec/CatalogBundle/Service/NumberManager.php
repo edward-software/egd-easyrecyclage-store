@@ -78,4 +78,9 @@ class NumberManager
         return round($value * 100);
     }
 
+    public function formatId($id, $padlength, $padstring = 0, $pad_type = STR_PAD_LEFT)
+    {
+        return str_pad($id, $padlength, $padstring, $pad_type);
+    }
+
 }

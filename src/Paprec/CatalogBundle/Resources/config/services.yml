@@ -45,6 +45,13 @@ services:
     tags:
       - { name: twig.extension }
 
+  twig.formatId:
+    class: Paprec\CatalogBundle\Twig\Extension\FormatIdExtension
+    public: false
+    arguments: ["@service_container"]
+    tags:
+      - { name: twig.extension }
+
 parameters:
 
   paprec_catalog.category.picto_path: "%kernel.root_dir%/../web/uploads/pictos"

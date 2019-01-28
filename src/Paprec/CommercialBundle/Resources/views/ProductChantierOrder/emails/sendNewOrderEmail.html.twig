@@ -12,12 +12,12 @@
 {% endblock %}
 
 {% block subtitle_header %}
-    Commande Chantier - N° {{ productChantierOrder.id }}
+    Commande Chantier - N° {{ productChantierOrder.id|formatId(6) }}
 {% endblock %}
 
 {% block main_content %}
     <tr>
-        Détail de la demande N° {{ productChantierOrder.id }} - {{ productChantierOrder.dateCreation|date('d/m/Y H:i:s') }}
+        Détail de la demande N° {{ productChantierOrder.id|formatId(6) }} - {{ productChantierOrder.dateCreation|date('d/m/Y H:i:s') }}
     </tr>
     <tr>
         <td class="label">

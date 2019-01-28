@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block subtitle_header %}
-    Formulaire {{ quoteRequestNonCorporate.customerType }} - N° {{ quoteRequestNonCorporate.id }}
+    Formulaire {{ quoteRequestNonCorporate.customerType }} - N° {{ quoteRequestNonCorporate.id|formatId(6) }}
 {% endblock %}
 
 {% block main_content %}

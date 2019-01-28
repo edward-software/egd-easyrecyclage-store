@@ -8,7 +8,7 @@
 
 {% block date %} {{ date|date('d/m/Y') }} {% endblock %}
 
-{% block quoteNumber %} {{ productDIQuote.id }} {% endblock %}
+{% block quoteNumber %} {{ productDIQuote.id|formatId(6) }} {% endblock %}
 
 {% block civility %} {% if productDIQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {% endblock %}
 

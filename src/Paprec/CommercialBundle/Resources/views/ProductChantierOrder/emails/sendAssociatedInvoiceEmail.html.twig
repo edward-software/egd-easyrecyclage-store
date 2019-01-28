@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block subtitle_header %}
-    Commande Chantier - N° {{ productChantierOrder.id }}
+    Commande Chantier - N° {{ productChantierOrder.id|formatId(6) }}
 {% endblock %}
 
 {% block main_content %}

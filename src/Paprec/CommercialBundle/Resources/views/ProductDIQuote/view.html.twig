@@ -237,7 +237,7 @@
                                 <tbody>
                                 {% for productDIQuoteLine in productDIQuote.productDIQuoteLines %}
                                     <tr>
-                                        <td>{{ productDIQuoteLine.id }}</td>
+                                        <td>{{ productDIQuoteLine.id|formatId(6) }}</td>
                                         <td>{{ productDIQuoteLine.productName }}</td>
                                         <td>{{ productDIQuoteLine.categoryName }}</td>
                                         <td>{{ productDIQuoteLine.unitPrice|formatAmount('EUR', app.request.locale) }}</td>

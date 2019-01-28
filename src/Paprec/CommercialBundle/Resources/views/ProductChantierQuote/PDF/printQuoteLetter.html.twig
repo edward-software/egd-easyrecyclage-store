@@ -8,7 +8,7 @@
 
 {% block date %} {{ date|date('d/m/Y') }} {% endblock %}
 
-{% block quoteNumber %} {{ productChantierQuote.id }} {% endblock %}
+{% block quoteNumber %} {{ productChantierQuote.id|formatId(6) }}{% endblock %}
 
 {% block civility %} {% if productChantierQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {% endblock %}
 

@@ -238,7 +238,7 @@
                                 <tbody>
                                 {% for productD3EQuoteLine in productD3EQuote.productD3EQuoteLines %}
                                     <tr>
-                                        <td>{{ productD3EQuoteLine.id }}</td>
+                                        <td>{{ productD3EQuoteLine.id|formatId(6) }}</td>
                                         <td>{{ productD3EQuoteLine.productName }}</td>
                                         <td>{{ productD3EQuoteLine.unitPrice|formatAmount('EUR', app.request.locale) }}</td>
                                         <td>{{ productD3EQuoteLine.quantity }}</td>

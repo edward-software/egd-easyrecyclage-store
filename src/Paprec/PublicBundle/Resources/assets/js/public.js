@@ -28,9 +28,21 @@ $(function () {
     // Si l'input "divisionSelect" existe, alors on intercepte les modifications de division
     // Quand on sélectionne une division dans le select, on recharge en envoyant la location et la division
     if ($('#divisionSelect').is('select')) {
+        var divisionValue = $('#divisionSelect').val();
         $('#divisionSelect').on('change', function () {
-            var url = $('#divisionSelect').data('url').replace('divisionTmp', $('#divisionSelect').val());
-            $(location).attr('href', url);
+            var navigate = true;
+            // Si on est dans need, alors on affiche une confirm dialog avertissant que le panier sera perdu
+            if ($('.need-form').is('div')) {
+                if (!confirm('test')) {
+                    navigate = false;
+                    $('#divisionSelect').val(divisionValue);
+                }
+            }
+            if (navigate === true) {
+                var url = $('#divisionSelect').data('url').replace('divisionTmp', $('#divisionSelect').val());
+                $(location).attr('href', url);
+            }
+
         });
     }
 

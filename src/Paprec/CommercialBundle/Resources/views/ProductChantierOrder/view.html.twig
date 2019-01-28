@@ -285,7 +285,7 @@
                                 <tbody>
                                 {% for productChantierOrderLine in productChantierOrder.productChantierOrderLines %}
                                     <tr>
-                                        <td>{{ productChantierOrderLine.id }}</td>
+                                        <td>{{ productChantierOrderLine.id|formatId(6) }}</td>
                                         <td>{{ productChantierOrderLine.productName }}</td>
                                         <td>{{ productChantierOrderLine.categoryName }}</td>
                                         <td>{{ productChantierOrderLine.unitPrice|formatAmount('EUR', app.request.locale) }}</td>

@@ -49,7 +49,7 @@
                     <span>{{ countProductsInCategory }} {{ 'Public.Cart.SelectedContainer'|trans }}</span>
                 {% endif %}
             </div>
-            <div id="productsWrapper_{{ category.id }}" >
+            <div id="productsWrapper_{{ category.id }}">
                 {% for key, products in productsCategories %}
                     {# pour chaque productCategory (categoryId => Products[],
                      on affiche le tableau de produits si ils font partie de la catégorie courante #}

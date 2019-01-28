@@ -12,12 +12,12 @@
 {% endblock %}
 
 {% block subtitle_header %}
-    Commande D3E - N° {{ productD3EOrder.id }}
+    Commande D3E - N° {{ productD3EOrder.id|formatId(6) }}
 {% endblock %}
 
 {% block main_content %}
     <tr>
-        Détail de la demande N° {{ productD3EOrder.id }} - {{ productD3EOrder.dateCreation|date('d/m/Y H:i:s') }}
+        Détail de la demande N° {{ productD3EOrder.id|formatId(6) }} - {{ productD3EOrder.dateCreation|date('d/m/Y H:i:s') }}
     </tr>
     <tr>
         <td class="label">

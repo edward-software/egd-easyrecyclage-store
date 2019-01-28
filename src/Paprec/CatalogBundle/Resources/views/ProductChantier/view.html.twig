@@ -421,7 +421,7 @@
                                 <tbody>
                                 {% for productChantierCategory in productChantier.productChantierCategories %}
                                     <tr>
-                                        <td>{{ productChantierCategory.id }}</td>
+                                        <td>{{ productChantierCategory.id|formatId(6) }}</td>
                                         <td>
                                             <a href="{{ path('paprec_catalog_category_view', {id: productChantierCategory.category.id}) }}">{{ productChantierCategory.category }}</a>
                                         </td>

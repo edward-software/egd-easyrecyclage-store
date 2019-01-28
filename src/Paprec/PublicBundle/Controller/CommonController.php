@@ -139,6 +139,7 @@ class CommonController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function getCTAsBottomAction($label, $cartUuid, $division, $stepBack = '', $nextStep = '', $idSubmit = '', $cartEmpty = false) {
+
         return $this->render('@PaprecPublic/Common/partial/ctaBottomPartial.html.twig', array(
             'cartUuid' => $cartUuid,
             'label' => $label,
