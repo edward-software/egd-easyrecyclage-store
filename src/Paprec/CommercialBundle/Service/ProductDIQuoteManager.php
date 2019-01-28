@@ -333,21 +333,21 @@ class ProductDIQuoteManager
             $snappy->generateFromHtml(
                 array(
                     $this->container->get('templating')->render(
-                        '@PaprecCommercial/ProductDIQuote/PDF/printQuoteTemplate1.html.twig',
+                        '@PaprecCommercial/ProductDIQuote/PDF/printQuoteCover.html.twig',
                         array(
                             'productDIQuote' => $productDIQuote,
                             'date' => $today
                         )
                     ),
                     $this->container->get('templating')->render(
-                        '@PaprecCommercial/ProductDIQuote/PDF/printQuoteTemplate2.html.twig',
+                        '@PaprecCommercial/ProductDIQuote/PDF/printQuoteLetter.html.twig',
                         array(
                             'productDIQuote' => $productDIQuote,
                             'date' => $today
                         )
                     ),
                     $this->container->get('templating')->render(
-                        '@PaprecCommercial/ProductDIQuote/PDF/printQuoteTemplate3.html.twig',
+                        '@PaprecCommercial/ProductDIQuote/PDF/printQuoteProducts.html.twig',
                         array(
                             'productDIQuote' => $productDIQuote,
                         )
