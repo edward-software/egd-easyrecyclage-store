@@ -24,8 +24,10 @@
                     {% endif %}
                 </td>
                 <td>
-                    {{ productDIQuoteLine.quantity }} x {{ productDIQuoteLine.productName }}<br>
-                    de {{ productDIQuoteLine.categoryName }}
+                    - {{ productDIQuoteLine.productDI.description }}
+                    <br>
+
+                    - {{ productDIQuoteLine.productDI.dimensions }}
                 </td>
                 <td>
                     {{ productDIQuoteLine.totalAmount|formatAmount('EUR', app.request.locale) }}
