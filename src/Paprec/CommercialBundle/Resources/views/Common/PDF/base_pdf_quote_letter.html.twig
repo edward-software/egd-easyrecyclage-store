@@ -1,14 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
-        "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-    <title>print contrat</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-</head>
-<body>
-<table>
+{% extends "@PaprecCommercial/Common/PDF/base_pdf.html.twig" %}
+{% block pdf_content %}
     <tr>
         <td>
             {% block businessName %} {% endblock %}
@@ -44,7 +35,4 @@
             {% block greeting %} {% endblock %}
         </td>
     </tr>
-</table>
-
-</body>
-</html>
+{% endblock %}

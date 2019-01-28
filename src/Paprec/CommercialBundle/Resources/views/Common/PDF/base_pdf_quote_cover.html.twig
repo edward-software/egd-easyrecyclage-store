@@ -1,0 +1,13 @@
+{% extends "@PaprecCommercial/Common/PDF/base_pdf.html.twig" %}
+{% block pdf_content %}
+    <tr>
+        <td>
+            {% block businessName %} {% endblock %}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Le {% block date %} {% endblock %}
+        </td>
+    </tr>
+{% endblock %}
