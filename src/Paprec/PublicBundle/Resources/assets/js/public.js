@@ -191,24 +191,9 @@ $(function () {
             var html = "";
             for (var i = 0; i < this.files.length; i++) {
                 var lastModified = new Date(this.files[i].lastModified);
-                html += this.files[i].name + " " + new Intl.DateTimeFormat('en-GB').format(lastModified) + " <a href=\"javascript:void(0);\" data-name=\"" + this.files[i].name + "\" class=\"removeFileButton\">x</a><br>";
+                html += this.files[i].name + " " + new Intl.DateTimeFormat('en-GB').format(lastModified) + "<br>";
                 $('#listFiles').html(html);
             }
-            files = Array.from(that.files);
-
-            $('.removeFileButton').on('click', function () {
-                var idx;
-                var fileName = $(this).data('name');
-                var f;
-                console.dir($(this).data('name'));
-                var found = files.some(function (item, index) {
-                    f = index;
-                    return item.name === fileName
-                });
-                if (found) {
-                    files.splice(f, 1);
-                }
-            });
         });
     }
 
