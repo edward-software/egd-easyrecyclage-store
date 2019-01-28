@@ -31,18 +31,31 @@ $(function () {
         var divisionValue = $('#divisionSelect').val();
         $('#divisionSelect').on('change', function () {
             var navigate = true;
+            var url = $('#divisionSelect').data('url').replace('divisionTmp', $('#divisionSelect').val());
             // Si on est dans need, alors on affiche une confirm dialog avertissant que le panier sera perdu
             if ($('.need-form').is('div')) {
-                if (!confirm('test')) {
-                    navigate = false;
-                    $('#divisionSelect').val(divisionValue);
-                }
-            }
-            if (navigate === true) {
-                var url = $('#divisionSelect').data('url').replace('divisionTmp', $('#divisionSelect').val());
+                Swal({
+                    titleText: "Attention",
+                    text: "En changeant le type de déchets, vous allez perdre toutes les données de votre panier en cours. Êtes-vous sûr de vouloir continuer ?",
+                    showCancelButton: true,
+                    type: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                    confirmButtonText: "Oui",
+                    width: '30%',
+                    height: '30%',
+                    cancelButtonText: "Non"
+                }).then((result) => {
+                    if (result.value) {
+                        $(location).attr('href', url);
+                    } else {
+                        navigate = false;
+                        $('#divisionSelect').val(divisionValue);
+                    }
+                });
+            } else {
                 $(location).attr('href', url);
             }
-
         });
     }
 
@@ -173,10 +186,6 @@ $(function () {
      */
     if ($('.collectivite-form').is('div')) {
         var files = [];
-
-        $('.test').on('click', function () {
-            console.dir(files);
-        });
 
         $('#groupFormSubmitButton').on('click', function () {
             $('#regularForm').submit();
