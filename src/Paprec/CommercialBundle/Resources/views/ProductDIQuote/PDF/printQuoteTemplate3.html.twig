@@ -1,0 +1,44 @@
+{% extends "@PaprecCommercial/Common/PDF/base_pdf_quote_3.html.twig" %}
+
+{% block address %} {{ productDIQuote.address }} {{ productDIQuote.postalCode }} {{ productDIQuote.city }} {% endblock %}
+
+{% block products %}
+    <table>
+        <thead>
+        <tr>
+            <th>Matériel</th>
+            <th>Déchets</th>
+            <th colspan="2">Type de prestation</th>
+            <th>Tarifs à partir de (€ HT)</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for productDIQuoteLine in productDIQuote.productDIQuoteLines %}
+            <tr>
+                <td> {{ productDIQuoteLine.quantity }} {{ productDIQuoteLine.productName }}</td>
+                <td> {{ productDIQuoteLine.categoryName }} </td>
+                <td>
+                    {% if productDIQuoteLine.productDI.pictures|length > 0 %}
+                        <img src="{% if productDIQuoteLine.productDI.pilotPictures|length > 0 %}{{ absolute_url('/uploads/pictos/' ~ productDIQuoteLine.productDI.pilotPictures[0].path) }}{% endif %}"
+                             alt="#">
+                    {% endif %}
+                </td>
+                <td>
+                    {{ productDIQuoteLine.quantity }} x {{ productDIQuoteLine.productName }}<br>
+                    de {{ productDIQuoteLine.categoryName }}
+                </td>
+                <td>
+                    {{ productDIQuoteLine.totalAmount|formatAmount('EUR', app.request.locale) }}
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>TOTAL</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ productDIQuote.totalAmount|formatAmount('EUR', app.request.locale) }}</td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

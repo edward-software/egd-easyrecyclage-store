@@ -1,7 +1,7 @@
 services:
-#    paprec_commercial.example:
-#        class: Paprec\CommercialBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+  #    paprec_commercial.example:
+  #        class: Paprec\CommercialBundle\Example
+  #        arguments: ["@service_id", "plain_value", "%parameter%"]
   paprec_commercial.agency_manager:
     class: Paprec\CommercialBundle\Service\AgencyManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
@@ -56,29 +56,36 @@ parameters:
 
   paprec_commercial.data_tmp_directory: "%kernel.root_dir%/data/tmp"
 
+  paprec_offer.quote_pdf_notice_directory: "%kernel.root_dir%/data/pdf/quote_notices"
 
+  paprec_offer.quote_pdf_notices:
+    - detail.pdf
+    - cgps1.pdf
+    - cgps2.pdf
+    - paprec_presentation.pdf
+    - paprec_activities.pdf
 
   paprec_quote_status:
-  - CREATED
-  - PENDING
-  - PROCESSING
-  - CLOSED
+    - CREATED
+    - PENDING
+    - PROCESSING
+    - CLOSED
 
   paprec_order_status:
-  - CREATED
-  - PENDING
-  - PROCESSING
-  - INVOICED
-  - CANCELED
+    - CREATED
+    - PENDING
+    - PROCESSING
+    - INVOICED
+    - CANCELED
 
   paprec_treatment_status:
-  - CREATED
-  - PENDING
-  - PROCESSING
-  - CLOSED
+    - CREATED
+    - PENDING
+    - PROCESSING
+    - CLOSED
 
   paprec_order_payment_methods:
-  - CB
-  - Virement
-  - E-signature
-  - Courrier
+    - CB
+    - Virement
+    - E-signature
+    - Courrier

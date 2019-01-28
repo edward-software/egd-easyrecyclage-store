@@ -17,7 +17,7 @@ class CustomizableAreaType extends AbstractType
     {
         $builder
             ->add('content', CKEditorType::class, array(
-                'config_name' => 'basic_config',
+                'config_name' => 'full_config',
                 'required' => true
             ))
             ->add('code', ChoiceType::class, array(

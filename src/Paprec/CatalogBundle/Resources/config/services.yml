@@ -59,10 +59,11 @@ parameters:
     - PILOTPICTURE
 
   paprec_customizable_area_codes:
-    - collectivite_form
-    - groupe_form
-    - particulier_form
-    - entreprise_form
-    - regular_form
+    - collectivite_top_msg_form
+    - collectivite_bottom_form
+    - groupe_top_msg_form
+    - particulier_top_msg_form
+    - entreprise_top_msg_form
+    - regular_top_msg_form
 
 

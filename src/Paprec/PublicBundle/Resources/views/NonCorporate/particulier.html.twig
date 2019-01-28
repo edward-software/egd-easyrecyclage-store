@@ -8,8 +8,8 @@
 
 {#{% endblock %}#}
 
- {% block customizable_area %}
-     {% set customArea = paprec_customizable_area('particulier_form') %}
+ {% block top_msg_customizable_area %}
+     {% set customArea = paprec_customizable_area('particulier_top_msg_form') %}
      {% if customArea is not null %}
          {% autoescape false %}
              <div class="custom-area">

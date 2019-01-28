@@ -8,8 +8,8 @@
 
 {#{% endblock %}#}
 
- {% block customizable_area %}
-     {% set customArea = paprec_customizable_area('collectivite_form') %}
+ {% block top_msg_customizable_area %}
+     {% set customArea = paprec_customizable_area('collectivite_top_msg_form') %}
      {% if customArea is not null %}
          {% autoescape false %}
              <div class="custom-area">
@@ -100,6 +100,21 @@
         </div>
         {{ form_rest(form) }}
     </form>
+{% endblock %}
+
+{% block bottom_customizable_area %}
+    {% set customArea = paprec_customizable_area('collectivite_bottom_form') %}
+    {% if customArea is not null %}
+        {% autoescape false %}
+            <div class="paprec_bottom_area">
+                <div class="wrapper">
+                    <div class="paprec_bottom_area_info">
+                        {{ customArea.content }}
+                    </div>
+                </div>
+            </div>
+        {% endautoescape %}
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
