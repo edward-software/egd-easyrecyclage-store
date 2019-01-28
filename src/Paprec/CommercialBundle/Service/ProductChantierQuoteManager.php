@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\ORMException;
 use Exception;
+use iio\libmergepdf\Merger;
 use Knp\Snappy\Pdf;
 use Paprec\CommercialBundle\Entity\ProductChantierQuote;
 use Paprec\CommercialBundle\Entity\ProductChantierQuoteLine;
@@ -320,6 +321,8 @@ class ProductChantierQuoteManager
     {
         try {
             $pdfTmpFolder = $this->container->getParameter('paprec_commercial.data_tmp_directory');
+            $noticeFileDirectory = $this->container->getParameter('paprec_commercial.quote_pdf_notice_directory');
+            $noticeFiles = $this->container->getParameter('paprec_commercial.quote_pdf_notices');
 
             if (!is_dir($pdfTmpFolder)) {
                 mkdir($pdfTmpFolder, 0755, true);
@@ -327,13 +330,29 @@ class ProductChantierQuoteManager
 
             $filename = $pdfTmpFolder . '/' . md5(uniqid()) . '.pdf';
 
+            $today = new \DateTime();
+
             $snappy = new Pdf($this->container->getParameter('wkhtmltopdf_path'));
             $snappy->generateFromHtml(
                 array(
                     $this->container->get('templating')->render(
-                        '@PaprecCommercial/ProductChantierQuote/PDF/quotePDF.html.twig',
+                        '@PaprecCommercial/ProductChantierQuote/PDF/printQuoteCover.html.twig',
                         array(
-                            'productChantierQuote' => $productChantierQuote
+                            'productChantierQuote' => $productChantierQuote,
+                            'date' => $today
+                        )
+                    ),
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductChantierQuote/PDF/printQuoteLetter.html.twig',
+                        array(
+                            'productChantierQuote' => $productChantierQuote,
+                            'date' => $today
+                        )
+                    ),
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductChantierQuote/PDF/printQuoteProducts.html.twig',
+                        array(
+                            'productChantierQuote' => $productChantierQuote,
                         )
                     )
                 ),
@@ -345,6 +364,21 @@ class ProductChantierQuoteManager
              */
             $pdfArray = array();
             $pdfArray[] = $filename;
+
+            if (is_array($noticeFiles) && count($noticeFiles)) {
+                foreach ($noticeFiles as $noticeFile) {
+                    $noticeFilename = $noticeFileDirectory . '/' . $noticeFile;
+                    if (file_exists($noticeFilename)) {
+                        $pdfArray[] = $noticeFilename;
+                    }
+                }
+            }
+
+            if (count($pdfArray)) {
+                $merger = new Merger();
+                $merger->addIterator($pdfArray);
+                file_put_contents($filename, $merger->merge());
+            }
 
             if (!file_exists($filename)) {
                 return false;

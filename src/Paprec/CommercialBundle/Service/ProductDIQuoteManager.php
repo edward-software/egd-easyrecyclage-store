@@ -318,8 +318,8 @@ class ProductDIQuoteManager
     {
         try {
             $pdfTmpFolder = $this->container->getParameter('paprec_commercial.data_tmp_directory');
-            $noticeFileDirectory = $this->container->getParameter('paprec_offer.quote_pdf_notice_directory');
-            $noticeFiles = $this->container->getParameter('paprec_offer.quote_pdf_notices');
+            $noticeFileDirectory = $this->container->getParameter('paprec_commercial.quote_pdf_notice_directory');
+            $noticeFiles = $this->container->getParameter('paprec_commercial.quote_pdf_notices');
 
             if (!is_dir($pdfTmpFolder)) {
                 mkdir($pdfTmpFolder, 0755, true);

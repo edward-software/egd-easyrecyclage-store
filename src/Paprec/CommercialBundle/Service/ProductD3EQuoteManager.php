@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\ORMException;
 use Exception;
+use iio\libmergepdf\Merger;
 use Knp\Snappy\Pdf;
 use Paprec\CommercialBundle\Entity\ProductD3EQuote;
 use Paprec\CommercialBundle\Entity\ProductD3EQuoteLine;
@@ -331,6 +332,8 @@ class ProductD3EQuoteManager
     {
         try {
             $pdfTmpFolder = $this->container->getParameter('paprec_commercial.data_tmp_directory');
+            $noticeFileDirectory = $this->container->getParameter('paprec_commercial.quote_pdf_notice_directory');
+            $noticeFiles = $this->container->getParameter('paprec_commercial.quote_pdf_notices');
 
             if (!is_dir($pdfTmpFolder)) {
                 mkdir($pdfTmpFolder, 0755, true);
@@ -338,13 +341,29 @@ class ProductD3EQuoteManager
 
             $filename = $pdfTmpFolder . '/' . md5(uniqid()) . '.pdf';
 
+            $today = new \DateTime();
+
             $snappy = new Pdf($this->container->getParameter('wkhtmltopdf_path'));
             $snappy->generateFromHtml(
                 array(
                     $this->container->get('templating')->render(
-                        '@PaprecCommercial/ProductD3EQuote/PDF/quotePDF.html.twig',
+                        '@PaprecCommercial/ProductD3EQuote/PDF/printQuoteCover.html.twig',
                         array(
-                            'productD3EQuote' => $productD3EQuote
+                            'productD3EQuote' => $productD3EQuote,
+                            'date' => $today
+                        )
+                    ),
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductD3EQuote/PDF/printQuoteLetter.html.twig',
+                        array(
+                            'productD3EQuote' => $productD3EQuote,
+                            'date' => $today
+                        )
+                    ),
+                    $this->container->get('templating')->render(
+                        '@PaprecCommercial/ProductD3EQuote/PDF/printQuoteProducts.html.twig',
+                        array(
+                            'productD3EQuote' => $productD3EQuote,
                         )
                     )
                 ),
@@ -356,6 +375,21 @@ class ProductD3EQuoteManager
              */
             $pdfArray = array();
             $pdfArray[] = $filename;
+
+            if (is_array($noticeFiles) && count($noticeFiles)) {
+                foreach ($noticeFiles as $noticeFile) {
+                    $noticeFilename = $noticeFileDirectory . '/' . $noticeFile;
+                    if (file_exists($noticeFilename)) {
+                        $pdfArray[] = $noticeFilename;
+                    }
+                }
+            }
+
+            if (count($pdfArray)) {
+                $merger = new Merger();
+                $merger->addIterator($pdfArray);
+                file_put_contents($filename, $merger->merge());
+            }
 
             if (!file_exists($filename)) {
                 return false;
