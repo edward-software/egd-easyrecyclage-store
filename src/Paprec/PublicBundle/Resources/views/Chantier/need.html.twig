@@ -136,7 +136,7 @@
                                             <div class="infoproduct__disclamer">
                                                 {{ 'Public.Cart.Disclaimer'|trans }}
                                             </div>
-                                            <a href="#"
+                                            <a href="javascript:void(0);"
                                                class="infoproduct__esti">{{ 'Public.Cart.EstimateTrashVolume'|trans }}</a>
                                             <div class="infoproduct__dimensiontitle">{{ 'Public.Cart.Dimensions'|trans }}</div>
                                             <div class="infoproduct__dimension">
@@ -171,11 +171,11 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             </select>
-                                            <div class="button button--lightgreen addToCartSubmitButton"
+                                            <button class="button button--lightgreen addToCartSubmitButton"
                                                  data-url="{{ path('paprec_public_corp_chantier_subscription_addContent', {cartUuid: cart.id, categoryId: category.id, productId: displayedProduct.id, quantity: 'quantityTmp'}) }}"
                                                  id="addToCartSubmitButton_{{ displayedProduct.id }}_{{ category.id }}"
                                                  disabled>{{ ('Public.Cart.AddToCart' ~ cart.type|capitalize)|trans }}
-                                            </div>
+                                            </button>
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>

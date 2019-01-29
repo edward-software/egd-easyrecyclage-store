@@ -1,10 +1,12 @@
-<div class="notice{% if nextStep == '' and idSubmit == '' and stepBack == '' %} notice--left {% endif %}">Un besoin <span>plus complexe</span> ? Vous souhaitez nous en parler ?</div>
+<div class="notice{% if nextStep == '' and idSubmit == '' and stepBack == '' %} notice--left {% endif %}">Un besoin
+    <span>plus complexe</span> ? Vous souhaitez nous en parler ?
+</div>
 <div class="clearfix"></div>
 <div {% if nextStep != '' or idSubmit != '' or stepBack != '' %}class="step__left"{% endif %}>
     {% if stepBack is defined and stepBack is not null and stepBack != '' %}
         <a href="{{ path('paprec_public_corp_' ~ division|lower ~ '_subscription_' ~ stepBack|lower, {cartUuid: cartUuid}) }}"
            class="back">{{ 'Public.Cart.Back'|trans }}</a>
-        {% else %}
+    {% else %}
         &nbsp;
     {% endif %}
 </div>
@@ -15,12 +17,13 @@
        class="button margint10 button--grey">{{ 'Public.CTA.CallBack'|trans|upper }}</a>
     {% if idSubmit != '' or nextStep != '' %}
         <a
+                id="validateNeedButton"
                 {% if idSubmit is defined and idSubmit is not null and idSubmit != '' %}
                     href="javascript:void(0);" id="{{ idSubmit }}"
                 {% elseif nextStep is defined and nextStep is not null and nextStep != '' %}
                     href="{{ path('paprec_public_corp_' ~ division|lower ~'_subscription_' ~ nextStep, {cartUuid: cartUuid }) }}"
                 {% endif %}
-                class="button margint10 button--green {% if cartEmpty == true %}disabled{% endif %}">{{ (('Public.Cart.' ~ label)|trans)|upper }}</a>
+                class="button margint10 button--green" {% if cartEmpty == true %}disabled="disabled"{% endif %}>{{ (('Public.Cart.' ~ label)|trans)|upper }}</a>
     {% endif %}
     {#{% if stepBack is defined and stepBack is not null and stepBack != '' %}#}
 </div>

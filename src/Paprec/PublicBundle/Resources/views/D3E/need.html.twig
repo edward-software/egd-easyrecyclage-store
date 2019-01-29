@@ -128,7 +128,7 @@
 
                         <button class="button button--lightgreen addToCartSubmitButton"
                              data-url="{{ path('paprec_public_corp_d3e_subscription_addContent', {cartUuid: cart.id, productId: displayedProduct.id, quantity: 'quantityTmp', optHandling: 'optHandlingTmp', optSerialNumberStmt: 'optSerialNumberStmtTmp', optDestruction: 'optDestructionTmp'}) }}"
-                             id="addToCartSubmitButton_{{ displayedProduct.id }}" disabled>{{ ('Public.Cart.AddToCart' ~ cart.type|capitalize)|trans }}
+                             id="addToCartSubmitButton_{{ displayedProduct.id }}">{{ ('Public.Cart.AddToCart' ~ cart.type|capitalize)|trans }}
                         </button>
                     </div>
                     <div class="right">

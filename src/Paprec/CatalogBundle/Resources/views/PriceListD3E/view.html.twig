@@ -218,9 +218,6 @@
                                 // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
                                 var htmlToDisplay = response.trim();
                                 $("#priceListD3ELineModalContent").html(htmlToDisplay);
-                            },
-                            error: function (errorThrown) {
-                                console.log(errorThrown);
                             }
                         })
                     });

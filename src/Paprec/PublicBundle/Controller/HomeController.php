@@ -4,14 +4,15 @@ namespace Paprec\PublicBundle\Controller;
 
 use Paprec\CommercialBundle\Entity\CallBack;
 use Paprec\CommercialBundle\Entity\ContactUs;
+use Paprec\CommercialBundle\Entity\ProductDIQuote;
 use Paprec\CommercialBundle\Entity\QuoteRequest;
 use Paprec\CommercialBundle\Form\CallBack\CallBackShortType;
 use Paprec\CommercialBundle\Form\ContactUs\ContactUsShortType;
 use Paprec\CommercialBundle\Form\QuoteRequest\QuoteRequestShortType;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends Controller
 {
@@ -412,6 +413,17 @@ class HomeController extends Controller
         return $this->render('@PaprecPublic/Common/CallBack/callBackConfirm.html.twig', array(
             'callBack' => $callBack,
             'cart' => $cart
+        ));
+    }
+
+    /**
+     * @Route("/showpdf/{productDIQuote}", name="paprec_public_home_showpdf")
+     *
+     */
+    public function showPDF(ProductDIQuote $productDIQuote)
+    {
+        return $this->render('@PaprecCommercial/ProductDIQuote/PDF/printQuoteProducts.html.twig', array(
+            'productDIQuote' => $productDIQuote
         ));
     }
 

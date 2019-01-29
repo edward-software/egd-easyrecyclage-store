@@ -74,6 +74,13 @@ $(function () {
         colorBodyFromDivision();
     }
 
+    $('.infoproduct__esti').on('click', function () {
+        Swal.fire({
+            type: 'info',
+            text: "Des infos pour estimer votre volume de déchets"
+        })
+    });
+
     /*******************************************************************************************************************
      * REGULAR FORM
      */
@@ -315,10 +322,8 @@ $(function () {
                     // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
                     removeBadge(productId, categoryId);
                     $('#productCheckboxPicto_' + productId + '_' + categoryId).prepend("<span class=\"number\">" + qtty + "<span");
+                    $('#validateNeedButton').removeAttr('disabled');
                     reloadCart();
-                },
-                error: function (errorThrown) {
-                    console.log(errorThrown);
                 }
             });
         });
@@ -349,10 +354,8 @@ $(function () {
                     // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
                     removeBadge(productId);
                     $('#productCheckboxPicto_' + productId).prepend("<span class=\"number\">" + qtty + "<span");
+                    $('#validateNeedButton').attr('disabled', 'disabled');
                     reloadCart()
-                },
-                error: function (errorThrown) {
-                    console.log(errorThrown);
                 }
             });
         });
@@ -484,9 +487,6 @@ function reloadNearbyAgencies() {
                 // On récupère l'HTML des agences proches et on l'insère dans step__agency dans la sidebar
                 var htmlToDisplay = response.trim();
                 $(".step__agency").html(htmlToDisplay);
-            },
-            error: function (errorThrown) {
-                console.log(errorThrown);
             }
         });
     }
@@ -522,9 +522,6 @@ function reloadCart(readonly) {
                             success: function (response) {
                                 removeBadgeD3E(productId);
                                 reloadCart();
-                            },
-                            error: function (errorThrown) {
-                                console.log(errorThrown);
                             }
                         });
                     } else {
@@ -540,17 +537,11 @@ function reloadCart(readonly) {
                             success: function (response) {
                                 removeBadge(productId, categoryId);
                                 reloadCart();
-                            },
-                            error: function (errorThrown) {
-                                console.log(errorThrown);
                             }
                         });
                     }
                 })
             }
-        },
-        error: function (errorThrown) {
-            console.log(errorThrown);
         }
     });
 }
