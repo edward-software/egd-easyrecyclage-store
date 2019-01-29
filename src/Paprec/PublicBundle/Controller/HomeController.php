@@ -422,8 +422,9 @@ class HomeController extends Controller
      */
     public function showPDF(ProductDIQuote $productDIQuote)
     {
-        return $this->render('@PaprecCommercial/ProductDIQuote/PDF/printQuoteProducts.html.twig', array(
-            'productDIQuote' => $productDIQuote
+        return $this->render('@PaprecCommercial/ProductDIQuote/PDF/printQuoteLetter.html.twig', array(
+            'productDIQuote' => $productDIQuote,
+            'date' => new \DateTime()
         ));
     }
 
