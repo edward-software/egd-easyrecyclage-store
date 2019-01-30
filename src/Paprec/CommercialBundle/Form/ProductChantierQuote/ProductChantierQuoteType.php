@@ -76,7 +76,9 @@ class ProductChantierQuoteType extends AbstractType
                 'expanded' => false,
                 'placeholder' => '',
                 'empty_data'  => null,
-                'choice_label' => 'username',
+                'choice_label' => function ($user) {
+                    return $user->getFirstName() . ' ' . $user->getLastName();
+                },
                 'query_builder' => function (UserRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->where('u.deleted IS NULL')
@@ -89,7 +91,9 @@ class ProductChantierQuoteType extends AbstractType
                 'expanded' => false,
                 'placeholder' => '',
                 'empty_data'  => null,
-                'choice_label' => 'name',
+                'choice_label' => function ($category) {
+                    return $category->getName() . ' - ' . $category->getCity();
+                },
                 'query_builder' => function (AgencyRepository $er) {
                     return $er->createQueryBuilder('a')
                         ->where('a.deleted IS NULL')

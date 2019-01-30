@@ -112,7 +112,7 @@
                                     <tr>
                                         <td>{{ priceListLineD3E.id|formatId(6) }}</td>
                                         <td>{{ priceListLineD3E.postalCodes }}</td>
-                                        <td>{{ priceListLineD3E.agency }}</td>
+                                        <td>{{ priceListLineD3E.agency }} - {{ priceListLineD3E.agency.city }}</td>
                                         <td>{{ priceListLineD3E.minQuantity }}</td>
                                         <td>{{ priceListLineD3E.maxQuantity }}</td>
                                         <td>{{ priceListLineD3E.price|formatAmount('EUR', app.request.locale) }}</td>

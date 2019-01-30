@@ -42,37 +42,6 @@
                         <button type="submit" class="ml-4 btn btn-primary">Valider</button>
                     </form>
 
-                    {# ---------------------------------------PANIER-----------------------------------------#}
-                    {# CARD SUR LES CARTS #}
-
-                    {#<div class="card">#}
-                    {#<div class="card-header">#}
-                    {#<h5>#}
-                    {#{{ 'Commercial.Stats.Cart'|trans }}#}
-                    {#</h5>#}
-                    {#</div>#}
-                    {#<div class="card-body">#}
-                    {#<table id="cartStatsTable"#}
-                    {#class="table table-striped table-bordered table-hover"#}
-                    {#cellpadding="0" cellspacing="0" border="0" width="100%">#}
-                    {#<thead>#}
-                    {#<tr>#}
-                    {#<th>#</th>#}
-                    {#<th>1</th>#}
-                    {#<th>2</th>#}
-                    {#<th>3</th>#}
-                    {#<th>4</th>#}
-                    {#<th>5</th>#}
-                    {#<th>6</th>#}
-                    {#</tr>#}
-                    {#</thead>#}
-                    {#<tbody>#}
-                    {#</tbody>#}
-                    {#</table>#}
-                    {#</div>#}
-                    {#</div>#}
-                    {#<br>#}
-
                     {# ---------------------------------------DEVIS-----------------------------------------#}
                     {# CARD SUR LES DEVIS DI#}
                     {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_COMMERCIAL_DIVISION', 'DI') %}
@@ -538,6 +507,7 @@
 
     <script>
         $(function () {
+
             $('#inputDateStart').datetimepicker({
                 locale: 'fr',
                 format: 'L',
@@ -565,6 +535,18 @@
                         previous: 'fa fa-angle-left'
                     },
             });
+
+            $('#inputDateStart').on('dp.change', function(e) {
+                if( e.date ){
+                    e.date.add(1, 'day');
+                }
+                $('#inputDateEnd').data("DateTimePicker").minDate(e.date);
+            });
+
+            $("#inputDateEnd").on("dp.change", function (e) {
+                $('#inputDateStart').data("DateTimePicker").maxDate(e.date);
+            });
+
         })
 
     </script>

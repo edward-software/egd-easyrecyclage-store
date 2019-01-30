@@ -25,7 +25,9 @@ class PriceListLineD3EType extends AbstractType
                 'class' => Agency::class,
                 'multiple' => false,
                 'expanded' => false,
-                'choice_label' => 'name',
+                'choice_label' => function ($category) {
+                    return $category->getName() . ' - ' . $category->getCity();
+                },
                 'query_builder' => function (AgencyRepository $er) {
                     return $er->createQueryBuilder('a')
                         ->where('a.deleted IS NULL')
