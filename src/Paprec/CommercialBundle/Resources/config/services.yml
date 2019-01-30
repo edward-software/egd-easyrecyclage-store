@@ -60,8 +60,7 @@ parameters:
 
   paprec_commercial.quote_pdf_notices:
     - detail.pdf
-    - cgps1.pdf
-    - cgps2.pdf
+    - cgps.pdf
     - paprec_presentation.pdf
     - paprec_activities.pdf
 

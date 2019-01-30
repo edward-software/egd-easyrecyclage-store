@@ -325,11 +325,17 @@ class ProductDIQuoteManager
                 mkdir($pdfTmpFolder, 0755, true);
             }
 
+            $filenameCover = $pdfTmpFolder . '/' . md5(uniqid()) . '.pdf';
             $filename = $pdfTmpFolder . '/' . md5(uniqid()) . '.pdf';
 
             $today = new \DateTime();
 
             $snappy = new Pdf($this->container->getParameter('wkhtmltopdf_path'));
+            $snappy->setOption('margin-left', 3);
+            $snappy->setOption('margin-right', 3);
+            /**
+             * On génère d'abord la page de couverture sans footer
+             */
             $snappy->generateFromHtml(
                 array(
                     $this->container->get('templating')->render(
@@ -338,7 +344,17 @@ class ProductDIQuoteManager
                             'productDIQuote' => $productDIQuote,
                             'date' => $today
                         )
-                    ),
+                    )
+                ),
+                $filenameCover
+            );
+
+            /**
+             * Puis les pages suivantes avec le footer
+             */
+            $snappy->setOption('footer-html', $this->container->get('templating')->render('@PaprecCommercial/Common/PDF/partials/footer.html.twig'));
+            $snappy->generateFromHtml(
+                array(
                     $this->container->get('templating')->render(
                         '@PaprecCommercial/ProductDIQuote/PDF/printQuoteLetter.html.twig',
                         array(
@@ -356,10 +372,12 @@ class ProductDIQuoteManager
                 $filename
             );
 
+
             /**
              * Concaténation des notices
              */
             $pdfArray = array();
+            $pdfArray[] = $filenameCover;
             $pdfArray[] = $filename;
 
             if (is_array($noticeFiles) && count($noticeFiles)) {
@@ -377,9 +395,14 @@ class ProductDIQuoteManager
                 file_put_contents($filename, $merger->merge());
             }
 
+            if (file_exists($filenameCover)) {
+                unlink($filenameCover);
+            }
+
             if (!file_exists($filename)) {
                 return false;
             }
+
             return $filename;
 
         } catch (ORMException $e) {

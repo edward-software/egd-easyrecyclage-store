@@ -65,7 +65,7 @@ class Agency
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="text")
+     * @ORM\Column(name="address", type="text", nullable=true)
      * @Assert\NotBlank()
      */
     private $address;
@@ -73,7 +73,7 @@ class Agency
     /**
      * @var string
      *
-     * @ORM\Column(name="postalCode", type="string", length=255)
+     * @ORM\Column(name="postalCode", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      */
     private $postalCode;
@@ -81,7 +81,7 @@ class Agency
     /**
      * @var string
      *
-     * @ORM\Column(name="city", type="string", length=255)
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      */
     private $city;
@@ -89,7 +89,7 @@ class Agency
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=255)
+     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/^((\+)?33|0)[1-9](\d{2}){4}$/",
@@ -102,7 +102,7 @@ class Agency
     /**
      * @var float
      *
-     * @ORM\Column(name="latitude", type="decimal", precision=18, scale=15)
+     * @ORM\Column(name="latitude", type="decimal", precision=18, scale=15, nullable=true)
      * @Assert\NotBlank()
      */
     private $latitude;
@@ -110,7 +110,7 @@ class Agency
     /**
      * @var float
      *
-     * @ORM\Column(name="longitude", type="decimal", precision=18, scale=15)
+     * @ORM\Column(name="longitude", type="decimal", precision=18, scale=15, nullable=true)
      * @Assert\NotBlank()
      */
     private $longitude;

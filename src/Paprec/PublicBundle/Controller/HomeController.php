@@ -4,7 +4,6 @@ namespace Paprec\PublicBundle\Controller;
 
 use Paprec\CommercialBundle\Entity\CallBack;
 use Paprec\CommercialBundle\Entity\ContactUs;
-use Paprec\CommercialBundle\Entity\ProductDIQuote;
 use Paprec\CommercialBundle\Entity\QuoteRequest;
 use Paprec\CommercialBundle\Form\CallBack\CallBackShortType;
 use Paprec\CommercialBundle\Form\ContactUs\ContactUsShortType;
@@ -415,17 +414,4 @@ class HomeController extends Controller
             'cart' => $cart
         ));
     }
-
-    /**
-     * @Route("/showpdf/{productDIQuote}", name="paprec_public_home_showpdf")
-     *
-     */
-    public function showPDF(ProductDIQuote $productDIQuote)
-    {
-        return $this->render('@PaprecCommercial/ProductDIQuote/PDF/printQuoteLetter.html.twig', array(
-            'productDIQuote' => $productDIQuote,
-            'date' => new \DateTime()
-        ));
-    }
-
 }
