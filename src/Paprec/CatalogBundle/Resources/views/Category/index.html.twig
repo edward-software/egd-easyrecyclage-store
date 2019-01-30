@@ -178,12 +178,6 @@
                 },
                 "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 
-                    if (aData['enabled'] == true) {
-                        $(nRow).find(':first-child').next().next().next().next().next().html('{{ 'General.Yes'|trans }}');
-                    } else {
-                        $(nRow).find(':first-child').next().next().next().next().next().html('{{ 'General.No'|trans }}');
-                    }
-
                     viewUrl = "{{ path('paprec_catalog_category_view', {id: '0000'}) }}".replace('0000', aData['id']);
                     editUrl = "{{ path('paprec_catalog_category_edit', {id: '0000'}) }}".replace('0000', aData['id']);
 
@@ -304,12 +298,6 @@
                     $('.dataTables_paginate > .pagination').addClass('pagination-sm');
                 },
                 "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-
-                    if (aData['enabled'] == true) {
-                        $(nRow).find(':first-child').next().next().next().next().next().html('{{ 'General.Yes'|trans }}');
-                    } else {
-                        $(nRow).find(':first-child').next().next().next().next().next().html('{{ 'General.No'|trans }}');
-                    }
 
                     viewUrl = "{{ path('paprec_catalog_category_view', {id: '0000'}) }}".replace('0000', aData['id']);
                     editUrl = "{{ path('paprec_catalog_category_edit', {id: '0000'}) }}".replace('0000', aData['id']);

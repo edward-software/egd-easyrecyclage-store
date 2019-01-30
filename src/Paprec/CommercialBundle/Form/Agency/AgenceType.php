@@ -40,7 +40,7 @@ class AgenceType extends AbstractType
                     'readonly' => true,
                 ),
             ))
-            ->add('phone')
+            ->add('phoneNumber')
             ->add('latitude', NumberType::class, array(
                 'attr' => array(
                     'readonly' => true,

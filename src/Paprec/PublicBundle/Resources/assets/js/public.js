@@ -82,13 +82,22 @@ $(function () {
     });
 
     /**
-
+     * Lorsque l'utilisateur choisit des fichiers à mettre en PJ, on les affiche au dessus du bouton d'import
      */
+    var options = {year: "numeric", month: "numeric", day: "numeric",
+        hour: "numeric", minute: "numeric", second: "numeric",
+        hour12: false};
     $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function () {
         var html = "";
-        var options = {year: "numeric", month: "numeric", day: "numeric",
-            hour: "numeric", minute: "numeric", second: "numeric",
-            hour12: false};
+        for (var i = 0; i < this.files.length; i++) {
+            var lastModified = new Date(this.files[i].lastModified);
+            html += "<span class='paprec-file'>" + this.files[i].name + " " + new Intl.DateTimeFormat('en-GB', options).format(lastModified) + "<br></span>";
+            $('#listFiles').html(html);
+        }
+    });
+    $('#paprec_commercialbundle_quoteRequest_attachedFiles').on('change', function () {
+        var html = "";
+
         for (var i = 0; i < this.files.length; i++) {
             var lastModified = new Date(this.files[i].lastModified);
             html += "<span class='paprec-file'>" + this.files[i].name + " " + new Intl.DateTimeFormat('en-GB', options).format(lastModified) + "<br></span>";

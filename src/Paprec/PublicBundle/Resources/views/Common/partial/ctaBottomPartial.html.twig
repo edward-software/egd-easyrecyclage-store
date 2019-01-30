@@ -17,10 +17,10 @@
        class="button margint10 button--grey">{{ 'Public.CTA.CallBack'|trans|upper }}</a>
     {% if idSubmit != '' or nextStep != '' %}
         <a
-                id="validateNeedButton"
                 {% if idSubmit is defined and idSubmit is not null and idSubmit != '' %}
                     href="javascript:void(0);" id="{{ idSubmit }}"
                 {% elseif nextStep is defined and nextStep is not null and nextStep != '' %}
+                    id="validateNeedButton"
                     href="{{ path('paprec_public_corp_' ~ division|lower ~'_subscription_' ~ nextStep, {cartUuid: cartUuid }) }}"
                 {% endif %}
                 class="button margint10 button--green" {% if cartEmpty == true %}disabled="disabled"{% endif %}>{{ (('Public.Cart.' ~ label)|trans)|upper }}</a>
