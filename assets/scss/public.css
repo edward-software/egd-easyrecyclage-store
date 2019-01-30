@@ -24,4 +24,18 @@ button[disabled], a[disabled] {
   opacity: 0.6;
   pointer-events: none; }
 
+.paprec-list-files {
+  background-color: rgba(37, 36, 36, 0.05);
+  margin-left: 17%;
+  width: 50%;
+  border-radius: 1px; }
+
+.paprec-file {
+  height: 40px;
+  color: #5A5A5A;
+  font-size: 13px;
+  font-weight: 300;
+  margin-left: 15px;
+  line-height: 25px; }
+
 /*# sourceMappingURL=public.css.map */

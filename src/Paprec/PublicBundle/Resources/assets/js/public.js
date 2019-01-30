@@ -81,6 +81,21 @@ $(function () {
         })
     });
 
+    /**
+
+     */
+    $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function () {
+        var html = "";
+        var options = {year: "numeric", month: "numeric", day: "numeric",
+            hour: "numeric", minute: "numeric", second: "numeric",
+            hour12: false};
+        for (var i = 0; i < this.files.length; i++) {
+            var lastModified = new Date(this.files[i].lastModified);
+            html += "<span class='paprec-file'>" + this.files[i].name + " " + new Intl.DateTimeFormat('en-GB', options).format(lastModified) + "<br></span>";
+            $('#listFiles').html(html);
+        }
+    });
+
     /*******************************************************************************************************************
      * REGULAR FORM
      */
@@ -196,20 +211,6 @@ $(function () {
 
         $('#groupFormSubmitButton').on('click', function () {
             $('#regularForm').submit();
-        });
-
-        /**
-         * TODO Mettre cette fonction commune à tous les quoteRequestNonCorporate
-         * Il faudrait envoyer la variable "files" au submit en fait
-         */
-        $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function () {
-            var that = this;
-            var html = "";
-            for (var i = 0; i < this.files.length; i++) {
-                var lastModified = new Date(this.files[i].lastModified);
-                html += this.files[i].name + " " + new Intl.DateTimeFormat('en-GB').format(lastModified) + "<br>";
-                $('#listFiles').html(html);
-            }
         });
     }
 
