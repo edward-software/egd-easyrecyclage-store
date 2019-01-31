@@ -1,12 +1,32 @@
 ivory_ck_editor:
+  configs:
+    full_config:
+      jquery: true
+      height: '900px'
+      language: '%locale%'
+      extraPlugins: 'lineutils,widget,dialog,codesnippet,widgetselection'
+      toolbar: standard
+    basic_config:
+      jquery: true
+      height: '250px'
+      language: '%locale%'
+      toolbar: basic
+    custom_config:
+      jquery: true
+      height: '900px'
+      language: '%locale%'
+      toolbar: "custom_toolbar"
+  toolbars:
     configs:
-        full_config:
-            jquery: true
-            height: '900px'
-            language: '%locale%'
-            extraPlugins: 'lineutils,widget,dialog,codesnippet,widgetselection'
-        basic_config:
-            jquery: true
-            heihgt: '250px'
-            language: '%locale%'
-            toolbar: basic
+      custom_toolbar: ['@clipboard', '@editing', '@links', '@insert', '@tools', '@document', '/', '@basic_styles', '@colors', '@paragraph']
+    items:
+      'about': ['Styles', 'Format', 'About']
+      'basic_styles': ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat']
+      'clipboard': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
+      'document': ['Source']
+      'editing': ['Scayt']
+      'links': ['Link', 'Unlink', 'Anchor']
+      'insert': ['Image', 'Table', 'HorizontalRule', 'SpecialChar']
+      'paragraph': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote']
+      'tools': ['Maximize']
+      'colors': ['TextColor', 'BGColor']
