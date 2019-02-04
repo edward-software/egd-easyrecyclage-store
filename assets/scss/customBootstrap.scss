@@ -106,3 +106,17 @@ a:hover{
     color: #4A90E2;
     border-color: #4A90E2;
 }
+
+.checkboxPicto {
+    width: 125px;
+    height: 120px;
+    background: #fbfbfb center no-repeat;
+    margin: 0 auto 0 auto;
+}
+
+.checkboxPicto:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+.checkboxPicto.active {
+    background-color: rgba(0, 0, 0, 0.03);
+}

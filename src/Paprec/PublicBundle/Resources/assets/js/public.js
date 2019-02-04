@@ -569,7 +569,6 @@ function removeBadge(productId, categoryId) {
  * POUR D3E
  * Supprime le badge au dessus d'un produit indiquant la quantité de ce produit ajoutée au panier
  * @param productId
- * @param categoryId
  */
 function removeBadgeD3E(productId) {
     $('#productCheckboxPicto_' + productId).find('span.number').remove();

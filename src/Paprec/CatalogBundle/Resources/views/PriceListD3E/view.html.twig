@@ -55,29 +55,6 @@
 
                     </div>
                 </div>
-                <div class="col-md-7 mt-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">{{ 'Catalog.PriceListD3E.System-informations'|trans }}</h5>
-                        </div>
-                        <div class="card-body">
-
-                            <div class="form-group row">
-                                <label class="col-md-4 col-form-label">{{ 'Catalog.PriceListD3E.Date-creation'|trans }}</label>
-                                <label class="col-form-label col-md-8">
-                                    {{ priceListD3E.dateCreation|localizeddate('short', 'medium', app.request.locale) }}
-                                </label>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-md-4 col-form-label">{{ 'Catalog.PriceListD3E.Date-update'|trans }}</label>
-                                <label class="col-form-label col-md-8">
-                                    {{ priceListD3E.dateUpdate is empty ? "" : priceListD3E.dateUpdate|localizeddate('short', 'medium', app.request.locale) }}
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-md-12 mt-3">
                     <div class="card">
                         <div class="card-header">
@@ -138,6 +115,29 @@
                                     <div class="modal-content" id="priceListD3ELineModalContent">
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ 'Catalog.PriceListD3E.System-informations'|trans }}</h5>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Catalog.PriceListD3E.Date-creation'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {{ priceListD3E.dateCreation|localizeddate('short', 'medium', app.request.locale) }}
+                                </label>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{ 'Catalog.PriceListD3E.Date-update'|trans }}</label>
+                                <label class="col-form-label col-md-8">
+                                    {{ priceListD3E.dateUpdate is empty ? "" : priceListD3E.dateUpdate|localizeddate('short', 'medium', app.request.locale) }}
+                                </label>
                             </div>
                         </div>
                     </div>

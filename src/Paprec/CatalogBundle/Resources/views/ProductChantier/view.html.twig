@@ -159,9 +159,10 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <img class="card-img-top"
-                                                                 src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
-                                                                 alt="{{ 'Catalog.ProductChantier.Pictures'|trans }}">
+                                                            <div class="card-body">
+                                                                <div class="checkboxPicto"
+                                                                     style="background-image: url({{ asset('/uploads/pictos/' ~ picture.path) }}"></div>
+                                                            </div>
                                                         </div>
                                                     {% endfor %}
                                                 {% endif %}
@@ -285,9 +286,12 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <img class="card-img-top"
-                                                                 src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
-                                                                 alt="{{ 'Catalog.ProductChantier.Pictures'|trans }}">
+                                                            <div class="card-body" style="text-align: center">
+                                                                <img class="card-img-top"
+                                                                     style="max-width: 60px; width: 60px;"
+                                                                     src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
+                                                                     alt="{{ 'Catalog.ProductChantier.Pictures'|trans }}">
+                                                            </div>
                                                         </div>
                                                     {% endfor %}
                                                 {% endif %}

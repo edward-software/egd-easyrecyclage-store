@@ -161,7 +161,7 @@
                 "lengthMenu": [[5, 10, 20, 50], [5, 10, 20, 50]],
                 "iDisplayLength": 20,
                 "ajax": "{{ path('paprec_catalog_category_loadList', {typeCategory: 'DI'}) }}",
-                "order": [[4, "asc"]],
+                "order": [[3, "asc"]],
                 "columns": [
                     {"data": "id"},
                     {"data": "name"},
@@ -177,11 +177,13 @@
                     $('.dataTables_paginate > .pagination').addClass('pagination-sm');
                 },
                 "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-
                     viewUrl = "{{ path('paprec_catalog_category_view', {id: '0000'}) }}".replace('0000', aData['id']);
                     editUrl = "{{ path('paprec_catalog_category_edit', {id: '0000'}) }}".replace('0000', aData['id']);
+                    // $(nRow).find(':first-child').find(':first-child').append('<i class="fa fa-xs fa-arrows-alt"></i>');
 
                     $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-sm btn-primary"><i class="fa fa-xs fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-sm btn-warning"><i class="fa fa-xs fa-edit"></i></a>');
+
+                    $(nRow).find('td:first-child').prepend('<i class="fa fa-xs fa-arrows-alt"></i>&nbsp;');
 
                 },
                 // On réduit la taille maximale de la deuxieme colonne pour ne pas qu'elle dépasse 50 caractères
@@ -282,7 +284,7 @@
                 "lengthMenu": [[5, 10, 20, 50], [5, 10, 20, 50]],
                 "iDisplayLength": 20,
                 "ajax": "{{ path('paprec_catalog_category_loadList', {typeCategory: 'CHANTIER'}) }}",
-                "order": [[4, "asc"]],
+                "order": [[3, "asc"]],
                 "columns": [
                     {"data": "id"},
                     {"data": "name"},
@@ -303,6 +305,8 @@
                     editUrl = "{{ path('paprec_catalog_category_edit', {id: '0000'}) }}".replace('0000', aData['id']);
 
                     $(nRow).find(':last-child').html('<a href="' + viewUrl + '" data-toggle="tooltip" title="Voir" class="btn btn-sm btn-primary btn-sm"><i class="fa fa-xs fa-eye"></i></a> <a href="' + editUrl + '" data-toggle="tooltip" title="Editer" class="btn btn-sm btn-warning btn-sm"><i class="fa fa-xs fa-edit"></i></a>');
+
+                    $(nRow).find('td:first-child').prepend('<i class="fa fa-xs fa-arrows-alt"></i>&nbsp;');
 
                 },
                 // On réduit la taille maximale de la deuxieme colonne pour ne pas qu'elle dépasse 50 caractères

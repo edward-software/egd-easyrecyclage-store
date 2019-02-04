@@ -167,9 +167,10 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <img class="card-img-top"
-                                                                 src="{{ asset('/uploads/pictos/' ~ picto.path) }}"
-                                                                 alt="{{ 'Catalog.ProductD3E.Picto'|trans }}">
+                                                            <div class="card-body">
+                                                                <div class="checkboxPicto"
+                                                                     style="background-image: url({{ asset('/uploads/pictos/' ~ picto.path) }}"></div>
+                                                            </div>
                                                         </div>
                                                     {% endfor %}
                                                 {% endif %}

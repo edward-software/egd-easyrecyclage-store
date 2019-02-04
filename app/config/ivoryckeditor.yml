@@ -18,10 +18,11 @@ ivory_ck_editor:
       toolbar: "custom_toolbar"
   toolbars:
     configs:
-      custom_toolbar: ['@clipboard', '@editing', '@links', '@insert', '@tools', '@document', '/', '@basic_styles', '@colors', '@paragraph']
+      custom_toolbar: ['@clipboard', '@editing', '@links', '@insert', '@tools', '@document', '/', '@basic_styles', '@advanced_styles', '/', '@paragraph']
     items:
       'about': ['Styles', 'Format', 'About']
       'basic_styles': ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat']
+      'advanced_styles': ['Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor']
       'clipboard': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
       'document': ['Source']
       'editing': ['Scayt']
