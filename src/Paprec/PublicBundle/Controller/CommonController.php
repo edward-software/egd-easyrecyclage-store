@@ -19,7 +19,6 @@ class CommonController extends Controller
         try {
 
             $client = new Client(['base_uri' => $this->getParameter('paprec_public_site_url')]);
-
             $response = $client->request('GET', '/wp-json/menus/v1/menus/' . $slug);
 
             $bodyResponse = json_decode($response->getBody(), true);
@@ -36,6 +35,7 @@ class CommonController extends Controller
                         );
                     }
                 }
+
                 return $this->render('@PaprecPublic/Menu/shortlinksMenu.html.twig', array(
                     'items' => $shortlinks
                 ));

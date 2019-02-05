@@ -15,7 +15,7 @@
     {% block stylesheets %}{% endblock %}
 
 </head>
-<body class="page-template-default page page-id-2 logged-in page-d-exemple tunnel">
+<body class="single page-template-default page page-id-2 logged-in page-d-exemple tunnel">
 
 <header class="header">
     <div class="header__shortlinks">
@@ -40,6 +40,21 @@
         </a>
     </div>
 </header>
+
+{# Affichage du menu fixe à droite tout le temps #}
+<div class="fixedright">
+    <a href="{{ path('paprec_public_corp_home_index') }}" class="green">
+        RECYCLEZ
+        <br>
+        VOS DÉCHETS
+    </a>
+    <a href="{{ path('paprec_public_home_contactForm') }}" class="blue">
+        Contactez-nous
+    </a>
+    <a href="{{ paprec_public_site_url }}/store-locator" class="orange">
+        Nous trouver
+    </a>
+</div>
 
 <main role="main">
     <div class="breadcrumb">
