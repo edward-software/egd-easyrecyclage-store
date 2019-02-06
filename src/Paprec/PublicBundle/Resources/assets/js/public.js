@@ -84,9 +84,11 @@ $(function () {
     /**
      * Lorsque l'utilisateur choisit des fichiers à mettre en PJ, on les affiche au dessus du bouton d'import
      */
-    var options = {year: "numeric", month: "numeric", day: "numeric",
+    var options = {
+        year: "numeric", month: "numeric", day: "numeric",
         hour: "numeric", minute: "numeric", second: "numeric",
-        hour12: false};
+        hour12: false
+    };
     $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function () {
         var html = "";
         for (var i = 0; i < this.files.length; i++) {
