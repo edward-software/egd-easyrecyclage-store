@@ -2,7 +2,7 @@
 
  {% block picto_header %}
      <a href="{{ paprec_public_site_url }}" target="_blank">
-         {#<img alt="Logo" src="{{ absolute_url('build/static/logo.png') }}"  width="100px" height="100px" style="display: block; font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">#}
+         {#<img alt="Logo" src="{{ absolute_url('build/static/logo.png') }}"  width="75px" height="75px" style="font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">#}
          LOGO
      </a>
  {% endblock %}
@@ -120,7 +120,7 @@
             <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.6);">
                 <td class="picto" style="text-align:center;">
                     {% if productDIQuoteLine.productDI.pictures|length > 0 %}
-                        <img src="{% if productDIQuoteLine.productDI.pilotPictures|length > 0 %}{{ absolute_url('/uploads/pictos/' ~ productDIQuoteLine.productDI.pilotPictures[0].path) }}{% endif %}"
+                        <img src="{% if productDIQuoteLine.productDI.pilotPictures|length > 0 %}{{ absolute_url(asset('/uploads/pictos/' ~ productDIQuoteLine.productDI.pilotPictures[0].path)) }}{% endif %}"
                              alt="#" style="height: 75px">
                     {% endif %}
                 </td>
