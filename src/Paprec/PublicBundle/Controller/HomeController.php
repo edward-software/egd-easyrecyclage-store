@@ -426,26 +426,4 @@ class HomeController extends Controller
             'cart' => $cart
         ));
     }
-
-    /**
-     * @Route("/sendMail/{id}", name="paprec_public_home_sendMail")
-     * @throws \Exception
-     */
-    public function showPDF(ProductDIQuote $productDIQuote) {
-        $productDIQuoteManager = $this->get('paprec_commercial.product_di_quote_manager');
-        $productDIQuoteManager->sendNewProductDIQuoteEmail($productDIQuote);
-        return $this->render('@PaprecCommercial/ProductDIQuote/PDF/printQuoteCover.html.twig', array(
-            'productDIQuote' => $productDIQuote,
-            'date' => new \DateTime()
-        ));
-//        $client = new \GuzzleHttp\Client();
-//        $uri = $this->getParameter('paprec_public_site_url') . '/?na=s';
-//        $response = $client->request('POST',$uri, [
-//            'form_params' => [
-//                'nr' => 'widget-minimal',
-//                'ne' => 'frederic.laine@eggers-digital.com'
-//            ]
-//        ]);
-//        return new Response(200);
-    }
 }
