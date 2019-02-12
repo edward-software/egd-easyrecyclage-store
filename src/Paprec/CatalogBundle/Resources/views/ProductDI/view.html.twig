@@ -60,7 +60,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Catalog.ProductDI.Capacity'|trans }}</label>
                                     <label class="col-form-label col-md-8">
-                                        {{ productDI.capacity }} {{ productDI.capacityUnit }}
+                                        {{ productDI.capacity }} {% autoescape false %} {{ productDI.capacityUnit }} {% endautoescape %}
                                     </label>
                                 </div>
                                 <div class="form-group row">

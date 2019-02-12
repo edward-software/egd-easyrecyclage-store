@@ -41,8 +41,11 @@
     {% set displayedProduct = "" %}
     {# On parcourt la liste des produits D3E #}
     {% for product in products %}
-        {% if (cpt%5 == 0) %}
+        {% if (cpt == 5) %}
             <div class="first-row">
+        {% endif %}
+        {% if (cpt%5 == 0 and cpt > 5) %}
+            <div class="following-row">
         {% endif %}
         {% if product.id in cart.displayedProducts %}
             {% set displayedProduct = product %}

@@ -31,7 +31,7 @@
     <div class="wrapper">
         <div class="header__menu">
 
-            <a class="header__cta">Recyclez<br>vos déchets</a>
+            <a class="header__cta" href="{{ path('paprec_public_corp_home_index') }}">Recyclez<br>vos déchets</a>
             <ul class="menu">
                 {{ render(controller('PaprecPublicBundle:Common:getMenuFromWP', {'slug': 'header-menu'})) }}
             </ul>

@@ -58,9 +58,12 @@
                         {# On instantie la variable qui va prendre le produit à afficher#}
                         {% set displayedProduct = "" %}
                         {% for product in products %}
-                            {% if (cpt%5 == 0) %}
-                                <div class="first-row">
-                            {% endif %}
+                            {% if (cpt == 5) %}
+                                    <div class="first-row">
+                                        {% endif %}
+                                        {% if (cpt%5 == 0 and cpt > 5) %}
+                                        <div class="following-row">
+                                            {% endif %}
                             {% if product.id in cart.displayedProducts and category.id in cart.displayedProducts|keys %}
                                 {% set displayedProduct = product %}
                             {% endif %}
@@ -69,7 +72,7 @@
                                  data-url="{{ path('paprec_public_corp_di_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: category.id, productId: product.id}) }}"
                                  style="{% if product.pictos| length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
                                 {{ product.name }}
-                                <br>{{ product.capacity|nl2br }}{{ product.capacityUnit }}
+                                <br>{{ product.capacity|nl2br }}{% autoescape false %}{{ product.capacityUnit }}{% endautoescape %}
                                 {% for items in cart.content %}
                                     {% if items['cId'] == category.id and items['pId'] == product.id %}
                                         <span class="number">{{ items['qtty'] }}</span>
@@ -123,8 +126,9 @@
                                             </div>
 
                                             {% if displayedProduct.reference is not null %}
-                                                <a href="{{ displayedProduct.reference }}"
-                                                   class="infoproduct__more">{{ 'Public.Cart.LearnMore'|trans }}</a>
+                                                <div class="infoproduct__more">
+                                                    <a href="{{ displayedProduct.reference }}">{{ 'Public.Cart.LearnMore'|trans }}</a>
+                                                </div>
                                             {% endif %}
 
                                             <div class="infoproduct__engagment">

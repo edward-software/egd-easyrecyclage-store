@@ -56,7 +56,7 @@
                          alt="#">
                 </div>
                 <div class="name">{{ productChantierQuoteLine.quantity }}
-                    x {{ productChantierQuoteLine.productChantier.name }} {{ productChantierQuoteLine.productChantier.capacity }}{{ productChantierQuoteLine.productChantier.capacityUnit }}</div>
+                    x {{ productChantierQuoteLine.productChantier.name }} {{ productChantierQuoteLine.productChantier.capacity }}{% autoescape false %}{{ productChantierQuoteLine.productChantier.capacityUnit }} {% endautoescape %}</div>
                 <div class="nameof">de {{ productChantierQuoteLine.categoryName }}</div>
                 <div class="desc">
                     Prestation {% if productChantierQuote.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}</div>

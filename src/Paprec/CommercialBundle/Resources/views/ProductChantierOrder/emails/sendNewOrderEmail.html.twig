@@ -16,73 +16,77 @@
 {% endblock %}
 
 {% block main_content %}
-    <tr>
-        Détail de la demande N° {{ productChantierOrder.id|formatId(6) }} - {{ productChantierOrder.dateCreation|date('d/m/Y H:i:s') }}
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductChantierOrder.BusinessName'|trans }}
-        </td>
-        <td class="value">
-            {{ productChantierOrder.businessName }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductChantierOrder.BusinessLine'|trans }}
-        </td>
-        <td class="value">
-            {{ productChantierOrder.businessLine.name }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductChantierOrder.Civility'|trans }}
-        </td>
-        <td class="value">
-            {{ productChantierOrder.civility }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductChantierOrder.LastName'|trans }}
-        </td>
-        <td class="value">
-            {{ productChantierOrder.lastName }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductChantierOrder.FirstName'|trans }}
-        </td>
-        <td class="value">
-            {{ productChantierOrder.firstName }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductChantierOrder.Function'|trans }}
-        </td>
-        <td class="value">
-            {{ productChantierOrder.function }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductChantierOrder.Email'|trans }}
-        </td>
-        <td class="value">
-            {{ productChantierOrder.email }}
-        </td>
-    </tr>
-    <tr>
-        <td class="label">
-            {{ 'Commercial.ProductChantierOrder.Phone'|trans }}
-        </td>
-        <td class="value">
-            {{ productChantierOrder.phone }}
-        </td>
-    </tr>
+    <table class="newRequestEmailTable" border="0" cellpadding="0" cellspacing="0" width="80%"
+           style="margin-left: 10%; margin-bottom: 15px; margin-top: 20px;text-align: right">
+        <tr>
+            Détail de la demande N° {{ productChantierOrder.id|formatId(6) }}
+            - {{ productChantierOrder.dateCreation|date('d/m/Y H:i:s') }}
+        </tr>
+        <tr>
+            <td class="label">
+                {{ 'Commercial.ProductChantierOrder.BusinessName'|trans }}
+            </td>
+            <td class="value">
+                {{ productChantierOrder.businessName }}
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                {{ 'Commercial.ProductChantierOrder.BusinessLine'|trans }}
+            </td>
+            <td class="value">
+                {{ productChantierOrder.businessLine.name }}
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                {{ 'Commercial.ProductChantierOrder.Civility'|trans }}
+            </td>
+            <td class="value">
+                {{ productChantierOrder.civility }}
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                {{ 'Commercial.ProductChantierOrder.LastName'|trans }}
+            </td>
+            <td class="value">
+                {{ productChantierOrder.lastName }}
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                {{ 'Commercial.ProductChantierOrder.FirstName'|trans }}
+            </td>
+            <td class="value">
+                {{ productChantierOrder.firstName }}
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                {{ 'Commercial.ProductChantierOrder.Function'|trans }}
+            </td>
+            <td class="value">
+                {{ productChantierOrder.function }}
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                {{ 'Commercial.ProductChantierOrder.Email'|trans }}
+            </td>
+            <td class="value">
+                {{ productChantierOrder.email }}
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                {{ 'Commercial.ProductChantierOrder.Phone'|trans }}
+            </td>
+            <td class="value">
+                {{ productChantierOrder.phone }}
+            </td>
+        </tr>
+    </table>
 {% endblock %}
 
 {% block footer %}

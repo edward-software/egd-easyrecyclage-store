@@ -21,7 +21,7 @@
             <div class="step__right">
                 <div class="first-row">
                     {% for category in categories %}
-                        <div class="checkboxPicto categoryCheckboxPicto"
+                        <div class="checkboxPicto categoryCheckboxPicto {% if category.id in cart.displayedCategories %} active {% endif %}"
                              id="categoryCheckboxPicto_{{ category.id }}"
                              data-url="{{ path('paprec_public_corp_' ~ cart.division|lower ~ '_subscription_addDisplayedCategory', {cartUuid: cart.id, categoryId: category.id}) }}"
                              style="background-image: url({{ asset('/uploads/pictos/' ~ category.picto) }})">

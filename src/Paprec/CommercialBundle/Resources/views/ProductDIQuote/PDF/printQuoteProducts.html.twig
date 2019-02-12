@@ -70,7 +70,7 @@
             <tr>
                 <td class="col1">
                     {{ productDIQuoteLine.quantity }} {{ productDIQuoteLine.productName }} <br>
-                    {{ productDIQuoteLine.productDI.capacity }} {{ productDIQuoteLine.productDI.capacityUnit }}
+                    {{ productDIQuoteLine.productDI.capacity }} {% autoescape false %}{{ productDIQuoteLine.productDI.capacityUnit }} {% endautoescape %}
                 </td>
                 <td class="col2"> {{ productDIQuoteLine.categoryName }} </td>
                 <td class="col3">

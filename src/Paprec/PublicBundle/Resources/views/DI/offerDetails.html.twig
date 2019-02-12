@@ -55,7 +55,7 @@
                          alt="#">
                 </div>
                 <div class="name">{{ productDIQuoteLine.quantity }}
-                    x {{ productDIQuoteLine.productDI.name }} {{ productDIQuoteLine.productDI.capacity }}{{ productDIQuoteLine.productDI.capacityUnit }}</div>
+                    x {{ productDIQuoteLine.productDI.name }} {{ productDIQuoteLine.productDI.capacity }} {% autoescape false %}{{ productDIQuoteLine.productDI.capacityUnit }} {% endautoescape %}</div>
                 <div class="nameof">de {{ productDIQuoteLine.categoryName }}</div>
                 <div class="desc">
                     Prestation {% if productDIQuote.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}</div>
