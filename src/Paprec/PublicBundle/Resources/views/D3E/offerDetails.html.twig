@@ -26,8 +26,13 @@
     <input type="hidden" id="divisionType" value="{{ cart.division }}">
     <div class="step">
         <div class="step__sucess">
-            <div class="title">{{ 'Public.Confirm.Thanks'|trans|upper }}</div>
-            <div class="content">{{ 'Public.Confirm.RequestReceivedMail'|trans }}
+            <div class="step__sucess__container">
+                <div class="step__sucess__container__left">
+                </div>
+                <div class="step__sucess__container__right">
+                    <div class="title">{{ 'Public.Confirm.Thanks'|trans|upper }}</div>
+                    <div class="content">{{ 'Public.Confirm.RequestReceivedMail'|trans }}</div>
+                </div>
             </div>
         </div>
         <div class="bold">{% if productD3EQuote.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productD3EQuote.firstName }} {{ productD3EQuote.lastName }}
