@@ -80,13 +80,14 @@ class PostalCodeManager
      * @return float|int
      */
     public function getRateByPostalCodeDivision($postalCode, $division) {
-        $rate = 1;
+        $rate = 100;
         $postalCodeDivs = $this->em->getRepository('PaprecCatalogBundle:PostalCode')->findBy(array(
-            'division' => $division
+            'division' => $division,
+            'deleted' => null
         ));
 
         // On parcourt tous les codes postaux appartenant à la division
-        if($postalCodeDivs !== null) {
+        if($postalCodeDivs !== null && count($postalCodeDivs)) {
             foreach ($postalCodeDivs as $pC) {
                 // si il existe un code postal exactement égal au $postalCode en param, alors on récupère son rate et on sort del a boucle
                 // ex : (92* == 92*) (92150 == 92150)
