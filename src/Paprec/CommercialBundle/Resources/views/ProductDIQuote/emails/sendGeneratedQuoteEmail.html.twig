@@ -1,10 +1,8 @@
 {% extends "@PaprecCommercial/Common/emails/base_email.html.twig" %}
 
  {% block picto_header %}
-     <a href="{{ paprec_public_site_url }}" target="_blank">
-         {#<img alt="Logo" src="{{ absolute_url('build/static/logo.png') }}"  width="75px" height="75px" style="font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">#}
-         LOGO
-     </a>
+     <img alt="Logo" src="{{ absolute_url(asset('build/static/picto_devis.png')) }}" width="75px" height="75px"
+          style="font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">
  {% endblock %}
 
 {% block title_header %}

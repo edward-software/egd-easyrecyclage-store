@@ -37,7 +37,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ 'Catalog.PostalCode.Code'|trans }}</th>
+                            <th>{{ 'Catalog.PostalCode.Codes'|trans }}</th>
                             <th>{{ 'Catalog.PostalCode.Division'|trans }}</th>
                             <th>{{ 'Catalog.PostalCode.Rate'|trans }}</th>
                             <th></th>
@@ -67,11 +67,11 @@
                     "infoEmpty": "{{ 'General.Datatable.No-records-available'|trans }}",
                     "search": "{{ 'General.Datatable.Search'|trans }}:",
                     "sProcessing": "{{ 'General.Datatable.Loading'|trans }}",
-"paginate": {
+                    "paginate": {
                         "previous": "{{ 'General.Datatable.Previous'|trans }}",
                         "next": "{{ 'General.Datatable.Next'|trans }}",
                     },
-"select": {
+                    "select": {
                         "rows": {
                             _: "%d lignes sélectionnées",
                             0: "Aucune ligne sélectionnée",
@@ -116,7 +116,7 @@
                 "ajax": "{{ path('paprec_catalog_postalCode_loadList') }}",
                 "columns": [
                     {"data": "id"},
-                    {"data": "code"},
+                    {"data": "codes"},
                     {"data": "division"},
                     {"data": "rate"},
                     {"data": "id", "width": "10%", "bSortable": false}

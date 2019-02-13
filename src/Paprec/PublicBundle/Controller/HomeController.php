@@ -2,11 +2,11 @@
 
 namespace Paprec\PublicBundle\Controller;
 
-use http\Client\Response;
 use Paprec\CommercialBundle\Entity\CallBack;
 use Paprec\CommercialBundle\Entity\ContactUs;
 use Paprec\CommercialBundle\Entity\ProductDIQuote;
 use Paprec\CommercialBundle\Entity\QuoteRequest;
+use Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate;
 use Paprec\CommercialBundle\Form\CallBack\CallBackShortType;
 use Paprec\CommercialBundle\Form\ContactUs\ContactUsShortType;
 use Paprec\CommercialBundle\Form\QuoteRequest\QuoteRequestShortType;
@@ -316,7 +316,7 @@ class HomeController extends Controller
 
             $client = new \GuzzleHttp\Client();
             $uri = $this->getParameter('paprec_public_site_url') . '/?na=s';
-            $response = $client->request('POST',$uri, [
+            $response = $client->request('POST', $uri, [
                 'form_params' => [
                     'nr' => 'widget-minimal',
                     'ne' => $contactUs->getEmail()
@@ -424,6 +424,18 @@ class HomeController extends Controller
         return $this->render('@PaprecPublic/Common/CallBack/callBackConfirm.html.twig', array(
             'callBack' => $callBack,
             'cart' => $cart
+        ));
+    }
+
+    /**
+     * @Route("/showMail/{id}", name="paprec_public_home_showmail")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function showMail(ProductDIQuote $productDIQuote)
+    {
+        return $this->render('@PaprecCommercial/ProductDIQuote/emails/sendNewQuoteEmail.html.twig', array(
+            'productDIQuote' => $productDIQuote
         ));
     }
 }

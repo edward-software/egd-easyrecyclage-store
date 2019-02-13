@@ -1,10 +1,9 @@
 {% extends "@PaprecCommercial/Common/emails/base_email.html.twig" %}
 
+
  {% block picto_header %}
-     <a href="{{ paprec_public_site_url }}" target="_blank">
-         {#<img alt="Logo" src="{{ absolute_url('build/static/logo.png') }}"  width="75px" height="75px" style="font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">#}
-         LOGO COURRIER
-     </a>
+     <img alt="Logo" src="{{ absolute_url(asset('build/static/mail_check.png')) }}" width="75px" height="75px"
+          style="font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">
  {% endblock %}
 
 {% block title_header %}
@@ -16,7 +15,7 @@
 {% endblock %}
 
 {% block main_content %}
-    <table border="0" cellpadding="8" cellspacing="0" width="60%"
+    <table id="mainContentTable" border="0" cellpadding="8" cellspacing="0" width="60%"
            style="margin-left: 20%; text-align: center; color: {{ blue1 }}; font-weight: bold; margin-bottom: 15px;">
 
         <tr>
@@ -56,8 +55,12 @@
         </tr>
         <tr>
             <td>
-                <a href="#"><button class="btn btn-green" style="margin-right: 25px">Découvrez nos équipements</button></a>
-                <a href="#"><button class="btn btn-blue">Trouvez une agence</button></a>
+                <a href="#">
+                    <button class="btn btn-green" style="margin-right: 25px">Découvrez nos équipements</button>
+                </a>
+                <a href="#">
+                    <button class="btn btn-blue">Trouvez une agence</button>
+                </a>
             </td>
         </tr>
     </table>

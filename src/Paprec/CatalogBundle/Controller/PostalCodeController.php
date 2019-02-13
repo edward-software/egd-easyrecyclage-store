@@ -42,7 +42,7 @@ class PostalCodeController extends Controller
         $columns = $request->get('columns');
 
         $cols['id'] = array('label' => 'id', 'id' => 'p.id', 'method' => array('getId'));
-        $cols['code'] = array('label' => 'code', 'id' => 'p.code', 'method' => array('getCode'));
+        $cols['codes'] = array('label' => 'codes', 'id' => 'p.codes', 'method' => array('getCodes'));
         $cols['division'] = array('label' => 'division', 'id' => 'c.division', 'method' => array('getDivision'));
         $cols['rate'] = array('label' => 'rate', 'id' => 'p.rate', 'method' => array('getRate'));
 
@@ -59,7 +59,7 @@ class PostalCodeController extends Controller
                 ))->setParameter(1, substr($search['value'], 1));
             } else {
                 $queryBuilder->andWhere($queryBuilder->expr()->orx(
-                    $queryBuilder->expr()->like('p.code', '?1'),
+                    $queryBuilder->expr()->like('p.codes', '?1'),
                     $queryBuilder->expr()->like('p.division', '?1'),
                     $queryBuilder->expr()->like('p.rate', '?1')
                 ))->setParameter(1, '%' . $search['value'] . '%');
@@ -112,7 +112,7 @@ class PostalCodeController extends Controller
 
         $phpExcelObject->setActiveSheetIndex(0)
             ->setCellValue('A1', 'ID')
-            ->setCellValue('B1', 'Code')
+            ->setCellValue('B1', 'Codes')
             ->setCellValue('C1', 'Division')
             ->setCellValue('D1', 'Coef. Mult.');
 
@@ -124,7 +124,7 @@ class PostalCodeController extends Controller
 
             $phpExcelObject->setActiveSheetIndex(0)
                 ->setCellValue('A' . $i, $postalCode->getId())
-                ->setCellValue('B' . $i, $postalCode->getCode())
+                ->setCellValue('B' . $i, $postalCode->getCodes())
                 ->setCellValue('C' . $i, $postalCode->getDivision())
                 ->setCellValue('D' . $i, $numberManager->denormalize($postalCode->getRate()));
             $i++;
@@ -232,8 +232,6 @@ class PostalCodeController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $postalCode = $form->getData();
-//            $postalCode->setRate($numberManager->normalize($postalCode->getRate()));
-
             $postalCode->setRate($numberManager->normalize($postalCode->getRate()));
 
             $em = $this->getDoctrine()->getManager();

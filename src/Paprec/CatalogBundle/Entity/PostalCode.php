@@ -23,17 +23,16 @@ class PostalCode
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="code", type="string", length=20)
-     * @Assert\NotBlank()
+     * @var text
+     * @ORM\Column(name="codes", type="text", nullable=true)
      * @Assert\Regex(
-     *     pattern="/^\d{2}(\*|(?:\d{3}))$/",
-     *     message="Les codes postaux doivent être aux formats : 75* ou 92150"
+     *     pattern="/^(\d{2}(\*|(?:\d{3}))(,\s*)?)+$/",
+     *     match=true,
+     *     message="Les codes postaux doivent être des nombres séparés par des virgules. (ex: 75*, 92150, 36*)"
      * )
      */
-    private $code;
-
+    private $codes;
+    
     /**
      * @var int
      *
@@ -126,30 +125,6 @@ class PostalCode
         return $this->deleted;
     }
 
-    /**
-     * Set code
-     *
-     * @param string $code
-     *
-     * @return PostalCode
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
-
-        return $this;
-    }
-
-    /**
-     * Get code
-     *
-     * @return string
-     */
-    public function getCode()
-    {
-        return $this->code;
-    }
-
 
 
     /**
@@ -174,5 +149,29 @@ class PostalCode
     public function getRate()
     {
         return $this->rate;
+    }
+
+    /**
+     * Set codes.
+     *
+     * @param string|null $codes
+     *
+     * @return PostalCode
+     */
+    public function setCodes($codes = null)
+    {
+        $this->codes = $codes;
+
+        return $this;
+    }
+
+    /**
+     * Get codes.
+     *
+     * @return string|null
+     */
+    public function getCodes()
+    {
+        return $this->codes;
     }
 }
