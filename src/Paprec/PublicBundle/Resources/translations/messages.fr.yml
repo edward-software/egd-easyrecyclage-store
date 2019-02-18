@@ -64,9 +64,12 @@ Public:
     AddToCartOrder:               Ajouter au panier
     SendNeed:                     Envoyer votre besoin
     NoProduct:                    Aucune prestation ajoutée
-    NeedEstimation:               J'estime mon besoin en 3 minutes
-    3MinOrder:                    Je commande en ligne en 3 minutes
-    FillForm:                     Je remplis un formulaire
+#    NeedEstimation:               J'estime mon besoin en 3 minutes
+    NeedEstimation:               Je compose ma solution
+#    3MinOrder:                    Je commande en ligne en 3 minutes
+    3MinOrder:                    Je compose ma solution
+#    FillForm:                     Je remplis un formulaire
+    FillForm:                     Je rédige mon besoin
     QuoteRequest:                 J'établis un devis
     PostalCode:                   Code postal
     ValidateNeed:                 Valider votre besoin

@@ -13,8 +13,10 @@
      {% set customArea = paprec_customizable_area('entreprise_top_msg_form') %}
      {% if customArea is not null %}
          {% autoescape false %}
-             <div class="custom-area">
-                 {{ customArea.content }}
+             <div class="custom-area__top">
+                 <div class="custom-area__top__msg">
+                     {{ customArea.content }}
+                 </div>
              </div>
          {% endautoescape %}
      {% endif %}
