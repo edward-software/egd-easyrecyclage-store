@@ -13,8 +13,10 @@
      {% if customArea is not null %}
          {% autoescape false %}
              <div class="custom-area__top">
-                 <div class="custom-area__top__msg">
-                     {{ customArea.content }}
+                 <div class="wrapper">
+                     <div class="custom-area__top__msg">
+                         {{ customArea.content }}
+                     </div>
                  </div>
              </div>
          {% endautoescape %}
