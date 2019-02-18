@@ -132,8 +132,10 @@
                     </div>
                     {% for argument in displayedProduct.arguments|slice(0, 2) %}
                         <div class="{% if loop.index == 1 %}infoproduct__satisfaction{% elseif loop.index == 2 %}infoproduct__tri{% endif %}">
+                            {% if argument.picto is not null %}
                             <img src="{{ asset('/uploads/pictos/' ~ argument.picto) }}" alt=""
                                  style="max-width: 50%; height: auto;">
+                            {% endif %}
                             {{ argument.description|nl2br }}
                         </div>
                     {% endfor %}
