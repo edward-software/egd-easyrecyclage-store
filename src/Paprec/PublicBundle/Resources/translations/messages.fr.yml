@@ -70,7 +70,8 @@ Public:
     3MinOrder:                    Je compose ma solution
 #    FillForm:                     Je remplis un formulaire
     FillForm:                     Je rédige mon besoin
-    QuoteRequest:                 J'établis un devis
+#    QuoteRequest:                 J'établis un devis
+    QuoteRequest:                 Je rédige mon besoin
     PostalCode:                   Code postal
     ValidateNeed:                 Valider votre besoin
     ValidateOrder:                Valider votre commande

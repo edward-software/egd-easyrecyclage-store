@@ -68,7 +68,6 @@
             <div class="wrapper">
                 <div class="righter">
                     <div class="whoare__title">{{ 'Public.Home.IAm'|trans }}</div>
-
                     <a href="{{ path('paprec_public_corp_home_index') }}"
                        class="whoare__cta {% if app.request.get('_route')|slice(0, 'paprec_public_corp'|length) == 'paprec_public_corp' %} active{% endif %}">Entreprise<br>&
                         administration</a>
