@@ -281,7 +281,7 @@ class ProductChantierQuoteManager
 
 
             $message = \Swift_Message::newInstance()
-                ->setSubject('Easy-Recyclage : Votre devis de prestation régulière pour déchets non dangereux')
+                ->setSubject('Easy-Recyclage : Votre devis de prestation ponctuelle pour déchets de chantier')
                 ->setFrom($from)
                 ->setTo($rcptTo)
                 ->setBody(
