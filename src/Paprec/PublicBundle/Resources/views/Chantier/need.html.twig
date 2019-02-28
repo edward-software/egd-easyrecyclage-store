@@ -79,6 +79,7 @@
     {% for product in products %}
     {% if (cpt == 5) %}
     <div class="first-row">
+      <div class="first-row-container">
         {% endif %}
         {% if (cpt%5 == 0 and cpt > 5) %}
         <div class="following-row">
@@ -103,6 +104,7 @@
 
             {% if ((cpt%5 == 0) and (cpt > 5)) or loop.last %}
         </div>
+      </div>
         {% if cart.displayedProducts and displayedProduct != '' %}
             <div class="infoproduct">
                 <div class="left">
@@ -127,6 +129,11 @@
                     <div class="infoproduct__title">
                         {{ displayedProduct.name }}
                     </div>
+                    {% if displayedProduct.reference is not null %}
+                        <div class="infoproduct__more">
+                            <a href="{{ displayedProduct.reference }}">{{ 'Public.Cart.LearnMore'|trans }}</a>
+                        </div>
+                    {% endif %}
                     <div class="infoproduct__desc">
                         {{ displayedProduct.description|nl2br }}
                     </div>
@@ -151,15 +158,11 @@
                     <div class="infoproduct__dimension">
                         {{ displayedProduct.dimensions|nl2br }}
                     </div>
-                    {% if displayedProduct.reference is not null %}
-                        <div class="infoproduct__more">
-                            <a href="{{ displayedProduct.reference }}">{{ 'Public.Cart.LearnMore'|trans }}</a>
-                        </div>
-                    {% endif %}
 
                     <div class="infoproduct__engagment">
                         <input type="checkbox" id="engagment">
                         <label for="engagment">{{ 'Public.Cart.Engagment'|trans }}</label>
+                        <p class="help">?</p>
                     </div>
                     {% set qtty = '' %}
                     {% for items in cart.content %}

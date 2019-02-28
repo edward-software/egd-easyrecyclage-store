@@ -14,44 +14,47 @@
 
     {% if cart.division is defined and cart.division in ['DI','CHANTIER'] %}
         <!-- DEBUT step categories  -->
-        <div class="step" id="anchor1">
-            <div class="step__left">
-                <div class="step__title">
-                    {{ 'Public.Cart.MyTrash'|trans }}
-                    <br>
-                    {{ 'Public.Cart.ToCollect'|trans }}
-                </div>
-            </div>
-            <div class="step__right">
-                <div class="first-row">
-                    {% for category in categories %}
-                        <div class="checkboxPicto categoryCheckboxPicto {% if category.id in cart.displayedCategories %} active {% endif %}"
-                             id="categoryCheckboxPicto_{{ category.id }}"
-                             data-url="{{ path('paprec_public_corp_' ~ cart.division|lower ~ '_subscription_addDisplayedCategory', {cartUuid: cart.id, categoryId: category.id}) }}"
-                             style="background-image: url({{ asset('/uploads/pictos/' ~ category.picto) }})">
-                            {{ category.name }}
-                        </div>
-                    {% endfor %}
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <!-- FIN step categories  -->
-    {% endif %}
+        <div class="container__step">
+          <div class="container__step-title">
+            <h2>Ma solution recyclage</h2>
+          </div>
+          <div class="step" id="anchor1">
+              <div class="step__left">
+                  <div class="step__title">
+                      {{ 'Public.Cart.MyTrash'|trans }}&nbsp;{{ 'Public.Cart.ToCollect'|trans }}
+                  </div>
+              </div>
+              <div class="step__right">
+                  <div class="first-row">
 
-    {% block products_panel %}
-        <div class="step">
-            <div class="step__left">
-                <div class="step__title">
-                    {% block product_step_title %}{% endblock %}
-                </div>
-            </div>
-            <div class="step__right">
-                {% block products %}
+                      {% for category in categories %}
+                          <div class="checkboxPicto categoryCheckboxPicto {% if category.id in cart.displayedCategories %} active {% endif %}"
+                               id="categoryCheckboxPicto_{{ category.id }}"
+                               data-url="{{ path('paprec_public_corp_' ~ cart.division|lower ~ '_subscription_addDisplayedCategory', {cartUuid: cart.id, categoryId: category.id}) }}"
+                               style="background-image: url({{ asset('/uploads/pictos/' ~ category.picto) }})">
+                              {{ category.name }}
+                          </div>
+                      {% endfor %}
+                  </div>
+                  <div class="clearfix"></div>
+              </div>
+          </div>
+          <!-- FIN step categories  -->
+      {% endif %}
 
-                {% endblock %}
-            </div>
+      {% block products_panel %}
+          <div class="step">
+              <div class="step__left">
+                  <div class="step__title">
+                      {% block product_step_title %}{% endblock %}
+                  </div>
+              </div>
+              <div class="step__right">
+                  {% block products %}
 
+                  {% endblock %}
+              </div>
+          </div>
         </div>
     {% endblock %}
     <div class="clearfix"></div>
