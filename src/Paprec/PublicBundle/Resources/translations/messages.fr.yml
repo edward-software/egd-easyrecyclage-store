@@ -8,6 +8,7 @@ Public:
     Recycle:                      Je recycle
     MyNeed:                       Mon besoin
     IAm:                          Je suis
+    Addresses:                    Adresses
     FileUploadNotice:             Afin de mieux appréhender votre demande, vous pouvez si vous le souhaitez nous fournir des photos (.jpg, .png, .tiff) ou autres fichiers (.pdf, .doc, .xls)
 
   CTA:
@@ -65,17 +66,17 @@ Public:
     SendNeed:                     Envoyer votre besoin
     NoProduct:                    Aucune prestation ajoutée
 #    NeedEstimation:               J'estime mon besoin en 3 minutes
-    NeedEstimation:               Je compose ma solution
+    NeedEstimation:               Je compose mon offre
 #    3MinOrder:                    Je commande en ligne en 3 minutes
     3MinOrder:                    Je compose ma solution
 #    FillForm:                     Je remplis un formulaire
-    FillForm:                     Je rédige mon besoin
+    FillForm:                     Je rédige ma demande
 #    QuoteRequest:                 J'établis un devis
     QuoteRequest:                 Je rédige mon besoin
     PostalCode:                   Code postal
     ValidateNeed:                 Valider votre besoin
     ValidateOrder:                Valider votre commande
-    AccessYourOffer:              Accéder à votre offre
+    Confirm:              Confirmez
     GoToDelivery:                 Aller à la livraison
     MyTrash:                      Mes déchets
     ToCollect:                    à collecter

@@ -16,9 +16,9 @@
 {% block cta_panel %}
     <div>
         <a class="step__tab"
-           href="{{ path('paprec_public_corp_chantier_subscription_setOrder', {cartUuid: cart.id}) }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
+           href="{{ path('paprec_public_corp_chantier_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.NeedEstimation'|trans }}</a>
         <a class="step__tab"
-           href="{{ path('paprec_public_corp_chantier_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
+           href="{{ path('paprec_public_corp_home_requestWriting_step1', {cartUuid: cart.id}) }}">{{ 'Public.Cart.FillForm'|trans }}</a>
         <div class="clearfix"></div>
     </div>
 {% endblock %}

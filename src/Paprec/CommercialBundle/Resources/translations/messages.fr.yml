@@ -387,15 +387,21 @@ Commercial:
     LastName:                   Nom
     FirstName:                  Prénom
     Email:                      Email
+    HeadOfficeAddress:          Adresse du siège
+    SiteAddress:                Adresse du chantier
     Address:                    Adresse
     PostalCode:                 Code postal
     City:                       Ville
     Phone:                      Téléphone
+    PreferredContactLabel:      "Pour notre futur échange, vous préférez être contacté par :"
+    PreferredContact:           Préfère être contacté par
     AttachedFiles:              Fichiers en PJ
     PhonePlaceholder:           Numéro de téléphone
     FunctionPlaceholder:        Fonction (facultatif)
     CollectivitePlaceholder:    Nom de collectivité / nom de syndicat
     Function:                   Fonction
+    TermsAccept:                J'accepte
+    TermsCGV:                   les conditions générales de vente
     Need:                       Le besoin
     NeedPlaceholder:            Votre besoin
     Division:                   Division

@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block subtitle_header %}
-    Formulaire Prestation régulière {{ quoteRequest.division }} - N° {{ quoteRequest.id|formatId(6) }}
+    Formulaire Prestation  {{ quoteRequest.division }} - {{ ('Public.Cart.' ~ quoteRequest.frequency|capitalize)|trans }} - N° {{ quoteRequest.id|formatId(6) }}
 {% endblock %}
 
 {% block main_content %}

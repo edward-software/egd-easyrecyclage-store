@@ -87,6 +87,10 @@ class BusinessLine
      */
     private $productD3EOrders;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\QuoteRequest", mappedBy="businessLine")
+     */
+    private $quoteRequests;
 
     /**
      * BusinessLine constructor.

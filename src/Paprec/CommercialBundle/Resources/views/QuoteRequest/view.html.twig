@@ -93,14 +93,14 @@
                                         {{ quoteRequest.phone }}
                                     </label>
                                 </div>
-                                {#<div class="form-group row">#}
-                                {#<label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.AttachedFiles'|trans }}</label>#}
-                                {#<label class="col-form-label">#}
-                                {#{{ quoteRequest.att }}#}
-                                {#</label>#}
-                                {#</div>#}
                             </div>
                             <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.PreferredContact'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {{ ('Commercial.QuoteRequest.' ~ quoteRequest.preferredContact|capitalize)|trans }}
+                                    </label>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Function'|trans }}</label>
                                     <label class="col-form-label">
@@ -121,12 +121,6 @@
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.PostalCode'|trans }}</label>
-                                    <label class="col-form-label">
-                                        {{ quoteRequest.postalCode }}
-                                    </label>
-                                </div>
-                                <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.AttachedFiles'|trans }}</label>
                                     <label class="col-form-label">
                                         {% if quoteRequest.attachedFiles %}
@@ -140,6 +134,60 @@
                                     <label class="col-form-label">
                                         {{ quoteRequest.need }}
                                     </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title">{{ 'Commercial.QuoteRequest.HeadOfficeAddress'|trans }}</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Address'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ quoteRequest.headofficeAddress }}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.PostalCode'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ quoteRequest.headofficePostalCode }}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.City'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ quoteRequest.headofficeCity }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title">{{ 'Commercial.QuoteRequest.SiteAddress'|trans }}</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Address'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ quoteRequest.address }}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.PostalCode'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ quoteRequest.postalCode }}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.City'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ quoteRequest.city }}
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

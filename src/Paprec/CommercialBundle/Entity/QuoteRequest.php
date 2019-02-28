@@ -55,32 +55,33 @@ class QuoteRequest
     /**
      * @var string
      *
-     * @ORM\Column(name="civility", type="string", length=10)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="civility", type="string", length=10, nullable=true)
+     * @Assert\NotBlank(groups={"details"})
      */
     private $civility;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastName", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="lastName", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"details"})
      */
     private $lastName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="firstName", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"details"})
      */
     private $firstName;
 
 
     /**
      * @var string
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
      * @Assert\Email(
+     *      groups={"details"},
      *      message = "L'email '{{ value }}' n'a pas un format valide"
      * )
      */
@@ -89,9 +90,10 @@ class QuoteRequest
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"details"})
      * @Assert\Regex(
+     *     groups={"details"},
      *     pattern="/^((\+)?33|0)[1-9](\d{2}){4}$/",
      *     match=true,
      *     message="Le n° de téléphone doit être au format français (ex: +33601020304, 0601020304)"
@@ -105,7 +107,7 @@ class QuoteRequest
      * @ORM\Column(name="function", type="string", length=255, nullable=true)
      */
     private $function;
-    
+
     /**
      * @var string
      *
@@ -118,7 +120,7 @@ class QuoteRequest
      * @var string
      *
      * @ORM\Column(name="need", type="text")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"need"})
      */
     private $need;
 
@@ -150,6 +152,54 @@ class QuoteRequest
      * @ORM\Column(name="postalCode", type="string", length=255)
      */
     private $postalCode;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     */
+    private $city;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="text", nullable=true)
+     * @Assert\NotBlank(groups={"details"})
+     */
+    private $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="headoffice_address", type="text", nullable=true)
+     * @Assert\NotBlank(groups={"details"})
+     */
+    private $headoffice_address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="headoffice_postalCode", type="string", length=255, nullable=true)
+     */
+    private $headoffice_postalCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="headoffice_city", type="text", nullable=true)
+     * @Assert\NotBlank(groups={"details"})
+     */
+    private $headoffice_city;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="preferredContact", type="string", length=10, nullable=true)
+     * @Assert\NotBlank(groups={"details"})
+     */
+    private $preferredContact;
+
 
     /**
      * Devis associé
@@ -194,7 +244,7 @@ class QuoteRequest
      *
      *  RELATIONS
      *
-    ########################### */
+     * ########################### */
 
     /**
      * @ORM\ManyToOne(targetEntity="Paprec\UserBundle\Entity\User", inversedBy="quoteRequests", cascade={"all"})
@@ -208,6 +258,13 @@ class QuoteRequest
      */
     private $agency;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\BusinessLine", inversedBy="quoteRequests")
+     * @ORM\JoinColumn(name="businessLineId", referencedColumnName="id", nullable=true)
+     * @Assert\NotBlank()
+     */
+    private $businessLine;
+
 
     /**
      * QuoteRequest constructor.
@@ -217,6 +274,7 @@ class QuoteRequest
         $this->dateCreation = new \DateTime();
         $this->attachedFiles = array();
     }
+
 
     /**
      * Get id.
@@ -299,16 +357,39 @@ class QuoteRequest
     {
         return $this->deleted;
     }
-    
+
+    /**
+     * Set businessName.
+     *
+     * @param string|null $businessName
+     *
+     * @return QuoteRequest
+     */
+    public function setBusinessName($businessName = null)
+    {
+        $this->businessName = $businessName;
+
+        return $this;
+    }
+
+    /**
+     * Get businessName.
+     *
+     * @return string|null
+     */
+    public function getBusinessName()
+    {
+        return $this->businessName;
+    }
 
     /**
      * Set civility.
      *
-     * @param string $civility
+     * @param string|null $civility
      *
      * @return QuoteRequest
      */
-    public function setCivility($civility)
+    public function setCivility($civility = null)
     {
         $this->civility = $civility;
 
@@ -318,7 +399,7 @@ class QuoteRequest
     /**
      * Get civility.
      *
-     * @return string
+     * @return string|null
      */
     public function getCivility()
     {
@@ -328,11 +409,11 @@ class QuoteRequest
     /**
      * Set lastName.
      *
-     * @param string $lastName
+     * @param string|null $lastName
      *
      * @return QuoteRequest
      */
-    public function setLastName($lastName)
+    public function setLastName($lastName = null)
     {
         $this->lastName = $lastName;
 
@@ -342,7 +423,7 @@ class QuoteRequest
     /**
      * Get lastName.
      *
-     * @return string
+     * @return string|null
      */
     public function getLastName()
     {
@@ -352,11 +433,11 @@ class QuoteRequest
     /**
      * Set firstName.
      *
-     * @param string $firstName
+     * @param string|null $firstName
      *
      * @return QuoteRequest
      */
-    public function setFirstName($firstName)
+    public function setFirstName($firstName = null)
     {
         $this->firstName = $firstName;
 
@@ -366,7 +447,7 @@ class QuoteRequest
     /**
      * Get firstName.
      *
-     * @return string
+     * @return string|null
      */
     public function getFirstName()
     {
@@ -376,11 +457,11 @@ class QuoteRequest
     /**
      * Set email.
      *
-     * @param string $email
+     * @param string|null $email
      *
      * @return QuoteRequest
      */
-    public function setEmail($email)
+    public function setEmail($email = null)
     {
         $this->email = $email;
 
@@ -390,7 +471,7 @@ class QuoteRequest
     /**
      * Get email.
      *
-     * @return string
+     * @return string|null
      */
     public function getEmail()
     {
@@ -400,11 +481,11 @@ class QuoteRequest
     /**
      * Set phone.
      *
-     * @param string $phone
+     * @param string|null $phone
      *
      * @return QuoteRequest
      */
-    public function setPhone($phone)
+    public function setPhone($phone = null)
     {
         $this->phone = $phone;
 
@@ -414,11 +495,35 @@ class QuoteRequest
     /**
      * Get phone.
      *
-     * @return string
+     * @return string|null
      */
     public function getPhone()
     {
         return $this->phone;
+    }
+
+    /**
+     * Set function.
+     *
+     * @param string|null $function
+     *
+     * @return QuoteRequest
+     */
+    public function setFunction($function = null)
+    {
+        $this->function = $function;
+
+        return $this;
+    }
+
+    /**
+     * Get function.
+     *
+     * @return string|null
+     */
+    public function getFunction()
+    {
+        return $this->function;
     }
 
     /**
@@ -493,16 +598,38 @@ class QuoteRequest
         return $this->attachedFiles;
     }
 
+    /**
+     * Set generatedTurnover.
+     *
+     * @param string|null $generatedTurnover
+     *
+     * @return QuoteRequest
+     */
+    public function setGeneratedTurnover($generatedTurnover = null)
+    {
+        $this->generatedTurnover = $generatedTurnover;
 
+        return $this;
+    }
+
+    /**
+     * Get generatedTurnover.
+     *
+     * @return string|null
+     */
+    public function getGeneratedTurnover()
+    {
+        return $this->generatedTurnover;
+    }
 
     /**
      * Set division.
      *
-     * @param string|null $division
+     * @param string $division
      *
      * @return QuoteRequest
      */
-    public function setDivision($division = null)
+    public function setDivision($division)
     {
         $this->division = $division;
 
@@ -512,7 +639,7 @@ class QuoteRequest
     /**
      * Get division.
      *
-     * @return string|null
+     * @return string
      */
     public function getDivision()
     {
@@ -541,6 +668,126 @@ class QuoteRequest
     public function getPostalCode()
     {
         return $this->postalCode;
+    }
+
+    /**
+     * Set city.
+     *
+     * @param string $city
+     *
+     * @return QuoteRequest
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city.
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set address.
+     *
+     * @param string $address
+     *
+     * @return QuoteRequest
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address.
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set headofficeAddress.
+     *
+     * @param string $headofficeAddress
+     *
+     * @return QuoteRequest
+     */
+    public function setHeadofficeAddress($headofficeAddress)
+    {
+        $this->headoffice_address = $headofficeAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficeAddress.
+     *
+     * @return string
+     */
+    public function getHeadofficeAddress()
+    {
+        return $this->headoffice_address;
+    }
+
+    /**
+     * Set headofficePostalCode.
+     *
+     * @param string $headofficePostalCode
+     *
+     * @return QuoteRequest
+     */
+    public function setHeadofficePostalCode($headofficePostalCode)
+    {
+        $this->headoffice_postalCode = $headofficePostalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficePostalCode.
+     *
+     * @return string
+     */
+    public function getHeadofficePostalCode()
+    {
+        return $this->headoffice_postalCode;
+    }
+
+    /**
+     * Set headofficeCity.
+     *
+     * @param string $headofficeCity
+     *
+     * @return QuoteRequest
+     */
+    public function setHeadofficeCity($headofficeCity)
+    {
+        $this->headoffice_city = $headofficeCity;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficeCity.
+     *
+     * @return string
+     */
+    public function getHeadofficeCity()
+    {
+        return $this->headoffice_city;
     }
 
     /**
@@ -615,6 +862,29 @@ class QuoteRequest
         return $this->frequency;
     }
 
+    /**
+     * Set tonnage.
+     *
+     * @param string|null $tonnage
+     *
+     * @return QuoteRequest
+     */
+    public function setTonnage($tonnage = null)
+    {
+        $this->tonnage = $tonnage;
+
+        return $this;
+    }
+
+    /**
+     * Get tonnage.
+     *
+     * @return string|null
+     */
+    public function getTonnage()
+    {
+        return $this->tonnage;
+    }
 
     /**
      * Set kookaburaNumber.
@@ -689,98 +959,50 @@ class QuoteRequest
     }
 
     /**
-     * Set function.
+     * Set businessLine.
      *
-     * @param string $function
+     * @param \Paprec\CommercialBundle\Entity\BusinessLine|null $businessLine
      *
      * @return QuoteRequest
      */
-    public function setFunction($function)
+    public function setBusinessLine(\Paprec\CommercialBundle\Entity\BusinessLine $businessLine = null)
     {
-        $this->function = $function;
+        $this->businessLine = $businessLine;
 
         return $this;
     }
 
     /**
-     * Get function.
+     * Get businessLine.
      *
-     * @return string
+     * @return \Paprec\CommercialBundle\Entity\BusinessLine|null
      */
-    public function getFunction()
+    public function getBusinessLine()
     {
-        return $this->function;
+        return $this->businessLine;
     }
 
     /**
-     * Set generatedTurnover.
+     * Set preferredContact.
      *
-     * @param string|null $generatedTurnover
+     * @param string|null $preferredContact
      *
      * @return QuoteRequest
      */
-    public function setGeneratedTurnover($generatedTurnover = null)
+    public function setPreferredContact($preferredContact = null)
     {
-        $this->generatedTurnover = $generatedTurnover;
+        $this->preferredContact = $preferredContact;
 
         return $this;
     }
 
     /**
-     * Get generatedTurnover.
+     * Get preferredContact.
      *
      * @return string|null
      */
-    public function getGeneratedTurnover()
+    public function getPreferredContact()
     {
-        return $this->generatedTurnover;
-    }
-
-    /**
-     * Set tonnage.
-     *
-     * @param string|null $tonnage
-     *
-     * @return QuoteRequest
-     */
-    public function setTonnage($tonnage = null)
-    {
-        $this->tonnage = $tonnage;
-
-        return $this;
-    }
-
-    /**
-     * Get tonnage.
-     *
-     * @return string|null
-     */
-    public function getTonnage()
-    {
-        return $this->tonnage;
-    }
-
-    /**
-     * Set businessName.
-     *
-     * @param string|null $businessName
-     *
-     * @return QuoteRequest
-     */
-    public function setBusinessName($businessName = null)
-    {
-        $this->businessName = $businessName;
-
-        return $this;
-    }
-
-    /**
-     * Get businessName.
-     *
-     * @return string|null
-     */
-    public function getBusinessName()
-    {
-        return $this->businessName;
+        return $this->preferredContact;
     }
 }

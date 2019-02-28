@@ -110,28 +110,21 @@ $(function () {
     /*******************************************************************************************************************
      * REGULAR FORM
      */
-    if ($('.regular-form').is('div')) {
+    if ($('.request-writing-need-form').is('div')) {
 
         // Au submit du formulaire, on rajoute les attributs au <form> avant de POST
-        $('#regularFormSubmitButton').on('click', function () {
+        $('#requestWritingNeedFormSubmitButton').on('click', function () {
             var form = $('form');
             form.attr('action', '#');
             form.attr('method', 'post');
             form.attr('enctype', 'multipart/form-data');
             form.submit();
         });
-
-        // // Affichage des fichiers sélectionnés en PJ
-        // $('#paprec_commercialbundle_quoteRequestNonCorporate_attachedFiles').on('change', function () {
-        //     var html = "";
-        //     for (var i = 0; i < this.files.length; i++) {
-        //         var lastModified = new Date(this.files[i].lastModified);
-        //         html += this.files[i].name + " " + new Intl.DateTimeFormat('en-GB').format(lastModified) + " <a href=\"#\">x</a><br>";
-        //         $('#listFiles').html(html);
-        //     }
-        //
-        // });
-
+    }
+    if ($('.request-writing-contact-details-form').is('div')) {
+        $('#requestWritingContactDetailsFormSubmitButton').on('click', function () {
+            $('form').submit();
+        })
     }
 
     /*******************************************************************************************************************

@@ -75,7 +75,7 @@
             <div class="clearfix"></div>
 
             {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
-                'label': cart.type == 'quote' ? 'AccessYourOffer' : 'GoToDelivery',
+                'label': cart.type == 'quote' ? 'Confirm' : 'GoToDelivery',
                 'cartUuid': cart.id,
                 'division': cart.division,
                 'stepBack': 'step1',

@@ -6,9 +6,9 @@ use Paprec\CommercialBundle\Entity\CallBack;
 use Paprec\CommercialBundle\Entity\ContactUs;
 use Paprec\CommercialBundle\Entity\ProductDIQuote;
 use Paprec\CommercialBundle\Entity\QuoteRequest;
-use Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate;
 use Paprec\CommercialBundle\Form\CallBack\CallBackShortType;
 use Paprec\CommercialBundle\Form\ContactUs\ContactUsShortType;
+use Paprec\CommercialBundle\Form\QuoteRequest\QuoteRequestNeedType;
 use Paprec\CommercialBundle\Form\QuoteRequest\QuoteRequestShortType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -72,28 +72,21 @@ class HomeController extends Controller
                 $step = "f";
             }
             if ($cart->getFrequency() && $cart->getFrequency() !== '') {
-
-                if ($cart->getFrequency() == 'ponctual') {
-                    // Redirection vers le controller de la bonne division
-                    switch ($cart->getDivision()) {
-                        case('DI'):
-                            return $this->redirectToRoute('paprec_public_corp_di_subscription_step0', array(
-                                'cartUuid' => $cart->getId()
-                            ));
-                            break;
-                        case('CHANTIER'):
-                            return $this->redirectToRoute('paprec_public_corp_chantier_subscription_step0', array(
-                                'cartUuid' => $cart->getId()
-                            ));
-                        case('D3E'):
-                            return $this->redirectToRoute('paprec_public_corp_d3e_subscription_step0', array(
-                                'cartUuid' => $cart->getId()
-                            ));
-                    }
-                } else {
-                    return $this->redirectToRoute('paprec_public_home_regularForm', array(
-                        'cartUuid' => $cart->getId()
-                    ));
+                // Redirection vers le controller de la bonne division
+                switch ($cart->getDivision()) {
+                    case('DI'):
+                        return $this->redirectToRoute('paprec_public_corp_di_subscription_step0', array(
+                            'cartUuid' => $cart->getId()
+                        ));
+                        break;
+                    case('CHANTIER'):
+                        return $this->redirectToRoute('paprec_public_corp_chantier_subscription_step0', array(
+                            'cartUuid' => $cart->getId()
+                        ));
+                    case('D3E'):
+                        return $this->redirectToRoute('paprec_public_corp_d3e_subscription_step0', array(
+                            'cartUuid' => $cart->getId()
+                        ));
                 }
             }
         }
@@ -182,15 +175,13 @@ class HomeController extends Controller
     }
 
     /**
-     * Formulaire pour besoin Régulier : commun à toutes les divisions donc dans HomeController
-     * @Route("/regularForm/{cartUuid}", name="paprec_public_home_regularForm")
+     * Formulaire "Mon besoin" de "Je rédige ma demande"
+     * @Route("/requestWriting/step1/{cartUuid}", name="paprec_public_corp_home_requestWriting_step1")
      * @param Request $request
      * @throws \Exception
      */
-    public function regularFormAction(Request $request, $cartUuid)
+    public function requestWritingStep1Action(Request $request, $cartUuid)
     {
-        $quoteRequestManager = $this->get('paprec_commercial.quote_request_manager');
-
         $cartManager = $this->get('paprec.cart_manager');
 
         $divisions = array();
@@ -200,9 +191,10 @@ class HomeController extends Controller
         $cart = $cartManager->get($cartUuid);
 
         $quoteRequest = new QuoteRequest();
-        $form = $this->createForm(QuoteRequestShortType::class, $quoteRequest);
+        $form = $this->createForm(QuoteRequestNeedType::class, $quoteRequest);
 
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
@@ -211,6 +203,73 @@ class HomeController extends Controller
             $quoteRequest->setFrequency($cart->getFrequency());
             $quoteRequest->setDivision($cart->getDivision());
             $quoteRequest->setPostalCode($cart->getPostalCode());
+            $quoteRequest->setCity($cart->getCity());
+
+            $files = array();
+            foreach ($quoteRequest->getAttachedFiles() as $uploadedFile) {
+                if ($uploadedFile instanceof UploadedFile) {
+                    /**
+                     * On place le file uploadé dans le dossier web/files
+                     * et on ajoute le nom du fichier md5 dans le tableau $files
+                     */
+                    $uploadedFileName = md5(uniqid()) . '.' . $uploadedFile->guessExtension();
+
+                    $uploadedFile->move($this->getParameter('paprec_commercial.quote_request.files_path'), $uploadedFileName);
+                    $files[] = $uploadedFileName;
+                }
+            }
+            $quoteRequest->setAttachedFiles($files);
+            $em->persist($quoteRequest);
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_public_corp_home_requestWriting_step2', array(
+                'cartUuid' => $cart->getId(),
+                'quoteRequestId' => $quoteRequest->getId()
+            ));
+        }
+
+        return $this->render('@PaprecPublic/Common/RequestWriting/need.html.twig', array(
+            'form' => $form->createView(),
+            'cart' => $cart,
+            'divisions' => $divisions
+        ));
+    }
+
+    /**
+     * Formulaire pour besoin Régulier : commun à toutes les divisions donc dans HomeController
+     * @Route("/requestWriting/step2/{cartUuid}/{quoteRequestId}", name="paprec_public_corp_home_requestWriting_step2")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function requestWritingStep2Action(Request $request, $cartUuid, $quoteRequestId)
+    {
+        $quoteRequestManager = $this->get('paprec_commercial.quote_request_manager');
+        $cartManager = $this->get('paprec.cart_manager');
+
+        $em = $this->getDoctrine()->getManager();
+        $quoteRequest = $em->getRepository('PaprecCommercialBundle:QuoteRequest')->find($quoteRequestId);
+
+        $divisions = array();
+        foreach ($this->getParameter('paprec_divisions_select') as $division => $divisionLong) {
+            $divisions[$division] = $divisionLong;
+        }
+        $cart = $cartManager->get($cartUuid);
+
+        $form = $this->createForm(QuoteRequestShortType::class, $quoteRequest, array(
+            'division' => $cart->getDivision()
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $quoteRequest = $form->getData();
+            $quoteRequest->setQuoteStatus('CREATED');
+            $quoteRequest->setFrequency($cart->getFrequency());
+            $quoteRequest->setDivision($cart->getDivision());
+            $quoteRequest->setPostalCode($cart->getPostalCode());
+            $quoteRequest->setCity($cart->getCity());
 
             $files = array();
             foreach ($quoteRequest->getAttachedFiles() as $uploadedFile) {
@@ -232,14 +291,15 @@ class HomeController extends Controller
             $sendNewQuoteRequest = $quoteRequestManager->sendNewRequestEmail($quoteRequest);
 
             if ($sendNewQuoteRequest) {
-                return $this->redirectToRoute('paprec_public_home_regularConfirm', array(
+                return $this->redirectToRoute('paprec_public_corp_home_requestWriting_step3', array(
                     'cartUuid' => $cart->getId(),
                     'quoteRequestId' => $quoteRequest->getId()
                 ));
             }
         }
 
-        return $this->render('@PaprecPublic/Common/Regular/regularForm.html.twig', array(
+        return $this->render('@PaprecPublic/Common/RequestWriting/contactDetails.html.twig', array(
+            'foorm' => $form,
             'form' => $form->createView(),
             'cart' => $cart,
             'divisions' => $divisions
@@ -248,15 +308,16 @@ class HomeController extends Controller
 
     /**
      * Formulaire pour besoin Régulier : commun à toutes les divisions donc dans HomeController
-     * @Route("/regularConfirm/{cartUuid}/{quoteRequestId}", name="paprec_public_home_regularConfirm")
+     * @Route("/requestWriting/step3/{cartUuid}/{quoteRequestId}", name="paprec_public_corp_home_requestWriting_step3")
      * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
     public function regularConfirmAction(Request $request, $cartUuid, $quoteRequestId)
     {
         $em = $this->getDoctrine()->getManager();
         $quoteRequest = $em->getRepository('PaprecCommercialBundle:QuoteRequest')->find($quoteRequestId);
-        return $this->render('@PaprecPublic/Common/Regular/regularConfirm.html.twig', array(
+        return $this->render('@PaprecPublic/Common/RequestWriting/confirm.html.twig', array(
             'quoteRequest' => $quoteRequest
         ));
     }
@@ -265,7 +326,9 @@ class HomeController extends Controller
      * Formulaire "Contactez-nous"
      * @Route("/contact/{cartUuid}", defaults={"cartUuid"=null}, name="paprec_public_home_contactForm")
      * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function contactFormAction(Request $request, $cartUuid)
     {
