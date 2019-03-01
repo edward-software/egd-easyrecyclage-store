@@ -54,6 +54,8 @@ doctrine:
     user: '%database_user%'
     password: '%database_password%'
     charset: UTF8
+    mapping_types:
+      json: json_array
     types:
       uuid:  Ramsey\Uuid\Doctrine\UuidType
     # if using pdo_sqlite as your database driver:

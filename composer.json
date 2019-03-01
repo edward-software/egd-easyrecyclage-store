@@ -25,7 +25,7 @@
     "ext-zip": "*",
     "beberlei/DoctrineExtensions": "^1.1",
     "doctrine/doctrine-bundle": "^1.6",
-    "doctrine/orm": "^2.5",
+    "doctrine/orm": "^2.6",
     "egeloen/ckeditor-bundle": "^6.0",
     "friendsofsymfony/user-bundle": "~2.0",
     "guzzlehttp/guzzle": "^6.3",

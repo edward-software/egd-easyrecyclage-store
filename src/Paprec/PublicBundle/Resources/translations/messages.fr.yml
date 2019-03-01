@@ -63,6 +63,9 @@ Public:
     Disclaimer:                   Forfait recyclage clé en main
     SelectedContainer:            contenant séléctionné
     SelectedContainers:           contenants séléctionnés
+    SelectedCategory:             déchet sélectionné
+    SelectedCategories:           déchets sélectionnés
+    NoSelectedCategory:           Aucun déchet sélectionné
     AddToCartQuote:               Ajouter au devis
     AddToCartOrder:               Ajouter au panier
     SendNeed:                     Envoyer votre besoin
