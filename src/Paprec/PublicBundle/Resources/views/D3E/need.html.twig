@@ -24,10 +24,10 @@
 
 {% block cta_panel %}
     <div>
-        <a class="step__tab{% if cart.type == 'order' %} active{% endif %}"
-           href="{{ path('paprec_public_corp_d3e_subscription_setOrder', {cartUuid: cart.id}) }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
-        <a class="step__tab{% if cart.type == 'quote' %} active{% endif %}"
-           href="{{ path('paprec_public_corp_d3e_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
+        <a class="step__tab active"
+           href="#">{{ 'Public.Cart.NeedEstimation'|trans }}</a>
+        <a class="step__tab"
+           href="{{ path('paprec_public_corp_home_requestWriting_step1', {cartUuid: cart.id}) }}">{{ 'Public.Cart.FillForm'|trans }}</a>
         <div class="clearfix"></div>
     </div>
 {% endblock %}

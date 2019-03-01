@@ -27,7 +27,7 @@
         <a class="step__tab{% if cart.type == 'order' %} active{% endif %}"
            href="{{ path('paprec_public_corp_chantier_subscription_setOrder', {cartUuid: cart.id}) }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
         <a class="step__tab{% if cart.type == 'quote' %} active{% endif %}"
-           href="{{ path('paprec_public_corp_chantier_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
+           href="#">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
         <div class="clearfix"></div>
     </div>
 {% endblock %}

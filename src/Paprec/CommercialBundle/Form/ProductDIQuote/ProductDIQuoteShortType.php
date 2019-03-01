@@ -6,11 +6,12 @@ use Paprec\CommercialBundle\Entity\BusinessLine;
 use Paprec\CommercialBundle\Repository\BusinessLineRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\IsTrue;
 
 class ProductDIQuoteShortType extends AbstractType
 {
@@ -47,13 +48,36 @@ class ProductDIQuoteShortType extends AbstractType
             ->add('lastName', TextType::class)
             ->add('firstName', TextType::class)
             ->add('email', TextType::class)
-            ->add('address', TextareaType::class)
-            ->add('postalCode', TextType::class)
-            ->add('city', TextType::class)
             ->add('phone', TextType::class)
             ->add('function', TextType::class, array(
                 'required' => false
-            ));
+            ))
+            ->add('address', TextType::class)
+            ->add('postalCode', TextType::class)
+            ->add('city', TextType::class)
+            ->add('headofficeAddress', TextType::class, array(
+                'required' => false
+            ))
+            ->add('headofficePostalCode', TextType::class, array(
+                'required' => false
+            ))
+            ->add('headofficeCity', TextType::class, array(
+                'required' => false
+            ))
+            ->add('preferredContact', ChoiceType::class, array(
+                'choices' => array(
+                    'Téléphone' => 'phone',
+                    'e-mail' => 'email',
+                ),
+                'choice_attr' => function () {
+                    return ['class' => 'input__radio'];
+                },
+                'expanded' => true
+            ))
+            ->add('terms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => new IsTrue()
+            ]);;
 
     }
 

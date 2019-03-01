@@ -27,7 +27,7 @@
                 <div class="step__title">{{ 'Public.Home.IAm'|trans }}</div>
             </div>
             <div class="step__right step__right--small">
-                {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductDIQuote.BusinessName'|trans}}) }}
+                {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.BusinessName'|trans}}) }}
                 {{ form_errors(form.businessName) }}
 
                 {{ form_widget(form.businessLine, {'attr': {'class': 'input input--full'}}) }}
@@ -38,31 +38,67 @@
 
                 <div class="clearfix step--marginfield"></div>
 
-                {{ form_widget(form.lastName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.ProductDIQuote.LastName'|trans}}) }}
+                {{ form_widget(form.lastName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.QuoteRequest.LastName'|trans}}) }}
                 {{ form_errors(form.lastName) }}
 
-                {{ form_widget(form.firstName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.ProductDIQuote.FirstName'|trans}}) }}
+                {{ form_widget(form.firstName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.QuoteRequest.FirstName'|trans}}) }}
                 {{ form_errors(form.firstName) }}
 
-                {{ form_widget(form.email, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductDIQuote.Email'|trans}}) }}
+                {{ form_widget(form.email, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.Email'|trans}}) }}
                 {{ form_errors(form.email) }}
 
-                {{ form_widget(form.address, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductDIQuote.Address'|trans}}) }}
-                {{ form_errors(form.address) }}
-
-                {{ form_widget(form.postalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.ProductDIQuote.PostalCode'|trans}}) }}
-                {{ form_errors(form.postalCode) }}
-
-                {{ form_widget(form.city, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.ProductDIQuote.City'|trans}}) }}
-                {{ form_errors(form.city) }}
-
-                {{ form_widget(form.phone, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductDIQuote.PhonePlaceholder'|trans}}) }}
+                {{ form_widget(form.phone, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.PhonePlaceholder'|trans}}) }}
                 {{ form_errors(form.phone) }}
 
-                {{ form_widget(form.function, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductDIQuote.FunctionPlaceholder'|trans}}) }}
+                {{ form_widget(form.function, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.FunctionPlaceholder'|trans}}) }}
                 {{ form_errors(form.function) }}
+            </div>
+        </div>
+        <div class="step">
 
-                <div class="clearfix"></div>
+            <div class="step__left">
+                <div class="step__title">
+                    {{ 'Public.Home.Addresses'|trans }}
+                </div>
+            </div>
+            <div class="step__right step__right--small">
+                {{ form_widget(form.headofficeAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.HeadOfficeAddress'|trans}}) }}
+                {{ form_errors(form.headofficeAddress) }}
+
+                {{ form_widget(form.headofficePostalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.QuoteRequest.PostalCode'|trans}}) }}
+                {{ form_errors(form.headofficePostalCode) }}
+
+                {{ form_widget(form.headofficeCity, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.QuoteRequest.City'|trans}}) }}
+                {{ form_errors(form.headofficeCity) }}
+
+                {{ form_widget(form.address, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.SiteAddress'|trans}}) }}
+                {{ form_errors(form.address) }}
+
+                {{ form_widget(form.postalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.QuoteRequest.PostalCode'|trans}}) }}
+                {{ form_errors(form.postalCode) }}
+
+                {{ form_widget(form.city, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.QuoteRequest.City'|trans}}) }}
+                {{ form_errors(form.city) }}
+
+                <div class="">
+                    {{ 'Commercial.QuoteRequest.PreferredContactLabel'|trans }}
+                </div>
+                {{ form_widget(form.preferredContact, {'attr': {'class': 'input--radio'}}) }}
+                {{ form_errors(form.preferredContact) }}
+
+                <div class="clearfix step--marginfield"></div>
+
+                {{ form_widget(form.terms) }}
+                {{ 'Commercial.QuoteRequest.TermsAccept'|trans }} <a href="#"
+                                                                     class="">{{ 'Commercial.QuoteRequest.TermsCGV'|trans }}</a>
+                {{ form_errors(form.terms) }}
+                <div>
+                    Les informations recueillies sur ce formulaire sont enregistrées dans un fichier informatisé pour
+                    permettre de vous adresser des contenus adaptés à vos besoins. Ces données sont conservées pendant 3
+                    ans et sont destinées au service marketing. Conformément à la loi
+                    « informatique et libertés », vous pouvez exercer votre droit d’accès aux données vous concernant et
+                    les faire rectifier en contactant : service-data@paprec.com
+                </div>
             </div>
             <div class="clearfix"></div>
 

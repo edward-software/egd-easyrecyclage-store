@@ -98,7 +98,22 @@ class ProductDIQuote
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="text")
+     * @ORM\Column(name="postalCode", type="string", length=255)
+     */
+    private $postalCode;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     */
+    private $city;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="text", nullable=true)
      * @Assert\NotBlank()
      */
     private $address;
@@ -106,18 +121,33 @@ class ProductDIQuote
     /**
      * @var string
      *
-     * @ORM\Column(name="postalCode", type="string", length=255)
+     * @ORM\Column(name="headoffice_address", type="text", nullable=true)
      * @Assert\NotBlank()
      */
-    private $postalCode;
+    private $headoffice_address;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="city", type="string", length=255)
+     * @ORM\Column(name="headoffice_postalCode", type="string", length=255, nullable=true)
+     */
+    private $headoffice_postalCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="headoffice_city", type="text", nullable=true)
      * @Assert\NotBlank()
      */
-    private $city;
+    private $headoffice_city;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="preferredContact", type="string", length=10, nullable=true)
+     * @Assert\NotBlank()
+     */
+    private $preferredContact;
 
     /**
      * @var string
@@ -223,7 +253,7 @@ class ProductDIQuote
         $this->dateCreation = new \DateTime();
         $this->productDIQuoteLines = new ArrayCollection();
     }
-
+    
 
     /**
      * Get id.
@@ -404,6 +434,30 @@ class ProductDIQuote
     }
 
     /**
+     * Set function.
+     *
+     * @param string|null $function
+     *
+     * @return ProductDIQuote
+     */
+    public function setFunction($function = null)
+    {
+        $this->function = $function;
+
+        return $this;
+    }
+
+    /**
+     * Get function.
+     *
+     * @return string|null
+     */
+    public function getFunction()
+    {
+        return $this->function;
+    }
+
+    /**
      * Set email.
      *
      * @param string $email
@@ -425,30 +479,6 @@ class ProductDIQuote
     public function getEmail()
     {
         return $this->email;
-    }
-
-    /**
-     * Set address.
-     *
-     * @param string $address
-     *
-     * @return ProductDIQuote
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get address.
-     *
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
     }
 
     /**
@@ -478,11 +508,11 @@ class ProductDIQuote
     /**
      * Set city.
      *
-     * @param string $city
+     * @param string|null $city
      *
      * @return ProductDIQuote
      */
-    public function setCity($city)
+    public function setCity($city = null)
     {
         $this->city = $city;
 
@@ -492,11 +522,131 @@ class ProductDIQuote
     /**
      * Get city.
      *
-     * @return string
+     * @return string|null
      */
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     * Set address.
+     *
+     * @param string|null $address
+     *
+     * @return ProductDIQuote
+     */
+    public function setAddress($address = null)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address.
+     *
+     * @return string|null
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set headofficeAddress.
+     *
+     * @param string|null $headofficeAddress
+     *
+     * @return ProductDIQuote
+     */
+    public function setHeadofficeAddress($headofficeAddress = null)
+    {
+        $this->headoffice_address = $headofficeAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficeAddress.
+     *
+     * @return string|null
+     */
+    public function getHeadofficeAddress()
+    {
+        return $this->headoffice_address;
+    }
+
+    /**
+     * Set headofficePostalCode.
+     *
+     * @param string|null $headofficePostalCode
+     *
+     * @return ProductDIQuote
+     */
+    public function setHeadofficePostalCode($headofficePostalCode = null)
+    {
+        $this->headoffice_postalCode = $headofficePostalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficePostalCode.
+     *
+     * @return string|null
+     */
+    public function getHeadofficePostalCode()
+    {
+        return $this->headoffice_postalCode;
+    }
+
+    /**
+     * Set headofficeCity.
+     *
+     * @param string|null $headofficeCity
+     *
+     * @return ProductDIQuote
+     */
+    public function setHeadofficeCity($headofficeCity = null)
+    {
+        $this->headoffice_city = $headofficeCity;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficeCity.
+     *
+     * @return string|null
+     */
+    public function getHeadofficeCity()
+    {
+        return $this->headoffice_city;
+    }
+
+    /**
+     * Set preferredContact.
+     *
+     * @param string|null $preferredContact
+     *
+     * @return ProductDIQuote
+     */
+    public function setPreferredContact($preferredContact = null)
+    {
+        $this->preferredContact = $preferredContact;
+
+        return $this;
+    }
+
+    /**
+     * Get preferredContact.
+     *
+     * @return string|null
+     */
+    public function getPreferredContact()
+    {
+        return $this->preferredContact;
     }
 
     /**
@@ -521,6 +671,78 @@ class ProductDIQuote
     public function getPhone()
     {
         return $this->phone;
+    }
+
+    /**
+     * Set quoteStatus.
+     *
+     * @param string $quoteStatus
+     *
+     * @return ProductDIQuote
+     */
+    public function setQuoteStatus($quoteStatus)
+    {
+        $this->quoteStatus = $quoteStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get quoteStatus.
+     *
+     * @return string
+     */
+    public function getQuoteStatus()
+    {
+        return $this->quoteStatus;
+    }
+
+    /**
+     * Set totalAmount.
+     *
+     * @param int|null $totalAmount
+     *
+     * @return ProductDIQuote
+     */
+    public function setTotalAmount($totalAmount = null)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return int|null
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
+    }
+
+    /**
+     * Set generatedTurnover.
+     *
+     * @param string|null $generatedTurnover
+     *
+     * @return ProductDIQuote
+     */
+    public function setGeneratedTurnover($generatedTurnover = null)
+    {
+        $this->generatedTurnover = $generatedTurnover;
+
+        return $this;
+    }
+
+    /**
+     * Get generatedTurnover.
+     *
+     * @return string|null
+     */
+    public function getGeneratedTurnover()
+    {
+        return $this->generatedTurnover;
     }
 
     /**
@@ -571,6 +793,29 @@ class ProductDIQuote
         return $this->frequency;
     }
 
+    /**
+     * Set tonnage.
+     *
+     * @param string|null $tonnage
+     *
+     * @return ProductDIQuote
+     */
+    public function setTonnage($tonnage = null)
+    {
+        $this->tonnage = $tonnage;
+
+        return $this;
+    }
+
+    /**
+     * Get tonnage.
+     *
+     * @return string|null
+     */
+    public function getTonnage()
+    {
+        return $this->tonnage;
+    }
 
     /**
      * Set kookaburaNumber.
@@ -702,125 +947,5 @@ class ProductDIQuote
     public function getBusinessLine()
     {
         return $this->businessLine;
-    }
-
-    /**
-     * Set quoteStatus.
-     *
-     * @param string $quoteStatus
-     *
-     * @return ProductDIQuote
-     */
-    public function setQuoteStatus($quoteStatus)
-    {
-        $this->quoteStatus = $quoteStatus;
-
-        return $this;
-    }
-
-    /**
-     * Get quoteStatus.
-     *
-     * @return string
-     */
-    public function getQuoteStatus()
-    {
-        return $this->quoteStatus;
-    }
-
-    /**
-     * Set function.
-     *
-     * @param string $function
-     *
-     * @return ProductDIQuote
-     */
-    public function setFunction($function)
-    {
-        $this->function = $function;
-
-        return $this;
-    }
-
-    /**
-     * Get function.
-     *
-     * @return string
-     */
-    public function getFunction()
-    {
-        return $this->function;
-    }
-
-    /**
-     * Set totalAmount.
-     *
-     * @param int|null $totalAmount
-     *
-     * @return ProductDIQuote
-     */
-    public function setTotalAmount($totalAmount = null)
-    {
-        $this->totalAmount = $totalAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get totalAmount.
-     *
-     * @return int|null
-     */
-    public function getTotalAmount()
-    {
-        return $this->totalAmount;
-    }
-
-    /**
-     * Set generatedTurnover.
-     *
-     * @param string|null $generatedTurnover
-     *
-     * @return ProductDIQuote
-     */
-    public function setGeneratedTurnover($generatedTurnover = null)
-    {
-        $this->generatedTurnover = $generatedTurnover;
-
-        return $this;
-    }
-
-    /**
-     * Get generatedTurnover.
-     *
-     * @return string|null
-     */
-    public function getGeneratedTurnover()
-    {
-        return $this->generatedTurnover;
-    }
-
-    /**
-     * Set tonnage.
-     *
-     * @param string|null $tonnage
-     *
-     * @return ProductDIQuote
-     */
-    public function setTonnage($tonnage = null)
-    {
-        $this->tonnage = $tonnage;
-
-        return $this;
-    }
-
-    /**
-     * Get tonnage.
-     *
-     * @return string|null
-     */
-    public function getTonnage()
-    {
-        return $this->tonnage;
     }
 }

@@ -22,7 +22,7 @@
         <a class="step__tab"
            href="{{ path('paprec_public_corp_'~ cart.division|lower ~ '_subscription_step1', {cartUuid: cart.id}) }}">{{ 'Public.Cart.NeedEstimation'|trans }}</a>
         <a class="step__tab active"
-           href="{{ path('paprec_public_home_contactForm', {cartUuid: cart.id}) }}">{{ 'Public.Cart.FillForm'|trans }}</a>
+           href="#">{{ 'Public.Cart.FillForm'|trans }}</a>
         <div class="clearfix"></div>
     </div>
 {% endblock %}
