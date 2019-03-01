@@ -4,9 +4,7 @@
     {{ render(controller('PaprecPublicBundle:Common:getSideBarInfo')) }}
 {% endblock %}
 
-{% block cta_panel %}
-{% endblock %}
-
+{% block cta_panel %}{% endblock %}
 
 {% block cinq_flux %}{% endblock %}
 
@@ -14,29 +12,34 @@
 
     {% if cart.division is defined and cart.division in ['DI','CHANTIER'] %}
         <!-- DEBUT step categories  -->
+        {# On compte le nombre de catégorie affichée #}
+        {% set countCategories = 0 %}
+        {% for category in categories %}
+            {# pour chaque catégorie, si elle fait partie des displayedCategories alors on incrémente #}
+            {% if category.id in cart.displayedCategories %}
+                {% set countCategories = countCategories + 1 %}
+            {% endif %}
+        {% endfor %}
+        <div class="container__step">
+        <div class="container__step-title">
+            <h2>Ma solution recyclage</h2>
+        </div>
         <div class="step" id="anchor1">
-            {# On compte le nombre de catégorie affichée #}
-            {% set countCategories = 0 %}
-            {% for category in categories %}
-                {# pour chaque catégorie, si elle fait partie des displayedCategories alors on incrémente #}
-                {% if category.id in cart.displayedCategories %}
-                    {% set countCategories = countCategories + 1 %}
-                {% endif %}
-            {% endfor %}
+
+
             <div class="step__left step__left-first">
                 <div class="step__title">
                     {{ 'Public.Cart.MyTrash'|trans }}&nbsp;{{ 'Public.Cart.ToCollect'|trans }}
                 </div>
                 {% if countCategories > 1 %}
-                    <span>{{countCategories}} {{ 'Public.Cart.SelectedCategories'|trans }}</span>
+                    <span>{{ countCategories }} {{ 'Public.Cart.SelectedCategories'|trans }}</span>
                 {% elseif countCategories == 1 %}
-                    <span>{{countCategories}} {{ 'Public.Cart.SelectedCategory'|trans }}</span>
+                    <span>{{ countCategories }} {{ 'Public.Cart.SelectedCategory'|trans }}</span>
                 {% else %}
                     <span>{{ 'Public.Cart.NoSelectedCategory'|trans }}</span>
                 {% endif %}
             </div>
             <div class="step__right">
-
                 <div class="first-row">
                     {% for category in categories %}
                         <div class="checkboxPicto categoryCheckboxPicto {% if category.id in cart.displayedCategories %} active {% endif %}"
@@ -68,6 +71,8 @@
 
         </div>
     {% endblock %}
+    </div>
+
     <div class="clearfix"></div>
     {% block cta_bottom_panel %} {% endblock %}
 {% endblock %}

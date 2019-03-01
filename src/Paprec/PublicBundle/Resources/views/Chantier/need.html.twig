@@ -24,10 +24,9 @@
 
 {% block cta_panel %}
     <div>
-        <a class="step__tab{% if cart.type == 'order' %} active{% endif %}"
-           href="{{ path('paprec_public_corp_chantier_subscription_setOrder', {cartUuid: cart.id}) }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
-        <a class="step__tab{% if cart.type == 'quote' %} active{% endif %}"
-           href="#">{{ 'Public.Cart.QuoteRequest'|trans }}</a>
+        <div class="step__tab active">{{ 'Public.Cart.NeedEstimation'|trans }}</div>
+        <a class="step__tab"
+           href="{{ path('paprec_public_corp_home_requestWriting_step1', {cartUuid: cart.id}) }}">{{ 'Public.Cart.FillForm'|trans }}</a>
         <div class="clearfix"></div>
     </div>
 {% endblock %}
@@ -79,32 +78,32 @@
     {% for product in products %}
     {% if (cpt == 5) %}
     <div class="first-row">
-      <div class="first-row-container">
-        {% endif %}
-        {% if (cpt%5 == 0 and cpt > 5) %}
-        <div class="following-row">
+        <div class="first-row-container">
             {% endif %}
-            {% if product.id in cart.displayedProducts and category.id in cart.displayedProducts|keys %}
-                {% set displayedProduct = product %}
-            {% endif %}
-            <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts and category.id in cart.displayedProducts|keys %}  active {% endif %}"
-                 id="productCheckboxPicto_{{ product.id }}_{{ category.id }}"
-                 data-url="{{ path('paprec_public_corp_chantier_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: category.id, productId: product.id}) }}"
-                 style="{% if product.pictos| length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
-                {{ product.name }}
-                <br>{{ product.capacity }} {% autoescape false %} {{ product.capacityUnit }}{% endautoescape %}
-                {% for items in cart.content %}
-                    {% if items['cId'] == category.id and items['pId'] == product.id %}
-                        <span class="number">{{ items['qtty'] }}</span>
-                    {% endif %}
-                {% endfor %}
+            {% if (cpt%5 == 0 and cpt > 5) %}
+            <div class="following-row">
+                {% endif %}
+                {% if product.id in cart.displayedProducts and category.id in cart.displayedProducts|keys %}
+                    {% set displayedProduct = product %}
+                {% endif %}
+                <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts and category.id in cart.displayedProducts|keys %}  active {% endif %}"
+                     id="productCheckboxPicto_{{ product.id }}_{{ category.id }}"
+                     data-url="{{ path('paprec_public_corp_chantier_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: category.id, productId: product.id}) }}"
+                     style="{% if product.pictos| length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
+                    {{ product.name }}
+                    <br>{{ product.capacity }} {% autoescape false %} {{ product.capacityUnit }}{% endautoescape %}
+                    {% for items in cart.content %}
+                        {% if items['cId'] == category.id and items['pId'] == product.id %}
+                            <span class="number">{{ items['qtty'] }}</span>
+                        {% endif %}
+                    {% endfor %}
 
+                </div>
+                {% set cpt = cpt + 1 %}
+
+                {% if ((cpt%5 == 0) and (cpt > 5)) or loop.last %}
             </div>
-            {% set cpt = cpt + 1 %}
-
-            {% if ((cpt%5 == 0) and (cpt > 5)) or loop.last %}
         </div>
-      </div>
         {% if cart.displayedProducts and displayedProduct != '' %}
             <div class="infoproduct">
                 <div class="left">
@@ -199,28 +198,27 @@
         {% endfor %}
         {% endif %}
         {% endfor %}
-    </div>
-    {% endif %}
-    {% endfor %}
-    {% endblock %}
+        {% endif %}
+        {% endfor %}
+        {% endblock %}
 
-    {% block cta_bottom_panel %}
-        <div class="step">
-            {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
-                'label': 'ValidateNeed',
-                'cartUuid': cart.id,
-                'division': cart.division,
-                'stepBack': '',
-                'nextStep': 'step2',
-                'idSubmit': '',
-                'cartEmpty': cart.content is empty
-            })) }}
-        </div>
-    {% endblock %}
+        {% block cta_bottom_panel %}
+            <div class="step">
+                {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
+                    'label': 'ValidateNeed',
+                    'cartUuid': cart.id,
+                    'division': cart.division,
+                    'stepBack': '',
+                    'nextStep': 'step2',
+                    'idSubmit': '',
+                    'cartEmpty': cart.content is empty
+                })) }}
+            </div>
+        {% endblock %}
 
 
-    {% block javascripts %}
-        <script type="text/javascript"
-                src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
-        </script>
-    {% endblock %}
+        {% block javascripts %}
+            <script type="text/javascript"
+                    src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
+            </script>
+        {% endblock %}
