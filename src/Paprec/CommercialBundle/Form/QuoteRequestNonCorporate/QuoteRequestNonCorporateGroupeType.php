@@ -21,7 +21,7 @@ class QuoteRequestNonCorporateGroupeType extends AbstractType
         $builder
             ->add('businessName')
             ->add('postalCode', HiddenType::class, array(
-                'error_bubbling'=>false
+                'error_bubbling' => false
             ))
             ->add('civility', ChoiceType::class, array(
                 'choices' => array(
@@ -29,7 +29,7 @@ class QuoteRequestNonCorporateGroupeType extends AbstractType
                     'Madame' => 'Mme',
                 ),
                 'choice_attr' => function () {
-                    return  ['class' => 'input__radio'];
+                    return ['class' => 'input__radio'];
                 },
                 'expanded' => true
             ))
@@ -47,7 +47,8 @@ class QuoteRequestNonCorporateGroupeType extends AbstractType
             ->add('attachedFiles', FileType::class, array(
                 'multiple' => true,
                 'data_class' => null
-            ));
+            ))
+            ->add('concernedRegion', TextType::class);
     }
 
     /**

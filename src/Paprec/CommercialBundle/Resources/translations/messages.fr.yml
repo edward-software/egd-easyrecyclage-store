@@ -542,6 +542,7 @@ Commercial:
     KookaburaNumber:            N° contrat Kookabura
     CustomerType:               Type de client
     LocationsNumber:            Nombre de sites
+    ConcernedRegion:            Secteur/région concerné
     UserInCharge:               Commercial en charge
     Informations:               Informations
     Informations-FO:            Informations Front Office

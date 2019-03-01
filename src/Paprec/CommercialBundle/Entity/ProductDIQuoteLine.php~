@@ -348,4 +348,52 @@ class ProductDIQuoteLine
     {
         return $this->categoryName;
     }
+
+    /**
+     * Set unitPrice.
+     *
+     * @param int $unitPrice
+     *
+     * @return ProductDIQuoteLine
+     */
+    public function setUnitPrice($unitPrice)
+    {
+        $this->unitPrice = $unitPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get unitPrice.
+     *
+     * @return int
+     */
+    public function getUnitPrice()
+    {
+        return $this->unitPrice;
+    }
+
+    /**
+     * Set totalAmount.
+     *
+     * @param int $totalAmount
+     *
+     * @return ProductDIQuoteLine
+     */
+    public function setTotalAmount($totalAmount)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return int
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
+    }
 }

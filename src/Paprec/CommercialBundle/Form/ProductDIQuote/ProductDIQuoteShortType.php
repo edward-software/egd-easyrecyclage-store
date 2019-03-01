@@ -77,7 +77,7 @@ class ProductDIQuoteShortType extends AbstractType
             ->add('terms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => new IsTrue()
-            ]);;
+            ]);
 
     }
 

@@ -97,37 +97,27 @@
                                         {{ productChantierQuote.function }}
                                     </label>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductChantierQuote.Email'|trans }}</label>
                                     <label class="col-form-label">
                                         {{ productChantierQuote.email }}
                                     </label>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductChantierQuote.Address'|trans }}</label>
-                                    <label class="col-form-label">
-                                        {{ productChantierQuote.address|nl2br }}
-                                    </label>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductChantierQuote.PostalCode'|trans }}</label>
-                                    <label class="col-form-label">
-                                        {{ productChantierQuote.postalCode }}
-                                    </label>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductChantierQuote.City'|trans }}</label>
-                                    <label class="col-form-label">
-                                        {{ productChantierQuote.city }}
-                                    </label>
-                                </div>
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductChantierQuote.Phone'|trans }}</label>
                                     <label class="col-form-label">
                                         {{ productChantierQuote.phone }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.PreferredContact'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if productChantierQuote.preferredContact %}
+                                            {{ ('Commercial.QuoteRequest.' ~ productChantierQuote.preferredContact|capitalize)|trans }}
+                                        {% endif %}
                                     </label>
                                 </div>
                                 <div class="form-group row">
@@ -141,6 +131,60 @@
                                     <label class="col-form-label">
                                         {{ productChantierQuote.totalAmount|formatAmount('EUR', app.request.locale) }}
                                     </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title">{{ 'Commercial.QuoteRequest.HeadOfficeAddress'|trans }}</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Address'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ productChantierQuote.headofficeAddress }}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.PostalCode'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ productChantierQuote.headofficePostalCode }}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.City'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ productChantierQuote.headofficeCity }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title">{{ 'Commercial.QuoteRequest.SiteAddress'|trans }}</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.Address'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ productChantierQuote.address }}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.PostalCode'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ productChantierQuote.postalCode }}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.QuoteRequest.City'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ productChantierQuote.city }}
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

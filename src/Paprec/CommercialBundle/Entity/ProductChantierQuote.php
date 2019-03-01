@@ -98,7 +98,22 @@ class ProductChantierQuote
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="text")
+     * @ORM\Column(name="postalCode", type="string", length=255)
+     */
+    private $postalCode;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     */
+    private $city;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="text", nullable=true)
      * @Assert\NotBlank()
      */
     private $address;
@@ -106,18 +121,31 @@ class ProductChantierQuote
     /**
      * @var string
      *
-     * @ORM\Column(name="postalCode", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="headoffice_address", type="text", nullable=true)
      */
-    private $postalCode;
+    private $headoffice_address;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="city", type="string", length=255)
+     * @ORM\Column(name="headoffice_postalCode", type="string", length=255, nullable=true)
+     */
+    private $headoffice_postalCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="headoffice_city", type="text", nullable=true)
+     */
+    private $headoffice_city;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="preferredContact", type="string", length=10, nullable=true)
      * @Assert\NotBlank()
      */
-    private $city;
+    private $preferredContact;
 
     /**
      * @var string
@@ -221,7 +249,6 @@ class ProductChantierQuote
         $this->dateCreation = new \DateTime();
         $this->productChantierQuoteLines = new ArrayCollection();
     }
-
 
 
     /**
@@ -405,11 +432,11 @@ class ProductChantierQuote
     /**
      * Set function.
      *
-     * @param string $function
+     * @param string|null $function
      *
      * @return ProductChantierQuote
      */
-    public function setFunction($function)
+    public function setFunction($function = null)
     {
         $this->function = $function;
 
@@ -419,7 +446,7 @@ class ProductChantierQuote
     /**
      * Get function.
      *
-     * @return string
+     * @return string|null
      */
     public function getFunction()
     {
@@ -451,30 +478,6 @@ class ProductChantierQuote
     }
 
     /**
-     * Set address.
-     *
-     * @param string $address
-     *
-     * @return ProductChantierQuote
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get address.
-     *
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
      * Set postalCode.
      *
      * @param string $postalCode
@@ -501,11 +504,11 @@ class ProductChantierQuote
     /**
      * Set city.
      *
-     * @param string $city
+     * @param string|null $city
      *
      * @return ProductChantierQuote
      */
-    public function setCity($city)
+    public function setCity($city = null)
     {
         $this->city = $city;
 
@@ -515,11 +518,131 @@ class ProductChantierQuote
     /**
      * Get city.
      *
-     * @return string
+     * @return string|null
      */
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     * Set address.
+     *
+     * @param string|null $address
+     *
+     * @return ProductChantierQuote
+     */
+    public function setAddress($address = null)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address.
+     *
+     * @return string|null
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set headofficeAddress.
+     *
+     * @param string|null $headofficeAddress
+     *
+     * @return ProductChantierQuote
+     */
+    public function setHeadofficeAddress($headofficeAddress = null)
+    {
+        $this->headoffice_address = $headofficeAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficeAddress.
+     *
+     * @return string|null
+     */
+    public function getHeadofficeAddress()
+    {
+        return $this->headoffice_address;
+    }
+
+    /**
+     * Set headofficePostalCode.
+     *
+     * @param string|null $headofficePostalCode
+     *
+     * @return ProductChantierQuote
+     */
+    public function setHeadofficePostalCode($headofficePostalCode = null)
+    {
+        $this->headoffice_postalCode = $headofficePostalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficePostalCode.
+     *
+     * @return string|null
+     */
+    public function getHeadofficePostalCode()
+    {
+        return $this->headoffice_postalCode;
+    }
+
+    /**
+     * Set headofficeCity.
+     *
+     * @param string|null $headofficeCity
+     *
+     * @return ProductChantierQuote
+     */
+    public function setHeadofficeCity($headofficeCity = null)
+    {
+        $this->headoffice_city = $headofficeCity;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficeCity.
+     *
+     * @return string|null
+     */
+    public function getHeadofficeCity()
+    {
+        return $this->headoffice_city;
+    }
+
+    /**
+     * Set preferredContact.
+     *
+     * @param string|null $preferredContact
+     *
+     * @return ProductChantierQuote
+     */
+    public function setPreferredContact($preferredContact = null)
+    {
+        $this->preferredContact = $preferredContact;
+
+        return $this;
+    }
+
+    /**
+     * Get preferredContact.
+     *
+     * @return string|null
+     */
+    public function getPreferredContact()
+    {
+        return $this->preferredContact;
     }
 
     /**
@@ -571,6 +694,54 @@ class ProductChantierQuote
     }
 
     /**
+     * Set totalAmount.
+     *
+     * @param int|null $totalAmount
+     *
+     * @return ProductChantierQuote
+     */
+    public function setTotalAmount($totalAmount = null)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return int|null
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
+    }
+
+    /**
+     * Set generatedTurnover.
+     *
+     * @param string|null $generatedTurnover
+     *
+     * @return ProductChantierQuote
+     */
+    public function setGeneratedTurnover($generatedTurnover = null)
+    {
+        $this->generatedTurnover = $generatedTurnover;
+
+        return $this;
+    }
+
+    /**
+     * Get generatedTurnover.
+     *
+     * @return string|null
+     */
+    public function getGeneratedTurnover()
+    {
+        return $this->generatedTurnover;
+    }
+
+    /**
      * Set summary.
      *
      * @param string|null $summary
@@ -616,6 +787,30 @@ class ProductChantierQuote
     public function getFrequency()
     {
         return $this->frequency;
+    }
+
+    /**
+     * Set tonnage.
+     *
+     * @param string|null $tonnage
+     *
+     * @return ProductChantierQuote
+     */
+    public function setTonnage($tonnage = null)
+    {
+        $this->tonnage = $tonnage;
+
+        return $this;
+    }
+
+    /**
+     * Get tonnage.
+     *
+     * @return string|null
+     */
+    public function getTonnage()
+    {
+        return $this->tonnage;
     }
 
     /**
@@ -748,77 +943,5 @@ class ProductChantierQuote
     public function getBusinessLine()
     {
         return $this->businessLine;
-    }
-
-    /**
-     * Set totalAmount.
-     *
-     * @param int|null $totalAmount
-     *
-     * @return ProductChantierQuote
-     */
-    public function setTotalAmount($totalAmount = null)
-    {
-        $this->totalAmount = $totalAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get totalAmount.
-     *
-     * @return int|null
-     */
-    public function getTotalAmount()
-    {
-        return $this->totalAmount;
-    }
-
-    /**
-     * Set generatedTurnover.
-     *
-     * @param string|null $generatedTurnover
-     *
-     * @return ProductChantierQuote
-     */
-    public function setGeneratedTurnover($generatedTurnover = null)
-    {
-        $this->generatedTurnover = $generatedTurnover;
-
-        return $this;
-    }
-
-    /**
-     * Get generatedTurnover.
-     *
-     * @return string|null
-     */
-    public function getGeneratedTurnover()
-    {
-        return $this->generatedTurnover;
-    }
-
-    /**
-     * Set tonnage.
-     *
-     * @param string|null $tonnage
-     *
-     * @return ProductChantierQuote
-     */
-    public function setTonnage($tonnage = null)
-    {
-        $this->tonnage = $tonnage;
-
-        return $this;
-    }
-
-    /**
-     * Get tonnage.
-     *
-     * @return string|null
-     */
-    public function getTonnage()
-    {
-        return $this->tonnage;
     }
 }

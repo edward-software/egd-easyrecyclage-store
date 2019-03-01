@@ -122,7 +122,6 @@ class ProductDIQuote
      * @var string
      *
      * @ORM\Column(name="headoffice_address", type="text", nullable=true)
-     * @Assert\NotBlank()
      */
     private $headoffice_address;
 
@@ -137,7 +136,6 @@ class ProductDIQuote
      * @var string
      *
      * @ORM\Column(name="headoffice_city", type="text", nullable=true)
-     * @Assert\NotBlank()
      */
     private $headoffice_city;
 
@@ -217,8 +215,7 @@ class ProductDIQuote
      *
      *  RELATIONS
      *
-     ########################### */
-
+     * ########################### */
 
 
     /**
@@ -253,7 +250,7 @@ class ProductDIQuote
         $this->dateCreation = new \DateTime();
         $this->productDIQuoteLines = new ArrayCollection();
     }
-    
+
 
     /**
      * Get id.
@@ -263,6 +260,16 @@ class ProductDIQuote
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get dateCreation.
+     *
+     * @return \DateTime
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
     }
 
     /**
@@ -280,13 +287,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get dateCreation.
+     * Get dateUpdate.
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getDateCreation()
+    public function getDateUpdate()
     {
-        return $this->dateCreation;
+        return $this->dateUpdate;
     }
 
     /**
@@ -304,13 +311,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get dateUpdate.
+     * Get deleted.
      *
      * @return \DateTime|null
      */
-    public function getDateUpdate()
+    public function getDeleted()
     {
-        return $this->dateUpdate;
+        return $this->deleted;
     }
 
     /**
@@ -328,13 +335,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get deleted.
+     * Get businessName.
      *
-     * @return \DateTime|null
+     * @return string
      */
-    public function getDeleted()
+    public function getBusinessName()
     {
-        return $this->deleted;
+        return $this->businessName;
     }
 
     /**
@@ -352,13 +359,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get businessName.
+     * Get civility.
      *
      * @return string
      */
-    public function getBusinessName()
+    public function getCivility()
     {
-        return $this->businessName;
+        return $this->civility;
     }
 
     /**
@@ -376,13 +383,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get civility.
+     * Get lastName.
      *
      * @return string
      */
-    public function getCivility()
+    public function getLastName()
     {
-        return $this->civility;
+        return $this->lastName;
     }
 
     /**
@@ -400,13 +407,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get lastName.
+     * Get firstName.
      *
      * @return string
      */
-    public function getLastName()
+    public function getFirstName()
     {
-        return $this->lastName;
+        return $this->firstName;
     }
 
     /**
@@ -424,13 +431,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get firstName.
+     * Get function.
      *
-     * @return string
+     * @return string|null
      */
-    public function getFirstName()
+    public function getFunction()
     {
-        return $this->firstName;
+        return $this->function;
     }
 
     /**
@@ -448,13 +455,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get function.
+     * Get email.
      *
-     * @return string|null
+     * @return string
      */
-    public function getFunction()
+    public function getEmail()
     {
-        return $this->function;
+        return $this->email;
     }
 
     /**
@@ -472,13 +479,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get email.
+     * Get postalCode.
      *
      * @return string
      */
-    public function getEmail()
+    public function getPostalCode()
     {
-        return $this->email;
+        return $this->postalCode;
     }
 
     /**
@@ -496,13 +503,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get postalCode.
+     * Get city.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPostalCode()
+    public function getCity()
     {
-        return $this->postalCode;
+        return $this->city;
     }
 
     /**
@@ -520,13 +527,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get city.
+     * Get address.
      *
      * @return string|null
      */
-    public function getCity()
+    public function getAddress()
     {
-        return $this->city;
+        return $this->address;
     }
 
     /**
@@ -544,13 +551,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get address.
+     * Get headofficeAddress.
      *
      * @return string|null
      */
-    public function getAddress()
+    public function getHeadofficeAddress()
     {
-        return $this->address;
+        return $this->headoffice_address;
     }
 
     /**
@@ -568,13 +575,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get headofficeAddress.
+     * Get headofficePostalCode.
      *
      * @return string|null
      */
-    public function getHeadofficeAddress()
+    public function getHeadofficePostalCode()
     {
-        return $this->headoffice_address;
+        return $this->headoffice_postalCode;
     }
 
     /**
@@ -592,13 +599,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get headofficePostalCode.
+     * Get headofficeCity.
      *
      * @return string|null
      */
-    public function getHeadofficePostalCode()
+    public function getHeadofficeCity()
     {
-        return $this->headoffice_postalCode;
+        return $this->headoffice_city;
     }
 
     /**
@@ -616,13 +623,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get headofficeCity.
+     * Get preferredContact.
      *
      * @return string|null
      */
-    public function getHeadofficeCity()
+    public function getPreferredContact()
     {
-        return $this->headoffice_city;
+        return $this->preferredContact;
     }
 
     /**
@@ -640,13 +647,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get preferredContact.
+     * Get phone.
      *
-     * @return string|null
+     * @return string
      */
-    public function getPreferredContact()
+    public function getPhone()
     {
-        return $this->preferredContact;
+        return $this->phone;
     }
 
     /**
@@ -664,13 +671,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get phone.
+     * Get quoteStatus.
      *
      * @return string
      */
-    public function getPhone()
+    public function getQuoteStatus()
     {
-        return $this->phone;
+        return $this->quoteStatus;
     }
 
     /**
@@ -688,13 +695,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get quoteStatus.
+     * Get totalAmount.
      *
-     * @return string
+     * @return int|null
      */
-    public function getQuoteStatus()
+    public function getTotalAmount()
     {
-        return $this->quoteStatus;
+        return $this->totalAmount;
     }
 
     /**
@@ -712,13 +719,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get totalAmount.
+     * Get generatedTurnover.
      *
-     * @return int|null
+     * @return string|null
      */
-    public function getTotalAmount()
+    public function getGeneratedTurnover()
     {
-        return $this->totalAmount;
+        return $this->generatedTurnover;
     }
 
     /**
@@ -736,13 +743,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get generatedTurnover.
+     * Get summary.
      *
      * @return string|null
      */
-    public function getGeneratedTurnover()
+    public function getSummary()
     {
-        return $this->generatedTurnover;
+        return $this->summary;
     }
 
     /**
@@ -760,13 +767,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get summary.
+     * Get frequency.
      *
      * @return string|null
      */
-    public function getSummary()
+    public function getFrequency()
     {
-        return $this->summary;
+        return $this->frequency;
     }
 
     /**
@@ -784,13 +791,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get frequency.
+     * Get tonnage.
      *
      * @return string|null
      */
-    public function getFrequency()
+    public function getTonnage()
     {
-        return $this->frequency;
+        return $this->tonnage;
     }
 
     /**
@@ -808,13 +815,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get tonnage.
+     * Get kookaburaNumber.
      *
-     * @return string|null
+     * @return int|null
      */
-    public function getTonnage()
+    public function getKookaburaNumber()
     {
-        return $this->tonnage;
+        return $this->kookaburaNumber;
     }
 
     /**
@@ -829,16 +836,6 @@ class ProductDIQuote
         $this->kookaburaNumber = $kookaburaNumber;
 
         return $this;
-    }
-
-    /**
-     * Get kookaburaNumber.
-     *
-     * @return int|null
-     */
-    public function getKookaburaNumber()
-    {
-        return $this->kookaburaNumber;
     }
 
     /**
@@ -878,6 +875,16 @@ class ProductDIQuote
     }
 
     /**
+     * Get userInCharge.
+     *
+     * @return \Paprec\UserBundle\Entity\User|null
+     */
+    public function getUserInCharge()
+    {
+        return $this->userInCharge;
+    }
+
+    /**
      * Set userInCharge.
      *
      * @param \Paprec\UserBundle\Entity\User|null $userInCharge
@@ -892,13 +899,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get userInCharge.
+     * Get agency.
      *
-     * @return \Paprec\UserBundle\Entity\User|null
+     * @return \Paprec\CommercialBundle\Entity\Agency|null
      */
-    public function getUserInCharge()
+    public function getAgency()
     {
-        return $this->userInCharge;
+        return $this->agency;
     }
 
     /**
@@ -916,13 +923,13 @@ class ProductDIQuote
     }
 
     /**
-     * Get agency.
+     * Get businessLine.
      *
-     * @return \Paprec\CommercialBundle\Entity\Agency|null
+     * @return \Paprec\CommercialBundle\Entity\BusinessLine|null
      */
-    public function getAgency()
+    public function getBusinessLine()
     {
-        return $this->agency;
+        return $this->businessLine;
     }
 
     /**
@@ -937,15 +944,5 @@ class ProductDIQuote
         $this->businessLine = $businessLine;
 
         return $this;
-    }
-
-    /**
-     * Get businessLine.
-     *
-     * @return \Paprec\CommercialBundle\Entity\BusinessLine|null
-     */
-    public function getBusinessLine()
-    {
-        return $this->businessLine;
     }
 }

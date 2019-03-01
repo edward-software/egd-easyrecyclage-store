@@ -49,9 +49,6 @@ class ProductDIQuoteType extends AbstractType
                 'required' => false
             ))
             ->add('email', TextType::class)
-            ->add('address', TextareaType::class)
-            ->add('postalCode', TextType::class)
-            ->add('city', TextType::class)
             ->add('phone', TextType::class)
             ->add('quoteStatus', ChoiceType::class, array(
                 "choices" => $options['status'],
@@ -99,6 +96,28 @@ class ProductDIQuoteType extends AbstractType
                         ->where('a.deleted IS NULL')
                         ->andWhere('a.divisions LIKE \'%DI%\'');
                 }
+            ))
+            ->add('address', TextType::class)
+            ->add('postalCode', TextType::class)
+            ->add('city', TextType::class)
+            ->add('headofficeAddress', TextType::class, array(
+                'required' => false
+            ))
+            ->add('headofficePostalCode', TextType::class, array(
+                'required' => false
+            ))
+            ->add('headofficeCity', TextType::class, array(
+                'required' => false
+            ))
+            ->add('preferredContact', ChoiceType::class, array(
+                'choices' => array(
+                    'Téléphone' => 'phone',
+                    'e-mail' => 'email',
+                ),
+                'choice_attr' => function () {
+                    return ['class' => 'input__radio'];
+                },
+                'expanded' => true
             ));
     }/**
      * {@inheritdoc}

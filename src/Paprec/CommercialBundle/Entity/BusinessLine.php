@@ -414,4 +414,40 @@ class BusinessLine
     {
         return $this->productD3EOrders;
     }
+
+    /**
+     * Add quoteRequest.
+     *
+     * @param \Paprec\CommercialBundle\Entity\QuoteRequest $quoteRequest
+     *
+     * @return BusinessLine
+     */
+    public function addQuoteRequest(\Paprec\CommercialBundle\Entity\QuoteRequest $quoteRequest)
+    {
+        $this->quoteRequests[] = $quoteRequest;
+
+        return $this;
+    }
+
+    /**
+     * Remove quoteRequest.
+     *
+     * @param \Paprec\CommercialBundle\Entity\QuoteRequest $quoteRequest
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeQuoteRequest(\Paprec\CommercialBundle\Entity\QuoteRequest $quoteRequest)
+    {
+        return $this->quoteRequests->removeElement($quoteRequest);
+    }
+
+    /**
+     * Get quoteRequests.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuoteRequests()
+    {
+        return $this->quoteRequests;
+    }
 }

@@ -9,7 +9,7 @@
 {#{% endblock %}#}
 
  {% block top_msg_customizable_area %}
-         {% set customArea = paprec_customizable_area('groupe_top_msg_form') %}
+     {% set customArea = paprec_customizable_area('groupe_top_msg_form') %}
      {% if customArea is not null %}
          {% autoescape false %}
              <div class="custom-area__top">
@@ -40,10 +40,8 @@
             <div class="step__right">
                 <input class="input" type="text"
                        id="locationSelect" autocomplete="off"
-                       placeholder="{{ 'Public.Cart.PostalCode'|trans }}"
-                >
+                       placeholder="{{ 'Public.Cart.PostalCode'|trans }}">
                 {{ form_errors(form.postalCode) }}
-
             </div>
         </div>
         <div class="step">
@@ -53,6 +51,12 @@
             <div class="step__right step__right--small">
                 {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductDIQuote.BusinessName'|trans}}) }}
                 {{ form_errors(form.businessName) }}
+
+                {{ form_widget(form.locationsNumber, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequestNonCorporate.LocationsNumber'|trans}}) }}
+                {{ form_errors(form.locationsNumber) }}
+
+                {{ form_widget(form.concernedRegion, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequestNonCorporate.ConcernedRegion'|trans}}) }}
+                {{ form_errors(form.concernedRegion) }}
 
                 {{ form_widget(form.civility, {'attr': {'class': 'input--radio'}}) }}
                 {{ form_errors(form.civility) }}
@@ -83,9 +87,6 @@
             </div>
             <div class="step__right step__right--small">
 
-                {{ form_widget(form.locationsNumber, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequestNonCorporate.LocationsNumber'|trans}}) }}
-                {{ form_errors(form.locationsNumber) }}
-
                 {{ form_widget(form.need, {'attr': {'class': 'input input--full input--bordered', 'placeholder': 'Commercial.QuoteRequest.NeedPlaceholder'|trans}}) }}
                 {{ form_errors(form.need) }}
             </div>
@@ -95,12 +96,11 @@
             <div class="notice">{{ 'Public.Home.FileUploadNotice'|trans }}
             </div>
             <br>
+            {{ form_label(form.attachedFiles, "TÉLÉCHARGER DES PIÈCES JOINTES OU DES PHOTOS", {'label_attr': {'class': 'button button--bordered'}}) }}
+            {{ form_widget(form.attachedFiles, {'attr': {'class': 'input-file'}}) }}
             <div id="listFiles" class="paprec-list-files">
 
             </div>
-            {{ form_label(form.attachedFiles, "TÉLÉCHARGER DES PIÈCES JOINTES OU DES PHOTOS", {'label_attr': {'class': 'button button--bordered'}}) }}
-            {{ form_widget(form.attachedFiles, {'attr': {'class': 'input-file'}}) }}
-
             <div class="clearfix"></div>
 
             <a href="javascript:void(0);" id="groupFormSubmitButton" class="button button--green">

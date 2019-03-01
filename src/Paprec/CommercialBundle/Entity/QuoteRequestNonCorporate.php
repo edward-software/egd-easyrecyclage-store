@@ -204,6 +204,13 @@ class QuoteRequestNonCorporate
      */
     private $locationsNumber;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="concernedRegion", type="string", length=255, nullable=true)
+     */
+    private $concernedRegion;
+
     /** ###########################
      *
      *  RELATIONS
@@ -843,5 +850,29 @@ class QuoteRequestNonCorporate
     public function getBusinessName()
     {
         return $this->businessName;
+    }
+
+    /**
+     * Set concernedRegion.
+     *
+     * @param string|null $concernedRegion
+     *
+     * @return QuoteRequestNonCorporate
+     */
+    public function setConcernedRegion($concernedRegion = null)
+    {
+        $this->concernedRegion = $concernedRegion;
+
+        return $this;
+    }
+
+    /**
+     * Get concernedRegion.
+     *
+     * @return string|null
+     */
+    public function getConcernedRegion()
+    {
+        return $this->concernedRegion;
     }
 }
