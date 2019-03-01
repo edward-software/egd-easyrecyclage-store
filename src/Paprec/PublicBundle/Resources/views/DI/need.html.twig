@@ -19,20 +19,17 @@
 
 {% block cta_panel %}
     <div>
-        <a class="step__tab active"
-           href="#">{{ 'Public.Cart.NeedEstimation'|trans }}</a>
+        <div class="step__tab active">{{ 'Public.Cart.NeedEstimation'|trans }}</div>
         <a class="step__tab"
            href="{{ path('paprec_public_corp_home_requestWriting_step1', {cartUuid: cart.id}) }}">{{ 'Public.Cart.FillForm'|trans }}</a>
         <div class="clearfix"></div>
     </div>
 {% endblock %}
 
-
 {# DEBUT affichage des contenants #}
 {% block products_panel %}
     {% if cart.displayedCategories %}
         {{ parent() }}
-
     {% endif %}
 {% endblock %}
 
@@ -75,6 +72,7 @@
             {% endif %}
             {% if (cpt%5 == 0 and cpt > 5) %}
             <div class="following-row">
+                <div>
                 {% endif %}
                 {% if product.id in cart.displayedProducts and category.id in cart.displayedProducts|keys %}
                     {% set displayedProduct = product %}
@@ -191,28 +189,27 @@
         {% endfor %}
         {% endif %}
         {% endfor %}
-    </div>
-    {% endif %}
-    {% endfor %}
-    {% endblock %}
+        {% endif %}
+        {% endfor %}
+        {% endblock %}
 
-    {% block cta_bottom_panel %}
-        <div class="step">
-            {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
-                'label': 'ValidateNeed',
-                'cartUuid': cart.id,
-                'division': cart.division,
-                'stepBack': '',
-                'nextStep': 'step2',
-                'idSubmit': '',
-                'cartEmpty': cart.content is empty
-            })) }}
-        </div>
-    {% endblock %}
+        {% block cta_bottom_panel %}
+            <div class="step">
+                {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
+                    'label': 'ValidateNeed',
+                    'cartUuid': cart.id,
+                    'division': cart.division,
+                    'stepBack': '',
+                    'nextStep': 'step2',
+                    'idSubmit': '',
+                    'cartEmpty': cart.content is empty
+                })) }}
+            </div>
+        {% endblock %}
 
 
-    {% block javascripts %}
-        <script type="text/javascript"
-                src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
-        </script>
-    {% endblock %}
+        {% block javascripts %}
+            <script type="text/javascript"
+                    src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
+            </script>
+        {% endblock %}

@@ -13,12 +13,7 @@
     {# Définition des menus affichés dans la sidebar #}
     {% set besoin = 'active' %}
     {% set coordonnees = '' %}
-    {% if cart.type == 'order' %}
-        {% set livraison = '' %}
-        {% set paiement = '' %}
-    {% elseif cart.type == 'quote' %}
-        {% set offre = '' %}
-    {% endif %}
+    {% set offre = '' %}
     {{ parent() }}
 {% endblock %}
 
@@ -31,7 +26,6 @@
     </div>
 {% endblock %}
 
-{# FIN step categories et products #}
 {# DEBUT affichage des contenants #}
 {% block products_panel %}
     {% if cart.displayedCategories %}
@@ -39,14 +33,11 @@
     {% endif %}
 {% endblock %}
 
-
-
 {% block product_step_title %}
     {{ 'Public.Cart.MyContainers'|trans }}
 {% endblock %}
 
 {% block products %}
-
     {% for category in categories %}
         {# pour chaque catégorie, si elle fait partie des displayedCategories
         alors lui ouvre son step_wrapper #}
@@ -67,7 +58,6 @@
     {% endif %}
 </div>
 <div id="productsWrapper_{{ category.id }}">
-
     {% for key, products in productsCategories %}
     {# pour chaque productCategory (categoryId => Products[],
      on affiche le tableau de produits si ils font partie de la catégorie courante #}
@@ -91,7 +81,7 @@
                      data-url="{{ path('paprec_public_corp_chantier_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: category.id, productId: product.id}) }}"
                      style="{% if product.pictos| length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
                     {{ product.name }}
-                    <br>{{ product.capacity }} {% autoescape false %} {{ product.capacityUnit }}{% endautoescape %}
+                    <br>{{ product.capacity|nl2br }} {% autoescape false %} {{ product.capacityUnit }}{% endautoescape %}
                     {% for items in cart.content %}
                         {% if items['cId'] == category.id and items['pId'] == product.id %}
                             <span class="number">{{ items['qtty'] }}</span>
