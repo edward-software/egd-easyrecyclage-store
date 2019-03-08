@@ -340,30 +340,49 @@ $(function () {
     if ($('.d3e-need-form').is('div')) {
 
         $('.addToCartSubmitButton').click(function () {
-            var url = $(this).data('url');
+                var url = $(this).data('url');
+                const productId = $(this).data('id');
 
-            var productId = (this.id).replace('addToCartSubmitButton_', '');
-            var qtty = $('#quantityProducSelect_' + productId).val();
-            var optHandling = $('#optHandlingProductSelect_' + productId).prop('checked') ? 1 : 0;
-            var optSerialNumberStmt = $('#optSerialNumberStmtProductSelect_' + productId).prop('checked') ? 1 : 0;
-            var optDestruction = $('#optDestructionProductSelect_' + productId).prop('checked') ? 1 : 0;
-            url = url
-                .replace('quantityTmp', qtty)
-                .replace('optHandlingTmp', optHandling)
-                .replace('optSerialNumberStmtTmp', optSerialNumberStmt)
-                .replace('optDestructionTmp', optDestruction);
-            $.ajax({
-                type: "POST",
-                url: url,
-                success: function (response) {
-                    // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
-                    removeBadge(productId);
-                    $('#productCheckboxPicto_' + productId).prepend("<span class=\"number\">" + qtty + "<span");
-                    $('#validateNeedButton').attr('disabled', 'disabled');
-                    reloadCart()
-                }
-            });
-        });
+                var data = [];
+                const types = $('.infoproduct__type');
+                types.each(function () {
+
+                    var productD3EType = {
+                        typeId: $(this).find($('.infoproduct__typeSelect')).val(),
+                        qtty: $(this).find($('.infoproduct__qty')).val(),
+                        optHandling: $(this).find($('.infoproduct__type__checkbox__optHandlingProductSelect')).prop('checked') ? 1 : 0,
+                        optSerialNumberStmt: $(this).find($('.infoproduct__type__checkbox__optSerialNumberStmtProductSelect')).prop('checked') ? 1 : 0,
+                        optDestruction: $(this).find($('.infoproduct__type__checkbox__optDestructionProductSelect')).prop('checked') ? 1 : 0,
+                        productId: productId
+                    };
+                    data.push(productD3EType);
+                });
+                const request = JSON.stringify(data);
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: request,
+                    success: function (response) {
+                        // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
+                        removeBadge(productId);
+                        $('#productCheckboxPicto_' + productId).prepend("<span class=\"number\">1<span");
+                        $('#validateNeedButton').removeAttr('disabled');
+                        reloadCart()
+                    }
+                });
+            }
+        );
+
+        $('.addNewTypeButton').click(function () {
+            $('.infoproduct__type').first().clone().hide().insertAfter($('.infoproduct__type').last()).fadeIn(500);
+
+            // On reset le formulaire
+            $('.infoproduct__type').last().find('.infoproduct__qty').val('');
+            $('.infoproduct__type').last().find($('#optHandlingProductSelect')).prop('checked', false)
+            $('.infoproduct__type').last().find($('#optSerialNumberStmtProductSelect')).prop('checked', false)
+            $('.infoproduct__type').last().find($('#optDestructionProductSelect')).prop('checked', false)
+        })
     }
 
     /*******************************************************************************************************************
@@ -457,7 +476,8 @@ $(function () {
         reloadCart(true);
     }
 
-});
+})
+;
 
 /****************************************************************
  * FUNCTIONS

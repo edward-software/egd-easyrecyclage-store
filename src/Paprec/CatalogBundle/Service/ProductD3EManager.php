@@ -28,7 +28,8 @@ class ProductD3EManager
         $this->container = $container;
     }
 
-    public function get($productD3E){
+    public function get($productD3E)
+    {
         $id = $productD3E;
         if ($productD3E instanceof ProductD3E) {
             $id = $productD3E->getId();
@@ -85,34 +86,35 @@ class ProductD3EManager
      */
     public function findAvailables($options)
     {
-        $type = $options['type'];
         $postalCode = $options['postalCode'];
+        $isPackage = $options['isPackage'];
+
         try {
             $query = $this->em
                 ->getRepository(ProductD3E::class)
                 ->createQueryBuilder('p')
                 ->where('p.deleted is NULL')
-                ->orderBy('p.position', 'ASC');
-            if ($type == 'order') {
-                $query->andWhere('p.isPayableOnline = 1');
-            }
+                ->andWhere('p.isPackage = :package')
+                ->orderBy('p.position', 'ASC')
+                ->setParameter('package', $isPackage);
 
             $products = $query->getQuery()->getResult();
 
             $productsPostalCodeMatch = array();
-
 
             // On parcourt tous les produits D3E pour récupérer ceux  qui possèdent le postalCode
             foreach ($products as $product) {
                 $postalCodes = str_replace(' ', '', $product->getAvailablePostalCodes());
                 $postalCodesArray = explode(',', $postalCodes);
                 foreach ($postalCodesArray as $pC) {
+
                     //on teste juste les deux premiers caractères pour avoir le code du département
                     if (substr($pC, 0, 2) == substr($postalCode, 0, 2)) {
                         $productsPostalCodeMatch[] = $product;
                     }
                 }
             }
+
 
             return $productsPostalCodeMatch;
 
@@ -133,7 +135,8 @@ class ProductD3EManager
      * @param $qtty
      * @return float|int
      */
-    public function calculatePrice($productD3E, $postalCode, $unitPrice, $qtty, $optHandling, $optSerialNumberStmt, $optDestruction) {
+    public function calculatePrice($productD3E, $postalCode, $unitPrice, $qtty, $optHandling, $optSerialNumberStmt, $optDestruction)
+    {
         $postalCodeManager = $this->container->get('paprec_catalog.postal_code_manager');
         $numberManager = $this->container->get('paprec_catalog.number_manager');
 

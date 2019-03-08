@@ -1,22 +1,25 @@
-<div class="recap__title">Mes prestations</div>
+<div class="recap__title">{{ 'Public.Cart.Prestations'|trans }}</div>
 <div class="recap__cart">
     {% if loadedCart and loadedCart is not empty %}
-
-        {% if loadedCart['sum'] == '0' %}
+        {% if loadedCart['sum'] == '0' and loadedCart|length < 2 %}
             {{ 'Public.Cart.NoProduct'|trans }}
         {% else %}
             {% for key,cartLine in loadedCart %}
                 {% if key != 'sum' %}
                     <div class="recap__item">
 
-                        <div class="quantity">x {{ cartLine['qtty'] }}</div>
+                        <div class="quantity">x1</div>
                         <div class="title">{{ cartLine['pName'] }}</div>
                         <div class="delete buttonDeleteProduct" id="buttonDeleteProduct_{{ key }}"
                              data-url="{{ path('paprec_public_corp_d3e_subscription_removeContent', {cartUuid: cartUuid, productId: 'productTmp'}) }}"></div>
                         <div class="info">
-                            {% if cartLine['frequency'] == 'ponctual' %}{{ 'Public.Cart.Ponctual'|trans }}{% else %}{{ 'Public.Cart.Regular'|trans }}{% endif %}
-                            • {{ cartLine['nbOptions'] }} option{% if cartLine['nbOptions'] > 1 %}s{% endif %}
-
+                            {% for type in cartLine['types'] %}
+                            {{ type['type']|slice(0,5) }}{% if type['type']|length > 5 %}...{% endif %}
+                            • {{ type['nbOptions'] }} option{% if type['nbOptions'] > 1 %}s{% endif %}
+                                {% if not loop.last%}
+                                    <br>
+                                {% endif %}
+                            {% endfor %}
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -39,5 +42,5 @@
     </div>
 </div>
 <div class="recap__info">
-{{ 'Public.Cart.Including'|trans|nl2br }}
+    {{ 'Public.Cart.Including'|trans|nl2br }}
 </div>

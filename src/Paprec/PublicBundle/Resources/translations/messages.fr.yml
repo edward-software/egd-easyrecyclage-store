@@ -93,6 +93,10 @@ Public:
     LearnMore:                    En savoir plus sur le produit
     Engagment:                    Je m'engage à respecter le type de déchets prévu
     QuantifyNeed:                 Quantifiez votre besoin
+    TrashType:                    Type déchet
+    NewType:                      Ajouter un autre type de déchet
+    PiecesNumber:                 Nombre de pièces
+    Options:                      Options
     ServiceDesc:                  Descriptif de la prestation
     ForfaitRecyclage:             |
                                   Forfait

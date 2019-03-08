@@ -53,7 +53,7 @@ class Picture
     private $productChantier;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\ProductD3E", inversedBy="pictos")
+     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\ProductD3E", inversedBy="pictures")
      */
     private $productD3E;
 

@@ -29,6 +29,10 @@ services:
     class: Paprec\CatalogBundle\Service\ProductD3EManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
+  paprec_catalog.type_manager:
+    class: Paprec\CatalogBundle\Service\TypeManager
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
   paprec_catalog.price_list_d3e_manager:
     class: Paprec\CatalogBundle\Service\PriceListD3EManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]

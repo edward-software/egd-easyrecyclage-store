@@ -2,7 +2,9 @@
 
 namespace Paprec\CatalogBundle\Form;
 
+use Paprec\CatalogBundle\Entity\Argument;
 use Paprec\CatalogBundle\Entity\PriceListD3E;
+use Paprec\CatalogBundle\Repository\ArgumentRepository;
 use Paprec\CatalogBundle\Repository\PriceListD3ERepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -12,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductD3EType extends AbstractType
+class ProductD3EPackageType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -21,9 +23,10 @@ class ProductD3EType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('coefHandling', TextType::class)
-            ->add('coefSerialNumberStmt', TextType::class)
-            ->add('coefDestruction', TextType::class)
+            ->add('subName')
+            ->add('description', TextareaType::class)
+            ->add('reference')
+            ->add('dimensions', TextareaType::class)
             ->add('position')
             ->add('availablePostalCodes', TextareaType::class)
             ->add('isDisplayed', ChoiceType::class, array(
@@ -32,6 +35,18 @@ class ProductD3EType extends AbstractType
                     'Oui' => 1
                 ),
                 "expanded" => true
+            ))
+            ->add('arguments', EntityType::class, array(
+                'class' => Argument::class,
+                'multiple' => true,
+                'expanded' => true,
+                'query_builder' => function (ArgumentRepository $er) {
+                    return $er->createQueryBuilder('a')
+                        ->where('a.deleted IS NULL');
+                }
+            ))
+            ->add('packageUnitPrice', TextType::class, array(
+                "required" => true
             ));
     }
 
@@ -42,7 +57,7 @@ class ProductD3EType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Paprec\CatalogBundle\Entity\ProductD3E',
-            'validation_groups' => ['custom'],
+            'validation_groups' => ['package'],
         ));
     }
 
@@ -51,7 +66,7 @@ class ProductD3EType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'paprec_catalogbundle_productd3e';
+        return 'paprec_catalogbundle_productd3e_package';
     }
 
 

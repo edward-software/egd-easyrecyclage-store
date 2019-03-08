@@ -58,6 +58,31 @@ Catalog:
         Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
         Confirm-remove:             Etes-vous sûr de vouloir supprimer cet argument ?
 
+    Type:
+      Types:                      Types
+      D3E:                        Type D3E
+      List:                       Liste des types
+      Date-creation:              Date de création
+      Date-crea:                  Date de créa.
+      Date-update:                Date de mise à jour
+      Name:                       Nom
+      Informations:               Informations
+      System-informations:        Informations système
+      Export:                     Exporter les types
+      View:                       Visualiser le type
+      Edit:                       Modifier le type
+      Remove:                     Supprimer le type
+      Add:                        Ajouter un type
+      Save:                       Enregistrer
+      Cancel:                     Annuler
+      Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
+      Confirm-remove:             Etes-vous sûr de vouloir supprimer ce type ?
+
+    ProductD3EType:
+      UnitPrice:                  Prix unitaire
+      Confirm-remove:             Etes-vous sûr de vouloir détacher ce type de ce produit ?
+
+
     PostalCode:
 
         PostalCodes:                Code postaux
@@ -194,31 +219,55 @@ Catalog:
       Informations:               Informations
       System-informations:        Informations système
       Name:                       Nom
+      SubName:                    Sous-titre
       Description:                Description
+      Dimensions:                 Dimensions
+      Arguments:                  Arguments
       Reference:                  Lien description
       CoefHandling:               Coef. de manunention
       CoefSerialNumberStmt:       Coef. de relevé de n° de série
       CoefDestruction:            Coef. de destruction par broyage
       Position:                   Position
+      PackageUnitPrice:           Prix unitaire du package
       PriceListD3E:               Grille tarifaire
       IsDisplayed:                Affiché
       IsPayableOnline:            Payable en ligne
       AvailablePostalCodes:       Dispo géographique
       Picto:                      Picto
       Pictures:                   Photos
-      EditPicto:                  Modificiation du picto
+      PilotPicture:               Photo principale
+      NewPicture:                 Nouvelle photo
+      SetSecondaryPicture:        Photo secondaire
+      EditPicture:                Modificiation de photo
       List:                       Liste des produits D3E
-      Add:                        Ajouter un produit
+      CustomList:                 Liste des produits D3E sur mesure
+      PackagedList:               Liste des produits D3E packagés
+      Types:                      Liste des types du produit D3E sur mesure
+      AddType:                    Ajouter un type
+      EditType:                   Editer un type
+      Add:
+        Custom:                   Ajouter un produit sur mesure
+        Packaged:                 Ajouter un produit packagé
       AddPicture:                 Ajouter
-      Export:                     Exporter les produits
-      View:                       Visualiser le produit D3E
-      Edit:                       Modifier le produit D3E
-      Remove:                     Supprimer le produit
+      Export:
+        Custom:                   Exporter les produits sur mesure
+        Packaged:                 Exporter les produits packagés
+      View:
+        Custom:                   Visualiser le produit D3E sur mesure
+        Packaged:                 Visualiser le produit D3E packagé
+      Edit:
+        Custom:                   Modifier le produit D3E sur mesure
+        Packaged:                 Modifier le produit D3E packagé
+      Remove:
+        Custom:                   Supprimer le produit sur mesure
+        Packaged:                 Supprimer le produit packagé
       Save:                       Enregistrer
       Cancel:                     Annuler
       Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
       Confirm-remove:             Etes-vous sûr de vouloir supprimer ce produit ?
       Confirm-remove-picture:     Etes-vous sûr de vouloir supprimer cette photo ?
+      Confirm-set_pilot:          Etes-vous sûr de vouloir définir cette photo comme photo principale ?
+      Confirm-set_picture:        Etes-vous sûr de vouloir définir cette photo comme photo secondaire ?
 
     PriceListD3E:
 

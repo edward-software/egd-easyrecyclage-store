@@ -1,7 +1,7 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-    {{ 'Catalog.ProductD3E.View.Custom'|trans }}
+    {{ 'Catalog.ProductD3E.View.Packaged'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -20,14 +20,14 @@
         <div class="card">
             <div class="card-header">
                 <h4>
-                    <i class="fa fa-xs fa-folder"></i> {{ 'Catalog.ProductD3E.View.Custom'|trans }}
+                    <i class="fa fa-xs fa-folder"></i> {{ 'Catalog.ProductD3E.View.Packaged'|trans }}
                 </h4>
                 <div class="float-right">
-                    <a href="{{ path("paprec_catalog_productD3E_edit", {id: productD3E.id}) }}"
+                    <a href="{{ path("paprec_catalog_productD3E_packaged_edit", {id: productD3E.id}) }}"
                        class="btn btn-sm btn-warning"><i
-                                class="fa fa-xs fa-edit"></i> {{ 'Catalog.ProductD3E.Edit.Custom'|trans }}</a>
+                                class="fa fa-xs fa-edit"></i> {{ 'Catalog.ProductD3E.Edit.Packaged'|trans }}</a>
                     <a id="catalogProductRemoveButton" href="javascript:void(0);" class="btn btn-sm btn-danger"><i
-                                class="fa fa-xs fa-trash"></i> {{ 'Catalog.ProductD3E.Remove.Custom'|trans }}</a>
+                                class="fa fa-xs fa-trash"></i> {{ 'Catalog.ProductD3E.Remove.Packaged'|trans }}</a>
                 </div>
                 <div class="float-left">
                     <a href="{{ path('paprec_catalog_productD3E_index') }}" class="btn btn-sm btn-default"><i
@@ -52,21 +52,27 @@
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.CoefHandling'|trans }}</label>
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.SubName'|trans }}</label>
                                     <label class="col-form-label col-md-7">
-                                        {{ productD3E.coefHandling|formatAmount(null, app.request.locale) }}
+                                        {{ productD3E.subName }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.CoefSerialNumberStmt'|trans }}</label>
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.Description'|trans }}</label>
                                     <label class="col-form-label col-md-7">
-                                        {{ productD3E.coefSerialNumberStmt|formatAmount(null, app.request.locale) }}
+                                        {{ productD3E.description|nl2br }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.CoefDestruction'|trans }}</label>
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.Dimensions'|trans }}</label>
                                     <label class="col-form-label col-md-7">
-                                        {{ productD3E.coefDestruction|formatAmount(null, app.request.locale) }}
+                                        {{ productD3E.dimensions|nl2br }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.Reference'|trans }}</label>
+                                    <label class="col-form-label col-md-7">
+                                        {{ productD3E.reference }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
@@ -79,6 +85,13 @@
                                     <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.Position'|trans }}</label>
                                     <label class="col-form-label col-md-7">
                                         {{ productD3E.position }}
+                                    </label>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-5 col-form-label">{{ 'Catalog.ProductD3E.PackageUnitPrice'|trans }}</label>
+                                    <label class="col-form-label col-md-7">
+                                        {{ productD3E.packageUnitPrice|formatAmount(null, app.request.locale) }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
@@ -143,6 +156,135 @@
                                                             <div class="card-body">
                                                                 <div class="checkboxPicto"
                                                                      style="background-image: url({{ asset('/uploads/pictos/' ~ picture.path) }}"></div>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {#
+                                    Affichage des photos PilotPicture
+                                #}
+                                <div class="col-md-12 mt-2 no-gutters">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            {{ 'Catalog.ProductD3E.PilotPicture'|trans }}
+                                            <div class="float-right">
+                                                <button class="btn btn-sm btn-outline-primary"
+                                                        data-target="#uploadPictureModal" data-toggle="modal"
+                                                        data-type="PILOTPICTURE" id="openModalUploadPicture">
+                                                    <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductD3E.AddPicture'|trans }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="card-group">
+                                                {% if (productD3E.pilotPictures) %}
+                                                    {% for picture in productD3E.pilotPictures %}
+                                                        <div class="card card-sec">
+                                                            <div class="card-header">
+                                                                <div class="float-left"> {{ 'Catalog.ProductD3E.PilotPicture'|trans }}</div>
+                                                                <div class="dropdown float-right">
+                                                                    <button class="p-0 btn btn-sm btn-light dropdown-toggle btn-sm"
+                                                                            type="button" id="{{ picture.id }}"
+                                                                            data-toggle="dropdown" aria-haspopup="true"
+                                                                            aria-expanded="false">
+                                                                        <i class="fa fa-xs fa-cog"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu"
+                                                                         aria-labelledby="{{ picture.id }}">
+                                                                        <button id="pictureEditButton"
+                                                                                class="dropdown-item"
+                                                                                type="button"
+                                                                                data-target="#editPictureModal"
+                                                                                data-toggle="modal"
+                                                                                data-type="PILOTPICTURE"
+                                                                                data-id="{{ picture.id }}">
+                                                                            <i class="fa fa-xs fa-pencil-alt"></i> {{ 'General.Edit'|trans }}
+                                                                        </button>
+                                                                        <button data-id="{{ picture.id }}"
+                                                                                class="dropdown-item setPictureButton"
+                                                                                type="button">
+                                                                            <i class="fa fa-xs fa-exchange-alt"></i> {{ 'Catalog.ProductD3E.SetSecondaryPicture'|trans }}
+                                                                        </button>
+                                                                        <button data-id="{{ picture.id }}"
+                                                                                class="dropdown-item removePictureButton"
+                                                                                type="button">
+                                                                            <i class="fa fa-xs fa-trash"></i> {{ 'General.Remove'|trans }}
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <img class="card-img-top"
+                                                                 src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
+                                                                 alt="{{ 'Catalog.ProductD3E.Pictures'|trans }}">
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {#
+                                    Affichage photo de type Picture
+                                #}
+                                <div class="col-md-12 mt-2 no-gutters">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            {{ 'Catalog.ProductD3E.Pictures'|trans }}
+                                            <div class="float-right">
+                                                <button class="btn btn-sm btn-outline-primary"
+                                                        data-target="#uploadPictureModal" data-toggle="modal"
+                                                        data-type="PICTURE" id="openModalUploadPicture">
+                                                    <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductD3E.AddPicture'|trans }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="card-group">
+                                                {% if (productD3E.picturesPictures) %}
+                                                    {% for picture in productD3E.picturesPictures %}
+                                                        <div class="card card-sec">
+                                                            <div class="card-header">
+                                                                <div class="float-left"> {{ 'Catalog.ProductD3E.Pictures'|trans }}</div>
+                                                                <div class="dropdown float-right">
+                                                                    <button class="p-0 btn btn-sm btn-light dropdown-toggle btn-sm"
+                                                                            type="button" id="{{ picture.id }}"
+                                                                            data-toggle="dropdown" aria-haspopup="true"
+                                                                            aria-expanded="false">
+                                                                        <i class="fa fa-xs fa-cog"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu"
+                                                                         aria-labelledby="{{ picture.id }}">
+                                                                        <button id="pictureEditButton"
+                                                                                class="dropdown-item"
+                                                                                type="button"
+                                                                                data-target="#editPictureModal"
+                                                                                data-toggle="modal"
+                                                                                data-type="PICTURE"
+                                                                                data-id="{{ picture.id }}">
+                                                                            <i class="fa fa-xs fa-pencil-alt"></i> {{ 'General.Edit'|trans }}
+                                                                        </button>
+                                                                        <button data-id="{{ picture.id }}"
+                                                                                class="dropdown-item setPilotPictureButton"
+                                                                                type="button">
+                                                                            <i class="fa fa-xs fa-exchange-alt"></i> {{ 'Catalog.ProductD3E.PilotPicture'|trans }}
+                                                                        </button>
+                                                                        <button data-id="{{ picture.id }}"
+                                                                                class="dropdown-item removePictureButton"
+                                                                                type="button">
+                                                                            <i class="fa fa-xs fa-trash"></i> {{ 'General.Remove'|trans }}
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body" style="text-align: center">
+                                                                <img class="card-img-top"
+                                                                     style="max-width: 60px; width: 60px;"
+                                                                     src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
+                                                                     alt="{{ 'Catalog.ProductD3E.Pictures'|trans }}">
                                                             </div>
                                                         </div>
                                                     {% endfor %}
@@ -246,59 +388,6 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                {# Card d'affichage des types du produit #}
-                <div class="col-md-12 mt-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>
-                                {{ 'Catalog.ProductD3E.Types'|trans }}
-                            </h5>
-                            <div class="float-right">
-                                <a href="{{ path('paprec_catalog_productD3E_addType', {id: productD3E.id}) }}"
-                                   class="btn btn-sm btn-outline-primary">
-                                    <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductD3E.AddType'|trans }}
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <table id="productD3ETypesDatatable"
-                                   class="table table-striped table-bordered table-hover"
-                                   cellpadding="0" cellspacing="0" border="0">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>{{ 'Catalog.Type.Name'|trans }}</th>
-                                    <th>{{ 'Catalog.ProductD3EType.UnitPrice'|trans }}</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for productD3EType in productD3E.productD3ETypes %}
-                                    <tr>
-                                        <td>{{ productD3EType.id|formatId(6) }}</td>
-                                        <td>
-                                            <a href="{{ path('paprec_catalog_category_view', {id: productD3EType.type.id}) }}">{{ productD3EType.type.name }}</a>
-                                        </td>
-                                        <td>{{ productD3EType.unitPrice|formatAmount('EUR', app.request.locale) }}</td>
-                                        <td class="text-center">
-                                            <a href="{{ path('paprec_catalog_productD3E_editType', {id: productD3E.id, productD3ETypeId: productD3EType.id}) }}"
-                                               class="btn btn-sm btn-warning btn-sm mx-1"
-                                               data-id="{{ productD3EType.id }}">
-                                                <i class="fa fa-xs fa-edit"></i>
-                                            </a>
-                                            <a href="#"
-                                               class="btn btn-sm btn-danger btn-sm catalogProductD3ETypeRemoveButton"
-                                               data-id="{{ productD3EType.id }}">
-                                                <i class="fa fa-xs fa-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -416,19 +505,38 @@
                     });
                 });
 
-                // Suppression d'un type rattachée au Produit
-                $('.catalogProductD3ETypeRemoveButton').on('click', function () {
-                    productD3ETypeId = $(this).data('id');
-                    var url = "{{ path("paprec_catalog_productD3E_removeType", {id: productD3E.id, productD3ETypeId: 'productD3ETypeIdTmp'}) }}".replace('productD3ETypeIdTmp', productD3ETypeId);
-
+                // Change le type de la Picture en PilotPicture
+                $('.setPilotPictureButton').on('click', function () {
+                    picId = $(this).data('id');
                     Swal({
                         title: "{{ 'General.Confirm'|trans }}",
-                        text: "{{ 'Catalog.ProductD3EType.Confirm-remove'|trans }}",
+                        text: "{{ 'Catalog.ProductD3E.Confirm-set_pilot'|trans }}",
                         showCancelButton: true,
                         confirmButtonText: "{{ 'General.Yes'|trans }}",
                         cancelButtonText: "{{ 'General.No'|trans }}"
                     }).then((result) => {
                         if (result.value) {
+                            var url = "{{ path("paprec_catalog_productD3E_setPilotPicture", {id: productD3E.id, pictureID: 'pictureTmp'}) }}";
+                            url = url.replace('pictureTmp', picId);
+                            $(location).attr('href', url);
+                        }
+                    });
+                });
+
+                // Change le type de PilotPicture en Picture
+                $('.setPictureButton').on('click', function () {
+                    picId = $(this).data('id');
+
+                    Swal({
+                        title: "{{ 'General.Confirm'|trans }}",
+                        text: "{{ 'Catalog.ProductD3E.Confirm-set_picture'|trans }}",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ 'General.Yes'|trans }}",
+                        cancelButtonText: "{{ 'General.No'|trans }}"
+                    }).then((result) => {
+                        if (result.value) {
+                            var url = "{{ path("paprec_catalog_productD3E_setPicture", {id: productD3E.id, pictureID: 'pictureTmp'}) }}";
+                            url = url.replace('pictureTmp', picId);
                             $(location).attr('href', url);
                         }
                     });

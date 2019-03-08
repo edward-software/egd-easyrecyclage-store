@@ -95,6 +95,10 @@
                                         <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_productD3E'|length) == 'paprec_catalog_productD3E' %} active{% endif %}"
                                            href="{{ path('paprec_catalog_productD3E_index') }}">{{ 'Catalog.D3E'|trans }}</a>
                                     {% endif %}
+                                    {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'D3E') %}
+                                        <a class="dropdown-item{% if app.request.get('_route')|slice(0, 'paprec_catalog_type'|length) == 'paprec_catalog_type' %} active{% endif %}"
+                                           href="{{ path('paprec_catalog_type_index') }}">{{ 'Catalog.Type.D3E'|trans }}</a>
+                                    {% endif %}
                                 </div>
                             </div>
                             {% if is_granted('ROLE_ADMIN') or paprec_has_access('ROLE_MANAGER_DIVISION', 'D3E') %}

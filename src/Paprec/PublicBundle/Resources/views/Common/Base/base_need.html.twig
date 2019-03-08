@@ -65,25 +65,31 @@
                 <div class="clearfix"></div>
             </div>
             <!-- FIN step categories  -->
-            {% endif %}
-
-            {% block products_panel %}
-                <div class="step">
-                    <div class="step__left">
-                        <div class="step__title">
-                            {% block product_step_title %}{% endblock %}
-                        </div>
-                    </div>
-                    <div class="step__right">
-                        {% block products %}
-
-                        {% endblock %}
-                    </div>
-
+            {% elseif cart.division is defined and cart.division in ['D3E'] %}
+            <div class="container__step">
+                <div class="container__step-title">
+                    <h2>Ma solution recyclage</h2>
                 </div>
-            {% endblock %}
-        </div>
+                {% endif %}
 
-        <div class="clearfix"></div>
-        {% block cta_bottom_panel %} {% endblock %}
-        {% endblock %}
+
+                {% block products_panel %}
+                    <div class="step">
+                        <div class="step__left">
+                            <div class="step__title">
+                                {% block product_step_title %}{% endblock %}
+                            </div>
+                        </div>
+                        <div class="step__right">
+                            {% block products %}
+
+                            {% endblock %}
+                        </div>
+
+                    </div>
+                {% endblock %}
+            </div>
+
+            <div class="clearfix"></div>
+            {% block cta_bottom_panel %} {% endblock %}
+            {% endblock %}

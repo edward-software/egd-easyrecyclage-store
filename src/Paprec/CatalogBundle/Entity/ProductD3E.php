@@ -57,10 +57,18 @@ class ProductD3E
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="description", type="text", nullable=true)
+     * @Assert\NotBlank(groups={"package"})
      */
     private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dimensions", type="string", length=500, nullable=true)
+     * @Assert\NotBlank(groups={"package"})
+     */
+    private $dimensions;
 
 
     /**
@@ -73,8 +81,8 @@ class ProductD3E
     /**
      * @var int
      * Le coef de manutention
-     * @ORM\Column(name="coefHandling", type="integer")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="coefHandling", type="integer", nullable=true)
+     * @Assert\NotBlank(groups={"custom"})
      * @Assert\Regex(
      *     pattern="/^\d{1,2}((\.|\,)\d{1,2})?$/",
      *     match=true,
@@ -86,8 +94,8 @@ class ProductD3E
     /**
      * @var int
      * Le coef de relevé de numéro de série
-     * @ORM\Column(name="coefSerialNumberStmt", type="integer")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="coefSerialNumberStmt", type="integer", nullable=true)
+     * @Assert\NotBlank(groups={"custom"})
      * @Assert\Regex(
      *     pattern="/^\d{1,2}((\.|\,)\d{1,2})?$/",
      *     match=true,
@@ -99,8 +107,8 @@ class ProductD3E
     /**
      * @var int
      * Le coef de destruction par broyage
-     * @ORM\Column(name="coefDestruction", type="integer")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="coefDestruction", type="integer", nullable=true)
+     * @Assert\NotBlank(groups={"custom"})
      * @Assert\Regex(
      *     pattern="/^\d{1,2}((\.|\,)\d{1,2})?$/",
      *     match=true,
@@ -138,10 +146,31 @@ class ProductD3E
     /**
      * @var boolean
      *
-     * @ORM\Column(name="isPayableOnline", type="boolean")
+     * @ORM\Column(name="isPackage", type="boolean")
      * @Assert\NotBlank()
      */
-    private $isPayableOnline;
+    private $isPackage;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="packageUnitPrice", type="integer", nullable=true)
+     * @Assert\NotBlank(groups={"package"})
+     * @Assert\Regex(
+     *     pattern="/^\d{1,6}((\.|\,)\d{1,2})?$/",
+     *     match=true,
+     *     message="la valeur doit être un nombre entre 0 et 999 999,99 ('.' autorisé)"
+     * )
+     */
+    private $packageUnitPrice;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="subName", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"package"})
+     */
+    private $subName;
 
     /**
      * #################################
@@ -150,14 +179,18 @@ class ProductD3E
      */
 
     /**
-     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\Picture", mappedBy="productD3E", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="Paprec\CatalogBundle\Entity\Argument", inversedBy="productD3Es")
+     * @ORM\JoinTable(name="productD3EsArguments",
+     *      joinColumns={@ORM\JoinColumn(name="productD3EId", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="argumentId", referencedColumnName="id")}
+     *     )
      */
-    private $pictos;
+    private $arguments;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\PriceListD3E", inversedBy="productD3Es", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\Picture", mappedBy="productD3E", cascade={"all"})
      */
-    private $priceListD3E;
+    private $pictures;
 
     /**
      * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductD3EQuoteLine", mappedBy="productD3E", cascade={"all"})
@@ -169,6 +202,10 @@ class ProductD3E
      */
     private $productD3EOrderLines;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductD3EType", mappedBy="productD3E", cascade={"all"})
+     */
+    private $productD3ETypes;
 
     /**
      * Constructor
@@ -176,10 +213,50 @@ class ProductD3E
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
-        $this->pictos = new ArrayCollection();
         $this->productD3EOrderLines = new ArrayCollection();
         $this->productD3EQuoteLines = new ArrayCollection();
+        $this->arguments = new ArrayCollection();
+        $this->productD3ETypes = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
+
+    /**
+     * GESTION DES PICTURES
+     */
+
+    public function getPilotPictures()
+    {
+        $pilotPictures = array();
+        foreach ($this->pictures as $picture) {
+            if ($picture->getType() == 'PILOTPICTURE') {
+                $pilotPictures[] = $picture;
+            }
+        }
+        return $pilotPictures;
+    }
+
+    public function getPictos()
+    {
+        $pictos = array();
+        foreach ($this->pictures as $picture) {
+            if ($picture->getType() == 'PICTO') {
+                $pictos[] = $picture;
+            }
+        }
+        return $pictos;
+    }
+
+    public function getPicturesPictures()
+    {
+        $pictures = array();
+        foreach ($this->pictures as $picture) {
+            if ($picture->getType() == 'PICTURE') {
+                $pictures[] = $picture;
+            }
+        }
+        return $pictures;
+    }
+
 
     /**
      * Get id.
@@ -290,11 +367,11 @@ class ProductD3E
     /**
      * Set description.
      *
-     * @param string $description
+     * @param string|null $description
      *
      * @return ProductD3E
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
 
@@ -304,11 +381,35 @@ class ProductD3E
     /**
      * Get description.
      *
-     * @return string
+     * @return string|null
      */
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set dimensions.
+     *
+     * @param string|null $dimensions
+     *
+     * @return ProductD3E
+     */
+    public function setDimensions($dimensions = null)
+    {
+        $this->dimensions = $dimensions;
+
+        return $this;
+    }
+
+    /**
+     * Get dimensions.
+     *
+     * @return string|null
+     */
+    public function getDimensions()
+    {
+        return $this->dimensions;
     }
 
     /**
@@ -333,6 +434,78 @@ class ProductD3E
     public function getReference()
     {
         return $this->reference;
+    }
+
+    /**
+     * Set coefHandling.
+     *
+     * @param int|null $coefHandling
+     *
+     * @return ProductD3E
+     */
+    public function setCoefHandling($coefHandling = null)
+    {
+        $this->coefHandling = $coefHandling;
+
+        return $this;
+    }
+
+    /**
+     * Get coefHandling.
+     *
+     * @return int|null
+     */
+    public function getCoefHandling()
+    {
+        return $this->coefHandling;
+    }
+
+    /**
+     * Set coefSerialNumberStmt.
+     *
+     * @param int|null $coefSerialNumberStmt
+     *
+     * @return ProductD3E
+     */
+    public function setCoefSerialNumberStmt($coefSerialNumberStmt = null)
+    {
+        $this->coefSerialNumberStmt = $coefSerialNumberStmt;
+
+        return $this;
+    }
+
+    /**
+     * Get coefSerialNumberStmt.
+     *
+     * @return int|null
+     */
+    public function getCoefSerialNumberStmt()
+    {
+        return $this->coefSerialNumberStmt;
+    }
+
+    /**
+     * Set coefDestruction.
+     *
+     * @param int|null $coefDestruction
+     *
+     * @return ProductD3E
+     */
+    public function setCoefDestruction($coefDestruction = null)
+    {
+        $this->coefDestruction = $coefDestruction;
+
+        return $this;
+    }
+
+    /**
+     * Get coefDestruction.
+     *
+     * @return int|null
+     */
+    public function getCoefDestruction()
+    {
+        return $this->coefDestruction;
     }
 
     /**
@@ -408,65 +581,147 @@ class ProductD3E
     }
 
     /**
-     * Set isPayableOnline.
+     * Set isPackage.
      *
-     * @param bool $isPayableOnline
+     * @param bool $isPackage
      *
      * @return ProductD3E
      */
-    public function setIsPayableOnline($isPayableOnline)
+    public function setIsPackage($isPackage)
     {
-        $this->isPayableOnline = $isPayableOnline;
+        $this->isPackage = $isPackage;
 
         return $this;
     }
 
     /**
-     * Get isPayableOnline.
+     * Get isPackage.
      *
      * @return bool
      */
-    public function getIsPayableOnline()
+    public function getIsPackage()
     {
-        return $this->isPayableOnline;
+        return $this->isPackage;
     }
 
     /**
-     * Add picto.
+     * Set packageUnitPrice.
      *
-     * @param \Paprec\CatalogBundle\Entity\Picture $picto
+     * @param int|null $packageUnitPrice
      *
      * @return ProductD3E
      */
-    public function addPicto(\Paprec\CatalogBundle\Entity\Picture $picto)
+    public function setPackageUnitPrice($packageUnitPrice = null)
     {
-        $this->pictos[] = $picto;
+        $this->packageUnitPrice = $packageUnitPrice;
 
         return $this;
     }
 
     /**
-     * Remove picto.
+     * Get packageUnitPrice.
      *
-     * @param \Paprec\CatalogBundle\Entity\Picture $picto
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return int|null
      */
-    public function removePicto(\Paprec\CatalogBundle\Entity\Picture $picto)
+    public function getPackageUnitPrice()
     {
-        return $this->pictos->removeElement($picto);
+        return $this->packageUnitPrice;
     }
 
     /**
-     * Get pictos.
+     * Set subName.
+     *
+     * @param string|null $subName
+     *
+     * @return ProductD3E
+     */
+    public function setSubName($subName = null)
+    {
+        $this->subName = $subName;
+
+        return $this;
+    }
+
+    /**
+     * Get subName.
+     *
+     * @return string|null
+     */
+    public function getSubName()
+    {
+        return $this->subName;
+    }
+
+    /**
+     * Add argument.
+     *
+     * @param \Paprec\CatalogBundle\Entity\Argument $argument
+     *
+     * @return ProductD3E
+     */
+    public function addArgument(\Paprec\CatalogBundle\Entity\Argument $argument)
+    {
+        $this->arguments[] = $argument;
+
+        return $this;
+    }
+
+    /**
+     * Remove argument.
+     *
+     * @param \Paprec\CatalogBundle\Entity\Argument $argument
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeArgument(\Paprec\CatalogBundle\Entity\Argument $argument)
+    {
+        return $this->arguments->removeElement($argument);
+    }
+
+    /**
+     * Get arguments.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPictos()
+    public function getArguments()
     {
-        $pictos = array();
-        $pictos = $this->pictos;
-        return $pictos;
+        return $this->arguments;
+    }
+
+    /**
+     * Add picture.
+     *
+     * @param \Paprec\CatalogBundle\Entity\Picture $picture
+     *
+     * @return ProductD3E
+     */
+    public function addPicture(\Paprec\CatalogBundle\Entity\Picture $picture)
+    {
+        $this->pictures[] = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Remove picture.
+     *
+     * @param \Paprec\CatalogBundle\Entity\Picture $picture
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removePicture(\Paprec\CatalogBundle\Entity\Picture $picture)
+    {
+        return $this->pictures->removeElement($picture);
+    }
+
+    /**
+     * Get pictures.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPictures()
+    {
+        return $this->pictures;
     }
 
     /**
@@ -542,99 +797,38 @@ class ProductD3E
     }
 
     /**
-     * Set priceListD3E.
+     * Add productD3EType.
      *
-     * @param \Paprec\CatalogBundle\Entity\PriceListD3E|null $priceListD3E
+     * @param \Paprec\CatalogBundle\Entity\ProductD3EType $productD3EType
      *
      * @return ProductD3E
      */
-    public function setPriceListD3E(\Paprec\CatalogBundle\Entity\PriceListD3E $priceListD3E = null)
+    public function addProductD3EType(\Paprec\CatalogBundle\Entity\ProductD3EType $productD3EType)
     {
-        $this->priceListD3E = $priceListD3E;
+        $this->productD3ETypes[] = $productD3EType;
 
         return $this;
     }
 
     /**
-     * Get priceListD3E.
+     * Remove productD3EType.
      *
-     * @return \Paprec\CatalogBundle\Entity\PriceListD3E|null
+     * @param \Paprec\CatalogBundle\Entity\ProductD3EType $productD3EType
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function getPriceListD3E()
+    public function removeProductD3EType(\Paprec\CatalogBundle\Entity\ProductD3EType $productD3EType)
     {
-        return $this->priceListD3E;
-    }
-
-
-    /**
-     * Set coefHandling.
-     *
-     * @param int $coefHandling
-     *
-     * @return ProductD3E
-     */
-    public function setCoefHandling($coefHandling)
-    {
-        $this->coefHandling = $coefHandling;
-
-        return $this;
+        return $this->productD3ETypes->removeElement($productD3EType);
     }
 
     /**
-     * Get coefHandling.
+     * Get productD3ETypes.
      *
-     * @return int
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCoefHandling()
+    public function getProductD3ETypes()
     {
-        return $this->coefHandling;
-    }
-
-    /**
-     * Set coefSerialNumberStmt.
-     *
-     * @param int $coefSerialNumberStmt
-     *
-     * @return ProductD3E
-     */
-    public function setCoefSerialNumberStmt($coefSerialNumberStmt)
-    {
-        $this->coefSerialNumberStmt = $coefSerialNumberStmt;
-
-        return $this;
-    }
-
-    /**
-     * Get coefSerialNumberStmt.
-     *
-     * @return int
-     */
-    public function getCoefSerialNumberStmt()
-    {
-        return $this->coefSerialNumberStmt;
-    }
-
-    /**
-     * Set coefDestruction.
-     *
-     * @param int $coefDestruction
-     *
-     * @return ProductD3E
-     */
-    public function setCoefDestruction($coefDestruction)
-    {
-        $this->coefDestruction = $coefDestruction;
-
-        return $this;
-    }
-
-    /**
-     * Get coefDestruction.
-     *
-     * @return int
-     */
-    public function getCoefDestruction()
-    {
-        return $this->coefDestruction;
+        return $this->productD3ETypes;
     }
 }

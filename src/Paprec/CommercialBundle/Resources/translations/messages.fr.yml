@@ -236,9 +236,9 @@ Commercial:
     CategoryName:               Catégorie
     UnitPrice:                  Prix unitaire
     OptHandling:                Manutention
-    OptSerialNumberStmt:        Relevé de numéro de série
+    OptSerialNumberStmt:        Relevé des numéros de série
     OptSerialNumberStmtShort:   N° série
-    OptDestruction:             Destruction des données par broyage
+    OptDestruction:             Destruction sécurisée
     OptDestructionShort:        Destruct°
     Quantity:                   Quantité
     TotalAmount:                Montant total
@@ -366,9 +366,9 @@ Commercial:
     UnitPrice:                  Prix unitaire
     Quantity:                   Quantité
     OptHandling:                Manutention
-    OptSerialNumberStmt:        Relevé de numéro de série
+    OptSerialNumberStmt:        Relevé des numéros de série
     OptSerialNumberStmtShort:   N° série
-    OptDestruction:             Destruction des données par broyage
+    OptDestruction:             Destruction sécurisée
     OptDestructionShort:        Destruct°
     TotalAmount:                Montant total
     Confirm-remove:             Etes-vous sûr de vouloir supprimer cette ligne de la commande D3E ?

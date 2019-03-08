@@ -73,6 +73,12 @@ class Argument
      */
     private $productChantiers;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductD3E", mappedBy="arguments", cascade={"persist"})
+
+     */
+    private $productD3Es;
+
 
     public function __construct()
     {
@@ -289,5 +295,41 @@ class Argument
     public function __toString()
     {
         return $this->description;
+    }
+
+    /**
+     * Add productD3E.
+     *
+     * @param \Paprec\CatalogBundle\Entity\ProductD3E $productD3E
+     *
+     * @return Argument
+     */
+    public function addProductD3E(\Paprec\CatalogBundle\Entity\ProductD3E $productD3E)
+    {
+        $this->productD3Es[] = $productD3E;
+
+        return $this;
+    }
+
+    /**
+     * Remove productD3E.
+     *
+     * @param \Paprec\CatalogBundle\Entity\ProductD3E $productD3E
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductD3E(\Paprec\CatalogBundle\Entity\ProductD3E $productD3E)
+    {
+        return $this->productD3Es->removeElement($productD3E);
+    }
+
+    /**
+     * Get productD3Es.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductD3Es()
+    {
+        return $this->productD3Es;
     }
 }

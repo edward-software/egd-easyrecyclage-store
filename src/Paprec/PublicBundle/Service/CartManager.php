@@ -272,6 +272,49 @@ class CartManager
     }
 
     /**
+     * Ajoute au cart le contenu d'un produit packagé avec ses types sélectionnés, options et quantité
+     *
+     * @param $id
+     * @param $productD3EType
+     * @return object|Cart|null
+     * @throws Exception
+     */
+    public function addContentD3EPackage($id, $productD3EType)
+    {
+        $cart = $this->get($id);
+        $content = $cart->getContent();
+
+        $productId = $productD3EType['productId'];
+        $productType = [
+            'tId' => $productD3EType['typeId'],
+            'qtty' => $productD3EType['qtty'],
+            'optHandling' => $productD3EType['optHandling'],
+            'optSerialNumberStmt' => $productD3EType['optSerialNumberStmt'],
+            'optDestruction' => $productD3EType['optDestruction']
+        ];
+        if ($content && count($content)) {
+            foreach ($content as $key => $value) {
+                if ($key == $productId) {
+                    foreach ($value as $key2 => $contentType) {
+                        if ($contentType['tId'] == $productType['tId']) {
+                            unset($content[$key][$key2]);
+                        }
+                    }
+                }
+            }
+        }
+        if ($productType['qtty'] =! '' && $productType['qtty'] > 0) {
+            $content[$productId][] = $productType;
+        }
+
+        $cart->setContent($content);
+        $this->em->persist($cart);
+        $this->em->flush();
+        return $cart;
+
+    }
+
+    /**
      * Supprime un produit
      * @param $id
      * @param $categoryId
@@ -308,7 +351,7 @@ class CartManager
         $products = $cart->getContent();
         if ($products && count($products)) {
             foreach ($products as $key => $product) {
-                if ($product['pId'] == $productId) {
+                if ($key == $productId) {
                     unset($products[$key]);
                 }
             }
@@ -372,7 +415,6 @@ class CartManager
         $productDIManager = $this->container->get('paprec_catalog.product_di_manager');
         $categoryManager = $this->container->get('paprec_catalog.category_manager');
         $numberManager = $this->container->get('paprec_catalog.number_manager');
-
 
 
         $sum = 0;
@@ -484,11 +526,8 @@ class CartManager
         $cart = $this->get($id);
         $productD3EManager = $this->container->get('paprec_catalog.product_d3e_manager');
         $priceListD3EManager = $this->container->get('paprec_catalog.price_list_d3e_manager');
+        $typeManager = $this->container->get('paprec_catalog.type_manager');
 
-        /**
-         * TODO : gérer la somme du panier dans une autre méthode :
-         * calcule en fonction de la division, du code postal, etc ...
-         */
 
         // on récupère les products ajoutés au Cart
         $products = $cart->getContent();
@@ -498,19 +537,24 @@ class CartManager
         $loadedCart = array();
         $loadedCart['sum'] = 0;
         if ($products && count($products)) {
-            foreach ($products as $product) {
-                $productD3E = $productD3EManager->get($product['pId']);
-                $nbOptions = $product['optHandling'] + $product['optSerialNumberStmt'] + $product['optDestruction'];
-                $loadedCart[$product['pId']] = ['qtty' => $product['qtty'], 'pName' => $productD3E->getName(), 'frequency' => $cart->getFrequency(), 'nbOptions' => $nbOptions];
-                $loadedCart['sum'] += $priceListD3EManager->getUnitPriceByPostalCodeQtty($productD3E->getPriceListD3E(), $postalCode, $product['qtty']) * $product['qtty'];
+            foreach ($products as $id => $product) {
+                $productD3E = $productD3EManager->get($id);
+                foreach ($product as $productType) {
+                    $type = $typeManager->get($productType['tId']);
+                    $nbOptions = $productType['optHandling'] + $productType['optSerialNumberStmt'] + $productType['optDestruction'];
+                    $loadedCart[$id]['pName'] = $productD3E->getName();
+                    $loadedCart[$id]['types'][] = ['qtty' => $productType['qtty'], 'type' => $type->getName(), 'nbOptions' => $nbOptions];
+                }
+//                $loadedCart['sum'] += $priceListD3EManager->getUnitPriceByPostalCodeQtty($productD3E->getPriceListD3E(), $postalCode, $product['qtty']) * $product['qtty'];
             }
-            $loadedCart['sum'] = $this->calculateSumD3E($products, $postalCode);
+//            $loadedCart['sum'] = $this->calculateSumD3E($products, $postalCode);
         } else {
             return $loadedCart;
         }
         // On trie par ordre croissant sur les clés, donc par les id des produits
         // ainsi les mêmes produits dans 2 catégories différentes
-        ksort($loadedCart);
+//        ksort($loadedCart);
+
         return $loadedCart;
     }
 
@@ -528,6 +572,6 @@ class CartManager
 
             $sum += $productD3EManager->calculatePrice($productD3E, $postalCode, $unitPrice, $product['qtty'], $product['optHandling'], $product['optSerialNumberStmt'], $product['optDestruction']);
         }
-        return $numberManager->normalize($sum)  ;
+        return $numberManager->normalize($sum);
     }
 }

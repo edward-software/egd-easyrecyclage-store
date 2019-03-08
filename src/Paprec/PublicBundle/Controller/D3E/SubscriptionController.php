@@ -7,6 +7,7 @@ use Paprec\CommercialBundle\Entity\ProductD3EQuote;
 use Paprec\CommercialBundle\Form\ProductD3EOrder\ProductD3EOrderDeliveryType;
 use Paprec\CommercialBundle\Form\ProductD3EOrder\ProductD3EOrderShortType;
 use Paprec\CommercialBundle\Form\ProductD3EQuote\ProductD3EQuoteShortType;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -82,6 +83,7 @@ class SubscriptionController extends Controller
     {
         $cartManager = $this->get('paprec.cart_manager');
         $productD3EManager = $this->get('paprec_catalog.product_d3e_manager');
+        $typeManager = $this->get('paprec_catalog.type_manager');
 
 
         $cart = $cartManager->get($cartUuid);
@@ -89,7 +91,7 @@ class SubscriptionController extends Controller
 
         // On récupère les produits D3E pour afficher le choix des produits (ou prestations)
         $products = $productD3EManager->findAvailables(array(
-            'type' => $type,
+            'isPackage' => false,
             'postalCode' => $cart->getPostalCode()
         ));
 
@@ -99,10 +101,25 @@ class SubscriptionController extends Controller
             $divisions[$division] = $divisionLong;
         }
 
+        /*
+         * Si il y a des displayedProducts, il faut récupérer leurs types pour les afficher
+         */
+        $productsTypes = array();
+
+        if ($cart->getDisplayedProducts() && count($cart->getDisplayedProducts())) {
+            foreach ($cart->getDisplayedProducts() as $displayedProduct) {
+                $productsTypes[$displayedProduct] = $typeManager->findAvailables(array(
+                    'product' => $displayedProduct
+                ));
+            }
+        }
+
+
         return $this->render('@PaprecPublic/D3E/need.html.twig', array(
             'divisions' => $divisions,
             'cart' => $cart,
-            'products' => $products
+            'products' => $products,
+            'productTypes' => $productsTypes
         ));
     }
 
@@ -331,6 +348,33 @@ class SubscriptionController extends Controller
         $cartManager = $this->get('paprec.cart_manager');
 
         $cart = $cartManager->addContentD3E($cartUuid, $productId, $quantity, $optHandling, $optSerialNumberStmt, $optDestruction);
+
+        return new JsonResponse('200');
+    }
+
+    /**
+     * Ajoute au cart un Product packagé avec sa quantité, ses options et son type
+     *
+     * @Route("/D3E/addContent/packaged/{cartUuid}", name="paprec_public_corp_d3e_subscription_addContent_packaged")
+     * @param Request $request
+     */
+    public function addPackageContentAction(Request $request, $cartUuid)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+
+        $data = json_decode($request->getContent(), true);
+        if ($data && count($data)) {
+            foreach ($data as $productD3EType) {
+                $cartManager->addContentD3EPackage($cartUuid, $productD3EType);
+            }
+        }
+
+
+//        $response = new Response(json_encode(array(
+//            'product' => $data,
+//            'producteur' => 'producteur'
+//        )));
+//        $response->headers->set('Content-Type', 'application/json');
 
         return new JsonResponse('200');
     }

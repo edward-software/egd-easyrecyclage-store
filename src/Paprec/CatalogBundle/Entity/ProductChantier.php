@@ -582,6 +582,10 @@ class ProductChantier
         return $this->pictures;
     }
 
+    /**
+     * GESTION DES PICTURES
+     */
+
     public function getPilotPictures() {
         $pilotPictures = array();
         foreach($this->pictures as $picture) {
