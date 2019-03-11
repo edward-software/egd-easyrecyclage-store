@@ -164,8 +164,10 @@ class SubscriptionController extends Controller
 
                 // On récupère tous les produits ajoutés au Cart
                 if ($cart->getContent() !== null) {
-                    foreach ($cart->getContent() as $item) {
-                        $productD3EQuoteManager->addLineFromCart($productD3EQuote, $item['pId'], $item['qtty'], $item['optHandling'], $item['optSerialNumberStmt'], $item['optDestruction']);
+                    foreach ($cart->getContent() as $key => $value) {
+                        foreach ($value as $item) {
+                            $productD3EQuoteManager->addLineFromCart($productD3EQuote, $key, $item['tId'], $item['qtty'], $item['optHandling'], $item['optSerialNumberStmt'], $item['optDestruction']);
+                        }
                     }
                 }
 
@@ -340,10 +342,10 @@ class SubscriptionController extends Controller
     /**
      * Ajoute au cart un Product avec sa quantité
      *
-     * @Route("/D3E/addContent/{cartUuid}/{productId}/{quantity}/{optHandling}/{optSerialNumberStmt}/{optDestruction}", name="paprec_public_corp_d3e_subscription_addContent")
+     * @Route("/D3E/addContent/packaged/{cartUuid}/{productId}/{quantity}/{optHandling}/{optSerialNumberStmt}/{optDestruction}", name="paprec_public_corp_d3e_subscription_addContent_packaged")
      * @throws \Exception
      */
-    public function addContentAction(Request $request, $cartUuid, $productId, $quantity, $optHandling, $optSerialNumberStmt, $optDestruction)
+    public function addPackageContentAction(Request $request, $cartUuid, $productId, $quantity, $optHandling, $optSerialNumberStmt, $optDestruction)
     {
         $cartManager = $this->get('paprec.cart_manager');
 
@@ -355,17 +357,17 @@ class SubscriptionController extends Controller
     /**
      * Ajoute au cart un Product packagé avec sa quantité, ses options et son type
      *
-     * @Route("/D3E/addContent/packaged/{cartUuid}", name="paprec_public_corp_d3e_subscription_addContent_packaged")
+     * @Route("/D3E/addContent/{cartUuid}", name="paprec_public_corp_d3e_subscription_addContent")
      * @param Request $request
      */
-    public function addPackageContentAction(Request $request, $cartUuid)
+    public function addContentAction(Request $request, $cartUuid)
     {
         $cartManager = $this->get('paprec.cart_manager');
 
         $data = json_decode($request->getContent(), true);
         if ($data && count($data)) {
             foreach ($data as $productD3EType) {
-                $cartManager->addContentD3EPackage($cartUuid, $productD3EType);
+                $cartManager->addContentD3E($cartUuid, $productD3EType);
             }
         }
 

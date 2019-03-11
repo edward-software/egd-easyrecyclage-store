@@ -52,6 +52,12 @@ class ProductD3EQuoteLine
      */
     private $productName;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="typeName", type="string", length=255)
+     */
+    private $typeName;
 
     /**
      * @var int
@@ -118,6 +124,12 @@ class ProductD3EQuoteLine
      * @ORM\JoinColumn(name="productD3EQuoteId", referencedColumnName="id", nullable=false)
      */
     private $productD3EQuote;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\Type", inversedBy="productD3EQuoteLines")
+     * @ORM\JoinColumn(name="typeId", referencedColumnName="id", nullable=false)
+     */
+    private $type;
 
 
     /**
@@ -427,5 +439,53 @@ class ProductD3EQuoteLine
     public function getTotalAmount()
     {
         return $this->totalAmount;
+    }
+
+    /**
+     * Set typeName.
+     *
+     * @param string $typeName
+     *
+     * @return ProductD3EQuoteLine
+     */
+    public function setTypeName($typeName)
+    {
+        $this->typeName = $typeName;
+
+        return $this;
+    }
+
+    /**
+     * Get typeName.
+     *
+     * @return string
+     */
+    public function getTypeName()
+    {
+        return $this->typeName;
+    }
+
+    /**
+     * Set type.
+     *
+     * @param \Paprec\CatalogBundle\Entity\Type $type
+     *
+     * @return ProductD3EQuoteLine
+     */
+    public function setType(\Paprec\CatalogBundle\Entity\Type $type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type.
+     *
+     * @return \Paprec\CatalogBundle\Entity\Type
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

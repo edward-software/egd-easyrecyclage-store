@@ -347,6 +347,8 @@ class ProductD3EQuoteController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
+        $selectedProductId = $request->get('selectedProductId');
+        $submitForm = $request->get('submitForm');
 
 
         if ($productD3EQuote->getDeleted() !== null) {
@@ -355,11 +357,14 @@ class ProductD3EQuoteController extends Controller
 
         $productD3EQuoteLine = new ProductD3EQuoteLine();
 
-        $form = $this->createForm(ProductD3EQuoteLineAddType::class, $productD3EQuoteLine);
+        $form = $this->createForm(ProductD3EQuoteLineAddType::class, $productD3EQuoteLine,
+            array(
+                'selectedProductId' => $selectedProductId
+            ));
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $submitForm) {
             $productD3EQuoteManager = $this->get('paprec_commercial.product_d3e_quote_manager');
 
             $productD3EQuoteLine = $form->getData();

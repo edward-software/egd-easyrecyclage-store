@@ -61,6 +61,11 @@ class Type
      * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductD3EType", mappedBy="type", cascade={"all"})
      */
     private $productD3ETypes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductD3EQuoteLine", mappedBy="type", cascade={"all"})
+     */
+    private $productD3EQuoteLines;
     
     /**
      * Constructor
@@ -220,5 +225,41 @@ class Type
     public function getProductD3ETypes()
     {
         return $this->productD3ETypes;
+    }
+
+    /**
+     * Add productD3EQuoteLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductD3EQuoteLine $productD3EQuoteLine
+     *
+     * @return Type
+     */
+    public function addProductD3EQuoteLine(\Paprec\CommercialBundle\Entity\ProductD3EQuoteLine $productD3EQuoteLine)
+    {
+        $this->productD3EQuoteLines[] = $productD3EQuoteLine;
+
+        return $this;
+    }
+
+    /**
+     * Remove productD3EQuoteLine.
+     *
+     * @param \Paprec\CommercialBundle\Entity\ProductD3EQuoteLine $productD3EQuoteLine
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProductD3EQuoteLine(\Paprec\CommercialBundle\Entity\ProductD3EQuoteLine $productD3EQuoteLine)
+    {
+        return $this->productD3EQuoteLines->removeElement($productD3EQuoteLine);
+    }
+
+    /**
+     * Get productD3EQuoteLines.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductD3EQuoteLines()
+    {
+        return $this->productD3EQuoteLines;
     }
 }

@@ -37,7 +37,7 @@ class ProductD3EQuoteType extends AbstractType
                 }
             ))
             ->add('civility', ChoiceType::class, array(
-                'choices'  => array(
+                'choices' => array(
                     'M' => 'M',
                     'Mme' => 'Mme',
                 ),
@@ -49,9 +49,6 @@ class ProductD3EQuoteType extends AbstractType
                 'required' => false
             ))
             ->add('email', TextType::class)
-            ->add('address', TextareaType::class)
-            ->add('postalCode', TextType::class)
-            ->add('city', TextType::class)
             ->add('phone', TextType::class)
             ->add('quoteStatus', ChoiceType::class, array(
                 "choices" => $options['status'],
@@ -62,7 +59,7 @@ class ProductD3EQuoteType extends AbstractType
             ->add('generatedTurnover', TextType::class)
             ->add('summary', TextareaType::class)
             ->add('frequency', ChoiceType::class, array(
-                'choices'  => array(
+                'choices' => array(
                     'Régulier' => 'regular',
                     'Ponctuel' => 'ponctual',
                 ),
@@ -75,7 +72,7 @@ class ProductD3EQuoteType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
                 'placeholder' => '',
-                'empty_data'  => null,
+                'empty_data' => null,
                 'choice_label' => function ($user) {
                     return $user->getFirstName() . ' ' . $user->getLastName();
                 },
@@ -90,7 +87,7 @@ class ProductD3EQuoteType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
                 'placeholder' => '',
-                'empty_data'  => null,
+                'empty_data' => null,
                 'choice_label' => function ($category) {
                     return $category->getName() . ' - ' . $category->getCity();
                 },
@@ -98,10 +95,33 @@ class ProductD3EQuoteType extends AbstractType
                     return $er->createQueryBuilder('a')
                         ->where('a.deleted IS NULL')
                         ->andWhere('a.divisions LIKE \'%D3E%\'');
-                    ;
                 }
+            ))
+            ->add('address', TextareaType::class)
+            ->add('postalCode', TextType::class)
+            ->add('city', TextType::class)
+            ->add('invoicingAddress', TextType::class, array(
+                'required' => false
+            ))
+            ->add('invoicingPostalCode', TextType::class, array(
+                'required' => false
+            ))
+            ->add('invoicingCity', TextType::class, array(
+                'required' => false
+            ))
+            ->add('preferredContact', ChoiceType::class, array(
+                'choices' => array(
+                    'Téléphone' => 'phone',
+                    'e-mail' => 'email',
+                ),
+                'choice_attr' => function () {
+                    return ['class' => 'input__radio'];
+                },
+                'expanded' => true
             ));
-    }/**
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)

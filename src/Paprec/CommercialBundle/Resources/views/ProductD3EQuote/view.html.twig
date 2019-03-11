@@ -95,37 +95,26 @@
                                         {{ productD3EQuote.function }}
                                     </label>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EQuote.Email'|trans }}</label>
                                     <label class="col-form-label">
                                         {{ productD3EQuote.email }}
                                     </label>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EQuote.Address'|trans }}</label>
-                                    <label class="col-form-label">
-                                        {{ productD3EQuote.address|nl2br }}
-                                    </label>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EQuote.PostalCode'|trans }}</label>
-                                    <label class="col-form-label">
-                                        {{ productD3EQuote.postalCode }}
-                                    </label>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EQuote.City'|trans }}</label>
-                                    <label class="col-form-label">
-                                        {{ productD3EQuote.city }}
-                                    </label>
-                                </div>
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EQuote.Phone'|trans }}</label>
                                     <label class="col-form-label">
                                         {{ productD3EQuote.phone }}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EQuote.PreferredContact'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if productD3EQuote.preferredContact %}
+                                            {{ ('Commercial.QuoteRequest.' ~ productD3EQuote.preferredContact|capitalize)|trans }}
+                                        {% endif %}
                                     </label>
                                 </div>
                                 <div class="form-group row">
@@ -139,6 +128,60 @@
                                     <label class="col-form-label">
                                         {{ productD3EQuote.totalAmount|formatAmount('EUR', app.request.locale) }}
                                     </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title">{{ 'Commercial.ProductD3EQuote.InvoicingAddress'|trans }}</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EQuote.Address'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ productD3EQuote.InvoicingAddress }}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EQuote.PostalCode'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ productD3EQuote.InvoicingPostalCode }}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EQuote.City'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ productD3EQuote.InvoicingCity }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title">{{ 'Commercial.ProductD3EQuote.Address'|trans }}</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EQuote.Address'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ productD3EQuote.address }}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EQuote.PostalCode'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ productD3EQuote.postalCode }}
+                                            </label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label">{{ 'Commercial.ProductD3EQuote.City'|trans }}</label>
+                                            <label class="col-form-label">
+                                                {{ productD3EQuote.city }}
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -225,6 +268,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>{{ 'Commercial.ProductD3EQuoteLine.ProductName'|trans }}</th>
+                                    <th>{{ 'Commercial.ProductD3EQuoteLine.TypeName'|trans }}</th>
+
                                     <th>{{ 'Commercial.ProductD3EQuoteLine.UnitPrice'|trans }}</th>
                                     <th>{{ 'Commercial.ProductD3EQuoteLine.Quantity'|trans }}</th>
                                     <th>{{ 'Commercial.ProductD3EQuoteLine.OptHandling'|trans }}</th>
@@ -240,6 +285,7 @@
                                     <tr>
                                         <td>{{ productD3EQuoteLine.id|formatId(6) }}</td>
                                         <td>{{ productD3EQuoteLine.productName }}</td>
+                                        <td>{{ productD3EQuoteLine.typeName }}</td>
                                         <td>{{ productD3EQuoteLine.unitPrice|formatAmount('EUR', app.request.locale) }}</td>
                                         <td>{{ productD3EQuoteLine.quantity }}</td>
                                         <td>{% if productD3EQuoteLine.optHandling == 1 %}Oui{% else %}Non{% endif %}</td>

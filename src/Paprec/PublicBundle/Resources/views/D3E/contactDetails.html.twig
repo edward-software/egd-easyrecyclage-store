@@ -15,12 +15,7 @@
     {# Définition des menus affichés dans la sidebar #}
     {% set besoin = 'passed' %}
     {% set coordonnees = 'active' %}
-    {% if cart.type == 'order' %}
-        {% set livraison = '' %}
-        {% set paiement = '' %}
-    {% elseif cart.type == 'quote' %}
-        {% set offre = '' %}
-    {% endif %}
+    {% set offre = '' %}
     {{ parent() }}
 {% endblock %}
 {% block main_content_stepper %}
@@ -50,6 +45,22 @@
                 {{ form_widget(form.email, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.Email'|trans}}) }}
                 {{ form_errors(form.email) }}
 
+                {{ form_widget(form.phone, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.PhonePlaceholder'|trans}}) }}
+                {{ form_errors(form.phone) }}
+
+                {{ form_widget(form.function, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.FunctionPlaceholder'|trans}}) }}
+                {{ form_errors(form.function) }}
+
+            </div>
+        </div>
+        <div class="step">
+            <div class="step__left">
+                <div class="step__title">
+                    {{ 'Public.Home.Addresses'|trans }}
+                </div>
+            </div>
+            <div class="step__right step__right--small">
+
                 {{ form_widget(form.address, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.Address'|trans}}) }}
                 {{ form_errors(form.address) }}
 
@@ -59,23 +70,38 @@
                 {{ form_widget(form.city, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.City'|trans}}) }}
                 {{ form_errors(form.city) }}
 
-                {{ form_widget(form.phone, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.PhonePlaceholder'|trans}}) }}
-                {{ form_errors(form.phone) }}
+                {{ form_widget(form.InvoicingAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.InvoicingAddressPlaceholder'|trans}}) }}
+                {{ form_errors(form.InvoicingAddress) }}
 
-                {{ form_widget(form.function, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.FunctionPlaceholder'|trans}}) }}
-                {{ form_errors(form.function) }}
+                {{ form_widget(form.InvoicingPostalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.PostalCode'|trans}}) }}
+                {{ form_errors(form.InvoicingPostalCode) }}
 
+                {{ form_widget(form.InvoicingCity, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.City'|trans}}) }}
+                {{ form_errors(form.InvoicingCity) }}
 
-                {{ form_widget(form.terms) }}
-                {{ form_label(form.terms, 'J\'accepte les conditions générales de vente') }}
-                {{ form_errors(form.terms) }}
 
                 <div class="clearfix"></div>
+                <div class="">
+                    {{ 'Commercial.QuoteRequest.PreferredContactLabel'|trans }}
+                </div>
+                {{ form_widget(form.preferredContact, {'attr': {'class': 'input--radio'}}) }}
+                {{ form_errors(form.preferredContact) }}
+
+                <div class="clearfix step--marginfield"></div>
+
+                <div>
+                    Les informations recueillies sur ce formulaire sont enregistrées dans un fichier informatisé pour
+                    permettre de vous adresser des contenus adaptés à vos besoins. Ces données sont conservées pendant 3
+                    ans et sont destinées au service marketing. Conformément à la loi
+                    « informatique et libertés », vous pouvez exercer votre droit d’accès aux données vous concernant et
+                    les faire rectifier en contactant : service-data@paprec.com
+                </div>
+
             </div>
             <div class="clearfix"></div>
 
             {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
-                'label': cart.type == 'quote' ? 'Confirm' : 'GoToDelivery',
+                'label': 'Confirm',
                 'cartUuid': cart.id,
                 'division': cart.division,
                 'stepBack': 'step1',

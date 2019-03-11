@@ -198,6 +198,9 @@ Commercial:
     Address:                    Adresse
     PostalCode:                 Code postal
     City:                       Ville
+    PreferredContact:           Préfère être contacté par
+    InvoicingAddress:           Adresse de facturation
+    InvoicingAddressPlaceholder: Adresse de facturation (facultatif)
     Phone:                      Téléphone
     PhonePlaceholder:           Numéro de téléphone
     QuoteStatus:                Statut
@@ -233,7 +236,7 @@ Commercial:
 
   ProductD3EQuoteLine:
     ProductName:                Produit
-    CategoryName:               Catégorie
+    TypeName:                   Type
     UnitPrice:                  Prix unitaire
     OptHandling:                Manutention
     OptSerialNumberStmt:        Relevé des numéros de série
@@ -435,6 +438,7 @@ Commercial:
       noUploadedQuoteFound:     Vous devez d'abord ajouter un devis pour pouvoir l'envoyer par mail au client.
     Success:
       associatedQuoteSent:      Le devis associé a été envoyé par mail au client.
+    InvoicingAddress: 'messages'
 
   ContactUs:
     ContactUss:                 Demandes de contact

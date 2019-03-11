@@ -85,42 +85,36 @@ class ProductD3EQuoteManager
      */
     public function addLine(ProductD3EQuote $productD3EQuote, ProductD3EQuoteLine $productD3EQuoteLine)
     {
-        $priceListD3EManager = $this->container->get('paprec_catalog.price_list_d3e_manager');
-
-        //Récupération de la grille liée au produit
-        $priceList = $productD3EQuoteLine->getProductD3E()->getPriceListD3E();
-
         // On check s'il existe déjà une ligne pour ce produit, pour l'incrémenter
         $currentQuoteLine = $this->em->getRepository('PaprecCommercialBundle:ProductD3EQuoteLine')->findOneBy(
             array(
                 'productD3EQuote' => $productD3EQuote,
-                'productD3E' => $productD3EQuoteLine->getProductD3E()
+                'productD3E' => $productD3EQuoteLine->getProductD3E(),
+                'type' => $productD3EQuoteLine->getType()
             )
         );
 
         if ($currentQuoteLine) {
             $quantity = $productD3EQuoteLine->getQuantity() + $currentQuoteLine->getQuantity();
             $currentQuoteLine->setQuantity($quantity);
-
-            // On vérifie de prix unitaire du produit exisntant qui a pu changer si l'on a changé de tranche
-            // en augmentant la quantité
-            $unitPrice = $priceListD3EManager->getUnitPriceByPostalCodeQtty($priceList, $productD3EQuote->getPostalCode(), $currentQuoteLine->getQuantity());
-            $currentQuoteLine->setUnitPrice($unitPrice);
-
+            
             //On recalcule le montant total de la ligne ainsi que celui du devis complet
             $totalLine = $this->calculateTotalLine($currentQuoteLine);
             $currentQuoteLine->setTotalAmount($totalLine);
             $this->em->flush();
         } else {
-            // On lie la grille et la ligne
             $productD3EQuoteLine->setProductD3EQuote($productD3EQuote);
             $productD3EQuote->addProductD3EQuoteLine($productD3EQuoteLine);
-
+            $productD3EType = $this->em->getRepository('PaprecCatalogBundle:ProductD3EType')->findOneBy(
+                array(
+                    'productD3E' => $productD3EQuoteLine->getProductD3E(),
+                    'type' => $productD3EQuoteLine->getType()
+                )
+            );
+            $productD3EQuoteLine->setUnitPrice($productD3EType->getUnitPrice());
             $productD3EQuoteLine->setProductName($productD3EQuoteLine->getProductD3E()->getName());
+            $productD3EQuoteLine->setTypeName($productD3EQuoteLine->getType()->getName());
 
-            // Récupération du prix unitaire du produit
-            $unitPrice = $priceListD3EManager->getUnitPriceByPostalCodeQtty($priceList, $productD3EQuote->getPostalCode(), $productD3EQuoteLine->getQuantity());
-            $productD3EQuoteLine->setUnitPrice($unitPrice);
             $this->em->persist($productD3EQuoteLine);
 
             //On recalcule le montant total de la ligne ainsi que celui du devis complet
@@ -141,12 +135,6 @@ class ProductD3EQuoteManager
      */
     public function editLine(ProductD3EQuote $productD3EQuote, ProductD3EQuoteLine $productD3EQuoteLine)
     {
-        $productD3EQuoteManager = $this->container->get('paprec_catalog.price_list_d3e_manager');
-
-        // Récupération du prix unitaire du produit
-        $unitPrice = $productD3EQuoteManager->getUnitPriceByPostalCodeQtty($productD3EQuoteLine->getProductD3E()->getPriceListD3E(), $productD3EQuote->getPostalCode(), $productD3EQuoteLine->getQuantity());
-        $productD3EQuoteLine->setUnitPrice($unitPrice);
-
         $totalLine = $this->calculateTotalLine($productD3EQuoteLine);
         $productD3EQuoteLine->setTotalAmount($totalLine);
         $this->em->flush();
@@ -163,18 +151,22 @@ class ProductD3EQuoteManager
      * @param $qtty
      * @throws Exception
      */
-    public function addLineFromCart(ProductD3EQuote $productD3EQuote, $productId, $qtty, $optHandling, $optSerialNumberStmt, $optDestruction)
+    public function addLineFromCart(ProductD3EQuote $productD3EQuote, $productId, $typeId, $qtty, $optHandling, $optSerialNumberStmt, $optDestruction)
     {
         $productD3EManager = $this->container->get('paprec_catalog.product_d3e_manager');
+        $typeManager = $this->container->get('paprec_catalog.type_manager');
 
         try {
             $productD3E = $productD3EManager->get($productId);
+            $type = $typeManager->get($typeId);
+
             $productD3EQuoteLine = new ProductD3EQuoteLine();
 
             $productD3EQuoteLine->setOptHandling($optHandling);
             $productD3EQuoteLine->setOptSerialNumberStmt($optSerialNumberStmt);
             $productD3EQuoteLine->setOptDestruction($optDestruction);
             $productD3EQuoteLine->setProductD3E($productD3E);
+            $productD3EQuoteLine->setType($type);
             $productD3EQuoteLine->setQuantity($qtty);
             $this->addLine($productD3EQuote, $productD3EQuoteLine);
         } catch (Exception $e) {

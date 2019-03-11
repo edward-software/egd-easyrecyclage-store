@@ -252,7 +252,7 @@ class CartManager
      * @return null|object|Cart
      * @throws Exception
      */
-    public function addContentD3E($id, $productId, $quantity, $optHandling, $optSerialNumberStmt, $optDestruction)
+    public function addContentD3EPackage($id, $productId, $quantity, $optHandling, $optSerialNumberStmt, $optDestruction)
     {
         $cart = $this->get($id);
         $content = $cart->getContent();
@@ -279,7 +279,7 @@ class CartManager
      * @return object|Cart|null
      * @throws Exception
      */
-    public function addContentD3EPackage($id, $productD3EType)
+    public function addContentD3E($id, $productD3EType)
     {
         $cart = $this->get($id);
         $content = $cart->getContent();
@@ -303,7 +303,7 @@ class CartManager
                 }
             }
         }
-        if ($productType['qtty'] =! '' && $productType['qtty'] > 0) {
+        if ($productType['qtty'] > 0) {
             $content[$productId][] = $productType;
         }
 

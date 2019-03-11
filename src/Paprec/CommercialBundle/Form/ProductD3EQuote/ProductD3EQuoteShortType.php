@@ -56,10 +56,28 @@ class ProductD3EQuoteShortType extends AbstractType
             ->add('function', TextType::class, array(
                 'required' => false
             ))
-            ->add('terms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => new IsTrue()
-            ]);
+            ->add('address', TextType::class)
+            ->add('postalCode', TextType::class)
+            ->add('city', TextType::class)
+            ->add('InvoicingAddress', TextType::class, array(
+                'required' => false
+            ))
+            ->add('InvoicingPostalCode', TextType::class, array(
+                'required' => false
+            ))
+            ->add('InvoicingCity', TextType::class, array(
+                'required' => false
+            ))
+            ->add('preferredContact', ChoiceType::class, array(
+                'choices' => array(
+                    'Téléphone' => 'phone',
+                    'e-mail' => 'email',
+                ),
+                'choice_attr' => function () {
+                    return ['class' => 'input__radio'];
+                },
+                'expanded' => true
+            ));
 
     }
 

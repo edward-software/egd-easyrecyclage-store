@@ -45,6 +45,13 @@
                                         {{ form_errors(form.productD3E) }}
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="form-label">{{ 'Commercial.ProductD3EQuoteLine.TypeName'|trans }}</label>
+                                    <div class="form-content">
+                                        {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.type) }}
+                                    </div>
+                                </div>
                                 <div class="form-group no-gutters">
                                     <label class="form-label">{{ 'Commercial.ProductD3EQuoteLine.Quantity'|trans }}</label>
                                     <div class="form-content col-md-6">
@@ -101,7 +108,10 @@
     <script>
         $(function () {
 
+            $('#selectedProductInput').val($('.select-product').val());
+
             $('.commercial-productD3EQuoteLine-save-button').on('click', function () {
+                $('#submitFormInput').val(1);
                 $('#commercialProductD3EQuoteForm').submit();
             });
 
@@ -122,6 +132,14 @@
                     }
                 });
 
+            });
+
+            $('.select-product').on('change', function () {
+                $('#selectedProductInput').val($(this).val());
+                $('#submitFormInput').val('');
+                if ($(this).val() != '') {
+                    $('#commercialProductD3EQuoteForm').submit();
+                }
             });
         });
     </script>

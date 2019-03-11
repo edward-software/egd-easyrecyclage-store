@@ -122,6 +122,35 @@ class ProductD3EQuote
     /**
      * @var string
      *
+     * @ORM\Column(name="invoicing_address", type="text", nullable=true)
+     */
+    private $invoicing_address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="invoicing_postalCode", type="string", length=255, nullable=true)
+     */
+    private $invoicing_postalCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="invoicing_city", type="text", nullable=true)
+     */
+    private $invoicing_city;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="preferredContact", type="string", length=10, nullable=true)
+     * @Assert\NotBlank()
+     */
+    private $preferredContact;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="phone", type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Regex(
@@ -820,5 +849,101 @@ class ProductD3EQuote
     public function getTonnage()
     {
         return $this->tonnage;
+    }
+
+    /**
+     * Set invoicingAddress.
+     *
+     * @param string|null $invoicingAddress
+     *
+     * @return ProductD3EQuote
+     */
+    public function setInvoicingAddress($invoicingAddress = null)
+    {
+        $this->invoicing_address = $invoicingAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get invoicingAddress.
+     *
+     * @return string|null
+     */
+    public function getInvoicingAddress()
+    {
+        return $this->invoicing_address;
+    }
+
+    /**
+     * Set invoicingPostalCode.
+     *
+     * @param string|null $invoicingPostalCode
+     *
+     * @return ProductD3EQuote
+     */
+    public function setInvoicingPostalCode($invoicingPostalCode = null)
+    {
+        $this->invoicing_postalCode = $invoicingPostalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get invoicingPostalCode.
+     *
+     * @return string|null
+     */
+    public function getInvoicingPostalCode()
+    {
+        return $this->invoicing_postalCode;
+    }
+
+    /**
+     * Set invoicingCity.
+     *
+     * @param string|null $invoicingCity
+     *
+     * @return ProductD3EQuote
+     */
+    public function setInvoicingCity($invoicingCity = null)
+    {
+        $this->invoicing_city = $invoicingCity;
+
+        return $this;
+    }
+
+    /**
+     * Get invoicingCity.
+     *
+     * @return string|null
+     */
+    public function getInvoicingCity()
+    {
+        return $this->invoicing_city;
+    }
+
+    /**
+     * Set preferredContact.
+     *
+     * @param string|null $preferredContact
+     *
+     * @return ProductD3EQuote
+     */
+    public function setPreferredContact($preferredContact = null)
+    {
+        $this->preferredContact = $preferredContact;
+
+        return $this;
+    }
+
+    /**
+     * Get preferredContact.
+     *
+     * @return string|null
+     */
+    public function getPreferredContact()
+    {
+        return $this->preferredContact;
     }
 }

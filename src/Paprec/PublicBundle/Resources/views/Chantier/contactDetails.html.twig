@@ -15,12 +15,7 @@
     {# Définition des menus affichés dans la sidebar #}
     {% set besoin = 'passed' %}
     {% set coordonnees = 'active' %}
-    {% if cart.type == 'order' %}
-        {% set livraison = '' %}
-        {% set paiement = '' %}
-    {% elseif cart.type == 'quote' %}
-        {% set offre = '' %}
-    {% endif %}
+    {% set offre = '' %}
     {{ parent() }}
 {% endblock %}
 {% block main_content_stepper %}
