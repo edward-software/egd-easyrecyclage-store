@@ -78,7 +78,6 @@ class ProductChantierManager
     /**
      * On passe en paramètre les options Type et PostalCode, retourne les produits appartenant à la catégorie,
      * qui sont disponibles dans le postalCode
-     * et si le Type est 'Order' alors il faut vérifier que les produits retournés sont payables en ligne
      * @param $categoryId
      * @param $type
      * @return mixed
@@ -98,9 +97,54 @@ class ProductChantierManager
                 ->where('pc.category = :category')
                 ->orderBy('pc.position', 'ASC')
                 ->setParameter("category", $categoryId);
-            if ($type == 'order') {
-                $query->andWhere('p.isPayableOnline = 1');
+//            if ($type == 'order') {
+//                $query->andWhere('p.isPayableOnline = 1');
+//            }
+
+            $products = $query->getQuery()->getResult();
+
+            $productsPostalCodeMatch = array();
+
+
+            // On parcourt tous les produits Chantier    pour récupérer ceux  qui possèdent le postalCode
+            foreach ($products as $product) {
+                $postalCodes = str_replace(' ', '', $product->getAvailablePostalCodes());
+                $postalCodesArray = explode(',', $postalCodes);
+                foreach ($postalCodesArray as $pC) {
+                    //on teste juste les deux premiers caractères pour avoir le code du département
+                    if (substr($pC, 0, 2) == substr($postalCode, 0, 2)) {
+                        $productsPostalCodeMatch[] = $product;
+                    }
+                }
             }
+            return $productsPostalCodeMatch;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToGetProductChantiers', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * On passe en paramètre le PostalCode
+     * retourne les produits packagés qui sont disponibles dans le postalCode, displayed et non supprimés
+     * @param $postalCode
+     * @return array
+     * @throws Exception
+     */
+    public function findPackagesAvailable($postalCode) {
+        try {
+            $query = $this->em
+                ->getRepository(ProductChantier::class)
+                ->createQueryBuilder('p')
+                ->where('p.isPackage = true')
+                ->andWhere('p.deleted is null')
+                ->andWhere('p.isDisplayed = true');
+//                ->orderBy('pc.position', 'ASC')
+//            if ($type == 'order') {
+//                $query->andWhere('p.isPayableOnline = 1');
+//            }
 
             $products = $query->getQuery()->getResult();
 

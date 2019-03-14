@@ -56,10 +56,10 @@ class PriceListD3E
      * #################################
      */
 
-    /**
-     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductD3E", mappedBy="priceListD3E", cascade={"all"})
-     */
-    private $productD3Es;
+//    /**
+//     * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\ProductD3E", mappedBy="priceListD3E", cascade={"all"})
+//     */
+//    private $productD3Es;
 
     /**
      * @ORM\OneToMany(targetEntity="Paprec\CatalogBundle\Entity\PriceListLineD3E", mappedBy="priceListD3E", cascade={"all"})

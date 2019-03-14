@@ -1,7 +1,7 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-    {{ 'Catalog.ProductDI.Edit.Custom'|trans }}
+    {{ 'Catalog.ProductDI.Edit.Packaged'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <i class="fa fa-xs fa-pencil-alt"></i> {{ 'Catalog.ProductDI.Edit.Custom'|trans }} #{{ productDI.id|formatId(6) }}
+                        <i class="fa fa-xs fa-pencil-alt"></i> {{ 'Catalog.ProductDI.Edit.Packaged'|trans }} #{{ productDI.id|formatId(6) }}
                     </h4>
                     <div class="float-right">
 
@@ -44,7 +44,13 @@
                                         {{ form_errors(form.name) }}
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'Catalog.ProductDI.SubName'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.subName, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.subName) }}
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <div class="form-label">{{ 'Catalog.ProductDI.Description'|trans }}</div>
                                     <div class="form-content checkbox-list">
@@ -112,6 +118,13 @@
                                         {% endfor %}
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'Catalog.ProductDI.PackageUnitPrice'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.packageUnitPrice, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.packageUnitPrice) }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -148,7 +161,7 @@
 
             $('.catalog-ProductDI-cancel-button').on('click', function () {
 
-                var url = "{{ path("paprec_catalog_productDI_view", {id: productDI.id}) }}";
+                var url = "{{ path("paprec_catalog_productDI_packaged_view", {id: productDI.id}) }}";
 
                 Swal({
                     title: "{{ 'General.Confirm'|trans }}",

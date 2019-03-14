@@ -125,9 +125,51 @@ class ProductD3EManager
         }
     }
 
+
+    /**
+     * On passe en paramètre le PostalCode
+     * retourne les produits packagés qui sont disponibles dans le postalCode, displayed et non supprimés
+     * @param $postalCode
+     * @return array
+     * @throws Exception
+     */
+    public function findPackagesAvailable($postalCode) {
+        try {
+            $query = $this->em
+                ->getRepository(ProductD3E::class)
+                ->createQueryBuilder('p')
+                ->where('p.isPackage = true')
+                ->andWhere('p.deleted is null')
+                ->andWhere('p.isDisplayed = true');
+
+            $products = $query->getQuery()->getResult();
+
+            $productsPostalCodeMatch = array();
+
+
+            // On parcourt tous les produits D3E pour récupérer ceux  qui possèdent le postalCode
+            foreach ($products as $product) {
+                $postalCodes = str_replace(' ', '', $product->getAvailablePostalCodes());
+                $postalCodesArray = explode(',', $postalCodes);
+                foreach ($postalCodesArray as $pC) {
+                    //on teste juste les deux premiers caractères pour avoir le code du département
+                    if (substr($pC, 0, 2) == substr($postalCode, 0, 2)) {
+                        $productsPostalCodeMatch[] = $product;
+                    }
+                }
+            }
+            return $productsPostalCodeMatch;
+
+        } catch (ORMException $e) {
+            throw new Exception('unableToGetProductD3Es', 500);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
     /**
      * Fonction calculant le prix d'un produit en fonction de sa quantité, du code postal et des options sélectionnées
-     * Utilisée dans le calcul du montant d'un Cart et dans le calcul du montant d'une ligne ProductDIQuoteLine
+     * Utilisée dans le calcul du montant d'un Cart et dans le calcul du montant d'une ligne ProductD3EQuoteLine
      * Si le calcul est modifiée, il faudra donc le modifier uniquement ici
      *
      * @param $postalCode
@@ -150,6 +192,27 @@ class ProductD3EManager
         $ratePostalCode = $postalCodeManager->getRateByPostalCodeDivision($postalCode, 'D3E');
 
         return $numberManager->denormalize($unitPrice) * $qtty * $numberManager->denormalize($ratePostalCode) * $rateHandling * $rateSerialNumberStmt * $rateDestruction;
+    }
+
+
+    /**
+     * Fonction calculant le prix d'un produit packagé en fonction de sa quantité, du code postal
+     * Si le calcul est modifiée, il faudra donc le modifier uniquement ici
+     *
+     * @param $postalCode
+     * @param $unitPrice
+     * @param $qtty
+     * @return float|int
+     */
+    public function calculatePricePackage($postalCode, $unitPrice, $qtty) {
+        $postalCodeManager = $this->container->get('paprec_catalog.postal_code_manager');
+        $numberManager = $this->container->get('paprec_catalog.number_manager');
+
+
+        $ratePostalCode = $postalCodeManager->getRateByPostalCodeDivision($postalCode, 'D3E');
+
+        // avant d'effectuer la multiplication, on dénormalise les valeurs qui sont normalisés en base
+        return $numberManager->denormalize($unitPrice) * $qtty * $numberManager->denormalize($ratePostalCode);
     }
 
 }

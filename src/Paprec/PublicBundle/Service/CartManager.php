@@ -192,13 +192,13 @@ class CartManager
     }
 
     /**
-     * Pour D3E,il n'y a pas de notion de catégorie, on remplace donc le displayedProdu
+     * Pour D3E ou package,il n'y a pas de notion de catégorie, on remplace donc le displayedProdu
      * @param $id
      * @param $productId
      * @return null|object|Cart
      * @throws Exception
      */
-    public function addOrRemoveDisplayedProductD3E($id, $productId)
+    public function addOrRemoveDisplayedProductNoCat($id, $productId)
     {
         $cart = $this->get($id);
         $dProducts = $cart->getDisplayedProducts();
@@ -217,6 +217,8 @@ class CartManager
     }
 
     /**
+     * Ajoute du content au cart pour un produit sur mesure DI ou CHANTIER
+     *
      * @param $id
      * @param $categoryId
      * @param $productId
@@ -245,6 +247,37 @@ class CartManager
     }
 
     /**
+     * Ajoute du content au cart pour un produit packagé DI ou CHANTIER
+     *
+     * @param $id
+     * @param $productId
+     * @param $quantity
+     * @return object|Cart|null
+     * @throws Exception
+     */
+    public function addContentPackage($id, $productId, $quantity)
+    {
+        $cart = $this->get($id);
+        $content = $cart->getContent();
+        $product = ['pId' => $productId, 'qtty' => $quantity];
+        if ($content && count($content)) {
+            foreach ($content as $key => $value) {
+                if ($value['pId'] == $productId) {
+                    unset($content[$key]);
+                }
+            }
+        }
+
+        $content[] = $product;
+        $cart->setContent($content);
+        $this->em->persist($cart);
+        $this->em->flush();
+        return $cart;
+    }
+
+    /**
+     * Ajoute du content au cart pour un produit packagé D3E
+     *
      * @param $id
      * @param $productId
      * @param $quantity
@@ -272,7 +305,7 @@ class CartManager
     }
 
     /**
-     * Ajoute au cart le contenu d'un produit packagé avec ses types sélectionnés, options et quantité
+     * Ajoute au cart le contenu d'un produit sur mesure D3E avec ses types sélectionnés, options et quantité
      *
      * @param $id
      * @param $productD3EType
@@ -329,6 +362,31 @@ class CartManager
         if ($products && count($products)) {
             foreach ($products as $key => $product) {
                 if ($product['cId'] == $categoryId && $product['pId'] == $productId) {
+                    unset($products[$key]);
+                }
+            }
+        }
+        $cart->setContent($products);
+        $this->em->persist($cart);
+        $this->em->flush();
+        return $cart;
+    }
+
+    /**
+     * Supprime un produit packagé
+     * @param $id
+     * @param $categoryId
+     * @param $productId
+     * @return null|object|Cart
+     * @throws Exception
+     */
+    public function removeContentPackage($id, $productId)
+    {
+        $cart = $this->get($id);
+        $products = $cart->getContent();
+        if ($products && count($products)) {
+            foreach ($products as $key => $product) {
+                if ($product['pId'] == $productId) {
                     unset($products[$key]);
                 }
             }
@@ -447,11 +505,6 @@ class CartManager
         $productChantierManager = $this->container->get('paprec_catalog.product_chantier_manager');
         $categoryManager = $this->container->get('paprec_catalog.category_manager');
 
-        /**
-         * TODO : gérer la somme du panier dans une autre méthode :
-         * calcule en fonction de la division, du code postal, etc ...
-         */
-
         // on récupère les products ajoutés au cart
         $productsCategories = $cart->getContent();
         // On récupère le code postal
@@ -473,6 +526,38 @@ class CartManager
         // On trie par ordre croissant sur les clés, donc par les id des produits
         // ainsi les mêmes produits dans 2 catégories différentes
         ksort($loadedCart);
+        return $loadedCart;
+    }
+
+
+    /**
+     * Fonction qui renvoie un tableau permettant d'afficher tous les produits packagés dans le Cart dans la partie "Mon besoin"
+     *
+     * @param $id
+     * @return array
+     * @throws Exception
+     */
+    public function loadCartPackageChantier($id)
+    {
+        $cart = $this->get($id);
+        $productChantierManager = $this->container->get('paprec_catalog.product_chantier_manager');
+
+
+        //On récupère les produits du Cart
+        $products = $cart->getContent();
+        // on récupère le code postal
+        $postalCode = $cart->getPostalCode();
+
+        $loadedCart = array();
+        $loadedCart['sum'] = 0;
+        if ($products && count($products)) {
+            foreach ($products as $product) {
+                $productChantier = $productChantierManager->get($product['pId']);
+                $loadedCart[$product['pId']] = ['qtty' => $product['qtty'], 'pName' => $productChantier->getName(), 'pSubName' => $productChantier->getSubName()];
+            }
+            $loadedCart['sum'] = $this->calculateSumChantierPackage($products, $postalCode);
+        }
+
         return $loadedCart;
     }
 
@@ -510,6 +595,27 @@ class CartManager
         }
 
         // on normalize la somme pour l'afficher avec le formatAmount twig
+        return $numberManager->normalize($sum);
+    }
+
+    /**
+     * Renvoie la somme totale des produits Chantier packagés du Cart
+     *
+     * @param $products
+     * @param $postalCode
+     * @return float|null
+     * @throws Exception
+     */
+    public function calculateSumChantierPackage($products, $postalCode)
+    {
+        $productChantierManager = $this->container->get('paprec_catalog.product_chantier_manager');
+        $numberManager = $this->container->get('paprec_catalog.number_manager');
+
+        $sum = 0;
+        foreach ($products as $product) {
+            $productChantier = $productChantierManager->get($product['pId']);
+            $sum += $productChantierManager->calculatePrice($postalCode, $productChantier->getPackageUnitPrice(), $product['qtty']);
+        }
         return $numberManager->normalize($sum);
     }
 
@@ -558,6 +664,37 @@ class CartManager
         return $loadedCart;
     }
 
+    /**
+     * Fonction qui renvoie un tableau permettant d'afficher tous les produits packagés dans le Cart dans la partie "Mon besoin"
+     *
+     * @param $id
+     * @return array
+     * @throws Exception
+     */
+    public function loadCartPackageD3E($id)
+    {
+        $cart = $this->get($id);
+        $productD3EManager = $this->container->get('paprec_catalog.product_d3e_manager');
+
+
+        //On récupère les produits du Cart
+        $products = $cart->getContent();
+        // on récupère le code postal
+        $postalCode = $cart->getPostalCode();
+
+        $loadedCart = array();
+        $loadedCart['sum'] = 0;
+        if ($products && count($products)) {
+            foreach ($products as $product) {
+                $productD3E = $productD3EManager->get($product['pId']);
+                $loadedCart[$product['pId']] = ['qtty' => $product['qtty'], 'pName' => $productD3E->getName(), 'pSubName' => $productD3E->getSubName()];
+            }
+            $loadedCart['sum'] = $this->calculateSumD3EPackage($products, $postalCode);
+        }
+
+        return $loadedCart;
+    }
+
     private function calculateSumD3E($products, $postalCode)
     {
         $numberManager = $this->container->get('paprec_catalog.number_manager');
@@ -571,6 +708,27 @@ class CartManager
             $unitPrice = $priceListD3EManager->getUnitPriceByPostalCodeQtty($productD3E->getPriceListD3E(), $postalCode, $product['qtty']);
 
             $sum += $productD3EManager->calculatePrice($productD3E, $postalCode, $unitPrice, $product['qtty'], $product['optHandling'], $product['optSerialNumberStmt'], $product['optDestruction']);
+        }
+        return $numberManager->normalize($sum);
+    }
+
+    /**
+     * Renvoie la somme totale des produits D3E packagés du Cart
+     *
+     * @param $products
+     * @param $postalCode
+     * @return float|null
+     * @throws Exception
+     */
+    public function calculateSumD3EPackage($products, $postalCode)
+    {
+        $productD3EManager = $this->container->get('paprec_catalog.product_d3e_manager');
+        $numberManager = $this->container->get('paprec_catalog.number_manager');
+
+        $sum = 0;
+        foreach ($products as $product) {
+            $productD3E = $productD3EManager->get($product['pId']);
+            $sum += $productD3EManager->calculatePricePackage($postalCode, $productD3E->getPackageUnitPrice(), $product['qtty']);
         }
         return $numberManager->normalize($sum);
     }

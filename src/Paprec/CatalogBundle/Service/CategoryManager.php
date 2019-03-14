@@ -113,7 +113,6 @@ class CategoryManager
                     ->innerJoin('PaprecCatalogBundle:ProductChantierCategory', 'pc', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.id = pc.category')
                     ->innerJoin('PaprecCatalogBundle:ProductChantier', 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 'p.id = pc.productChantier')
                     ->where('c.division = \'Chantier\'')
-                    ->andWhere('p.isPayableOnline = 1')
                     ->distinct()
                     ->orderBy('c.position', 'ASC');
 

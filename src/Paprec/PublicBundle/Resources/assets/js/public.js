@@ -280,8 +280,11 @@ $(function () {
         $('#engagment').on('change', function () {
             if ($(this).prop('checked')) {
                 $('.addToCartSubmitButton').removeAttr('disabled');
+                $('.addToCartPackageSubmitButton').removeAttr('disabled');
+
             } else {
                 $('.addToCartSubmitButton').attr('disabled', 'disabled');
+                $('.addToCartPackageSubmitButton').attr('disabled', 'disabled');
             }
         });
 
@@ -332,6 +335,25 @@ $(function () {
                 }
             });
         });
+
+        $('.addToCartPackageSubmitButton').click(function() {
+            var url = $(this).data('url');
+
+            var productId = (this.id).replace('addToCartPackageSubmitButton', '');
+            var qtty = $('#quantityProducSelect_' + productId).val();
+            url = url.replace('quantityTmp', qtty);
+            $.ajax({
+                type: "POST",
+                url: url,
+                success: function (response) {
+                    // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
+                    removeBadgeNoCat(productId);
+                    $('#productCheckboxPicto_' + productId).prepend("<span class=\"number\">" + qtty + "<span");
+                    $('#validateNeedButton').removeAttr('disabled');
+                    reloadCart();
+                }
+            })
+        })
     }
 
     /*******************************************************************************************************************
@@ -373,6 +395,25 @@ $(function () {
                 });
             }
         );
+
+        $('.addToCartPackageSubmitButton').click(function() {
+            var url = $(this).data('url');
+
+            var productId = (this.id).replace('addToCartPackageSubmitButton', '');
+            var qtty = $('#quantityProducSelect_' + productId).val();
+            url = url.replace('quantityTmp', qtty);
+            $.ajax({
+                type: "POST",
+                url: url,
+                success: function (response) {
+                    // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
+                    removeBadgeNoCat(productId);
+                    $('#productCheckboxPicto_' + productId).prepend("<span class=\"number\">" + qtty + "<span");
+                    $('#validateNeedButton').removeAttr('disabled');
+                    reloadCart();
+                }
+            })
+        })
 
         $('.addNewTypeButton').click(function () {
             $('.infoproduct__type').first().clone().hide().insertAfter($('.infoproduct__type').last()).fadeIn(500);
@@ -545,7 +586,7 @@ function reloadCart(readonly) {
                             dataType: "json",
                             url: urlRemove.replace('productTmp', productId),
                             success: function (response) {
-                                removeBadgeD3E(productId);
+                                removeBadgeNoCat(productId);
                                 reloadCart();
                             }
                         });
@@ -585,7 +626,7 @@ function removeBadge(productId, categoryId) {
  * Supprime le badge au dessus d'un produit indiquant la quantité de ce produit ajoutée au panier
  * @param productId
  */
-function removeBadgeD3E(productId) {
+function removeBadgeNoCat(productId) {
     $('#productCheckboxPicto_' + productId).find('span.number').remove();
 }
 

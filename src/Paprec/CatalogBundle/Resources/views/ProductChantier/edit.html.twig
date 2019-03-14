@@ -1,7 +1,7 @@
 {% extends "::base_admin.html.twig" %}
 
 {% block title %}
-    {{ 'Catalog.ProductChantier.Edit'|trans }}
+    {{ 'Catalog.ProductChantier.Edit.Custom'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <i class="fa fa-xs fa-pencil-alt"></i> {{ 'Catalog.ProductChantier.Edit'|trans }}
+                        <i class="fa fa-xs fa-pencil-alt"></i> {{ 'Catalog.ProductChantier.Edit.Custom'|trans }}
                         #{{ productChantier.id|formatId(6) }}
                     </h4>
                     <div class="float-right">
@@ -100,17 +100,6 @@
                                             <div class="form__check ml-4">
                                                 {{ form_widget(checkbox) }}
                                                 {{ form_label(checkbox)|nl2br }}
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="form-label">{{ 'Catalog.ProductChantier.IsPayableOnline'|trans }}</div>
-                                    <div class="form-content checkbox-list">
-                                        {% for radio in form.isPayableOnline.children %}
-                                            <div class="form__check ml-4">
-                                                {{ form_widget(radio) }}
-                                                {{ form_label(radio) }}
                                             </div>
                                         {% endfor %}
                                     </div>

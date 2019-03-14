@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SubscriptionController extends Controller
 {
-
     /**
      * @Route("/D3E/step0/{cartUuid}", name="paprec_public_corp_d3e_subscription_step0")
      * @throws \Exception
@@ -331,8 +330,14 @@ class SubscriptionController extends Controller
         $cartManager = $this->get('paprec.cart_manager');
 
         // On ajoute ou on supprime le produit sélecionné au tableau des displayedProduct du Cart
-        $cart = $cartManager->addOrRemoveDisplayedProductD3E($cartUuid, $productId);
+        $cart = $cartManager->addOrRemoveDisplayedProductNoCat($cartUuid, $productId);
 
+        if ($cart->getType() === 'package') {
+            return $this->redirectToRoute('paprec_public_corp_d3e_subscription_packaged_step1', array(
+                'cartUuid' => $cart->getId(),
+                '_fragment' => 'anchor1'
+            ));
+        }
         return $this->redirectToRoute('paprec_public_corp_d3e_subscription_step1', array(
             'cartUuid' => $cart->getId(),
             '_fragment' => 'anchor1'
@@ -433,6 +438,135 @@ class SubscriptionController extends Controller
             'nbAgencies' => $nbAgencies,
             'distance' => $distance
         ));
+    }
+
+    /****************************************************
+     * PACKAGE
+     ***************************************************/
+
+    /**
+     * Page d'accueil pour la gestion des package
+     * @Route("/d3e/package/step0/{cartUuid}", defaults={"cartUuid"=null}, name="paprec_public_corp_d3e_subscription_packaged_index")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
+    public function indexPackageAction(Request $request, $cartUuid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $cartManager = $this->get('paprec.cart_manager');
+        if (!$cartUuid) {
+            $cart = $cartManager->create(90);
+            $cart->setType('package');
+            $cart->setDivision('D3E');
+            $em->persist($cart);
+            $em->flush();
+            return $this->redirectToRoute('paprec_public_corp_d3e_subscription_packaged_index', array(
+                'cartUuid' => $cart->getId()
+            ));
+        } else {
+            $cart = $cartManager->get($cartUuid);
+        }
+
+        return $this->render('@PaprecPublic/D3E/package/index.html.twig', array(
+            'cart' => $cart
+        ));
+    }
+
+    /**
+     * Chois de  Ma solution Recyclage pour les produits packageés
+     *
+     * @Route("/d3e/package/step1/{cartUuid}", name="paprec_public_corp_d3e_subscription_packaged_step1")
+     * @throws \Exception
+     */
+    public function step1PackageAction(Request $request, $cartUuid)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+        $productD3EManager = $this->get('paprec_catalog.product_d3e_manager');
+
+        $cart = $cartManager->get($cartUuid);
+
+        /*
+         * On récupère tous les produits packagés de la division qui sont disponibles en fonction du postalCode
+         */
+        $products = $productD3EManager->findPackagesAvailable($cart->getPostalCode());
+
+        return $this->render('@PaprecPublic/D3E/package/need.html.twig', array(
+            'cart' => $cart,
+            'products' => $products
+        ));
+    }
+
+    /**
+     * Ajoute au cart un displayedProduct
+     *
+     * @Route("/d3e/package/addOrRemoveDisplayedProduct/{cartUuid}/{productId}", name="paprec_public_corp_d3e_subscription_packaged_addOrRemoveDisplayedProduct")
+     * @throws \Exception
+     */
+    public function addOrRemoveDisplayedProductPackageAction(Request $request, $cartUuid, $productId)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+
+        // On ajoute ou on supprime le produit sélecionné au tableau des displayedCategories du Cart
+        $cart = $cartManager->addOrRemoveDisplayedProductNoCat($cartUuid, $productId);
+
+        return $this->redirectToRoute('paprec_public_corp_d3e_subscription_packaged_step1', array(
+            'cartUuid' => $cart->getId(),
+            '_fragment' => 'anchor1'
+        ));
+
+    }
+
+    /**
+     * Ajoute au cart un Product avec sa quantité et  sa catégorie
+     *
+     * @Route("/d3e/package/addContent/{cartUuid}/{productId}/{quantity}", name="paprec_public_corp_d3e_subscription_packaged_addContent")
+     * @throws \Exception
+     */
+    public function addContentPackageAction(Request $request, $cartUuid, $productId, $quantity)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+
+
+        // On ajoute ou on supprime le produit sélecionné au tableau des displayedCategories du Cart
+        $cart = $cartManager->addContentPackage($cartUuid, $productId, $quantity);
+
+        return new JsonResponse('200');
+    }
+
+    /**
+     * Retourne le twig.html du cart avec les produits dans celui-ci ainsi que le montant total
+     *
+     * @Route("/d3e/package/loadCart/{cartUuid}", name="paprec_public_corp_d3e_subscription_packaged_loadCart", condition="request.isXmlHttpRequest()")
+     * @throws \Exception
+     */
+    public function loadCartPackageAction(Request $request, $cartUuid)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+
+        // On récupère les informations du cart à afficher ainsi que le calcul de la somme du Cart
+        $loadedCart = $cartManager->loadCartPackageD3E($cartUuid);
+
+        return $this->render('@PaprecPublic/D3E/package/partial/cartPartial.html.twig', array(
+            'loadedCart' => $loadedCart,
+            'cartUuid' => $cartUuid
+        ));
+    }
+
+    /**
+     * Supprime un Product du contenu du Cart
+     *
+     * @Route("/d3e/package/removeContent/{cartUuid}/{productId}", name="paprec_public_corp_d3e_subscription_packaged_removeContent")
+     * @throws \Exception
+     */
+    public function removeContentPackageAction(Request $request, $cartUuid, $productId)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+
+        // On ajoute ou on supprime le produit sélecionné au tableau des displayedCategories du Cart
+        $cart = $cartManager->removeContentPackage($cartUuid, $productId);
+
+        return new JsonResponse($cart->getContent());
     }
 
 }

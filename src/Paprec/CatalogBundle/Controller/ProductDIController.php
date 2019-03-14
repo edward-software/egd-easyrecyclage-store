@@ -7,6 +7,7 @@ use Paprec\CatalogBundle\Entity\ProductDI;
 use Paprec\CatalogBundle\Entity\ProductDICategory;
 use Paprec\CatalogBundle\Form\PictureProductType;
 use Paprec\CatalogBundle\Form\ProductDICategoryAddType;
+use Paprec\CatalogBundle\Form\ProductDIPackageType;
 use Paprec\CatalogBundle\Form\ProductDIType;
 use Paprec\CommercialBundle\Form\ProductDICategoryEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -48,6 +49,8 @@ class ProductDIController extends Controller
         $orders = $request->get('order');
         $search = $request->get('search');
         $columns = $request->get('columns');
+        // Récupération du type de ProductDI souhaité (package ou non)
+        $isPackage = $request->get('isPackage');
 
         $cols['id'] = array('label' => 'id', 'id' => 'p.id', 'method' => array('getId'));
         $cols['name'] = array('label' => 'name', 'id' => 'p.name', 'method' => array('getName'));
@@ -58,7 +61,8 @@ class ProductDIController extends Controller
 
         $queryBuilder->select(array('p'))
             ->from('PaprecCatalogBundle:ProductDI', 'p')
-            ->where('p.deleted IS NULL');
+            ->where('p.deleted IS NULL')
+            ->andWhere('p.isPackage = ' . $isPackage); // Récupération des productDI du type voulu
 
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
@@ -196,6 +200,37 @@ class ProductDIController extends Controller
     }
 
     /**
+     * @Route("/productDI/view/packaged/{id}",  name="paprec_catalog_productDI_packaged_view")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'DI' in user.getDivisions())")
+     */
+    public function viewPackagedAction(Request $request, ProductDI $productDI)
+    {
+        $productDIManager = $this->get('paprec_catalog.product_di_manager');
+        $productDIManager->isDeleted($productDI, true);
+
+        foreach ($this->getParameter('paprec_types_picture') as $type) {
+            $types[$type] = $type;
+        }
+
+        $picture = new Picture();
+
+        $formAddPicture = $this->createForm(PictureProductType::class, $picture, array(
+            'types' => $types
+        ));
+
+        $formEditPicture = $this->createForm(PictureProductType::class, $picture, array(
+            'types' => $types
+        ));
+
+
+        return $this->render('@PaprecCatalog/ProductDI/package/viewPackage.html.twig', array(
+            'productDI' => $productDI,
+            'formAddPicture' => $formAddPicture->createView(),
+            'formEditPicture' => $formEditPicture->createView()
+        ));
+    }
+
+    /**
      * @Route("/productDI/add",  name="paprec_catalog_productDI_add")
      * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'DI' in user.getDivisions())")
      */
@@ -209,6 +244,7 @@ class ProductDIController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $productDI = $form->getData();
+            $productDI->setIsPackage(false);
             $productDI->setDateCreation(new \DateTime);
 
             $em = $this->getDoctrine()->getManager();
@@ -222,6 +258,44 @@ class ProductDIController extends Controller
         }
 
         return $this->render('PaprecCatalogBundle:ProductDI:add.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+
+    /**
+     * @Route("/productDI/packaged/add",  name="paprec_catalog_productDI_packaged_add")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'DI' in user.getDivisions())")
+     */
+    public function addPackagedAction(Request $request)
+    {
+        $numberManager = $this->get('paprec_catalog.number_manager');
+
+        $productDI = new ProductDI();
+
+        $form = $this->createForm(ProductDIPackageType::class, $productDI);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $productDI = $form->getData();
+            $productDI->setIsPackage(true);
+            $productDI->setDateCreation(new \DateTime);
+            $productDI->setPackageUnitPrice($numberManager->normalize($productDI->getPackageUnitPrice()));
+
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($productDI);
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_catalog_productDI_packaged_view', array(
+                'id' => $productDI->getId(),
+                'isPackage' => true
+            ));
+
+        }
+
+        return $this->render('@PaprecCatalog/ProductDI/package/addPackage.html.twig', array(
             'form' => $form->createView()
         ));
     }
@@ -255,6 +329,45 @@ class ProductDIController extends Controller
             ));
         }
         return $this->render('PaprecCatalogBundle:ProductDI:edit.html.twig', array(
+            'form' => $form->createView(),
+            'productDI' => $productDI
+        ));
+    }
+
+    /**
+     * @Route("/productDI/edit/packaged/{id}",  name="paprec_catalog_productDI_packaged_edit")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'DI' in user.getDivisions())")
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws \Exception
+     */
+    public function editPackagedAction(Request $request, ProductDI $productDI)
+    {
+        $numberManager = $this->get('paprec_catalog.number_manager');
+        $productDIManager = $this->get('paprec_catalog.product_di_manager');
+        $productDIManager->isDeleted($productDI, true);
+
+        $productDI->setPackageUnitPrice($numberManager->denormalize($productDI->getPackageUnitPrice()));
+
+        $form = $this->createForm(ProductDIPackageType::class, $productDI);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $productDI = $form->getData();
+            $productDI->setPackageUnitPrice($numberManager->normalize($productDI->getPackageUnitPrice()));
+
+            $productDI->setDateUpdate(new \DateTime);
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_catalog_productDI_packaged_view', array(
+                'id' => $productDI->getId()
+            ));
+        }
+        return $this->render('@PaprecCatalog/ProductDI/package/editPackage.html.twig', array(
             'form' => $form->createView(),
             'productDI' => $productDI
         ));

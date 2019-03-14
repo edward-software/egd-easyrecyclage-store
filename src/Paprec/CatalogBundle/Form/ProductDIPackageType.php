@@ -8,10 +8,11 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductChantierType extends AbstractType
+class ProductDIPackageType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -20,6 +21,7 @@ class ProductChantierType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('subName')
             ->add('description', TextareaType::class)
             ->add('capacity')
             ->add('capacityUnit')
@@ -30,9 +32,8 @@ class ProductChantierType extends AbstractType
                     'Non' => 0,
                     'Oui' => 1
                 ),
-                "expanded" => true
+                "expanded" => true,
             ))
-
             ->add('availablePostalCodes')
             ->add('arguments', EntityType::class, array(
                 'class' => Argument::class,
@@ -42,6 +43,9 @@ class ProductChantierType extends AbstractType
                     return $er->createQueryBuilder('a')
                         ->where('a.deleted IS NULL');
                 }
+            ))
+            ->add('packageUnitPrice', TextType::class, array(
+                "required" => true
             ));
     }
 
@@ -51,7 +55,8 @@ class ProductChantierType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Paprec\CatalogBundle\Entity\ProductChantier'
+            'data_class' => 'Paprec\CatalogBundle\Entity\ProductDI',
+            'validation_groups' => ['package'],
         ));
     }
 
@@ -60,9 +65,8 @@ class ProductChantierType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'paprec_catalogbundle_productchantier';
+        return 'paprec_catalogbundle_productdi_package';
     }
-
 
 
 }

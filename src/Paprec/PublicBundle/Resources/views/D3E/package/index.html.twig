@@ -1,0 +1,18 @@
+{% extends "@PaprecPublic/Common/Base/package/base_index.html.twig" %}
+
+{% block sidebar %}
+    {# Définition des menus affichés dans la sidebar #}
+    {% set besoin = 'active' %}
+    {% set coordonnees = '' %}
+    {% set livraison = '' %}
+    {% set paiement = '' %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
+    </script>
+
+{% endblock %}

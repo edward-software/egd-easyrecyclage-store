@@ -115,10 +115,31 @@ class ProductChantier
     /**
      * @var boolean
      *
-     * @ORM\Column(name="isPayableOnline", type="boolean")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="isPackage", type="boolean")
      */
-    private $isPayableOnline;
+    private $isPackage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="subName", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"package"})
+     */
+    private $subName;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="packageUnitPrice", type="integer", nullable=true)
+     * @Assert\NotBlank(groups={"package"})
+     * @Assert\Regex(
+     *     pattern="/^\d{1,6}((\.|\,)\d{1,2})?$/",
+     *     match=true,
+     *     message="la valeur doit être un nombre entre 0 et 999 999,99 ('.' autorisé)"
+     * )
+     */
+    private $packageUnitPrice;
+
 
     /**************************************************************************************************
      * RELATIONS
@@ -451,28 +472,6 @@ class ProductChantier
         return $this->isDisplayed;
     }
 
-    /**
-     * Set isPayableOnline
-     *
-     * @param bool $isPayableOnline
-     *
-     * @return bool
-     */
-    public function setIsPayableOnline($isPayableOnline)
-    {
-        $this->isPayableOnline = $isPayableOnline;
-    }
-
-    /**
-     * Get isPayableOnline
-     *
-     * @return bool
-     */
-    public function getIsPayableOnline()
-    {
-        return $this->isPayableOnline;
-    }
-
 
     /**
      * Add argument.
@@ -711,5 +710,77 @@ class ProductChantier
     public function getCapacity()
     {
         return $this->capacity;
+    }
+
+    /**
+     * Set isPackage.
+     *
+     * @param bool $isPackage
+     *
+     * @return ProductChantier
+     */
+    public function setIsPackage($isPackage)
+    {
+        $this->isPackage = $isPackage;
+
+        return $this;
+    }
+
+    /**
+     * Get isPackage.
+     *
+     * @return bool
+     */
+    public function getIsPackage()
+    {
+        return $this->isPackage;
+    }
+
+    /**
+     * Set packageUnitPrice.
+     *
+     * @param int|null $packageUnitPrice
+     *
+     * @return ProductChantier
+     */
+    public function setPackageUnitPrice($packageUnitPrice = null)
+    {
+        $this->packageUnitPrice = $packageUnitPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get packageUnitPrice.
+     *
+     * @return int|null
+     */
+    public function getPackageUnitPrice()
+    {
+        return $this->packageUnitPrice;
+    }
+
+    /**
+     * Set subName.
+     *
+     * @param string|null $subName
+     *
+     * @return ProductChantier
+     */
+    public function setSubName($subName = null)
+    {
+        $this->subName = $subName;
+
+        return $this;
+    }
+
+    /**
+     * Get subName.
+     *
+     * @return string|null
+     */
+    public function getSubName()
+    {
+        return $this->subName;
     }
 }

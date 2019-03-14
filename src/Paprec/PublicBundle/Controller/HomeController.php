@@ -46,6 +46,7 @@ class HomeController extends Controller
 
         if (!$cartUuid) {
             $cart = $cartManager->create(90);
+            $cart->setType('quote');
             $em->persist($cart);
             $em->flush();
             return $this->redirectToRoute('paprec_public_corp_home_index', array(
@@ -123,6 +124,18 @@ class HomeController extends Controller
         $cart->setLongitude($long);
         $em->flush();
 
+        if ($cart->getType() === 'package') {
+            switch ($cart->getDivision()) {
+                case 'CHANTIER':
+                    return $this->redirectToRoute('paprec_public_corp_chantier_subscription_packaged_step1', array(
+                        'cartUuid' => $cartUuid
+                    ));
+                case 'D3E':
+                    return $this->redirectToRoute('paprec_public_corp_d3e_subscription_packaged_step1', array(
+                        'cartUuid' => $cartUuid
+                    ));
+            }
+        }
         return $this->redirectToRoute('paprec_public_corp_home_index', array(
             'cartUuid' => $cartUuid
         ));

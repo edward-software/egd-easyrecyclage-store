@@ -230,7 +230,7 @@ class ProductD3EController extends Controller
             'types' => $types
         ));
 
-        return $this->render('PaprecCatalogBundle:ProductD3E:viewPackage.html.twig', array(
+        return $this->render('@PaprecCatalog/ProductD3E/package/viewPackage.html.twig', array(
             'productD3E' => $productD3E,
             'formAddPicture' => $formAddPicture->createView(),
             'formEditPicture' => $formEditPicture->createView()
@@ -313,7 +313,7 @@ class ProductD3EController extends Controller
 
         }
 
-        return $this->render('PaprecCatalogBundle:ProductD3E:addPackage.html.twig', array(
+        return $this->render('@PaprecCatalog/ProductD3E/package/addPackage.html.twig', array(
             'form' => $form->createView()
         ));
     }
@@ -396,7 +396,7 @@ class ProductD3EController extends Controller
                 'id' => $productD3E->getId()
             ));
         }
-        return $this->render('PaprecCatalogBundle:ProductD3E:editPackage.html.twig', array(
+        return $this->render('@PaprecCatalog/ProductD3E/package/editPackage.html.twig', array(
             'form' => $form->createView(),
             'productD3E' => $productD3E
         ));

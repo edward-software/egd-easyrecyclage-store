@@ -1,0 +1,195 @@
+{% extends "@PaprecPublic/Common/Base/package/base_need.html.twig" %}
+
+{#{% block title %}#}
+
+{#{% endblock %}#}
+
+{#{% block stylesheets %}#}
+
+{#{% endblock %}#}
+
+{% block sidebar %}
+    <div class="need-form d3e-need-form"></div>
+    {# Définition des menus affichés dans la sidebar #}
+    {% set besoin = 'active' %}
+    {% set coordonnees = '' %}
+    {% set offre = '' %}
+    {{ parent() }}
+{% endblock %}
+
+{% block cta_panel %}
+    <div>
+        <div class="step__tab active">{{ 'Public.Cart.NeedEstimation'|trans }}</div>
+        <a class="step__tab"
+           href="{{ path('paprec_public_corp_home_requestWriting_step1', {cartUuid: cart.id}) }}">{{ 'Public.Cart.FillForm'|trans }}</a>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}
+
+{# DEBUT affichage des contenants #}
+{% block products_panel %}
+    {% if cart.displayedCategories %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block product_step_title %}
+    {{ 'Public.Cart.MyServices'|trans }}
+{% endblock %}
+
+{% block products %}
+    {% set cpt = 5 %}
+    {% set displayedProduct = "" %}
+    {% for product in products %}
+        {% if (cpt == 5) %}
+<div class="first-row">
+    <div class="first-row-container">
+        {% endif %}
+        {% if (cpt%5 == 0 and cpt > 5) %}
+        <div class="following-row">
+            {% endif %}
+            {% if product.id in cart.displayedProducts %}
+                {% set displayedProduct = product %}
+            {% endif %}
+            <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts %}  active {% endif %}"
+                 id="productCheckboxPicto_{{ product.id }}"
+                 data-url="{{ path('paprec_public_corp_d3e_subscription_packaged_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: product.id}) }}"
+                 style="{% if product.pictos|length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
+                {{ product.name }}
+                {% for items in cart.content %}
+                    {% if items['pId'] == product.id %}
+                        <span class="number">{{ items['qtty'] }}</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% set cpt = cpt + 1 %}
+
+            {% if ((cpt%5 == 0) and (cpt > 5)) or loop.last %}
+        </div>
+    </div>
+    {% if cart.displayedProducts and displayedProduct != '' %}
+        <div class="infoproduct">
+            <div class="left">
+                {% if displayedProduct.pilotPictures | length > 0 %}
+                    <img src="{{ asset('/uploads/pictos/' ~ displayedProduct.pilotPictures[0].path) }}"
+                         alt="#" class="mainpicture">
+                    <br>
+                {% endif %}
+                {% if displayedProduct.getPicturesPictures() %}
+                    {% for picture in displayedProduct.getPicturesPictures() %}
+                        <img src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
+                             class="thumb"
+                             alt="#">
+                    {% endfor %}
+                {% endif %}
+
+            </div>
+            <div class="right">
+                <div class="infoproduct__close"
+                     data-url="{{ path('paprec_public_corp_d3e_subscription_packaged_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: displayedProduct.id}) }}"
+                     id="infoProductClose_{{ displayedProduct.id }}"></div>
+                <div class="infoproduct__header__container">
+                    <div class="infoproduct__title__container">
+                        <div class="infoproduct__title">
+                            {{ displayedProduct.name }}
+                        </div>
+                        <div class="infoproduct__subtitle">
+                            {{ displayedProduct.subName }}
+                        </div>
+                    </div>
+
+                    {% if displayedProduct.reference is not null %}
+                        <div class="infoproduct__more">
+                            <a href="{{ displayedProduct.reference }}">{{ 'Public.Cart.LearnMore'|trans }}</a>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="infoproduct__desc">
+                    {{ displayedProduct.description|nl2br }}
+                </div>
+                {% for argument in displayedProduct.arguments|slice(0, 2) %}
+                    <div class="{% if loop.index == 1 %}infoproduct__satisfaction{% elseif loop.index == 2 %}infoproduct__tri{% endif %}">
+                        {% if argument.picto is not null %}
+                            <img src="{{ asset('/uploads/pictos/' ~ argument.picto) }}" alt="">
+                        {% endif %}
+                        {{ argument.description|nl2br }}
+                    </div>
+                {% endfor %}
+                <div class="clearfix"></div>
+                <div class="infoproduct__disclamer">
+                    <div class="infoproduct__disclamer__img"></div>
+                    <div class="infoproduct__disclamer__msg">
+                        {{ 'Public.Cart.Disclaimer'|trans }}
+                    </div>
+                </div>
+                <a href="javascript:void(0);"
+                   class="infoproduct__esti">{{ 'Public.Cart.EstimateTrashVolume'|trans }}</a>
+                <div class="infoproduct__dimensiontitle">{{ 'Public.Cart.Dimensions'|trans }}</div>
+                <div class="infoproduct__dimension">
+                    {{ displayedProduct.dimensions|nl2br }}
+                </div>
+
+                <div class="infoproduct__engagment">
+                    <input type="checkbox" id="engagment">
+                    <label for="engagment">{{ 'Public.Cart.Engagment'|trans }} <span class="help">?</span>
+                    </label>
+                </div>
+
+                {% set qtty = '' %}
+                {% for items in cart.content %}
+                    {% if items['pId'] == displayedProduct.id %}
+                        {% set qtty = items['qtty'] %}
+                    {% endif %}
+                {% endfor %}
+                <div class="infoproduct__qtytitle">{{ 'Public.Cart.Qtty'|trans }}</div>
+                <select name=""
+                        id="quantityProducSelect_{{ displayedProduct.id }}"
+                        class="infoproduct__qty">
+                    {% for i in 1..10 %}
+                        {% if i == qtty %}
+                            <option value="{{ i }}"
+                                    selected="selected">{{ i }}</option>
+                        {% else %}
+                            <option value="{{ i }}">{{ i }}</option>
+
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <button class="button button--lightgreen addToCartPackageSubmitButton"
+                        data-url="{{ path('paprec_public_corp_d3e_subscription_packaged_addContent', {cartUuid: cart.id, productId: displayedProduct.id, quantity: 'quantityTmp'}) }}"
+                        id="addToCartPackageSubmitButton{{ displayedProduct.id }}"
+                        disabled>{{ 'Public.Cart.AddToCartOrder'|trans }}
+                </button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        {% set displayedProduct = '' %}
+
+    {% endif %}
+    <div class="clearfix"></div>
+
+    {% endif %}
+    {% endfor %}
+    {% endblock %}
+
+    {% block cta_bottom_panel %}
+        <div class="step">
+            {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
+                'label': 'ValidateNeed',
+                'cartUuid': cart.id,
+                'division': cart.division,
+                'stepBack': '',
+                'nextStep': 'step2',
+                'idSubmit': '',
+                'cartEmpty': cart.content is empty
+            })) }}
+        </div>
+    {% endblock %}
+
+
+    {% block javascripts %}
+        <script type="text/javascript"
+                src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
+        </script>
+    {% endblock %}

@@ -9,6 +9,7 @@ use Paprec\CatalogBundle\Entity\ProductChantierCategory;
 use Paprec\CatalogBundle\Form\PictureProductType;
 use Paprec\CatalogBundle\Form\ProductChantierCategoryAddType;
 use Paprec\CatalogBundle\Form\ProductChantierCategoryEditType;
+use Paprec\CatalogBundle\Form\ProductChantierPackageType;
 use Paprec\CatalogBundle\Form\ProductChantierType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -48,6 +49,8 @@ class ProductChantierController extends Controller
         $orders = $request->get('order');
         $search = $request->get('search');
         $columns = $request->get('columns');
+        // Récupération du type de ProductChantier souhaité (package ou non)
+        $isPackage = $request->get('isPackage');
 
         $cols['id'] = array('label' => 'id', 'id' => 'p.id', 'method' => array('getId'));
         $cols['name'] = array('label' => 'name', 'id' => 'p.name', 'method' => array('getName'));
@@ -58,7 +61,9 @@ class ProductChantierController extends Controller
 
         $queryBuilder->select(array('p'))
             ->from('PaprecCatalogBundle:ProductChantier', 'p')
-            ->where('p.deleted IS NULL');
+            ->where('p.deleted IS NULL')
+            ->andWhere('p.isPackage = ' . $isPackage); // Récupération des ProductChantier du type voulu
+
 
 
         if (is_array($search) && isset($search['value']) && $search['value'] != '') {
@@ -195,6 +200,38 @@ class ProductChantierController extends Controller
         ));
     }
 
+
+    /**
+     * @Route("/productChantier/view/packaged/{id}",  name="paprec_catalog_productChantier_packaged_view")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
+     */
+    public function viewPackagedAction(Request $request, ProductChantier $productChantier)
+    {
+        $productChantierManager = $this->get('paprec_catalog.product_chantier_manager');
+        $productChantierManager->isDeleted($productChantier, true);
+
+        foreach ($this->getParameter('paprec_types_picture') as $type) {
+            $types[$type] = $type;
+        }
+
+        $picture = new Picture();
+
+        $formAddPicture = $this->createForm(PictureProductType::class, $picture, array(
+            'types' => $types
+        ));
+
+        $formEditPicture = $this->createForm(PictureProductType::class, $picture, array(
+            'types' => $types
+        ));
+
+
+        return $this->render('@PaprecCatalog/ProductChantier/package/viewPackage.html.twig', array(
+            'productChantier' => $productChantier,
+            'formAddPicture' => $formAddPicture->createView(),
+            'formEditPicture' => $formEditPicture->createView()
+        ));
+    }
+
     /**
      * @Route("/productChantier/add",  name="paprec_catalog_productChantier_add")
      * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
@@ -209,6 +246,7 @@ class ProductChantierController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $productChantier = $form->getData();
+            $productChantier->setIsPackage(false);
             $productChantier->setDateCreation(new \DateTime);
 
 
@@ -228,6 +266,42 @@ class ProductChantierController extends Controller
     }
 
     /**
+     * @Route("/productChantier/packaged/add",  name="paprec_catalog_productChantier_packaged_add")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
+     */
+    public function addPackagedAction(Request $request)
+    {
+        $numberManager = $this->get('paprec_catalog.number_manager');
+
+        $productChantier = new ProductChantier();
+
+        $form = $this->createForm(ProductChantierType::class, $productChantier);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $productChantier = $form->getData();
+            $productChantier->setIsPackage(true);
+            $productChantier->setDateCreation(new \DateTime);
+            $productChantier->setPackageUnitPrice($numberManager->normalize($productChantier->getPackageUnitPrice()));
+
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($productChantier);
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_catalog_productChantier_packaged_view', array(
+                'id' => $productChantier->getId()
+            ));
+
+        }
+
+        return $this->render('@PaprecCatalog/ProductChantier/package/addPackage.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
      * @Route("/productChantier/edit/{id}",  name="paprec_catalog_productChantier_edit")
      * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
      */
@@ -236,7 +310,7 @@ class ProductChantierController extends Controller
         $productChantierManager = $this->get('paprec_catalog.product_chantier_manager');
         $productChantierManager->isDeleted($productChantier, true);
 
-        $form = $this->createForm(ProductChantierType::class, $productChantier);
+        $form = $this->createForm(ProductChantierPackageType::class, $productChantier);
 
         /**
          * On récupère les productChantierCategories présents avant la modif. Il faut les supprimer sinon on a un doublon
@@ -263,6 +337,53 @@ class ProductChantierController extends Controller
             'productChantier' => $productChantier
         ));
     }
+
+    /**
+     * @Route("/productChantier/edit/packaged/{id}",  name="paprec_catalog_productChantier_packaged_edit")
+     * @Security("has_role('ROLE_ADMIN') or (has_role('ROLE_MANAGER_DIVISION') and 'CHANTIER' in user.getDivisions())")
+     * @param Request $request
+     * @param ProductChantier $productChantier
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     */
+    public function editPackagedAction(Request $request, ProductChantier $productChantier)
+    {
+        $numberManager = $this->get('paprec_catalog.number_manager');
+        $productChantierManager = $this->get('paprec_catalog.product_chantier_manager');
+        $productChantierManager->isDeleted($productChantier, true);
+
+        $productChantier->setPackageUnitPrice($numberManager->denormalize($productChantier->getPackageUnitPrice()));
+
+        $form = $this->createForm(ProductChantierPackageType::class, $productChantier);
+
+        /**
+         * On récupère les productChantierCategories présents avant la modif. Il faut les supprimer sinon on a un doublon
+         */
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $productChantier = $form->getData();
+
+            $productChantier->setPackageUnitPrice($numberManager->normalize($productChantier->getPackageUnitPrice()));
+            $productChantier->setDateUpdate(new \DateTime);
+
+            $em = $this->getDoctrine()->getManager();
+
+
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_catalog_productChantier_packaged_view', array(
+                'id' => $productChantier->getId()
+            ));
+        }
+        return $this->render('@PaprecCatalog/ProductChantier/package/editPackage.html.twig', array(
+            'form' => $form->createView(),
+            'productChantier' => $productChantier
+        ));
+    }
+
 
     /**
      * @Route("/productChantier/remove/{id}", name="paprec_catalog_productChantier_remove")

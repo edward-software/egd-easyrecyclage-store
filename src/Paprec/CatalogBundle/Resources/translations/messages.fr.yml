@@ -122,6 +122,7 @@ Catalog:
         Informations:               Informations
         System-informations:        Informations système
         Name:                       Nom
+        SubName:                    Sous-titre
         Description:                Description
         Capacity:                   Volume
         CapacityUnit:               Unité
@@ -130,6 +131,7 @@ Catalog:
         IsDisplayed:                Affiché
         Arguments:                  Arguments
         Categories:                 Catégories
+        PackageUnitPrice:           Prix unitaire du package
         Picto:                      Picto
         Pictures:                   Photos
         PilotPicture:               Photo principale
@@ -138,14 +140,26 @@ Catalog:
         EditPicture:                Modificiation de photo
         AvailablePostalCodes:       Dispo géographique
         List:                       Liste des produits DI
+        CustomList:                 Liste des produits DI sur mesure
+        PackagedList:               Liste des produits DI packagés
         CategoriesList:             Liste des catégories
         AddCategory:                Ajouter une catégorie
-        Add:                        Ajouter un produit
+        Add:
+          Custom:                   Ajouter un produit sur mesure
+          Packaged:                 Ajouter un produit packagé
         AddPicture:                 Ajouter
-        Export:                     Exporter les produits
-        View:                       Visualiser le produit DI
-        Edit:                       Modifier le produit DI
-        Remove:                     Supprimer le produit
+        Export:
+          Custom:                   Exporter les produits sur mesure
+          Packaged:                 Exporter les produits packagés
+        View:
+          Custom:                   Visualiser le produit sur mesure
+          Packaged:                 Visualiser le produit packagé
+        Edit:
+          Custom:                   Modifier le produit sur mesure
+          Packaged:                 Modifier le produit packagé
+        Remove:
+          Custom:                   Supprimer le produit sur mesure
+          Packaged:                 Supprimer le produit packagé
         Save:                       Enregistrer
         Cancel:                     Annuler
         Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
@@ -170,14 +184,15 @@ Catalog:
       Informations:               Informations
       System-informations:        Informations système
       Name:                       Nom
+      SubName:                    Sous-titre
       Description:                Description
       Capacity:                   Volume
       CapacityUnit:               Unité
       Dimensions:                 Dimensions
       UnitPrice:                  Prix unitaire
+      PackageUnitPrice:           Prix unitaire du package
       Reference:                  Lien description
       IsDisplayed:                Affiché
-      IsPayableOnline:            Payable en ligne
       Arguments:                  Arguments
       Categories:                 Catégories
       Picto:                      Picto
@@ -188,14 +203,26 @@ Catalog:
       EditPicture:                Modificiation de photo
       AvailablePostalCodes:       Dispo géographique
       List:                       Liste des produits Chantier
+      CustomList:                 Liste des produits Chantier sur mesure
+      PackagedList:               Liste des produits Chantier packagés
       CategoriesList:             Liste des catégories
       AddCategory:                Ajouter une catégorie
-      Add:                        Ajouter un produit
+      Add:
+        Custom:                   Ajouter un produit sur mesure
+        Packaged:                 Ajouter un produit packagé
       AddPicture:                 Ajouter
-      Export:                     Exporter les produits
-      View:                       Visualiser le produit Chantier
-      Edit:                       Modifier le produit Chantier
-      Remove:                     Supprimer le produit
+      Export:
+        Custom:                   Exporter les produits sur mesure
+        Packaged:                 Exporter les produits packagés
+      View:
+        Custom:                   Visualiser le produit Chantier sur mesure
+        Packaged:                 Visualiser le produit Chantier packagé
+      Edit:
+        Custom:                   Modifier le produit Chantier sur mesure
+        Packaged:                 Modifier le produit Chantier packagé
+      Remove:
+        Custom:                   Supprimer le produit sur mesure
+        Packaged:                 Supprimer le produit packagé
       Save:                       Enregistrer
       Cancel:                     Annuler
       Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
@@ -231,7 +258,6 @@ Catalog:
       PackageUnitPrice:           Prix unitaire du package
       PriceListD3E:               Grille tarifaire
       IsDisplayed:                Affiché
-      IsPayableOnline:            Payable en ligne
       AvailablePostalCodes:       Dispo géographique
       Picto:                      Picto
       Pictures:                   Photos
