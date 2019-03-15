@@ -27,7 +27,7 @@ class ProductD3EOrderShortType extends AbstractType
                 'class' => BusinessLine::class,
                 'multiple' => false,
                 'expanded' => false,
-                'placeholder' => 'Commercial.ProductD3EOrder.BusinessLinePlaceholder',
+                'placeholder' => 'Commercial.ProductD3EQuote.BusinessLinePlaceholder',
                 'empty_data' => null,
                 'choice_label' => 'name',
                 'query_builder' => function (BusinessLineRepository $er) {
@@ -56,10 +56,28 @@ class ProductD3EOrderShortType extends AbstractType
             ->add('function', TextType::class, array(
                 'required' => false
             ))
-            ->add('terms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => new IsTrue()
-            ]);
+            ->add('address', TextType::class)
+            ->add('postalCode', TextType::class)
+            ->add('city', TextType::class)
+            ->add('invoicingAddress', TextType::class, array(
+                'required' => false
+            ))
+            ->add('invoicingPostalCode', TextType::class, array(
+                'required' => false
+            ))
+            ->add('invoicingCity', TextType::class, array(
+                'required' => false
+            ))
+            ->add('preferredContact', ChoiceType::class, array(
+                'choices' => array(
+                    'Téléphone' => 'phone',
+                    'e-mail' => 'email',
+                ),
+                'choice_attr' => function () {
+                    return ['class' => 'input__radio'];
+                },
+                'expanded' => true
+            ));
 
     }
 

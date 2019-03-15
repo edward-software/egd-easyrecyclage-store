@@ -1,7 +1,7 @@
-{% extends "@PaprecPublic/Common/Base/base_stepper.html.twig" %}
+{% extends "@PaprecPublic/Common/Base/package/base_stepper.html.twig" %}
+
 
 {#{% block title %}#}
-
 {#{% endblock %}#}
 
 {#{% block stylesheets %}#}
@@ -13,9 +13,10 @@
 {% block sidebar %}
     <div class="contact-details-form"></div>
     {# Définition des menus affichés dans la sidebar #}
-    {% set besoin = 'passed' %}
+    {% set besoin = 'active' %}
     {% set coordonnees = 'active' %}
-    {% set offre = '' %}
+    {% set livraison = '' %}
+    {% set paiement = '' %}
     {{ parent() }}
 {% endblock %}
 {% block main_content_stepper %}
@@ -104,8 +105,8 @@
                 'label': 'Confirm',
                 'cartUuid': cart.id,
                 'division': cart.division,
-                'stepBack': 'step1',
-                'nextStep': '',
+                'stepBack': 'packaged_step1',
+                'nextStep': 'packaged_step3',
                 'idSubmit': 'contactDetailsFormSubmitButton'
             })) }}
         </div>

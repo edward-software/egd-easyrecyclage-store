@@ -53,25 +53,11 @@ class ProductD3EOrderLine
     private $productName;
 
     /**
-     * @var boolean
-     * Option de manutention sélectionnée
-     * @ORM\Column(name="optHandling", type="boolean", options={"default" : false})
+     * @var string
+     *
+     * @ORM\Column(name="productSubName", type="string", length=255)
      */
-    private $optHandling;
-
-    /**
-     * @var boolean
-     * option de relevé de numéro de série sélectionnée
-     * @ORM\Column(name="optSerialNumberStmt", type="boolean", options={"default" : false})
-     */
-    private $optSerialNumberStmt;
-
-    /**
-     * @var boolean
-     * option de de destruction par broyage sélectionnée
-     * @ORM\Column(name="optDestruction", type="boolean", options={"default" : false})
-     */
-    private $optDestruction;
+    private $productSubName;
 
     /**
      * @var int
@@ -125,7 +111,7 @@ class ProductD3EOrderLine
     {
         $this->dateCreation = new \DateTime();
     }
-
+    
 
     /**
      * Get id.
@@ -233,6 +219,77 @@ class ProductD3EOrderLine
         return $this->productName;
     }
 
+    /**
+     * Set productSubName.
+     *
+     * @param string $productSubName
+     *
+     * @return ProductD3EOrderLine
+     */
+    public function setProductSubName($productSubName)
+    {
+        $this->productSubName = $productSubName;
+
+        return $this;
+    }
+
+    /**
+     * Get productSubName.
+     *
+     * @return string
+     */
+    public function getProductSubName()
+    {
+        return $this->productSubName;
+    }
+
+    /**
+     * Set unitPrice.
+     *
+     * @param int $unitPrice
+     *
+     * @return ProductD3EOrderLine
+     */
+    public function setUnitPrice($unitPrice)
+    {
+        $this->unitPrice = $unitPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get unitPrice.
+     *
+     * @return int
+     */
+    public function getUnitPrice()
+    {
+        return $this->unitPrice;
+    }
+
+    /**
+     * Set totalAmount.
+     *
+     * @param int $totalAmount
+     *
+     * @return ProductD3EOrderLine
+     */
+    public function setTotalAmount($totalAmount)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return int
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
+    }
 
     /**
      * Set quantity.
@@ -304,125 +361,5 @@ class ProductD3EOrderLine
     public function getProductD3EOrder()
     {
         return $this->productD3EOrder;
-    }
-
-    /**
-     * Set optHandling.
-     *
-     * @param bool $optHandling
-     *
-     * @return ProductD3EOrderLine
-     */
-    public function setOptHandling($optHandling)
-    {
-        $this->optHandling = $optHandling;
-
-        return $this;
-    }
-
-    /**
-     * Get optHandling.
-     *
-     * @return bool
-     */
-    public function getOptHandling()
-    {
-        return $this->optHandling;
-    }
-
-    /**
-     * Set optSerialNumberStmt.
-     *
-     * @param bool $optSerialNumberStmt
-     *
-     * @return ProductD3EOrderLine
-     */
-    public function setOptSerialNumberStmt($optSerialNumberStmt)
-    {
-        $this->optSerialNumberStmt = $optSerialNumberStmt;
-
-        return $this;
-    }
-
-    /**
-     * Get optSerialNumberStmt.
-     *
-     * @return bool
-     */
-    public function getOptSerialNumberStmt()
-    {
-        return $this->optSerialNumberStmt;
-    }
-
-    /**
-     * Set optDestruction.
-     *
-     * @param bool $optDestruction
-     *
-     * @return ProductD3EOrderLine
-     */
-    public function setOptDestruction($optDestruction)
-    {
-        $this->optDestruction = $optDestruction;
-
-        return $this;
-    }
-
-    /**
-     * Get optDestruction.
-     *
-     * @return bool
-     */
-    public function getOptDestruction()
-    {
-        return $this->optDestruction;
-    }
-
-    /**
-     * Set unitPrice.
-     *
-     * @param int $unitPrice
-     *
-     * @return ProductD3EOrderLine
-     */
-    public function setUnitPrice($unitPrice)
-    {
-        $this->unitPrice = $unitPrice;
-
-        return $this;
-    }
-
-    /**
-     * Get unitPrice.
-     *
-     * @return int
-     */
-    public function getUnitPrice()
-    {
-        return $this->unitPrice;
-    }
-
-    /**
-     * Set totalAmount.
-     *
-     * @param int $totalAmount
-     *
-     * @return ProductD3EOrderLine
-     */
-    public function setTotalAmount($totalAmount)
-    {
-        $this->totalAmount = $totalAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get totalAmount.
-     *
-     * @return int
-     */
-    public function getTotalAmount()
-    {
-        return $this->totalAmount;
     }
 }

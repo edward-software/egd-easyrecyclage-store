@@ -84,10 +84,6 @@ class ProductD3EOrderManager
      */
     public function addLine(ProductD3EOrder $productD3EOrder, ProductD3EOrderLine $productD3EOrderLine)
     {
-        $priceListD3EManager = $this->container->get('paprec_catalog.price_list_d3e_manager');
-
-        //Récupération de la grille liée au produit
-        $priceList = $productD3EOrderLine->getProductD3E()->getPriceListD3E();
 
         // On check s'il existe déjà une ligne pour ce produit, pour l'incrémenter
         $currentOrderLine = $this->em->getRepository('PaprecCommercialBundle:ProductD3EOrderLine')->findOneBy(
@@ -101,11 +97,6 @@ class ProductD3EOrderManager
             $quantity = $productD3EOrderLine->getQuantity() + $currentOrderLine->getQuantity();
             $currentOrderLine->setQuantity($quantity);
 
-            // On vérifie de prix unitaire du produit exisntant qui a pu changer si l'on a changé de tranche
-            // en augmentant la quantité
-            $unitPrice = $priceListD3EManager->getUnitPriceByPostalCodeQtty($priceList, $productD3EOrder->getPostalCode(), $currentOrderLine->getQuantity());
-            $currentOrderLine->setUnitPrice($unitPrice);
-
             //On recalcule le montant total de la ligne ainsi que celui du devis complet
             $totalLine = $this->calculateTotalLine($currentOrderLine);
             $currentOrderLine->setTotalAmount($totalLine);
@@ -116,10 +107,11 @@ class ProductD3EOrderManager
             $productD3EOrder->addProductD3EOrderLine($productD3EOrderLine);
 
             $productD3EOrderLine->setProductName($productD3EOrderLine->getProductD3E()->getName());
+            $productD3EOrderLine->setProductSubName($productD3EOrderLine->getProductD3E()->getSubName());
+
 
             // Récupération du prix unitaire du produit
-            $unitPrice = $priceListD3EManager->getUnitPriceByPostalCodeQtty($priceList, $productD3EOrder->getPostalCode(), $productD3EOrderLine->getQuantity());
-            $productD3EOrderLine->setUnitPrice($unitPrice);
+            $productD3EOrderLine->setUnitPrice($productD3EOrderLine->getProductD3E()->getPackageUnitPrice());
             $this->em->persist($productD3EOrderLine);
 
             //On recalcule le montant total de la ligne ainsi que celui du devis complet
@@ -140,11 +132,6 @@ class ProductD3EOrderManager
      */
     public function editLine(ProductD3EOrder $productD3EOrder, ProductD3EOrderLine $productD3EOrderLine)
     {
-        $productD3EOrderManager = $this->container->get('paprec_catalog.price_list_d3e_manager');
-
-        // Récupération du prix unitaire du produit
-        $unitPrice = $productD3EOrderManager->getUnitPriceByPostalCodeQtty($productD3EOrderLine->getProductD3E()->getPriceListD3E(), $productD3EOrder->getPostalCode(), $productD3EOrderLine->getQuantity());
-        $productD3EOrderLine->setUnitPrice($unitPrice);
 
         $totalLine = $this->calculateTotalLine($productD3EOrderLine);
         $productD3EOrderLine->setTotalAmount($totalLine);
@@ -162,7 +149,7 @@ class ProductD3EOrderManager
      * @param $qtty
      * @throws Exception
      */
-    public function addLineFromCart(ProductD3EOrder $productD3EOrder, $productId, $qtty, $optHandling, $optSerialNumberStmt, $optDestruction)
+    public function addLineFromCart(ProductD3EOrder $productD3EOrder, $productId, $qtty)
     {
         $productD3EManager = $this->container->get('paprec_catalog.product_d3e_manager');
 
@@ -170,9 +157,6 @@ class ProductD3EOrderManager
             $productD3E = $productD3EManager->get($productId);
             $productD3EOrderLine = new ProductD3EOrderLine();
 
-            $productD3EOrderLine->setOptHandling($optHandling);
-            $productD3EOrderLine->setOptSerialNumberStmt($optSerialNumberStmt);
-            $productD3EOrderLine->setOptDestruction($optDestruction);
             $productD3EOrderLine->setProductD3E($productD3E);
             $productD3EOrderLine->setQuantity($qtty);
 
@@ -210,14 +194,10 @@ class ProductD3EOrderManager
         $numberManager = $this->container->get('paprec_catalog.number_manager');
 
         return round($numberManager->normalize(
-                $productD3EManager->calculatePrice(
-                $productD3EOrderLine->getProductD3E(),
+                $productD3EManager->calculatePricePackage(
                 $productD3EOrderLine->getProductD3EOrder()->getPostalCode(),
                 $productD3EOrderLine->getUnitPrice(),
-                $productD3EOrderLine->getQuantity(),
-                $productD3EOrderLine->getOptHandling(),
-                $productD3EOrderLine->getOptSerialNumberStmt(),
-                $productD3EOrderLine->getOptDestruction()
+                $productD3EOrderLine->getQuantity()
             )
         ), 2);
     }

@@ -20,10 +20,7 @@ class ProductD3EOrderLineEditType extends AbstractType
         $builder
             ->add('quantity', IntegerType::class, array(
                 "required" => true
-            ))
-        ->add('optDestruction', CheckboxType::class)
-        ->add('optHandling', CheckboxType::class)
-        ->add('optSerialNumberStmt', CheckboxType::class);
+            ));
     }
 
     /**

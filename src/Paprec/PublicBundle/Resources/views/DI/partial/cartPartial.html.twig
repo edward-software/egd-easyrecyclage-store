@@ -6,9 +6,9 @@
         {% else %}
             {% for key,cartLine in loadedCart %}
                 {% if key != 'sum' %}
-                    <d  iv class="recap__item">
+                    <div class="recap__item">
 
-                        <div class="quantity">x {{ cartLine['qtty'] }}</div>
+                        <div class="quantity">x{{ cartLine['qtty'] }}</div>
                         <div class="title">{{ cartLine['pName'] }}
                             • {% autoescape false %} {{ cartLine['pCapacity'] }} {% endautoescape %}</div>
                         <div class="delete buttonDeleteProduct" id="buttonDeleteProduct_{{ key }}"

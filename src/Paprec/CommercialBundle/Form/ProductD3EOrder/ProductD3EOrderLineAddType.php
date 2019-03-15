@@ -23,14 +23,13 @@ class ProductD3EOrderLineAddType extends AbstractType
             ->add('quantity', IntegerType::class, array(
                 "required" => true
             ))
-            ->add('optDestruction', CheckboxType::class)
-            ->add('optHandling', CheckboxType::class)
-            ->add('optSerialNumberStmt', CheckboxType::class)
             ->add('productD3E', EntityType::class, array(
                 'class' => 'PaprecCatalogBundle:ProductD3E',
                 'query_builder' => function (ProductD3ERepository $er) {
                     return $er->createQueryBuilder('p')
                         ->where('p.deleted is NULL')
+                        ->andWhere('p.isPackage = true')
+                        ->andWhere('p.isDisplayed = true')
                         ->orderBy('p.name', 'ASC');
                 },
                 'choice_label' => 'name',

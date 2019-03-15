@@ -47,9 +47,28 @@ class ProductD3EOrderType extends AbstractType
                 'required' => false
             ))
             ->add('email', TextType::class)
-            ->add('address', TextareaType::class)
+            ->add('address', TextType::class)
             ->add('postalCode', TextType::class)
             ->add('city', TextType::class)
+            ->add('invoicingAddress', TextType::class, array(
+                'required' => false
+            ))
+            ->add('invoicingPostalCode', TextType::class, array(
+                'required' => false
+            ))
+            ->add('invoicingCity', TextType::class, array(
+                'required' => false
+            ))
+            ->add('preferredContact', ChoiceType::class, array(
+                'choices' => array(
+                    'Téléphone' => 'phone',
+                    'e-mail' => 'email',
+                ),
+                'choice_attr' => function () {
+                    return ['class' => 'input__radio'];
+                },
+                'expanded' => true
+            ))
             ->add('phone', TextType::class)
             ->add('orderStatus', ChoiceType::class, array(
                 "choices" => $options['status'],

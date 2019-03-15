@@ -70,6 +70,7 @@ Public:
     AddToCartOrder:               Ajouter au panier
     SendNeed:                     Envoyer votre besoin
     NoProduct:                    Aucune prestation ajoutée
+    NoContainer:                  Aucun contenant sélectionné
 #    NeedEstimation:               J'estime mon besoin en 3 minutes
     NeedEstimation:               Je compose mon offre
 #    3MinOrder:                    Je commande en ligne en 3 minutes

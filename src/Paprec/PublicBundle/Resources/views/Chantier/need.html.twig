@@ -97,10 +97,13 @@
         {% if cart.displayedProducts and displayedProduct != '' %}
             <div class="infoproduct">
                 <div class="left">
+
                     {% if displayedProduct.pilotPictures | length > 0 %}
                         <img src="{{ asset('/uploads/pictos/' ~ displayedProduct.pilotPictures[0].path) }}"
                              alt="#" class="mainpicture">
                         <br>
+                    {% else %}
+                        &nbsp;
                     {% endif %}
                     {% if displayedProduct.getPicturesPictures() %}
                         {% for picture in displayedProduct.getPicturesPictures() %}
@@ -115,14 +118,23 @@
                     <div class="infoproduct__close"
                          data-url="{{ path('paprec_public_corp_chantier_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: category.id, productId: displayedProduct.id}) }}"
                          id="infoProductClose_{{ displayedProduct.id }}_{{ category.id }}"></div>
-                    <div class="infoproduct__title">
-                        {{ displayedProduct.name }}
-                    </div>
-                    {% if displayedProduct.reference is not null %}
-                        <div class="infoproduct__more">
-                            <a href="{{ displayedProduct.reference }}">{{ 'Public.Cart.LearnMore'|trans }}</a>
+                    <div class="infoproduct__header__container">
+                        <div class="infoproduct__title__container">
+
+                            <div class="infoproduct__title">
+                                {{ displayedProduct.name }}
+                            </div>
+                            <div class="infoproduct__subtitle">
+                                {{ category.name }}
+                            </div>
                         </div>
-                    {% endif %}
+                        {% if displayedProduct.reference is not null %}
+                            <div class="infoproduct__more">
+                                <a href="{{ displayedProduct.reference }}">{{ 'Public.Cart.LearnMore'|trans }}</a>
+                            </div>
+                        {% endif %}
+                    </div>
+
                     <div class="infoproduct__desc">
                         {{ displayedProduct.description|nl2br }}
                     </div>
@@ -141,17 +153,18 @@
                             {{ 'Public.Cart.Disclaimer'|trans }}
                         </div>
                     </div>
-                    <a href="javascript:void(0);"
-                       class="infoproduct__esti">{{ 'Public.Cart.EstimateTrashVolume'|trans }}</a>
-                    <div class="infoproduct__dimensiontitle">{{ 'Public.Cart.Dimensions'|trans }}</div>
+                    <div class="infoproduct__dimension__container">
+                        <div class="infoproduct__dimensiontitle">{{ 'Public.Cart.Dimensions'|trans }}</div>
+                        <a href="javascript:void(0);"
+                           class="infoproduct__esti">{{ 'Public.Cart.EstimateTrashVolume'|trans }}</a>
+                    </div>
                     <div class="infoproduct__dimension">
                         {{ displayedProduct.dimensions|nl2br }}
                     </div>
 
                     <div class="infoproduct__engagment">
                         <input type="checkbox" id="engagment">
-                        <label for="engagment">{{ 'Public.Cart.Engagment'|trans }}</label>
-                        <p class="help">?</p>
+                        <label for="engagment">{{ 'Public.Cart.Engagment'|trans }} <span class="help">i</span></label>
                     </div>
                     {% set qtty = '' %}
                     {% for items in cart.content %}

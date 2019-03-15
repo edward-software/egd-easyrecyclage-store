@@ -711,10 +711,19 @@ function colorBodyFromDivision() {
     if (division !== '') {
         if (division === 'DI') {
             $('body').addClass('tunnel--green');
+            if($('.tunnel-package').is('div')) {
+                $('body').addClass('tunnel--green--package');
+            }
         } else if (division === 'CHANTIER') {
             $('body').addClass('tunnel--orange');
+            if($('.tunnel-package').is('div')) {
+                $('body').addClass('tunnel--orange--package');
+            }
         } else if (division === 'D3E') {
             $('body').addClass('tunnel--purple');
+            if($('.tunnel-package').is('div')) {
+                $('body').addClass('tunnel--purple--package');
+            }
         }
     }
 }

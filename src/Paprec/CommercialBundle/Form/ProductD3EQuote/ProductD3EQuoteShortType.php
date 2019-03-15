@@ -59,13 +59,13 @@ class ProductD3EQuoteShortType extends AbstractType
             ->add('address', TextType::class)
             ->add('postalCode', TextType::class)
             ->add('city', TextType::class)
-            ->add('InvoicingAddress', TextType::class, array(
+            ->add('invoicingAddress', TextType::class, array(
                 'required' => false
             ))
-            ->add('InvoicingPostalCode', TextType::class, array(
+            ->add('invoicingPostalCode', TextType::class, array(
                 'required' => false
             ))
-            ->add('InvoicingCity', TextType::class, array(
+            ->add('invoicingCity', TextType::class, array(
                 'required' => false
             ))
             ->add('preferredContact', ChoiceType::class, array(

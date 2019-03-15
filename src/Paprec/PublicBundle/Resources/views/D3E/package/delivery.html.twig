@@ -1,4 +1,4 @@
-{% extends "@PaprecPublic/Common/Base/base_stepper.html.twig" %}
+{% extends "@PaprecPublic/Common/Base/package/base_stepper.html.twig" %}
 
 {#{% block title %}#}
 
@@ -69,8 +69,8 @@
                 'label': 'ValidateOrder',
                 'cartUuid': cart.id,
                 'division': cart.division,
-                'stepBack': 'step2',
-                'nextStep': 'step5',
+                'stepBack': 'packaged_step2',
+                'nextStep': 'packaged_step4',
                 'idSubmit': 'deliveryFormSubmitButton'
             })) }}
         </div>

@@ -123,16 +123,21 @@
                         {{ 'Public.Cart.Disclaimer'|trans }}
                     </div>
                 </div>
-                <a href="javascript:void(0);"
-                   class="infoproduct__esti">{{ 'Public.Cart.EstimateTrashVolume'|trans }}</a>
-                <div class="infoproduct__dimensiontitle">{{ 'Public.Cart.Dimensions'|trans }}</div>
+                <div class="infoproduct__dimension__container">
+                    <div class="infoproduct__dimensiontitle">{{ 'Public.Cart.Dimensions'|trans }}</div>
+                    <a href="javascript:void(0);"
+                       class="infoproduct__esti">{{ 'Public.Cart.EstimateTrashVolume'|trans }}</a>
+                </div>
+
                 <div class="infoproduct__dimension">
                     {{ displayedProduct.dimensions|nl2br }}
                 </div>
 
+
+
                 <div class="infoproduct__engagment">
                     <input type="checkbox" id="engagment">
-                    <label for="engagment">{{ 'Public.Cart.Engagment'|trans }} <span class="help">?</span>
+                    <label for="engagment">{{ 'Public.Cart.Engagment'|trans }} <span class="help">i</span>
                     </label>
                 </div>
 
@@ -180,7 +185,7 @@
                 'cartUuid': cart.id,
                 'division': cart.division,
                 'stepBack': '',
-                'nextStep': 'step2',
+                'nextStep': 'packaged_step2',
                 'idSubmit': '',
                 'cartEmpty': cart.content is empty
             })) }}
