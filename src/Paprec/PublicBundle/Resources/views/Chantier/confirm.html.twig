@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block sidebar %}
+    <div class="confirm"></div>
     {# Définition des menus affichés dans la sidebar #}
     {% set besoin = 'passed' %}
     {% set coordonnees = 'passed' %}
@@ -35,9 +36,7 @@
                 </div>
             </div>
         </div>
-        <div class="bold">{% if productChantierQuote.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productChantierQuote.firstName }} {{ productChantierQuote.lastName }}
-            ,
-        </div>
+        <div class="bold">{% if productChantierQuote.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productChantierQuote.firstName }} {{ productChantierQuote.lastName }},</div>
 
         <div class="recaptitle">{{ 'Public.Confirm.RecapOrder'|trans }}</div>
         <div class="greyrecap">
@@ -60,16 +59,18 @@
                     <img src="{% if productChantierQuoteLine.productChantier.pilotPictures| length > 0 %}{{ asset('/uploads/pictos/' ~ productChantierQuoteLine.productChantier.pilotPictures[0].path) }}{% endif %}"
                          alt="#">
                 </div>
-                <div class="name">{{ productChantierQuoteLine.quantity }}
-                    x {{ productChantierQuoteLine.productChantier.name }} {{ productChantierQuoteLine.productChantier.capacity }}{% autoescape false %}{{ productChantierQuoteLine.productChantier.capacityUnit }} {% endautoescape %}</div>
-                <div class="nameof">de {{ productChantierQuoteLine.categoryName }}</div>
+                <div class="wrapper-col">
+                    <div class="name">{{ productChantierQuoteLine.quantity }}
+                        x {{ productChantierQuoteLine.productChantier.name }}</div>
+                    <div class="nameof">de {{ productChantierQuoteLine.categoryName }}</div>
+                </div>
                 <div class="desc">
                     Prestation {% if productChantierQuote.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}</div>
             </div>
         {% endfor %}
 
         <a href="{{ paprec_public_site_url }}"
-           class="backtohome button button--green">{{ ('Public.Cart.BackHome'|trans)|upper }}</a>
+           class="backtohome button button--darkblue--outline">{{ ('Public.Cart.BackHome'|trans)|upper }}</a>
 
         {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
             'label': 'Validate',

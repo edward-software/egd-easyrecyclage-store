@@ -130,7 +130,7 @@
                         </div>
                         {% if displayedProduct.reference is not null %}
                             <div class="infoproduct__more">
-                                <a href="{{ displayedProduct.reference }}">{{ 'Public.Cart.LearnMore'|trans }}</a>
+                                <a href="{{ displayedProduct.reference }}">{{ ('Public.Cart.LearnMore'|trans)|slice(0,14) }}...</a>
                             </div>
                         {% endif %}
                     </div>

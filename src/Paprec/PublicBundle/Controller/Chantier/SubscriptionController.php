@@ -235,7 +235,7 @@ class SubscriptionController extends Controller
         $productChantierQuote = $em->getRepository('PaprecCommercialBundle:ProductChantierQuote')->find($quoteId);
         $cart = $cartManager->get($cartUuid);
 
-        return $this->render('confirm.html.twig', array(
+        return $this->render('@PaprecPublic/Chantier/confirm.html.twig', array(
             'productChantierQuote' => $productChantierQuote,
             'cart' => $cart
         ));

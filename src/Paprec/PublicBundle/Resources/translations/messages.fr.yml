@@ -69,7 +69,8 @@ Public:
     AddToCartQuote:               Ajouter au devis
     AddToCartOrder:               Ajouter au panier
     SendNeed:                     Envoyer votre besoin
-    NoProduct:                    Aucune prestation ajoutée
+    NoProduct:                    Aucune prestation
+    Added:                        ajoutée
     NoContainer:                  Aucun contenant sélectionné
 #    NeedEstimation:               J'estime mon besoin en 3 minutes
     NeedEstimation:               Je compose mon offre
