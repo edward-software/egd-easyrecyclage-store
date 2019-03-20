@@ -5,6 +5,8 @@ namespace Paprec\PublicBundle\Controller;
 use GuzzleHttp\Client;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class CommonController extends Controller
 {
@@ -156,6 +158,17 @@ class CommonController extends Controller
      */
     public function getSideBarInfoAction() {
         return $this->render('@PaprecPublic/Common/partial/sidebarInfoPartial.html.twig');
+    }
+
+
+    /**
+     * Retourne le twig.html du cart avec les produits dans celui-ci ainsi que le montant total
+     *
+     * @Route("/common/loadPopupRecycle", name="paprec_public_common_loadPopupRecycle", condition="request.isXmlHttpRequest()")
+     * @throws \Exception
+     */
+    public function loadPopupRecycle(Request $request) {
+        return $this->render('@PaprecPublic/Common/partial/recyclePopup.html.twig');
     }
 }
 

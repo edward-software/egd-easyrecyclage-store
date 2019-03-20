@@ -98,6 +98,19 @@ class ProductChantierOrder
     /**
      * @var string
      *
+     * @ORM\Column(name="phone", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/^((\+)?33|0)[1-9](\d{2}){4}$/",
+     *     match=true,
+     *     message="Le n° de téléphone doit être au format français (ex: +33601020304, 0601020304)"
+     * )
+     */
+    private $phone;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="address", type="text")
      * @Assert\NotBlank()
      */
@@ -122,15 +135,58 @@ class ProductChantierOrder
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Regex(
-     *     pattern="/^((\+)?33|0)[1-9](\d{2}){4}$/",
-     *     match=true,
-     *     message="Le n° de téléphone doit être au format français (ex: +33601020304, 0601020304)"
-     * )
+     * @ORM\Column(name="invoicing_address", type="text", nullable=true)
      */
-    private $phone;
+    private $invoicing_address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="invoicing_postalCode", type="string", length=255, nullable=true)
+     */
+    private $invoicing_postalCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="invoicing_city", type="text", nullable=true)
+     */
+    private $invoicing_city;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="preferredContact", type="string", length=10, nullable=true)
+     */
+    private $preferredContact;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="customerType", type="string", length=50)
+     */
+    private $customerType;
+
+    /******************************
+     * PROFESSIONAL
+     ******************************/
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="siret", type="string", length=15)
+     * @Assert\NotBlank(groups={"pro"})
+     */
+    private $siret;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tvaStatus", type="string", length=50)
+     * @Assert\NotBlank(groups={"pro"})
+     */
+    private $tvaStatus;
+
+
 
     /**
      * @var string
@@ -900,5 +956,173 @@ class ProductChantierOrder
     public function getTotalAmount()
     {
         return $this->totalAmount;
+    }
+
+    /**
+     * Set invoicingAddress.
+     *
+     * @param string|null $invoicingAddress
+     *
+     * @return ProductChantierOrder
+     */
+    public function setInvoicingAddress($invoicingAddress = null)
+    {
+        $this->invoicing_address = $invoicingAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get invoicingAddress.
+     *
+     * @return string|null
+     */
+    public function getInvoicingAddress()
+    {
+        return $this->invoicing_address;
+    }
+
+    /**
+     * Set invoicingPostalCode.
+     *
+     * @param string|null $invoicingPostalCode
+     *
+     * @return ProductChantierOrder
+     */
+    public function setInvoicingPostalCode($invoicingPostalCode = null)
+    {
+        $this->invoicing_postalCode = $invoicingPostalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get invoicingPostalCode.
+     *
+     * @return string|null
+     */
+    public function getInvoicingPostalCode()
+    {
+        return $this->invoicing_postalCode;
+    }
+
+    /**
+     * Set invoicingCity.
+     *
+     * @param string|null $invoicingCity
+     *
+     * @return ProductChantierOrder
+     */
+    public function setInvoicingCity($invoicingCity = null)
+    {
+        $this->invoicing_city = $invoicingCity;
+
+        return $this;
+    }
+
+    /**
+     * Get invoicingCity.
+     *
+     * @return string|null
+     */
+    public function getInvoicingCity()
+    {
+        return $this->invoicing_city;
+    }
+
+    /**
+     * Set preferredContact.
+     *
+     * @param string|null $preferredContact
+     *
+     * @return ProductChantierOrder
+     */
+    public function setPreferredContact($preferredContact = null)
+    {
+        $this->preferredContact = $preferredContact;
+
+        return $this;
+    }
+
+    /**
+     * Get preferredContact.
+     *
+     * @return string|null
+     */
+    public function getPreferredContact()
+    {
+        return $this->preferredContact;
+    }
+
+    /**
+     * Set customerType.
+     *
+     * @param string $customerType
+     *
+     * @return ProductChantierOrder
+     */
+    public function setCustomerType($customerType)
+    {
+        $this->customerType = $customerType;
+
+        return $this;
+    }
+
+    /**
+     * Get customerType.
+     *
+     * @return string
+     */
+    public function getCustomerType()
+    {
+        return $this->customerType;
+    }
+
+    /**
+     * Set siret.
+     *
+     * @param string $siret
+     *
+     * @return ProductChantierOrder
+     */
+    public function setSiret($siret)
+    {
+        $this->siret = $siret;
+
+        return $this;
+    }
+
+    /**
+     * Get siret.
+     *
+     * @return string
+     */
+    public function getSiret()
+    {
+        return $this->siret;
+    }
+
+    /**
+     * Set tvaStatus.
+     *
+     * @param string $tvaStatus
+     *
+     * @return ProductChantierOrder
+     */
+    public function setTvaStatus($tvaStatus)
+    {
+        $this->tvaStatus = $tvaStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get tvaStatus.
+     *
+     * @return string
+     */
+    public function getTvaStatus()
+    {
+        return $this->tvaStatus;
     }
 }

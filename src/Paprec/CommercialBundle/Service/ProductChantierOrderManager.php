@@ -86,40 +86,40 @@ class ProductChantierOrderManager
      */
     public function addLine(ProductChantierOrder $productChantierOrder, ProductChantierOrderLine $productChantierOrderLine)
     {
-        $productChantierOrderLine->setProductChantierOrder($productChantierOrder);
-        $productChantierOrder->addProductChantierOrderLine($productChantierOrderLine);
-        $productChantierCategory = $this->em->getRepository('PaprecCatalogBundle:ProductChantierCategory')->findOneBy(
-            array(
-                'productChantier' => $productChantierOrderLine->getProductChantier(),
-                'category' => $productChantierOrderLine->getCategory()
-            )
-        );
-        $productChantierOrderLine->setUnitPrice($productChantierCategory->getUnitPrice());
-        $productChantierOrderLine->setProductName($productChantierOrderLine->getProductChantier()->getName());
-        $productChantierOrderLine->setCategoryName($productChantierOrderLine->getCategory()->getName());
-
-
         // On check s'il existe déjà une ligne pour ce produit, pour l'incrémenter
         $currentOrderLine = $this->em->getRepository('PaprecCommercialBundle:ProductChantierOrderLine')->findOneBy(
             array(
                 'productChantierOrder' => $productChantierOrder,
-                'productChantier' => $productChantierOrderLine->getProductChantier(),
-                'category' => $productChantierOrderLine->getCategory()
+                'productChantier' => $productChantierOrderLine->getProductChantier()
             )
         );
 
         if ($currentOrderLine) {
             $quantity = $productChantierOrderLine->getQuantity() + $currentOrderLine->getQuantity();
             $currentOrderLine->setQuantity($quantity);
+
+            //On recalcule le montant total de la ligne ainsi que celui du devis complet
+            $totalLine = $this->calculateTotalLine($currentOrderLine);
+            $currentOrderLine->setTotalAmount($totalLine);
+            $this->em->flush();
         } else {
+            // On lie la grille et la ligne
+            $productChantierOrderLine->setProductChantierOrder($productChantierOrder);
+            $productChantierOrder->addProductChantierOrderLine($productChantierOrderLine);
 
+            $productChantierOrderLine->setProductName($productChantierOrderLine->getProductChantier()->getName());
+            $productChantierOrderLine->setProductSubName($productChantierOrderLine->getProductChantier()->getSubName());
+
+
+            // Récupération du prix unitaire du produit
+            $productChantierOrderLine->setUnitPrice($productChantierOrderLine->getProductChantier()->getPackageUnitPrice());
             $this->em->persist($productChantierOrderLine);
-        }
 
-        //On recalcule le montant total de la ligne ainsi que celui du devis complet
-        $totalLine = $this->calculateTotalLine($productChantierOrderLine);
-        $productChantierOrderLine->setTotalAmount($totalLine);
-        $this->em->flush();
+            //On recalcule le montant total de la ligne ainsi que celui du devis complet
+            $totalLine = $this->calculateTotalLine($productChantierOrderLine);
+            $productChantierOrderLine->setTotalAmount($totalLine);
+            $this->em->flush();
+        }
 
         $total = $this->calculateTotal($productChantierOrder);
         $productChantierOrder->setTotalAmount($total);
@@ -149,19 +149,16 @@ class ProductChantierOrderManager
      * @param $qtty
      * @throws Exception
      */
-    public function addLineFromCart(ProductChantierOrder $productChantierOrder, $productId, $qtty, $categoryId)
+    public function addLineFromCart(ProductChantierOrder $productChantierOrder, $productId, $qtty)
     {
         $productChantierManager = $this->container->get('paprec_catalog.product_chantier_manager');
-        $categoryManager = $this->container->get('paprec_catalog.category_manager');
 
         try {
             $productChantier = $productChantierManager->get($productId);
             $productChantierOrderLine = new ProductChantierOrderLine();
-            $category = $categoryManager->get($categoryId);
 
 
             $productChantierOrderLine->setProductChantier($productChantier);
-            $productChantierOrderLine->setCategory($category);
             $productChantierOrderLine->setQuantity($qtty);
             $this->addLine($productChantierOrder, $productChantierOrderLine);
         } catch (Exception $e) {
@@ -256,7 +253,8 @@ class ProductChantierOrderManager
      * @return bool
      * @throws Exception
      */
-    public function sendAssociatedInvoiceMail(ProductChantierOrder $productChantierOrder) {
+    public function sendAssociatedInvoiceMail(ProductChantierOrder $productChantierOrder)
+    {
         try {
             $from = $this->container->getParameter('paprec_email_sender');
 
@@ -266,7 +264,7 @@ class ProductChantierOrderManager
                 return false;
             }
 
-            $pdfFilename = date('Y-m-d') . '-EasyRecyclage-Facture-Chantier-'  . $productChantierOrder->getId() . '.pdf';
+            $pdfFilename = date('Y-m-d') . '-EasyRecyclage-Facture-Chantier-' . $productChantierOrder->getId() . '.pdf';
 
             if ($productChantierOrder->getAssociatedInvoice()) {
                 $filename = $productChantierOrder->getAssociatedInvoice();
@@ -347,10 +345,10 @@ class ProductChantierOrderManager
                     ),
                     'text/html'
                 )
-            ->attach($attachment);
+                ->attach($attachment);
 
             if ($this->container->get('mailer')->send($message)) {
-                if(file_exists($pdfFile)) {
+                if (file_exists($pdfFile)) {
                     unlink($pdfFile);
                 }
                 return true;

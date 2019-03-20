@@ -722,4 +722,28 @@ class ProductDI
     {
         return $this->packageUnitPrice;
     }
+
+    /**
+     * Set subName.
+     *
+     * @param string|null $subName
+     *
+     * @return ProductDI
+     */
+    public function setSubName($subName = null)
+    {
+        $this->subName = $subName;
+
+        return $this;
+    }
+
+    /**
+     * Get subName.
+     *
+     * @return string|null
+     */
+    public function getSubName()
+    {
+        return $this->subName;
+    }
 }

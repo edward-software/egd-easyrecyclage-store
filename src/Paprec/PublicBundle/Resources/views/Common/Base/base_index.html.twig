@@ -22,7 +22,7 @@
 
 {% block main_content_stepper %}
     <form action="#">
-        <div class="step">
+        <div class="step step--index">
             <div class="step__left">
                 <div class="step__title">{{ 'Public.Home.Recycle'|trans }}</div>
             </div>
@@ -47,34 +47,31 @@
             {% endif %}
         </div>
         {% block division_selected %}
-            <div class="step" style="border-bottom:0px;">
+            <div class="step step--index">
                 <div class="step__left">
                     <div class="step__title">{{ 'Public.Home.Location'|trans }}</div>
                 </div>
                 <div class="step__right">
-                    <div class="step__right">
-                        <input class="input" type="text" id="locationSelect"
-                               name="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}
-                               data-url="{{ path('paprec_public_corp_home_addLocation', {cartUuid: cart.id, location: 'locationTmp', city: 'cityTmp', postalCode: 'postalCodeTmp', long: 'longTmp', lat:'latTmp' }) }}"
-                               placeholder="{{ 'Public.Cart.PostalCode'|trans }}">
+                    <input class="input" type="text" id="locationSelect"
+                           name="locationSelect" {% if cart.location and cart.location != '' %} value="{{ cart.location }}"{% endif %}
+                           data-url="{{ path('paprec_public_corp_home_addLocation', {cartUuid: cart.id, location: 'locationTmp', city: 'cityTmp', postalCode: 'postalCodeTmp', long: 'longTmp', lat:'latTmp' }) }}"
+                           placeholder="{{ 'Public.Cart.PostalCode'|trans }}">
 
-                        {% block frequency %}
-                            <br>
-                            <div id="frequencyRadioBox"
-                                 data-url="{{ path('paprec_public_corp_home_addFrequency', {cartUuid: cart.id, frequency: 'frequencyTmp' }) }}">
-                                <input class="input__radio" type="radio" id="ponctualRadio"
-                                       name="frequencyRadio"
-                                       value="ponctual" {% if cart.frequency == 'ponctual' %}checked{% endif %}>
-                                <label for="ponctualRadio">{{ 'Public.Cart.Ponctual'|trans }}</label>
+                    {% block frequency %}
+                        <div id="frequencyRadioBox"
+                             data-url="{{ path('paprec_public_corp_home_addFrequency', {cartUuid: cart.id, frequency: 'frequencyTmp' }) }}">
+                            <input class="input__radio" type="radio" id="ponctualRadio"
+                                   name="frequencyRadio"
+                                   value="ponctual" {% if cart.frequency == 'ponctual' %}checked{% endif %}>
+                            <label for="ponctualRadio">{{ 'Public.Cart.Ponctual'|trans }}</label>
 
-                                <input class="input__radio" type="radio" id="regularRadio" name="frequencyRadio"
-                                       value="regular" {% if cart.frequency == 'regular' %}checked{% endif %}>
-                                <label for="regularRadio">{{ 'Public.Cart.Regular'|trans }}</label>
-                            </div>
-                            <div class="clearfix"></div>
-                        {% endblock %}
+                            <input class="input__radio" type="radio" id="regularRadio" name="frequencyRadio"
+                                   value="regular" {% if cart.frequency == 'regular' %}checked{% endif %}>
+                            <label for="regularRadio">{{ 'Public.Cart.Regular'|trans }}</label>
+                        </div>
+                        <div class="clearfix"></div>
+                    {% endblock %}
 
-                    </div>
                 </div>
             </div>
 

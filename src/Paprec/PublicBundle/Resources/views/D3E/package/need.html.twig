@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block cta_panel %}
-    <div>
+    <div class="step__tab__container">
         <div class="step__tab active">{{ 'Public.Cart.NeedEstimation'|trans }}</div>
         <a class="step__tab"
            href="{{ path('paprec_public_corp_home_requestWriting_step1', {cartUuid: cart.id}) }}">{{ 'Public.Cart.FillForm'|trans }}</a>
@@ -47,6 +47,7 @@
         {% endif %}
         {% if (cpt%5 == 0 and cpt > 5) %}
         <div class="following-row">
+            <div>
             {% endif %}
             {% if product.id in cart.displayedProducts %}
                 {% set displayedProduct = product %}
@@ -75,6 +76,7 @@
                          alt="#" class="mainpicture">
                     <br>
                 {% endif %}
+                &nbsp;
                 {% if displayedProduct.getPicturesPictures() %}
                     {% for picture in displayedProduct.getPicturesPictures() %}
                         <img src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
@@ -100,7 +102,7 @@
 
                     {% if displayedProduct.reference is not null %}
                         <div class="infoproduct__more">
-                            <a href="{{ displayedProduct.reference }}">{{ 'Public.Cart.LearnMore'|trans }}</a>
+                            <a href="{{ displayedProduct.reference }}">{{ ('Public.Cart.LearnMore'|trans)|slice(0,14) }}...</a>
                         </div>
                     {% endif %}
                 </div>
@@ -179,7 +181,7 @@
     {% endblock %}
 
     {% block cta_bottom_panel %}
-        <div class="step">
+        <div class="step wrapper-button-bottom">
             {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
                 'label': 'ValidateNeed',
                 'cartUuid': cart.id,

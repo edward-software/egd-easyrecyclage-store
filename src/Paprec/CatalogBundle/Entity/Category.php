@@ -111,10 +111,6 @@ class Category
      */
     private $productChantierQuoteLines;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Paprec\CommercialBundle\Entity\ProductChantierOrderLine", mappedBy="category", cascade={"all"})
-     */
-    private $productChantierOrderLines;
 
 
     public function __construct()
@@ -554,39 +550,4 @@ class Category
         return $this->productChantierQuoteLines;
     }
 
-    /**
-     * Add productChantierOrderLine.
-     *
-     * @param \Paprec\CommercialBundle\Entity\ProductChantierOrderLine $productChantierOrderLine
-     *
-     * @return Category
-     */
-    public function addProductChantierOrderLine(\Paprec\CommercialBundle\Entity\ProductChantierOrderLine $productChantierOrderLine)
-    {
-        $this->productChantierOrderLines[] = $productChantierOrderLine;
-
-        return $this;
-    }
-
-    /**
-     * Remove productChantierOrderLine.
-     *
-     * @param \Paprec\CommercialBundle\Entity\ProductChantierOrderLine $productChantierOrderLine
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeProductChantierOrderLine(\Paprec\CommercialBundle\Entity\ProductChantierOrderLine $productChantierOrderLine)
-    {
-        return $this->productChantierOrderLines->removeElement($productChantierOrderLine);
-    }
-
-    /**
-     * Get productChantierOrderLines.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getProductChantierOrderLines()
-    {
-        return $this->productChantierOrderLines;
-    }
 }

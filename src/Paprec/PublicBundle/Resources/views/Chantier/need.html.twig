@@ -18,8 +18,8 @@
 {% endblock %}
 
 {% block cta_panel %}
-    <div>
-        <div class="step__tab active">{{ 'Public.Cart.NeedEstimation'|trans }}</div>
+    <div class="step__tab__container">
+        <div class="step__tab active  step__tab--cart">{{ 'Public.Cart.NeedEstimation'|trans }}</div>
         <a class="step__tab"
            href="{{ path('paprec_public_corp_home_requestWriting_step1', {cartUuid: cart.id}) }}">{{ 'Public.Cart.FillForm'|trans }}</a>
         <div class="clearfix"></div>
@@ -206,7 +206,7 @@
         {% endblock %}
 
         {% block cta_bottom_panel %}
-            <div class="step">
+            <div class="step wrapper-button-bottom">
                 {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
                     'label': 'ValidateNeed',
                     'cartUuid': cart.id,

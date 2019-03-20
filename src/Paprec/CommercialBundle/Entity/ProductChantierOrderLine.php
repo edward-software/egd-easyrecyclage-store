@@ -55,9 +55,9 @@ class ProductChantierOrderLine
     /**
      * @var string
      *
-     * @ORM\Column(name="categoryName", type="string", length=255)
+     * @ORM\Column(name="productSubName", type="string", length=255)
      */
-    private $categoryName;
+    private $productSubName;
 
     /**
      * @var int
@@ -99,12 +99,6 @@ class ProductChantierOrderLine
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paprec\CatalogBundle\Entity\Category", inversedBy="productChantierOrderLines")
-     * @ORM\JoinColumn(name="categoryId", referencedColumnName="id", nullable=false)
-     */
-    private $category;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Paprec\CommercialBundle\Entity\ProductChantierOrder", inversedBy="productChantierOrderLines")
      * @ORM\JoinColumn(name="productChantierOrderId", referencedColumnName="id", nullable=false)
      */
@@ -118,6 +112,7 @@ class ProductChantierOrderLine
     {
         $this->dateCreation = new \DateTime();
     }
+
 
 
     /**
@@ -227,27 +222,75 @@ class ProductChantierOrderLine
     }
 
     /**
-     * Set categoryName.
+     * Set productSubName.
      *
-     * @param string $categoryName
+     * @param string $productSubName
      *
      * @return ProductChantierOrderLine
      */
-    public function setCategoryName($categoryName)
+    public function setProductSubName($productSubName)
     {
-        $this->categoryName = $categoryName;
+        $this->productSubName = $productSubName;
 
         return $this;
     }
 
     /**
-     * Get categoryName.
+     * Get productSubName.
      *
      * @return string
      */
-    public function getCategoryName()
+    public function getProductSubName()
     {
-        return $this->categoryName;
+        return $this->productSubName;
+    }
+
+    /**
+     * Set unitPrice.
+     *
+     * @param int $unitPrice
+     *
+     * @return ProductChantierOrderLine
+     */
+    public function setUnitPrice($unitPrice)
+    {
+        $this->unitPrice = $unitPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get unitPrice.
+     *
+     * @return int
+     */
+    public function getUnitPrice()
+    {
+        return $this->unitPrice;
+    }
+
+    /**
+     * Set totalAmount.
+     *
+     * @param int $totalAmount
+     *
+     * @return ProductChantierOrderLine
+     */
+    public function setTotalAmount($totalAmount)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return int
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
     }
 
     /**
@@ -299,30 +342,6 @@ class ProductChantierOrderLine
     }
 
     /**
-     * Set category.
-     *
-     * @param \Paprec\CatalogBundle\Entity\Category $category
-     *
-     * @return ProductChantierOrderLine
-     */
-    public function setCategory(\Paprec\CatalogBundle\Entity\Category $category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category.
-     *
-     * @return \Paprec\CatalogBundle\Entity\Category
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
      * Set productChantierOrder.
      *
      * @param \Paprec\CommercialBundle\Entity\ProductChantierOrder $productChantierOrder
@@ -344,53 +363,5 @@ class ProductChantierOrderLine
     public function getProductChantierOrder()
     {
         return $this->productChantierOrder;
-    }
-
-    /**
-     * Set unitPrice.
-     *
-     * @param int $unitPrice
-     *
-     * @return ProductChantierOrderLine
-     */
-    public function setUnitPrice($unitPrice)
-    {
-        $this->unitPrice = $unitPrice;
-
-        return $this;
-    }
-
-    /**
-     * Get unitPrice.
-     *
-     * @return int
-     */
-    public function getUnitPrice()
-    {
-        return $this->unitPrice;
-    }
-
-    /**
-     * Set totalAmount.
-     *
-     * @param int $totalAmount
-     *
-     * @return ProductChantierOrderLine
-     */
-    public function setTotalAmount($totalAmount)
-    {
-        $this->totalAmount = $totalAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get totalAmount.
-     *
-     * @return int
-     */
-    public function getTotalAmount()
-    {
-        return $this->totalAmount;
     }
 }

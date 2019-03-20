@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block cta_panel %}
-    <div>
+    <div class="step__tab__container">
         <a class="step__tab active"
            href="#">{{ 'Public.Cart.NeedEstimation'|trans }}</a>
         <a class="step__tab"
@@ -219,7 +219,7 @@
     {% endblock %}
 
     {% block cta_bottom_panel %}
-        <div class="step">
+        <div class="step wrapper-button-bottom">
             {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
                 'label': 'ValidateNeed',
                 'cartUuid': cart.id,

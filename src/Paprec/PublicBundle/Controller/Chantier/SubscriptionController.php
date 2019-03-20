@@ -483,6 +483,71 @@ class SubscriptionController extends Controller
         ));
     }
 
+
+    /**
+     * Etape "Mes coordonnées"
+     * où l'on créé la commande au submit du formulaire
+     *
+     * @Route("/chantier/package/step2/{cartUuid}", name="paprec_public_corp_chantier_subscription_packaged_step2")
+     * @throws \Exception
+     */
+    public function step2PackageAction(Request $request, $cartUuid)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+
+        $cart = $cartManager->get($cartUuid);
+        $type = $cart->getType();
+
+        $postalCode = $cart->getPostalCode();
+        $city = $cart->getCity();
+
+        if ($type == 'package') {
+            $productChantierOrderManager = $this->get('paprec_commercial.product_chantier_order_manager');
+
+            $productChantierOrder = new ProductChantierOrder();
+            $productChantierOrder->setCity($city);
+            $productChantierOrder->setPostalCode($postalCode);
+            $productChantierOrder->setInvoicingPostalCode($postalCode);
+            $productChantierOrder->setInvoicingCity($city);
+
+            $form = $this->createForm(ProductChantierOrderShortType::class, $productChantierOrder);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $productChantierOrder = $form->getData();
+                $productChantierOrder->setOrderStatus('CREATED');
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($productChantierOrder);
+                $em->flush();
+
+                // On récupère tous les produits ajoutés au Cart
+                if ($cart->getContent() !== null) {
+                    foreach ($cart->getContent() as $item) {
+                        $productChantierOrderManager->addLineFromCart($productChantierOrder, $item['pId'], $item['qtty']);
+                    }
+                }
+
+                $sendNewProductD3EOrderMail = $productChantierOrderManager->sendNewProductChantierOrderEmail($productChantierOrder);
+                $sendOrderSummaryEmail = $productChantierOrderManager->sendOrderSummaryEmail($productChantierOrder);
+
+                if ($sendNewProductD3EOrderMail && $sendOrderSummaryEmail) {
+                    return $this->redirectToRoute('paprec_public_corp_chantier_subscription_packaged_step2', array(
+                        'cartUuid' => $cart->getId(),
+                        'orderId' => $productChantierOrder->getId()
+                    ));
+                }
+            }
+        }
+        return $this->render('@PaprecPublic/Chantier/package/contactDetails.html.twig', array(
+            'cart' => $cart,
+            'form' => $form->createView()
+        ));
+    }
+
+
     /**
      * Ajoute au cart un displayedProduct
      *

@@ -30,29 +30,14 @@ class ProductChantierOrderLineAddType extends AbstractType
                 'class' => 'PaprecCatalogBundle:ProductChantier',
                 'query_builder' => function (ProductChantierRepository $er) {
                     return $er->createQueryBuilder('p')
-                        ->leftJoin('PaprecCatalogBundle:ProductChantierCategory', 'pc', \Doctrine\ORM\Query\Expr\Join::WITH, 'p.id = pc.category')
-                        ->distinct()
                         ->where('p.deleted is NULL')
+                        ->andWhere('p.isPackage = true')
+                        ->andWhere('p.isDisplayed = true')
                         ->orderBy('p.name', 'ASC');
                 },
                 'choice_label' => 'name',
                 'placeholder' => '',
                 'empty_data' => null,
-            ))
-            ->add('category', EntityType::class, array(
-                'class' => 'PaprecCatalogBundle:Category',
-                'query_builder' => function (CategoryRepository $er) {
-                    return $er->createQueryBuilder('c')
-                        ->innerJoin('PaprecCatalogBundle:ProductChantierCategory', 'pc', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.id = pc.category')
-                        ->where('c.division = \'CHANTIER\'')
-                        ->andWhere('c.deleted is NULL')
-                        ->andWhere('pc.productChantier = :selectedProductId')
-                        ->distinct()
-                        ->orderBy('c.name', 'ASC')
-                        ->setParameter('selectedProductId', $this->selectedProductId);
-                },
-                'placeholder' => '',
-                'empty_data' => null
             ));
     }
 

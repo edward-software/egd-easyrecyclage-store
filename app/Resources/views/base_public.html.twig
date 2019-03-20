@@ -31,7 +31,7 @@
     <div class="wrapper">
         <div class="header__menu">
 
-            <a class="header__cta" href="{{ path('paprec_public_corp_home_index') }}">Recyclez<br>vos déchets</a>
+            <a class="header__cta" href="javascript:void(0);">Recyclez<br>vos déchets</a>
             <ul class="menu">
                 {{ render(controller('PaprecPublicBundle:Common:getMenuFromWP', {'slug': 'header-menu'})) }}
             </ul>
@@ -127,7 +127,7 @@
 </footer>
 <!-- /footer -->
 <script src="{{ asset('build/public.js') }}"></script>
-
+<script src="{{ paprec_public_site_url }}/wp-content/themes/paprec/js/scripts.js"></script>
 {% block javascripts %}
 
 {% endblock %}
