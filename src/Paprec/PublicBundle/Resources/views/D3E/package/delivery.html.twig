@@ -24,8 +24,7 @@
         <input type="hidden" id="divisionType" value="{{ cart.division }}">
         <div class="step">
             <div class="bold">
-                {% if productD3EOrder.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productD3EOrder.firstName }} {{ productD3EOrder.lastName }}
-                ,
+                {% if productD3EOrder.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productD3EOrder.firstName }} {{ productD3EOrder.lastName }},
             </div>
             <div class="recaptitle">Vous pouvez maintenant nous indiquer vos préférences de livraison.</div>
             <div>

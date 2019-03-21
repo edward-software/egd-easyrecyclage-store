@@ -23,8 +23,7 @@
     <form id="paymentForm" action="" method="post" class="main">
         <input type="hidden" id="divisionType" value="{{ cart.division }}">
         <div class="step">
-            <div class="bold">{% if productD3EOrder.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productD3EOrder.firstName }} {{ productD3EOrder.lastName }}
-                ,
+            <div class="bold">{% if productD3EOrder.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productD3EOrder.firstName }} {{ productD3EOrder.lastName }},
             </div>
             <div class="recaptitle">{{ 'Public.Payment.Title'|trans }}</div>
             <div class="choice">
