@@ -31,7 +31,8 @@
     <div class="wrapper">
         <div class="header__menu">
 
-            <a class="header__cta" href="javascript:void(0);" data-url="{{ path('paprec_public_common_loadPopupRecycle') }}">Recyclez<br>vos déchets</a>
+            <a class="header__cta" href="javascript:void(0);"
+               data-url="{{ path('paprec_public_common_loadPopupRecycle') }}">Recyclez<br>vos déchets</a>
             <ul class="menu">
                 {{ render(controller('PaprecPublicBundle:Common:getMenuFromWP', {'slug': 'header-menu'})) }}
             </ul>
@@ -60,7 +61,24 @@
     <div class="breadcrumb">
         <div class="wrapper">
             <a href="#">Accueil</a> > <a href="#">Recyclez vos déchets</a>
-            <h2>Votre solution <span>EasyRecyclage</span> personalisée</h2>
+            <h2>Votre solution
+                <span>EasyRecyclage</span>
+                {% if 'packaged' in  app.request.get('_route') %}
+                    {{ 'Public.Breadcrumb.Packaged'|trans }}
+                    {% if 'chantier' in app.request.get('_route') %}
+                        {{ 'Public.Breadcrumb.Chantier'|trans }}
+                    {% else %}
+                        {{ 'Public.Breadcrumb.D3E'|trans }}
+                    {% endif %}
+
+                {% else %}
+                    {% if 'corp_' in app.request.get('_route') %}
+                        {{ 'Public.Breadcrumb.OnMeasure'|trans }}
+                    {% else %}
+                        {{ 'Public.Breadcrumb.Custom'|trans }}
+                    {% endif %}
+                {% endif %}
+            </h2>
         </div>
     </div>
     {% block whoare %}

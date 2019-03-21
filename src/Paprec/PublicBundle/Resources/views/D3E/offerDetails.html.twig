@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block sidebar %}
+    <div class="confirm"></div>
     {# Définition des menus affichés dans la sidebar #}
     {% set besoin = 'passed' %}
     {% set coordonnees = 'passed' %}
@@ -35,8 +36,7 @@
                 </div>
             </div>
         </div>
-        <div class="bold">{% if productD3EQuote.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productD3EQuote.firstName }} {{ productD3EQuote.lastName }}
-            ,
+        <div class="bold">{% if productD3EQuote.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productD3EQuote.firstName }} {{ productD3EQuote.lastName }},
         </div>
 
         <div class="recaptitle">{{ 'Public.Confirm.RecapOrder'|trans }}</div>
@@ -60,22 +60,21 @@
                     <img src="{% if productD3EQuoteLine.productD3E.pictos| length > 0 %}{{ asset('/uploads/pictos/' ~ productD3EQuoteLine.productD3E.pictos[0].path) }}{% endif %}"
                          alt="#">
                 </div>
-                <div class="column">
+                <div class="wrapper-col">
                     <div class="name">{{ productD3EQuoteLine.quantity }}
                         x {{ productD3EQuoteLine.productD3E.name }}</div>
-                    <div class="desc">
-                        {{ 'Commercial.ProductD3EQuoteLine.TypeName'|trans }} {{ productD3EQuoteLine.typeName }}
-                        Prestation {% if productD3EQuote.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}</div>
+                    <div class="nameof">
+                        {{ 'Commercial.ProductD3EQuoteLine.TypeName'|trans }} {{ productD3EQuoteLine.typeName }}</div>
                 </div>
-                <div class="frequency">
+                <div class="desc">
                     Prestation {% if productD3EQuote.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}
                 </div>
             </div>
 
         {% endfor %}
-
+        <br>
         <a href="{{ paprec_public_site_url }}"
-           class="backtohome button button--green">{{ ('Public.Cart.BackHome'|trans)|upper }}</a>
+           class="backtohome button button--darkblue--outline">{{ ('Public.Cart.BackHome'|trans)|upper }}</a>
 
         {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
             'label': 'Validate',

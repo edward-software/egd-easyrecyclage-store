@@ -13,7 +13,7 @@
 {% block sidebar %}
     <div class="contact-details-form"></div>
     {# Définition des menus affichés dans la sidebar #}
-    {% set besoin = 'passed' %}
+    {% set besoin = 'active' %}
     {% set coordonnees = 'active' %}
     {% set offre = '' %}
     {{ parent() }}
@@ -22,7 +22,7 @@
 {% block main_content_stepper %}
     <form id="contactDetailsForm" action="" method="post">
         <input type="hidden" id="divisionType" value="{{ cart.division }}">
-        <div class="step">
+        <div class="step step--index">
             <div class="step__left">
                 <div class="step__title">{{ 'Public.Home.IAm'|trans }}</div>
             </div>
@@ -89,8 +89,8 @@
                 <div class="clearfix step--marginfield"></div>
 
                 {{ form_widget(form.terms) }}
-                {{ 'Commercial.QuoteRequest.TermsAccept'|trans }} <a href="#"
-                                                                     class="">{{ 'Commercial.QuoteRequest.TermsCGV'|trans }}</a>
+                {{ 'Commercial.QuoteRequest.TermsAccept'|trans }}
+                <a href="#" class="">{{ 'Commercial.QuoteRequest.TermsCGV'|trans }}</a>
                 {{ form_errors(form.terms) }}
                 <div>
                     Les informations recueillies sur ce formulaire sont enregistrées dans un fichier informatisé pour

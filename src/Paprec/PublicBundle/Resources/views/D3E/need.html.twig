@@ -82,7 +82,7 @@
             {% if cart.content is empty or productHasContent == '0' %}
                 <div class="infoproduct__type">
                     <div class="infoproduct__type__left">
-                        <div class="infoproduct__title">
+                        <div class="infoproduct__title infoproduct__title--type">
                             {{ ('Public.Cart.TrashType'|trans)|upper }}
                         </div>
                         <div class="-align-right">
@@ -97,7 +97,7 @@
                         </div>
                         <div class="clearfix"></div>
                         <br>
-                        <div class="infoproduct__title">{{ ('Public.Cart.Options'|trans)|upper }}</div>
+                        <div class="infoproduct__title infoproduct__title--type">{{ ('Public.Cart.Options'|trans)|upper }}</div>
                         <div class="-align-right">
                             <input type="checkbox"
                                    class="infoproduct__type__checkbox infoproduct__type__checkbox__optHandlingProductSelect"

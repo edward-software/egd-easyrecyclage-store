@@ -74,7 +74,6 @@
             {% endif %}
             {% if (cpt%5 == 0 and cpt > 5) %}
             <div class="following-row">
-                <div>
                     {% endif %}
                     {% if product.id in cart.displayedProducts and category.id in cart.displayedProducts|keys %}
                         {% set displayedProduct = product %}

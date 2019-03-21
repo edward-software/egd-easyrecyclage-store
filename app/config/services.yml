@@ -10,7 +10,7 @@ parameters:
         - D3E
 
     paprec_divisions_select:
-        DI: Mes déchets d'entreprise
+        DI: Mes déchets non dangereux (DND)
         CHANTIER: Mes déchets de chantier
         D3E: Mes déchets électriques et électroniques
         5FLUX: Mes déchets de bureau - 5 flux

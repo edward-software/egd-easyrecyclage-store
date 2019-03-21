@@ -85,6 +85,7 @@ Public:
     ValidateOrder:                Valider votre commande
     Confirm:              Confirmez
     GoToDelivery:                 Aller à la livraison
+    GoToPayment:                  Aller au paiement
     MyTrash:                      Mes déchets
     ToCollect:                    à collecter
     MyServices:                   Mes prestations
@@ -113,3 +114,10 @@ Public:
   Step1:
     NextStepQuote:                Valider votre besoin
     NextStepOrder:                Commander
+
+  Breadcrumb:
+    OnMeasure:                    sur-mesure
+    Custom:                       personnalisée
+    Packaged:                     packagée
+    Chantier:                     chantier
+    D3E:                          D3E

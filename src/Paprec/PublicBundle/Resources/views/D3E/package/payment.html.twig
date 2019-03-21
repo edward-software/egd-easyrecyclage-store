@@ -1,4 +1,4 @@
-{% extends "@PaprecPublic/Common/Base/base_stepper.html.twig" %}
+{% extends "@PaprecPublic/Common/Base/package/base_stepper.html.twig" %}
 
 {#{% block title %}#}
 
@@ -13,7 +13,7 @@
 {% block sidebar %}
     <div class="payment-form"></div>
     {# Définition des menus affichés dans la sidebar #}
-    {% set besoin = 'passed' %}
+    {% set besoin = 'active' %}
     {% set coordonnees = 'passed' %}
     {% set livraison = 'passed' %}
     {% set paiement = 'active' %}

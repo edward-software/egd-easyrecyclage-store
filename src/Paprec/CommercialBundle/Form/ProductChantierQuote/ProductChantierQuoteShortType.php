@@ -71,7 +71,7 @@ class ProductChantierQuoteShortType extends AbstractType
                     'e-mail' => 'email',
                 ),
                 'choice_attr' => function () {
-                    return ['class' => 'input__radio'];
+                    return ['class' => 'input__radio input__radio--short'];
                 },
                 'expanded' => true
             ))
