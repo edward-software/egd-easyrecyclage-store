@@ -125,7 +125,7 @@
                                 {{ displayedProduct.name }}
                             </div>
                             <div class="infoproduct__subtitle">
-                                {{ category.name }}
+                                {{ product.capacity|nl2br }} {% autoescape false %} {{ product.capacityUnit }}{% endautoescape %}
                             </div>
                         </div>
                         {% if displayedProduct.reference is not null %}

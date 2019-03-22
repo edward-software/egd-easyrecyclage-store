@@ -240,6 +240,7 @@ class CartManager
         }
 
         $content[] = $product;
+        $cart->setDisplayedProducts = array();
         $cart->setContent($content);
         $this->em->persist($cart);
         $this->em->flush();

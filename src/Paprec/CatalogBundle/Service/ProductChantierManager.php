@@ -95,6 +95,7 @@ class ProductChantierManager
                 ->createQueryBuilder('p')
                 ->innerJoin('PaprecCatalogBundle:ProductChantierCategory', 'pc', \Doctrine\ORM\Query\Expr\Join::WITH, 'p.id = pc.productChantier')
                 ->where('pc.category = :category')
+                ->andWhere('p.isPackage = false')
                 ->orderBy('pc.position', 'ASC')
                 ->setParameter("category", $categoryId);
 //            if ($type == 'order') {
