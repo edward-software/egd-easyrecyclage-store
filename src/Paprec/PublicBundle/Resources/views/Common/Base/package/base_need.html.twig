@@ -10,26 +10,35 @@
 
 {% block main_content_index %}
 
-    <div class="container__step">
-        <div class="container__step-title">
-            <h2>Ma solution recyclage</h2>
-        </div>
+    {% if products is not empty %}
+        <div class="container__step">
+            <div class="container__step-title">
+                <h2>Ma solution recyclage</h2>
+            </div>
 
-        <div class="step">
-            <div class="step__left">
-                <div class="step__title">
-                    {% block product_step_title %}{% endblock %}
+            <div class="step">
+                <div class="step__left">
+                    <div class="step__title">
+                        {% block product_step_title %}{% endblock %}
+                    </div>
                 </div>
-            </div>
-            <div class="step__right">
-                {% block products %}
+                <div class="step__right">
+                    {% block products %}
 
-                {% endblock %}
-            </div>
+                    {% endblock %}
+                </div>
 
+            </div>
         </div>
-    </div>
 
-    <div class="clearfix"></div>
-    {% block cta_bottom_panel %} {% endblock %}
+
+        <div class="clearfix"></div>
+        {% block cta_bottom_panel %} {% endblock %}
+    {% else %}
+        <div class="step step--index">
+            <div class="unavailable-area">
+
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

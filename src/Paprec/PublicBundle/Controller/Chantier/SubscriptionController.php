@@ -534,7 +534,7 @@ class SubscriptionController extends Controller
                 $sendOrderSummaryEmail = $productChantierOrderManager->sendOrderSummaryEmail($productChantierOrder);
 
                 if ($sendNewProductD3EOrderMail && $sendOrderSummaryEmail) {
-                    return $this->redirectToRoute('paprec_public_corp_chantier_subscription_packaged_step2', array(
+                    return $this->redirectToRoute('paprec_public_corp_chantier_subscription_packaged_step3', array(
                         'cartUuid' => $cart->getId(),
                         'orderId' => $productChantierOrder->getId()
                     ));
@@ -547,6 +547,72 @@ class SubscriptionController extends Controller
         ));
     }
 
+    /**
+     * Etape "Ma livraison" qui est encore un formulaire complétant les infos du productChantierOrder
+     *
+     * @Route("/chantier/package/step3/{cartUuid}/{orderId}", name="paprec_public_corp_chantier_subscription_packaged_step3")
+     */
+    public function step3PackageAction(Request $request, $cartUuid, $orderId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $cartManager = $this->get('paprec.cart_manager');
+
+        $cart = $cartManager->get($cartUuid);
+        $productChantierOrder = $em->getRepository('PaprecCommercialBundle:ProductChantierOrder')->find($orderId);
+        $form = $this->createForm(ProductChantierOrderDeliveryType::class, $productChantierOrder);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $productChantierOrder = $form->getData();
+            $em->merge($productChantierOrder);
+            $em->flush();
+
+            return $this->redirectToRoute('paprec_public_corp_chantier_subscription_packaged_step4', array(
+                'cartUuid' => $cart->getId(),
+                'orderId' => $productChantierOrder->getId()
+            ));
+        }
+        return $this->render('@PaprecPublic/Chantier/package/delivery.html.twig', array(
+            'cart' => $cart,
+            'productChantierOrder' => $productChantierOrder,
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * Etape "Mon paiement" qui est encore un formulaire complétant les infos du productChantierOrder
+     *
+     * @Route("/chantier/package/step4/{cartUuid}/{orderId}", name="paprec_public_corp_chantier_subscription_packaged_step4")
+     */
+    public function step4PackageAction(Request $request, $cartUuid, $orderId)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $cartManager = $this->get('paprec.cart_manager');
+
+        $cart = $cartManager->get($cartUuid);
+        $productChantierOrder = $em->getRepository('PaprecCommercialBundle:ProductChantierOrder')->find($orderId);
+//        $form = $this->createForm(ProductD3EOrderDeliveryType::class, $productD3EOrder);
+//
+//        $form->handleRequest($request);
+//        if ($form->isSubmitted() && $form->isValid()) {
+//
+//            $productD3EOrder = $form->getData();
+//            $em->merge($productD3EOrder);
+//            $em->flush();
+//
+//            return $this->redirectToRoute(paprec_public_corp_d3e_subscription_step5, array(
+//                'cartUuid' => $cart->getId(),
+//                'orderId' => $productD3EOrder->getId()
+//            ));
+//        }
+        return $this->render('@PaprecPublic/Chantier/package/payment.html.twig', array(
+            'cart' => $cart,
+            'productChantierOrder' => $productChantierOrder
+//            'form' => $form->createView()
+        ));
+    }
 
     /**
      * Ajoute au cart un displayedProduct

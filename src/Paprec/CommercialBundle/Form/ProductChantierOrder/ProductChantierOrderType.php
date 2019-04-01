@@ -50,6 +50,15 @@ class ProductChantierOrderType extends AbstractType
             ->add('address', TextareaType::class)
             ->add('postalCode', TextType::class)
             ->add('city', TextType::class)
+            ->add('headofficeAddress', TextType::class, array(
+                'required' => false
+            ))
+            ->add('headofficePostalCode', TextType::class, array(
+                'required' => false
+            ))
+            ->add('headofficeCity', TextType::class, array(
+                'required' => false
+            ))
             ->add('invoicingAddress', TextType::class, array(
                 'required' => false
             ))
@@ -69,6 +78,18 @@ class ProductChantierOrderType extends AbstractType
                 },
                 'expanded' => true
             ))
+            ->add('siret', TextType::class)
+            ->add('tvaStatus', ChoiceType::class, array(
+                'choices' => array(
+                    'Numéro de TVA intracommunautaire' => 'intracom',
+                    'Franchise en base de TVA - Article 293 B' => 'franchise',
+                ),
+                'choice_attr' => function () {
+                    return ['class' => 'input__radio input__radio--short'];
+                },
+                'expanded' => true
+            ))
+            ->add('tvaNumber', TextType::class)
             ->add('phone', TextType::class)
             ->add('orderStatus', ChoiceType::class, array(
                 "choices" => $options['status'],

@@ -143,6 +143,27 @@ class ProductD3EOrder
     /**
      * @var string
      *
+     * @ORM\Column(name="headoffice_address", type="text", nullable=true)
+     */
+    private $headoffice_address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="headoffice_postalCode", type="string", length=255, nullable=true)
+     */
+    private $headoffice_postalCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="headoffice_city", type="text", nullable=true)
+     */
+    private $headoffice_city;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="phone", type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Regex(
@@ -160,6 +181,37 @@ class ProductD3EOrder
      * @Assert\NotBlank()
      */
     private $preferredContact;
+
+    /******************************
+     * PROFESSIONAL
+     ******************************/
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="siret", type="string", length=15, nullable=true)
+     * @Assert\Length(
+     *     min = 14,
+     *     max = 14,
+     *     minMessage="Le numéro SIRET est composé de 14 chiffres",
+     *     maxMessage="Le numéro SIRET est composé de 14 chiffres"
+     * )
+     */
+    private $siret;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tvaStatus", type="string", length=50, nullable=true)
+     */
+    private $tvaStatus;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tvaNumber", type="string", length=50, nullable=true)
+     */
+    private $tvaNumber;
+
 
     /**
      * @var string
@@ -282,8 +334,6 @@ class ProductD3EOrder
         $this->productD3EOrderLines = new ArrayCollection();
     }
 
-
-
     /**
      * Get id.
      *
@@ -293,7 +343,6 @@ class ProductD3EOrder
     {
         return $this->id;
     }
-    
 
     /**
      * Set dateCreation.
@@ -584,6 +633,150 @@ class ProductD3EOrder
     }
 
     /**
+     * Set invoicingAddress.
+     *
+     * @param string|null $invoicingAddress
+     *
+     * @return ProductD3EOrder
+     */
+    public function setInvoicingAddress($invoicingAddress = null)
+    {
+        $this->invoicing_address = $invoicingAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get invoicingAddress.
+     *
+     * @return string|null
+     */
+    public function getInvoicingAddress()
+    {
+        return $this->invoicing_address;
+    }
+
+    /**
+     * Set invoicingPostalCode.
+     *
+     * @param string|null $invoicingPostalCode
+     *
+     * @return ProductD3EOrder
+     */
+    public function setInvoicingPostalCode($invoicingPostalCode = null)
+    {
+        $this->invoicing_postalCode = $invoicingPostalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get invoicingPostalCode.
+     *
+     * @return string|null
+     */
+    public function getInvoicingPostalCode()
+    {
+        return $this->invoicing_postalCode;
+    }
+
+    /**
+     * Set invoicingCity.
+     *
+     * @param string|null $invoicingCity
+     *
+     * @return ProductD3EOrder
+     */
+    public function setInvoicingCity($invoicingCity = null)
+    {
+        $this->invoicing_city = $invoicingCity;
+
+        return $this;
+    }
+
+    /**
+     * Get invoicingCity.
+     *
+     * @return string|null
+     */
+    public function getInvoicingCity()
+    {
+        return $this->invoicing_city;
+    }
+
+    /**
+     * Set headofficeAddress.
+     *
+     * @param string|null $headofficeAddress
+     *
+     * @return ProductD3EOrder
+     */
+    public function setHeadofficeAddress($headofficeAddress = null)
+    {
+        $this->headoffice_address = $headofficeAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficeAddress.
+     *
+     * @return string|null
+     */
+    public function getHeadofficeAddress()
+    {
+        return $this->headoffice_address;
+    }
+
+    /**
+     * Set headofficePostalCode.
+     *
+     * @param string|null $headofficePostalCode
+     *
+     * @return ProductD3EOrder
+     */
+    public function setHeadofficePostalCode($headofficePostalCode = null)
+    {
+        $this->headoffice_postalCode = $headofficePostalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficePostalCode.
+     *
+     * @return string|null
+     */
+    public function getHeadofficePostalCode()
+    {
+        return $this->headoffice_postalCode;
+    }
+
+    /**
+     * Set headofficeCity.
+     *
+     * @param string|null $headofficeCity
+     *
+     * @return ProductD3EOrder
+     */
+    public function setHeadofficeCity($headofficeCity = null)
+    {
+        $this->headoffice_city = $headofficeCity;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficeCity.
+     *
+     * @return string|null
+     */
+    public function getHeadofficeCity()
+    {
+        return $this->headoffice_city;
+    }
+
+    /**
      * Set phone.
      *
      * @param string $phone
@@ -608,6 +801,102 @@ class ProductD3EOrder
     }
 
     /**
+     * Set preferredContact.
+     *
+     * @param string|null $preferredContact
+     *
+     * @return ProductD3EOrder
+     */
+    public function setPreferredContact($preferredContact = null)
+    {
+        $this->preferredContact = $preferredContact;
+
+        return $this;
+    }
+
+    /**
+     * Get preferredContact.
+     *
+     * @return string|null
+     */
+    public function getPreferredContact()
+    {
+        return $this->preferredContact;
+    }
+
+    /**
+     * Set siret.
+     *
+     * @param string|null $siret
+     *
+     * @return ProductD3EOrder
+     */
+    public function setSiret($siret = null)
+    {
+        $this->siret = $siret;
+
+        return $this;
+    }
+
+    /**
+     * Get siret.
+     *
+     * @return string|null
+     */
+    public function getSiret()
+    {
+        return $this->siret;
+    }
+
+    /**
+     * Set tvaStatus.
+     *
+     * @param string|null $tvaStatus
+     *
+     * @return ProductD3EOrder
+     */
+    public function setTvaStatus($tvaStatus = null)
+    {
+        $this->tvaStatus = $tvaStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get tvaStatus.
+     *
+     * @return string|null
+     */
+    public function getTvaStatus()
+    {
+        return $this->tvaStatus;
+    }
+
+    /**
+     * Set tvaNumber.
+     *
+     * @param string|null $tvaNumber
+     *
+     * @return ProductD3EOrder
+     */
+    public function setTvaNumber($tvaNumber = null)
+    {
+        $this->tvaNumber = $tvaNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get tvaNumber.
+     *
+     * @return string|null
+     */
+    public function getTvaNumber()
+    {
+        return $this->tvaNumber;
+    }
+
+    /**
      * Set orderStatus.
      *
      * @param string $orderStatus
@@ -629,6 +918,30 @@ class ProductD3EOrder
     public function getOrderStatus()
     {
         return $this->orderStatus;
+    }
+
+    /**
+     * Set totalAmount.
+     *
+     * @param int|null $totalAmount
+     *
+     * @return ProductD3EOrder
+     */
+    public function setTotalAmount($totalAmount = null)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return int|null
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
     }
 
     /**
@@ -905,125 +1218,5 @@ class ProductD3EOrder
     public function getBusinessLine()
     {
         return $this->businessLine;
-    }
-
-    /**
-     * Set totalAmount.
-     *
-     * @param int|null $totalAmount
-     *
-     * @return ProductD3EOrder
-     */
-    public function setTotalAmount($totalAmount = null)
-    {
-        $this->totalAmount = $totalAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get totalAmount.
-     *
-     * @return int|null
-     */
-    public function getTotalAmount()
-    {
-        return $this->totalAmount;
-    }
-
-    /**
-     * Set preferredContact.
-     *
-     * @param string|null $preferredContact
-     *
-     * @return ProductD3EOrder
-     */
-    public function setPreferredContact($preferredContact = null)
-    {
-        $this->preferredContact = $preferredContact;
-
-        return $this;
-    }
-
-    /**
-     * Get preferredContact.
-     *
-     * @return string|null
-     */
-    public function getPreferredContact()
-    {
-        return $this->preferredContact;
-    }
-
-    /**
-     * Set invoicingAddress.
-     *
-     * @param string|null $invoicingAddress
-     *
-     * @return ProductD3EOrder
-     */
-    public function setInvoicingAddress($invoicingAddress = null)
-    {
-        $this->invoicing_address = $invoicingAddress;
-
-        return $this;
-    }
-
-    /**
-     * Get invoicingAddress.
-     *
-     * @return string|null
-     */
-    public function getInvoicingAddress()
-    {
-        return $this->invoicing_address;
-    }
-
-    /**
-     * Set invoicingPostalCode.
-     *
-     * @param string|null $invoicingPostalCode
-     *
-     * @return ProductD3EOrder
-     */
-    public function setInvoicingPostalCode($invoicingPostalCode = null)
-    {
-        $this->invoicing_postalCode = $invoicingPostalCode;
-
-        return $this;
-    }
-
-    /**
-     * Get invoicingPostalCode.
-     *
-     * @return string|null
-     */
-    public function getInvoicingPostalCode()
-    {
-        return $this->invoicing_postalCode;
-    }
-
-    /**
-     * Set invoicingCity.
-     *
-     * @param string|null $invoicingCity
-     *
-     * @return ProductD3EOrder
-     */
-    public function setInvoicingCity($invoicingCity = null)
-    {
-        $this->invoicing_city = $invoicingCity;
-
-        return $this;
-    }
-
-    /**
-     * Get invoicingCity.
-     *
-     * @return string|null
-     */
-    public function getInvoicingCity()
-    {
-        return $this->invoicing_city;
     }
 }

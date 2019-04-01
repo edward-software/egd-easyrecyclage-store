@@ -35,16 +35,16 @@ $(function () {
             // Si on est dans need, alors on affiche une confirm dialog avertissant que le panier sera perdu
             if ($('.need-form').is('div')) {
                 Swal({
-                    titleText: "Attention",
-                    text: "En changeant le type de déchets, vous allez perdre toutes les données de votre panier en cours. Êtes-vous sûr de vouloir continuer ?",
+                    title: "<div class=\"test\">Voulez-vous continuer ?</div>",
+                    html: "Cette action va entraîner la <span>perte de votre sélection</span><br>Nous vous conseillons de <span>valider votre besoin</span><br> avant de changer de typologie de dévhets.",
                     showCancelButton: true,
-                    type: "warning",
+                    showCloseButton: true,
+                    customClass: 'trash-change-popup',
                     buttons: true,
-                    dangerMode: true,
-                    confirmButtonText: "Oui",
-                    width: '30%',
-                    height: '30%',
-                    cancelButtonText: "Non"
+                    confirmButtonText: "Changer de filière déchet",
+                    cancelButtonText: "Annuler",
+                    width: '630px',
+                    reverseButtons: true
                 }).then((result) => {
                     if (result.value) {
                         $(location).attr('href', url);
@@ -420,8 +420,8 @@ $(function () {
 
             // On reset le formulaire
             $('.infoproduct__type').last().find('.infoproduct__qty').val('');
-            $('.infoproduct__type').last().find($('#optHandlingProductSelect')).prop('checked', false)
-            $('.infoproduct__type').last().find($('#optSerialNumberStmtProductSelect')).prop('checked', false)
+            $('.infoproduct__type').last().find($('#optHandlingProductSelect')).prop('checked', false);
+            $('.infoproduct__type').last().find($('#optSerialNumberStmtProductSelect')).prop('checked', false);
             $('.infoproduct__type').last().find($('#optDestructionProductSelect')).prop('checked', false)
         })
     }
@@ -433,8 +433,33 @@ $(function () {
         reloadCart();
 
         $('#contactDetailsFormSubmitButton').on('click', function () {
+            const div = $('#divisionType').val();
+
+            const address = $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_address').val();
+            const cp = $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_postalCode').val();
+            const city = $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_city').val();
+
+            if ($('#headofficeAddressCheckbox').is('input') && !$('#headofficeAddressCheckbox').prop('checked')) {
+                $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_headofficeAddress').val(address);
+                $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_headofficePostalCode').val(cp);
+                $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_headofficeCity').val(city);
+            }
+            if ($('#invoicingAddressCheckbox').is('input') && !$('#invoicingAddressCheckbox').prop('checked')) {
+                $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_invoicingAddress').val(address);
+                $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_invoicingPostalCode').val(cp);
+                $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_invoicingCity').val(city);
+            }
+
             $('#contactDetailsForm').submit();
         });
+
+        $('#headofficeAddressCheckbox').on('change', function () {
+            $('#headofficeAddressContainer').toggleClass('active');
+        });
+
+        $('#invoicingAddressCheckbox').on('change', function () {
+            $('#invoicingAddressContainer').toggleClass('active');
+        })
     }
 
 
@@ -444,7 +469,6 @@ $(function () {
     if ($('.confirm').is('div')) {
         reloadCart();
     }
-
 
 
     /*******************************************************************************************************************

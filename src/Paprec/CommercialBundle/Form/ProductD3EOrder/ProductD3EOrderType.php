@@ -59,6 +59,15 @@ class ProductD3EOrderType extends AbstractType
             ->add('invoicingCity', TextType::class, array(
                 'required' => false
             ))
+            ->add('headofficeAddress', TextType::class, array(
+                'required' => false
+            ))
+            ->add('headofficePostalCode', TextType::class, array(
+                'required' => false
+            ))
+            ->add('headofficeCity', TextType::class, array(
+                'required' => false
+            ))
             ->add('preferredContact', ChoiceType::class, array(
                 'choices' => array(
                     'Téléphone' => 'phone',
@@ -69,6 +78,18 @@ class ProductD3EOrderType extends AbstractType
                 },
                 'expanded' => true
             ))
+            ->add('siret', TextType::class)
+            ->add('tvaStatus', ChoiceType::class, array(
+                'choices' => array(
+                    'Numéro de TVA intracommunautaire' => 'intracom',
+                    'Franchise en base de TVA - Article 293 B' => 'franchise',
+                ),
+                'choice_attr' => function () {
+                    return ['class' => 'input__radio input__radio--short'];
+                },
+                'expanded' => true
+            ))
+            ->add('tvaNumber', TextType::class)
             ->add('phone', TextType::class)
             ->add('orderStatus', ChoiceType::class, array(
                 "choices" => $options['status'],

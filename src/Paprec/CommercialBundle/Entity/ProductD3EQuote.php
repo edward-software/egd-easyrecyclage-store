@@ -122,23 +122,24 @@ class ProductD3EQuote
     /**
      * @var string
      *
-     * @ORM\Column(name="invoicing_address", type="text", nullable=true)
+     * @ORM\Column(name="headoffice_address", type="text", nullable=true)
      */
-    private $invoicing_address;
+    private $headoffice_address;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="invoicing_postalCode", type="string", length=255, nullable=true)
+     * @ORM\Column(name="headoffice_postalCode", type="string", length=255, nullable=true)
      */
-    private $invoicing_postalCode;
+    private $headoffice_postalCode;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="invoicing_city", type="text", nullable=true)
+     * @ORM\Column(name="headoffice_city", type="text", nullable=true)
      */
-    private $invoicing_city;
+    private $headoffice_city;
+
 
     /**
      * @var string
@@ -251,7 +252,6 @@ class ProductD3EQuote
         $this->dateCreation = new \DateTime();
         $this->productD3EQuoteLines = new ArrayCollection();
     }
-
 
     /**
      * Get id.
@@ -552,6 +552,102 @@ class ProductD3EQuote
     }
 
     /**
+     * Set headofficeAddress.
+     *
+     * @param string|null $headofficeAddress
+     *
+     * @return ProductD3EQuote
+     */
+    public function setHeadofficeAddress($headofficeAddress = null)
+    {
+        $this->headoffice_address = $headofficeAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficeAddress.
+     *
+     * @return string|null
+     */
+    public function getHeadofficeAddress()
+    {
+        return $this->headoffice_address;
+    }
+
+    /**
+     * Set headofficePostalCode.
+     *
+     * @param string|null $headofficePostalCode
+     *
+     * @return ProductD3EQuote
+     */
+    public function setHeadofficePostalCode($headofficePostalCode = null)
+    {
+        $this->headoffice_postalCode = $headofficePostalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficePostalCode.
+     *
+     * @return string|null
+     */
+    public function getHeadofficePostalCode()
+    {
+        return $this->headoffice_postalCode;
+    }
+
+    /**
+     * Set headofficeCity.
+     *
+     * @param string|null $headofficeCity
+     *
+     * @return ProductD3EQuote
+     */
+    public function setHeadofficeCity($headofficeCity = null)
+    {
+        $this->headoffice_city = $headofficeCity;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficeCity.
+     *
+     * @return string|null
+     */
+    public function getHeadofficeCity()
+    {
+        return $this->headoffice_city;
+    }
+
+    /**
+     * Set preferredContact.
+     *
+     * @param string|null $preferredContact
+     *
+     * @return ProductD3EQuote
+     */
+    public function setPreferredContact($preferredContact = null)
+    {
+        $this->preferredContact = $preferredContact;
+
+        return $this;
+    }
+
+    /**
+     * Get preferredContact.
+     *
+     * @return string|null
+     */
+    public function getPreferredContact()
+    {
+        return $this->preferredContact;
+    }
+
+    /**
      * Set phone.
      *
      * @param string $phone
@@ -600,6 +696,54 @@ class ProductD3EQuote
     }
 
     /**
+     * Set totalAmount.
+     *
+     * @param int|null $totalAmount
+     *
+     * @return ProductD3EQuote
+     */
+    public function setTotalAmount($totalAmount = null)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return int|null
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
+    }
+
+    /**
+     * Set generatedTurnover.
+     *
+     * @param string|null $generatedTurnover
+     *
+     * @return ProductD3EQuote
+     */
+    public function setGeneratedTurnover($generatedTurnover = null)
+    {
+        $this->generatedTurnover = $generatedTurnover;
+
+        return $this;
+    }
+
+    /**
+     * Get generatedTurnover.
+     *
+     * @return string|null
+     */
+    public function getGeneratedTurnover()
+    {
+        return $this->generatedTurnover;
+    }
+
+    /**
      * Set summary.
      *
      * @param string|null $summary
@@ -645,6 +789,30 @@ class ProductD3EQuote
     public function getFrequency()
     {
         return $this->frequency;
+    }
+
+    /**
+     * Set tonnage.
+     *
+     * @param string|null $tonnage
+     *
+     * @return ProductD3EQuote
+     */
+    public function setTonnage($tonnage = null)
+    {
+        $this->tonnage = $tonnage;
+
+        return $this;
+    }
+
+    /**
+     * Get tonnage.
+     *
+     * @return string|null
+     */
+    public function getTonnage()
+    {
+        return $this->tonnage;
     }
 
     /**
@@ -777,173 +945,5 @@ class ProductD3EQuote
     public function getBusinessLine()
     {
         return $this->businessLine;
-    }
-
-    /**
-     * Set totalAmount.
-     *
-     * @param int|null $totalAmount
-     *
-     * @return ProductD3EQuote
-     */
-    public function setTotalAmount($totalAmount = null)
-    {
-        $this->totalAmount = $totalAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get totalAmount.
-     *
-     * @return int|null
-     */
-    public function getTotalAmount()
-    {
-        return $this->totalAmount;
-    }
-
-    /**
-     * Set generatedTurnover.
-     *
-     * @param string|null $generatedTurnover
-     *
-     * @return ProductD3EQuote
-     */
-    public function setGeneratedTurnover($generatedTurnover = null)
-    {
-        $this->generatedTurnover = $generatedTurnover;
-
-        return $this;
-    }
-
-    /**
-     * Get generatedTurnover.
-     *
-     * @return string|null
-     */
-    public function getGeneratedTurnover()
-    {
-        return $this->generatedTurnover;
-    }
-
-    /**
-     * Set tonnage.
-     *
-     * @param string|null $tonnage
-     *
-     * @return ProductD3EQuote
-     */
-    public function setTonnage($tonnage = null)
-    {
-        $this->tonnage = $tonnage;
-
-        return $this;
-    }
-
-    /**
-     * Get tonnage.
-     *
-     * @return string|null
-     */
-    public function getTonnage()
-    {
-        return $this->tonnage;
-    }
-
-    /**
-     * Set invoicingAddress.
-     *
-     * @param string|null $invoicingAddress
-     *
-     * @return ProductD3EQuote
-     */
-    public function setInvoicingAddress($invoicingAddress = null)
-    {
-        $this->invoicing_address = $invoicingAddress;
-
-        return $this;
-    }
-
-    /**
-     * Get invoicingAddress.
-     *
-     * @return string|null
-     */
-    public function getInvoicingAddress()
-    {
-        return $this->invoicing_address;
-    }
-
-    /**
-     * Set invoicingPostalCode.
-     *
-     * @param string|null $invoicingPostalCode
-     *
-     * @return ProductD3EQuote
-     */
-    public function setInvoicingPostalCode($invoicingPostalCode = null)
-    {
-        $this->invoicing_postalCode = $invoicingPostalCode;
-
-        return $this;
-    }
-
-    /**
-     * Get invoicingPostalCode.
-     *
-     * @return string|null
-     */
-    public function getInvoicingPostalCode()
-    {
-        return $this->invoicing_postalCode;
-    }
-
-    /**
-     * Set invoicingCity.
-     *
-     * @param string|null $invoicingCity
-     *
-     * @return ProductD3EQuote
-     */
-    public function setInvoicingCity($invoicingCity = null)
-    {
-        $this->invoicing_city = $invoicingCity;
-
-        return $this;
-    }
-
-    /**
-     * Get invoicingCity.
-     *
-     * @return string|null
-     */
-    public function getInvoicingCity()
-    {
-        return $this->invoicing_city;
-    }
-
-    /**
-     * Set preferredContact.
-     *
-     * @param string|null $preferredContact
-     *
-     * @return ProductD3EQuote
-     */
-    public function setPreferredContact($preferredContact = null)
-    {
-        $this->preferredContact = $preferredContact;
-
-        return $this;
-    }
-
-    /**
-     * Get preferredContact.
-     *
-     * @return string|null
-     */
-    public function getPreferredContact()
-    {
-        return $this->preferredContact;
     }
 }

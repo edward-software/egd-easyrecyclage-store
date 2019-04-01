@@ -137,6 +137,7 @@ Commercial:
     FunctionPlaceholder:        Fonction (facultatif)
     Email:                      Email
     Address:                    Adresse
+    InvoicingAddressPlaceholder: Adresse de facturation (facultatif)
     PostalCode:                 Code postal
     City:                       Ville
     Phone:                      Téléphone
@@ -199,8 +200,8 @@ Commercial:
     PostalCode:                 Code postal
     City:                       Ville
     PreferredContact:           Préfère être contacté par
-    InvoicingAddress:           Adresse de facturation
-    InvoicingAddressPlaceholder: Adresse de facturation (facultatif)
+    HeadofficeAddress:           Adresse de siège
+    HeadofficeAddressPlaceholder: Adresse de siège (facultatif)
     Phone:                      Téléphone
     PhonePlaceholder:           Numéro de téléphone
     QuoteStatus:                Statut
@@ -262,11 +263,23 @@ Commercial:
     Function:                   Fonction
     FunctionPlaceholder:        Fonction (facultatif)
     Email:                      Email
+    InvoicingAddress:           Adresse de facturation
+    HeadofficeAddress:          Adresse de siège
+    InvoicingAddressPlaceholder: Adresse de facturation (facultatif)
+    HeadofficeAddressPlaceholder: Adresse de siège (facultatif)
+    HeadofficeAddressCheckbox:  Adresse de siège (si différente)
+    InvoicingAddressCheckbox:   Adresse de facturation (si différente)
     Address:                    Adresse
     PostalCode:                 Code postal
     City:                       Ville
     Phone:                      Téléphone
     PhonePlaceholder:           Numéro de téléphone
+    SIRET:                      Numéro de SIRET
+    TVAStatus:                  Statut TVA
+    TVANumber:                  Numéro de TVA
+    TVA:
+      Intracom:                 Numéro de TVA intracommunautaire
+      Franchise:                Franchise en base de TVA - Article 293 B
     OrderStatus:                Statut
     TotalAmount:                Montant total
     AssociatedInvoice:          Facture associée
@@ -324,11 +337,23 @@ Commercial:
     Function:                   Fonction
     FunctionPlaceholder:        Fonction (facultatif)
     Email:                      Email
+    InvoicingAddress:           Adresse de facturation
+    HeadofficeAddress:          Adresse de siège
+    InvoicingAddressPlaceholder: Adresse de facturation (facultatif)
+    HeadofficeAddressPlaceholder: Adresse de siège (facultatif)
+    HeadofficeAddressCheckbox:  Adresse de siège (si différente)
+    InvoicingAddressCheckbox:   Adresse de facturation (si différente)
     Address:                    Adresse
     PostalCode:                 Code postal
     City:                       Ville
     Phone:                      Téléphone
     PhonePlaceholder:           Numéro de téléphone
+    SIRET:                      Numéro de SIRET
+    TVAStatus:                  Statut TVA
+    TVANumber:                  Numéro de TVA
+    TVA:
+      Intracom:                 Numéro de TVA intracommunautaire
+      Franchise:                Franchise en base de TVA - Article 293 B
     OrderStatus:                Statut
     TotalAmount:                Montant total
     AssociatedInvoice:          Facture associée

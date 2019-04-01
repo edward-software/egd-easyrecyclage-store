@@ -9,6 +9,7 @@ Public:
     MyNeed:                       Mon besoin
     IAm:                          Je suis
     Addresses:                    Adresses
+    TVAStatus:                    Statut TVA
     FileUploadNotice:             Afin de mieux appréhender votre demande, vous pouvez si vous le souhaitez nous fournir des photos (.jpg, .png, .tiff) ou autres fichiers (.pdf, .doc, .xls)
 
   CTA:

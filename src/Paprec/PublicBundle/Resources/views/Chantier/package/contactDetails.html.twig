@@ -27,10 +27,10 @@
                 <div class="step__title">{{ 'Public.Home.IAm'|trans }}</div>
             </div>
             <div class="step__right step__right--small">
-                {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.BusinessName'|trans}}) }}
+                {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductChantierOrder.BusinessName'|trans}}) }}
                 {{ form_errors(form.businessName) }}
 
-                {{ form_widget(form.siret, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EOrder.SIRET'|trans}}) }}
+                {{ form_widget(form.siret, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductChantierOrder.SIRET'|trans}}) }}
                 {{ form_errors(form.siret) }}
 
                 {{ form_widget(form.businessLine, {'attr': {'class': 'input input--full'}}) }}
@@ -41,18 +41,18 @@
 
                 <div class="clearfix step--marginfield"></div>
 
-                {{ form_widget(form.lastName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.LastName'|trans}}) }}
+                {{ form_widget(form.lastName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.ProductChantierQuote.LastName'|trans}}) }}
                 {{ form_errors(form.lastName) }}
-                {{ form_widget(form.firstName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.FirstName'|trans}}) }}
+                {{ form_widget(form.firstName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.ProductChantierQuote.FirstName'|trans}}) }}
                 {{ form_errors(form.firstName) }}
 
-                {{ form_widget(form.email, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.Email'|trans}}) }}
+                {{ form_widget(form.email, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductChantierQuote.Email'|trans}}) }}
                 {{ form_errors(form.email) }}
 
-                {{ form_widget(form.phone, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.PhonePlaceholder'|trans}}) }}
+                {{ form_widget(form.phone, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductChantierQuote.PhonePlaceholder'|trans}}) }}
                 {{ form_errors(form.phone) }}
 
-                {{ form_widget(form.function, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.FunctionPlaceholder'|trans}}) }}
+                {{ form_widget(form.function, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductChantierQuote.FunctionPlaceholder'|trans}}) }}
                 {{ form_errors(form.function) }}
 
             </div>
@@ -65,45 +65,44 @@
             </div>
             <div class="step__right step__right--small">
 
-                {{ form_widget(form.address, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EOrder.Address'|trans}}) }}
+                {{ form_widget(form.address, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductChantierOrder.Address'|trans}}) }}
                 {{ form_errors(form.address) }}
 
-                {{ form_widget(form.postalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.ProductD3EOrder.PostalCode'|trans}}) }}
+                {{ form_widget(form.postalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.ProductChantierOrder.PostalCode'|trans}}) }}
                 {{ form_errors(form.postalCode) }}
 
-                {{ form_widget(form.city, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.ProductD3EOrder.City'|trans}}) }}
+                {{ form_widget(form.city, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.ProductChantierOrder.City'|trans}}) }}
                 {{ form_errors(form.city) }}
-
                 <div class="clearfix"></div>
+
                 <input type="checkbox" id="headofficeAddressCheckbox" class="address-checkbox">
-                <label for="headofficeAddressCheckbox" class="address-checkbox-label">{{ 'Commercial.ProductD3EOrder.HeadofficeAddressCheckbox'|trans }}</label>
+                <label for="headofficeAddressCheckbox" class="address-checkbox-label">{{ 'Commercial.ProductChantierOrder.HeadofficeAddressCheckbox'|trans }}</label>
                 <div id="headofficeAddressContainer" class="address-container">
-                    {{ form_widget(form.headofficeAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EOrder.HeadofficeAddressPlaceholder'|trans}}) }}
+                    {{ form_widget(form.headofficeAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductChantierOrder.HeadofficeAddressPlaceholder'|trans}}) }}
                     {{ form_errors(form.headofficeAddress) }}
 
-                    {{ form_widget(form.headofficePostalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.ProductD3EOrder.PostalCode'|trans}}) }}
+                    {{ form_widget(form.headofficePostalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.ProductChantierOrder.PostalCode'|trans}}) }}
                     {{ form_errors(form.headofficePostalCode) }}
 
-                    {{ form_widget(form.headofficeCity, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.ProductD3EOrder.City'|trans}}) }}
+                    {{ form_widget(form.headofficeCity, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.ProductChantierOrder.City'|trans}}) }}
                     {{ form_errors(form.headofficeCity) }}
                 </div>
-
                 <div class="clearfix"></div>
+
                 <input type="checkbox" id="invoicingAddressCheckbox" class="address-checkbox">
-                <label for="invoicingAddressCheckbox" class="address-checkbox-label">{{ 'Commercial.ProductD3EOrder.InvoicingAddressCheckbox'|trans }}</label>
+                <label for="invoicingAddressCheckbox" class="address-checkbox-label">{{ 'Commercial.ProductChantierOrder.InvoicingAddressCheckbox'|trans }}</label>
                 <div id="invoicingAddressContainer" class="address-container">
-                    {{ form_widget(form.invoicingAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EOrder.InvoicingAddressPlaceholder'|trans}}) }}
+                    {{ form_widget(form.invoicingAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductChantierOrder.InvoicingAddressPlaceholder'|trans}}) }}
                     {{ form_errors(form.invoicingAddress) }}
 
-                    {{ form_widget(form.invoicingPostalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.ProductD3EOrder.PostalCode'|trans}}) }}
+                    {{ form_widget(form.invoicingPostalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.ProductChantierOrder.PostalCode'|trans}}) }}
                     {{ form_errors(form.invoicingPostalCode) }}
 
-                    {{ form_widget(form.invoicingCity, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.ProductD3EOrder.City'|trans}}) }}
+                    {{ form_widget(form.invoicingCity, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.ProductChantierOrder.City'|trans}}) }}
                     {{ form_errors(form.invoicingCity) }}
                 </div>
             </div>
         </div>
-
         <div class="step step--index">
             <div class="step__left">
                 <div class="step__title">
@@ -115,11 +114,11 @@
                 {{ form_errors(form.tvaStatus) }}
             </div>
         </div>
+
         <div class="step">
             <div class="step__left">&nbsp;</div>
             <div class="step__right step__right--small">
-
-                {{ form_widget(form.tvaNumber, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EOrder.TVANumber'|trans}}) }}
+                {{ form_widget(form.tvaNumber, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductChantierOrder.TVANumber'|trans}}) }}
                 {{ form_errors(form.tvaNumber) }}
 
                 <div class="clearfix"></div>

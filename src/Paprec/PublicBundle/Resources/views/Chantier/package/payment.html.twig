@@ -1,4 +1,4 @@
-{% extends "@PaprecPublic/Common/Base/base_stepper.html.twig" %}
+{% extends "@PaprecPublic/Common/Base/package/base_stepper.html.twig" %}
 
 {#{% block title %}#}
 
@@ -23,8 +23,7 @@
     <form id="paymentForm" action="" method="post">
         <input type="hidden" id="divisionType" value="{{ cart.division }}">
         <div class="step">
-            <div class="bold">{% if productChantierOrder.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productChantierOrder.firstName }} {{ productChantierOrder.lastName }}
-                ,
+            <div class="bold">{% if productChantierOrder.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productChantierOrder.firstName }} {{ productChantierOrder.lastName }},
             </div>
             <div class="recaptitle">{{ 'Public.Payment.Title'|trans }}</div>
             <div class="choice">

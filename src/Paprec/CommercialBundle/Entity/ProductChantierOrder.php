@@ -156,16 +156,31 @@ class ProductChantierOrder
     /**
      * @var string
      *
-     * @ORM\Column(name="preferredContact", type="string", length=10, nullable=true)
+     * @ORM\Column(name="headoffice_address", type="text", nullable=true)
      */
-    private $preferredContact;
+    private $headoffice_address;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="customerType", type="string", length=50)
+     * @ORM\Column(name="headoffice_postalCode", type="string", length=255, nullable=true)
      */
-    private $customerType;
+    private $headoffice_postalCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="headoffice_city", type="text", nullable=true)
+     */
+    private $headoffice_city;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="preferredContact", type="string", length=10, nullable=true)
+     */
+    private $preferredContact;
 
     /******************************
      * PROFESSIONAL
@@ -173,18 +188,29 @@ class ProductChantierOrder
     /**
      * @var string
      *
-     * @ORM\Column(name="siret", type="string", length=15)
-     * @Assert\NotBlank(groups={"pro"})
+     * @ORM\Column(name="siret", type="string", length=15, nullable=true)
+     * @Assert\Length(
+     *     min = 14,
+     *     max = 14,
+     *     minMessage="Le numéro SIRET est composé de 14 chiffres",
+     *     maxMessage="Le numéro SIRET est composé de 14 chiffres"
+     * )
      */
     private $siret;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tvaStatus", type="string", length=50)
-     * @Assert\NotBlank(groups={"pro"})
+     * @ORM\Column(name="tvaStatus", type="string", length=50, nullable=true)
      */
     private $tvaStatus;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tvaNumber", type="string", length=50, nullable=true)
+     */
+    private $tvaNumber;
 
 
 
@@ -308,8 +334,6 @@ class ProductChantierOrder
         $this->productChantierOrderLines = new ArrayCollection();
     }
 
-
-
     /**
      * Get id.
      *
@@ -319,8 +343,6 @@ class ProductChantierOrder
     {
         return $this->id;
     }
-
-
 
     /**
      * Set dateCreation.
@@ -539,6 +561,30 @@ class ProductChantierOrder
     }
 
     /**
+     * Set phone.
+     *
+     * @param string $phone
+     *
+     * @return ProductChantierOrder
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone.
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
      * Set address.
      *
      * @param string $address
@@ -611,27 +657,243 @@ class ProductChantierOrder
     }
 
     /**
-     * Set phone.
+     * Set invoicingAddress.
      *
-     * @param string $phone
+     * @param string|null $invoicingAddress
      *
      * @return ProductChantierOrder
      */
-    public function setPhone($phone)
+    public function setInvoicingAddress($invoicingAddress = null)
     {
-        $this->phone = $phone;
+        $this->invoicing_address = $invoicingAddress;
 
         return $this;
     }
 
     /**
-     * Get phone.
+     * Get invoicingAddress.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPhone()
+    public function getInvoicingAddress()
     {
-        return $this->phone;
+        return $this->invoicing_address;
+    }
+
+    /**
+     * Set invoicingPostalCode.
+     *
+     * @param string|null $invoicingPostalCode
+     *
+     * @return ProductChantierOrder
+     */
+    public function setInvoicingPostalCode($invoicingPostalCode = null)
+    {
+        $this->invoicing_postalCode = $invoicingPostalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get invoicingPostalCode.
+     *
+     * @return string|null
+     */
+    public function getInvoicingPostalCode()
+    {
+        return $this->invoicing_postalCode;
+    }
+
+    /**
+     * Set invoicingCity.
+     *
+     * @param string|null $invoicingCity
+     *
+     * @return ProductChantierOrder
+     */
+    public function setInvoicingCity($invoicingCity = null)
+    {
+        $this->invoicing_city = $invoicingCity;
+
+        return $this;
+    }
+
+    /**
+     * Get invoicingCity.
+     *
+     * @return string|null
+     */
+    public function getInvoicingCity()
+    {
+        return $this->invoicing_city;
+    }
+
+    /**
+     * Set headofficeAddress.
+     *
+     * @param string|null $headofficeAddress
+     *
+     * @return ProductChantierOrder
+     */
+    public function setHeadofficeAddress($headofficeAddress = null)
+    {
+        $this->headoffice_address = $headofficeAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficeAddress.
+     *
+     * @return string|null
+     */
+    public function getHeadofficeAddress()
+    {
+        return $this->headoffice_address;
+    }
+
+    /**
+     * Set headofficePostalCode.
+     *
+     * @param string|null $headofficePostalCode
+     *
+     * @return ProductChantierOrder
+     */
+    public function setHeadofficePostalCode($headofficePostalCode = null)
+    {
+        $this->headoffice_postalCode = $headofficePostalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficePostalCode.
+     *
+     * @return string|null
+     */
+    public function getHeadofficePostalCode()
+    {
+        return $this->headoffice_postalCode;
+    }
+
+    /**
+     * Set headofficeCity.
+     *
+     * @param string|null $headofficeCity
+     *
+     * @return ProductChantierOrder
+     */
+    public function setHeadofficeCity($headofficeCity = null)
+    {
+        $this->headoffice_city = $headofficeCity;
+
+        return $this;
+    }
+
+    /**
+     * Get headofficeCity.
+     *
+     * @return string|null
+     */
+    public function getHeadofficeCity()
+    {
+        return $this->headoffice_city;
+    }
+
+    /**
+     * Set preferredContact.
+     *
+     * @param string|null $preferredContact
+     *
+     * @return ProductChantierOrder
+     */
+    public function setPreferredContact($preferredContact = null)
+    {
+        $this->preferredContact = $preferredContact;
+
+        return $this;
+    }
+
+    /**
+     * Get preferredContact.
+     *
+     * @return string|null
+     */
+    public function getPreferredContact()
+    {
+        return $this->preferredContact;
+    }
+
+    /**
+     * Set siret.
+     *
+     * @param string|null $siret
+     *
+     * @return ProductChantierOrder
+     */
+    public function setSiret($siret = null)
+    {
+        $this->siret = $siret;
+
+        return $this;
+    }
+
+    /**
+     * Get siret.
+     *
+     * @return string|null
+     */
+    public function getSiret()
+    {
+        return $this->siret;
+    }
+
+    /**
+     * Set tvaStatus.
+     *
+     * @param string|null $tvaStatus
+     *
+     * @return ProductChantierOrder
+     */
+    public function setTvaStatus($tvaStatus = null)
+    {
+        $this->tvaStatus = $tvaStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get tvaStatus.
+     *
+     * @return string|null
+     */
+    public function getTvaStatus()
+    {
+        return $this->tvaStatus;
+    }
+
+    /**
+     * Set tvaNumber.
+     *
+     * @param string|null $tvaNumber
+     *
+     * @return ProductChantierOrder
+     */
+    public function setTvaNumber($tvaNumber = null)
+    {
+        $this->tvaNumber = $tvaNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get tvaNumber.
+     *
+     * @return string|null
+     */
+    public function getTvaNumber()
+    {
+        return $this->tvaNumber;
     }
 
     /**
@@ -656,6 +918,30 @@ class ProductChantierOrder
     public function getOrderStatus()
     {
         return $this->orderStatus;
+    }
+
+    /**
+     * Set totalAmount.
+     *
+     * @param int|null $totalAmount
+     *
+     * @return ProductChantierOrder
+     */
+    public function setTotalAmount($totalAmount = null)
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalAmount.
+     *
+     * @return int|null
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
     }
 
     /**
@@ -779,6 +1065,102 @@ class ProductChantierOrder
     }
 
     /**
+     * Set installationDate.
+     *
+     * @param \DateTime|null $installationDate
+     *
+     * @return ProductChantierOrder
+     */
+    public function setInstallationDate($installationDate = null)
+    {
+        $this->installationDate = $installationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get installationDate.
+     *
+     * @return \DateTime|null
+     */
+    public function getInstallationDate()
+    {
+        return $this->installationDate;
+    }
+
+    /**
+     * Set removalDate.
+     *
+     * @param \DateTime|null $removalDate
+     *
+     * @return ProductChantierOrder
+     */
+    public function setRemovalDate($removalDate = null)
+    {
+        $this->removalDate = $removalDate;
+
+        return $this;
+    }
+
+    /**
+     * Get removalDate.
+     *
+     * @return \DateTime|null
+     */
+    public function getRemovalDate()
+    {
+        return $this->removalDate;
+    }
+
+    /**
+     * Set domainType.
+     *
+     * @param string|null $domainType
+     *
+     * @return ProductChantierOrder
+     */
+    public function setDomainType($domainType = null)
+    {
+        $this->domainType = $domainType;
+
+        return $this;
+    }
+
+    /**
+     * Get domainType.
+     *
+     * @return string|null
+     */
+    public function getDomainType()
+    {
+        return $this->domainType;
+    }
+
+    /**
+     * Set accessConditions.
+     *
+     * @param string|null $accessConditions
+     *
+     * @return ProductChantierOrder
+     */
+    public function setAccessConditions($accessConditions = null)
+    {
+        $this->accessConditions = $accessConditions;
+
+        return $this;
+    }
+
+    /**
+     * Get accessConditions.
+     *
+     * @return string|null
+     */
+    public function getAccessConditions()
+    {
+        return $this->accessConditions;
+    }
+
+    /**
      * Add productChantierOrderLine.
      *
      * @param \Paprec\CommercialBundle\Entity\ProductChantierOrderLine $productChantierOrderLine
@@ -836,293 +1218,5 @@ class ProductChantierOrder
     public function getBusinessLine()
     {
         return $this->businessLine;
-    }
-
-    /**
-     * Set installationDate.
-     *
-     * @param \DateTime $installationDate
-     *
-     * @return ProductChantierOrder
-     */
-    public function setInstallationDate($installationDate)
-    {
-        $this->installationDate = $installationDate;
-
-        return $this;
-    }
-
-    /**
-     * Get installationDate.
-     *
-     * @return \DateTime
-     */
-    public function getInstallationDate()
-    {
-        return $this->installationDate;
-    }
-
-    /**
-     * Set removalDate.
-     *
-     * @param \DateTime $removalDate
-     *
-     * @return ProductChantierOrder
-     */
-    public function setRemovalDate($removalDate)
-    {
-        $this->removalDate = $removalDate;
-
-        return $this;
-    }
-
-    /**
-     * Get removalDate.
-     *
-     * @return \DateTime
-     */
-    public function getRemovalDate()
-    {
-        return $this->removalDate;
-    }
-
-    /**
-     * Set domainType.
-     *
-     * @param string|null $domainType
-     *
-     * @return ProductChantierOrder
-     */
-    public function setDomainType($domainType = null)
-    {
-        $this->domainType = $domainType;
-
-        return $this;
-    }
-
-    /**
-     * Get domainType.
-     *
-     * @return string|null
-     */
-    public function getDomainType()
-    {
-        return $this->domainType;
-    }
-
-    /**
-     * Set accessConditions.
-     *
-     * @param string|null $accessConditions
-     *
-     * @return ProductChantierOrder
-     */
-    public function setAccessConditions($accessConditions = null)
-    {
-        $this->accessConditions = $accessConditions;
-
-        return $this;
-    }
-
-    /**
-     * Get accessConditions.
-     *
-     * @return string|null
-     */
-    public function getAccessConditions()
-    {
-        return $this->accessConditions;
-    }
-
-    /**
-     * Set totalAmount.
-     *
-     * @param int|null $totalAmount
-     *
-     * @return ProductChantierOrder
-     */
-    public function setTotalAmount($totalAmount = null)
-    {
-        $this->totalAmount = $totalAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get totalAmount.
-     *
-     * @return int|null
-     */
-    public function getTotalAmount()
-    {
-        return $this->totalAmount;
-    }
-
-    /**
-     * Set invoicingAddress.
-     *
-     * @param string|null $invoicingAddress
-     *
-     * @return ProductChantierOrder
-     */
-    public function setInvoicingAddress($invoicingAddress = null)
-    {
-        $this->invoicing_address = $invoicingAddress;
-
-        return $this;
-    }
-
-    /**
-     * Get invoicingAddress.
-     *
-     * @return string|null
-     */
-    public function getInvoicingAddress()
-    {
-        return $this->invoicing_address;
-    }
-
-    /**
-     * Set invoicingPostalCode.
-     *
-     * @param string|null $invoicingPostalCode
-     *
-     * @return ProductChantierOrder
-     */
-    public function setInvoicingPostalCode($invoicingPostalCode = null)
-    {
-        $this->invoicing_postalCode = $invoicingPostalCode;
-
-        return $this;
-    }
-
-    /**
-     * Get invoicingPostalCode.
-     *
-     * @return string|null
-     */
-    public function getInvoicingPostalCode()
-    {
-        return $this->invoicing_postalCode;
-    }
-
-    /**
-     * Set invoicingCity.
-     *
-     * @param string|null $invoicingCity
-     *
-     * @return ProductChantierOrder
-     */
-    public function setInvoicingCity($invoicingCity = null)
-    {
-        $this->invoicing_city = $invoicingCity;
-
-        return $this;
-    }
-
-    /**
-     * Get invoicingCity.
-     *
-     * @return string|null
-     */
-    public function getInvoicingCity()
-    {
-        return $this->invoicing_city;
-    }
-
-    /**
-     * Set preferredContact.
-     *
-     * @param string|null $preferredContact
-     *
-     * @return ProductChantierOrder
-     */
-    public function setPreferredContact($preferredContact = null)
-    {
-        $this->preferredContact = $preferredContact;
-
-        return $this;
-    }
-
-    /**
-     * Get preferredContact.
-     *
-     * @return string|null
-     */
-    public function getPreferredContact()
-    {
-        return $this->preferredContact;
-    }
-
-    /**
-     * Set customerType.
-     *
-     * @param string $customerType
-     *
-     * @return ProductChantierOrder
-     */
-    public function setCustomerType($customerType)
-    {
-        $this->customerType = $customerType;
-
-        return $this;
-    }
-
-    /**
-     * Get customerType.
-     *
-     * @return string
-     */
-    public function getCustomerType()
-    {
-        return $this->customerType;
-    }
-
-    /**
-     * Set siret.
-     *
-     * @param string $siret
-     *
-     * @return ProductChantierOrder
-     */
-    public function setSiret($siret)
-    {
-        $this->siret = $siret;
-
-        return $this;
-    }
-
-    /**
-     * Get siret.
-     *
-     * @return string
-     */
-    public function getSiret()
-    {
-        return $this->siret;
-    }
-
-    /**
-     * Set tvaStatus.
-     *
-     * @param string $tvaStatus
-     *
-     * @return ProductChantierOrder
-     */
-    public function setTvaStatus($tvaStatus)
-    {
-        $this->tvaStatus = $tvaStatus;
-
-        return $this;
-    }
-
-    /**
-     * Get tvaStatus.
-     *
-     * @return string
-     */
-    public function getTvaStatus()
-    {
-        return $this->tvaStatus;
     }
 }

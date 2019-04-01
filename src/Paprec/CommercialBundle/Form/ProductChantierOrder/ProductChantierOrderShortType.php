@@ -49,17 +49,53 @@ class ProductChantierOrderShortType extends AbstractType
             ->add('lastName', TextType::class)
             ->add('firstName', TextType::class)
             ->add('email', TextType::class)
-            ->add('address', TextareaType::class)
-            ->add('postalCode', TextType::class)
-            ->add('city', TextType::class)
             ->add('phone', TextType::class)
             ->add('function', TextType::class, array(
                 'required' => false
             ))
-            ->add('terms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => new IsTrue()
-            ]);
+            ->add('siret', TextType::class)
+            ->add('tvaStatus', ChoiceType::class, array(
+                'choices' => array(
+                    'Numéro de TVA intracommunautaire' => 'intracom',
+                    'Franchise en base de TVA - Article 293 B' => 'franchise',
+                ),
+                'choice_attr' => function () {
+                    return ['class' => 'input__radio input__radio--short'];
+                },
+                'expanded' => true
+            ))
+            ->add('tvaNumber', TextType::class)
+            ->add('address', TextType::class)
+            ->add('postalCode', TextType::class)
+            ->add('city', TextType::class)
+            ->add('invoicingAddress', TextType::class, array(
+                'required' => false
+            ))
+            ->add('invoicingPostalCode', TextType::class, array(
+                'required' => false
+            ))
+            ->add('invoicingCity', TextType::class, array(
+                'required' => false
+            ))
+            ->add('headofficeAddress', TextType::class, array(
+                'required' => false
+            ))
+            ->add('headofficePostalCode', TextType::class, array(
+                'required' => false
+            ))
+            ->add('headofficeCity', TextType::class, array(
+                'required' => false
+            ))
+            ->add('preferredContact', ChoiceType::class, array(
+                'choices' => array(
+                    'Téléphone' => 'phone',
+                    'e-mail' => 'email',
+                ),
+                'choice_attr' => function () {
+                    return ['class' => 'input__radio input__radio--short'];
+                },
+                'expanded' => true
+            ));
 
     }
 

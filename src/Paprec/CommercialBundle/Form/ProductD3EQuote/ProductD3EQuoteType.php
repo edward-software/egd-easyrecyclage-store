@@ -100,13 +100,13 @@ class ProductD3EQuoteType extends AbstractType
             ->add('address', TextareaType::class)
             ->add('postalCode', TextType::class)
             ->add('city', TextType::class)
-            ->add('invoicingAddress', TextType::class, array(
+            ->add('headofficeAddress', TextType::class, array(
                 'required' => false
             ))
-            ->add('invoicingPostalCode', TextType::class, array(
+            ->add('headofficePostalCode', TextType::class, array(
                 'required' => false
             ))
-            ->add('invoicingCity', TextType::class, array(
+            ->add('headofficeCity', TextType::class, array(
                 'required' => false
             ))
             ->add('preferredContact', ChoiceType::class, array(
