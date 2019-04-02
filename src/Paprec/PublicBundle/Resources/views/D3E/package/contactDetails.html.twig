@@ -115,23 +115,28 @@
                 {{ form_errors(form.tvaStatus) }}
             </div>
         </div>
-        <div class="step">
+        <div class="step step--index">
             <div class="step__left">&nbsp;</div>
             <div class="step__right step__right--small">
-
                 {{ form_widget(form.tvaNumber, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EOrder.TVANumber'|trans}}) }}
                 {{ form_errors(form.tvaNumber) }}
 
                 <div class="clearfix"></div>
-                <div class="">
+                <div class="preferred-contact">
                     {{ 'Commercial.QuoteRequest.PreferredContactLabel'|trans }}
                 </div>
-                {{ form_widget(form.preferredContact, {'attr': {'class': 'input--radio'}}) }}
-                {{ form_errors(form.preferredContact) }}
+                <div class="preferred-contact--choice">
+                    {{ form_widget(form.preferredContact, {'attr': {'class': 'input--radio'}}) }}
+                    {{ form_errors(form.preferredContact) }}
+                </div>
 
-                <div class="clearfix step--marginfield"></div>
-
-                <div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step__left">&nbsp;</div>
+            <div class="step__right">
+                <div class="cnil">
                     Les informations recueillies sur ce formulaire sont enregistrées dans un fichier informatisé pour
                     permettre de vous adresser des contenus adaptés à vos besoins. Ces données sont conservées pendant 3
                     ans et sont destinées au service marketing. Conformément à la loi
@@ -143,7 +148,7 @@
             <div class="clearfix"></div>
 
             {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
-                'label': 'Confirm',
+                'label': 'ValidateOrder',
                 'cartUuid': cart.id,
                 'division': cart.division,
                 'stepBack': 'packaged_step1',
