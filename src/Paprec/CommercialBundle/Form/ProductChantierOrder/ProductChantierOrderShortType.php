@@ -95,7 +95,11 @@ class ProductChantierOrderShortType extends AbstractType
                     return ['class' => 'input__radio input__radio--short'];
                 },
                 'expanded' => true
-            ));
+            ))
+            ->add('terms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => new IsTrue()
+            ]);
 
     }
 

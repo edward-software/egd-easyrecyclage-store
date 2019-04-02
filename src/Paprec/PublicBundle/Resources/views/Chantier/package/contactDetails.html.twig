@@ -22,7 +22,7 @@
 {% block main_content_stepper %}
     <form id="contactDetailsForm" action="" method="post">
         <input type="hidden" id="divisionType" value="{{ cart.division }}">
-        <div class="step">
+        <div class="step step--index">
             <div class="step__left">
                 <div class="step__title">{{ 'Public.Home.IAm'|trans }}</div>
             </div>
@@ -57,7 +57,7 @@
 
             </div>
         </div>
-        <div class="step">
+        <div class="step step--index">
             <div class="step__left">
                 <div class="step__title">
                     {{ 'Public.Home.Addresses'|trans }}
@@ -76,7 +76,8 @@
                 <div class="clearfix"></div>
 
                 <input type="checkbox" id="headofficeAddressCheckbox" class="address-checkbox">
-                <label for="headofficeAddressCheckbox" class="address-checkbox-label">{{ 'Commercial.ProductChantierOrder.HeadofficeAddressCheckbox'|trans }}</label>
+                <label for="headofficeAddressCheckbox"
+                       class="address-checkbox-label">{{ 'Commercial.ProductChantierOrder.HeadofficeAddressCheckbox'|trans }}</label>
                 <div id="headofficeAddressContainer" class="address-container">
                     {{ form_widget(form.headofficeAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductChantierOrder.HeadofficeAddressPlaceholder'|trans}}) }}
                     {{ form_errors(form.headofficeAddress) }}
@@ -90,7 +91,8 @@
                 <div class="clearfix"></div>
 
                 <input type="checkbox" id="invoicingAddressCheckbox" class="address-checkbox">
-                <label for="invoicingAddressCheckbox" class="address-checkbox-label">{{ 'Commercial.ProductChantierOrder.InvoicingAddressCheckbox'|trans }}</label>
+                <label for="invoicingAddressCheckbox"
+                       class="address-checkbox-label">{{ 'Commercial.ProductChantierOrder.InvoicingAddressCheckbox'|trans }}</label>
                 <div id="invoicingAddressContainer" class="address-container">
                     {{ form_widget(form.invoicingAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductChantierOrder.InvoicingAddressPlaceholder'|trans}}) }}
                     {{ form_errors(form.invoicingAddress) }}
@@ -115,7 +117,7 @@
             </div>
         </div>
 
-        <div class="step">
+        <div class="step step--index">
             <div class="step__left">&nbsp;</div>
             <div class="step__right step__right--small">
                 {{ form_widget(form.tvaNumber, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductChantierOrder.TVANumber'|trans}}) }}
@@ -129,20 +131,29 @@
                 {{ form_errors(form.preferredContact) }}
 
                 <div class="clearfix step--marginfield"></div>
-
-                <div>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step__left">&nbsp;</div>
+            <div class="step__right">
+                <div class="cgv">
+                    {{ form_widget(form.terms) }}
+                    {{ 'Commercial.QuoteRequest.TermsAccept'|trans }}
+                    <a href="#">{{ 'Commercial.QuoteRequest.TermsCGV'|trans }}</a>
+                    {{ form_errors(form.terms) }}
+                </div>
+                <div class="cnil">
                     Les informations recueillies sur ce formulaire sont enregistrées dans un fichier informatisé pour
                     permettre de vous adresser des contenus adaptés à vos besoins. Ces données sont conservées pendant 3
                     ans et sont destinées au service marketing. Conformément à la loi
                     « informatique et libertés », vous pouvez exercer votre droit d’accès aux données vous concernant et
                     les faire rectifier en contactant : service-data@paprec.com
                 </div>
-
             </div>
             <div class="clearfix"></div>
 
             {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
-                'label': 'Confirm',
+                'label': 'GoToDelivery',
                 'cartUuid': cart.id,
                 'division': cart.division,
                 'stepBack': 'packaged_step1',
