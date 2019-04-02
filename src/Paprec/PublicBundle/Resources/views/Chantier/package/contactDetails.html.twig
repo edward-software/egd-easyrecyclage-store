@@ -124,13 +124,14 @@
                 {{ form_errors(form.tvaNumber) }}
 
                 <div class="clearfix"></div>
-                <div class="">
+                <div class="preferred-contact">
                     {{ 'Commercial.QuoteRequest.PreferredContactLabel'|trans }}
                 </div>
-                {{ form_widget(form.preferredContact, {'attr': {'class': 'input--radio'}}) }}
-                {{ form_errors(form.preferredContact) }}
-
-                <div class="clearfix step--marginfield"></div>
+                <div class="preferred-contact--choice">
+                    {{ form_widget(form.preferredContact, {'attr': {'class': 'input--radio'}}) }}
+                    {{ form_errors(form.preferredContact) }}
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
         <div class="step">
