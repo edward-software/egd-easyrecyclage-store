@@ -55,7 +55,7 @@ class ProductChantierOrderLine
     /**
      * @var string
      *
-     * @ORM\Column(name="productSubName", type="string", length=255)
+     * @ORM\Column(name="productSubName", type="string", length=255, nullable=true)
      */
     private $productSubName;
 

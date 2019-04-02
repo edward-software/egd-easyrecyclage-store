@@ -37,7 +37,20 @@
     {% else %}
         <div class="step step--index">
             <div class="unavailable-area">
-
+                <div class="unavailable-area__msg-container">
+                    <div class="unavailable-area__msg-container__title">
+                        Cette zone n'est pas disponbile en ligne
+                    </div>
+                    <div class="unavailable-area__msg-container__message">
+                        Désolé, nous ne livrons pas actuellement à cet endroit.<br>
+                        Vous pouvez cependant <span>faire une demande personnalisée.</span>
+                    </div>
+                </div>
+                <div class="unavailable-area__btn-container">
+                    <a href="{{ path('paprec_public_corp_home_index') }}">
+                        <div class="button button--green">Demande personnalisée</div>
+                    </a>
+                </div>
             </div>
         </div>
     {% endif %}

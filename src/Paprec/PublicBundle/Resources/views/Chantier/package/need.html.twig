@@ -50,6 +50,7 @@
                  data-url="{{ path('paprec_public_corp_chantier_subscription_packaged_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: product.id}) }}"
                  style="{% if product.pictos|length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
                 {{ product.name }}
+                <br>{{ product.subName }}
                 {% for items in cart.content %}
                     {% if items['pId'] == product.id %}
                         <span class="number">{{ items['qtty'] }}</span>
