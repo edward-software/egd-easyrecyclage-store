@@ -15,9 +15,9 @@
 
 {% block cta_panel %}
     <div class="step__tab__container">
-        <a class="step__tab"
+        <a class="step__tab step__tab--cart"
            href="{{ path('paprec_public_corp_chantier_subscription_setQuote', {cartUuid: cart.id}) }}">{{ 'Public.Cart.NeedEstimation'|trans }}</a>
-        <a class="step__tab"
+        <a class="step__tab step__tab--quote"
            href="{{ path('paprec_public_corp_home_requestWriting_step1', {cartUuid: cart.id}) }}">{{ 'Public.Cart.FillForm'|trans }}</a>
         <div class="clearfix"></div>
     </div>
