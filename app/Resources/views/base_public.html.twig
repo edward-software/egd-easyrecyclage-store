@@ -82,6 +82,7 @@
         </div>
     </div>
     {% block whoare %}
+        {#DESKTOP#}
         <div class="whoare wrapper-top">
             <div class="wrapper">
                 <div class="righter">
@@ -99,6 +100,32 @@
                 </div>
             </div>
         </div>
+        {#END DESKTOP#}
+        {#MOBILE#}
+        <div class="whoare-mobile whoare">
+            <div class="whoare__title">{{ 'Public.Home.IAm'|trans }}</div>
+            <div class="select-container">
+                <select>
+                    <option data-url="{{ path('paprec_public_corp_home_index') }}"
+                            {% if app.request.get('_route')|slice(0, 'paprec_public_corp'|length) == 'paprec_public_corp' %} selected="selected"{% endif %}>
+                        Entreprise
+                    </option>
+                    <option data-url="{{ path('paprec_public_non_corporate_subscription_groupe_step0') }}"
+                            {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_groupe'|length) == 'paprec_public_non_corporate_subscription_groupe' %} selected="selected"{% endif %}>
+                        Groupe & réseaux
+                    </option>
+                    <option data-url="{{ path('paprec_public_non_corporate_subscription_collectivite_step0') }}"
+                            {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_collectivite'|length) == 'paprec_public_non_corporate_subscription_collectivite' %} selected="selected"{% endif %}>
+                        Collectivité
+                    </option>
+                    <option data-url="{{ path('paprec_public_non_corporate_subscription_particulier_step0') }}"
+                            {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_particulier'|length) == 'paprec_public_non_corporate_subscription_particulier' %} selected="selected"{% endif %}>
+                        Particulier
+                    </option>
+                </select>
+            </div>
+        </div>
+        {#END MOBILE#}
     {% endblock %}
 
     {% block main_content %}
