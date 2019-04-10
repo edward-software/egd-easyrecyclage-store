@@ -27,7 +27,7 @@
                         <p>
                             {% if besoin is defined and besoin == 'active' %}Mon besoin{% endif %}
                             {% if confirmation is defined and confirmation == 'active' %}Ma confirmation{% endif %}
-                            {% if coordonnees == 'active' %}Mes coordonnées{% endif %}
+                            {% if coordonnees is defined and coordonnees == 'active' %}Mes coordonnées{% endif %}
                             {% if offre is defined and offre == 'active' %}Mon offre{% endif %}
                             {% if livraison is defined and livraison == 'active' %}Ma livraison{% endif %}
                             {% if paiement is defined and paiement == 'active' %}Mon paiement{% endif %}
