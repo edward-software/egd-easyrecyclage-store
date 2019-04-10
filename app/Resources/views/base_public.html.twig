@@ -105,7 +105,7 @@
         <div class="whoare-mobile whoare">
             <div class="whoare__title">{{ 'Public.Home.IAm'|trans }}</div>
             <div class="select-container">
-                <select>
+                <select id="whoare-select">
                     <option data-url="{{ path('paprec_public_corp_home_index') }}"
                             {% if app.request.get('_route')|slice(0, 'paprec_public_corp'|length) == 'paprec_public_corp' %} selected="selected"{% endif %}>
                         Entreprise

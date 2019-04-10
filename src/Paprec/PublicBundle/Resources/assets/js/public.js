@@ -5,6 +5,13 @@ $(function () {
      * COMMON
      */
 
+    // A la selection d'une option dans le select whoare, on navigue
+    $('#whoare-select').on('change', function () {
+        var element = $(this).find('option:selected');
+        var url = element.data('url');
+        $(location).attr('href', url);
+    });
+
     // Si il y a la div step__agency alors on charge son contenu
     if ($('.step__agency').is('div')) {
         reloadNearbyAgencies()
