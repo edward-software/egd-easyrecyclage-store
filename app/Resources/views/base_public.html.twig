@@ -102,13 +102,13 @@
         </div>
         {#END DESKTOP#}
         {#MOBILE#}
-        <div class="whoare-mobile whoare">
+        <div class="whoare-mobile whoare wrapper-top">
             <div class="whoare__title">{{ 'Public.Home.IAm'|trans }}</div>
             <div class="select-container">
                 <select id="whoare-select">
                     <option data-url="{{ path('paprec_public_corp_home_index') }}"
                             {% if app.request.get('_route')|slice(0, 'paprec_public_corp'|length) == 'paprec_public_corp' %} selected="selected"{% endif %}>
-                        Entreprise
+                        Entreprise & Administration
                     </option>
                     <option data-url="{{ path('paprec_public_non_corporate_subscription_groupe_step0') }}"
                             {% if app.request.get('_route')|slice(0, 'paprec_public_non_corporate_subscription_groupe'|length) == 'paprec_public_non_corporate_subscription_groupe' %} selected="selected"{% endif %}>
