@@ -509,19 +509,10 @@ class HomeController extends Controller
      * Affichage des mails
      */
 
-    /**
-     * @Route("/mail/diquote/{id}", name="paprec_public_home_mail_diquote")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMail(ProductDIQuote $productDIQuote)
-    {
-        return $this->render('@PaprecCommercial/ProductDIQuote/emails/sendNewQuoteEmail.html.twig', array(
-            'productDIQuote' => $productDIQuote
-        ));
-    }
 
     /**
+     * 2.3.2 : Formulaire Groupe @ Réseaux
+     *
      * @Route("/mail/group/{id}", name="paprec_public_home_mail_group")
      * @param Request $request
      * @throws \Exception
@@ -533,9 +524,40 @@ class HomeController extends Controller
         ));
     }
 
+    /**
+     * 2.4.2 :Formulaire Collectivite
+     *
+     * @Route("/mail/collectivite/{id}", name="paprec_public_home_mail_collectivite")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function showMailCollectivite(QuoteRequestNonCorporate $quoteRequestNonCorporate)
+    {
+        return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate/emails:sendNewRequestEmail.html.twig', array(
+            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
+        ));
+    }
+
 
     /**
-     * @Route("/mail/group/{id}", name="paprec_public_home_mail_group")
+     * 2.5.2 :Formulaire Particulier
+     *
+     * @Route("/mail/particulier/{id}", name="paprec_public_home_mail_particulier")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function showMailParticulier(QuoteRequestNonCorporate $quoteRequestNonCorporate)
+    {
+        return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate/emails:sendNewRequestEmail.html.twig', array(
+            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
+        ));
+    }
+
+
+    /**
+     * 2,6,1,2 : Fomulaire Contact, mail alerte au responsable Paprec
+     *
+     * @Route("/mail/new/contact/{id}", name="paprec_public_home_mail_new_contact")
      * @param Request $request
      * @throws \Exception
      */
@@ -545,4 +567,77 @@ class HomeController extends Controller
             'contactUs' => $contactUs
         ));
     }
+
+    /**
+     * 2,6,1,2 : Fomulaire Contact, mail de confirmation à l'utilisateur
+     *
+     * @Route("/mail/confirm/contact/{id}", name="paprec_public_home_mail_confirm_contact")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function showMailConformContact(ContactUs $contactUs)
+    {
+        return $this->render('PaprecCommercialBundle:ContactUs/emails:sendConfirmRequestEmail.html.twig', array(
+            'contactUs' => $contactUs
+        ));
+    }
+
+
+    /**
+     * 2,6,2,2 : Fomulaire Rappel, mail alerte au responsable Paprec
+     *
+     * @Route("/mail/new/contact/{id}", name="paprec_public_home_mail_new_callback")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function showMailNewCallback(ContactUs $contactUs)
+    {
+        return $this->render('PaprecCommercialBundle:CallBack/emails:sendNewRequestEmail.html.twig', array(
+            'contactUs' => $contactUs
+        ));
+    }
+
+    /**
+     * 2,6,2,2 : Fomulaire Rappel, mail de confirmation à l'utilisateur
+     *
+     * @Route("/mail/confirm/contact/{id}", name="paprec_public_home_mail_confirm_callback")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function showMailConformCallback(ContactUs $contactUs)
+    {
+        return $this->render('PaprecCommercialBundle:CallBack/emails:sendConfirmRequestEmail.html.twig', array(
+            'contactUs' => $contactUs
+        ));
+    }
+
+
+    /**
+     * 3,1,2,2 : Devis DI, mail alerte au responsable de la division
+     *
+     * @Route("/mail/quote/new/di/{id}", name="paprec_public_home_mail_quote_new_di")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function showMailNewDIQuote(ProductDIQuote $productDIQuote)
+    {
+        return $this->render('@PaprecCommercial/ProductDIQuote/emails/sendNewQuoteEmail.html.twig', array(
+            'productDIQuote' => $productDIQuote
+        ));
+    }
+
+    /**
+     * 3,1,2,2 : Devis DI, mail confirrmation à l'utilisateur (avec Devis joint normalement)
+     *
+     * @Route("/mail/quote/confirm/di/{id}", name="paprec_public_home_mail_quote_confirm_di")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function showMailConfirmDIQuote(ProductDIQuote $productDIQuote)
+    {
+        return $this->render('@PaprecCommercial/ProductDIQuote/emails/sendGeneratedQuoteEmail.html.twig', array(
+            'productDIQuote' => $productDIQuote
+        ));
+    }
+
 }
