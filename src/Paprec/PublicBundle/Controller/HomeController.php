@@ -6,6 +6,7 @@ use Paprec\CommercialBundle\Entity\CallBack;
 use Paprec\CommercialBundle\Entity\ContactUs;
 use Paprec\CommercialBundle\Entity\ProductDIQuote;
 use Paprec\CommercialBundle\Entity\QuoteRequest;
+use Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate;
 use Paprec\CommercialBundle\Form\CallBack\CallBackShortType;
 use Paprec\CommercialBundle\Form\ContactUs\ContactUsShortType;
 use Paprec\CommercialBundle\Form\QuoteRequest\QuoteRequestNeedType;
@@ -503,8 +504,13 @@ class HomeController extends Controller
         ));
     }
 
+
     /**
-     * @Route("/showMail/{id}", name="paprec_public_home_showmail")
+     * Affichage des mails
+     */
+
+    /**
+     * @Route("/mail/diquote/{id}", name="paprec_public_home_mail_diquote")
      * @param Request $request
      * @throws \Exception
      */
@@ -512,6 +518,31 @@ class HomeController extends Controller
     {
         return $this->render('@PaprecCommercial/ProductDIQuote/emails/sendNewQuoteEmail.html.twig', array(
             'productDIQuote' => $productDIQuote
+        ));
+    }
+
+    /**
+     * @Route("/mail/group/{id}", name="paprec_public_home_mail_group")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function showMailGroupReseau(QuoteRequestNonCorporate $quoteRequestNonCorporate)
+    {
+        return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate/emails:sendNewRequestEmail.html.twig', array(
+            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
+        ));
+    }
+
+
+    /**
+     * @Route("/mail/group/{id}", name="paprec_public_home_mail_group")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function showMailNewContact(ContactUs $contactUs)
+    {
+        return $this->render('PaprecCommercialBundle:ContactUs/emails:sendNewRequestEmail.html.twig', array(
+            'contactUs' => $contactUs
         ));
     }
 }
