@@ -1,10 +1,8 @@
 {% extends "@PaprecCommercial/Common/emails/base_email.html.twig" %}
 
  {% block picto_header %}
-     <a href="{{ paprec_public_site_url }}" target="_blank">
-         {#<img alt="Logo" src="{{ absolute_url('build/static/logo.png') }}"  width="75px" height="75px" style="font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">#}
-         LOGO
-     </a>
+     <img alt="Logo" src="{{ absolute_url(asset('build/static/check.svg')) }}" width="60px" height="60px"
+          border="0" class="picto-header">
  {% endblock %}
 
 {% block title_header %}
@@ -16,12 +14,20 @@
 {% endblock %}
 
 {% block main_content %}
+<table class="newRequestEmailTable content-email-detail" border="0" cellpadding="0" cellspacing="0" width="80%"
+       style="text-align: right">
+
+    <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.6); text-align: center">
+        <td style="padding-bottom: 10px">
+        Détail de la commande N° {{ productD3EOrder.id|formatId(6) }} - {{ productD3EOrder.dateCreation|date('d/m/Y H:i:s') }}
+        </td>
+    </tr>
     <tr>
-        Détail de la demande N° {{ productD3EOrder.id|formatId(6) }} - {{ productD3EOrder.dateCreation|date('d/m/Y H:i:s') }}
+        <td>&nbsp;</td>
     </tr>
     <tr>
         <td class="label">
-            {{ 'Commercial.ProductD3EOrder.BusinessName'|trans }}
+            {{ 'Commercial.ProductD3EOrder.BusinessName'|trans }} :&nbsp;
         </td>
         <td class="value">
             {{ productD3EOrder.businessName }}
@@ -29,7 +35,7 @@
     </tr>
     <tr>
         <td class="label">
-            {{ 'Commercial.ProductD3EOrder.BusinessLine'|trans }}
+            {{ 'Commercial.ProductD3EOrder.BusinessLine'|trans }} :&nbsp;
         </td>
         <td class="value">
             {{ productD3EOrder.businessLine.name }}
@@ -37,7 +43,7 @@
     </tr>
     <tr>
         <td class="label">
-            {{ 'Commercial.ProductD3EOrder.Civility'|trans }}
+            {{ 'Commercial.ProductD3EOrder.Civility'|trans }} :&nbsp;
         </td>
         <td class="value">
             {{ productD3EOrder.civility }}
@@ -45,7 +51,7 @@
     </tr>
     <tr>
         <td class="label">
-            {{ 'Commercial.ProductD3EOrder.LastName'|trans }}
+            {{ 'Commercial.ProductD3EOrder.LastName'|trans }} :&nbsp;
         </td>
         <td class="value">
             {{ productD3EOrder.lastName }}
@@ -53,7 +59,7 @@
     </tr>
     <tr>
         <td class="label">
-            {{ 'Commercial.ProductD3EOrder.FirstName'|trans }}
+            {{ 'Commercial.ProductD3EOrder.FirstName'|trans }} :&nbsp;
         </td>
         <td class="value">
             {{ productD3EOrder.firstName }}
@@ -61,7 +67,7 @@
     </tr>
     <tr>
         <td class="label">
-            {{ 'Commercial.ProductD3EOrder.Function'|trans }}
+            {{ 'Commercial.ProductD3EOrder.Function'|trans }} :&nbsp;
         </td>
         <td class="value">
             {{ productD3EOrder.function }}
@@ -69,7 +75,7 @@
     </tr>
     <tr>
         <td class="label">
-            {{ 'Commercial.ProductD3EOrder.Email'|trans }}
+            {{ 'Commercial.ProductD3EOrder.Email'|trans }} :&nbsp;
         </td>
         <td class="value">
             {{ productD3EOrder.email }}
@@ -77,17 +83,18 @@
     </tr>
     <tr>
         <td class="label">
-            {{ 'Commercial.ProductD3EOrder.Phone'|trans }}
+            {{ 'Commercial.ProductD3EOrder.Phone'|trans }} :&nbsp;
         </td>
         <td class="value">
             {{ productD3EOrder.phone }}
         </td>
     </tr>
+</table>
 {% endblock %}
 
 {% block footer %}
     <tr>
-        <td>
+        <td class="footer-repondre-title" style="padding: 15px;">
             <a href="{{ absolute_url(path("paprec_commercial_productD3EOrder_view", {id: productD3EOrder.id})) }}">
                 Consulter la commande
             </a>

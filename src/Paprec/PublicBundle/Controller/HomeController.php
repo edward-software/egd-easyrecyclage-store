@@ -515,15 +515,29 @@ class HomeController extends Controller
 
 
     /**
-     * 2.3.2 : Formulaire Groupe @ Réseaux
+     * 2.3.2 : Formulaire Groupe @ Réseaux, alerte au responsable
      *
-     * @Route("/mail/group/{id}", name="paprec_public_home_mail_group")
+     * @Route("/mail/group/new/{id}", name="paprec_public_home_mail_group")
      * @param Request $request
      * @throws \Exception
      */
-    public function showMailGroupReseau(QuoteRequestNonCorporate $quoteRequestNonCorporate)
+    public function showMailNewGroupReseau(QuoteRequestNonCorporate $quoteRequestNonCorporate)
     {
         return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate/emails:sendNewRequestEmail.html.twig', array(
+            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
+        ));
+    }
+
+    /**
+     * 2.3.2 : Formulaire Groupe @ Réseaux, confirmation
+     *
+     * @Route("/mail/group/confirm/{id}", name="paprec_public_home_mail_group_confirm")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function showMailConfirmGroupReseau(QuoteRequestNonCorporate $quoteRequestNonCorporate)
+    {
+        return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate/emails:sendConfirmRequestEmail.html.twig', array(
             'quoteRequestNonCorporate' => $quoteRequestNonCorporate
         ));
     }
@@ -579,7 +593,7 @@ class HomeController extends Controller
      * @param Request $request
      * @throws \Exception
      */
-    public function showMailConformContact(ContactUs $contactUs)
+    public function showMailConfirmContact(ContactUs $contactUs)
     {
         return $this->render('PaprecCommercialBundle:ContactUs/emails:sendConfirmRequestEmail.html.twig', array(
             'contactUs' => $contactUs
@@ -588,30 +602,30 @@ class HomeController extends Controller
 
 
     /**
-     * 2,6,2,2 : Fomulaire Rappel, mail alerte au responsable Paprec
+     * 2,6,2,2 : Formulaire Rappel, mail alerte au responsable Paprec
      *
-     * @Route("/mail/new/contact/{id}", name="paprec_public_home_mail_new_callback")
+     * @Route("/mail/new/callback/{id}", name="paprec_public_home_mail_new_callback")
      * @param Request $request
      * @throws \Exception
      */
-    public function showMailNewCallback(ContactUs $contactUs)
+    public function showMailNewCallback(CallBack $callBack)
     {
         return $this->render('PaprecCommercialBundle:CallBack/emails:sendNewRequestEmail.html.twig', array(
-            'contactUs' => $contactUs
+            'callBack' => $callBack
         ));
     }
 
     /**
      * 2,6,2,2 : Fomulaire Rappel, mail de confirmation à l'utilisateur
      *
-     * @Route("/mail/confirm/contact/{id}", name="paprec_public_home_mail_confirm_callback")
+     * @Route("/mail/confirm/callback/{id}", name="paprec_public_home_mail_confirm_callback")
      * @param Request $request
      * @throws \Exception
      */
-    public function showMailConformCallback(ContactUs $contactUs)
+    public function showMailConformCallback(CallBack $callBack)
     {
         return $this->render('PaprecCommercialBundle:CallBack/emails:sendConfirmRequestEmail.html.twig', array(
-            'contactUs' => $contactUs
+            'callBack' => $callBack
         ));
     }
 

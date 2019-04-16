@@ -68,7 +68,7 @@ Commercial:
     Date-creation:              Date de création
     Date-crea:                  Date de créa.
     Date-update:                Date de mise à jour
-    BusinessName:               Raison sociale
+    BusinessName:               Nom de la société
     BusinessLine:               Secteur d'activité
     BusinessLinePlaceholder:    Sélectionnez votre secteur d'activité
     Civility:                   Civilité
@@ -187,7 +187,7 @@ Commercial:
     Date-creation:              Date de création
     Date-crea:                  Date de créa.
     Date-update:                Date de mise à jour
-    BusinessName:               Raison sociale
+    BusinessName:               Nom de la société
     BusinessLine:               Secteur d'activité
     BusinessLinePlaceholder:    Sélectionnez votre secteur d'activité
     Civility:                   Civilité
@@ -475,7 +475,7 @@ Commercial:
     Date-creation:              Date de création
     Date-crea:                  Date de créa.
     Date-update:                Date de mise à jour
-    BusinessName:               Raison sociale
+    BusinessName:               Nom de la société
     Civility:                   Civilité
     LastName:                   Nom
     FirstName:                  Prénom
@@ -502,6 +502,7 @@ Commercial:
     Cancel:                     Annuler
     Confirm-cancel:             Etes-vous sûr de vouloir annuler ?
     Confirm-remove:             Etes-vous sûr de vouloir supprimer cette demande de contact ?
+    PostalCode:                 Code postal
 
   CallBack:
     CallBacks:                  Demandes de rappel
@@ -509,7 +510,7 @@ Commercial:
     Date-creation:              Date de création
     Date-crea:                  Date de créa.
     Date-update:                Date de mise à jour
-    BusinessName:               Raison sociale
+    BusinessName:               Nom de la société
     Civility:                   Civilité
     LastName:                   Nom
     FirstName:                  Prénom
@@ -544,6 +545,7 @@ Commercial:
     Date-crea:                  Date de créa.
     Date-update:                Date de mise à jour
     BusinessName:               Raison sociale
+    CollectivitePlaceholder:    Nom de collectivité / nom de syndicat
     Civility:                   Civilité
     LastName:                   Nom
     FirstName:                  Prénom
@@ -556,7 +558,7 @@ Commercial:
     PhonePlaceholder:           Numéro de téléphone
     FunctionPlaceholder:        Fonction (facultatif)
     Function:                   Fonction
-    Need:                       Le besoin
+    Need:                       Besoin
     NeedPlaceholder:            Votre besoin
     Division:                   Division
     QuoteStatus:                Statut

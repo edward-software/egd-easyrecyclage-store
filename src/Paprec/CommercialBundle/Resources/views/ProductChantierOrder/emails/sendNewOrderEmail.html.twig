@@ -1,10 +1,8 @@
 {% extends "@PaprecCommercial/Common/emails/base_email.html.twig" %}
 
  {% block picto_header %}
-     <a href="{{ paprec_public_site_url }}" target="_blank">
-         {#<img alt="Logo" src="{{ absolute_url('build/static/logo.png') }}"  width="75px" height="75px" style="font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">#}
-         LOGO
-     </a>
+     <img alt="Logo" src="{{ absolute_url(asset('build/static/check.svg')) }}" width="60px" height="60px"
+          border="0" class="picto-header">
  {% endblock %}
 
 {% block title_header %}
@@ -16,15 +14,20 @@
 {% endblock %}
 
 {% block main_content %}
-    <table class="newRequestEmailTable" border="0" cellpadding="0" cellspacing="0" width="80%"
-           style="margin-left: 10%; margin-bottom: 15px; margin-top: 20px;text-align: right">
-        <tr>
-            Détail de la demande N° {{ productChantierOrder.id|formatId(6) }}
+    <table class="newRequestEmailTable content-email-detail" border="0" cellpadding="0" cellspacing="0" width="100%"
+           style="text-align: right">
+        <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.6); text-align: center;">
+            <td style="padding-bottom: 10px">
+                Détail de la commande N° {{ productChantierOrder.id|formatId(6) }}
             - {{ productChantierOrder.dateCreation|date('d/m/Y H:i:s') }}
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="label">
-                {{ 'Commercial.ProductChantierOrder.BusinessName'|trans }}
+                {{ 'Commercial.ProductChantierOrder.BusinessName'|trans }} :&nbsp;
             </td>
             <td class="value">
                 {{ productChantierOrder.businessName }}
@@ -32,7 +35,7 @@
         </tr>
         <tr>
             <td class="label">
-                {{ 'Commercial.ProductChantierOrder.BusinessLine'|trans }}
+                {{ 'Commercial.ProductChantierOrder.BusinessLine'|trans }} :&nbsp;
             </td>
             <td class="value">
                 {{ productChantierOrder.businessLine.name }}
@@ -40,7 +43,7 @@
         </tr>
         <tr>
             <td class="label">
-                {{ 'Commercial.ProductChantierOrder.Civility'|trans }}
+                {{ 'Commercial.ProductChantierOrder.Civility'|trans }} :&nbsp;
             </td>
             <td class="value">
                 {{ productChantierOrder.civility }}
@@ -48,7 +51,7 @@
         </tr>
         <tr>
             <td class="label">
-                {{ 'Commercial.ProductChantierOrder.LastName'|trans }}
+                {{ 'Commercial.ProductChantierOrder.LastName'|trans }} :&nbsp;
             </td>
             <td class="value">
                 {{ productChantierOrder.lastName }}
@@ -56,7 +59,7 @@
         </tr>
         <tr>
             <td class="label">
-                {{ 'Commercial.ProductChantierOrder.FirstName'|trans }}
+                {{ 'Commercial.ProductChantierOrder.FirstName'|trans }} :&nbsp;
             </td>
             <td class="value">
                 {{ productChantierOrder.firstName }}
@@ -64,7 +67,7 @@
         </tr>
         <tr>
             <td class="label">
-                {{ 'Commercial.ProductChantierOrder.Function'|trans }}
+                {{ 'Commercial.ProductChantierOrder.Function'|trans }} :&nbsp;
             </td>
             <td class="value">
                 {{ productChantierOrder.function }}
@@ -72,7 +75,7 @@
         </tr>
         <tr>
             <td class="label">
-                {{ 'Commercial.ProductChantierOrder.Email'|trans }}
+                {{ 'Commercial.ProductChantierOrder.Email'|trans }} :&nbsp;
             </td>
             <td class="value">
                 {{ productChantierOrder.email }}
@@ -80,7 +83,7 @@
         </tr>
         <tr>
             <td class="label">
-                {{ 'Commercial.ProductChantierOrder.Phone'|trans }}
+                {{ 'Commercial.ProductChantierOrder.Phone'|trans }} :&nbsp;
             </td>
             <td class="value">
                 {{ productChantierOrder.phone }}
@@ -91,7 +94,7 @@
 
 {% block footer %}
     <tr>
-        <td>
+        <td class="footer-repondre-title" style="padding: 15px;">
             <a href="{{ absolute_url(path("paprec_commercial_productChantierOrder_view", {id: productChantierOrder.id})) }}">
                 Consulter la commande
             </a>

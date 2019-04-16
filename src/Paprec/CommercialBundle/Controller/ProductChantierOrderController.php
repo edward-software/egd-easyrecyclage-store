@@ -523,6 +523,7 @@ class ProductChantierOrderController extends Controller
             readfile($file);
             exit;
         }
+        // TODO : Erreur si !file_eistes($file)
     }
 
     /**
