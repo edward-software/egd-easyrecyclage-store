@@ -14,9 +14,12 @@ class CommonController extends Controller
 
     /**
      * Get menu from WordPress API
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param $slug
+     * @param bool $isMobile
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws Exception
      */
-    public function getMenuFromWPAction($slug)
+    public function getMenuFromWPAction($slug, $isMobile = false)
     {
         try {
 
@@ -38,52 +41,61 @@ class CommonController extends Controller
                     }
                 }
 
-                return $this->render('@PaprecPublic/Menu/shortlinksMenu.html.twig', array(
-                    'items' => $shortlinks
-                ));
+                if ($isMobile) {
+                    return $this->render('@PaprecPublic/Menu/mobile/shortlinksMenu.html.twig', array(
+                        'items' => $shortlinks
+                    ));
+                } else {
+                    return $this->render('@PaprecPublic/Menu/shortlinksMenu.html.twig', array(
+                        'items' => $shortlinks
+                    ));
+                }
 
             } elseif ($slug == 'header-menu') {
 
                 $headers = array();
+
                 if (isset($bodyResponse['items']) && is_array($bodyResponse['items']) && count($bodyResponse['items'])) {
                     foreach ($bodyResponse['items'] as $item) {
-                        if ($item['menu_item_parent'] != null && $item['menu_item_parent'] == '0') {
-                            $headers[$item['ID']] = array(
-                                'id' => $item['ID'],
-                                'title' => $item['title'],
-                                'url' => $item['url'],
-                                'submenus' => array()
-                            );
-                        } elseif ($item['menu_item_parent'] !== null && $item['menu_item_parent'] != '') {
-                            // teste si le numéro du parent est dans le premier niveau de menu
-                            if (array_key_exists($item['menu_item_parent'], $headers)) {
-                                $headers[$item['menu_item_parent']]['submenus'][$item['ID']] = array(
-                                    'id' => $item['ID'],
-                                    'title' => $item['title'],
-                                    'url' => $item['url'],
+                        $headers[$item['ID']] = array(
+                            'id' => $item['ID'],
+                            'title' => $item['title'],
+                            'url' => $item['url'],
+                            'submenus' => array()
+                        );
+                        if ($item['child_items'] != null && count($item['child_items'])) {
+                            foreach ($item['child_items'] as $childItem) {
+                                $headers[$item['ID']]['submenus'][$childItem['ID']] = array(
+                                    'id' => $childItem['ID'],
+                                    'title' => $childItem['title'],
+                                    'url' => $childItem['url'],
                                     'submenus' => array()
                                 );
-                            } else {
-                                foreach ($headers as $key => $menu) {
-                                    if (isset($menu['submenus']) && is_array($menu['submenus']) && count($menu['submenus'])) {
-                                        if (array_key_exists($item['menu_item_parent'], $menu['submenus'])) {
-                                            $headers[$key]['submenus'][$item['menu_item_parent']]['submenus'][$item['ID']] = array(
-                                                'id' => $item['ID'],
-                                                'title' => $item['title'],
-                                                'url' => $item['url']
-                                            );
-                                        }
-                                    }
-                                }
+//                                if ($childItem['child_items'] !== null && count($childItem['child_items'])) {
+//                                    foreach ($childItem['child_items'] as $greatChildItem) {
+//                                        $headers[$item['ID']]['submenus'][$childItem['ID']]['submenus'][$greatChildItem['ID']] = array(
+//                                            'id' => $greatChildItem['ID'],
+//                                            'title' => $greatChildItem['title'],
+//                                            'url' => $greatChildItem['url']
+//                                        );
+//                                    }
+//
+//                                }
                             }
-
                         }
-
                     }
                 }
-                return $this->render('@PaprecPublic/Menu/headersMenu.html.twig', array(
-                    'items' => $headers
-                ));
+
+
+                if ($isMobile) {
+                    return $this->render('@PaprecPublic/Menu/mobile/headersMenu.html.twig', array(
+                        'items' => $headers
+                    ));
+                } else {
+                    return $this->render('@PaprecPublic/Menu/headersMenu.html.twig', array(
+                        'items' => $headers
+                    ));
+                }
             } elseif ($slug == 'footer-menu') {
 
                 $footers = array();
@@ -123,13 +135,13 @@ class CommonController extends Controller
                     }
                 }
 
-
                 return $this->render('@PaprecPublic/Menu/quicklinksMenu.html.twig', array(
                     'items' => $quicklinksmenus
                 ));
             }
 
-        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+        } catch
+        (\GuzzleHttp\Exception\GuzzleException $e) {
             throw new Exception('cannotLoadMenuWorpress', 500);
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode());
@@ -140,7 +152,8 @@ class CommonController extends Controller
      * @param $label
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getCTAsBottomAction($label, $cartUuid, $division, $stepBack = '', $nextStep = '', $idSubmit = '', $cartEmpty = false) {
+    public function getCTAsBottomAction($label, $cartUuid, $division, $stepBack = '', $nextStep = '', $idSubmit = '', $cartEmpty = false)
+    {
 
         return $this->render('@PaprecPublic/Common/partial/ctaBottomPartial.html.twig', array(
             'cartUuid' => $cartUuid,
@@ -156,7 +169,8 @@ class CommonController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getSideBarInfoAction() {
+    public function getSideBarInfoAction()
+    {
         return $this->render('@PaprecPublic/Common/partial/sidebarInfoPartial.html.twig');
     }
 
@@ -167,7 +181,8 @@ class CommonController extends Controller
      * @Route("/common/loadPopupRecycle", name="paprec_public_common_loadPopupRecycle", condition="request.isXmlHttpRequest()")
      * @throws \Exception
      */
-    public function loadPopupRecycle(Request $request) {
+    public function loadPopupRecycle(Request $request)
+    {
         return $this->render('@PaprecPublic/Common/partial/recyclePopup.html.twig');
     }
 }

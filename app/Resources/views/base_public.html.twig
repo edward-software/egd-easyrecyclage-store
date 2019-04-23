@@ -17,6 +17,7 @@
 </head>
 <body class="single page-template-default page page-id-2 logged-in page-d-exemple tunnel">
 
+<!-- DESKTOP -->
 <header class="header">
     <div class="header__shortlinks">
         <div class="wrapper">
@@ -41,6 +42,36 @@
         </a>
     </div>
 </header>
+<!-- END DESKTOP -->
+
+<!-- MOBILE -->
+<header class="menu-mobile">
+    <div class="menu-mobile__header">
+        <div class="menu-mobile__header__logo">
+            <a href="/"><img class="" src="{{ paprec_public_site_url }}/wp-content/themes/paprec/img/logo_mobile.jpg"
+                             alt="logo_paprec"></a>
+        </div>
+        <i class="fa fa-bars" id="toggleMenuMobile"></i>
+    </div>
+
+
+    <div class="menu-mobile-area">
+        <div class="menu-mobile-area__top">
+            <p>Menu</p>
+            {{ render(controller('PaprecPublicBundle:Common:getMenuFromWP', {'slug': 'header-menu', 'isMobile': true})) }}
+        </div>
+
+        <div class="menu-mobile-area__center">
+            <a class="header__cta" href="javascript:void(0);"
+               data-url="{{ path('paprec_public_common_loadPopupRecycle') }}">Recyclez <br>vos déchets</a>
+        </div>
+
+        <div class="menu-mobile-area__bottom">
+            {{ render(controller('PaprecPublicBundle:Common:getMenuFromWP', {'slug': 'shortlinks-menu', 'isMobile': true})) }}
+        </div>
+    </div>
+</header>
+<!-- END MOBILE-->
 
 {# Affichage du menu fixe à droite tout le temps #}
 <div class="fixedright">
@@ -139,8 +170,9 @@
 <footer class="footer" role="contentinfo">
     <div class="wrapper">
         <div class="footer__infos">
-            <a href="{{ paprec_public_site_url }}"><img src="{{ paprec_public_site_url }}/wp-content/themes/paprec/img/logo-group.png"
-                             alt="Paprec Group"></a>
+            <a href="{{ paprec_public_site_url }}"><img
+                        src="{{ paprec_public_site_url }}/wp-content/themes/paprec/img/logo-group.png"
+                        alt="Paprec Group"></a>
             <span>PAPREC GROUP</span>
             Présent sur l'ensemble des filières existantes, le groupe est N°1 du recyclage des plastiques, du papier, du
             carton, des déchets du bâtiment ainsi que du tri de la collecte sélective des ménages. Il est N°2 du
