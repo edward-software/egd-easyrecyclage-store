@@ -360,8 +360,55 @@ $(function () {
                     reloadCart();
                 }
             })
-        })
+        });
+
+
     }
+
+    /*******************************************************************************************************************
+     * D3E OU CHANTIER PACKGE NEED FORM
+     */
+    if ($('.d3e-need-form').is('div') || $('.chantier-need-form').is('div')) {
+        /**
+         * Ajout un seul produit au clic sur le +
+         */
+        $('.addOneToCartPackageButton').click(function () {
+            var url = $(this).data('url');
+
+            var productId = (this.id).replace('addOneToCartPackageButton', '');
+            $.ajax({
+                type: "POST",
+                url: url,
+                success: function (response) {
+                    var prevQtty = removeBadgeNoCat(productId);
+                    $('#productCheckboxPicto_' + productId).prepend("<span class=\"number\">" + (parseInt(prevQtty) + 1) + "<span");
+                    $('#validateNeedButton').removeAttr('disabled');
+                    reloadCart();
+                }
+            })
+        });
+
+        /**
+         * Enlève un seul produit au clic sur le -
+         */
+        $('.removeOneToCartPackageButton').click(function () {
+            var url = $(this).data('url');
+
+            var productId = (this.id).replace('removeOneToCartPackageButton', '');
+            $.ajax({
+                type: "POST",
+                url: url,
+                success: function (response) {
+                    var prevQtty = removeBadgeNoCat(productId);
+                    if (prevQtty > 1) {
+                        $('#productCheckboxPicto_' + productId).prepend("<span class=\"number\">" + (parseInt(prevQtty) - 1) + "<span");
+                    }
+                    reloadCart();
+                }
+            })
+        });
+    }
+
 
     /*******************************************************************************************************************
      * D3E NEED FORM
@@ -667,7 +714,12 @@ function removeBadge(productId, categoryId) {
  * @param productId
  */
 function removeBadgeNoCat(productId) {
+    var prevQtty = $('#productCheckboxPicto_' + productId).find('span.number').html();
+    if (typeof prevQtty === 'undefined' || prevQtty.length < 1) {
+        prevQtty = 0;
+    }
     $('#productCheckboxPicto_' + productId).find('span.number').remove();
+    return prevQtty;
 }
 
 /**

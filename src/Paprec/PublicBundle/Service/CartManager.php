@@ -277,6 +277,71 @@ class CartManager
     }
 
     /**
+     * Ajoute du content au cart pour un produit packagé D3E ou CHANTIER
+     *
+     * @param $id
+     * @param $productId
+     * @param $quantity
+     * @return object|Cart|null
+     * @throws Exception
+     */
+    public function addOneProductPackage($id, $productId)
+    {
+        $cart = $this->get($id);
+        $qtty = '1';
+        $content = $cart->getContent();
+        if ($content && count($content)) {
+            foreach ($content as $key => $product) {
+                if ($product['pId'] == $productId) {
+                    $qtty = strval(intval($product['qtty']) + 1);
+                    unset($content[$key]);
+                }
+            }
+        }
+        $product = ['pId' => $productId, 'qtty' => $qtty];
+        $content[] = $product;
+
+        $cart->setContent($content);
+        $this->em->persist($cart);
+        $this->em->flush();
+        return $cart;
+    }
+
+    /**
+     * Elève 1 de de quantité au cart pour un produit packagé CHANTIER OU D3E
+     *
+     * @param $id
+     * @param $productId
+     * @param $quantity
+     * @return object|Cart|null
+     * @throws Exception
+     */
+    public function removeOneProductPackage($id, $productId)
+    {
+        $cart = $this->get($id);
+        $qtty = '0';
+        $content = $cart->getContent();
+        if ($content && count($content)) {
+            foreach ($content as $key => $product) {
+                if ($product['pId'] == $productId) {
+                    $qtty = strval(intval($product['qtty']) - 1);
+                    unset($content[$key]);
+                }
+            }
+        }
+
+        if ($qtty !== '0') {
+            $product = ['pId' => $productId, 'qtty' => $qtty];
+            $content[] = $product;
+        }
+
+        $cart->setContent($content);
+        $this->em->persist($cart);
+        $this->em->flush();
+        return $cart;
+    }
+
+    /**
      * Ajoute du content au cart pour un produit packagé D3E
      *
      * @param $id
