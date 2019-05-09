@@ -483,7 +483,8 @@ $(function () {
             $('.infoproduct__type').last().find('.infoproduct__qty').val('');
             $('.infoproduct__type').last().find($('#optHandlingProductSelect')).prop('checked', false);
             $('.infoproduct__type').last().find($('#optSerialNumberStmtProductSelect')).prop('checked', false);
-            $('.infoproduct__type').last().find($('#optDestructionProductSelect')).prop('checked', false)
+            $('.infoproduct__type').last().find($('#optDestructionProductSelect')).prop('checked', false);
+            $('.infoproduct-container').outerHeight($('.infoproduct').outerHeight());
         })
     }
 

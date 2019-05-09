@@ -32,208 +32,195 @@
 {% endblock %}
 
 {% block products %}
-    {% set cpt = 5 %}
-    {% set displayedProduct = "" %}
-    {# On parcourt la liste des produits D3E #}
-    {% for product in products %}
-        {% if (cpt == 5) %}
-<div class="first-row">
-    <div class="first-row-container">
-        {% endif %}
-        {% if (cpt%5 == 0 and cpt > 5) %}
-        <div class="following-row">
-            {% endif %}
-            {% if product.id in cart.displayedProducts %}
-                {% set displayedProduct = product %}
-            {% endif %}
-            <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts %}  active {% endif %}"
-                 id="productCheckboxPicto_{{ product.id }}"
-                 data-url="{{ path('paprec_public_corp_d3e_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: product.id}) }}"
-                 style="{% if product.pictos|length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
-                {{ product.name }}
-                {% for key, items in cart.content %}
-                    {% if key == product.id %}
-                        <span class="number">1</span>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            {% set cpt = cpt + 1 %}
+    <div class="products-container">
 
-            {% if ((cpt%5 == 0) and (cpt > 5)) or loop.last %}
-        </div>
-    </div>
-    {% if cart.displayedProducts and displayedProduct != '' %}
-        <div class="infoproduct">
+        {% for product in products %}
+            <div class="product-container">
+                <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts %}  active {% endif %}"
+                     id="productCheckboxPicto_{{ product.id }}"
+                     data-url="{{ path('paprec_public_corp_d3e_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: product.id}) }}"
+                     style="{% if product.pictos|length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
+                    {{ product.name }}
 
-            {#<div class="infoproduct__close"#}
-            {#data-url="{{ path('paprec_public_corp_d3e_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: displayedProduct.id}) }}"#}
-            {#id="infoProductClose_{{ displayedProduct.id }}"></div>#}
-
-            <div class="infoproduct__type__title">
-                <p>{{ product.name }}</p>
-            </div>
-
-            {% set productHasContent = '0' %}
-            {% for key, content in cart.content %}
-                {% if displayedProduct.id == key %}
-                    {% set productHasContent = '1' %}
-                {% endif %}
-            {% endfor %}
-            {% if cart.content is empty or productHasContent == '0' %}
-                <div class="infoproduct__type">
-                    <div class="infoproduct__type__left">
-                        <div class="infoproduct__title infoproduct__title--type">
-                            {{ ('Public.Cart.TrashType'|trans)|upper }}
-                        </div>
-                        <div class="-align-right">
-                            <select class="infoproduct__type__input infoproduct__typeSelect">
-                                <option disabled selected value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
-                                {% for productType in productTypes %}
-                                    {% for type in productType %}
-                                        <option value="{{ type.id }}">{{ type.name }}</option>
-                                    {% endfor %}
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="clearfix"></div>
-                        <br>
-                        <div class="infoproduct__title infoproduct__title--type">{{ ('Public.Cart.Options'|trans)|upper }}</div>
-                        <div class="-align-right">
-                            <input type="checkbox"
-                                   class="infoproduct__type__checkbox infoproduct__type__checkbox__optHandlingProductSelect"
-                                   id="optHandlingProductSelect">
-                            {{ 'Commercial.ProductD3EOrderLine.OptHandling'|trans }}<br>
-
-                            <input type="checkbox"
-                                   class="infoproduct__type__checkbox infoproduct__type__checkbox__optSerialNumberStmtProductSelect"
-                                   id="optSerialNumberStmtProductSelect">
-                            {{ 'Commercial.ProductD3EOrderLine.OptSerialNumberStmt'|trans }}<br>
-
-                            <input type="checkbox"
-                                   class="infoproduct__type__checkbox infoproduct__type__checkbox__optDestructionProductSelect"
-                                   id="optDestructionProductSelect">
-                            {{ 'Commercial.ProductD3EOrderLine.OptDestruction'|trans }}<br>
-                        </div>
-                    </div>
-                    <div class="infoproduct__type__right">
-                        <div class="infoproduct__pieces">{{ 'Public.Cart.PiecesNumber'|trans }}</div>
-                        <div class="-align-right">
-
-                            <input name=""
-                                   id="quantityProducSelect_{{ displayedProduct.id }}"
-                                   class="infoproduct__qty infoproduct__type__input"/>
-                        </div>
-                    </div>
                 </div>
-            {% else %}
-                {% for key, content in cart.content %}
-                    {% set i = loop.index0 %}
-                    {% if key == displayedProduct.id %}
-                        {% for types in content %}
-                            <div class="infoproduct__type">
-                                <div class="infoproduct__type__left">
-                                    <div class="infoproduct__title">
-                                        {{ ('Public.Cart.TrashType'|trans)|upper }}
-                                    </div>
-                                    <div class="-align-right">
-                                        <select class="infoproduct__type__input infoproduct__typeSelect">
-                                            <option disabled selected
-                                                    value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
+                {% if product.id in cart.displayedProducts %}
+                    <div class="infoproduct-container">
 
-                                            {% for productType in productTypes %}
-                                                {% for type in productType %}
-                                                    <option value="{{ type.id }}"
-                                                            {% if type.id == types['tId'] %} selected="selected" {% endif %}>{{ type.name }}
-                                                    </option>
+                        <div class="infoproduct">
+
+                            {#<div class="infoproduct__close"#}
+                            {#data-url="{{ path('paprec_public_corp_d3e_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: displayedProduct.id}) }}"#}
+                            {#id="infoProductClose_{{ displayedProduct.id }}"></div>#}
+
+                            <div class="infoproduct__type__title">
+                                <p>{{ product.name }}</p>
+                            </div>
+
+                            {% set productHasContent = '0' %}
+                            {% for key, content in cart.content %}
+                                {% if product.id == key %}
+                                    {% set productHasContent = '1' %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if cart.content is empty or productHasContent == '0' %}
+                                <div class="infoproduct__type">
+                                    <div class="infoproduct__type__left">
+                                        <div class="infoproduct__title infoproduct__title--type">
+                                            {{ ('Public.Cart.TrashType'|trans)|upper }}
+                                        </div>
+                                        <div class="-align-right">
+                                            <select class="infoproduct__type__input infoproduct__typeSelect">
+                                                <option disabled selected
+                                                        value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
+                                                {% for productType in productTypes %}
+                                                    {% for type in productType %}
+                                                        <option value="{{ type.id }}">{{ type.name }}</option>
+                                                    {% endfor %}
                                                 {% endfor %}
-                                            {% endfor %}
-                                        </select>
+                                            </select>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <br>
+                                        <div class="infoproduct__title infoproduct__title--type">{{ ('Public.Cart.Options'|trans)|upper }}</div>
+                                        <div class="-align-right">
+                                            <input type="checkbox"
+                                                   class="infoproduct__type__checkbox infoproduct__type__checkbox__optHandlingProductSelect"
+                                                   id="optHandlingProductSelect">
+                                            {{ 'Commercial.ProductD3EOrderLine.OptHandling'|trans }}<br>
+
+                                            <input type="checkbox"
+                                                   class="infoproduct__type__checkbox infoproduct__type__checkbox__optSerialNumberStmtProductSelect"
+                                                   id="optSerialNumberStmtProductSelect">
+                                            {{ 'Commercial.ProductD3EOrderLine.OptSerialNumberStmt'|trans }}<br>
+
+                                            <input type="checkbox"
+                                                   class="infoproduct__type__checkbox infoproduct__type__checkbox__optDestructionProductSelect"
+                                                   id="optDestructionProductSelect">
+                                            {{ 'Commercial.ProductD3EOrderLine.OptDestruction'|trans }}<br>
+                                        </div>
                                     </div>
+                                    <div class="infoproduct__type__right">
+                                        <div class="infoproduct__pieces">{{ 'Public.Cart.PiecesNumber'|trans }}</div>
+                                        <div class="-align-right">
 
-                                    <div class="clearfix"></div>
-
-                                    {# Si le produit sélectionné est déjà dans le Cart on récupère la quantité et les options qui étaient choisis #}
-                                    {% set qtty = '' %}
-                                    {% set optHandling = '' %}
-                                    {% set optSerialNumberStmt = '' %}
-                                    {% set optDestruction = '' %}
-                                    {% set qtty = types['qtty'] %}
-                                    {% if types['optHandling'] == '1' %}
-                                        {% set optHandling = '1' %}
-                                    {% endif %}
-                                    {% if types['optSerialNumberStmt'] == '1' %}
-                                        {% set optSerialNumberStmt = '1' %}
-                                    {% endif %}
-                                    {% if types['optDestruction'] == '1' %}
-                                        {% set optDestruction = '1' %}
-                                    {% endif %}
-                                    <br>
-
-                                    <div class="infoproduct__title">{{ ('Public.Cart.Options'|trans)|upper }}</div>
-                                    <div class="-align-right">
-                                        <input type="checkbox"
-                                               id="optHandlingProductSelect"
-                                               class="infoproduct__type__checkbox infoproduct__type__checkbox__optHandlingProductSelect"
-                                                {% if optHandling is defined and optHandling == '1' %} checked{% endif %}>
-                                        {{ 'Commercial.ProductD3EOrderLine.OptHandling'|trans }}<br>
-
-                                        <input type="checkbox"
-                                               id="optSerialNumberStmtProductSelect"
-                                               class="infoproduct__type__checkbox infoproduct__type__checkbox__optSerialNumberStmtProductSelect"
-                                                {% if optSerialNumberStmt is defined and optSerialNumberStmt == '1' %} checked{% endif %}>
-                                        {{ 'Commercial.ProductD3EOrderLine.OptSerialNumberStmt'|trans }}<br>
-
-                                        <input type="checkbox"
-                                               id="optDestructionProductSelect"
-                                               class="infoproduct__type__checkbox infoproduct__type__checkbox__optDestructionProductSelect"
-                                                {% if optDestruction is defined and optDestruction == '1' %} checked{% endif %}>
-                                        {{ 'Commercial.ProductD3EOrderLine.OptDestruction'|trans }}<br>
+                                            <input name=""
+                                                   id="quantityProducSelect_{{ product.id }}"
+                                                   class="infoproduct__qty infoproduct__type__input"/>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="infoproduct__type__right">
-                                    <div class="infoproduct__pieces-number">{{ 'Public.Cart.PiecesNumber'|trans }}</div>
-                                    <input name=""
-                                           id="quantityProducSelect_{{ displayedProduct.id }}"
-                                           class="infoproduct__qty infoproduct__type__input" value="{{ qtty }}"/>
+                            {% else %}
+                                {% for key, content in cart.content %}
+                                    {% set i = loop.index0 %}
+                                    {% if key == product.id %}
+                                        {% for types in content %}
+                                            <div class="infoproduct__type">
+                                                <div class="infoproduct__type__left">
+                                                    <div class="infoproduct__title">
+                                                        {{ ('Public.Cart.TrashType'|trans)|upper }}
+                                                    </div>
+                                                    <div class="-align-right">
+                                                        <select class="infoproduct__type__input infoproduct__typeSelect">
+                                                            <option disabled selected
+                                                                    value> {{ 'Public.Cart.ChooseTrash'|trans }} </option>
+
+                                                            {% for productType in productTypes %}
+                                                                {% for type in productType %}
+                                                                    <option value="{{ type.id }}"
+                                                                            {% if type.id == types['tId'] %} selected="selected" {% endif %}>{{ type.name }}
+                                                                    </option>
+                                                                {% endfor %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="clearfix"></div>
+
+                                                    {# Si le produit sélectionné est déjà dans le Cart on récupère la quantité et les options qui étaient choisis #}
+                                                    {% set qtty = '' %}
+                                                    {% set optHandling = '' %}
+                                                    {% set optSerialNumberStmt = '' %}
+                                                    {% set optDestruction = '' %}
+                                                    {% set qtty = types['qtty'] %}
+                                                    {% if types['optHandling'] == '1' %}
+                                                        {% set optHandling = '1' %}
+                                                    {% endif %}
+                                                    {% if types['optSerialNumberStmt'] == '1' %}
+                                                        {% set optSerialNumberStmt = '1' %}
+                                                    {% endif %}
+                                                    {% if types['optDestruction'] == '1' %}
+                                                        {% set optDestruction = '1' %}
+                                                    {% endif %}
+                                                    <br>
+
+                                                    <div class="infoproduct__title">{{ ('Public.Cart.Options'|trans)|upper }}</div>
+                                                    <div class="-align-right">
+                                                        <input type="checkbox"
+                                                               id="optHandlingProductSelect"
+                                                               class="infoproduct__type__checkbox infoproduct__type__checkbox__optHandlingProductSelect"
+                                                                {% if optHandling is defined and optHandling == '1' %} checked{% endif %}>
+                                                        {{ 'Commercial.ProductD3EOrderLine.OptHandling'|trans }}<br>
+
+                                                        <input type="checkbox"
+                                                               id="optSerialNumberStmtProductSelect"
+                                                               class="infoproduct__type__checkbox infoproduct__type__checkbox__optSerialNumberStmtProductSelect"
+                                                                {% if optSerialNumberStmt is defined and optSerialNumberStmt == '1' %} checked{% endif %}>
+                                                        {{ 'Commercial.ProductD3EOrderLine.OptSerialNumberStmt'|trans }}
+                                                        <br>
+
+                                                        <input type="checkbox"
+                                                               id="optDestructionProductSelect"
+                                                               class="infoproduct__type__checkbox infoproduct__type__checkbox__optDestructionProductSelect"
+                                                                {% if optDestruction is defined and optDestruction == '1' %} checked{% endif %}>
+                                                        {{ 'Commercial.ProductD3EOrderLine.OptDestruction'|trans }}<br>
+                                                    </div>
+                                                </div>
+                                                <div class="infoproduct__type__right">
+                                                    <div class="infoproduct__pieces-number">{{ 'Public.Cart.PiecesNumber'|trans }}</div>
+                                                    <input name=""
+                                                           id="quantityProducSelect_{{ product.id }}"
+                                                           class="infoproduct__qty infoproduct__type__input"
+                                                           value="{{ qtty }}"/>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <div class="button-container">
+                                <div class="button-align-container">
+                                    <a class="addNewTypeButton"><p>+</p>{{ 'Public.Cart.NewType'|trans }}</a>
+                                    <a class="button button--lightgreen addToCartSubmitButton addToCartD3E"
+                                       data-id="{{ product.id }}"
+                                       data-url="{{ path('paprec_public_corp_d3e_subscription_addContent', {cartUuid: cart.id}) }}"
+                                       id="addToCartSubmitButton_{{ product.id }}">{{ ('Public.Cart.AddToCart' ~ cart.type|capitalize)|trans }}
+                                    </a>
                                 </div>
                             </div>
-                        {% endfor %}
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-            <div class="button-container">
-                <div class="button-align-container">
-                    <a class="addNewTypeButton"><p>+</p>{{ 'Public.Cart.NewType'|trans }}</a>
-                    <a class="button button--lightgreen addToCartSubmitButton addToCartD3E" data-id="{{ displayedProduct.id }}"
-                       data-url="{{ path('paprec_public_corp_d3e_subscription_addContent', {cartUuid: cart.id}) }}"
-                       id="addToCartSubmitButton_{{ displayedProduct.id }}">{{ ('Public.Cart.AddToCart' ~ cart.type|capitalize)|trans }}
-                    </a>
-                </div>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
-        </div>
-        {% set displayedProduct = '' %}
-    {% endif %}
-    <div class="clearfix"></div>
-    {% endif %}
-    {% endfor %}
-    {% endblock %}
+        {% endfor %}
+    </div>
+{% endblock %}
 
-    {% block cta_bottom_panel %}
-        <div class="step wrapper-button-bottom">
-            {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
-                'label': 'ValidateNeed',
-                'cartUuid': cart.id,
-                'division': cart.division,
-                'stepBack': '',
-                'nextStep': 'step2',
-                'idSubmit': '',
-                'cartEmpty': cart.content is empty
-            })) }}
-        </div>
-    {% endblock %}
+        {% block cta_bottom_panel %}
+            <div class="step wrapper-button-bottom">
+                {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
+                    'label': 'ValidateNeed',
+                    'cartUuid': cart.id,
+                    'division': cart.division,
+                    'stepBack': '',
+                    'nextStep': 'step2',
+                    'idSubmit': '',
+                    'cartEmpty': cart.content is empty
+                })) }}
+            </div>
+        {% endblock %}
 
-    {% block javascripts %}
-        <script type="text/javascript"
-                src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
-        </script>
-    {% endblock %}
+        {% block javascripts %}
+            <script type="text/javascript"
+                    src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
+            </script>
+        {% endblock %}

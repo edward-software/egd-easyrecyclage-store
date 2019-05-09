@@ -179,7 +179,7 @@
                      id="productCheckboxPicto_{{ product.id }}"
                      data-url="{{ path('paprec_public_corp_chantier_subscription_packaged_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: product.id}) }}"
                      style="{% if product.pictos|length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
-                    <div class="productCheckboxPicto__title" >
+                    <div class="productCheckboxPicto__title">
                         {{ product.name }}
                         <span>{{ product.subName }}</span>
                     </div>
@@ -208,24 +208,23 @@
                                 {% if product.pilotPictures | length > 0 %}
                                     <div class="mainpicture">
                                         <img src="{{ asset('/uploads/pictos/' ~ product.pilotPictures[0].path) }}"
-                                         alt="#" class="">
+                                             alt="#" class="">
                                     </div>
 
                                 {% else %}
                                     &nbsp;
                                 {% endif %}
                                 {% if product.getPicturesPictures() %}
-                                <div class="container-thumbs">
-                                    {% for picture in product.getPicturesPictures() %}
-                                        <div class="container-thumb">
-                                            <img src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
+                                    <div class="container-thumbs">
+                                        {% for picture in product.getPicturesPictures() %}
+                                            <div class="container-thumb">
+                                                <img src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
                                                      class="thumb"
                                                      alt="#">
-                                        </div>
-                                    {% endfor %}
-                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                 {% endif %}
-
                             </div>
                             <div class="right">
                                 <div class="infoproduct__close"
@@ -249,23 +248,23 @@
                                 </div>
                                 <div class="infoproduct__responsive-image">
                                     {% if product.pilotPictures | length > 0 %}
-                                    <div class="mainpicture">
-                                        <img src="{{ asset('/uploads/pictos/' ~ product.pilotPictures[0].path) }}"
-                                             alt="#" class="mainpicture">
-                                    </div>
+                                        <div class="mainpicture">
+                                            <img src="{{ asset('/uploads/pictos/' ~ product.pilotPictures[0].path) }}"
+                                                 alt="#" class="mainpicture">
+                                        </div>
                                     {% else %}
                                         &nbsp;
                                     {% endif %}
                                     {% if product.getPicturesPictures() %}
-                                    <div class="container-thumbs">
-                                        {% for picture in product.getPicturesPictures() %}
-                                        <div class="container-thumb">
-                                            <img src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
-                                                 class="thumb"
-                                                 alt="#">
+                                        <div class="container-thumbs">
+                                            {% for picture in product.getPicturesPictures() %}
+                                                <div class="container-thumb">
+                                                    <img src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
+                                                         class="thumb"
+                                                         alt="#">
+                                                </div>
+                                            {% endfor %}
                                         </div>
-                                        {% endfor %}
-                                    </div>
                                     {% endif %}
                                 </div>
                                 <div class="infoproduct__desc">
@@ -347,7 +346,6 @@
                 'idSubmit': '',
                 'cartEmpty': cart.content is empty
             })) }}
-        </div>
         </div>
     {% endblock %}
 

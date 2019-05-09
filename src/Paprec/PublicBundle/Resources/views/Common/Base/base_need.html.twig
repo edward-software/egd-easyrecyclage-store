@@ -24,7 +24,7 @@
     <div class="container__step-title">
         <h2>Ma solution recyclage</h2>
     </div>
-    <div class="step" id="anchor1">
+    <div class="step step--index" id="anchor1">
         <div class="step__left step__left-first">
             <div class="step__title">
                 {{ 'Public.Cart.MyTrash'|trans }}&nbsp;{{ 'Public.Cart.ToCollect'|trans }}
@@ -38,58 +38,49 @@
             {% endif %}
         </div>
         <div class="step__right">
-            {% set cpt = 5 %}
-            {% for category in categories %}
-            {% if (cpt == 5) %}
-            <div class="first-row">
-                <div class="first-row-container">
-                    {% endif %}
-                    {% if (cpt%5 == 0 and cpt > 5) %}
-                    <div class="following-row">
-                        <div>
-                            {% endif %}
-                            <div class="checkboxPicto categoryCheckboxPicto {% if category.id in cart.displayedCategories %} active {% endif %}"
-                                 id="categoryCheckboxPicto_{{ category.id }}"
-                                 data-url="{{ path('paprec_public_corp_' ~ cart.division|lower ~ '_subscription_addDisplayedCategory', {cartUuid: cart.id, categoryId: category.id}) }}"
-                                 style="background-image: url({{ asset('/uploads/pictos/' ~ category.picto) }})">
-                                {{ category.name }}
-                            </div>
-                            {% set cpt = cpt + 1 %}
+            <div class="products-container">
+                {% for category in categories %}
+                    <div class="product-container">
+                        <div class="checkboxPicto categoryCheckboxPicto {% if category.id in cart.displayedCategories %} active {% endif %}"
+                             id="categoryCheckboxPicto_{{ category.id }}"
+                             data-url="{{ path('paprec_public_corp_' ~ cart.division|lower ~ '_subscription_addDisplayedCategory', {cartUuid: cart.id, categoryId: category.id}) }}"
+                             style="background-image: url({{ asset('/uploads/pictos/' ~ category.picto) }})">
 
-                            {% if ((cpt%5 == 0) and (cpt > 5)) or loop.last %}
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <!-- FIN step categories  -->
-            {% elseif cart.division is defined and cart.division in ['D3E'] %}
-            <div class="container__step">
-                <div class="container__step-title">
-                    <h2>Ma solution recyclage</h2>
-                </div>
-                {% endif %}
-
-
-                {% block products_panel %}
-                    <div class="step">
-                        <div class="step__left">
-                            <div class="step__title">
-                                {% block product_step_title %}{% endblock %}
-                            </div>
-                        </div>
-                        <div class="step__right">
-                            {% block products %}
-
-                            {% endblock %}
+                            {{ category.name }}
                         </div>
 
                     </div>
-                {% endblock %}
+                {% endfor %}
             </div>
-
             <div class="clearfix"></div>
-            {% block cta_bottom_panel %} {% endblock %}
-            {% endblock %}
+        </div>
+    </div>
+    <!-- FIN step categories  -->
+    {% elseif cart.division is defined and cart.division in ['D3E'] %}
+    <div class="container__step">
+        <div class="container__step-title">
+            <h2>Ma solution recyclage</h2>
+        </div>
+        {% endif %}
+
+
+        {% block products_panel %}
+            <div class="step">
+                <div class="step__left">
+                    <div class="step__title">
+                        {% block product_step_title %}{% endblock %}
+                    </div>
+                </div>
+                <div class="step__right">
+                    {% block products %}
+
+                    {% endblock %}
+                </div>
+
+            </div>
+        {% endblock %}
+    </div>
+
+    <div class="clearfix"></div>
+    {% block cta_bottom_panel %} {% endblock %}
+    {% endblock %}

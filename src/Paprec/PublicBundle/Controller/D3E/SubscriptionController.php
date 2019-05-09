@@ -558,6 +558,42 @@ class SubscriptionController extends Controller
     }
 
     /**
+     * Augmente la quantité d'un produit dans le panier de 1
+     * L'ajoute au panier si produit non présent
+     *
+     * @Route("/d3e/package/addOneContent/{cartUuid}/{productId}", name="paprec_public_corp_d3e_subscription_packaged_addOneContent", condition="request.isXmlHttpRequest()")
+     * @throws \Exception
+     */
+    public function addOneProductPackageAction(Request $request, $cartUuid, $productId)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+
+
+        // On ajoute ou on supprime le produit sélecionné au tableau des displayedCategories du Cart
+        $cart = $cartManager->addOneProductPackage($cartUuid, $productId);
+
+        return new JsonResponse('200');
+    }
+
+    /**
+     * Diminue la quantité d'un produit dans le panier de 1
+     * Le supprime du panier si quantité = 0
+     *
+     * @Route("/d3e/package/removeOneContent/{cartUuid}/{productId}", name="paprec_public_corp_d3e_subscription_packaged_removeOneContent", condition="request.isXmlHttpRequest()")
+     * @throws \Exception
+     */
+    public function removeOneProductPackageAction(Request $request, $cartUuid, $productId)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+
+
+        // On ajoute ou on supprime le produit sélecionné au tableau des displayedCategories du Cart
+        $cart = $cartManager->removeOneProductPackage($cartUuid, $productId);
+
+        return new JsonResponse('200');
+    }
+
+    /**
      * Retourne le twig.html du cart avec les produits dans celui-ci ainsi que le montant total
      *
      * @Route("/d3e/package/loadCart/{cartUuid}", name="paprec_public_corp_d3e_subscription_packaged_loadCart", condition="request.isXmlHttpRequest()")
