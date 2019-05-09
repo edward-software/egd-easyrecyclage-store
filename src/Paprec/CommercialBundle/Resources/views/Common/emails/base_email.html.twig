@@ -114,11 +114,13 @@
         }
 
         .content-email {
-            max-width: 900px; margin: auto;
+            width: 500px;
+            margin: auto;
         }
 
         .content-email-detail {
-            max-width: 700px; margin: auto;
+            width: 400px;
+            margin: auto;
         }
 
         .picto-header {
@@ -146,15 +148,16 @@
             font-size: 1.5em;
         }
 
-        /*Apple mail*/
-        @media only screen and (min-width: 901px) {
+        @media screen and (max-width: 525px) {
+
+            /* ALLOWS FOR FLUID TABLES */
             .content-email {
-                width: 900px !important;
+                width: 100% !important;
+                max-width: 100% !important;
             }
-        }
-        @media only screen and (min-width: 701px) {
             .content-email-detail {
-                width: 700px !important;
+                width: 95% !important;
+                max-width: 95% !important;
             }
         }
 
