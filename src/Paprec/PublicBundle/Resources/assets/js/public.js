@@ -89,6 +89,13 @@ $(function () {
     });
 
     /**
+     * On adapte la taille de infoproduct à la taille de infoproduct-container
+     */
+    if ($('.infoproduct').is('div')) {
+        $('.infoproduct-container').outerHeight($('.infoproduct').outerHeight());
+    }
+
+    /**
      * Lorsque l'utilisateur choisit des fichiers à mettre en PJ, on les affiche au dessus du bouton d'import
      */
     var options = {
@@ -667,7 +674,7 @@ function reloadCart(readonly) {
                 $(".buttonDeleteProduct").click(function () {
                     var urlRemove = $(this).data('url');
                     if (division === 'D3E') {
-                        productId = (this.id).replace('buttonDeleteProduct_', '');
+                        let productId = (this.id).replace('buttonDeleteProduct_', '');
                         $.ajax({
                             type: "GET",
                             dataType: "json",
@@ -689,6 +696,7 @@ function reloadCart(readonly) {
                                 .replace('productTmp', productId),
                             success: function (response) {
                                 removeBadge(productId, categoryId);
+                                removeBadgeNoCat(productId);
                                 reloadCart();
                             }
                         });
