@@ -1,4 +1,4 @@
-<div class="recap__title">{{ 'Public.Cart.Prestations'|trans }}</div>
+<div class="recap__title">{{ 'Public.Cart.MyTrash'|trans }}</div>
 <div class="recap__cart">
     {% if loadedCart and loadedCart is not empty %}
         {% if loadedCart['sum'] == '0' and loadedCart|length < 2 %}
@@ -14,7 +14,7 @@
                              data-url="{{ path('paprec_public_corp_d3e_subscription_removeContent', {cartUuid: cartUuid, productId: 'productTmp'}) }}"></div>
                         <div class="info">
                             {% for type in cartLine['types'] %}
-                            {{ type['type']|slice(0,5) }}{% if type['type']|length > 5 %}...{% endif %}
+                            {{ type['type']|slice(0,6) }}{% if type['type']|length > 5 %}...{% endif %}
                             • {{ type['nbOptions'] }} option{% if type['nbOptions'] > 1 %}s{% endif %}
                                 {% if not loop.last%}
                                     <br>
@@ -28,17 +28,6 @@
         {% endif %}
     {% endif %}
 
-    <div class="recap__price">
-        <div class="left">
-            {{ 'Public.Cart.ForfaitRecyclage'|trans|nl2br }}
-        </div>
-        <div class="right">
-            <span>
-                {% if loadedCart and loadedCart is not empty %}{{ loadedCart['sum']|formatAmount(null, app.request.locale) }}{% else %}0{% endif %}€
-            </span> HT
-        </div>
-        <div class="clearfix"></div>
-    </div>
 </div>
 <div class="recap__info">
     {{ 'Public.Cart.Including'|trans|nl2br }}

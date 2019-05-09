@@ -43,7 +43,7 @@ $(function () {
             if ($('.need-form').is('div')) {
                 Swal({
                     title: "<div class=\"test\">Voulez-vous continuer ?</div>",
-                    html: "Cette action va entraîner la <span>perte de votre sélection</span><br>Nous vous conseillons de <span>valider votre besoin</span><br> avant de changer de typologie de dévhets.",
+                    html: "Cette action va entraîner la <span>perte de votre sélection</span><br>Nous vous conseillons de <span>valider votre besoin</span><br> avant de changer de typologie de déchets.",
                     showCancelButton: true,
                     showCloseButton: true,
                     customClass: 'trash-change-popup',
