@@ -94,12 +94,15 @@
                                                         &nbsp;
                                                     {% endif %}
                                                     {% if product.getPicturesPictures() %}
-                                                        {% for picture in product.getPicturesPictures() %}
-                                                            <img src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
-                                                                 class="thumb"
-                                                                 alt="#">
-                                                        {% endfor %}
-                                                    {% else %}
+                                                        <div class="container-thumbs">
+                                                            {% for picture in product.getPicturesPictures() %}
+                                                                <div class="container-thumb">
+                                                                    <img src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
+                                                                         class="thumb"
+                                                                         alt="#">
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
                                                     {% endif %}
 
                                                 </div>
