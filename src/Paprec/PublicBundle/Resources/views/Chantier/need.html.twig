@@ -83,18 +83,24 @@
                                                 <div class="left">
 
                                                     {% if product.pilotPictures | length > 0 %}
-                                                        <img src="{{ asset('/uploads/pictos/' ~ product.pilotPictures[0].path) }}"
-                                                             alt="#" class="mainpicture">
-                                                        <br>
+                                                        <div class="mainpicture">
+
+                                                            <img src="{{ asset('/uploads/pictos/' ~ product.pilotPictures[0].path) }}"
+                                                                 alt="#" class="">
+                                                        </div>
                                                     {% else %}
                                                         &nbsp;
                                                     {% endif %}
                                                     {% if product.getPicturesPictures() %}
-                                                        {% for picture in product.getPicturesPictures() %}
-                                                            <img src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
-                                                                 class="thumb"
-                                                                 alt="#">
-                                                        {% endfor %}
+                                                        <div class="container-thumbs">
+                                                            {% for picture in product.getPicturesPictures() %}
+                                                                <div class="container-thumb">
+                                                                    <img src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
+                                                                         class="thumb"
+                                                                         alt="#">
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
                                                     {% endif %}
 
                                                 </div>
@@ -119,7 +125,27 @@
                                                             </div>
                                                         {% endif %}
                                                     </div>
-
+                                                    <div class="infoproduct__responsive-image">
+                                                        {% if product.pilotPictures | length > 0 %}
+                                                            <div class="mainpicture">
+                                                                <img src="{{ asset('/uploads/pictos/' ~ product.pilotPictures[0].path) }}"
+                                                                     alt="#" class="">
+                                                            </div>
+                                                        {% else %}
+                                                            &nbsp;
+                                                        {% endif %}
+                                                        {% if product.getPicturesPictures() %}
+                                                            <div class="container-thumbs">
+                                                                {% for picture in product.getPicturesPictures() %}
+                                                                    <div class="container-thumb">
+                                                                        <img src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
+                                                                             class="thumb"
+                                                                             alt="#">
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
                                                     <div class="infoproduct__desc">
                                                         {{ product.description|nl2br }}
                                                     </div>

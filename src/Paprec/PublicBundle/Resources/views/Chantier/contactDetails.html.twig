@@ -59,14 +59,7 @@
                 </div>
             </div>
             <div class="step__right step__right--small">
-                {{ form_widget(form.headofficeAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.HeadOfficeAddress'|trans}}) }}
-                {{ form_errors(form.headofficeAddress) }}
 
-                {{ form_widget(form.headofficePostalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.QuoteRequest.PostalCode'|trans}}) }}
-                {{ form_errors(form.headofficePostalCode) }}
-
-                {{ form_widget(form.headofficeCity, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.QuoteRequest.City'|trans}}) }}
-                {{ form_errors(form.headofficeCity) }}
 
                 {{ form_widget(form.address, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.SiteAddress'|trans}}) }}
                 {{ form_errors(form.address) }}
@@ -76,6 +69,18 @@
 
                 {{ form_widget(form.city, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.QuoteRequest.City'|trans}}) }}
                 {{ form_errors(form.city) }}
+
+                <div class="clearfix"></div>
+                <input type="checkbox" id="headofficeAddressCheckbox" class="address-checkbox">
+                <label for="headofficeAddressCheckbox"
+                       class="address-checkbox-label">{{ 'Commercial.ProductD3EOrder.HeadofficeAddressCheckbox'|trans }}</label>
+                <div id="headofficeAddressContainer" class="address-container">
+                    {{ form_widget(form.headofficeAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.HeadOfficeAddress'|trans}}) }}
+
+                    {{ form_widget(form.headofficePostalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.QuoteRequest.PostalCode'|trans}}) }}
+
+                    {{ form_widget(form.headofficeCity, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.QuoteRequest.City'|trans}}) }}
+                </div>
 
                 <div class="preferred-contact">
                     {{ 'Commercial.QuoteRequest.PreferredContactLabel'|trans }}

@@ -70,14 +70,20 @@
                 {{ form_widget(form.city, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.City'|trans}}) }}
                 {{ form_errors(form.city) }}
 
-                {{ form_widget(form.headofficeAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.HeadofficeAddressPlaceholder'|trans}}) }}
-                {{ form_errors(form.headofficeAddress) }}
+                <div class="clearfix"></div>
+                <input type="checkbox" id="headofficeAddressCheckbox" class="address-checkbox">
+                <label for="headofficeAddressCheckbox"
+                       class="address-checkbox-label">{{ 'Commercial.ProductD3EOrder.HeadofficeAddressCheckbox'|trans }}</label>
+                <div id="headofficeAddressContainer" class="address-container">
+                    {{ form_widget(form.headofficeAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.HeadofficeAddressPlaceholder'|trans}}) }}
+                    {{ form_errors(form.headofficeAddress) }}
 
-                {{ form_widget(form.headofficePostalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.PostalCode'|trans}}) }}
-                {{ form_errors(form.headofficePostalCode) }}
+                    {{ form_widget(form.headofficePostalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.PostalCode'|trans}}) }}
+                    {{ form_errors(form.headofficePostalCode) }}
 
-                {{ form_widget(form.headofficeCity, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.City'|trans}}) }}
-                {{ form_errors(form.headofficeCity) }}
+                    {{ form_widget(form.headofficeCity, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.ProductD3EQuote.City'|trans}}) }}
+                    {{ form_errors(form.headofficeCity) }}
+                </div>
 
 
                 <div class="clearfix"></div>
@@ -106,7 +112,7 @@
             <div class="clearfix"></div>
 
             {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
-                'label': 'ValidateOrder',
+                'label': 'Validate',
                 'cartUuid': cart.id,
                 'division': cart.division,
                 'stepBack': 'step1',

@@ -497,19 +497,20 @@ $(function () {
         $('#contactDetailsFormSubmitButton').on('click', function () {
             const div = $('#divisionType').val();
 
-            const address = $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_address').val();
-            const cp = $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_postalCode').val();
-            const city = $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_city').val();
+            const address = $('input[id*=_address]').val();
+            const cp = $('input[id*=_postalCode]').val();
+            const city = $('input[id*=_city]').val();
 
+            console.dir( $('input[id*=_headofficeAddress]'));
             if ($('#headofficeAddressCheckbox').is('input') && !$('#headofficeAddressCheckbox').prop('checked')) {
-                $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_headofficeAddress').val(address);
-                $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_headofficePostalCode').val(cp);
-                $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_headofficeCity').val(city);
+                $('input[id*=_headofficeAddress]').val(address);
+                $('input[id*=_headofficePostalCode]').val(cp);
+                $('input[id*=_headofficeCity]').val(city);
             }
             if ($('#invoicingAddressCheckbox').is('input') && !$('#invoicingAddressCheckbox').prop('checked')) {
-                $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_invoicingAddress').val(address);
-                $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_invoicingPostalCode').val(cp);
-                $('#paprec_commercialbundle_product' + div.toLowerCase() + 'ordershort_invoicingCity').val(city);
+                $('input[id*=_invoicingAddress]').val(address);
+                $('input[id*=_invoicingPostalCode]').val(cp);
+                $('input[id*=_invoicingCity]').val(city);
             }
 
             $('#contactDetailsForm').submit();

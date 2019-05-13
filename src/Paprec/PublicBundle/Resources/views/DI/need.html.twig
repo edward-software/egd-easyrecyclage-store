@@ -84,9 +84,15 @@
                                         <div class="infoproduct-container">
                                             <div class="infoproduct">
                                                 <div class="left">
-                                                    <img src="{% if product.pilotPictures|length > 0 %}{{ asset('/uploads/pictos/' ~ product.pilotPictures[0].path) }}{% endif %}"
-                                                         alt="#" class="mainpicture">
-                                                    <br>
+                                                    {% if product.pilotPictures | length > 0 %}
+                                                        <div class="mainpicture">
+                                                            <img src="{% if product.pilotPictures|length > 0 %}{{ asset('/uploads/pictos/' ~ product.pilotPictures[0].path) }}{% endif %}"
+                                                                 alt="#" class="">
+                                                        </div>
+
+                                                    {% else %}
+                                                        &nbsp;
+                                                    {% endif %}
                                                     {% if product.getPicturesPictures() %}
                                                         {% for picture in product.getPicturesPictures() %}
                                                             <img src="{{ asset('/uploads/pictos/' ~ picture.path) }}"
