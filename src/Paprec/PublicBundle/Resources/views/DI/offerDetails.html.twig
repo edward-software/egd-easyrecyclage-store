@@ -63,11 +63,11 @@
                 </div>
                 <div class="wrapper-col">
                     <div class="name">{{ productDIQuoteLine.quantity }}
-                        x {{ productDIQuoteLine.productDI.name }} {{ productDIQuoteLine.productDI.capacity }} {% autoescape false %}{{ productDIQuoteLine.productDI.capacityUnit }} {% endautoescape %}</div>
+                        x {{ productDIQuoteLine.productDI.name }} - {{ productDIQuoteLine.productDI.capacity }} {% autoescape false %}{{ productDIQuoteLine.productDI.capacityUnit }} {% endautoescape %}</div>
                     <div class="nameof">de {{ productDIQuoteLine.categoryName }}</div>
                 </div>
-                <div class="desc">
-                    Prestation {% if productDIQuote.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}</div>
+    {#            <div class="desc">
+                    Prestation {% if productDIQuote.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}</div>#}
             </div>
         {% endfor %}
 
