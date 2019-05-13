@@ -34,7 +34,7 @@
 
             <a class="header__cta" href="javascript:void(0);"
                data-url="{{ path('paprec_public_common_loadPopupRecycle') }}">Recyclez<br>vos déchets</a>
-            <ul class="menu">
+            <ul class="menu" id="menu-main-menu">
                 {{ render(controller('PaprecPublicBundle:Common:getMenuFromWP', {'slug': 'header-menu'})) }}
             </ul>
         </div>
