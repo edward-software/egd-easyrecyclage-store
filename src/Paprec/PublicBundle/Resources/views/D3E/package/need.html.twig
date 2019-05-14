@@ -163,14 +163,6 @@
                                     {{ product.dimensions|nl2br }}
                                 </div>
 
-
-                                <div class="infoproduct__engagment">
-                                    <input type="checkbox" id="engagment">
-                                    <label for="engagment">{{ 'Public.Cart.Engagment'|trans }} <span
-                                                class="help">i</span>
-                                    </label>
-                                </div>
-
                                 {% set qtty = '' %}
                                 {% for items in cart.content %}
                                     {% if items['pId'] == product.id %}
@@ -194,7 +186,7 @@
                                 <button class="button button--lightgreen addToCartPackageSubmitButton"
                                         data-url="{{ path('paprec_public_corp_d3e_subscription_packaged_addContent', {cartUuid: cart.id, productId: product.id, quantity: 'quantityTmp'}) }}"
                                         id="addToCartPackageSubmitButton{{ product.id }}"
-                                        disabled>{{ 'Public.Cart.AddToCartOrder'|trans }}
+                                >{{ 'Public.Cart.AddToCartOrder'|trans }}
                                 </button>
                             </div>
                             <div class="clearfix"></div>

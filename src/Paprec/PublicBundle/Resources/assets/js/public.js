@@ -291,17 +291,6 @@ $(function () {
             $(location).attr('href', url);
         });
 
-        $('#engagment').on('change', function () {
-            if ($(this).prop('checked')) {
-                $('.addToCartSubmitButton').removeAttr('disabled');
-                $('.addToCartPackageSubmitButton').removeAttr('disabled');
-
-            } else {
-                $('.addToCartSubmitButton').attr('disabled', 'disabled');
-                $('.addToCartPackageSubmitButton').attr('disabled', 'disabled');
-            }
-        });
-
     }
 
     /*******************************************************************************************************************
