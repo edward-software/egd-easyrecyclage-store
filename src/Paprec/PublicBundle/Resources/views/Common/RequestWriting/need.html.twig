@@ -29,7 +29,7 @@
 
 
 {% block main_content_index %}
-    <div class="step">
+    <div class="step step--index">
         <div class="step__left">
             <div class="step__title">{{ 'Public.Home.MyNeed'|trans }}</div>
         </div>
@@ -39,7 +39,7 @@
         </div>
         <div class="clearfix"></div>
     </div>
-    <div class="step">
+    <div class="step step--index">
         <div class="notice">{{ 'Public.Home.FileUploadNotice'|trans }}
         </div>
         <br>
@@ -56,6 +56,24 @@
         </a>
     </div>
     {{ form_rest(form) }}
+{% endblock %}
+
+{% block bottom_customizable_area %}
+
+    {% set customAreaImage = paprec_customizable_area('images_banner_' ~ cart.division|lower) %}
+    {% if customAreaImage is not null %}
+        {% autoescape false %}
+            {{ customAreaImage.content }}
+        {% endautoescape %}
+    {% endif %}
+
+    {% set customArea = paprec_customizable_area('reassurance_banner_' ~ cart.division|lower) %}
+    {% if customArea is not null %}
+        {% autoescape false %}
+            {{ customArea.content }}
+        {% endautoescape %}
+    {% endif %}
+
 {% endblock %}
 
 {% block javascripts %}

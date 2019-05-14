@@ -2,7 +2,7 @@
 <div class="recap__cart">
     {% if loadedCart and loadedCart is not empty %}
         {% if loadedCart['sum'] == '0' %}
-            <span class="noproduct">{{ 'Public.Cart.NoProduct'|trans }}<br>{{ 'Public.Cart.Added'|trans }}</span>
+            <span class="noproduct">{{ 'Public.Cart.NoPrestation'|trans }}<br>{{ 'Public.Cart.Added'|trans }}</span>
         {% else %}
             {% for key,cartLine in loadedCart %}
                 {% if key != 'sum' %}

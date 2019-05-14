@@ -205,22 +205,39 @@
     </div>
 {% endblock %}
 
-        {% block cta_bottom_panel %}
-            <div class="step wrapper-button-bottom">
-                {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
-                    'label': 'ValidateNeed',
-                    'cartUuid': cart.id,
-                    'division': cart.division,
-                    'stepBack': '',
-                    'nextStep': 'step2',
-                    'idSubmit': '',
-                    'cartEmpty': cart.content is empty
-                })) }}
-            </div>
-        {% endblock %}
+{% block cta_bottom_panel %}
+    <div class="step wrapper-button-bottom">
+        {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
+            'label': 'ValidateNeed',
+            'cartUuid': cart.id,
+            'division': cart.division,
+            'stepBack': '',
+            'nextStep': 'step2',
+            'idSubmit': '',
+            'cartEmpty': cart.content is empty
+        })) }}
+    </div>
+{% endblock %}
 
-        {% block javascripts %}
-            <script type="text/javascript"
-                    src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
-            </script>
-        {% endblock %}
+{% block bottom_customizable_area %}
+    {% set customAreaImage = paprec_customizable_area('images_banner_' ~ cart.division|lower) %}
+    {% if customAreaImage is not null %}
+        {% autoescape false %}
+            {{ customAreaImage.content }}
+        {% endautoescape %}
+    {% endif %}
+
+    {% set customArea = paprec_customizable_area('reassurance_banner_' ~ cart.division|lower) %}
+    {% if customArea is not null %}
+        {% autoescape false %}
+            {{ customArea.content }}
+        {% endautoescape %}
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
+    </script>
+{% endblock %}

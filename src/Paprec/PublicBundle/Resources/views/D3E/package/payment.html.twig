@@ -73,6 +73,22 @@
     </form>
 {% endblock %}
 
+{% block bottom_customizable_area %}
+    {% set customAreaImage = paprec_customizable_area('images_banner_' ~ cart.division|lower) %}
+    {% if customAreaImage is not null %}
+        {% autoescape false %}
+            {{ customAreaImage.content }}
+        {% endautoescape %}
+    {% endif %}
+
+    {% set customArea = paprec_customizable_area('reassurance_banner_chantier') %}
+    {% if customArea is not null %}
+        {% autoescape false %}
+            {{ customArea.content }}
+        {% endautoescape %}
+    {% endif %}
+{% endblock %}
+
 {% block javascripts %}
 
 {% endblock %}

@@ -93,7 +93,7 @@
                 <div class="clearfix"></div>
             </div>
         </div>
-        <div class="step">
+        <div class="step step--index">
             <div class="step__left">&nbsp;</div>
             <div class="step__right">
                 <div class="cgv">
@@ -120,11 +120,34 @@
                 'nextStep': 'step3',
                 'idSubmit': 'contactDetailsFormSubmitButton'
             })) }}
+
+            <div class="step--marginfield"></div>
+
         </div>
         {{ form_rest(form) }}
     </form>
 {% endblock %}
 
-{% block javascripts %}
+{% block bottom_customizable_area %}
 
+    {% set customAreaImage = paprec_customizable_area('images_banner_' ~ cart.division|lower) %}
+    {% if customAreaImage is not null %}
+        {% autoescape false %}
+            {{ customAreaImage.content }}
+        {% endautoescape %}
+    {% endif %}
+
+    {% set customArea = paprec_customizable_area('reassurance_banner_' ~ cart.division|lower) %}
+    {% if customArea is not null %}
+        {% autoescape false %}
+            {{ customArea.content }}
+        {% endautoescape %}
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
+    </script>
 {% endblock %}

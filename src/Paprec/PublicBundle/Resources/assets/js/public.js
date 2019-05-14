@@ -493,6 +493,7 @@ $(function () {
      */
     if ($('.contact-details-form').is('div')) {
         reloadCart();
+        initializeAutocompleteAddress()
 
         $('#contactDetailsFormSubmitButton').on('click', function () {
             const div = $('#divisionType').val();
@@ -501,7 +502,6 @@ $(function () {
             const cp = $('input[id*=_postalCode]').val();
             const city = $('input[id*=_city]').val();
 
-            console.dir( $('input[id*=_headofficeAddress]'));
             if ($('#headofficeAddressCheckbox').is('input') && !$('#headofficeAddressCheckbox').prop('checked')) {
                 $('input[id*=_headofficeAddress]').val(address);
                 $('input[id*=_headofficePostalCode]').val(cp);
@@ -517,12 +517,16 @@ $(function () {
         });
 
         $('#headofficeAddressCheckbox').on('change', function () {
+            initializeAutocompleteHeadoffice();
             $('#headofficeAddressContainer').toggleClass('active');
         });
 
         $('#invoicingAddressCheckbox').on('change', function () {
+            initializeAutocompleteInvoicing();
             $('#invoicingAddressContainer').toggleClass('active');
-        })
+        });
+
+
     }
 
 
@@ -828,6 +832,130 @@ function colorBodyFromDivision() {
             }
         }
     }
+}
+
+/****************************************************************
+ * CONTACT DETAILS ADDRESSES
+ ***************************************************************/
+
+/**
+ * Initialise l'autocomplete Google sur l'adresse
+ */
+function initializeAutocompleteAddress() {
+    var element = $('input[id*=_address]')[0];
+    var options = {
+        componentRestrictions: {country: "fr"}
+    };
+    if (element) {
+        var autocomplete = new google.maps.places.Autocomplete(element, options);
+        google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChangedAddress);
+    }
+}
+
+/**
+ * Fonction appelée lorsque l'on choisit une proposition de l'autocomplete Google
+ */
+function onPlaceChangedAddress() {
+    var place = this.getPlace();
+    var address = '';
+    for (var i in place.address_components) {
+        var component = place.address_components[i];
+        for (var j in component.types) {  // Some types are ["country", "political"]
+            if (component.types[j] === 'postal_code') {
+                $('input[id*=_postalCode]').val(component.long_name);
+            }
+            if (component.types[j] === 'locality') {
+                $('input[id*=_city]').val(component.long_name);
+            }
+            if (component.types[j] === 'street_number') {
+                address += component.long_name + ' ';
+            }
+            if (component.types[j] === 'route') {
+                address += component.long_name;
+            }
+        }
+    }
+    $('input[id*=_address]').val(address);
+}
+
+/**
+ * Initialise l'autocomplete Google sur l'adresse headoffice
+ */
+function initializeAutocompleteHeadoffice() {
+    var element = $('input[id*=_headofficeAddress]')[0];
+    var options = {
+        componentRestrictions: {country: "fr"}
+    };
+    if (element) {
+        var autocomplete = new google.maps.places.Autocomplete(element, options);
+        google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChangedHeadoffice);
+    }
+}
+
+/**
+ * Fonction appelée lorsque l'on choisit une proposition de l'autocomplete Google
+ */
+function onPlaceChangedHeadoffice() {
+    var place = this.getPlace();
+    var address = '';
+    for (var i in place.address_components) {
+        var component = place.address_components[i];
+        for (var j in component.types) {  // Some types are ["country", "political"]
+            if (component.types[j] === 'postal_code') {
+                $('input[id*=_headofficePostalCode]').val(component.long_name);
+            }
+            if (component.types[j] === 'locality') {
+                $('input[id*=_headofficeCity]').val(component.long_name);
+            }
+            if (component.types[j] === 'street_number') {
+                address += component.long_name + ' ';
+            }
+            if (component.types[j] === 'route') {
+                address += component.long_name;
+            }
+        }
+    }
+    $('input[id*=_headofficeAddress]').val(address);
+}
+
+/**
+ * Initialise l'autocomplete Google sur l'adresseInvoicing
+ */
+function initializeAutocompleteInvoicing() {
+    var element = $('input[id*=_invoicingAddress]')[0];
+    var options = {
+        componentRestrictions: {country: "fr"}
+    };
+    if (element) {
+        var autocomplete = new google.maps.places.Autocomplete(element, options);
+        google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChangedInvoicing);
+    }
+}
+
+/**
+ * Fonction appelée lorsque l'on choisit une proposition de l'autocomplete Google
+ */
+function onPlaceChangedInvoicing() {
+    var place = this.getPlace();
+    var address = '';
+    for (var i in place.address_components) {
+        var component = place.address_components[i];
+        for (var j in component.types) {  // Some types are ["country", "political"]
+            if (component.types[j] === 'postal_code') {
+                $('input[id*=_invoicingPostalCode]').val(component.long_name);
+            }
+            if (component.types[j] === 'locality') {
+                $('input[id*=_invoicingCity]').val(component.long_name);
+            }
+            if (component.types[j] === 'street_number') {
+                address += component.long_name + ' ';
+            }
+            if (component.types[j] === 'route') {
+                address += component.long_name;
+            }
+        }
+    }
+    $('input[id*=_invoicingAddress]').val(address);
 }
 
 

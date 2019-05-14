@@ -70,11 +70,19 @@ parameters:
     - PILOTPICTURE
 
   paprec_customizable_area_codes:
-    - collectivite_top_msg_form
-    - collectivite_bottom_form
-    - groupe_top_msg_form
-    - particulier_top_msg_form
-    - entreprise_top_msg_form
-    - regular_top_msg_form
-
+    - collectivite_top_msg
+    - groupe_top_msg
+    - particulier_top_msg
+    - entreprise_top_msg
+    - reassurance_banner_di
+    - logo_banner_di
+    - images_banner_di
+    - reassurance_banner_chantier
+    - logo_banner_chantier
+    - images_banner_chantier
+    - reassurance_banner_d3e
+    - logo_banner_d3e
+    - images_banner_d3e
+    - logo_banner_default
+    - reassurance_banner_default
 

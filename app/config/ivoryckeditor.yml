@@ -6,16 +6,19 @@ ivory_ck_editor:
       language: '%locale%'
       extraPlugins: 'lineutils,widget,dialog,codesnippet,widgetselection'
       toolbar: standard
+      allowedContent: true
     basic_config:
       jquery: true
       height: '250px'
       language: '%locale%'
       toolbar: basic
+      allowedContent: true
     custom_config:
       jquery: true
       height: '900px'
       language: '%locale%'
       toolbar: "custom_toolbar"
+      allowedContent: true
   toolbars:
     configs:
       custom_toolbar: ['@clipboard', '@editing', '@links', '@insert', '@tools', '@document', '/', '@basic_styles', '@advanced_styles', '/', '@paragraph']
