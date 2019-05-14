@@ -45,5 +45,22 @@
     </div>
 {% endblock %}
 
+{% block bottom_customizable_area %}
+    {% set customArea = paprec_customizable_area('reassurance_banner_default') %}
+    {% if customArea is not null %}
+        {% autoescape false %}
+            {{ customArea.content }}
+        {% endautoescape %}
+    {% endif %}
+
+    {% set customAreaLogo = paprec_customizable_area('logo_banner_default') %}
+    {% if customAreaLogo is not null %}
+        {% autoescape false %}
+            {{ customAreaLogo.content }}
+        {% endautoescape %}
+    {% endif %}
+
+{% endblock %}
+
 {% block javascripts %}
 {% endblock %}

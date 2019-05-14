@@ -36,7 +36,9 @@
                 </div>
             </div>
         </div>
-        <div class="bold">{% if productChantierQuote.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productChantierQuote.firstName }} {{ productChantierQuote.lastName }},</div>
+        <div class="bold">{% if productChantierQuote.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productChantierQuote.firstName }} {{ productChantierQuote.lastName }}
+            ,
+        </div>
 
         <div class="recaptitle">{{ 'Public.Confirm.RecapOrder'|trans }}</div>
         <div class="greyrecap">
@@ -64,8 +66,8 @@
                         x {{ productChantierQuoteLine.productChantier.name }}</div>
                     <div class="nameof">de {{ productChantierQuoteLine.categoryName }}</div>
                 </div>
-{#                <div class="desc">
-                    Prestation {% if productChantierQuote.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}</div>#}
+                {#                <div class="desc">
+                                    Prestation {% if productChantierQuote.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}</div>#}
             </div>
         {% endfor %}
 
@@ -84,7 +86,7 @@
 {% endblock %}
 
 {% block bottom_customizable_area %}
-</div>
+    </div>
     {% set customAreaImage = paprec_customizable_area('images_banner_' ~ cart.division|lower) %}
     {% if customAreaImage is not null %}
         {% autoescape false %}
@@ -96,6 +98,13 @@
     {% if customArea is not null %}
         {% autoescape false %}
             {{ customArea.content }}
+        {% endautoescape %}
+    {% endif %}
+
+    {% set customAreaLogo = paprec_customizable_area('logo_banner_' ~ cart.division|lower) %}
+    {% if customAreaLogo is not null %}
+        {% autoescape false %}
+            {{ customAreaLogo.content }}
         {% endautoescape %}
     {% endif %}
 

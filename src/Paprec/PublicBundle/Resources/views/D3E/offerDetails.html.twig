@@ -36,7 +36,8 @@
                 </div>
             </div>
         </div>
-        <div class="bold">{% if productD3EQuote.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productD3EQuote.firstName }} {{ productD3EQuote.lastName }},
+        <div class="bold">{% if productD3EQuote.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productD3EQuote.firstName }} {{ productD3EQuote.lastName }}
+            ,
         </div>
 
         <div class="recaptitle">{{ 'Public.Confirm.RecapOrder'|trans }}</div>
@@ -66,9 +67,9 @@
                     <div class="nameof">
                         {{ 'Commercial.ProductD3EQuoteLine.TypeName'|trans }} {{ productD3EQuoteLine.typeName }}</div>
                 </div>
-               {# <div class="desc">
-                    Prestation {% if productD3EQuote.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}
-                </div>#}
+                {# <div class="desc">
+                     Prestation {% if productD3EQuote.frequency == 'ponctual' %}ponctuelle {% else %} régulière {% endif %}
+                 </div>#}
             </div>
 
         {% endfor %}
@@ -100,6 +101,13 @@
     {% if customArea is not null %}
         {% autoescape false %}
             {{ customArea.content }}
+        {% endautoescape %}
+    {% endif %}
+
+    {% set customAreaLogo = paprec_customizable_area('logo_banner_' ~ cart.division|lower) %}
+    {% if customAreaLogo is not null %}
+        {% autoescape false %}
+            {{ customAreaLogo.content }}
         {% endautoescape %}
     {% endif %}
 

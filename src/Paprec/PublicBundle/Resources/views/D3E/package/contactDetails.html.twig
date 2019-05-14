@@ -76,7 +76,8 @@
 
                 <div class="clearfix"></div>
                 <input type="checkbox" id="headofficeAddressCheckbox" class="address-checkbox">
-                <label for="headofficeAddressCheckbox" class="address-checkbox-label">{{ 'Commercial.ProductD3EOrder.HeadofficeAddressCheckbox'|trans }}</label>
+                <label for="headofficeAddressCheckbox"
+                       class="address-checkbox-label">{{ 'Commercial.ProductD3EOrder.HeadofficeAddressCheckbox'|trans }}</label>
                 <div id="headofficeAddressContainer" class="address-container">
                     {{ form_widget(form.headofficeAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EOrder.HeadofficeAddressPlaceholder'|trans}}) }}
                     {{ form_errors(form.headofficeAddress) }}
@@ -90,7 +91,8 @@
 
                 <div class="clearfix"></div>
                 <input type="checkbox" id="invoicingAddressCheckbox" class="address-checkbox">
-                <label for="invoicingAddressCheckbox" class="address-checkbox-label">{{ 'Commercial.ProductD3EOrder.InvoicingAddressCheckbox'|trans }}</label>
+                <label for="invoicingAddressCheckbox"
+                       class="address-checkbox-label">{{ 'Commercial.ProductD3EOrder.InvoicingAddressCheckbox'|trans }}</label>
                 <div id="invoicingAddressContainer" class="address-container">
                     {{ form_widget(form.invoicingAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.ProductD3EOrder.InvoicingAddressPlaceholder'|trans}}) }}
                     {{ form_errors(form.invoicingAddress) }}
@@ -172,6 +174,13 @@
     {% if customArea is not null %}
         {% autoescape false %}
             {{ customArea.content }}
+        {% endautoescape %}
+    {% endif %}
+
+    {% set customAreaLogo = paprec_customizable_area('logo_banner_' ~ cart.division|lower) %}
+    {% if customAreaLogo is not null %}
+        {% autoescape false %}
+            {{ customAreaLogo.content }}
         {% endautoescape %}
     {% endif %}
 {% endblock %}
