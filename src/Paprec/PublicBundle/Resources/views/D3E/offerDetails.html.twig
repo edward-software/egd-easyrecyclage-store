@@ -39,19 +39,7 @@
         <div class="bold">{% if productD3EQuote.civility == 'M' %}{{ 'General.Mr'|trans }}{% else %}{{ 'General.Mme'|trans }}{% endif %} {{ productD3EQuote.firstName }} {{ productD3EQuote.lastName }}
             ,
         </div>
-
         <div class="recaptitle">{{ 'Public.Confirm.RecapOrder'|trans }}</div>
-        <div class="greyrecap">
-            <div class="title">{{ 'Public.Cart.ForfaitRecyclage'|trans }}</div>
-            <div class="info">
-                {{ 'Public.Cart.Including2Lines'|trans|nl2br }}
-            </div>
-            <div class="right">
-                {{ 'Public.Cart.From'|trans|upper }}
-                <span>{{ productD3EQuote.totalAmount|formatAmount(null, app.request.locale) }}€</span>
-            </div>
-        </div>
-
         <div class="greennotice">
             {{ 'Public.Confirm.AgencyContactQuote'|trans }}
         </div>

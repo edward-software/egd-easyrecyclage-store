@@ -108,16 +108,19 @@ class CommonController extends Controller
                                 'url' => $item['url'],
                                 'submenus' => array()
                             );
-                        } else {
-                            $footers[$item['menu_item_parent']]['submenus'][$item['ID']] = array(
-                                'id' => $item['ID'],
-                                'title' => $item['title'],
-                                'url' => $item['url']
-                            );
+                            if ($item['child_items'] != null && count($item['child_items'])) {
+                                foreach ($item['child_items'] as $childItem) {
+                                    $footers[$item['ID']]['submenus'][$childItem['ID']] = array(
+                                        'id' => $childItem['ID'],
+                                        'title' => $childItem['title'],
+                                        'url' => $childItem['url']
+                                    );
+                                }
+
+                            }
                         }
                     }
                 }
-
 
                 return $this->render('@PaprecPublic/Menu/footersMenu.html.twig', array(
                     'items' => $footers

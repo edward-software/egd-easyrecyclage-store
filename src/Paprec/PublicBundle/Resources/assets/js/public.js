@@ -482,7 +482,7 @@ $(function () {
      */
     if ($('.contact-details-form').is('div')) {
         reloadCart();
-        initializeAutocompleteAddress()
+        initializeAutocompleteAddress();
 
         $('#contactDetailsFormSubmitButton').on('click', function () {
             const div = $('#divisionType').val();

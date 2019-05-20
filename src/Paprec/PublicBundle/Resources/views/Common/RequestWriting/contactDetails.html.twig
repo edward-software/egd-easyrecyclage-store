@@ -54,22 +54,13 @@
                 {{ form_errors(form.function) }}
             </div>
         </div>
-        <div class="step">
-
+        <div class="step step--index">
             <div class="step__left">
                 <div class="step__title">
                     {{ 'Public.Home.Addresses'|trans }}
                 </div>
             </div>
             <div class="step__right step__right--small">
-                {{ form_widget(form.headofficeAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.HeadOfficeAddress'|trans}}) }}
-                {{ form_errors(form.headofficeAddress) }}
-
-                {{ form_widget(form.headofficePostalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.QuoteRequest.PostalCode'|trans}}) }}
-                {{ form_errors(form.headofficePostalCode) }}
-
-                {{ form_widget(form.headofficeCity, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.QuoteRequest.City'|trans}}) }}
-                {{ form_errors(form.headofficeCity) }}
 
                 {{ form_widget(form.address, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.SiteAddress'|trans}}) }}
                 {{ form_errors(form.address) }}
@@ -80,19 +71,43 @@
                 {{ form_widget(form.city, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.QuoteRequest.City'|trans}}) }}
                 {{ form_errors(form.city) }}
 
-                <div class="">
+                <div class="clearfix"></div>
+                <input type="checkbox" id="headofficeAddressCheckbox" class="address-checkbox">
+                <label for="headofficeAddressCheckbox"
+                       class="address-checkbox-label">{{ 'Commercial.ProductD3EOrder.HeadofficeAddressCheckbox'|trans }}</label>
+                <div id="headofficeAddressContainer" class="address-container">
+                    {{ form_widget(form.headofficeAddress, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.HeadOfficeAddress'|trans}}) }}
+                    {{ form_errors(form.headofficeAddress) }}
+
+                    {{ form_widget(form.headofficePostalCode, {'attr': {'class': 'input input--zip step--marginfield', 'placeholder': 'Commercial.QuoteRequest.PostalCode'|trans}}) }}
+                    {{ form_errors(form.headofficePostalCode) }}
+
+                    {{ form_widget(form.headofficeCity, {'attr': {'class': 'input input--city step--marginfield', 'placeholder': 'Commercial.QuoteRequest.City'|trans}}) }}
+                    {{ form_errors(form.headofficeCity) }}
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="preferred-contact">
                     {{ 'Commercial.QuoteRequest.PreferredContactLabel'|trans }}
                 </div>
-                {{ form_widget(form.preferredContact, {'attr': {'class': 'input--radio'}}) }}
-                {{ form_errors(form.preferredContact) }}
+                <div class="preferred-contact--choice">
+                    {{ form_widget(form.preferredContact, {'attr': {'class': 'input--radio'}}) }}
+                    {{ form_errors(form.preferredContact) }}
+                </div>
 
-                <div class="clearfix step--marginfield"></div>
-
-                {{ form_widget(form.terms) }}
-                {{ 'Commercial.QuoteRequest.TermsAccept'|trans }} <a href="#"
-                                                                     class="">{{ 'Commercial.QuoteRequest.TermsCGV'|trans }}</a>
-                {{ form_errors(form.terms) }}
-                <div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step__left">&nbsp;</div>
+            <div class="step__right">
+                <div class="cgv">
+                    {{ form_widget(form.terms) }}
+                    {{ 'Commercial.QuoteRequest.TermsAccept'|trans }}
+                    <a href="#">{{ 'Commercial.QuoteRequest.TermsCGV'|trans }}</a>
+                    {{ form_errors(form.terms) }}
+                </div>
+                <div class="cnil">
                     Les informations recueillies sur ce formulaire sont enregistrées dans un fichier informatisé pour
                     permettre de vous adresser des contenus adaptés à vos besoins. Ces données sont conservées pendant 3
                     ans et sont destinées au service marketing. Conformément à la loi
@@ -102,6 +117,7 @@
             </div>
             <div class="clearfix"></div>
 
+
             {{ render(controller('PaprecPublicBundle:Common:getCTAsBottom', {
                 'label': 'Confirm',
                 'cartUuid': cart.id,
@@ -110,12 +126,13 @@
                 'nextStep': 'step3',
                 'idSubmit': 'contactDetailsFormSubmitButton'
             })) }}
-            {{ form_rest(form) }}
         </div>
-
+        {{ form_rest(form) }}
     </form>
 {% endblock %}
 
 {% block javascripts %}
-
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ paprec_google_api_key }}">
+    </script>
 {% endblock %}

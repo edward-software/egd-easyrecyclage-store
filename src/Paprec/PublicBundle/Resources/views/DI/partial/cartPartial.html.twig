@@ -25,9 +25,12 @@
             {{ 'Public.Cart.ForfaitRecyclage'|trans|nl2br }}
         </div>
         <div class="right">
-            <span>
-                {% if loadedCart and loadedCart is not empty %}{{ loadedCart['sum']|formatAmount(null, app.request.locale) }}{% else %}0{% endif %}€
-            </span> HT
+            <div style="margin-bottom: 3px">{{ 'Public.Cart.From'|trans|upper }}</div>
+            <div>
+                <span>
+                    {% if loadedCart and loadedCart is not empty %}{{ loadedCart['sum']|formatAmount(null, app.request.locale) }}{% else %}0{% endif %}€
+                </span> HT
+            </div>
         </div>
         <div class="clearfix"></div>
     </div>
