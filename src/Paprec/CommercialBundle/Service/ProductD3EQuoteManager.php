@@ -272,7 +272,7 @@ class ProductD3EQuoteManager
                 return false;
             }
 
-            $pdfFilename = date('Y-m-d') . '-EasyRecyclage-Devis-' . $productD3EQuote->getId() . '.pdf';
+            /*$pdfFilename = date('Y-m-d') . '-EasyRecyclage-Devis-' . $productD3EQuote->getId() . '.pdf';
 
             $pdfFile = $this->generatePDF($productD3EQuote);
 
@@ -280,7 +280,7 @@ class ProductD3EQuoteManager
                 return false;
             }
 
-            $attachment = \Swift_Attachment::newInstance(file_get_contents($pdfFile), $pdfFilename, 'application/pdf');
+            $attachment = \Swift_Attachment::newInstance(file_get_contents($pdfFile), $pdfFilename, 'application/pdf');*/
 
 
             $message = \Swift_Message::newInstance()
@@ -295,13 +295,13 @@ class ProductD3EQuoteManager
                         )
                     ),
                     'text/html'
-                )
-                ->attach($attachment);
+                );
+//                ->attach($attachment);
 
             if ($this->container->get('mailer')->send($message)) {
-                if(file_exists($pdfFile)) {
-                    unlink($pdfFile);
-                }
+//                if(file_exists($pdfFile)) {
+//                    unlink($pdfFile);
+//                }
                 return true;
             }
             return false;
