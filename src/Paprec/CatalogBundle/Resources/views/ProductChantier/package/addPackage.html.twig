@@ -23,7 +23,8 @@
                         <i class="fa fa-xs fa-plus"></i> {{ 'Catalog.ProductChantier.Add.Packaged'|trans }}
                     </h4>
                     <div class="float-right">
-                        <a href="javascript:void(0);" class="btn btn-sm btn-success catalog-productChantier-save-button"><i
+                        <a href="javascript:void(0);"
+                           class="btn btn-sm btn-success catalog-productChantier-save-button"><i
                                     class="fa fa-xs fa-check"></i> {{ 'Catalog.ProductChantier.Save'|trans }}</a>
                         <a href="javascript:void(0);"
                            class="btn btn-sm btn-danger catalog-productChantier-cancel-button"><i
@@ -125,6 +126,13 @@
                                         {{ form_errors(form.packageUnitPrice) }}
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="form-label">{{ 'Catalog.ProductChantier.Position'|trans }}</div>
+                                    <div class="form-content">
+                                        {{ form_widget(form.position, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.position) }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -132,9 +140,11 @@
 
                 <div class="card-footer">
                     <div class="float-right">
-                        <a href="javascript:void(0);" class="btn btn-sm btn-success catalog-productChantier-save-button"><i
+                        <a href="javascript:void(0);"
+                           class="btn btn-sm btn-success catalog-productChantier-save-button"><i
                                     class="fa fa-xs fa-check"></i> {{ 'Catalog.ProductChantier.Save'|trans }}</a>
-                        <a href="javascript:void(0);" class="btn btn-sm btn-danger catalog-productChantier-cancel-button"><i
+                        <a href="javascript:void(0);"
+                           class="btn btn-sm btn-danger catalog-productChantier-cancel-button"><i
                                     class="fa fa-xs fa-close"></i> {{ 'Catalog.ProductChantier.Cancel'|trans }}</a>
                     </div>
                 </div>

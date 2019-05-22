@@ -191,6 +191,7 @@ Catalog:
       Dimensions:                 Dimensions
       UnitPrice:                  Prix unitaire
       PackageUnitPrice:           Prix unitaire du package
+      Position:                   Position
       Reference:                  Lien description
       IsDisplayed:                Affiché
       Arguments:                  Arguments

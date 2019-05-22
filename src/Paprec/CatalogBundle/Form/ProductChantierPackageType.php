@@ -34,7 +34,6 @@ class ProductChantierPackageType extends AbstractType
                 ),
                 "expanded" => true
             ))
-
             ->add('availablePostalCodes')
             ->add('arguments', EntityType::class, array(
                 'class' => Argument::class,
@@ -47,7 +46,8 @@ class ProductChantierPackageType extends AbstractType
             ))
             ->add('packageUnitPrice', TextType::class, array(
                 "required" => true
-            ));
+            ))
+            ->add('position');
     }
 
     /**
