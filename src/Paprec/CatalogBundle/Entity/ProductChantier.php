@@ -140,6 +140,12 @@ class ProductChantier
      */
     private $packageUnitPrice;
 
+    /**
+     * @var string
+     * @ORM\Column(name="position", type="integer", nullable=true)
+     */
+    private $position;
+
 
     /**************************************************************************************************
      * RELATIONS
@@ -742,5 +748,29 @@ class ProductChantier
     public function getSubName()
     {
         return $this->subName;
+    }
+
+    /**
+     * Set position.
+     *
+     * @param int|null $position
+     *
+     * @return ProductChantier
+     */
+    public function setPosition($position = null)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position.
+     *
+     * @return int|null
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

@@ -140,6 +140,12 @@ class ProductChantier
      */
     private $packageUnitPrice;
 
+    /**
+     * @var string
+     * @ORM\Column(name="position", type="integer", nullable=true)
+     */
+    private $position;
+
 
     /**************************************************************************************************
      * RELATIONS

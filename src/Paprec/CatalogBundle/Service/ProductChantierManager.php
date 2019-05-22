@@ -141,8 +141,8 @@ class ProductChantierManager
                 ->createQueryBuilder('p')
                 ->where('p.isPackage = true')
                 ->andWhere('p.deleted is null')
-                ->andWhere('p.isDisplayed = true');
-//                ->orderBy('pc.position', 'ASC')
+                ->andWhere('p.isDisplayed = true')
+                ->orderBy('p.position', 'ASC');
 //            if ($type == 'order') {
 //                $query->andWhere('p.isPayableOnline = 1');
 //            }
