@@ -275,7 +275,7 @@ class ProductChantierController extends Controller
 
         $productChantier = new ProductChantier();
 
-        $form = $this->createForm(ProductChantierType::class, $productChantier);
+        $form = $this->createForm(ProductChantierPackageType::class, $productChantier);
 
         $form->handleRequest($request);
 
