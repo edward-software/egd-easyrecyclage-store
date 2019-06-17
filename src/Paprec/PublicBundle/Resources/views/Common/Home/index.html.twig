@@ -41,8 +41,9 @@
 
 {% block cinq_flux %}
     {% if (step is defined and (step != 'd')) and (cart.division is defined and cart.division == '5FLUX') %}
-        <a class="button button--grey"
-           href="{{ paprec_easyrecyclage_5flux_url }}">{{ 'Public.Cart.3MinOrder'|trans }}</a>
+            <a class="button button--flux button--grey button--mediumblue"
+               href="{{ paprec_easyrecyclage_5flux_url }}">{{ 'Public.Cart.NeedEstimation'|trans }}</a>
+
     {% endif %}
 {% endblock %}
 

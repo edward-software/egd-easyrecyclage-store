@@ -8,6 +8,12 @@
 
 {#{% endblock %}#}
 
+{% block whoare %}
+    {% if cart and cart.type != 'package' %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block sidebar %}
     <div class="callBack-form"></div>
     {# Définition des menus affichés dans la sidebar #}
@@ -56,10 +62,10 @@
                 <div class="step__title">Date et heure de rappel</div>
             </div>
             <div class="step__right step__right--small">
-                {{ form_widget(form.dateCallBack, {'attr': {'class': 'input input--mid'}}) }}
-                {{ form_errors(form.dateCallBack) }}
-                {{ form_widget(form.timeCallBack, {'attr': {'class': 'input input--mid'}}) }}
+                {{ form_widget(form.timeCallBack, {'attr': {'class': 'input input--mid', 'placeholder': 'Heure'}}) }}
                 {{ form_errors(form.timeCallBack) }}
+                {{ form_widget(form.dateCallBack, {'attr': {'class': 'input input--mid', 'placeholder': 'Date'}}) }}
+                {{ form_errors(form.dateCallBack) }}
             </div>
             <div class="clearfix"></div>
             <a href="javascript:void(0);" id="callBackFormSubmitButton" class="button button--green">

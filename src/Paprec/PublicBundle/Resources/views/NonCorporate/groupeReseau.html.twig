@@ -38,7 +38,7 @@
                 <div class="step__title">{{ 'Public.Home.Location'|trans }}</div>
             </div>
             <div class="step__right">
-                <input class="input" type="text"
+                <input class="input input--full" type="text"
                        id="locationSelect" autocomplete="off"
                        placeholder="{{ 'Public.Cart.PostalCode'|trans }}">
                 {{ form_errors(form.postalCode) }}
@@ -95,15 +95,16 @@
         <div class="step">
             <div class="notice">{{ 'Public.Home.FileUploadNotice'|trans }}
             </div>
-            <br>
-            {{ form_label(form.attachedFiles, "TÉLÉCHARGER DES PIÈCES JOINTES OU DES PHOTOS", {'label_attr': {'class': 'button button--bordered'}}) }}
-            {{ form_widget(form.attachedFiles, {'attr': {'class': 'input-file'}}) }}
             <div id="listFiles" class="paprec-list-files">
 
             </div>
+            <br>
+            {{ form_label(form.attachedFiles, "TÉLÉCHARGER DES PIÈCES JOINTES OU DES PHOTOS", {'label_attr': {'class': 'button button--bordered'}}) }}
+            {{ form_widget(form.attachedFiles, {'attr': {'class': 'input-file'}}) }}
+
             <div class="clearfix"></div>
 
-            <a href="javascript:void(0);" id="groupFormSubmitButton" class="button button--green">
+            <a href="javascript:void(0);" id="groupFormSubmitButton" class="button button--green button--darkblue">
                 {{ ('Public.Cart.SendNeed'|trans)|upper }}
             </a>
         </div>

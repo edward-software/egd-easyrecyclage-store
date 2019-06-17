@@ -65,6 +65,7 @@ Public:
     SelectedContainers:           contenants séléctionnés
     SelectedCategory:             déchet sélectionné
     SelectedCategories:           déchets sélectionnés
+    OtherTrash:                   Autres déchets
     NoSelectedCategory:           Aucun déchet sélectionné
     AddToCartQuote:               Ajouter au devis
     AddToCartOrder:               Ajouter au panier

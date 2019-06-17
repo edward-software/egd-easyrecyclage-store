@@ -49,17 +49,17 @@
                                 data-url="{{ path('paprec_public_corp_chantier_subscription_packaged_removeOneContent', {cartUuid: cart.id, productId: product.id}) }}">
                             -
                         </button>
-                        {% for items in cart.content %}
-                            {% if items['pId'] == product.id %}
-                                <span class="number">{{ items['qtty'] }}</span>
-                            {% endif %}
-                        {% endfor %}
                         <button class="addOneToCartPackageButton"
                                 id="addOneToCartPackageButton{{ product.id }}"
                                 data-url="{{ path('paprec_public_corp_chantier_subscription_packaged_addOneContent', {cartUuid: cart.id, productId: product.id}) }}">
                             +
                         </button>
                     </div>
+                    {% for items in cart.content %}
+                        {% if items['pId'] == product.id %}
+                            <span class="number">{{ items['qtty'] }}</span>
+                        {% endif %}
+                    {% endfor %}
                 </div>
                 {% if product.id in cart.displayedProducts %}
                     <div class="infoproduct-container">
@@ -178,7 +178,7 @@
                                 <button class="button button--lightgreen addToCartPackageSubmitButton"
                                         data-url="{{ path('paprec_public_corp_chantier_subscription_packaged_addContent', {cartUuid: cart.id, productId: product.id, quantity: 'quantityTmp'}) }}"
                                         id="addToCartPackageSubmitButton{{ product.id }}"
-                                        >{{ 'Public.Cart.AddToCartOrder'|trans }}
+                                >{{ 'Public.Cart.AddToCartOrder'|trans }}
                                 </button>
                             </div>
                             <div class="clearfix"></div>

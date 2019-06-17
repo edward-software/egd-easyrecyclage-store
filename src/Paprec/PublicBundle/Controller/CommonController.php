@@ -97,7 +97,6 @@ class CommonController extends Controller
                     ));
                 }
             } elseif ($slug == 'footer-menu') {
-
                 $footers = array();
                 if (isset($bodyResponse['items']) && is_array($bodyResponse['items']) && count($bodyResponse['items'])) {
                     foreach ($bodyResponse['items'] as $item) {
