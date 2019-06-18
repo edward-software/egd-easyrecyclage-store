@@ -1,16 +1,16 @@
 {% autoescape false %}
-    {% for link in items %}
-        <li class="menu-item menu-item-type-post_type menu-item-object-page {% if link['submenus']|length > 0  %}menu-item-has-children {% endif %}">
-            <a href="{{ link['url'] }}">{{ link['title'] }}</a>
-            <div class="submenu__title">{{ link['title'] }}</div>
-            {% if link['submenus']|length > 0 %}
+    {% for menu in items %}
+        <li class="menu-item menu-item-type-post_type menu-item-object-page {% if menu['children']|length > 0  %}menu-item-has-children {% endif %}">
+            <a href="{{ menu['url'] }}">{{ menu['title'] }}</a>
+            <div class="submenu__title">{{ menu['title'] }}</div>
+            {% if menu['children']|length > 0 %}
                 <ul class="sub-menu">
-                    {% for submenu in link['submenus'] %}
+                    {% for submenu in menu['children'] %}
                         <li>
                             <a href="{{ submenu['url'] }}">{{ submenu['title'] }}</a>
-                            {% if submenu['submenus']|length > 0 %}
+                            {% if submenu['children']|length > 0 %}
                                 <ul class="sub-menu">
-                                    {% for subsubmenu in submenu['submenus'] %}
+                                    {% for subsubmenu in submenu['children'] %}
                                         <li>
                                             <a href="{{ subsubmenu['url'] }}">{{ subsubmenu['title'] }}</a>
                                         </li>

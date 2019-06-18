@@ -24,7 +24,11 @@ class CommonController extends Controller
         try {
 
             $client = new Client(['base_uri' => $this->getParameter('paprec_public_site_url')]);
-            $response = $client->request('GET', '/wp-json/menus/v1/menus/' . $slug);
+            if ($slug == 'header-menu') {
+                $response = $client->request('GET', '/wp-json/menus/v2/header');
+            } else {
+                $response = $client->request('GET', '/wp-json/menus/v1/menus/' . $slug);
+            }
 
             $bodyResponse = json_decode($response->getBody(), true);
 
@@ -53,9 +57,9 @@ class CommonController extends Controller
 
             } elseif ($slug == 'header-menu') {
 
-                $headers = array();
+                $headers = $bodyResponse;
 
-                if (isset($bodyResponse['items']) && is_array($bodyResponse['items']) && count($bodyResponse['items'])) {
+                /*if (isset($bodyResponse['items']) && is_array($bodyResponse['items']) && count($bodyResponse['items'])) {
                     foreach ($bodyResponse['items'] as $item) {
                         $headers[$item['ID']] = array(
                             'id' => $item['ID'],
@@ -84,8 +88,7 @@ class CommonController extends Controller
                             }
                         }
                     }
-                }
-
+                }*/
 
                 if ($isMobile) {
                     return $this->render('@PaprecPublic/Menu/mobile/headersMenu.html.twig', array(
