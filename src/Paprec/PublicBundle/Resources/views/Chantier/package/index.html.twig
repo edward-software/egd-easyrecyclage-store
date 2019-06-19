@@ -17,10 +17,17 @@
         {% endautoescape %}
     {% endif %}
 
-    {% set customArea = paprec_customizable_area('reassurance_banner_chantier') %}
+    {% set customArea = paprec_customizable_area('reassurance_banner_' ~ cart.division|lower) %}
     {% if customArea is not null %}
         {% autoescape false %}
             {{ customArea.content }}
+        {% endautoescape %}
+    {% endif %}
+
+    {% set customAreaLogo = paprec_customizable_area('logo_banner_' ~ cart.division|lower) %}
+    {% if customAreaLogo is not null %}
+        {% autoescape false %}
+            {{ customAreaLogo.content }}
         {% endautoescape %}
     {% endif %}
 {% endblock %}
