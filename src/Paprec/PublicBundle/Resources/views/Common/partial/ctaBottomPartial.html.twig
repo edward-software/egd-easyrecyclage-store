@@ -31,7 +31,7 @@
                         id="validateNeedButton"
                         href="{{ path('paprec_public_corp_' ~ division|lower ~'_subscription_' ~ nextStep, {cartUuid: cartUuid }) }}"
                     {% endif %}
-                    class="button margint10 button--green" {% if cartEmpty == true %}disabled="disabled"{% endif %}>{{ (('Public.Cart.' ~ label)|trans)|upper }}</a>
+                    class="button margint10 button--green {% if division == 'DI' %}button--lightgreen {% endif %}" {% if cartEmpty == true %}disabled="disabled"{% endif %}>{{ (('Public.Cart.' ~ label)|trans)|upper }}</a>
         </div>
     </div>
 </div>
