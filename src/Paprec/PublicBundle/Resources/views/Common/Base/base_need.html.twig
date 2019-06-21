@@ -54,7 +54,8 @@
                 {% if cart.division == 'DI' %}
                     <div class="product-container">
                         <a href="{{ path('paprec_public_corp_home_requestWriting_step1', {cartUuid: cart.id}) }}">
-                            <div class="checkboxPicto categoryCheckboxPicto">
+                            <div class="checkboxPicto categoryCheckboxPicto"
+                                 style="background-image: url({{ asset('/build/static/autre_dechet.svg') }})">
                                 {{ 'Public.Cart.OtherTrash'|trans }}
                             </div>
                         </a>

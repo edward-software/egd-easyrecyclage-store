@@ -318,8 +318,8 @@ class ProductDIQuoteManager
     {
         try {
             $pdfTmpFolder = $this->container->getParameter('paprec_commercial.data_tmp_directory');
-            $noticeFileDirectory = $this->container->getParameter('paprec_commercial.quote_pdf_notice_directory');
-            $noticeFiles = $this->container->getParameter('paprec_commercial.quote_pdf_notices');
+            $noticeFileDirectory = $this->container->getParameter('paprec_commercial.di_quote_pdf_notice_directory');
+            $noticeFiles = $this->container->getParameter('paprec_commercial.di_quote_pdf_notices');
 
             if (!is_dir($pdfTmpFolder)) {
                 mkdir($pdfTmpFolder, 0755, true);
@@ -333,8 +333,9 @@ class ProductDIQuoteManager
             $snappy = new Pdf($this->container->getParameter('wkhtmltopdf_path'));
             $snappy->setOption('margin-left', 3);
             $snappy->setOption('margin-right', 3);
+
             /**
-             * On génère d'abord la page de couverture sans footer
+             * On génère les PDF
              */
             $snappy->generateFromHtml(
                 array(
@@ -344,17 +345,7 @@ class ProductDIQuoteManager
                             'productDIQuote' => $productDIQuote,
                             'date' => $today
                         )
-                    )
-                ),
-                $filenameCover
-            );
-
-            /**
-             * Puis les pages suivantes avec le footer
-             */
-            $snappy->setOption('footer-html', $this->container->get('templating')->render('@PaprecCommercial/Common/PDF/partials/footer.html.twig'));
-            $snappy->generateFromHtml(
-                array(
+                    ),
                     $this->container->get('templating')->render(
                         '@PaprecCommercial/ProductDIQuote/PDF/printQuoteLetter.html.twig',
                         array(
@@ -377,7 +368,6 @@ class ProductDIQuoteManager
              * Concaténation des notices
              */
             $pdfArray = array();
-            $pdfArray[] = $filenameCover;
             $pdfArray[] = $filename;
 
             if (is_array($noticeFiles) && count($noticeFiles)) {
