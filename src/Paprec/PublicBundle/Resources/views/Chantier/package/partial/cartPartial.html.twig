@@ -20,7 +20,7 @@
         {% endif %}
     {% endif %}
 
-    <div class="recap__price">
+    <div class="recap__price {% if loadedCart['sum'] == '0' %}recap__price--grey{% endif %}">
         <div class="left">
             {{ 'Public.Cart.ForfaitRecyclage'|trans|nl2br }}
         </div>
