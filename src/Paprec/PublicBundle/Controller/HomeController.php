@@ -843,4 +843,54 @@ class HomeController extends Controller
             'quoteRequestNonCorporate' => $quoteRequestNonCorporate
         ));
     }
+
+    
+    /*******
+     * ex: http://dev.store.easyrecyclage.com/app_dev.php/devis/quote/di/cover/2
+     ******/
+
+    /**
+     * @Route("/quote/di/cover/{id}", name="paprec_public_quote_di_cover")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function showDevisDICover(ProductDIQuote $productDIQuote)
+    {
+        $today = new \DateTime();
+        return $this->render('@PaprecCommercial/ProductDIQuote/PDF/printQuoteCover.html.twig', array(
+                'productDIQuote' => $productDIQuote,
+                'date' => $today
+            )
+        );
+    }
+
+    /**
+     * @Route("/quote/di/letter/{id}", name="paprec_public_quote_di_letter")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function showDevisDILetter(ProductDIQuote $productDIQuote)
+    {
+        $today = new \DateTime();
+        return $this->render('@PaprecCommercial/ProductDIQuote/PDF/printQuoteLetter.html.twig', array(
+                'productDIQuote' => $productDIQuote,
+                'date' => $today
+            )
+        );
+    }
+
+    /**
+     * @Route("/quote/di/products/{id}", name="paprec_public_quote_di_products")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function showDevisDIProducts(ProductDIQuote $productDIQuote)
+    {
+        return $this->render('@PaprecCommercial/ProductDIQuote/PDF/printQuoteProducts.html.twig', array(
+                'productDIQuote' => $productDIQuote
+            )
+        );
+    }
+
+
 }
