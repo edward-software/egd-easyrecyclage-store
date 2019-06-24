@@ -5,6 +5,7 @@ $(function () {
      * COMMON
      */
 
+
     // A la selection d'une option dans le select whoare, on navigue
     $('#whoare-select').on('change', function () {
         var element = $(this).find('option:selected');
