@@ -50,7 +50,8 @@ class SubscriptionController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('paprec_public_corp_chantier_subscription_step1', array(
-            'cartUuid' => $cart->getId()
+            'cartUuid' => $cart->getId(),
+            '_fragment' => 'anchor1'
         ));
     }
 
@@ -67,7 +68,8 @@ class SubscriptionController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('paprec_public_corp_chantier_subscription_step1', array(
-            'cartUuid' => $cart->getId()
+            'cartUuid' => $cart->getId(),
+            '_fragment' => 'anchor1'
         ));
     }
 
@@ -75,7 +77,7 @@ class SubscriptionController extends Controller
      * Etape "Mon besoin", choix des produits et ajout au Cart
      *
      * On passe le $type en paramère qui correspond à 'order' (commande) ou 'quote'(devis)
-     * @Route("/chantier/step1/{cartUuid}", name="paprec_public_corp_chantier_subscription_step1")
+     * @Route("/chantier/step1/{cartUuid}",defaults={"_fragment" = "anchor1"}, name="paprec_public_corp_chantier_subscription_step1")
      * @throws \Exception
      */
     public function step1Action(Request $request, $cartUuid)

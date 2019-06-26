@@ -50,7 +50,8 @@ class SubscriptionController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('paprec_public_corp_d3e_subscription_step1', array(
-            'cartUuid' => $cart->getId()
+            'cartUuid' => $cart->getId(),
+            '_fragment' => 'anchor1'
         ));
     }
 
@@ -67,7 +68,8 @@ class SubscriptionController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('paprec_public_corp_d3e_subscription_step1', array(
-            'cartUuid' => $cart->getId()
+            'cartUuid' => $cart->getId(),
+            '_fragment' => 'anchor1'
         ));
     }
 

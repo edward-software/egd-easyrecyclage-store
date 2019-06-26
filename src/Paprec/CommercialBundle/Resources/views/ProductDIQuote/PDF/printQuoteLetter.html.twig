@@ -2,6 +2,8 @@
 
 {% block businessName %} {{ productDIQuote.businessName|upper }} {% endblock %}
 
+{% block address %} {{ productDIQuote.address|upper }}{% endblock %}
+
 {% block location %} {{ productDIQuote.postalCode }} {{ productDIQuote.city|upper }} {% endblock %}
 
 {% block recipient %} {% if productDIQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productDIQuote.firstName }} {{ productDIQuote.lastName|upper }} {% endblock %}
