@@ -502,7 +502,7 @@ class ProductDIController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $pictureID = $request->get('pictureID');
-        $picture = $productDIManager->get($productDI);
+        $picture = $em->getRepository('PaprecCatalogBundle:Picture')->find($pictureID);
         $oldPath = $picture->getPath();
 
         $em = $this->getDoctrine()->getEntityManager();
