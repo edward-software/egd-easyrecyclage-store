@@ -2,17 +2,16 @@
 {% block pdf_content %}
     <table width="780" cellpadding="0" cellspacing="0" align="center" style="font-size: 13px">
         <tr>
-            <td height="280" width="100%"
+            <td height="180" width="100%"
                 style="background-repeat: no-repeat;">
                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
                     <tr>
-                        <td width="100%" colspan="2" height="200"></td>
-                    </tr>
-                    <tr>
                         <td width="500"></td>
-                        <td width="280">
+                        <td width="280" class="pdf-title">
                             <p style="margin: 0;">{% block businessName %}{% endblock %}</p>
+                            <p style="margin: 0;">{% block address %}{% endblock %}</p>
                             <p style="margin: 0;">{% block location %}{% endblock %}</p>
+
                         </td>
                     </tr>
                 </table>
@@ -22,8 +21,9 @@
             <td>
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td width="460">
-                            <p style="line-height: 15px; margin: 20px; text-align: left;">A l'attention
+                        <td width="460" class="pdf-title">
+                            <p style="line-height: 15px; margin: 20px; text-align: left; text-transform: uppercase;">
+                                À l'attention
                                 de {% block recipient %}{% endblock %}</p>
                         </td>
 
@@ -32,15 +32,15 @@
             </td>
         </tr>
         <tr>
-            <td height="70" width="100%"
+            <td height="40" width="100%"
                 style="background-repeat: no-repeat;">
                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
                     <tr>
-                        <td width="100%" colspan="2" height="35"></td>
+                        <td width="100%" colspan="2" height="20"></td>
                     </tr>
                     <tr>
-                        <td width="450"></td>
-                        <td width="330">
+                        <td width="600"></td>
+                        <td width="330" class="pdf-title">
                             <p style="margin: 0;">Le {% block date %}{% endblock %}</p>
                         </td>
                     </tr>
@@ -51,12 +51,12 @@
             <td height="100px">
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td width="100%" colspan="2" height="50"></td>
+                        <td width="100%" colspan="2" height="20"></td>
                     </tr>
                     <tr>
                         <td width="460">
-                            <p style="line-height: 15px; margin: 20px; text-align: left;">ESTIMATION N°
-                                : {% block quoteNumber %}{% endblock %}</p>
+                            <p class="pdf-title bg-blue" style="margin: 20px;" class="pdf-title bg-blue">
+                                ESTIMATION N°{% block quoteNumber %}{% endblock %}</p>
                         </td>
 
                     </tr>
@@ -65,22 +65,23 @@
         </tr>
         <tr>
             <td>
-                <table width="100%" cellpadding="0" cellspacing="0">
+                <table width="100%" cellpadding="0" cellspacing="0"
+                       class="pdf-default">
                     <tr>
                         <td>
                             <p style="line-height: 15px; margin: 20px; text-align: left;">{% block civility %}{% endblock %}</p>
-                            <p style="line-height: 15px; margin: 20px; text-align: left; margin-top: 15px; margin-bottom: 0;">
+                            <p style="line-height: 15px; margin: 20px; margin-top: 15px; margin-bottom: 0; text-align: justify">
                                 Nous vous remercions pour l’attention que vous avez bien voulu nous accorder et nous
                                 vous prions de trouver
                                 <nobr>ci-joint :</nobr>
                             </p>
                             <p style="line-height: 15px; margin: 20px; text-align: left; margin-top: 16px; margin-bottom: 0;">
                                 Notre proposition estimée pour la gestion de vos déchets.</p>
-                            <p style="line-height: 16px; margin: 20px; text-align: left; padding-right: 70px; margin-top: 16px; margin-bottom: 0;">
+                            <p style="line-height: 16px; margin: 20px; margin-top: 16px; margin-bottom: 0; text-align: justify;">
                                 Spécialisés dans le recyclage de tous types des déchets, bénéficiant d’une logistique de
                                 pointe, notre but est d’apporter à votre entreprise la solution la plus avantageuse tant
                                 en termes d’efficacité que de coût.</p>
-                            <p style="line-height: 15px; margin: 20px; text-align: left; padding-right: 70px; margin-top: 16px; margin-bottom: 0;">
+                            <p style="line-height: 15px; margin: 20px; margin-top: 16px; margin-bottom: 0; text-align: justify;">
                                 Nos prix de reprise évoluent conformément aux variations du marché international
                                 départ négociant, publiés mensuellement par la mercuriale « L’Usine Nouvelle » pour
                                 les papiers/cartons et les plastiques. Cette méthode vous assure une parfaite
@@ -90,7 +91,7 @@
                             <p style="line-height: 15px; margin: 20px; text-align: left; margin-top: 14px; margin-bottom: 0;">
                                 Nos offres de services sont en totale conformité avec la réglementation qui instaure
                                 :</p>
-                            <p style="line-height: 16px; margin: 20px; text-align: left; padding-left: 61px; padding-right: 63px; margin-top: 15px; margin-bottom: 0; text-indent: -24px;">
+                            <p style="line-height: 16px; margin: 20px; text-align: justify; padding-left: 61px; margin-top: 15px; margin-bottom: 0; text-indent: -24px;">
                                 -<span style="margin-left: 19px;line-height: 16px">De valoriser les déchets par Recyclage </span>
                                 <nobr>c’est-à-dire</nobr>
                                 l’emploi, recyclage ou toute autre action visant à obtenir, à partir des déchets, des
@@ -100,7 +101,7 @@
                                 du 13 juillet 1992 – Article
                                 <nobr>1er-1)</nobr>
                             </p>
-                            <p style="line-height: 16px; margin: 20px; text-align: left; padding-left: 61px; padding-right: 70px; margin-top: 14px; margin-bottom: 0; text-indent: -24px;">
+                            <p style="line-height: 16px; margin: 20px; text-align: justify; padding-left: 61px; margin-top: 14px; margin-bottom: 0; text-indent: -24px;">
                                 -<span style="margin-left: 19px;line-height: 16px">L’obligation de valoriser les déchets d’emballage (cartons, palettes, housses, métaux, etc…) en les cédant par contrat à un tiers agréé (décret </span>
                                 <nobr>n°94-609</nobr>
                                 du 13 juillet 1994 relatif aux déchets d’emballages industriels).

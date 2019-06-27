@@ -6,13 +6,33 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-
+    <link rel="stylesheet" href="{{ paprec_public_site_url }}/wp-content/themes/paprec/style.css?ver=1.0">
+    <link rel="stylesheet" href="{{ paprec_public_site_url }}/wp-content/themes/paprec/css/styles.css?te=fesg">
     <style type="text/css">
         html,
         body {
             margin: 0;
             padding: 0;
             text-rendering: optimizeLegibility;
+        }
+
+        .pdf-title {
+            font-size: 22px;
+            font-family: 'Knockout';
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .bg-blue {
+            background-color: #cbebfa;
+            width: fit-content;
+            padding: 0 2px;
+        }
+
+        .pdf-default {
+            color: #000000 !important;
+            font-size: 15px;
+            font-family: 'Century';
         }
     </style>
     {% block stylesheet %}{% endblock %}

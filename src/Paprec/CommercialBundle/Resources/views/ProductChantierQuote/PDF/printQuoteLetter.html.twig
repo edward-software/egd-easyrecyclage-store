@@ -2,6 +2,8 @@
 
 {% block businessName %} {{ productChantierQuote.businessName|upper }} {% endblock %}
 
+{% block address %} {{ productChantierQuote.address|upper }}{% endblock %}
+
 {% block location %} {{ productChantierQuote.postalCode }} {{ productChantierQuote.city|upper }} {% endblock %}
 
 {% block recipient %} {% if productChantierQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productChantierQuote.firstName }} {{ productChantierQuote.lastName|upper }} {% endblock %}
