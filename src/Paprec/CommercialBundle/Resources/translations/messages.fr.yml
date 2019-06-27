@@ -510,7 +510,7 @@ Commercial:
     Date-creation:              Date de création
     Date-crea:                  Date de créa.
     Date-update:                Date de mise à jour
-    BusinessName:               Nom de la société
+    BusinessName:               Raison sociale
     Civility:                   Civilité
     LastName:                   Nom
     FirstName:                  Prénom
@@ -545,7 +545,7 @@ Commercial:
     Date-crea:                  Date de créa.
     Date-update:                Date de mise à jour
     BusinessName:               Raison sociale
-    CollectivitePlaceholder:    Nom de collectivité / nom de syndicat
+    CollectivitePlaceholder:    Nom de la collectivité / syndicat
     Civility:                   Civilité
     LastName:                   Nom
     FirstName:                  Prénom

@@ -2,96 +2,147 @@
 
 {% block css_rules %}
     <style>
-        .btn {
-            border-radius: 3px;
-            padding: 5px 15px;
-        }
     </style>
 {% endblock %}
 
- {% block picto_header %}
+{# {% block picto_header %}
      <img alt="Logo" src="{{ absolute_url(asset('build/static/check.svg')) }}" width="60px" height="60px"
           border="0" class="picto-header">
- {% endblock %}
+ {% endblock %}#}
 
 {% block title_header %}
-    Merci pour votre commande
+    <tr>
+        <td style="padding: 60px 80px;" class="mobile-padding">
+            <table style="border-collapse:separate !important;" border="0" cellpadding="0"
+                   cellspacing="0" width="100%" align="center">
+                <tr>
+                    <td style="font-size: 2em;">Merci</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 1.2em;">pour votre commande</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 1.2em; padding-top: 25px;">
+                        Commande D3E - N° {{ productD3EOrder.id|formatId(6) }}
+                    </td>
+                </tr>
+            </table>
+    </tr>
 {% endblock %}
 
-{% block subtitle_header %}
+{#{% block subtitle_header %}
     Commande D3E - N° {{ productD3EOrder.id|formatId(6) }}
-{% endblock %}
+{% endblock %}#}
 
 {% block main_content %}
-<table id="mainContentTable" class="content-email-detail" border="0" cellpadding="8" cellspacing="0" width="60%"
-       style="text-align: center; color: {{ blue1 }}; font-weight: bold;">
-    <tr>
-        <td>
-            {% if productD3EOrder.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productD3EOrder.firstName }} {{ productD3EOrder.lastName }}
-            ,
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Nous vous remercions pour votre commande et de l'intérêt que vous nous
-            portez.
-        </td>
-    </tr>
+    <table id="mainContentTable" class="responsive-table" border="0" cellpadding="0" cellspacing="0" width="100%"
+           align="center"
+           style="max-width: 600px; color: {{ gray1 }};font-size: 1em;">
+        <tr>
+            <td style="padding-bottom: 10px; font-size: 1.2em;font-weight: bold;">
+                {% if productD3EOrder.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productD3EOrder.firstName }} {{ productD3EOrder.lastName }}
+                ,
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Nous vous remercions pour votre commande
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-bottom: 40px;">
+                et de l'intérêt que vous nous portez.
+            </td>
+        </tr>
 
-    <tr style="color: {{ green1 }}; border-top: 1px solid rgba(55, 65, 131, 0.6);">
-        <td>
-            Voici ci-joint le récapitulatif de la commande que vous avez réalisée le {{ productD3EOrder.dateCreation|localizeddate('full', 'none', app.request.locale) }}.
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Cordialement
-            <br>
-            L'équipe Paprec - EasyRecyclage
-            <br>
 
-            <a href="www.easyrecyclage.com">www.easyrecyclage.com</a>
-        </td>
-    </tr>
-    <tr>
-        <td style="padding-top: 25px;">
-            <a href="#">
-                <a href="{{ paprec_public_site_url}}/catalogue" target="_blank"><button class="btn btn-green" style="margin-right: 25px">Découvrez nos équipements</button></a>
+        <tr style="border-top: 1px solid {{ gray2 }};">
+            <td style="padding: 20px 0 10px;color: {{ green1 }}">
+                Voici ci-joint le récapitulatif de la commande que vous avez réalisée
+                le {{ productD3EOrder.dateCreation|localizeddate('full', 'none', app.request.locale) }}.
+            </td>
+        </tr>
 
-            </a>
-            <a href="#">
-                <a href="{{ paprec_public_site_url}}/store-locator" target="_blank"><button class="btn btn-blue">Trouvez une agence</button></a>
-
-            </a>
-        </td>
-    </tr>
-</table>
+        <tr>
+            <td>
+                Cordialement
+            </td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold;">
+                L'équipe Paprec - EasyRecyclage
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-bottom: 40px;">
+                <a href="www.easyrecyclage.com">www.easyrecyclage.com</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td>
+                            <a href="{{ paprec_public_site_url }}/catalogue" target="_blank">
+                                <button class="btn btn-green" style="margin: 0 10px 10px;">Découvrez nos équipements</button>
+                            </a>
+                            <a href="{{ paprec_public_site_url }}/store-locator" target="_blank">
+                                <button class="btn btn-blue" style="margin: 0 10px 10px;">Trouvez une agence</button>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 {% endblock %}
 
 {% block footer %}
-    <tr class="flex-footer">
-        <td>
-            <img alt="Logo" src="{{ absolute_url(asset('build/static/logo.png')) }}" width="100px"
-                 style="float:left;margin-bottom: 10px;"
-                 border="0">
-        </td>
-        <td class="footer-social-title">
-            Retrouvez-nous
-        </td>
-        <td class="flex-footer">
-            <a href="https://www.youtube.com/user/PaprecGroup" target="_blank"><img alt="Logo" src="{{ absolute_url(asset('build/static/YT.png')) }}" width="60px" height="60px"
-                 style="margin-right: 5px;" border="0"></a>
+    <table class="responsive-table" border="0" cellpadding="20" cellspacing="0" width="100%"
+           align="center"
+           style="max-width: 600px; color: {{ white }}; background-color: {{ blue1 }};font-size: 1em;">
+        <tr>
+            <td style="padding: 0;">
+                <a href="{{ paprec_public_site_url }}" target="_blank">
+                    <img alt="Logo Easyrecyclage" src="{{ absolute_url(
+                        asset('build/static/logo-paprec.png')) }}" width="140" height="50"
+                         border="0" style="vertical-align: middle;">
+                </a>
+            </td>
+            <td>
+                Retrouvez-nous
+            </td>
 
-            <a href="https://twitter.com/paprec_group" target="_blank"><img alt="Logo" src="{{ absolute_url(asset('build/static/TW.png')) }}" width="60px" height="60px"
-                 style="margin-right: 5px;" border="0"></a>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td align="left">
+                            <a href="#" target="_blank">
+                                <img alt="Linkedin" src="{{ absolute_url(asset('build/static/IN.png')) }}"
+                                     width="30px" height="30px" border="0" style="vertical-align: middle;">
+                            </a>
+                        </td>
+                        <td align="left" style="">
+                            <a href="#" target="_blank">
+                                <img alt="Twitter" src="{{ absolute_url(asset('build/static/TW.png')) }}" width="30px"
+                                     height="30px" border="0" style="vertical-align: middle;">
+                            </a>
+                        </td>
+                        <td align="left" style="">
+                            <a href="#" target="_blank">
+                                <img alt="YouTube" src="{{ absolute_url(asset('build/static/YT.png')) }}" width="30px"
+                                     height="30px" border="0" style="vertical-align: middle;">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
 
-            <a href="https://www.linkedin.com/company/paprec" target="_blank"><img alt="Logo" src="{{ absolute_url(asset('build/static/IN.png')) }}" width="60px" height="60px" border="0"></a>
-
-        </td>
-    </tr>
+        </tr>
+    </table>
 {% endblock %}
 
-{% block sub_footer %}
+{#{% block sub_footer %}
     <tr>
         <td>
             Cet email est un message automatique, veuillez ne pas y répondre.
@@ -102,5 +153,5 @@
             © 2018 Paprec Group
         </td>
     </tr>
-{% endblock %}
+{% endblock %}#}
 

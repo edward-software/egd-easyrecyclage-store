@@ -2,115 +2,117 @@
 
  {% block css_rules %}
      <style>
-         .btn {
-             border-radius: 3px;
-             padding: 5px 15px;
-         }
      </style>
  {% endblock %}
 
- {% block picto_header %}
+{# {% block picto_header %}
      <img alt="Logo" src="{{ absolute_url(asset('build/static/picto_devis.svg')) }}" width="60px" height="60px"
           border="0" class="picto-header">
- {% endblock %}
+ {% endblock %}#}
 
 {% block title_header %}
-    Merci pour votre demande de devis
+    <tr>
+        <td style="padding: 60px 80px;" class="mobile-padding">
+            <table style="border-collapse:separate !important;" border="0" cellpadding="0"
+                   cellspacing="0" width="100%" align="center">
+                <tr>
+                    <td style="font-size: 2em;">Merci</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 1.2em;">pour votre demande de devis</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 1.2em; padding-top: 25px;">
+                        <button class="btn btn-green">Devis au format PDF</button>
+                    </td>
+                </tr>
+            </table>
+    </tr>
 {% endblock %}
 
-{% block subtitle_header %}
+{#{% block subtitle_header %}
     <button class="btn btn-green">Devis au format PDF</button>
-{% endblock %}
+{% endblock %}#}
 
 {% block main_content %}
-    <table class="newRequestEmailTable content-email-detail" border="0" cellpadding="0" cellspacing="0" width="100%"
-           style="text-align: right">
-        <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.6); text-align: center">
-            <td style="padding-bottom: 10px">
-                Détail du devis N° {{ productDIQuote.id|formatId(6) }} - {{ productDIQuote.dateCreation|date('d/m/Y H:i') }}
+    <table class="newRequestEmailTable responsive-table" border="0" cellpadding="0" cellspacing="0" width="100%"
+           align="center"
+           style="max-width: 600px; color: {{ gray1 }};font-size: 1em;">
+        <tr style="border-bottom: 1px solid {{ gray2 }};">
+            <td style="margin-bottom: 10px; font-size: 1.2em;font-weight: bold;display: block;">
+                Détail du devis N° {{ productDIQuote.id|formatId(6) }}
+                - {{ productDIQuote.dateCreation|date('d/m/Y H:i') }}
             </td>
         </tr>
         <tr>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>
-                <div class="label">
-                    {{ 'Commercial.ProductDIQuote.BusinessName'|trans }} : &nbsp;
-                </div>
-                <div class="value">
-                    {{ productDIQuote.businessName }}
-                </div>
+            <td class="label">
+                {{ 'Commercial.ProductDIQuote.BusinessName'|trans }} : &nbsp;
+            </td>
+            <td class="value">
+                {{ productDIQuote.businessName }}
             </td>
         </tr>
         <tr>
-            <td>
-                <div class="label">
-                    Contact : &nbsp;
-                </div>
-                <div class="value">
-                    {% if productDIQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productDIQuote.lastName }} {{ productDIQuote.firstName }}
-                </div>
+            <td class="label">
+                Contact : &nbsp;
+            </td>
+            <td class="value">
+                {% if productDIQuote.civility == 'M' %}Monsieur{% else %}Madame{% endif %} {{ productDIQuote.lastName }} {{ productDIQuote.firstName }}
             </td>
         </tr>
         <tr>
-            <td>
-                <div class="label">
-                    {{ 'Commercial.ProductDIQuote.Function'|trans }} :&nbsp;
-                </div>
-                <div class="value">
-                    {{ productDIQuote.function }}
-                </div>
+            <td class="label">
+                {{ 'Commercial.ProductDIQuote.Function'|trans }} :&nbsp;
+            </td>
+            <td class="value">
+                {{ productDIQuote.function }}
             </td>
         </tr>
         <tr>
-            <td>
-                <div class="label">
-                    {{ 'Commercial.ProductDIQuote.Address'|trans }} :&nbsp;
-                </div>
-                <div class="value">
-                    {{ productDIQuote.address }}
-                    <br>
-                    {{ productDIQuote.postalCode }} {{ productDIQuote.city }}
-                </div>
+            <td class="label">
+                {{ 'Commercial.ProductDIQuote.Address'|trans }} :&nbsp;
+            </td>
+            <td class="value">
+                {{ productDIQuote.address }}
             </td>
         </tr>
         <tr>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="label">
-                    {{ 'Commercial.ProductDIQuote.Email'|trans }} :&nbsp;
-                </div>
-                <div class="value">
-                    {{ productDIQuote.email }}
-                </div>
+            <td class="label">
+                {{ 'Commercial.ProductDIQuote.PostalCode'|trans }} :&nbsp;
+            </td>
+            <td class="value">
+                {{ productDIQuote.postalCode }} {{ productDIQuote.city }}
             </td>
         </tr>
         <tr>
-            <td>
-                <div class="label">
-                    {{ 'Commercial.ProductDIQuote.Phone'|trans }} :&nbsp;
-                </div>
-                <div class="value">
-                    {{ productDIQuote.phone }}
-                </div>
+            <td class="label">
+                {{ 'Commercial.ProductDIQuote.Email'|trans }} :&nbsp;
+            </td>
+            <td class="value">
+                {{ productDIQuote.email }}
             </td>
         </tr>
         <tr>
-            <td>&nbsp;</td>
+            <td class="label">
+                {{ 'Commercial.ProductDIQuote.Phone'|trans }} :&nbsp;
+            </td>
+            <td class="value">
+                {{ productDIQuote.phone }}
+            </td>
+        </tr>
+        <tr>
+            <td style="margin: 40px 0 30px; font-weight: bold;font-size: 1.2em;">Composition du devis :</td>
         </tr>
     </table>
 
-    <table class="content-email-detail" border="0" cellpadding="0" cellspacing="0" width="80%"
-           style="margin-top: 20px;">
-        <tr>
-            <td colspan="3" style="text-align: center; padding-bottom: 5px;">
-                Composition du devis :
-            </td>
-        </tr>
-        <tr>
+    <table class="responsive-table" border="0" cellpadding="0" cellspacing="0" width="100%"
+           align="center"
+           style="max-width: 600px; color: {{ gray1 }};font-size: 1em;">
+
+        <tr style="background-color: {{ gray1 }};">
             <td class="greyrecap" colspan="3">
                 <div class="title">
                     {{ 'Public.Cart.ForfaitRecyclage'|trans }}
@@ -120,58 +122,101 @@
                 </div>
             </td>
         </tr>
+
         <tr>
             <td>&nbsp;</td>
         </tr>
-        {% for productDIQuoteLine in productDIQuote.productDIQuoteLines %}
-            <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.6);">
-                <td class="picto" style="text-align:center;">
-                    {% if productDIQuoteLine.productDI.pictures|length > 0 %}
-                        <img src="{% if productDIQuoteLine.productDI.pilotPictures|length > 0 %}{{ absolute_url(asset('/uploads/pictos/' ~ productDIQuoteLine.productDI.pilotPictures[0].path)) }}{% endif %}"
-                             alt="#" style="height: 75px">
-                    {% endif %}
-                </td>
-                <td class="product" style="padding-left: 15%">
-                    {{ productDIQuoteLine.quantity }} x {{ productDIQuoteLine.productName }}<br>
-                    de {{ productDIQuoteLine.categoryName }}
-                </td>
-                <td class="price" style="display: inline-flex; float: right; margin-right: 10px; line-height: 75px;">
-                    à partir de
-                    <div class="value bigger-value">
-                        &nbsp; {{ productDIQuoteLine.totalAmount|formatAmount('EUR', app.request.locale) }}</div>
-                </td>
-            </tr>
-        {% endfor %}
+
+        <tr style="margin-top: 15px;">
+            <td colspan="3">
+                <table class="" border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
+                       style="max-width: 600px;">
+
+                    <tr>
+                        <td>
+                            {% for productDIQuoteLine in productDIQuote.productDIQuoteLines %}
+                                <table class="footer-demand" border="0" cellpadding="20" cellspacing="0" width="100%"
+                                       align="center"
+                                       style="max-width: 600px; margin-bottom: 15px !important;">
+                                    <tr>
+                                        <td style="text-align:center;">
+                                            {% if productDIQuoteLine.productDI.pictures|length > 0 %}
+                                                <img src="{% if productDIQuoteLine.productDI.pilotPictures|length > 0 %}{{ absolute_url(asset('/uploads/pictos/' ~ productDIQuoteLine.productDI.pilotPictures[0].path)) }}{% endif %}"
+                                                     alt="Image produit" width="100" border="0" style="vertical-align: middle;">
+                                            {% endif %}
+                                        </td>
+                                        <td style="padding: 0;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
+                                                <tr>
+                                                    <td style="font-family: DIN Condensed, Arial, sans-serif;font-size: 30px;text-align: left;">
+                                                        {{ productDIQuoteLine.quantity }} x {{ productDIQuoteLine.productName }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: normal;text-align: left;">
+                                                        de {{ productDIQuoteLine.categoryName }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
+                                                <tr>
+                                                    <td align="center" style="color:{{green1}};font-weight: normal;padding-bottom: 20px;">
+                                                        PRESTATION PONCTUELLE
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: normal;display: inline-flex;">
+                                                        À partir de &nbsp;
+                                                    </td>
+                                                    <td class="value bigger-value" style="display: inline-flex;font-size: 1.3em;">
+                                                        {{ productDIQuoteLine.totalAmount|formatAmount('EUR', app.request.locale) }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            {% endfor %}
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+
         <tr>
             <td>&nbsp;</td>
         </tr>
-        <tr>
-            <td></td>
-            <td style="padding-left: 15%">
-                <div class="value bigger-value" style="font-size: 1.3em;line-height: 75px;">TOTAL</div>
+
+        <tr style="border-top: 1px solid {{ gray2 }};">
+            <td class="value bigger-value" style="font-weight: normal;padding: 20px 0;">
+                Total
             </td>
-            <td style="display: inline-flex; float: right; margin-right: 10px; line-height: 75px">
-                à partir de
-                <div class="value bigger-value">&nbsp; {{ productDIQuote.totalAmount|formatAmount('EUR', app.request.locale) }}</div>
+            <td style="text-align: right; padding-right: 50px;">
+                À partir de
+                <span class="value bigger-value">
+                    &nbsp; {{ productDIQuote.totalAmount|formatAmount('EUR', app.request.locale) }}</span>
             </td>
         </tr>
+
     </table>
+
 {% endblock %}
 
 {% block footer %}
-    <tr>
-        <td class="footer-repondre-title" style="padding-top: 15px;">
-            L'agence en charge de votre demande vous recontactera sous 48h
+<table class="responsive-table" border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
+       style="max-width: 92%;">
+    <tr style="padding: 5px">
+        <td style="border: 1px solid {{ green1 }}; border-left: 5px solid {{ green1 }};font-size: 1.2em; color: {{ green1 }};font-family: DIN Condensed, Arial, sans-serif;padding: 5px;">
+            L’agence en charge de votre demande vous recontactera sous 48h par e-mail ou téléphone afin de valider un devis.
         </td>
     </tr>
-    <tr>
-        <td class="footer-repondre-title" style="padding-bottom: 15px;">
-            par e-mail ou téléphone afin de valider un devis.
-        </td>
-    </tr>
-{% endblock %}
 
-{% block sub_footer %}
+</table>
+{% endblock %}
+{#{% block sub_footer %}
     <tr>
         <td>
             Cet email est un message automatique, veuillez ne pas y répondre.
@@ -182,5 +227,5 @@
             © 2018 Paprec Group
         </td>
     </tr>
-{% endblock %}
+{% endblock %}#}
 
