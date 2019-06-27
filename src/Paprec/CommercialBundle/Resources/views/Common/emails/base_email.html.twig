@@ -6,13 +6,19 @@
     {% set blue1 = "#333D80" %}
     {% set blue2 = "#4B8BC9" %}
     {% set white= "#ffffff" %}
-    {% set green1 = "#189B55" %}
+    {% set green1 = "#94C220" %}
+    {% set gray1 = "#5A5A5A" %}
+    {% set gray2 = "#E6E6E6;" %}
+    {% set gray3 = "#FAFAFA" %}
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
     <style type="text/css">
         @import url("https://use.typekit.net/tvr6mby.css");
+        @import url(http://fonts.googleapis.com/css?family=Oxygen:400,700);
+
 
         /* CLIENT-SPECIFIC STYLES */
         body, table, td, a {
@@ -47,7 +53,8 @@
         }
 
         body {
-            font-family: "open-sans", Arial, sans-serif;
+            /*font-family: "Ingra", Arial, sans-serif !important;*/
+            font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;
             height: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
@@ -60,14 +67,15 @@
         }
 
         .btn {
-            font-weight: bold;
-            padding: 0 10px;
-            line-height: 35px;
+            font-family: DIN Condensed, Arial, sans-serif;
+            padding: 12px 15px 6px;
+            letter-spacing: 0.91px;
             color: #FFFFFF;
-            font-size: 15px;
+            font-size: 20px;
             display: inline-block;
             border: none;
             cursor: pointer;
+            text-transform: uppercase;
         }
 
         .btn-green {
@@ -75,11 +83,14 @@
         }
 
         .btn-blue {
-            background-color: {{ blue1 }};
+            color: {{ blue1 }};
+            border: 1px solid {{ blue1 }};
+            background: transparent;
         }
 
         .value {
-            color: {{ green1 }};
+            color: {{ gray1 }};
+            font-weight: bold;
         }
 
         .bigger-value {
@@ -96,6 +107,7 @@
             color: #fff;
             margin: 30px 0 12px;
             position: relative;
+            text-align: left;
         }
 
         .greyrecap .title {
@@ -113,134 +125,203 @@
             line-height: 13px;
         }
 
-        .content-email {
-            width: 500px;
-            margin: auto;
+        .new-demand {
+            border: 1px solid #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
         }
 
-        .content-email-detail {
-            width: 400px;
-            margin: auto;
-        }
-
-        .picto-header {
+        .bullet {
+            width: 27px;
+            height: 27px;
+            background-color: #FF0000;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
             position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: -13px;
+            right: -13px;
+            font-size: 1.2em;
         }
 
-        .flex-footer {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            padding: 5px;
+        .footer-demand {
+            border: 1px solid{{ gray2 }};
+            background-color: {{ gray3 }};
+            margin-bottom: 60px;
+            color: {{ gray1 }};
+            font-size: 0.9em;
+            font-weight: bold;
         }
 
-        .footer-repondre-title {
-            font-family: DIN Condensed, Arial, sans-serif;
-            font-size: 1.3em;
-        }
-
-        .footer-social-title {
-            font-family: DIN Condensed, Arial, sans-serif;
-            font-size: 1.5em;
-        }
-
-        @media screen and (max-width: 525px) {
+        @media screen and (max-width: 480px) {
 
             /* ALLOWS FOR FLUID TABLES */
-            .content-email {
+            .wrapper {
                 width: 100% !important;
                 max-width: 100% !important;
             }
-            .content-email-detail {
-                width: 95% !important;
-                max-width: 95% !important;
+
+            /* FULL-WIDTH TABLES */
+            .responsive-table {
+                width: 100% !important;
+            }
+
+            /* UTILITY CLASSES FOR ADJUSTING PADDING & MARGIN ON MOBILE */
+            .mobile-padding {
+                padding: 20px !important;
+            }
+            .no-margin {
+                margin: 0 !important;
             }
         }
-
     </style>
+    <!--[if mso]>
+    <style type="text/css">
+        body, table, td, p, li, a {font-family: Arial, Helvetica, sans-serif !important;}
+    </style>
+    <![endif]-->
+
+
     {% block css_rules %} {% endblock %}
 
 </head>
 <body style="margin: 0 !important; padding: 0 !important;">
 
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: {{ gray3 }};">
 
-    <!-- Header Logo + "Recycler devient facile" -->
-    <tr style="color: {{ white }}; height: 50px;">
-        <td style="display: block;">
-            <table class="content-email" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: {{ blue1 }}; text-align: center;">
-            <tr>
-                <td style="padding: 15px;display: flex; justify-content: space-between; align-items: center;">
-                    <a href="{{ paprec_public_site_url }}" target="_blank">
-                        <img alt="Logo" src="{{ absolute_url(asset('build/static/logo.png')) }}" width="100px"
-                             style="float:left;margin-bottom: 10px;"
-                             border="0">
-                    </a>
-                    <div style="font-size: 1em; float:right;">
-                        RECYCLER DEVIENT FACILE
-                    </div>
-                </td>
+    <!-- Header Logo -->
+    <tr>
+        <td bgcolor="{{ blue1 }}" style="display: block;">
 
-            </tr>
-
+            <!--[if (gte mso 9)|(IE)]>
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+                <tr>
+                    <td align="center" valign="top" width="600">
+            <![endif]-->
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" class="wrapper"
+                   align="center"
+                   style="background-color: {{ blue1 }}; text-align: center;">
+                <tr>
+                    <td width="100%" align="left" style="padding: 5px 0;">
+                        <a href="{{ paprec_public_site_url }}" target="_blank">
+                            <img alt="Logo Easyrecyclage" src="{{ absolute_url(
+                                asset('build/static/logo-paprec.png')) }}" width="140" height="50"
+                                 border="0" style="vertical-align: middle;">
+                        </a>
+                    </td>
+                </tr>
             </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
         </td>
     </tr>
+
 
     <!-- Sub Header Merci pour votre demande  -->
-    <tr>
-        <td colspan="2">
-            <table class="content-email"  border="0" cellpadding="0" cellspacing="0" width="100%" style="text-align: center; background-color: {{ blue2 }}; color: {{ white }};">
-                <tr>
-                    <td style="padding-top:15px; position: relative; height: 75px;">
-                        {% block picto_header %}{% endblock %}
-                    </td>
-                </tr>
-                <tr>
-                    <td style="font-size: 2em;font-family:DIN Condensed, Arial, sans-serif;">
-                        {% block title_header %}{% endblock %}
-                    </td>
-                </tr>
-                <tr>
-                    <td style="font-size: 1.2em;">
-                        {% block subtitle_header %}{% endblock %}
-                    </td>
-                </tr>
-                <tr>
-                    <td style="height: 15px"></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
+
     <!-- CONTENT -->
     <tr>
-        <td colspan="2" style="padding: 15px 0;">
-            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <td align="center">
+            <table border="0" cellpadding="0" cellspacing="0" bgcolor="{{ white }}" align="center" width="100%"
+                   style="max-width: 650px;" class="responsive-table">
+
+                <!-- Sub Header Merci pour votre demande  -->
                 <tr>
-                    <td style="padding: 15px 15px 30px 15px;">
+                    <td>
+                        <table class="responsive-table no-margin" border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
+                               style="max-width: 600px; height: 250px; margin-top: 50px; margin-bottom: 20px; text-align: center; font-family:CircularStd-Book, Arial, sans-serif; background: radial-gradient(circle, #55B7FB 0%, #2E95DD 100%); background-color:#2E95DD ;color: {{ white }};">
+
+                            {% block title_header %}{% endblock %}
+
+                        </table>
+                    </td>
+                </tr>
+                <!-- Main content  -->
+                <tr>
+                    <td style="padding: 15px 15px 30px 15px; text-align: center" align="center">
                         {% block main_content %}{% endblock %}
                     </td>
                 </tr>
                 <!-- FOOTER  -->
-                <tr style="color: {{ white }};">
+                <tr>
                     <td style="text-align: center;">
-                        <table class="content-email" border="0" cellpadding="0" cellspacing="0" width="100%"
-                               style="background-color: {{ blue1 }};">
-                            {% block footer %} {% endblock %}
-                        </table>
+                        {% block footer %} {% endblock %}
                     </td>
                 </tr>
                 <!-- Mentions + message automatique -->
-                <tr>
+                {#<tr>
                     <td style="text-align: center;padding-top: 15px;">
-                        <table class="content-email"  border="0" cellpadding="0" cellspacing="0" width="100%"
+                        <table class="content-email" border="0" cellpadding="0" cellspacing="0" width="100%"
                                style="font-size: 0.8em; color: {{ blue1 }}; margin-top: 10px;">
                             {% block sub_footer %}{% endblock %}
                         </table>
+                    </td>
+                </tr>#}
+            </table>
+        </td>
+    </tr>
+
+    <!-- Copyright - message automatique -->
+    <tr>
+        <td style="padding: 15px;">
+            <table class="responsive-table" border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
+                   style="max-width: 600px; margin-top: 30px; margin-bottom: 45px; text-align: center; color: #8C8C8C; font-size: 0.8em;">
+
+                <tr style="width: 70%; display: block;border-bottom: 1px solid {{ gray2 }};padding-bottom: 20px;margin-bottom: 20px;margin-left: auto; margin-right: auto;"
+                    align="center">
+                    <td style="padding-left: 10px; padding-right: 10px;">
+                        <a href="#" target="_blank">
+                            <img alt="Linkedin" src="{{ absolute_url(asset('build/static/IN.png')) }}"
+                                 width="30px" height="30px" border="0">
+                        </a>
+                    </td>
+                    <td style="padding-left: 10px; padding-right: 10px;">
+                        <a href="#" target="_blank">
+                            <img alt="Twitter" src="{{ absolute_url(asset('build/static/TW.png')) }}" width="30px"
+                                 height="30px"
+                                 border="0">
+                        </a>
+                    </td>
+                    <td style="padding-left: 10px; padding-right: 10px;">
+                        <a href="#" target="_blank">
+                            <img alt="YouTube" src="{{ absolute_url(asset('build/static/YT.png')) }}" width="30px"
+                                 height="30px"
+                                 border="0">
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Copyright © Paprec Group, Tous droits réservés.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold; padding: 10px 0 20px 0;">Ceci est un mail automatique, merci de ne pas
+                        répondre.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Vous souhaitez changer la manière de recevoir ces e-mails ?</td>
+                </tr>
+                <tr>
+                    <td>Vous pouvez <a href="#" style="text-decoration: underline">changez vos préférences </a>ou <a
+                                href="#" style="text-decoration: underline">vous désabonnez.</a></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">
+                        <a href="{{ paprec_public_site_url }}" target="_blank">
+                            <img alt="Logo Paprec" src="{{ absolute_url(asset('build/static/logo-group.png')) }}"
+                                 width="50px" height="50px"
+                                 style="margin-top: 20px;" border="0">
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;padding-top: 15px;">
                     </td>
                 </tr>
             </table>

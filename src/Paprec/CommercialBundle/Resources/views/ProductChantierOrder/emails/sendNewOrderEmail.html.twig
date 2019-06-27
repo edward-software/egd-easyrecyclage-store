@@ -1,25 +1,46 @@
 {% extends "@PaprecCommercial/Common/emails/base_email.html.twig" %}
 
- {% block picto_header %}
+{# {% block picto_header %}
      <img alt="Logo" src="{{ absolute_url(asset('build/static/check.svg')) }}" width="60px" height="60px"
           border="0" class="picto-header">
- {% endblock %}
+ {% endblock %}#}
 
 {% block title_header %}
-    Nouvelle commande pour déchets de chantier
+    <tr>
+        <td style="padding: 60px 80px;" class="mobile-padding">
+            <table class="new-demand" style="border-collapse:separate !important;" border="0" cellpadding="0"
+                   cellspacing="0" width="100%" align="center">
+                <tr>
+                    <td>
+                        <div class="bullet">1</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size: 1.2em;">Vous avez une</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 2em;">nouvelle commande</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 1.2em; padding-top: 25px;">
+                        Commande Chantier - N° {{ productChantierOrder.id|formatId(6) }}
+                    </td>
+                </tr>
+            </table>
+    </tr>
 {% endblock %}
 
-{% block subtitle_header %}
+{#{% block subtitle_header %}
     Commande Chantier - N° {{ productChantierOrder.id|formatId(6) }}
-{% endblock %}
+{% endblock %}#}
 
 {% block main_content %}
-    <table class="newRequestEmailTable content-email-detail" border="0" cellpadding="0" cellspacing="0" width="100%"
-           style="text-align: right">
-        <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.6); text-align: center;">
-            <td style="padding-bottom: 10px">
-                Détail de la commande N° {{ productChantierOrder.id|formatId(6) }}
-            - {{ productChantierOrder.dateCreation|date('d/m/Y H:i:s') }}
+    <table class="newRequestEmailTable responsive-table" border="0" cellpadding="0" cellspacing="0" width="100%"
+           align="center"
+           style="max-width: 600px; color: {{ gray1 }};font-size: 1em;">
+        <tr style="border-bottom: 1px solid {{ gray2 }};">
+            <td style="margin-bottom: 10px; font-size: 1.2em;font-weight: bold;display: block;">
+                Détail de la commande N° {{ productChantierOrder.id|formatId(6) }} - {{ productChantierOrder.dateCreation|date('d/m/Y H:i:s') }}
             </td>
         </tr>
         <tr>
@@ -94,9 +115,11 @@
 
 {% block footer %}
     <tr>
-        <td class="footer-repondre-title" style="padding: 15px;">
+        <td style="padding-bottom: 25px;" align="center">
             <a href="{{ absolute_url(path("paprec_commercial_productChantierOrder_view", {id: productChantierOrder.id})) }}">
-                Consulter la commande
+                <button class="btn btn-green" style="margin-top: 15px;">
+                    Consulter la commande
+                </button>
             </a>
         </td>
     </tr>
