@@ -331,8 +331,6 @@ class ProductDIQuoteManager
             $today = new \DateTime();
 
             $snappy = new Pdf($this->container->getParameter('wkhtmltopdf_path'));
-            $snappy->setOption('margin-left', 3);
-            $snappy->setOption('margin-right', 3);
             $snappy->setOption('javascript-delay', 3000);
             $snappy->setOption('dpi', 100);
 
