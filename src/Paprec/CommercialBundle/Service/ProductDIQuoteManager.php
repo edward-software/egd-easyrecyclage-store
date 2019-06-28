@@ -333,6 +333,7 @@ class ProductDIQuoteManager
             $snappy = new Pdf($this->container->getParameter('wkhtmltopdf_path'));
             $snappy->setOption('margin-left', 3);
             $snappy->setOption('margin-right', 3);
+            $snappy->setOption('page-size', 'A4');
 
             /**
              * On génère les PDF
