@@ -32,9 +32,11 @@
     <div class="wrapper">
         <div class="header__menu">
 
-            <a class="header__cta" href="javascript:void(0);"
-               data-url="{{ path('paprec_public_common_loadPopupRecycle') }}">Recyclez<br>vos déchets</a>
             <ul class="menu" id="menu-main-menu">
+                <li class="current-menu-ancestor">
+                    <a class="" href="javascript:void(0);"
+                       data-url="{{ path('paprec_public_common_loadPopupRecycle') }}">Recyclez vos déchets</a>
+                </li>
                 {{ render(controller('PaprecPublicBundle:Common:getMenuFromWP', {'slug': 'header-menu'})) }}
             </ul>
         </div>
