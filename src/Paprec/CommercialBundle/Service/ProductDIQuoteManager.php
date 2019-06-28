@@ -334,7 +334,7 @@ class ProductDIQuoteManager
             $snappy->setOption('margin-left', 3);
             $snappy->setOption('margin-right', 3);
             $snappy->setOption('javascript-delay', 3000);
-            $snappy->setOption('page-size', 'A4');
+            $snappy->setOption('dpi', 100);
 
 
             /**
