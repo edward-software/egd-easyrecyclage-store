@@ -334,6 +334,9 @@ class ProductDIQuoteManager
             $snappy->setOption('margin-left', 3);
             $snappy->setOption('margin-right', 3);
             $snappy->setOption('javascript-delay', 3000);
+            $snappy->setOption('dpi', 72);
+            $snappy->setOption('page-width', 550);
+
 
             /**
              * On génère les PDF
