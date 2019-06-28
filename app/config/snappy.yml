@@ -2,4 +2,6 @@ knp_snappy:
   pdf:
     enabled:    true
     binary: "%wkhtmltopdf_path%"
-    options:    []
+    options:
+      page-size: A4
+      dpi: 72
