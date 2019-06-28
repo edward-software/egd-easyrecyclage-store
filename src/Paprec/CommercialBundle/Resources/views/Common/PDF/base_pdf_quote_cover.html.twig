@@ -10,17 +10,21 @@
             padding: 80px 0;
             width: 596px; /*format A4*/
             height: 842px; /*format A4*/
-            color: #a5a5a;
         }
 
         .pdf-cover-title h1 {
             color: #000000;
-            font-size: 44px;
+            font-size: 48px;
+            letter-spacing: 4px;
+            font-weight: 300;
         }
 
         .pdf-cover-title h2 {
             color: #cbebfa;
-            font-size: 40px;
+            font-size: 44px;
+            letter-spacing: 4px;
+            font-weight: 300;
+
         }
 
         .pdf-cover-image {
@@ -47,7 +51,10 @@
         }
 
         .pdf-cover-image-infos {
-            padding: 10px 0 0 280px;
+            font-family: 'Knockout';
+            color: rgba(0,0,0,0.82);
+            letter-spacing: 0.5px;
+            padding: 10px 0 0 290px;
             font-weight: bold;
             width: 596px;
         }
@@ -77,10 +84,10 @@
                 <img src="{{ absolute_url(asset('build/static/pdf_cover.jpg')) }}" alt="Illustration Paprec Group">
             </div>
             <div class="pdf-cover-image-infos">
-                <p style="margin-bottom: 20px;font-size: 20px;">{% block businessName %} {% endblock %}</p>
-                <p style="text-transform: uppercase;">Estimation tarifaire de la prestation demandée</p>
-                <p>Affaire suivie par votre agence locale</p>
-                <p style="font-weight: normal;">
+                <p style="margin-bottom: 20px;font-size: 28px;">{% block businessName %} {% endblock %}</p>
+                <p style="text-transform: uppercase; font-size: 22px; font-weight: 300">Estimation tarifaire de la prestation demandée</p>
+                <p style="font-size: 20px; letter-spacing: 1.5px">Affaire suivie par votre agence locale</p>
+                <p style="font-weight: normal; letter-spacing: 1.5px">
                     L’agence en charge de votre demande vous<br>
                     recontactera sous 48h par email ou telephone<br>
                     afin de valider
