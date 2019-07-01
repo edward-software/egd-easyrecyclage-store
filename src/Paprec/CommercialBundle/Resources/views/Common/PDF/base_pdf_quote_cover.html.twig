@@ -8,20 +8,25 @@
             overflow: hidden;
             margin: 0 auto;
             padding: 80px 0;
-            width: 596px; /*format A4*/
-            height: 842px; /*format A4*/
+            width: 810px;
+            height: 1250px;
+        }
+
+        .pdf-cover-title {
+            margin-top: 75px;
+            margin-bottom: 75px;
         }
 
         .pdf-cover-title h1 {
             color: #000000;
-            font-size: 48px;
+            font-size: 56px;
             letter-spacing: 4px;
             font-weight: 300;
         }
 
         .pdf-cover-title h2 {
             color: #cbebfa;
-            font-size: 44px;
+            font-size: 52px;
             letter-spacing: 4px;
             font-weight: 300;
 
@@ -34,8 +39,8 @@
         }
 
         .blue-bg {
-            width: 200px;
-            height: 370px;
+            width: 277px;
+            height: 511px;
             background-color: #cbebfa;
             position: absolute;
             top: 0;
@@ -45,24 +50,23 @@
 
         .pdf-cover-image img {
             margin-top: 30px;
-            width: 480px;
-            height: 250px;
+            width: 664px;
+            height: 346px;
             object-fit: cover;
         }
 
         .pdf-cover-image-infos {
             font-family: 'Knockout';
             color: rgba(0,0,0,0.82);
-            letter-spacing: 0.5px;
-            padding: 10px 0 0 290px;
+            letter-spacing: 2px;
+            padding: 10px 0 0 360px;
             font-weight: bold;
-            width: 596px;
+            width: 780px;
         }
 
         .pdf-cover-footer {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 50px;
+            padding: 20px 0 0 570px;
+            margin-top: 200px;
         }
         .pdf-cover-footer img {
             height: 80px;
@@ -84,10 +88,10 @@
                 <img src="{{ absolute_url(asset('build/static/pdf_cover.jpg')) }}" alt="Illustration Paprec Group">
             </div>
             <div class="pdf-cover-image-infos">
-                <p style="margin-bottom: 20px;font-size: 28px;">{% block businessName %} {% endblock %}</p>
-                <p style="text-transform: uppercase; font-size: 22px; font-weight: 300">Estimation tarifaire de la prestation demandée</p>
-                <p style="font-size: 20px; letter-spacing: 1.5px">Affaire suivie par votre agence locale</p>
-                <p style="font-weight: normal; letter-spacing: 1.5px">
+                <p style="margin-bottom: 20px;font-size: 32px;">{% block businessName %} {% endblock %}</p>
+                <p style="text-transform: uppercase; font-size: 26px; font-weight: 300">Estimation tarifaire de la prestation demandée</p>
+                <p style="font-size: 22px; letter-spacing: 2px">Affaire suivie par votre agence locale</p>
+                <p style="font-weight: normal; letter-spacing: 2px">
                     L’agence en charge de votre demande vous<br>
                     recontactera sous 48h par email ou telephone<br>
                     afin de valider
