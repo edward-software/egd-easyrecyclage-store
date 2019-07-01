@@ -59,7 +59,7 @@
 {% block products %}
 
     {% for productDIQuoteLine in productDIQuote.productDIQuoteLines %}
-        <div class="product-table-item">
+        <div class="product-table-item" style="page-break-inside: avoid;">
             <div class="product-table-item-img">
                 <img src="{% if productDIQuoteLine.productDI.pilotPictures|length > 0 %}{{ absolute_url('/uploads/pictos/' ~ productDIQuoteLine.productDI.pilotPictures[0].path) }}{% endif %}"
                      alt="#">

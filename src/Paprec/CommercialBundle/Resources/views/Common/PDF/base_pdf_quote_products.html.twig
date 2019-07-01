@@ -8,7 +8,6 @@
             margin: 0 auto;
             padding: 20px 0;
             width: 810px;
-            height: 1250px;
         }
 
         h1 {
@@ -23,7 +22,7 @@
             padding-bottom: 15px;
         }
 
-        .product-adress {
+        .product-address {
             padding-top: 50px;
             margin-bottom: 90px;
         }
@@ -39,6 +38,11 @@
 {% block pdf_content %}
 
     <div class="products pdf-default">
+        <div class="product-note">
+            <p style="font-size: 10px;">* Toutes nos tarifications de matériels sont valables sur la base d’un engagement contractuel à déterminer,
+                sous réserve de la validation d’implantation et de disponibilités à confirmer par Paprec Techniques.
+            </p>
+        </div>
 
         <div class="product-title">
             <h1 style="font-family:'Knockout';">
@@ -46,12 +50,12 @@
             </h1>
         </div>
 
-        <div class="product-adress">
+        <div class="product-address">
             <p style="margin-bottom: 20px;">
                 Vous trouverez ci-dessous la composition de votre estimation tarifaire.
             </p>
             <div style="height: 5px">&nbsp;</div>
-            <h3 class="bg-blue" >L’adresse de la demande de prestation</h3>
+            <h3 class="bg-blue" >L’addresse de la demande de prestation</h3>
             <div style="height: 20px">&nbsp;</div>
             <p style="font-size: 16px;text-transform: uppercase;">{% block address %}{% endblock %}</p>
             <p style="margin-top: 20px;">Un forfait Recyclage comprenant la collecte, le traitement en centre de tri et la mise à
@@ -63,12 +67,6 @@
                 Détail de la prestation demandée* :
             </h3>
             {% block products %}{% endblock %}
-        </div>
-
-        <div class="product-note">
-            <p style="font-size: 10px;">* Toutes nos tarifications de matériels sont valables sur la base d’un engagement contractuel à déterminer,
-                sous réserve de la validation d’implantation et de disponibilités à confirmer par Paprec Techniques.
-            </p>
         </div>
 
 {% endblock %}
