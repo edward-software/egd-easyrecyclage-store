@@ -27,6 +27,7 @@
             margin-bottom: 90px;
         }
         .product-note {
+            margin-top: 50px;
             font-size: 10px;
             position: absolute;
             bottom: 0;
@@ -38,11 +39,6 @@
 {% block pdf_content %}
 
     <div class="products pdf-default">
-        <div class="product-note">
-            <p style="font-size: 10px;">* Toutes nos tarifications de matériels sont valables sur la base d’un engagement contractuel à déterminer,
-                sous réserve de la validation d’implantation et de disponibilités à confirmer par Paprec Techniques.
-            </p>
-        </div>
 
         <div class="product-title">
             <h1 style="font-family:'Knockout';">
@@ -67,6 +63,12 @@
                 Détail de la prestation demandée* :
             </h3>
             {% block products %}{% endblock %}
+        </div>
+
+        <div class="product-note">
+            <p style="font-size: 10px;">* Toutes nos tarifications de matériels sont valables sur la base d’un engagement contractuel à déterminer,
+                sous réserve de la validation d’implantation et de disponibilités à confirmer par Paprec Techniques.
+            </p>
         </div>
 
 {% endblock %}

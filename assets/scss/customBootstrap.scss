@@ -120,3 +120,11 @@ a:hover{
 .checkboxPicto.active {
     background-color: rgba(0, 0, 0, 0.03);
 }
+
+.dataTables_processing {
+    background-color: #FFFFFF;
+    border: 1px solid #4A90E2;
+    z-index: 3;
+    top: 70% !important;
+}
+
