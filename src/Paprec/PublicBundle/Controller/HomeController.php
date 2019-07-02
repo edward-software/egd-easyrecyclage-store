@@ -508,389 +508,389 @@ class HomeController extends Controller
         ));
     }
 
-
-    /**
-     * Affichage des mails
-     */
-
-
-    /**
-     * 2.3.2 : Formulaire Groupe @ Réseaux, alerte au responsable
-     *
-     * @Route("/mail/group/new/{id}", name="paprec_public_home_mail_group")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailNewGroupReseau(QuoteRequestNonCorporate $quoteRequestNonCorporate)
-    {
-        return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate/emails:sendNewRequestEmail.html.twig', array(
-            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
-        ));
-    }
-
-    /**
-     * 2.3.2 : Formulaire Groupe @ Réseaux, confirmation
-     *
-     * @Route("/mail/group/confirm/{id}", name="paprec_public_home_mail_group_confirm")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailConfirmGroupReseau(QuoteRequestNonCorporate $quoteRequestNonCorporate)
-    {
-        return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate/emails:sendConfirmRequestEmail.html.twig', array(
-            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
-        ));
-    }
-
-    /**
-     * 2.4.2 :Formulaire Collectivite
-     *
-     * @Route("/mail/collectivite/{id}", name="paprec_public_home_mail_collectivite")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailCollectivite(QuoteRequestNonCorporate $quoteRequestNonCorporate)
-    {
-        return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate/emails:sendNewRequestEmail.html.twig', array(
-            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
-        ));
-    }
-
-
-    /**
-     * 2.5.2 :Formulaire Particulier
-     *
-     * @Route("/mail/particulier/{id}", name="paprec_public_home_mail_particulier")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailParticulier(QuoteRequestNonCorporate $quoteRequestNonCorporate)
-    {
-        return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate/emails:sendNewRequestEmail.html.twig', array(
-            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
-        ));
-    }
-
-
-    /**
-     * 2,6,1,2 : Fomulaire Contact, mail alerte au responsable Paprec
-     *
-     * @Route("/mail/new/contact/{id}", name="paprec_public_home_mail_new_contact")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailNewContact(ContactUs $contactUs)
-    {
-        return $this->render('PaprecCommercialBundle:ContactUs/emails:sendNewRequestEmail.html.twig', array(
-            'contactUs' => $contactUs
-        ));
-    }
-
-    /**
-     * 2,6,1,2 : Fomulaire Contact, mail de confirmation à l'utilisateur
-     *
-     * @Route("/mail/confirm/contact/{id}", name="paprec_public_home_mail_confirm_contact")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailConfirmContact(ContactUs $contactUs)
-    {
-        return $this->render('PaprecCommercialBundle:ContactUs/emails:sendConfirmRequestEmail.html.twig', array(
-            'contactUs' => $contactUs
-        ));
-    }
-
-
-    /**
-     * 2,6,2,2 : Formulaire Rappel, mail alerte au responsable Paprec
-     *
-     * @Route("/mail/new/callback/{id}", name="paprec_public_home_mail_new_callback")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailNewCallback(CallBack $callBack)
-    {
-        return $this->render('PaprecCommercialBundle:CallBack/emails:sendNewRequestEmail.html.twig', array(
-            'callBack' => $callBack
-        ));
-    }
-
-    /**
-     * 2,6,2,2 : Fomulaire Rappel, mail de confirmation à l'utilisateur
-     *
-     * @Route("/mail/confirm/callback/{id}", name="paprec_public_home_mail_confirm_callback")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailConformCallback(CallBack $callBack)
-    {
-        return $this->render('PaprecCommercialBundle:CallBack/emails:sendConfirmRequestEmail.html.twig', array(
-            'callBack' => $callBack
-        ));
-    }
-
-
-    /**
-     * 3,1,2,2 : Devis DI, mail alerte au responsable de la division
-     *
-     * @Route("/mail/quote/new/di/{id}", name="paprec_public_home_mail_quote_new_di")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailNewDIQuote(ProductDIQuote $productDIQuote)
-    {
-        return $this->render('@PaprecCommercial/ProductDIQuote/emails/sendNewQuoteEmail.html.twig', array(
-            'productDIQuote' => $productDIQuote
-        ));
-    }
-
-    /**
-     * 3,1,2,2 : Devis DI, mail confirrmation à l'utilisateur (avec Devis joint normalement)
-     *
-     * @Route("/mail/quote/confirm/di/{id}", name="paprec_public_home_mail_quote_confirm_di")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailConfirmDIQuote(ProductDIQuote $productDIQuote)
-    {
-        return $this->render('@PaprecCommercial/ProductDIQuote/emails/sendGeneratedQuoteEmail.html.twig', array(
-            'productDIQuote' => $productDIQuote
-        ));
-    }
-
-    /**
-     * 4,1,2,2 : Devis D3E, mail alerte au responsable de la division
-     *
-     * @Route("/mail/quote/new/d3e/{id}", name="paprec_public_home_mail_quote_new_d3e")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailNewD3EQuote(ProductD3EQuote $productD3EQuote)
-    {
-        return $this->render('@PaprecCommercial/ProductD3EQuote/emails/sendNewQuoteEmail.html.twig', array(
-            'productD3EQuote' => $productD3EQuote
-        ));
-    }
-
-    /**
-     * 4,1,2,2 : Devis D3E, mail confirrmation à l'utilisateur (avec Devis joint normalement)
-     *
-     * @Route("/mail/quote/confirm/d3e/{id}", name="paprec_public_home_mail_quote_confirm_d3e")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailConfirmD3EQuote(ProductD3EQuote $productD3EQuote)
-    {
-        return $this->render('@PaprecCommercial/ProductD3EQuote/emails/sendGeneratedQuoteEmail.html.twig', array(
-            'productD3EQuote' => $productD3EQuote
-        ));
-    }
-
-    /**
-     * 4,1,2,2 : Commande D3E, mail alerte au responsable de la division
-     *
-     * @Route("/mail/order/new/d3e/{id}", name="paprec_public_home_mail_order_new_d3e")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailNewD3EOrder(ProductD3EOrder $productD3EOrder)
-    {
-        return $this->render('@PaprecCommercial/ProductD3EOrder/emails/sendNewOrderEmail.html.twig', array(
-            'productD3EOrder' => $productD3EOrder
-        ));
-    }
-
-    /**
-     * 4,1,2,2 : Commande D3E, mail confirrmation à l'utilisateur
-     *
-     * @Route("/mail/order/confirm/d3e/{id}", name="paprec_public_home_mail_order_confirm_d3e")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailConfirmD3EOrder(ProductD3EOrder $productD3EOrder)
-    {
-        return $this->render('@PaprecCommercial/ProductD3EOrder/emails/sendOrderSummaryEmail.html.twig', array(
-            'productD3EOrder' => $productD3EOrder
-        ));
-    }
-
-
-    /**
-     * 5,1,2,2 : Devis Chantier, mail alerte au responsable de la division
-     *
-     * @Route("/mail/quote/new/chantier/{id}", name="paprec_public_home_mail_quote_new_chantier")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailNewChantierQuote(ProductChantierQuote $productChantierQuote)
-    {
-        return $this->render('@PaprecCommercial/ProductChantierQuote/emails/sendNewQuoteEmail.html.twig', array(
-            'productChantierQuote' => $productChantierQuote
-        ));
-    }
-
-    /**
-     * 5,1,2,2 : Devis Chantier, mail confirrmation à l'utilisateur (avec Devis joint normalement)
-     *
-     * @Route("/mail/quote/confirm/chantier/{id}", name="paprec_public_home_mail_quote_confirm_chantier")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailConfirmChantierQuote(ProductChantierQuote $productChantierQuote)
-    {
-        return $this->render('@PaprecCommercial/ProductChantierQuote/emails/sendGeneratedQuoteEmail.html.twig', array(
-            'productChantierQuote' => $productChantierQuote
-        ));
-    }
-
-
-    /**
-     * 5,1,2,2 : Commande Chantier, mail alerte au responsable de la division
-     *
-     * @Route("/mail/order/new/chantier/{id}", name="paprec_public_home_mail_order_new_chantier")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailNewChantierOrder(ProductChantierOrder $productChantierOrder)
-    {
-        return $this->render('@PaprecCommercial/ProductChantierOrder/emails/sendNewOrderEmail.html.twig', array(
-            'productChantierOrder' => $productChantierOrder
-        ));
-    }
-
-    /**
-     * 5,1,2,2 : Commande Chantier, mail confirrmation à l'utilisateur
-     *
-     * @Route("/mail/order/confirm/chantier/{id}", name="paprec_public_home_mail_order_confirm_chantier")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailConfirmChantierOrder(ProductChantierOrder $productChantierOrder)
-    {
-        return $this->render('@PaprecCommercial/ProductChantierOrder/emails/sendOrderSummaryEmail.html.twig', array(
-            'productChantierOrder' => $productChantierOrder
-        ));
-    }
-
-
-    /**
-     * 3,2,2/4,2,2/5,2,2 : Formulaire "Je rédige mon besoin" pour DI/D3E/Chantier, alerte au responsable
-     *
-     * @Route("/mail/new/besoin/{id}", name="paprec_public_home_mail_besoin_new")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailBesoin(QuoteRequest $quoteRequest)
-    {
-        return $this->render('@PaprecCommercial/QuoteRequest/emails/sendNewRequestEmail.html.twig', array(
-            'quoteRequest' => $quoteRequest
-        ));
-    }
-
-    /**
-     * 7,6,1,2 : Formulaire "Je rédige mon besoin" pour DI/D3E/Chantier, envoi de devis uploadé dans le BO
-     *
-     * @Route("/mail/quote/besoin/{id}", name="paprec_public_home_mail_besoin_quote")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showMailBesoinQuote(QuoteRequest $quoteRequest)
-    {
-        return $this->render('@PaprecCommercial/QuoteRequest/emails/sendAssociatedQuoteEmail.html.twig', array(
-            'quoteRequest' => $quoteRequest
-        ));
-    }
-
-
-    /**
-     * 7,6,5,2 : Facture D3E : Envoi de la facture uploadée par le Responsable depuis le BO
-     *
-     * @Route("/mail/d3e/invoice/{id}", name="paprec_public_home_mail_invoice_d3e")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showInvoiceMailD3E(ProductD3EOrder $productD3EOrder)
-    {
-        return $this->render('@PaprecCommercial/ProductD3EOrder/emails/sendAssociatedInvoiceEmail.html.twig', array(
-            'productD3EOrder' => $productD3EOrder
-        ));
-    }
-
-    /**
-     * 7,6,5,2 : Facture Chantier : Envoi de la facture uploadée par le Responsable depuis le BO
-     *
-     * @Route("/mail/chantier/invoice/{id}", name="paprec_public_home_mail_invoice_chantier")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showInvoiceMailChantier(ProductChantierOrder $productChantierOrder)
-    {
-        return $this->render('@PaprecCommercial/ProductChantierOrder/emails/sendAssociatedInvoiceEmail.html.twig', array(
-            'productChantierOrder' => $productChantierOrder
-        ));
-    }
-
-    /**
-     * 7,6,7,2 : Devis Groupe/Collectivite/Particulier,  Envoi du Devis en PDF uploadé par le responsable depuis le BO
-     *
-     * @Route("/mail/noncorporate/quote/{id}", name="paprec_public_home_mail_non_corporate_quote")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showQuoteMailNonCorporate(QuoteRequestNonCorporate $quoteRequestNonCorporate)
-    {
-        return $this->render('@PaprecCommercial/QuoteRequestNonCorporate/emails/sendAssociatedQuoteEmail.html.twig', array(
-            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
-        ));
-    }
-
-    
-    /*******
-     * ex: http://dev.store.easyrecyclage.com/app_dev.php/devis/quote/di/cover/2
-     ******/
-
-    /**
-     * @Route("/quote/di/cover/{id}", name="paprec_public_quote_di_cover")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showDevisDICover(ProductDIQuote $productDIQuote)
-    {
-        $today = new \DateTime();
-        return $this->render('@PaprecCommercial/ProductDIQuote/PDF/printQuoteCover.html.twig', array(
-                'productDIQuote' => $productDIQuote,
-                'date' => $today
-            )
-        );
-    }
-
-    /**
-     * @Route("/quote/di/letter/{id}", name="paprec_public_quote_di_letter")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showDevisDILetter(ProductDIQuote $productDIQuote)
-    {
-        $today = new \DateTime();
-        return $this->render('@PaprecCommercial/ProductDIQuote/PDF/printQuoteLetter.html.twig', array(
-                'productDIQuote' => $productDIQuote,
-                'date' => $today
-            )
-        );
-    }
-
-    /**
-     * @Route("/quote/di/products/{id}", name="paprec_public_quote_di_products")
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function showDevisDIProducts(ProductDIQuote $productDIQuote)
-    {
-        return $this->render('@PaprecCommercial/ProductDIQuote/PDF/printQuoteProducts.html.twig', array(
-                'productDIQuote' => $productDIQuote
-            )
-        );
-    }
+//
+//    /**
+//     * Affichage des mails
+//     */
+//
+//
+//    /**
+//     * 2.3.2 : Formulaire Groupe @ Réseaux, alerte au responsable
+//     *
+//     * @Route("/mail/group/new/{id}", name="paprec_public_home_mail_group")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailNewGroupReseau(QuoteRequestNonCorporate $quoteRequestNonCorporate)
+//    {
+//        return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate/emails:sendNewRequestEmail.html.twig', array(
+//            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
+//        ));
+//    }
+//
+//    /**
+//     * 2.3.2 : Formulaire Groupe @ Réseaux, confirmation
+//     *
+//     * @Route("/mail/group/confirm/{id}", name="paprec_public_home_mail_group_confirm")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailConfirmGroupReseau(QuoteRequestNonCorporate $quoteRequestNonCorporate)
+//    {
+//        return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate/emails:sendConfirmRequestEmail.html.twig', array(
+//            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
+//        ));
+//    }
+//
+//    /**
+//     * 2.4.2 :Formulaire Collectivite
+//     *
+//     * @Route("/mail/collectivite/{id}", name="paprec_public_home_mail_collectivite")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailCollectivite(QuoteRequestNonCorporate $quoteRequestNonCorporate)
+//    {
+//        return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate/emails:sendNewRequestEmail.html.twig', array(
+//            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
+//        ));
+//    }
+//
+//
+//    /**
+//     * 2.5.2 :Formulaire Particulier
+//     *
+//     * @Route("/mail/particulier/{id}", name="paprec_public_home_mail_particulier")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailParticulier(QuoteRequestNonCorporate $quoteRequestNonCorporate)
+//    {
+//        return $this->render('PaprecCommercialBundle:QuoteRequestNonCorporate/emails:sendNewRequestEmail.html.twig', array(
+//            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
+//        ));
+//    }
+//
+//
+//    /**
+//     * 2,6,1,2 : Fomulaire Contact, mail alerte au responsable Paprec
+//     *
+//     * @Route("/mail/new/contact/{id}", name="paprec_public_home_mail_new_contact")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailNewContact(ContactUs $contactUs)
+//    {
+//        return $this->render('PaprecCommercialBundle:ContactUs/emails:sendNewRequestEmail.html.twig', array(
+//            'contactUs' => $contactUs
+//        ));
+//    }
+//
+//    /**
+//     * 2,6,1,2 : Fomulaire Contact, mail de confirmation à l'utilisateur
+//     *
+//     * @Route("/mail/confirm/contact/{id}", name="paprec_public_home_mail_confirm_contact")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailConfirmContact(ContactUs $contactUs)
+//    {
+//        return $this->render('PaprecCommercialBundle:ContactUs/emails:sendConfirmRequestEmail.html.twig', array(
+//            'contactUs' => $contactUs
+//        ));
+//    }
+//
+//
+//    /**
+//     * 2,6,2,2 : Formulaire Rappel, mail alerte au responsable Paprec
+//     *
+//     * @Route("/mail/new/callback/{id}", name="paprec_public_home_mail_new_callback")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailNewCallback(CallBack $callBack)
+//    {
+//        return $this->render('PaprecCommercialBundle:CallBack/emails:sendNewRequestEmail.html.twig', array(
+//            'callBack' => $callBack
+//        ));
+//    }
+//
+//    /**
+//     * 2,6,2,2 : Fomulaire Rappel, mail de confirmation à l'utilisateur
+//     *
+//     * @Route("/mail/confirm/callback/{id}", name="paprec_public_home_mail_confirm_callback")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailConformCallback(CallBack $callBack)
+//    {
+//        return $this->render('PaprecCommercialBundle:CallBack/emails:sendConfirmRequestEmail.html.twig', array(
+//            'callBack' => $callBack
+//        ));
+//    }
+//
+//
+//    /**
+//     * 3,1,2,2 : Devis DI, mail alerte au responsable de la division
+//     *
+//     * @Route("/mail/quote/new/di/{id}", name="paprec_public_home_mail_quote_new_di")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailNewDIQuote(ProductDIQuote $productDIQuote)
+//    {
+//        return $this->render('@PaprecCommercial/ProductDIQuote/emails/sendNewQuoteEmail.html.twig', array(
+//            'productDIQuote' => $productDIQuote
+//        ));
+//    }
+//
+//    /**
+//     * 3,1,2,2 : Devis DI, mail confirrmation à l'utilisateur (avec Devis joint normalement)
+//     *
+//     * @Route("/mail/quote/confirm/di/{id}", name="paprec_public_home_mail_quote_confirm_di")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailConfirmDIQuote(ProductDIQuote $productDIQuote)
+//    {
+//        return $this->render('@PaprecCommercial/ProductDIQuote/emails/sendGeneratedQuoteEmail.html.twig', array(
+//            'productDIQuote' => $productDIQuote
+//        ));
+//    }
+//
+//    /**
+//     * 4,1,2,2 : Devis D3E, mail alerte au responsable de la division
+//     *
+//     * @Route("/mail/quote/new/d3e/{id}", name="paprec_public_home_mail_quote_new_d3e")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailNewD3EQuote(ProductD3EQuote $productD3EQuote)
+//    {
+//        return $this->render('@PaprecCommercial/ProductD3EQuote/emails/sendNewQuoteEmail.html.twig', array(
+//            'productD3EQuote' => $productD3EQuote
+//        ));
+//    }
+//
+//    /**
+//     * 4,1,2,2 : Devis D3E, mail confirrmation à l'utilisateur (avec Devis joint normalement)
+//     *
+//     * @Route("/mail/quote/confirm/d3e/{id}", name="paprec_public_home_mail_quote_confirm_d3e")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailConfirmD3EQuote(ProductD3EQuote $productD3EQuote)
+//    {
+//        return $this->render('@PaprecCommercial/ProductD3EQuote/emails/sendGeneratedQuoteEmail.html.twig', array(
+//            'productD3EQuote' => $productD3EQuote
+//        ));
+//    }
+//
+//    /**
+//     * 4,1,2,2 : Commande D3E, mail alerte au responsable de la division
+//     *
+//     * @Route("/mail/order/new/d3e/{id}", name="paprec_public_home_mail_order_new_d3e")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailNewD3EOrder(ProductD3EOrder $productD3EOrder)
+//    {
+//        return $this->render('@PaprecCommercial/ProductD3EOrder/emails/sendNewOrderEmail.html.twig', array(
+//            'productD3EOrder' => $productD3EOrder
+//        ));
+//    }
+//
+//    /**
+//     * 4,1,2,2 : Commande D3E, mail confirrmation à l'utilisateur
+//     *
+//     * @Route("/mail/order/confirm/d3e/{id}", name="paprec_public_home_mail_order_confirm_d3e")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailConfirmD3EOrder(ProductD3EOrder $productD3EOrder)
+//    {
+//        return $this->render('@PaprecCommercial/ProductD3EOrder/emails/sendOrderSummaryEmail.html.twig', array(
+//            'productD3EOrder' => $productD3EOrder
+//        ));
+//    }
+//
+//
+//    /**
+//     * 5,1,2,2 : Devis Chantier, mail alerte au responsable de la division
+//     *
+//     * @Route("/mail/quote/new/chantier/{id}", name="paprec_public_home_mail_quote_new_chantier")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailNewChantierQuote(ProductChantierQuote $productChantierQuote)
+//    {
+//        return $this->render('@PaprecCommercial/ProductChantierQuote/emails/sendNewQuoteEmail.html.twig', array(
+//            'productChantierQuote' => $productChantierQuote
+//        ));
+//    }
+//
+//    /**
+//     * 5,1,2,2 : Devis Chantier, mail confirrmation à l'utilisateur (avec Devis joint normalement)
+//     *
+//     * @Route("/mail/quote/confirm/chantier/{id}", name="paprec_public_home_mail_quote_confirm_chantier")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailConfirmChantierQuote(ProductChantierQuote $productChantierQuote)
+//    {
+//        return $this->render('@PaprecCommercial/ProductChantierQuote/emails/sendGeneratedQuoteEmail.html.twig', array(
+//            'productChantierQuote' => $productChantierQuote
+//        ));
+//    }
+//
+//
+//    /**
+//     * 5,1,2,2 : Commande Chantier, mail alerte au responsable de la division
+//     *
+//     * @Route("/mail/order/new/chantier/{id}", name="paprec_public_home_mail_order_new_chantier")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailNewChantierOrder(ProductChantierOrder $productChantierOrder)
+//    {
+//        return $this->render('@PaprecCommercial/ProductChantierOrder/emails/sendNewOrderEmail.html.twig', array(
+//            'productChantierOrder' => $productChantierOrder
+//        ));
+//    }
+//
+//    /**
+//     * 5,1,2,2 : Commande Chantier, mail confirrmation à l'utilisateur
+//     *
+//     * @Route("/mail/order/confirm/chantier/{id}", name="paprec_public_home_mail_order_confirm_chantier")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailConfirmChantierOrder(ProductChantierOrder $productChantierOrder)
+//    {
+//        return $this->render('@PaprecCommercial/ProductChantierOrder/emails/sendOrderSummaryEmail.html.twig', array(
+//            'productChantierOrder' => $productChantierOrder
+//        ));
+//    }
+//
+//
+//    /**
+//     * 3,2,2/4,2,2/5,2,2 : Formulaire "Je rédige mon besoin" pour DI/D3E/Chantier, alerte au responsable
+//     *
+//     * @Route("/mail/new/besoin/{id}", name="paprec_public_home_mail_besoin_new")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailBesoin(QuoteRequest $quoteRequest)
+//    {
+//        return $this->render('@PaprecCommercial/QuoteRequest/emails/sendNewRequestEmail.html.twig', array(
+//            'quoteRequest' => $quoteRequest
+//        ));
+//    }
+//
+//    /**
+//     * 7,6,1,2 : Formulaire "Je rédige mon besoin" pour DI/D3E/Chantier, envoi de devis uploadé dans le BO
+//     *
+//     * @Route("/mail/quote/besoin/{id}", name="paprec_public_home_mail_besoin_quote")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showMailBesoinQuote(QuoteRequest $quoteRequest)
+//    {
+//        return $this->render('@PaprecCommercial/QuoteRequest/emails/sendAssociatedQuoteEmail.html.twig', array(
+//            'quoteRequest' => $quoteRequest
+//        ));
+//    }
+//
+//
+//    /**
+//     * 7,6,5,2 : Facture D3E : Envoi de la facture uploadée par le Responsable depuis le BO
+//     *
+//     * @Route("/mail/d3e/invoice/{id}", name="paprec_public_home_mail_invoice_d3e")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showInvoiceMailD3E(ProductD3EOrder $productD3EOrder)
+//    {
+//        return $this->render('@PaprecCommercial/ProductD3EOrder/emails/sendAssociatedInvoiceEmail.html.twig', array(
+//            'productD3EOrder' => $productD3EOrder
+//        ));
+//    }
+//
+//    /**
+//     * 7,6,5,2 : Facture Chantier : Envoi de la facture uploadée par le Responsable depuis le BO
+//     *
+//     * @Route("/mail/chantier/invoice/{id}", name="paprec_public_home_mail_invoice_chantier")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showInvoiceMailChantier(ProductChantierOrder $productChantierOrder)
+//    {
+//        return $this->render('@PaprecCommercial/ProductChantierOrder/emails/sendAssociatedInvoiceEmail.html.twig', array(
+//            'productChantierOrder' => $productChantierOrder
+//        ));
+//    }
+//
+//    /**
+//     * 7,6,7,2 : Devis Groupe/Collectivite/Particulier,  Envoi du Devis en PDF uploadé par le responsable depuis le BO
+//     *
+//     * @Route("/mail/noncorporate/quote/{id}", name="paprec_public_home_mail_non_corporate_quote")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showQuoteMailNonCorporate(QuoteRequestNonCorporate $quoteRequestNonCorporate)
+//    {
+//        return $this->render('@PaprecCommercial/QuoteRequestNonCorporate/emails/sendAssociatedQuoteEmail.html.twig', array(
+//            'quoteRequestNonCorporate' => $quoteRequestNonCorporate
+//        ));
+//    }
+//
+//
+//    /*******
+//     * ex: http://dev.store.easyrecyclage.com/app_dev.php/devis/quote/di/cover/2
+//     ******/
+//
+//    /**
+//     * @Route("/quote/di/cover/{id}", name="paprec_public_quote_di_cover")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showDevisDICover(ProductDIQuote $productDIQuote)
+//    {
+//        $today = new \DateTime();
+//        return $this->render('@PaprecCommercial/ProductDIQuote/PDF/printQuoteCover.html.twig', array(
+//                'productDIQuote' => $productDIQuote,
+//                'date' => $today
+//            )
+//        );
+//    }
+//
+//    /**
+//     * @Route("/quote/di/letter/{id}", name="paprec_public_quote_di_letter")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showDevisDILetter(ProductDIQuote $productDIQuote)
+//    {
+//        $today = new \DateTime();
+//        return $this->render('@PaprecCommercial/ProductDIQuote/PDF/printQuoteLetter.html.twig', array(
+//                'productDIQuote' => $productDIQuote,
+//                'date' => $today
+//            )
+//        );
+//    }
+//
+//    /**
+//     * @Route("/quote/di/products/{id}", name="paprec_public_quote_di_products")
+//     * @param Request $request
+//     * @throws \Exception
+//     */
+//    public function showDevisDIProducts(ProductDIQuote $productDIQuote)
+//    {
+//        return $this->render('@PaprecCommercial/ProductDIQuote/PDF/printQuoteProducts.html.twig', array(
+//                'productDIQuote' => $productDIQuote
+//            )
+//        );
+//    }
 
 
 }
