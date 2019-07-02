@@ -249,9 +249,8 @@ class ProductChantierQuoteManager
     }
 
 
-
     /**
-     * Envoie du devis généré au client
+     * Envoi du devis généré au client
      *
      * @param ProductChantierQuote $productChantierQuote
      * @return bool
@@ -296,7 +295,7 @@ class ProductChantierQuoteManager
                 ->attach($attachment);
 
             if ($this->container->get('mailer')->send($message)) {
-                if(file_exists($pdfFile)) {
+                if (file_exists($pdfFile)) {
                     unlink($pdfFile);
                 }
                 return true;
@@ -320,22 +319,23 @@ class ProductChantierQuoteManager
     public function generatePDF(ProductChantierQuote $productChantierQuote)
     {
         try {
+
             $pdfTmpFolder = $this->container->getParameter('paprec_commercial.data_tmp_directory');
-            $noticeFileDirectory = $this->container->getParameter('paprec_commercial.quote_pdf_notice_directory');
-            $noticeFiles = $this->container->getParameter('paprec_commercial.quote_pdf_notices');
+            $noticeFileDirectory = $this->container->getParameter('paprec_commercial.chantier_quote_pdf_notice_directory');
+            $noticeFiles = $this->container->getParameter('paprec_commercial.chantier_quote_pdf_notices');
 
             if (!is_dir($pdfTmpFolder)) {
                 mkdir($pdfTmpFolder, 0755, true);
             }
 
-            $filenameCover = $pdfTmpFolder . '/' . md5(uniqid()) . '.pdf';
             $filename = $pdfTmpFolder . '/' . md5(uniqid()) . '.pdf';
 
             $today = new \DateTime();
 
             $snappy = new Pdf($this->container->getParameter('wkhtmltopdf_path'));
-            $snappy->setOption('margin-left', 3);
-            $snappy->setOption('margin-right', 3);
+            $snappy->setOption('javascript-delay', 3000);
+            $snappy->setOption('dpi', 100);
+
             /**
              * On génère d'abord la page de couverture sans footer
              */
@@ -347,17 +347,7 @@ class ProductChantierQuoteManager
                             'productChantierQuote' => $productChantierQuote,
                             'date' => $today
                         )
-                    )
-                ),
-                $filenameCover
-            );
-
-            /**
-             * Puis les pages suivantes avec le footer
-             */
-            $snappy->setOption('footer-html', $this->container->get('templating')->render('@PaprecCommercial/Common/PDF/partials/footer.html.twig'));
-            $snappy->generateFromHtml(
-                array(
+                    ),
                     $this->container->get('templating')->render(
                         '@PaprecCommercial/ProductChantierQuote/PDF/printQuoteLetter.html.twig',
                         array(
@@ -370,7 +360,7 @@ class ProductChantierQuoteManager
                         array(
                             'productChantierQuote' => $productChantierQuote,
                         )
-                    )
+                    ),
                 ),
                 $filename
             );
@@ -379,7 +369,6 @@ class ProductChantierQuoteManager
              * Concaténation des notices
              */
             $pdfArray = array();
-            $pdfArray[] = $filenameCover;
             $pdfArray[] = $filename;
 
             if (is_array($noticeFiles) && count($noticeFiles)) {
@@ -395,10 +384,6 @@ class ProductChantierQuoteManager
                 $merger = new Merger();
                 $merger->addIterator($pdfArray);
                 file_put_contents($filename, $merger->merge());
-            }
-
-            if (file_exists($filenameCover)) {
-                unlink($filenameCover);
             }
 
             if (!file_exists($filename)) {

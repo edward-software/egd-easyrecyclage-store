@@ -24,6 +24,7 @@ services:
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
   paprec_commercial.product_chantier_quote_manager:
+    public: true
     class: Paprec\CommercialBundle\Service\ProductChantierQuoteManager
     arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
@@ -56,13 +57,14 @@ parameters:
 
   paprec_commercial.data_tmp_directory: "%kernel.root_dir%/data/tmp"
 
-  paprec_commercial.quote_pdf_notice_directory: "%kernel.root_dir%/data/pdf/quote_notices"
   paprec_commercial.di_quote_pdf_notice_directory: "%kernel.root_dir%/data/pdf/di/quote_notices"
+  paprec_commercial.chantier_quote_pdf_notice_directory: "%kernel.root_dir%/data/pdf/chantier/quote_notices"
 
-  paprec_commercial.quote_pdf_notices:
+
+  paprec_commercial.chantier_quote_pdf_notices:
+    - dechets.pdf
     - detail.pdf
     - cgps.pdf
-    - paprec_presentation.pdf
     - paprec_activities.pdf
 
   paprec_commercial.di_quote_pdf_notices:

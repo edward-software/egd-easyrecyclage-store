@@ -1,4 +1,7 @@
 {% extends "@PaprecCommercial/Common/PDF/base_pdf_quote_cover.html.twig" %}
+{% block cover_image %}
+    <img src="{{ absolute_url(asset('build/static/pdf_di_cover.jpg')) }}" alt="Illustration Paprec Group">
+{% endblock %}
 {% block businessName %}
     {{ productDIQuote.businessName|upper }}
 {% endblock %}

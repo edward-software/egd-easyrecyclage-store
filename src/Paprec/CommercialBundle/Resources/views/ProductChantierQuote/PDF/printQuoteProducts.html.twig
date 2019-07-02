@@ -1,46 +1,89 @@
 {% extends "@PaprecCommercial/Common/PDF/base_pdf_quote_products.html.twig" %}
 
-{% block address %} {{ productChantierQuote.address }} {{ productChantierQuote.postalCode }} {{ productChantierQuote.city }} {% endblock %}
+{% block stylesheet %}
+    {{ parent() }}
+    <style type="text/css">
+
+        .product-table-item {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid #d3d3d3;
+            padding: 15px 0;
+        }
+
+        .product-table-item h3 {
+            margin: 0;
+        }
+
+        .product-table-item-img {
+            width: 217px;
+            padding: 10px;
+            align-self: center;
+        }
+
+        .product-table-item-img img {
+            width: 100%;
+        }
+
+        .product-table-item-desc {
+            width: 382px;
+            padding: 10px;
+        }
+
+        .product-table-item-price {
+            width: 211px;
+            padding: 10px;
+            align-self: center;
+            text-align: left;
+            margin-top: 20px
+        }
+
+        .product-table-total {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            justify-content: space-between;
+            padding: 30px 0;
+        }
+
+    </style>
+{% endblock %}
+
+{% block address %}
+    {{ productChantierQuote.address }}
+    <br> {{ productChantierQuote.postalCode }} {{ productChantierQuote.city }}
+{% endblock %}
 
 {% block products %}
-    <table>
-        <thead>
-        <tr>
-            <th>Matériel</th>
-            <th>Déchets</th>
-            <th colspan="2">Type de prestation</th>
-            <th>Tarifs à partir de (€ HT)</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for productChantierQuoteLine in productChantierQuote.productChantierQuoteLines %}
-            <tr>
-                <td> {{ productChantierQuoteLine.quantity }} {{ productChantierQuoteLine.productName }}</td>
-                <td> {{ productChantierQuoteLine.categoryName }} </td>
-                <td>
-                    {% if productChantierQuoteLine.productChantier.pictures|length > 0 %}
-                        <img src="{% if productChantierQuoteLine.productChantier.pilotPictures|length > 0 %}{{ absolute_url('/uploads/pictos/' ~ productChantierQuoteLine.productChantier.pilotPictures[0].path) }}{% endif %}"
-                             alt="#">
-                    {% endif %}
-                </td>
-                <td>
-                    - {{ productChantierQuoteLine.productChantier.description }}
-                    <br>
 
-                    - {{ productChantierQuoteLine.productChantier.dimensions }}
-                </td>
-                <td>
-                    {{ productChantierQuoteLine.totalAmount|formatAmount('EUR', app.request.locale) }}
-                </td>
-            </tr>
-        {% endfor %}
-        <tr>
-            <td>TOTAL</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>{{ productChantierQuote.totalAmount|formatAmount('EUR', app.request.locale) }}</td>
-        </tr>
-        </tbody>
-    </table>
+    {% for productChantierQuoteLine in productChantierQuote.productChantierQuoteLines %}
+        <div class="product-table-item" style="page-break-inside: avoid;">
+            <div class="product-table-item-img">
+                <img src="{% if productChantierQuoteLine.productChantier.pilotPictures|length > 0 %}{{ absolute_url('/uploads/pictos/' ~ productChantierQuoteLine.productChantier.pilotPictures[0].path) }}{% endif %}"
+                     alt="#">
+            </div>
+            <div class="product-table-item-desc">
+                <h3 class="bg-blue" style="display: inline">
+                    {{ productChantierQuoteLine.quantity }} {{ productChantierQuoteLine.productName }} {{ productChantierQuoteLine.productChantier.capacity }}
+                    {% autoescape false %}{{ productChantierQuoteLine.productChantier.capacityUnit }} {% endautoescape %} - DECHETS {{ productChantierQuoteLine.categoryName }}
+                </h3>
+                <p style="margin-top: 20px; ; padding-right: 10px; text-align: justify">
+                    {% autoescape false %}{{ productChantierQuoteLine.productChantier.description }} {% endautoescape %}
+                </p>
+            </div>
+            <div class="product-table-item-price">
+                <p>{{ productChantierQuoteLine.totalAmount|formatAmount('EUR', app.request.locale) }} HT / mois / {{ productChantierQuoteLine.productName|lower }}</p>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="product-table-total">
+        <div style="width: 217px ;"></div>
+        <div style="width: 382px ;">
+            <h3 class="bg-blue" style="margin: 0 0 0 10px;">TOTAL</h3>
+        </div>
+        <div style="width: 211px;">{{ productChantierQuote.totalAmount|formatAmount('EUR', app.request.locale) }} HT</div>
+    </div>
 {% endblock %}

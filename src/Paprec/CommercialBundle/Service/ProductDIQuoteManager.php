@@ -248,7 +248,7 @@ class ProductDIQuoteManager
     }
 
     /**
-     * Envoie du devis généré au client
+     * Envoi du devis généré au client
      *
      * @param ProductDIQuote $productDIQuote
      * @return bool
@@ -325,7 +325,6 @@ class ProductDIQuoteManager
                 mkdir($pdfTmpFolder, 0755, true);
             }
 
-            $filenameCover = $pdfTmpFolder . '/' . md5(uniqid()) . '.pdf';
             $filename = $pdfTmpFolder . '/' . md5(uniqid()) . '.pdf';
 
             $today = new \DateTime();
@@ -384,10 +383,6 @@ class ProductDIQuoteManager
                 $merger = new Merger();
                 $merger->addIterator($pdfArray);
                 file_put_contents($filename, $merger->merge());
-            }
-
-            if (file_exists($filenameCover)) {
-                unlink($filenameCover);
             }
 
             if (!file_exists($filename)) {
