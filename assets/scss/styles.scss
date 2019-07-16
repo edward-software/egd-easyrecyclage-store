@@ -1,3 +1,68 @@
+// Flex
+.flex {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  &.column {
+    -ms-flex-direction: column;
+    -webkit-direction: column;
+    flex-direction: column;
+  }
+
+  &.flex-start {
+    -ms-flex-pack: start;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+  }
+
+  &.flex-end {
+    -ms-flex-pack: end;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+  }
+
+  &.center {
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+  }
+
+  &.space-between {
+    -ms-flex-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+  }
+
+  &.space-around {
+    -ms-flex-pack: justify;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+  }
+
+  &.flex-wrap {
+    -ms-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+
+  &.align-items_flex-start {
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+  }
+
+  &.align-items_flex-end {
+    -webkit-align-items: flex-end;
+    align-items: flex-end;
+  }
+
+  &.align-items_center {
+    -webkit-align-items: center;
+    align-items: center;
+  }
+}
+
+
 .paprec_bottom_area {
   background-color: #333D7F;
   margin-bottom: 3px;
@@ -24,7 +89,7 @@ button[disabled], a[disabled] {
 }
 
 .paprec-list-files {
-  background-color: rgba(37,36,36,0.05);
+  background-color: rgba(37, 36, 36, 0.05);
   margin-left: 17%;
   width: 50%;
   border-radius: 1px;
@@ -37,4 +102,43 @@ button[disabled], a[disabled] {
   font-weight: 300;
   margin-left: 15px;
   line-height: 25px;
+}
+
+/*******************
+* FLOATING LABEL
+ ****************/
+.form-float-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+
+  &--mid {
+    width: 48%;
+  }
+}
+
+.form-float-control-placeholder {
+  font-family: "ingra", Arial, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  color: #C8C8C8;
+  position: absolute;
+  top: 0;
+  padding: 5px 0 0 0;
+  transition: all 200ms;
+}
+
+textarea + .form-float-control-placeholder {
+  padding-left: 5px;
+}
+
+.form-float-control::placeholder {
+  color: transparent;
+  opacity: 0;
+}
+
+.form-float-control:focus + .form-float-control-placeholder,
+.form-float-control:not(:placeholder-shown) + .form-float-control-placeholder {
+  font-size: 13px;
+  transform: translate3d(0, -100%, 0);
+  padding: 0;
 }
