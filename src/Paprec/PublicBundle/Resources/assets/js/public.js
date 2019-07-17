@@ -199,13 +199,13 @@ $(function () {
         var maxDate = moment(now);
         maxDate.add(3, 'months');
 
-        $('#paprec_commercialbundle_callBack_dateCallBack').datepicker({
+        $('#date_callback_input').datepicker({
             option: $.datepicker.regional["fr"],
             minDate: +1,
             maxDate: "+1M",
         });
 
-        $('#paprec_commercialbundle_callBack_timeCallBack').timepicker({
+        $('#time_callback_input').timepicker({
             timeFormat: 'H:mm',
             minTime: '9',
             maxTime: '19',
@@ -217,7 +217,7 @@ $(function () {
 
         $('#callBackFormSubmitButton').on('click', function () {
             // avant de submit, on convertit la date au format yyyy-mm-dd
-            $('#paprec_commercialbundle_callBack_dateCallBack').val($('#paprec_commercialbundle_callBack_dateCallBack').val().split('/').reverse().join('-'));
+            $('#date_callback_input').val($('#datepicker').val().split('/').reverse().join('-'));
             $('#callBackForm').submit();
         });
     }
@@ -832,7 +832,7 @@ function colorBodyFromDivision() {
  * Initialise l'autocomplete Google sur l'adresse
  */
 function initializeAutocompleteAddress() {
-    var element = $('input[id*=_address]')[0];
+    var element = $('input[id*=address_input]')[0];
     var options = {
         componentRestrictions: {country: "fr"}
     };
@@ -852,10 +852,10 @@ function onPlaceChangedAddress() {
         var component = place.address_components[i];
         for (var j in component.types) {  // Some types are ["country", "political"]
             if (component.types[j] === 'postal_code') {
-                $('input[id*=_postalCode]').val(component.long_name);
+                $('input[id*=postal_code_input]').val(component.long_name);
             }
             if (component.types[j] === 'locality') {
-                $('input[id*=_city]').val(component.long_name);
+                $('input[id*=city_input]').val(component.long_name);
             }
             if (component.types[j] === 'street_number') {
                 address += component.long_name + ' ';
@@ -872,7 +872,7 @@ function onPlaceChangedAddress() {
  * Initialise l'autocomplete Google sur l'adresse headoffice
  */
 function initializeAutocompleteHeadoffice() {
-    var element = $('input[id*=_headofficeAddress]')[0];
+    var element = $('input[id*=address_headoffice_input]')[0];
     var options = {
         componentRestrictions: {country: "fr"}
     };
@@ -892,10 +892,10 @@ function onPlaceChangedHeadoffice() {
         var component = place.address_components[i];
         for (var j in component.types) {  // Some types are ["country", "political"]
             if (component.types[j] === 'postal_code') {
-                $('input[id*=_headofficePostalCode]').val(component.long_name);
+                $('input[id*=postal_code_headoffice_input]').val(component.long_name);
             }
             if (component.types[j] === 'locality') {
-                $('input[id*=_headofficeCity]').val(component.long_name);
+                $('input[id*=city_headoffice_input]').val(component.long_name);
             }
             if (component.types[j] === 'street_number') {
                 address += component.long_name + ' ';
@@ -905,14 +905,14 @@ function onPlaceChangedHeadoffice() {
             }
         }
     }
-    $('input[id*=_headofficeAddress]').val(address);
+    $('input[id*=address_headoffice_input]').val(address);
 }
 
 /**
  * Initialise l'autocomplete Google sur l'adresseInvoicing
  */
 function initializeAutocompleteInvoicing() {
-    var element = $('input[id*=_invoicingAddress]')[0];
+    var element = $('input[id*=address_invoicing_input]')[0];
     var options = {
         componentRestrictions: {country: "fr"}
     };
@@ -932,10 +932,10 @@ function onPlaceChangedInvoicing() {
         var component = place.address_components[i];
         for (var j in component.types) {  // Some types are ["country", "political"]
             if (component.types[j] === 'postal_code') {
-                $('input[id*=_invoicingPostalCode]').val(component.long_name);
+                $('input[id*=postal_code_invoicing_input]').val(component.long_name);
             }
             if (component.types[j] === 'locality') {
-                $('input[id*=_invoicingCity]').val(component.long_name);
+                $('input[id*=city_invoicing_input]').val(component.long_name);
             }
             if (component.types[j] === 'street_number') {
                 address += component.long_name + ' ';
@@ -945,7 +945,7 @@ function onPlaceChangedInvoicing() {
             }
         }
     }
-    $('input[id*=_invoicingAddress]').val(address);
+    $('input[id*=address_invoicing_input]').val(address);
 }
 
 

@@ -31,27 +31,54 @@
                 <div class="step__title">{{ 'Public.Home.IAm'|trans }}</div>
             </div>
             <div class="step__right step__right--small">
-                {{ form_widget(form.businessName, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.BusinessName'|trans}}) }}
-                {{ form_errors(form.businessName) }}
+                <div class="form-float-group">
+                    {{ form_widget(form.businessName, {'id': 'business_name_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder':'placeholder'}}) }}
+                    <label class="form-float-control-placeholder"
+                           for="business_name_input">{{ 'Commercial.CallBack.BusinessName'|trans }}</label>
+                    {{ form_errors(form.businessName) }}
+                </div>
 
                 {{ form_widget(form.civility, {'attr': {'class': 'input--radio'}}) }}
                 {{ form_errors(form.civility) }}
 
                 <div class="clearfix step--marginfield"></div>
 
-                {{ form_widget(form.lastName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.CallBack.LastName'|trans}}) }}
-                {{ form_errors(form.lastName) }}
-                {{ form_widget(form.firstName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.CallBack.FirstName'|trans}}) }}
-                {{ form_errors(form.firstName) }}
+                <div class="flex space-between">
+                    <div class="form-float-group form-float-group--mid">
+                        {{ form_widget(form.lastName, {'id': 'last_name_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.CallBack.LastName'|trans}}) }}
+                        <label class="form-float-control-placeholder"
+                               for="last_name_input">{{ 'Commercial.CallBack.LastName'|trans }}</label>
+                        {{ form_errors(form.lastName) }}
+                    </div>
 
-                {{ form_widget(form.email, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.Email'|trans}}) }}
-                {{ form_errors(form.email) }}
+                    <div class="form-float-group form-float-group--mid">
+                        {{ form_widget(form.firstName, {'id': 'first_name_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.CallBack.FirstName'|trans}}) }}
+                        <label class="form-float-control-placeholder"
+                               for="first_name_input">{{ 'Commercial.CallBack.FirstName'|trans }}</label>
+                        {{ form_errors(form.firstName) }}
+                    </div>
+                </div>
 
-                {{ form_widget(form.phone, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.PhonePlaceholder'|trans}}) }}
-                {{ form_errors(form.phone) }}
+                <div class="form-float-group">
+                    {{ form_widget(form.email, {'id': 'email_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.CallBack.Email'|trans}}) }}
+                    <label class="form-float-control-placeholder"
+                           for="email_input">{{ 'Commercial.ContactUs.Email'|trans }}</label>
+                    {{ form_errors(form.email) }}
+                </div>
 
-                {{ form_widget(form.function, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.CallBack.FunctionPlaceholder'|trans}}) }}
-                {{ form_errors(form.function) }}
+                <div class="form-float-group">
+                    {{ form_widget(form.phone, {'id': 'phone_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.CallBack.PhonePlaceholder'|trans}}) }}
+                    <label class="form-float-control-placeholder"
+                           for="phone_input">{{ 'Commercial.CallBack.PhonePlaceholder'|trans }}</label>
+                    {{ form_errors(form.phone) }}
+                </div>
+
+                <div class="form-float-group">
+                    {{ form_widget(form.function, {'id': 'function_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.CallBack.FunctionPlaceholder'|trans}}) }}
+                    <label class="form-float-control-placeholder"
+                           for="function_input">{{ 'Commercial.CallBack.FunctionPlaceholder'|trans }}</label>
+                    {{ form_errors(form.function) }}
+                </div>
 
                 <div class="clearfix"></div>
             </div>
@@ -62,10 +89,20 @@
                 <div class="step__title">Date et heure de rappel</div>
             </div>
             <div class="step__right step__right--small">
-                {{ form_widget(form.timeCallBack, {'attr': {'class': 'input input--mid', 'placeholder': 'Heure'}}) }}
-                {{ form_errors(form.timeCallBack) }}
-                {{ form_widget(form.dateCallBack, {'attr': {'class': 'input input--mid', 'placeholder': 'Date'}}) }}
-                {{ form_errors(form.dateCallBack) }}
+                <div class="flex space-between">
+                    <div class="form-float-group form-float-group--mid">
+                        {{ form_widget(form.timeCallBack, {'id': 'time_callback_input', 'attr': {'class': 'input input--full form-float-control', 'placeholder': 'Heure'}}) }}
+                        <label class="form-float-control-placeholder"
+                               for="time_callback_input">{{ 'Heure' }}</label>
+                        {{ form_errors(form.timeCallBack) }}
+                    </div>
+                    <div class="form-float-group form-float-group--mid">
+                        {{ form_widget(form.dateCallBack, {'id': 'date_callback_input', 'attr': {'class': 'input input--full form-float-control', 'placeholder': 'Date'}}) }}
+                        <label class="form-float-control-placeholder"
+                               for="date_callback_input">{{ 'Date'}}</label>
+                        {{ form_errors(form.dateCallBack) }}
+                    </div>
+                </div>
             </div>
             <div class="clearfix"></div>
             <a href="javascript:void(0);" id="callBackFormSubmitButton" class="button button--green">

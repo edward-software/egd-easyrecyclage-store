@@ -39,11 +39,14 @@
                 <div class="step__title">{{ 'Public.Home.Location'|trans }}</div>
             </div>
             <div class="step__right step__right--small">
-                <input class="input input--full" type="text"
-                       id="locationSelect" autocomplete="off"
-                       placeholder="{{ 'Public.Cart.PostalCode'|trans }}">
-                {{ form_errors(form.postalCode) }}
-
+                <div class="form-float-group">
+                    <input class="input input--full form-float-control" type="text"
+                           id="locationSelect" autocomplete="off"
+                           placeholder="placeholder">
+                    <label class="form-float-control-placeholder"
+                           for="locationSelect">{{ 'Commercial.QuoteRequestNonCorporate.PostalCode'|trans }}</label>
+                    {{ form_errors(form.postalCode) }}
+                </div>
             </div>
         </div>
         <div class="step step--index">
@@ -58,19 +61,42 @@
 
                 <div class="clearfix step--marginfield"></div>
 
-                {{ form_widget(form.lastName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.QuoteRequest.LastName'|trans}}) }}
-                {{ form_errors(form.lastName) }}
-                {{ form_widget(form.firstName, {'attr': {'class': 'input input--mid step--marginfield', 'placeholder': 'Commercial.QuoteRequest.FirstName'|trans}}) }}
-                {{ form_errors(form.firstName) }}
+                <div class="flex space-between">
+                    <div class="form-float-group form-float-group--mid">
+                        {{ form_widget(form.lastName, {'id': 'last_name_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.LastName'|trans}}) }}
+                        <label class="form-float-control-placeholder"
+                               for="last_name_input">{{ 'Commercial.QuoteRequestNonCorporate.LastName'|trans }}</label>
+                        {{ form_errors(form.lastName) }}
+                    </div>
 
-                {{ form_widget(form.email, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.Email'|trans}}) }}
-                {{ form_errors(form.email) }}
+                    <div class="form-float-group form-float-group--mid">
+                        {{ form_widget(form.firstName, {'id': 'first_name_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.FirstName'|trans}}) }}
+                        <label class="form-float-control-placeholder"
+                               for="first_name_input">{{ 'Commercial.QuoteRequestNonCorporate.FirstName'|trans }}</label>
+                        {{ form_errors(form.firstName) }}
+                    </div>
+                </div>
 
-                {{ form_widget(form.phone, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.PhonePlaceholder'|trans}}) }}
-                {{ form_errors(form.phone) }}
+                <div class="form-float-group">
+                    {{ form_widget(form.email, {'id': 'email_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.Email'|trans}}) }}
+                    <label class="form-float-control-placeholder"
+                           for="email_input">{{ 'Commercial.QuoteRequestNonCorporate.Email'|trans }}</label>
+                    {{ form_errors(form.email) }}
+                </div>
 
-                {{ form_widget(form.function, {'attr': {'class': 'input input--full step--marginfield', 'placeholder': 'Commercial.QuoteRequest.FunctionPlaceholder'|trans}}) }}
-                {{ form_errors(form.function) }}
+                <div class="form-float-group">
+                    {{ form_widget(form.phone, {'id': 'phone_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.PhonePlaceholder'|trans}}) }}
+                    <label class="form-float-control-placeholder"
+                           for="phone_input">{{ 'Commercial.QuoteRequestNonCorporate.PhonePlaceholder'|trans }}</label>
+                    {{ form_errors(form.phone) }}
+                </div>
+
+                <div class="form-float-group">
+                    {{ form_widget(form.function, {'id': 'function_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.FunctionPlaceholder'|trans}}) }}
+                    <label class="form-float-control-placeholder"
+                           for="function_input">{{ 'Commercial.QuoteRequestNonCorporate.FunctionPlaceholder'|trans }}</label>
+                    {{ form_errors(form.function) }}
+                </div>
 
                 <div class="clearfix"></div>
             </div>
@@ -81,9 +107,12 @@
                 <div class="step__title">{{ 'Public.Home.MyNeed'|trans }}</div>
             </div>
             <div class="step__right step__right--small">
-
-                {{ form_widget(form.need, {'attr': {'class': 'input input--full input--bordered', 'placeholder': 'Commercial.QuoteRequest.NeedPlaceholder'|trans}}) }}
-                {{ form_errors(form.need) }}
+                <div class="form-float-group">
+                    {{ form_widget(form.need, {'id': 'need_input', 'attr': {'class': 'input input--full input--bordered form-float-control', 'placeholder': 'Commercial.QuoteRequest.NeedPlaceholder'|trans}}) }}
+                    <label class="form-float-control-placeholder"
+                           for="need_input">{{ 'Commercial.QuoteRequestNonCorporate.NeedPlaceholder'|trans }}</label>
+                    {{ form_errors(form.need) }}
+                </div>
             </div>
             <div class="clearfix"></div>
         </div>
