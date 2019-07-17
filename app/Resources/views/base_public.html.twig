@@ -105,11 +105,7 @@
                     {% endif %}
 
                 {% else %}
-                    {% if 'corp_' in app.request.get('_route') %}
-                        {{ 'Public.Breadcrumb.OnMeasure'|trans }}
-                    {% else %}
-                        {{ 'Public.Breadcrumb.Custom'|trans }}
-                    {% endif %}
+                    {{ 'Public.Breadcrumb.Custom'|trans }}
                 {% endif %}
             </h2>
         </div>
