@@ -542,7 +542,7 @@ class SubscriptionController extends Controller
                 $sendOrderSummaryEmail = $productChantierOrderManager->sendOrderSummaryEmail($productChantierOrder);
 
                 if ($sendNewProductD3EOrderMail && $sendOrderSummaryEmail) {
-                    return $this->redirectToRoute('paprec_public_corp_chantier_subscription_packaged_step3', array(
+                    return $this->redirectToRoute('paprec_public_corp_chantier_subscription_packaged_step5', array(
                         'cartUuid' => $cart->getId(),
                         'orderId' => $productChantierOrder->getId()
                     ));
@@ -619,6 +619,26 @@ class SubscriptionController extends Controller
             'cart' => $cart,
             'productChantierOrder' => $productChantierOrder
 //            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * Etape Confirmation de commande qui récapitule la commande passée
+     *
+     * @Route("/chantier/package/step5/{cartUuid}/{orderId}", name="paprec_public_corp_chantier_subscription_packaged_step5")
+     */
+    public function step5packageAction(Request $request, $cartUuid, $orderId)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $cartManager = $this->get('paprec.cart_manager');
+
+        $cart = $cartManager->get($cartUuid);
+        $productChantierOrder = $em->getRepository('PaprecCommercialBundle:ProductChantierOrder')->find($orderId);
+
+        return $this->render('@PaprecPublic/Chantier/package/confirm.html.twig', array(
+            'cart' => $cart,
+            'productChantierOrder' => $productChantierOrder
         ));
     }
 

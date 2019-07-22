@@ -84,38 +84,13 @@
                     </div>
 
 
-                    <div class="recap-cart-mb">
-                        <div class="recap__title">Mes prestations</div>
-                        <div class="recap__cart">
-                            <span class="noproduct">{{ 'Public.Cart.NoPrestation'|trans }}<br>{{ 'Public.Cart.Added'|trans }}</span>
+                    <div class="recap-cart-mb" id="loadedCartPanelMb">
 
-                            <div class="recap__item">
-                                <div class="quantity">x1</div>
-                                <div class="title">Box</div>
-                                <div class="delete buttonDeleteProduct" id="buttonDeleteProduct_"></div>
-                                <div class="info">Petits D3E
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="recap__price">
-                                <div class="left">
-                                    {{ 'Public.Cart.ForfaitRecyclage'|trans|nl2br }}
-                                </div>
-                                <div class="right no-flex">
-                                <span>
-                                    50€
-                                </span> HT
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="recap__info">
-                            {{ 'Public.Cart.Including'|trans|nl2br }}
-                        </div>
                     </div>
+                    {% if cart is defined and cart is not null and cart.division is not null and cart.division != '5FLUX' and cart.postalCode is not null %}
 
-                    <div class="button-open-cart close"></div>
-
+                        <div class="button-open-cart"></div>
+                    {% endif %}
                     {#END MOBILE#}
 
 

@@ -83,6 +83,14 @@
                             {% endif %}
                         </div>
                     </div>
+
+                    <div class="recap-cart-mb" id="loadedCartPanelMb">
+
+                    </div>
+                    {% if cart is defined and cart is not null and cart.division is not null and cart.division != '5FLUX' and cart.postalCode is not null and cart.frequency != null %}
+
+                        <div class="button-open-cart"></div>
+                    {% endif %}
                     {#END MOBILE#}
 
                     {# DESKTOP#}

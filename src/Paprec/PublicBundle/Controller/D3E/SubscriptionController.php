@@ -446,7 +446,7 @@ class SubscriptionController extends Controller
                 $sendOrderSummaryEmail = $productD3EOrderManager->sendOrderSummaryEmail($productD3EOrder);
 
                 if ($sendNewProductD3EOrderMail && $sendOrderSummaryEmail) {
-                    return $this->redirectToRoute('paprec_public_corp_d3e_subscription_packaged_step3', array(
+                    return $this->redirectToRoute('paprec_public_corp_d3e_subscription_packaged_step5', array(
                         'cartUuid' => $cart->getId(),
                         'orderId' => $productD3EOrder->getId()
                     ));
@@ -526,7 +526,26 @@ class SubscriptionController extends Controller
 //            'form' => $form->createView()
         ));
     }
-    
+
+    /**
+     * Etape Confirmation de commande qui récapitule la commande passée
+     *
+     * @Route("/d3e/package/step5/{cartUuid}/{orderId}", name="paprec_public_corp_d3e_subscription_packaged_step5")
+     */
+    public function step5packageAction(Request $request, $cartUuid, $orderId)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $cartManager = $this->get('paprec.cart_manager');
+
+        $cart = $cartManager->get($cartUuid);
+        $productD3EOrder = $em->getRepository('PaprecCommercialBundle:ProductD3EOrder')->find($orderId);
+
+        return $this->render('@PaprecPublic/D3E/package/confirm.html.twig', array(
+            'cart' => $cart,
+            'productD3EOrder' => $productD3EOrder
+        ));
+    }
 
     /**
      * Ajoute au cart un displayedProduct

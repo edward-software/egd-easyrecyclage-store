@@ -122,6 +122,20 @@ $(function () {
         }
     });
 
+
+    /**
+     * PANIER MOBILE
+     */
+    $('.button-open-cart').on('click', function () {
+        $(this).toggleClass('close');
+        if ($(this).hasClass('close')) {
+            $('#loadedCartPanelMb').show();
+            $('#loadedCartPanelMb').addClass('active');
+        } else {
+            $('#loadedCartPanelMb').hide();
+        }
+    });
+
     /*******************************************************************************************************************
      * REGULAR FORM
      */
@@ -662,6 +676,7 @@ function reloadCart(readonly) {
             // On récupère l'HTML du cart dans "Mon besoin" et on l'insère dans loadedCartPanel dans la sidebar
             var htmlToDisplay = response.trim();
             $("#loadedCartPanel").html(htmlToDisplay);
+            $('#loadedCartPanelMb').html(htmlToDisplay);
             if (readonly) {
                 //on supprime les croix dans le panier
                 $('.buttonDeleteProduct').remove();
