@@ -344,8 +344,8 @@ class ProductChantierOrderManager
                         )
                     ),
                     'text/html'
-                )
-                ->attach($attachment);
+                );
+//                ->attach($attachment);
 
             if ($this->container->get('mailer')->send($message)) {
                 if (file_exists($pdfFile)) {
