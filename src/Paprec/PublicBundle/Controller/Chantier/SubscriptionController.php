@@ -132,6 +132,15 @@ class SubscriptionController extends Controller
         $cartManager = $this->get('paprec.cart_manager');
 
         $cart = $cartManager->get($cartUuid);
+
+        /**
+         * Si pas de contenu, on redirige vers la step1
+         */
+        if ($cart->getContent() == null || count($cart->getContent()) < 1) {
+            return $this->redirectToRoute('paprec_public_corp_chantier_subscription_step1', array(
+                'cartUuid' => $cart->getId(),
+            ));
+        }
         $type = $cart->getType();
 
         $postalCode = $cart->getPostalCode();
@@ -504,6 +513,16 @@ class SubscriptionController extends Controller
         $cartManager = $this->get('paprec.cart_manager');
 
         $cart = $cartManager->get($cartUuid);
+
+        /**
+         * Si pas de contenu, on redirige vers la step1
+         */
+        if ($cart->getContent() == null || count($cart->getContent()) < 1) {
+            return $this->redirectToRoute('paprec_public_corp_chantier_subscription_packaged_step1', array(
+                'cartUuid' => $cart->getId(),
+            ));
+        }
+
         $type = $cart->getType();
 
         $postalCode = $cart->getPostalCode();

@@ -89,6 +89,14 @@ class SubscriptionController extends Controller
 
         $cart = $cartManager->get($cartUuid);
 
+        /**
+         * Si pas de contenu, on redirige vers la step1
+         */
+        if ($cart->getContent() == null || count($cart->getContent()) < 1) {
+            return $this->redirectToRoute('paprec_public_corp_di_subscription_step1', array(
+                'cartUuid' => $cart->getId(),
+            ));
+        }
 
         $productDIQuote = new productDIQuote();
         $productDIQuote->setCity($cart->getCity());

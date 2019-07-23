@@ -496,7 +496,7 @@ $(function () {
      * CONTACT DETAILS FORM
      */
     if ($('.contact-details-form').is('div')) {
-        reloadCart();
+        reloadCart(true);
         initializeAutocompleteAddress();
 
         $('#contactDetailsFormSubmitButton').on('click', function () {
@@ -538,7 +538,7 @@ $(function () {
      * CONFIRM
      */
     if ($('.confirm').is('div')) {
-        reloadCart();
+        reloadCart(true);
     }
 
 

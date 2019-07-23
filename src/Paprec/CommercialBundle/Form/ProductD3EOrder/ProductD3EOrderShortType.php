@@ -53,30 +53,30 @@ class ProductD3EOrderShortType extends AbstractType
             ->add('function', TextType::class, array(
                 'required' => false
             ))
-            ->add('siret', TextType::class)
-            ->add('tvaStatus', ChoiceType::class, array(
-                'choices' => array(
-                    'Numéro de TVA intracommunautaire' => 'intracom',
-                    'Franchise en base de TVA - Article 293 B' => 'franchise',
-                ),
-                'choice_attr' => function () {
-                    return ['class' => 'input__radio input__radio--short'];
-                },
-                'expanded' => true
-            ))
-            ->add('tvaNumber', TextType::class)
+//            ->add('siret', TextType::class)
+//            ->add('tvaStatus', ChoiceType::class, array(
+//                'choices' => array(
+//                    'Numéro de TVA intracommunautaire' => 'intracom',
+//                    'Franchise en base de TVA - Article 293 B' => 'franchise',
+//                ),
+//                'choice_attr' => function () {
+//                    return ['class' => 'input__radio input__radio--short'];
+//                },
+//                'expanded' => true
+//            ))
+//            ->add('tvaNumber', TextType::class)
             ->add('address', TextType::class)
             ->add('postalCode', TextType::class)
             ->add('city', TextType::class)
-            ->add('invoicingAddress', TextType::class, array(
-                'required' => false
-            ))
-            ->add('invoicingPostalCode', TextType::class, array(
-                'required' => false
-            ))
-            ->add('invoicingCity', TextType::class, array(
-                'required' => false
-            ))
+//            ->add('invoicingAddress', TextType::class, array(
+//                'required' => false
+//            ))
+//            ->add('invoicingPostalCode', TextType::class, array(
+//                'required' => false
+//            ))
+//            ->add('invoicingCity', TextType::class, array(
+//                'required' => false
+//            ))
             ->add('headofficeAddress', TextType::class, array(
                 'required' => false
             ))

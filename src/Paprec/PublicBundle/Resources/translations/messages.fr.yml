@@ -85,9 +85,9 @@ Public:
     QuoteRequest:                 Je rédige mon besoin
     PostalCode:                   Code postal
     ValidateNeed:                 Validez votre besoin
-    ValidateOrder:                Validez votre commande
+    ValidateOrder:                Validez votre devis
     Confirm:                      Confirmez
-    GoToDelivery:                 Aller à la livraison
+    GoToDelivery:                 Validez
     GoToPayment:                  Aller au paiement
     MyTrash:                      Mes déchets
     ToCollect:                    à collecter
