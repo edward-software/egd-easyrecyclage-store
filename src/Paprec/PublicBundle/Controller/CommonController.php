@@ -147,7 +147,7 @@ class CommonController extends Controller
 
         } catch
         (\GuzzleHttp\Exception\GuzzleException $e) {
-            throw new Exception('cannotLoadMenuWorpress', 500);
+            throw new Exception($e->getMessage(), 500);
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode());
         }
