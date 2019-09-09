@@ -23,7 +23,7 @@ parameters:
     paprec_email_other_services: digital@eggers-conseil.com
     paprec_public_site_url: 'https://wwwv3.easyrecyclage.eggers-digital.com'
     paprec_easyrecyclage_5flux_url: 'https://store.easyrecyclage.com/besoin'
-    paprec_google_api_key: AIzaSyBdYprWZt8V-GkukzTG2ev3-eVdLb3FSCA
+    paprec_google_api_key: AIzaSyBik0ZOBhO3ZubAGYoZCjJt-QPrMsFfnBQ
 
     wkhtmltopdf_path: /usr/local/bin/wkhtmltopdf
 

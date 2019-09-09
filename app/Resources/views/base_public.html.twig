@@ -25,6 +25,16 @@
                 <ul>
                     {{ render(controller('PaprecPublicBundle:Common:getMenuFromWP', {'slug': 'shortlinks-menu'})) }}
                 </ul>
+                <div class="header__searchbar">
+                    <!-- search -->
+                    <form class="header__searchbar__form" method="get" action="{{ paprec_public_site_url }}"
+                          role="search">
+                        <input class="header__searchbar__input" type="search" name="s">
+                        <span class="header__searchbar__submit"></span>
+                        <span class="header__searchbar__close"></span>
+                    </form>
+                    <!-- /search -->
+                </div>
             </nav>
         </div>
     </div>

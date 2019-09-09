@@ -23,7 +23,7 @@ class CommonController extends Controller
     {
         try {
 
-            $client = new Client(['base_uri' => $this->getParameter('paprec_public_site_url')]);
+            $client = new Client(['base_uri' => $this->getParameter('paprec_public_site_url'), 'verify' => false]);
             if ($slug == 'header-menu') {
                 $response = $client->request('GET', '/wp-json/menus/v2/header');
             } else {
