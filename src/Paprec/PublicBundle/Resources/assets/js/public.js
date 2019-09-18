@@ -383,7 +383,8 @@ $(function () {
         /**
          * Ajout un seul produit au clic sur le +
          */
-        $('.addOneToCartPackageButton').click(function () {
+        $('.addOneToCartPackageButton').click(function (event) {
+            event.stopPropagation();
             var url = $(this).data('url');
 
             var productId = (this.id).replace('addOneToCartPackageButton', '');
@@ -403,6 +404,7 @@ $(function () {
          * Enlève un seul produit au clic sur le -
          */
         $('.removeOneToCartPackageButton').click(function () {
+            event.stopPropagation();
             var url = $(this).data('url');
 
             var productId = (this.id).replace('removeOneToCartPackageButton', '');
