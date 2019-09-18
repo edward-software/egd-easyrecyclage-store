@@ -296,8 +296,13 @@ $(function () {
 
         // Au clic sur un produit, on l'ajoute ou on le supprime des displayedCategories
         $('.productCheckboxPicto').click(function () {
+            alert('');
             var url = $(this).data('url');
             $(location).attr('href', url);
+        });
+
+        $('.productCheckboxPicto button').click(function (event) {
+            event.stopPropagation();
         });
 
         // Au clic sur la croix de l'infoproduct, on supprime le produit des displayedProduct
@@ -385,6 +390,7 @@ $(function () {
          */
         $('.addOneToCartPackageButton').click(function (event) {
             event.stopPropagation();
+            event.preventDefault();
             var url = $(this).data('url');
 
             var productId = (this.id).replace('addOneToCartPackageButton', '');
@@ -403,8 +409,9 @@ $(function () {
         /**
          * Enlève un seul produit au clic sur le -
          */
-        $('.removeOneToCartPackageButton').click(function () {
+        $('.removeOneToCartPackageButton').click(function (event) {
             event.stopPropagation();
+            event.preventDefault();
             var url = $(this).data('url');
 
             var productId = (this.id).replace('removeOneToCartPackageButton', '');
