@@ -296,7 +296,6 @@ $(function () {
 
         // Au clic sur un produit, on l'ajoute ou on le supprime des displayedCategories
         $('.productCheckboxPicto').click(function () {
-            alert('');
             var url = $(this).data('url');
             $(location).attr('href', url);
         });
