@@ -13,14 +13,14 @@
 {% block sidebar %}
     <div class="contact-details-form"></div>
     {# Définition des menus affichés dans la sidebar #}
-    {% set besoin = 'active' %}
+    {% set besoin = 'passed' %}
     {% set coordonnees = 'active' %}
 {#    {% set livraison = '' %}#}
 {#    {% set paiement = '' %}#}
     {% set offre = '' %}
 
     {{ parent() }}
-{% endblock %}
+{% endblock %} 
 {% block main_content_stepper %}
     <form id="contactDetailsForm" action="" method="post">
         <input type="hidden" id="divisionType" value="{{ cart.division }}">
