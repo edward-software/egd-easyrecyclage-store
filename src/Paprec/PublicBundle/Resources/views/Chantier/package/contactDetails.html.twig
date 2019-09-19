@@ -15,8 +15,8 @@
     {# Définition des menus affichés dans la sidebar #}
     {% set besoin = 'passed' %}
     {% set coordonnees = 'active' %}
-{#    {% set livraison = '' %}#}
-{#    {% set paiement = '' %}#}
+    {#    {% set livraison = '' %}#}
+    {#    {% set paiement = '' %}#}
     {% set offre = '' %}
 
     {{ parent() }}
@@ -36,19 +36,19 @@
                     {{ form_errors(form.businessName) }}
                 </div>
 
-{#                <div class="form-float-group">#}
-{#                    {{ form_widget(form.siret, {'id': 'siret_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.ProductChantierOrder.SIRET'|trans}}) }}#}
-{#                    <label class="form-float-control-placeholder"#}
-{#                           for="siret_input">{{ 'Commercial.ProductChantierOrder.SIRET'|trans }}</label>#}
-{#                    {{ form_errors(form.siret) }}#}
-{#                </div>#}
+                {#                <div class="form-float-group">#}
+                {#                    {{ form_widget(form.siret, {'id': 'siret_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.ProductChantierOrder.SIRET'|trans}}) }}#}
+                {#                    <label class="form-float-control-placeholder"#}
+                {#                           for="siret_input">{{ 'Commercial.ProductChantierOrder.SIRET'|trans }}</label>#}
+                {#                    {{ form_errors(form.siret) }}#}
+                {#                </div>#}
 
-                {{ form_widget(form.businessLine, {'attr': {'class': 'input input--full'}}) }}
-                {{ form_errors(form.businessLine) }}
-
-                {{ form_widget(form.civility, {'attr': {'class': 'input--radio'}}) }}
-                {{ form_errors(form.civility) }}
-
+                    {{ form_widget(form.businessLine, {'id': 'business_line_input', 'attr': {'class': 'input input--full'}}) }}
+                    {{ form_errors(form.businessLine) }}
+                <div class="form-float-group--radio-button ">
+                    {{ form_widget(form.civility, {'attr': {'class': 'input--radio'}}) }}
+{#                    {{ form_errors(form.civility) }}#}
+                </div>
                 <div class="clearfix step--marginfield"></div>
 
                 <div class="flex space-between">
@@ -147,54 +147,54 @@
                 </div>
                 <div class="clearfix"></div>
 
-{#                <input type="checkbox" id="invoicingAddressCheckbox" class="address-checkbox">#}
-{#                <label for="invoicingAddressCheckbox"#}
-{#                       class="address-checkbox-label">{{ 'Commercial.ProductChantierOrder.InvoicingAddressCheckbox'|trans }}</label>#}
-{#                <div id="invoicingAddressContainer" class="address-container m-t-15">#}
-{#                    <div class="form-float-group">#}
-{#                        {{ form_widget(form.invoicingAddress, {'id': 'address_invoicing_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.ProductChantierOrder.InvoicingAddressPlaceholder'|trans}}) }}#}
-{#                        <label class="form-float-control-placeholder"#}
-{#                               for="address_invoicing_input">{{ 'Commercial.ProductChantierOrder.InvoicingAddressPlaceholder'|trans }}</label>#}
-{#                        {{ form_errors(form.invoicingAddress) }}#}
-{#                    </div>#}
-{#                    <div class="flex space-between">#}
-{#                        <div class="form-float-group form-float-group--zip">#}
-{#                            {{ form_widget(form.invoicingPostalCode, {'id': 'postal_code_invoicing_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.ProductChantierOrder.PostalCode'|trans}}) }}#}
-{#                            <label class="form-float-control-placeholder"#}
-{#                                   for="postal_code_invoicing_input">{{ 'Commercial.ProductChantierOrder.PostalCode'|trans }}</label>#}
-{#                            {{ form_errors(form.invoicingPostalCode) }}#}
-{#                        </div>#}
-{#                        <div class="form-float-group form-float-group--city">#}
-{#                            {{ form_widget(form.invoicingCity, {'id': 'city_invoicing_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.ProductChantierOrder.City'|trans}}) }}#}
-{#                            <label class="form-float-control-placeholder"#}
-{#                                   for="city_invoicing_input">{{ 'Commercial.ProductChantierOrder.City'|trans }}</label>#}
-{#                            {{ form_errors(form.invoicingCity) }}#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
+                {#                <input type="checkbox" id="invoicingAddressCheckbox" class="address-checkbox">#}
+                {#                <label for="invoicingAddressCheckbox"#}
+                {#                       class="address-checkbox-label">{{ 'Commercial.ProductChantierOrder.InvoicingAddressCheckbox'|trans }}</label>#}
+                {#                <div id="invoicingAddressContainer" class="address-container m-t-15">#}
+                {#                    <div class="form-float-group">#}
+                {#                        {{ form_widget(form.invoicingAddress, {'id': 'address_invoicing_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.ProductChantierOrder.InvoicingAddressPlaceholder'|trans}}) }}#}
+                {#                        <label class="form-float-control-placeholder"#}
+                {#                               for="address_invoicing_input">{{ 'Commercial.ProductChantierOrder.InvoicingAddressPlaceholder'|trans }}</label>#}
+                {#                        {{ form_errors(form.invoicingAddress) }}#}
+                {#                    </div>#}
+                {#                    <div class="flex space-between">#}
+                {#                        <div class="form-float-group form-float-group--zip">#}
+                {#                            {{ form_widget(form.invoicingPostalCode, {'id': 'postal_code_invoicing_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.ProductChantierOrder.PostalCode'|trans}}) }}#}
+                {#                            <label class="form-float-control-placeholder"#}
+                {#                                   for="postal_code_invoicing_input">{{ 'Commercial.ProductChantierOrder.PostalCode'|trans }}</label>#}
+                {#                            {{ form_errors(form.invoicingPostalCode) }}#}
+                {#                        </div>#}
+                {#                        <div class="form-float-group form-float-group--city">#}
+                {#                            {{ form_widget(form.invoicingCity, {'id': 'city_invoicing_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.ProductChantierOrder.City'|trans}}) }}#}
+                {#                            <label class="form-float-control-placeholder"#}
+                {#                                   for="city_invoicing_input">{{ 'Commercial.ProductChantierOrder.City'|trans }}</label>#}
+                {#                            {{ form_errors(form.invoicingCity) }}#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                </div>#}
             </div>
         </div>
-{#        <div class="step step--index">#}
-{#            <div class="step__left">#}
-{#                <div class="step__title">#}
-{#                    {{ 'Public.Home.TVAStatus'|trans }}#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="step__right form-input">#}
-{#                {{ form_widget(form.tvaStatus, {'attr': {'class': 'input--radio'}}) }}#}
-{#                {{ form_errors(form.tvaStatus) }}#}
-{#            </div>#}
-{#        </div>#}
+        {#        <div class="step step--index">#}
+        {#            <div class="step__left">#}
+        {#                <div class="step__title">#}
+        {#                    {{ 'Public.Home.TVAStatus'|trans }}#}
+        {#                </div>#}
+        {#            </div>#}
+        {#            <div class="step__right form-input">#}
+        {#                {{ form_widget(form.tvaStatus, {'attr': {'class': 'input--radio'}}) }}#}
+        {#                {{ form_errors(form.tvaStatus) }}#}
+        {#            </div>#}
+        {#        </div>#}
 
         <div class="step step--index">
             <div class="step__left">&nbsp;</div>
             <div class="step__right step__right--small">
-{#                <div class="form-float-group">#}
-{#                    {{ form_widget(form.tvaNumber, {'id': 'tva_number_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.ProductChantierOrder.TVANumber'|trans}}) }}#}
-{#                    <label class="form-float-control-placeholder"#}
-{#                           for="tva_number_input">{{ 'Commercial.ProductChantierOrder.TVANumber'|trans }}</label>#}
-{#                    {{ form_errors(form.tvaNumber) }}#}
-{#                </div>#}
+                {#                <div class="form-float-group">#}
+                {#                    {{ form_widget(form.tvaNumber, {'id': 'tva_number_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.ProductChantierOrder.TVANumber'|trans}}) }}#}
+                {#                    <label class="form-float-control-placeholder"#}
+                {#                           for="tva_number_input">{{ 'Commercial.ProductChantierOrder.TVANumber'|trans }}</label>#}
+                {#                    {{ form_errors(form.tvaNumber) }}#}
+                {#                </div>#}
 
                 <div class="clearfix"></div>
                 <div class="preferred-contact">
@@ -202,7 +202,7 @@
                 </div>
                 <div class="preferred-contact--choice">
                     {{ form_widget(form.preferredContact, {'attr': {'class': 'input--radio'}}) }}
-                    {{ form_errors(form.preferredContact) }}
+{#                    {{ form_errors(form.preferredContact) }}#}
                 </div>
 
                 <div class="clearfix"></div>
