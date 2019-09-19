@@ -47,12 +47,12 @@
                         <button class="removeOneToCartPackageButton"
                                 id="removeOneToCartPackageButton{{ product.id }}"
                                 data-url="{{ path('paprec_public_corp_chantier_subscription_packaged_removeOneContent', {cartUuid: cart.id, productId: product.id}) }}">
-                            -
+                            <i class="fa fa-minus" id=""></i>
                         </button>
                         <button class="addOneToCartPackageButton"
                                 id="addOneToCartPackageButton{{ product.id }}"
                                 data-url="{{ path('paprec_public_corp_chantier_subscription_packaged_addOneContent', {cartUuid: cart.id, productId: product.id}) }}">
-                            +
+                            <i class="fa fa-plus" id=""></i>
                         </button>
                     </div>
                     {% for items in cart.content %}
