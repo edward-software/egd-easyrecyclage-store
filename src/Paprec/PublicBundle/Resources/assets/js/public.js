@@ -904,7 +904,6 @@ function addOrRemoveDisplayedProduct(el) {
                 var htmlToDisplay = response.trim();
                 $(that).addClass('active');
                 var container = $(that).next('.infoproduct-container');
-                $('.infoproduct-container').outerHeight(0);
                 $(container).html(htmlToDisplay);
                 setInterval(function () {
                     $(container).outerHeight($('.infoproduct').outerHeight());
@@ -920,6 +919,8 @@ function addOrRemoveDisplayedProduct(el) {
 function closeInfoproductContainer() {
     $('.productCheckboxPicto').removeClass('active');
     $('.infoproduct-container').outerHeight(0);
+    $('.infoproduct-container').height(0);
+    $('.infoproduct-container').innerHeight(0);
     $('.infoproduct-container').html('');
 }
 
