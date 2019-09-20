@@ -905,7 +905,7 @@ function addOrRemoveDisplayedProduct(el) {
                 $(that).addClass('active');
                 var container = $(that).next('.infoproduct-container');
                 $(container).html(htmlToDisplay);
-                setInterval(function () {
+                setTimeout(function () {
                     $(container).outerHeight($('.infoproduct').outerHeight());
                 }, 100);
             }
