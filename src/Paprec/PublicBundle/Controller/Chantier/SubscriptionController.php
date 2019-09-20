@@ -2,6 +2,7 @@
 
 namespace Paprec\PublicBundle\Controller\Chantier;
 
+use Paprec\CatalogBundle\Entity\ProductChantier;
 use Paprec\CommercialBundle\Entity\ProductChantierOrder;
 use Paprec\CommercialBundle\Entity\ProductChantierQuote;
 use Paprec\CommercialBundle\Form\ProductChantierOrder\ProductChantierOrderDeliveryType;
@@ -501,6 +502,8 @@ class SubscriptionController extends Controller
     }
 
 
+
+
     /**
      * Etape "Mes coordonnées"
      * où l'on créé la commande au submit du formulaire
@@ -753,6 +756,7 @@ class SubscriptionController extends Controller
         ));
     }
 
+
     /**
      * Supprime un Product du contenu du Cart
      *
@@ -767,6 +771,60 @@ class SubscriptionController extends Controller
         $cart = $cartManager->removeContentPackage($cartUuid, $productId);
 
         return new JsonResponse($cart->getContent());
+    }
+
+
+    /**
+     * AJAX Function qui retourne le HTML de l'infoproduct si on ajoute le produit comme produit à afficher, renvoie false sinon
+     *
+     * @Route("/chantier/package/infoproduct/{cartUuid}/{productId}", name="paprec_public_corp_chantier_subscription_packaged_infoproduct", condition="request.isXmlHttpRequest()")
+     * @throws \Exception
+     */
+    public function getInfoproductPackageAction(Request $request, $cartUuid, $productId)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+        $productChantierManager = $this->get('paprec_catalog.product_chantier_manager');
+
+        $productChantier = $productChantierManager->get($productId);
+
+        $cart = $cartManager->addOrRemoveDisplayedProductNoCat($cartUuid, $productChantier->getId());
+
+        if ($cart->getDisplayedProducts() && count($cart->getDisplayedProducts()) && in_array($productId, $cart->getDisplayedProducts())) {
+            return $this->render('@PaprecPublic/Chantier/package/partial/infoproductPartial.html.twig', array(
+                'cart' => $cart,
+                'product' => $productChantier
+            ));
+        } else {
+            return new JsonResponse(false, 200);
+        }
+    }
+
+    /**
+     * AJAX Function qui retourne le HTML de l'infoproduct si on ajoute le produit comme produit à afficher, renvoie false sinon
+     *
+     * @Route("/chantier/infoproduct/{cartUuid}/{productId}/{categoryId}", name="paprec_public_corp_chantier_subscription_infoproduct", condition="request.isXmlHttpRequest()")
+     * @throws \Exception
+     */
+    public function getInfoproductAction(Request $request, $cartUuid, $productId, $categoryId)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+        $productChantierManager = $this->get('paprec_catalog.product_chantier_manager');
+        $categoryManager = $this->get('paprec_catalog.category_manager');
+
+        $productChantier = $productChantierManager->get($productId);
+        $category = $categoryManager->get($categoryId);
+
+        $cart = $cartManager->addOrRemoveDisplayedProduct($cartUuid, $category->getId(), $productChantier->getId());
+
+        if ($cart->getDisplayedProducts() && count($cart->getDisplayedProducts()) && in_array($productId, $cart->getDisplayedProducts())) {
+            return $this->render('@PaprecPublic/Chantier/partial/infoproductPartial.html.twig', array(
+                'cart' => $cart,
+                'product' => $productChantier,
+                'category' => $category
+            ));
+        } else {
+            return new JsonResponse(false, 200);
+        }
     }
 
 }

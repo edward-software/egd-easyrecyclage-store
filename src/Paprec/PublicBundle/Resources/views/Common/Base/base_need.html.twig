@@ -24,7 +24,7 @@
     <div class="container__step-title" id="anchor1">
         <h2>Ma solution recyclage</h2>
     </div>
-    <div class="step step--index" >
+    <div class="step step--index">
         <div class="step__left step__left-first">
             <div class="step__title">
                 {{ 'Public.Cart.MyTrash'|trans }}&nbsp;{{ 'Public.Cart.ToCollect'|trans }}
@@ -46,7 +46,9 @@
                              data-url="{{ path('paprec_public_corp_' ~ cart.division|lower ~ '_subscription_addDisplayedCategory', {cartUuid: cart.id, categoryId: category.id}) }}"
                              style="background-image: url({{ asset('/uploads/pictos/' ~ category.picto) }})">
 
-                            {{ category.name }}
+                            <div class="productCheckboxPicto__title">
+                                {{ category.name }}
+                            </div>
                         </div>
 
                     </div>
@@ -56,7 +58,9 @@
                         <a href="{{ path('paprec_public_corp_home_requestWriting_step1', {cartUuid: cart.id}) }}">
                             <div class="checkboxPicto categoryCheckboxPicto"
                                  style="background-image: url({{ asset('/build/static/autre_dechet.svg') }})">
-                                {{ 'Public.Cart.OtherTrash'|trans }}
+                                <div class="productCheckboxPicto__title">
+                                    {{ 'Public.Cart.OtherTrash'|trans }}
+                                </div>
                             </div>
                         </a>
                     </div>

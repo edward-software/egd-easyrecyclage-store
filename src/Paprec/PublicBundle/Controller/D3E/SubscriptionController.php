@@ -343,6 +343,43 @@ class SubscriptionController extends Controller
         ));
     }
 
+    /**
+     * AJAX Function qui retourne le HTML de l'infoproduct si on ajoute le produit comme produit à afficher, renvoie false sinon
+     *
+     * @Route("/d3e/infoproduct/{cartUuid}/{productId}", name="paprec_public_corp_d3e_subscription_infoproduct", condition="request.isXmlHttpRequest()")
+     * @throws \Exception
+     */
+    public function getInfoproductAction(Request $request, $cartUuid, $productId)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+        $productD3EManager = $this->get('paprec_catalog.product_d3e_manager');
+
+        $productChantier = $productD3EManager->get($productId);
+
+        $cart = $cartManager->addOrRemoveDisplayedProductNoCat($cartUuid, $productChantier->getId());
+
+        if ($cart->getDisplayedProducts() && count($cart->getDisplayedProducts()) && in_array($productId, $cart->getDisplayedProducts())) {
+            $typeManager = $this->get('paprec_catalog.type_manager');
+            $productsTypes = array();
+
+            if ($cart->getDisplayedProducts() && count($cart->getDisplayedProducts())) {
+                foreach ($cart->getDisplayedProducts() as $displayedProduct) {
+                    $productsTypes[$displayedProduct] = $typeManager->findAvailables(array(
+                        'product' => $displayedProduct
+                    ));
+                }
+            }
+
+            return $this->render('@PaprecPublic/D3E/partial/infoproductPartial.html.twig', array(
+                'cart' => $cart,
+                'product' => $productChantier,
+                'productTypes' => $productsTypes
+            ));
+        } else {
+            return new JsonResponse(false, 200);
+        }
+    }
+
 
 
 
@@ -675,4 +712,28 @@ class SubscriptionController extends Controller
         return new JsonResponse($cart->getContent());
     }
 
+    /**
+     * AJAX Function qui retourne le HTML de l'infoproduct si on ajoute le produit comme produit à afficher, renvoie false sinon
+     *
+     * @Route("/d3e/package/infoproduct/{cartUuid}/{productId}", name="paprec_public_corp_d3e_subscription_packaged_infoproduct", condition="request.isXmlHttpRequest()")
+     * @throws \Exception
+     */
+    public function getInfoproductPackageAction(Request $request, $cartUuid, $productId)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+        $productD3EManager = $this->get('paprec_catalog.product_d3e_manager');
+
+        $productD3E = $productD3EManager->get($productId);
+
+        $cart = $cartManager->addOrRemoveDisplayedProductNoCat($cartUuid, $productD3E->getId());
+
+        if ($cart->getDisplayedProducts() && count($cart->getDisplayedProducts()) && in_array($productId, $cart->getDisplayedProducts())) {
+            return $this->render('@PaprecPublic/D3E/package/partial/infoproductPartial.html.twig', array(
+                'cart' => $cart,
+                'product' => $productD3E
+            ));
+        } else {
+            return new JsonResponse(false, 200);
+        }
+    }
 }

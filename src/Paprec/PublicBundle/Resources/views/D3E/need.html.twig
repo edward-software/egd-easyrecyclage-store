@@ -38,19 +38,20 @@
             <div class="product-container">
                 <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts %}  active {% endif %}"
                      id="productCheckboxPicto_{{ product.id }}"
-                     data-url="{{ path('paprec_public_corp_d3e_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: product.id}) }}"
+                     data-url="{{ path('paprec_public_corp_d3e_subscription_infoproduct', {cartUuid: cart.id, productId: product.id}) }}"
                      style="{% if product.pictos|length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
-                    {{ product.name }}
-
+                    <div class="productCheckboxPicto__title">
+                        {{ product.name }}
+                    </div>
                 </div>
-                {% if product.id in cart.displayedProducts %}
-                    <div class="infoproduct-container">
+                <div class="infoproduct-container">
+                    {% if product.id in cart.displayedProducts %}
 
                         <div class="infoproduct">
 
-                            {#<div class="infoproduct__close"#}
-                            {#data-url="{{ path('paprec_public_corp_d3e_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, productId: displayedProduct.id}) }}"#}
-                            {#id="infoProductClose_{{ displayedProduct.id }}"></div>#}
+                            <div class="infoproduct__close"
+                            data-url="{{ path('paprec_public_corp_d3e_subscription_infoproduct', {cartUuid: cart.id, productId: product.id}) }}"
+                            id="infoProductClose_{{ product    .id }}"></div>
 
                             <div class="infoproduct__type__title">
                                 <p>{{ product.name }}</p>
@@ -198,8 +199,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div>
         {% endfor %}
     </div>

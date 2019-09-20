@@ -67,18 +67,21 @@
                                 <div class="product-container">
                                     <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts and category.id in cart.displayedProducts|keys %}  active {% endif %}"
                                          id="productCheckboxPicto_{{ product.id }}_{{ category.id }}"
-                                         data-url="{{ path('paprec_public_corp_chantier_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: category.id, productId: product.id}) }}"
+                                         data-url="{{ path('paprec_public_corp_chantier_subscription_infoproduct', {cartUuid: cart.id, categoryId: category.id, productId: product.id}) }}"
                                          style="{% if product.pictos| length > 0 %}background-image: url({{ asset('/uploads/pictos/' ~ product.pictos[0].path) }}) {% endif %}">
-                                        {{ product.name }}
-                                        <br>{{ product.capacity|nl2br }} {% autoescape false %} {{ product.capacityUnit }}{% endautoescape %}
+                                        <div class="productCheckboxPicto__title">
+                                            {{ product.name }}
+                                            <span>{{ product.capacity }}{% autoescape false %}{{ product.capacityUnit }}{% endautoescape %}</span>
+
+                                        </div>
                                         {% for items in cart.content %}
                                             {% if items['cId'] == category.id and items['pId'] == product.id %}
                                                 <span class="number">{{ items['qtty'] }}</span>
                                             {% endif %}
                                         {% endfor %}
                                     </div>
-                                    {% if product.id in cart.displayedProducts and category.id in cart.displayedProducts|keys %}
-                                        <div class="infoproduct-container">
+                                    <div class="infoproduct-container">
+                                        {% if product.id in cart.displayedProducts and category.id in cart.displayedProducts|keys %}
                                             <div class="infoproduct">
                                                 <div class="left">
 
@@ -106,7 +109,7 @@
                                                 </div>
                                                 <div class="right">
                                                     <div class="infoproduct__close"
-                                                         data-url="{{ path('paprec_public_corp_chantier_subscription_addOrRemoveDisplayedProduct', {cartUuid: cart.id, categoryId: category.id, productId: product.id}) }}"
+                                                         data-url="{{ path('paprec_public_corp_chantier_subscription_infoproduct', {cartUuid: cart.id, categoryId: category.id, productId: product.id}) }}"
                                                          id="infoProductClose_{{ product.id }}_{{ category.id }}"></div>
                                                     <div class="infoproduct__header__container">
                                                         <div class="infoproduct__title__container">
@@ -197,13 +200,13 @@
                                                     <button class="button button--lightgreen addToCartSubmitButton waves-effect"
                                                             data-url="{{ path('paprec_public_corp_chantier_subscription_addContent', {cartUuid: cart.id, categoryId: category.id, productId: product.id, quantity: 'quantityTmp'}) }}"
                                                             id="addToCartSubmitButton_{{ product.id }}_{{ category.id }}"
-                                                            >{{ ('Public.Cart.AddToCart' ~ cart.type|capitalize)|trans }}
+                                                    >{{ ('Public.Cart.AddToCart' ~ cart.type|capitalize)|trans }}
                                                     </button>
                                                 </div>
                                                 <div class="clearfix"></div>
                                             </div>
-                                        </div>
-                                    {% endif %}
+                                        {% endif %}
+                                    </div>
                                 </div>
                             {% endfor %}
                         </div>

@@ -266,4 +266,32 @@ class SubscriptionController extends Controller
 
     }
 
+    /**
+     * AJAX Function qui retourne le HTML de l'infoproduct si on ajoute le produit comme produit à afficher, renvoie false sinon
+     *
+     * @Route("/di/infoproduct/{cartUuid}/{productId}/{categoryId}", name="paprec_public_corp_di_subscription_infoproduct", condition="request.isXmlHttpRequest()")
+     * @throws \Exception
+     */
+    public function getInfoproductAction(Request $request, $cartUuid, $productId, $categoryId)
+    {
+        $cartManager = $this->get('paprec.cart_manager');
+        $productDIManager = $this->get('paprec_catalog.product_di_manager');
+        $categoryManager = $this->get('paprec_catalog.category_manager');
+
+        $productDI = $productDIManager->get($productId);
+        $category  = $categoryManager->get($categoryId);
+
+        $cart = $cartManager->addOrRemoveDisplayedProduct($cartUuid, $category->getId(), $productDI->getId());
+
+        if ($cart->getDisplayedProducts() && count($cart->getDisplayedProducts()) && in_array($productId, $cart->getDisplayedProducts())) {
+            return $this->render('@PaprecPublic/DI/partial/infoproductPartial.html.twig', array(
+                'cart' => $cart,
+                'product' => $productDI,
+                'category' => $category
+            ));
+        } else {
+            return new JsonResponse(false, 200);
+        }
+    }
+
 }

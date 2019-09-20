@@ -93,7 +93,7 @@ $(function () {
      * On adapte la taille de infoproduct à la taille de infoproduct-container
      */
     if ($('.infoproduct').is('div')) {
-        $('.infoproduct-container').outerHeight($('.infoproduct').outerHeight());
+        $('.infoproduct').parent('.infoproduct-container').outerHeight($('.infoproduct').outerHeight());
     }
 
     /**
@@ -304,22 +304,15 @@ $(function () {
     if ($('.need-form').is('div')) {
         reloadCart();
 
-        // Au clic sur un produit, on l'ajoute ou on le supprime des displayedCategories
+        // Au clic sur un produit, on l'ajoute ou on le supprime des displayedProducts
         $('.productCheckboxPicto').click(function () {
-            var url = $(this).data('url');
-            $(location).attr('href', url);
+            addOrRemoveDisplayedProduct(this);
         });
+
 
         $('.productCheckboxPicto button').click(function (event) {
             event.stopPropagation();
         });
-
-        // Au clic sur la croix de l'infoproduct, on supprime le produit des displayedProduct
-        $('.infoproduct__close').click(function () {
-            var url = $(this).data('url');
-            $(location).attr('href', url);
-        });
-
     }
 
     /*******************************************************************************************************************
@@ -347,45 +340,15 @@ $(function () {
         /**
          * On intercepte le clic sur le bouton "Ajouter au panier" pour récupérer le produit et la catégorie et l'ajouter au cart
          */
-        $('.addToCartSubmitButton').click(function () {
-            var url = $(this).data('url');
-
-            var productCategory = (this.id).replace('addToCartSubmitButton_', '').split('_', 2);
-            var productId = productCategory[0];
-            var categoryId = productCategory[1];
-            var qtty = $('#quantityProducSelect_' + productId + '_' + categoryId).val();
-            url = url.replace('quantityTmp', qtty);
-            $.ajax({
-                type: "POST",
-                url: url,
-                success: function (response) {
-                    // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
-                    removeBadge(productId, categoryId);
-                    $('#productCheckboxPicto_' + productId + '_' + categoryId).prepend("<span class=\"number\">" + qtty + "<span");
-                    $('#validateNeedButton').removeAttr('disabled');
-                    reloadCart();
-                }
-            });
-        });
-
-        $('.addToCartPackageSubmitButton').click(function () {
-            var url = $(this).data('url');
-
-            var productId = (this.id).replace('addToCartPackageSubmitButton', '');
-            var qtty = $('#quantityProducSelect_' + productId).val();
-            url = url.replace('quantityTmp', qtty);
-            $.ajax({
-                type: "POST",
-                url: url,
-                success: function (response) {
-                    // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
-                    removeBadgeNoCat(productId);
-                    $('#productCheckboxPicto_' + productId).prepend("<span class=\"number\">" + qtty + "<span");
-                    $('#validateNeedButton').removeAttr('disabled');
-                    reloadCart();
-                }
-            })
-        });
+        // $('.addToCartSubmitButton').click(function (e) {
+        //     e.preventDefault();
+        //     addToCart(this);
+        // });
+        //
+        // $('.addToCartPackageSubmitButton').click(function (e) {
+        //     e.preventDefault();
+        //     addToCartPackage(this);
+        // });
 
 
     }
@@ -442,73 +405,20 @@ $(function () {
     /*******************************************************************************************************************
      * D3E NEED FORM
      */
-    if ($('.d3e-need-form').is('div')) {
+    // if ($('.d3e-need-form').is('div')) {
 
-        $('.addToCartSubmitButton').click(function () {
-                var url = $(this).data('url');
-                const productId = $(this).data('id');
-
-                var data = [];
-                const types = $('.infoproduct__type');
-                types.each(function () {
-
-                    var productD3EType = {
-                        typeId: $(this).find($('.infoproduct__typeSelect')).val(),
-                        qtty: $(this).find($('.infoproduct__qty')).val(),
-                        optHandling: $(this).find($('.infoproduct__type__checkbox__optHandlingProductSelect')).prop('checked') ? 1 : 0,
-                        optSerialNumberStmt: $(this).find($('.infoproduct__type__checkbox__optSerialNumberStmtProductSelect')).prop('checked') ? 1 : 0,
-                        optDestruction: $(this).find($('.infoproduct__type__checkbox__optDestructionProductSelect')).prop('checked') ? 1 : 0,
-                        productId: productId
-                    };
-                    data.push(productD3EType);
-                });
-                const request = JSON.stringify(data);
-
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: request,
-                    success: function (response) {
-                        // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
-                        removeBadge(productId);
-                        $('#productCheckboxPicto_' + productId).prepend("<span class=\"number\">1<span");
-                        $('#validateNeedButton').removeAttr('disabled');
-                        reloadCart()
-                    }
-                });
-            }
-        );
-
-        $('.addToCartPackageSubmitButton').click(function () {
-            var url = $(this).data('url');
-
-            var productId = (this.id).replace('addToCartPackageSubmitButton', '');
-            var qtty = $('#quantityProducSelect_' + productId).val();
-            url = url.replace('quantityTmp', qtty);
-            $.ajax({
-                type: "POST",
-                url: url,
-                success: function (response) {
-                    // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
-                    removeBadgeNoCat(productId);
-                    $('#productCheckboxPicto_' + productId).prepend("<span class=\"number\">" + qtty + "<span");
-                    $('#validateNeedButton').removeAttr('disabled');
-                    reloadCart();
-                }
-            })
-        });
-
-        $('.addNewTypeButton').click(function () {
-            $('.infoproduct__type').first().clone().hide().insertAfter($('.infoproduct__type').last()).fadeIn(500);
-
-            // On reset le formulaire
-            $('.infoproduct__type').last().find('.infoproduct__qty').val('');
-            $('.infoproduct__type').last().find($('#optHandlingProductSelect')).prop('checked', false);
-            $('.infoproduct__type').last().find($('#optSerialNumberStmtProductSelect')).prop('checked', false);
-            $('.infoproduct__type').last().find($('#optDestructionProductSelect')).prop('checked', false);
-            $('.infoproduct-container').outerHeight($('.infoproduct').outerHeight());
-        })
-    }
+        // $('.addToCartSubmitButton').click(function () {
+        //     addToCartD3E(this);
+        // });
+        //
+        // $('.addToCartPackageSubmitButton').click(function () {
+        //     addToCartPackage(this);
+        // });
+        //
+        // $('.addNewTypeButton').click(function () {
+        //     addNewTypeD3E()
+        // })
+    // }
 
     /*******************************************************************************************************************
      * CONTACT DETAILS FORM
@@ -982,5 +892,143 @@ function onPlaceChangedInvoicing() {
 }
 
 
+function addOrRemoveDisplayedProduct(el) {
+    var url = $(el).data('url');
+    var that = el;
+    $.ajax({
+        type: "POST",
+        url: url,
+        success: function (response) {
+            closeInfoproductContainer();
+            if (response) {
+                var htmlToDisplay = response.trim();
+                $(that).addClass('active');
+                var container = $(that).next('.infoproduct-container');
+                $(container).html(htmlToDisplay);
+                $(container).outerHeight($('.infoproduct').outerHeight());
+            }
+        }
+    });
+}
 
+/**
+ * Ferme l'infoproduct affiché
+ */
+function closeInfoproductContainer() {
+    $('.productCheckboxPicto').removeClass('active');
+    $('.infoproduct-container').outerHeight(0);
+    $('.infoproduct-container').html('');
+}
 
+function addToCartPackage(el) {
+    var url = $(el).data('url');
+
+    var productId = (el.id).replace('addToCartPackageSubmitButton', '');
+    var qtty = $('#quantityProducSelect_' + productId).val();
+    url = url.replace('quantityTmp', qtty);
+    $.ajax({
+        type: "POST",
+        url: url,
+        success: function (response) {
+            // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
+            removeBadgeNoCat(productId);
+            $('#productCheckboxPicto_' + productId).prepend("<span class=\"number\">" + qtty + "<span");
+            $('#validateNeedButton').removeAttr('disabled');
+            reloadCart();
+        }
+    });
+    return false;
+}
+
+function addToCart(el) {
+    var url = $(el).data('url');
+
+    var productCategory = (el.id).replace('addToCartSubmitButton_', '').split('_', 2);
+    var productId = productCategory[0];
+    var categoryId = productCategory[1];
+    var qtty = $('#quantityProducSelect_' + productId + '_' + categoryId).val();
+    url = url.replace('quantityTmp', qtty);
+    $.ajax({
+        type: "POST",
+        url: url,
+        success: function (response) {
+            // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
+            removeBadge(productId, categoryId);
+            $('#productCheckboxPicto_' + productId + '_' + categoryId).prepend("<span class=\"number\">" + qtty + "<span");
+            $('#validateNeedButton').removeAttr('disabled');
+            reloadCart();
+        }
+    });
+    return false;
+}
+
+function addNewTypeD3E() {
+    $('.infoproduct__type').first().clone().hide().insertAfter($('.infoproduct__type').last()).fadeIn(500);
+
+    // On reset le formulaire
+    $('.infoproduct__type').last().find('.infoproduct__qty').val('');
+    $('.infoproduct__type').last().find($('#optHandlingProductSelect')).prop('checked', false);
+    $('.infoproduct__type').last().find($('#optSerialNumberStmtProductSelect')).prop('checked', false);
+    $('.infoproduct__type').last().find($('#optDestructionProductSelect')).prop('checked', false);
+    $('.infoproduct-container').outerHeight($('.infoproduct').outerHeight());
+}
+
+function addToCartD3E(el) {
+    var url = $(el).data('url');
+    const productId = $(el).data('id');
+    var data = [];
+    const types = $('.infoproduct__type');
+    types.each(function () {
+
+        var productD3EType = {
+            typeId: $(this).find($('.infoproduct__typeSelect')).val(),
+            qtty: $(this).find($('.infoproduct__qty')).val(),
+            optHandling: $(this).find($('.infoproduct__type__checkbox__optHandlingProductSelect')).prop('checked') ? 1 : 0,
+            optSerialNumberStmt: $(this).find($('.infoproduct__type__checkbox__optSerialNumberStmtProductSelect')).prop('checked') ? 1 : 0,
+            optDestruction: $(this).find($('.infoproduct__type__checkbox__optDestructionProductSelect')).prop('checked') ? 1 : 0,
+            productId: productId
+        };
+        data.push(productD3EType);
+    });
+    const request = JSON.stringify(data);
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: request,
+        success: function (response) {
+            // Quand on ajoute un produit au devis, on referme l'affichage des infos du produit ajouté
+            removeBadge(productId);
+            $('#productCheckboxPicto_' + productId).prepend("<span class=\"number\">1<span");
+            $('#validateNeedButton').removeAttr('disabled');
+            reloadCart()
+        }
+    });
+}
+
+/**
+ * Listener for click on added .infoproduct__close
+ */
+$(document).on('click', '.infoproduct__close', function () {
+    addOrRemoveDisplayedProduct(this);
+});
+
+$(document).on('click', '.addToCartPackageSubmitButton', function (e) {
+    e.preventDefault();
+    addToCartPackage(this);
+});
+
+$(document).on('click', '.addToCartSubmitButton', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if ($(this).hasClass('addToCartD3E')) {
+        addToCartD3E(this);
+    } else {
+        addToCart(this);
+    }
+});
+
+$(document).on('click', '.addNewTypeButton', function (e) {
+    e.preventDefault();
+    addNewTypeD3E();
+});
