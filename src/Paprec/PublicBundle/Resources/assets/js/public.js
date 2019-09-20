@@ -407,17 +407,17 @@ $(function () {
      */
     // if ($('.d3e-need-form').is('div')) {
 
-        // $('.addToCartSubmitButton').click(function () {
-        //     addToCartD3E(this);
-        // });
-        //
-        // $('.addToCartPackageSubmitButton').click(function () {
-        //     addToCartPackage(this);
-        // });
-        //
-        // $('.addNewTypeButton').click(function () {
-        //     addNewTypeD3E()
-        // })
+    // $('.addToCartSubmitButton').click(function () {
+    //     addToCartD3E(this);
+    // });
+    //
+    // $('.addToCartPackageSubmitButton').click(function () {
+    //     addToCartPackage(this);
+    // });
+    //
+    // $('.addNewTypeButton').click(function () {
+    //     addNewTypeD3E()
+    // })
     // }
 
     /*******************************************************************************************************************
@@ -905,7 +905,9 @@ function addOrRemoveDisplayedProduct(el) {
                 $(that).addClass('active');
                 var container = $(that).next('.infoproduct-container');
                 $(container).html(htmlToDisplay);
-                $(container).outerHeight($('.infoproduct').outerHeight());
+                setInterval(function () {
+                    $(container).outerHeight($('.infoproduct').outerHeight());
+                }, 100);
             }
         }
     });
