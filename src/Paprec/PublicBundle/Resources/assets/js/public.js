@@ -126,14 +126,24 @@ $(function () {
     /**
      * PANIER MOBILE
      */
-    $('.button-open-cart').on('click', function () {
+    $('.button-open-cart').on('click', function (e) {
+        e.stopPropagation();
         $(this).toggleClass('close');
         if ($(this).hasClass('close')) {
+            $('main').addClass('has-mobile-cart');
             $('#loadedCartPanelMb').show();
             $('#loadedCartPanelMb').addClass('active');
         } else {
+            $('main').removeClass('has-mobile-cart');
             $('#loadedCartPanelMb').hide();
         }
+    });
+
+    $(document).on('click', '.has-mobile-cart *', function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        $('.button-open-cart').toggleClass('close');
+        $('#loadedCartPanelMb').hide();
     });
 
     /*******************************************************************************************************************
@@ -486,7 +496,7 @@ $(function () {
                     reloadCart();
                 }
             })
-        })
+        });
 
         $('.addNewTypeButton').click(function () {
             $('.infoproduct__type').first().clone().hide().insertAfter($('.infoproduct__type').last()).fadeIn(500);
