@@ -905,10 +905,12 @@ function addOrRemoveDisplayedProduct(el) {
             if (response) {
                 var htmlToDisplay = response.trim();
                 var container = $(that).next('.infoproduct-container');
-                $(that).addClass('active');
+                $(container).css('visibility', 'hidden');
                 $(container).html(htmlToDisplay);
                 setTimeout(e => {
                     $(container).outerHeight($(container).find('.infoproduct').outerHeight());
+                    $(that).addClass('active');
+                    $(container).css('visibility', 'visible');
 
                 }, 200);
 
