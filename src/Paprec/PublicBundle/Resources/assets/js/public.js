@@ -905,9 +905,7 @@ function addOrRemoveDisplayedProduct(el) {
                 $(that).addClass('active');
                 var container = $(that).next('.infoproduct-container');
                 $(container).html(htmlToDisplay);
-                setTimeout(function () {
-                    $(container).outerHeight($('.infoproduct').outerHeight());
-                }, 100);
+                $(container).outerHeight($(container).find('.infoproduct').outerHeight());
             }
         }
     });
