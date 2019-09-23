@@ -610,7 +610,9 @@ function reloadCart(readonly) {
                 $('.buttonDeleteProduct').remove();
             } else {
                 // On ajoute un listener sur les "x" dans la liste des produits dans le Cart
-                $(".buttonDeleteProduct").click(function () {
+                $(".buttonDeleteProduct").click(function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     var urlRemove = $(this).data('url');
                     if (division === 'D3E') {
                         let productId = (this.id).replace('buttonDeleteProduct_', '');
@@ -902,10 +904,16 @@ function addOrRemoveDisplayedProduct(el) {
             closeInfoproductContainer();
             if (response) {
                 var htmlToDisplay = response.trim();
-                $(that).addClass('active');
                 var container = $(that).next('.infoproduct-container');
+                $(that).addClass('active');
                 $(container).html(htmlToDisplay);
-                $(container).outerHeight($(container).find('.infoproduct').outerHeight());
+                console.dir($(container).find('.infoproduct').outerHeight());
+                setTimeout(e => {
+                    console.dir($(container).find('.infoproduct').outerHeight());
+                    $(container).outerHeight($(container).find('.infoproduct').outerHeight());
+
+                }, 200);
+
             }
         }
     });
