@@ -280,12 +280,6 @@ class SubscriptionController extends Controller
         }
 
 
-//        $response = new Response(json_encode(array(
-//            'product' => $data,
-//            'producteur' => 'producteur'
-//        )));
-//        $response->headers->set('Content-Type', 'application/json');
-
         return new JsonResponse('200');
     }
 
@@ -299,10 +293,25 @@ class SubscriptionController extends Controller
     {
         $cartManager = $this->get('paprec.cart_manager');
 
-        // On ajoute ou on supprime le produit sélecionné au tableau des displayedCategories du Cart
         $cart = $cartManager->removeContentD3E($cartUuid, $productId);
 
         return new JsonResponse($cart->getContent());
+    }
+
+    /**
+     * Supprime un type d'un produit du Cart
+     *
+     * @Route("/d3e/removeType/{cartUuid}/{productId}/{typeId}", name="paprec_public_corp_d3e_subscription_removeType", condition="request.isXmlHttpRequest()")
+     * @throws \Exception
+     */
+    public function removeTypeAction(Request $request, $cartUuid, $productId, $typeId)
+    {
+
+        $cartManager = $this->get('paprec.cart_manager');
+
+        $lastTypeDeleted = $cartManager->removeTypeFromProductD3E($cartUuid, $productId, $typeId);
+
+        return new JsonResponse($lastTypeDeleted);
     }
 
     /**

@@ -37,7 +37,7 @@
                 {{ form_errors(form.businessLine) }}
 
                 {{ form_widget(form.civility, {'attr': {'class': 'input--radio'}}) }}
-{#                {{ form_errors(form.civility) }}#}
+                {#                {{ form_errors(form.civility) }}#}
 
                 <div class="clearfix step--marginfield"></div>
 
@@ -88,20 +88,20 @@
             <div class="step__right step__right--small">
 
                 <div class="form-float-group">
-                    {{ form_widget(form.address, {'id': 'address_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.Address'|trans}}) }}
+                    {{ form_widget(form.address, {'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.Address'|trans}}) }}
                     <label class="form-float-control-placeholder"
                            for="address_input">{{ 'Commercial.QuoteRequest.Address'|trans }}</label>
                     {{ form_errors(form.address) }}
                 </div>
                 <div class="flex space-between">
                     <div class="form-float-group form-float-group--zip">
-                        {{ form_widget(form.postalCode, {'id': 'postal_code_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.PostalCode'|trans}}) }}
+                        {{ form_widget(form.postalCode, {'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.PostalCode'|trans}}) }}
                         <label class="form-float-control-placeholder"
                                for="postal_code_input">{{ 'Commercial.QuoteRequest.PostalCode'|trans }}</label>
                         {{ form_errors(form.postalCode) }}
                     </div>
                     <div class="form-float-group form-float-group--city">
-                        {{ form_widget(form.city, {'id': 'city_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.City'|trans}}) }}
+                        {{ form_widget(form.city, {'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.City'|trans}}) }}
                         <label class="form-float-control-placeholder"
                                for="city_input">{{ 'Commercial.QuoteRequest.City'|trans }}</label>
                         {{ form_errors(form.city) }}
@@ -113,20 +113,20 @@
                        class="address-checkbox-label">{{ 'Commercial.ProductD3EOrder.HeadofficeAddressCheckbox'|trans }}</label>
                 <div id="headofficeAddressContainer" class="address-container m-t-15">
                     <div class="form-float-group">
-                        {{ form_widget(form.headofficeAddress, {'id': 'address_headoffice_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.HeadOfficeAddress'|trans}}) }}
+                        {{ form_widget(form.headofficeAddress, {'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.HeadOfficeAddress'|trans}}) }}
                         <label class="form-float-control-placeholder"
                                for="address_headoffice_input">{{ 'Commercial.QuoteRequest.HeadOfficeAddress'|trans }}</label>
                         {{ form_errors(form.headofficeAddress) }}
                     </div>
                     <div class="flex space-between">
                         <div class="form-float-group form-float-group--zip">
-                            {{ form_widget(form.headofficePostalCode, {'id': 'postal_code_headoffice_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.PostalCode'|trans}}) }}
+                            {{ form_widget(form.headofficePostalCode, {'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.PostalCode'|trans}}) }}
                             <label class="form-float-control-placeholder"
                                    for="postal_code_headoffice_input">{{ 'Commercial.QuoteRequest.PostalCode'|trans }}</label>
                             {{ form_errors(form.headofficePostalCode) }}
                         </div>
                         <div class="form-float-group form-float-group--city">
-                            {{ form_widget(form.headofficeCity, {'id': 'city_headoffice_input', 'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.City'|trans}}) }}
+                            {{ form_widget(form.headofficeCity, {'attr': {'class': 'input input--full step--marginfield form-float-control', 'placeholder': 'Commercial.QuoteRequest.City'|trans}}) }}
                             <label class="form-float-control-placeholder"
                                    for="city_headoffice_input">{{ 'Commercial.QuoteRequest.City'|trans }}</label>
                             {{ form_errors(form.headofficeCity) }}
@@ -140,7 +140,7 @@
                 </div>
                 <div class="preferred-contact--choice">
                     {{ form_widget(form.preferredContact, {'attr': {'class': 'input--radio'}}) }}
-{#                    {{ form_errors(form.preferredContact) }}#}
+                    {{ form_errors(form.preferredContact) }}
                 </div>
 
                 <div class="clearfix"></div>
@@ -152,15 +152,16 @@
                 <div class="cgv">
                     {{ form_widget(form.terms) }}
                     {{ 'Commercial.QuoteRequest.TermsAccept'|trans }}
-                    <a href="{{ paprec_public_site_url}}/cgv" target="_blank">{{ 'Commercial.QuoteRequest.TermsCGV'|trans }}</a>
+                    <a href="{{ paprec_public_site_url }}/cgv"
+                       target="_blank">{{ 'Commercial.QuoteRequest.TermsCGV'|trans }}</a>
                     {{ form_errors(form.terms) }}
                 </div>
                 <div class="cnil">
                     Les informations recueillies sur ce formulaire sont enregistrées dans un fichier informatisé pour
-                    permettre de vous adresser des contenus adaptés à vos besoins. Ces données sont conservées pendant 3
-                    ans et sont destinées au service marketing. Conformément à la loi
-                    « informatique et libertés », vous pouvez exercer votre droit d’accès aux données vous concernant et
-                    les faire rectifier en contactant : service-data@paprec.com
+                    permettre de vous adresser des contenus adaptés à vos besoins. Ces données sont destinées aux
+                    services commerciaux, marketing et communication. Conformément à la RGPD, vous pouvez exercer
+                    votre droit d’accès aux données vous concernant et les faire rectifier en contactant :
+                    <a href="mailto:communication@paprec.com">communication@paprec.com</a>.
                 </div>
             </div>
             <div class="clearfix"></div>

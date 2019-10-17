@@ -131,12 +131,17 @@ class CallBack
      */
     private $timeCallBack;
 
+
     /**
-     * @var array|null
-     *
-     * @ORM\Column(name="cartContent", type="json", nullable=true)
+     * #################################
+     *              Relations
+     * #################################
      */
-    private $cartContent;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Paprec\PublicBundle\Entity\Cart")
+     */
+    protected $cart;
 
     /**
      * CallBack constructor.
@@ -446,27 +451,6 @@ class CallBack
         return $this->dateCallBack;
     }
 
-
-    /**
-     * @param null $cartContent
-     * @return $this
-     */
-    public function setCartContent($cartContent = null)
-    {
-        $this->cartContent = $cartContent;
-
-        return $this;
-    }
-
-
-    /**
-     * @return array|null
-     */
-    public function getCartContent()
-    {
-        return $this->cartContent;
-    }
-
     /**
      * Set timeCallBack.
      *
@@ -489,5 +473,53 @@ class CallBack
     public function getTimeCallBack()
     {
         return $this->timeCallBack;
+    }
+
+    /**
+     * Set address.
+     *
+     * @param \Paprec\PublicBundle\Entity\Cart|null $address
+     *
+     * @return CallBack
+     */
+    public function setAddress(\Paprec\PublicBundle\Entity\Cart $address = null)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address.
+     *
+     * @return \Paprec\PublicBundle\Entity\Cart|null
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set cart.
+     *
+     * @param \Paprec\PublicBundle\Entity\Cart|null $cart
+     *
+     * @return CallBack
+     */
+    public function setCart(\Paprec\PublicBundle\Entity\Cart $cart = null)
+    {
+        $this->cart = $cart;
+
+        return $this;
+    }
+
+    /**
+     * Get cart.
+     *
+     * @return \Paprec\PublicBundle\Entity\Cart|null
+     */
+    public function getCart()
+    {
+        return $this->cart;
     }
 }

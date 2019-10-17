@@ -308,6 +308,7 @@ class HomeController extends Controller
 
             $sendNewQuoteRequest = $quoteRequestManager->sendNewRequestEmail($quoteRequest);
 
+
             if ($sendNewQuoteRequest) {
                 return $this->redirectToRoute('paprec_public_corp_home_requestWriting_step3', array(
                     'cartUuid' => $cart->getId(),
@@ -466,8 +467,7 @@ class HomeController extends Controller
 
             $callBack = $form->getData();
             $callBack->setTreatmentStatus('CREATED');
-            $callBack->setCartContent($cart->getContent());
-
+            $callBack->setCart($cart);
 
             $em->persist($callBack);
             $em->flush();

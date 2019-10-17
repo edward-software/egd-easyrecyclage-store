@@ -519,6 +519,7 @@ Commercial:
     PhonePlaceholder:           Numéro de téléphone
     FunctionPlaceholder:        Fonction (facultatif)
     Function:                   Fonction
+    Division:                   Division
     TreatmentStatus:            Statut
     DateCallBack:               Date et heure de rappel
     CartContent:                Contenu du panier

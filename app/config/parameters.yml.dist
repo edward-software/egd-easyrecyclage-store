@@ -28,7 +28,8 @@ parameters:
     wkhtmltopdf_path: /usr/local/bin/wkhtmltopdf
 
     paprec_distance_nearby_agencies: 50
-    paprec_assistant_commercial_email: mourad.kerkeni@paprec.com
+    paprec_assistant_commercial_email: ecommerce@paprec.com
+    paprec_communication_email: communication@paprec.com
     paprec_manager_di_email: ecommerce@paprec.com
     paprec_manager_chantier_email: chantiers@paprec.com
     paprec_manager_d3e_email: d3e@paprec.com

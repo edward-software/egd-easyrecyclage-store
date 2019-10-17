@@ -486,6 +486,46 @@ class CartManager
         return $cart;
     }
 
+    public function removeTypeFromProductD3E($id, $productId, $typeId)
+    {
+        $cart = $this->get($id);
+        $products = $cart->getContent();
+
+        $lastTypeDeleted = false;
+        /**
+         * On parcourt les produits ajoutés au cart
+         */
+        if ($products && count($products)) {
+            foreach ($products as $key => $product) {
+                /**
+                 * On cherche celui dont l'id est passé en param
+                 */
+                if ($key == $productId) {
+
+                    /**
+                     * On cherche là ou le type est égal au typeId passé en param
+                     */
+                    foreach ($product as $t => $productType) {
+                        if ($typeId == $productType['tId']) {
+                            unset($products[$key][$t]);
+                        }
+                    }
+                }
+                /**
+                 * Si on a supprimé le dernier type d'un produit, alors on supprime entièrement le produit du contenu du cart
+                 */
+                if (!count($products[$key])) {
+                    $lastTypeDeleted = true;
+                    unset($products[$key]);
+                }
+            }
+        }
+        $cart->setContent($products);
+        $this->em->persist($cart);
+        $this->em->flush();
+        return $lastTypeDeleted;
+    }
+
     /**
      * Fonction qui renvoie un tableau permettant d'afficher tous les produits dans le Cart dans la partie "Mon besoin"
      * ainsi que la somme du prix du Cart
@@ -493,7 +533,8 @@ class CartManager
      * @return array
      * @throws Exception
      */
-    public function loadCartDI($id)
+    public
+    function loadCartDI($id)
     {
         $cart = $this->get($id);
         $productDIManager = $this->container->get('paprec_catalog.product_di_manager');
@@ -534,7 +575,8 @@ class CartManager
      * @return float|int
      * @throws Exception
      */
-    private function calculateSumDI($productsCategories, $postalCode)
+    private
+    function calculateSumDI($productsCategories, $postalCode)
     {
         $productDIManager = $this->container->get('paprec_catalog.product_di_manager');
         $categoryManager = $this->container->get('paprec_catalog.category_manager');
@@ -565,7 +607,8 @@ class CartManager
      * @return array
      * @throws Exception
      */
-    public function loadCartChantier($id)
+    public
+    function loadCartChantier($id)
     {
         $cart = $this->get($id);
         $productChantierManager = $this->container->get('paprec_catalog.product_chantier_manager');
@@ -603,7 +646,8 @@ class CartManager
      * @return array
      * @throws Exception
      */
-    public function loadCartPackageChantier($id)
+    public
+    function loadCartPackageChantier($id)
     {
         $cart = $this->get($id);
         $productChantierManager = $this->container->get('paprec_catalog.product_chantier_manager');
@@ -639,7 +683,8 @@ class CartManager
      * @return float|int
      * @throws Exception
      */
-    private function calculateSumChantier($productsCategories, $postalCode)
+    private
+    function calculateSumChantier($productsCategories, $postalCode)
     {
         $productChantierManager = $this->container->get('paprec_catalog.product_chantier_manager');
         $categoryManager = $this->container->get('paprec_catalog.category_manager');
@@ -672,7 +717,8 @@ class CartManager
      * @return float|null
      * @throws Exception
      */
-    public function calculateSumChantierPackage($products, $postalCode)
+    public
+    function calculateSumChantierPackage($products, $postalCode)
     {
         $productChantierManager = $this->container->get('paprec_catalog.product_chantier_manager');
         $numberManager = $this->container->get('paprec_catalog.number_manager');
@@ -693,7 +739,8 @@ class CartManager
      * @return array
      * @throws Exception
      */
-    public function loadCartD3E($id)
+    public
+    function loadCartD3E($id)
     {
         $cart = $this->get($id);
         $productD3EManager = $this->container->get('paprec_catalog.product_d3e_manager');
@@ -737,7 +784,8 @@ class CartManager
      * @return array
      * @throws Exception
      */
-    public function loadCartPackageD3E($id)
+    public
+    function loadCartPackageD3E($id)
     {
         $cart = $this->get($id);
         $productD3EManager = $this->container->get('paprec_catalog.product_d3e_manager');
@@ -761,7 +809,8 @@ class CartManager
         return $loadedCart;
     }
 
-    private function calculateSumD3E($products, $postalCode)
+    private
+    function calculateSumD3E($products, $postalCode)
     {
         $numberManager = $this->container->get('paprec_catalog.number_manager');
 
@@ -786,7 +835,8 @@ class CartManager
      * @return float|null
      * @throws Exception
      */
-    public function calculateSumD3EPackage($products, $postalCode)
+    public
+    function calculateSumD3EPackage($products, $postalCode)
     {
         $productD3EManager = $this->container->get('paprec_catalog.product_d3e_manager');
         $numberManager = $this->container->get('paprec_catalog.number_manager');

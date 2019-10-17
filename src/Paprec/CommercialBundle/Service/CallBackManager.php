@@ -126,7 +126,19 @@ class CallBackManager
     {
         try {
             $from = $this->container->getParameter('paprec_email_sender');
+
             $rcptTo = $this->container->getParameter('paprec_assistant_commercial_email');
+
+            $cart = $callBack->getCart();
+            if ($cart) {
+                if ($cart->getDivision() == 'CHANTIER') {
+                    $rcptTo = $this->container->getParameter('paprec_manager_chantier_email');
+                } elseif ($cart->getDivision() == 'D3E') {
+                    $rcptTo = $this->container->getParameter('paprec_manager_d3e_email');
+                } else {
+                    $rcptTo = $this->container->getParameter('paprec_manager_di_email');
+                }
+            }
 
             $message = \Swift_Message::newInstance()
                 ->setSubject('Easy-Recyclage : Nouvelle demande de rappel N°' . $callBack->getId())

@@ -129,6 +129,9 @@ class QuoteRequestNonCorporateManager
         try {
             $from = $this->container->getParameter('paprec_email_sender');
             $rcptTo = $this->container->getParameter('paprec_assistant_commercial_email');
+            if ($quoteRequestNonCorporate->getCustomerType() == 'Particulier') {
+                $rcptTo = $this->container->getParameter('paprec_communication_email');
+            }
 
             $message = \Swift_Message::newInstance()
                 ->setSubject('Easy-Recyclage : Nouvelle demande de devis : ' . $quoteRequestNonCorporate->getCustomerType() . ' ' . $quoteRequestNonCorporate->getId())
@@ -163,7 +166,8 @@ class QuoteRequestNonCorporateManager
      * @return bool
      * @throws Exception
      */
-    public function sendAssociatedQuoteMail(QuoteRequestNonCorporate $quoteRequestNonCorporate) {
+    public function sendAssociatedQuoteMail(QuoteRequestNonCorporate $quoteRequestNonCorporate)
+    {
         try {
             $from = $this->container->getParameter('paprec_email_sender');
 

@@ -33,7 +33,6 @@
 
 {% block products %}
     <div class="products-container">
-
         {% for product in products %}
             <div class="product-container">
                 <div class="checkboxPicto productCheckboxPicto {% if product.id in cart.displayedProducts %}  active {% endif %}"
@@ -48,10 +47,9 @@
                     {% if product.id in cart.displayedProducts %}
 
                         <div class="infoproduct">
-
                             <div class="infoproduct__close"
-                            data-url="{{ path('paprec_public_corp_d3e_subscription_infoproduct', {cartUuid: cart.id, productId: product.id}) }}"
-                            id="infoProductClose_{{ product    .id }}"></div>
+                                 data-url="{{ path('paprec_public_corp_d3e_subscription_infoproduct', {cartUuid: cart.id, productId: product.id}) }}"
+                                 id="infoProductClose_{{ product.id }}"></div>
 
                             <div class="infoproduct__type__title">
                                 <p>{{ product.name }}</p>
@@ -104,9 +102,13 @@
                                         <div class="infoproduct__pieces">{{ 'Public.Cart.PiecesNumber'|trans }}</div>
                                         <div class="-align-right">
 
-                                            <input name=""
-                                                   id="quantityProducSelect_{{ product.id }}"
-                                                   class="infoproduct__qty infoproduct__type__input"/>
+                                            <select name=""
+                                                    id="quantityProducSelect_{{ product.id }}"
+                                                    class="infoproduct__qty">
+                                                {% for i in 1..20 %}
+                                                    <option value="{{ i }}">{{ i }}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -116,6 +118,10 @@
                                     {% if key == product.id %}
                                         {% for types in content %}
                                             <div class="infoproduct__type">
+                                                <div class="infoproduct__close removeTypeD3E"
+                                                     data-url="{{ path('paprec_public_corp_d3e_subscription_removeType', {cartUuid: cart.id, productId: product.id, typeId: types['tId']}) }}"
+                                                     data-id="{{ product.id }}"
+                                                     id="infoProductClose_{{ product.id }}"></div>
                                                 <div class="infoproduct__type__left">
                                                     <div class="infoproduct__title">
                                                         {{ ('Public.Cart.TrashType'|trans)|upper }}
@@ -178,10 +184,19 @@
                                                 </div>
                                                 <div class="infoproduct__type__right">
                                                     <div class="infoproduct__pieces-number">{{ 'Public.Cart.PiecesNumber'|trans }}</div>
-                                                    <input name=""
-                                                           id="quantityProducSelect_{{ product.id }}"
-                                                           class="infoproduct__qty infoproduct__type__input"
-                                                           value="{{ qtty }}"/>
+                                                    <select name=""
+                                                            id="quantityProducSelect_{{ product.id }}"
+                                                            class="infoproduct__qty">
+                                                        {% for i in 1..20 %}
+                                                            {% if i == qtty %}
+                                                                <option value="{{ i }}"
+                                                                        selected="selected">{{ i }}</option>
+                                                            {% else %}
+                                                                <option value="{{ i }}">{{ i }}</option>
+
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
                                                 </div>
                                             </div>
                                         {% endfor %}

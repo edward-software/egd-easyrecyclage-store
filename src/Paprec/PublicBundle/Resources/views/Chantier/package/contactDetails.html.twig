@@ -43,11 +43,11 @@
                 {#                    {{ form_errors(form.siret) }}#}
                 {#                </div>#}
 
-                    {{ form_widget(form.businessLine, {'id': 'business_line_input', 'attr': {'class': 'input input--full'}}) }}
-                    {{ form_errors(form.businessLine) }}
+                {{ form_widget(form.businessLine, {'id': 'business_line_input', 'attr': {'class': 'input input--full'}}) }}
+                {{ form_errors(form.businessLine) }}
                 <div class="form-float-group--radio-button ">
                     {{ form_widget(form.civility, {'attr': {'class': 'input--radio'}}) }}
-{#                    {{ form_errors(form.civility) }}#}
+                    {#                    {{ form_errors(form.civility) }}#}
                 </div>
                 <div class="clearfix step--marginfield"></div>
 
@@ -202,7 +202,7 @@
                 </div>
                 <div class="preferred-contact--choice">
                     {{ form_widget(form.preferredContact, {'attr': {'class': 'input--radio'}}) }}
-{#                    {{ form_errors(form.preferredContact) }}#}
+                    {#                    {{ form_errors(form.preferredContact) }}#}
                 </div>
 
                 <div class="clearfix"></div>
@@ -220,13 +220,10 @@
                 </div>
                 <div class="cnil">
                     Les informations recueillies sur ce formulaire sont enregistrées dans un fichier informatisé
-                    pour
-                    permettre de vous adresser des contenus adaptés à vos besoins. Ces données sont conservées
-                    pendant 3
-                    ans et sont destinées au service marketing. Conformément à la loi
-                    « informatique et libertés », vous pouvez exercer votre droit d’accès aux données vous
-                    concernant et
-                    les faire rectifier en contactant : service-data@paprec.com
+                    pour permettre de vous adresser des contenus adaptés à vos besoins. Ces données sont destinées aux
+                    services commerciaux, marketing et communication. Conformément à la RGPD, vous pouvez exercer
+                    votre droit d’accès aux données vous concernant et les faire rectifier en contactant :
+                    <a href="mailto:communication@paprec.com">communication@paprec.com</a>.
                 </div>
             </div>
             <div class="clearfix"></div>

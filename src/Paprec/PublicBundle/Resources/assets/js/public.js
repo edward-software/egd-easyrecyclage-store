@@ -241,7 +241,7 @@ $(function () {
 
         $('#callBackFormSubmitButton').on('click', function () {
             // avant de submit, on convertit la date au format yyyy-mm-dd
-            $('#date_callback_input').val($('#datepicker').val().split('/').reverse().join('-'));
+            $('#date_callback_input').val($('#date_callback_input').val().split('/').reverse().join('-'));
             $('#callBackForm').submit();
         });
     }
@@ -983,6 +983,25 @@ function addNewTypeD3E() {
     $('.infoproduct-container').outerHeight($('.infoproduct').outerHeight());
 }
 
+function removeTypeFromProductD3E(el) {
+    var url = $(el).data('url');
+    const productId = $(el).data('id');
+    var that = el;
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        success: function (lastTypeDeleted) {
+            if (lastTypeDeleted) {
+                removeBadgeNoCat(productId);
+                addNewTypeD3E();
+            }
+            $(that).parent().remove();
+            reloadCart();
+        }
+    });
+}
+
 function addToCartD3E(el) {
     var url = $(el).data('url');
     const productId = $(el).data('id');
@@ -1020,7 +1039,11 @@ function addToCartD3E(el) {
  * Listener for click on added .infoproduct__close
  */
 $(document).on('click', '.infoproduct__close', function () {
-    addOrRemoveDisplayedProduct(this);
+    if ($(this).hasClass('removeTypeD3E')) {
+        removeTypeFromProductD3E(this)
+    } else {
+        addOrRemoveDisplayedProduct(this);
+    }
 });
 
 $(document).on('click', '.addToCartPackageSubmitButton', function (e) {

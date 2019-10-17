@@ -80,13 +80,13 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.Email'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ callBack.email }}
+                                        <a href="mailto:{{ callBack.email }}">{{ callBack.email }}</a>
                                     </label>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.Phone'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ callBack.phone }}
+                                        <a href="tel:{{ callBack.phone }}">{{ callBack.phone }}</a>
                                     </label>
                                 </div>
 
@@ -96,7 +96,8 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.DateCallBack'|trans }}</label>
                                     <label class="col-form-label">
-                                        {{ callBack.dateCallBack is empty ? "" : callBack.dateCallBack|localizeddate('short', 'none', app.request.locale) }} à {{ callBack.timeCallBack|date('H\\Hs',"Europe/Paris") }}
+                                        {{ callBack.dateCallBack is empty ? "" : callBack.dateCallBack|localizeddate('short', 'none', app.request.locale) }}
+                                        à {{ callBack.timeCallBack|date('H\\Hs',"Europe/Paris") }}
                                     </label>
                                 </div>
                                 <div class="form-group row">
@@ -106,11 +107,30 @@
                                     </label>
                                 </div>
                                 <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.Division'|trans }}</label>
+                                    <label class="col-form-label">
+                                        {% if callBack.cart %}
+                                            {{ callBack.cart.division|capitalize }}
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{ 'Commercial.CallBack.CartContent'|trans }}</label>
                                     <label class="col-form-label">
-                                        {% for content in callBack.cartContent %}
-                                            Produit n° {{ content['pId'] }} : {{ content['qtty']}}<br>
-                                        {% endfor %}
+                                        {% if callBack.cart %}
+                                            {% for content in callBack.cart.content %}
+                                                {% if callBack.cart.division == 'CHANTIER' %}
+                                                    <a href="{{ path('paprec_catalog_productChantier_view', {id: content['pId']}) }}">Produit
+                                                        n° {{ content['pId'] }}</a> : {{ content['qtty'] }}<br>
+                                                {% elseif callBack.cart.division == 'D3E' %}
+                                                    <a href="{{ path('paprec_catalog_productD3E_view', {id: content['pId']}) }}">Produit
+                                                        n° {{ content['pId'] }}</a> : {{ content['qtty'] }}<br>
+                                                {% elseif callBack.cart.division == 'DI' %}
+                                                    <a href="{{ path('paprec_catalog_productDI_view', {id: content['pId']}) }}">Produit
+                                                        n° {{ content['pId'] }}</a> : {{ content['qtty'] }}<br>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
                                     </label>
                                 </div>
                                 <div class="form-group row">

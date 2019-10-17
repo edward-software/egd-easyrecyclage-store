@@ -85,7 +85,6 @@ class QuoteRequestShortType extends AbstractType
             'data_class' => 'Paprec\CommercialBundle\Entity\QuoteRequest',
             'validation_groups' => ['details'],
             'division' => '',
-
         ));
     }
 
