@@ -139,6 +139,15 @@ button[disabled], a[disabled] {
   &--city {
     width: 76%;
   }
+
+  @media all and (max-width: 450px) {
+    &--zip {
+      width: 30%;
+    }
+    &--city {
+      width: 68%;
+    }
+  }
 }
 
 .form-float-control-placeholder {
