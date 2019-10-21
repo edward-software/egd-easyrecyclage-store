@@ -102,3 +102,4 @@ oneup_uploader:
     gallery:
       frontend: dropzone
       namer: oneup_uploader.namer.urlsafe
+      route_prefix: /devis

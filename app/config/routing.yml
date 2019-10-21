@@ -43,4 +43,3 @@ paprec_public:
 oneup_uploader:
     resource: .
     type: uploader
-    prefix: /devis
