@@ -17,6 +17,7 @@
 /node_modules/
 /web/bundles/
 /web/build/
+/web/uploads/
 /.idea
 /web/uploads/files/*
 /web/uploads/pictos/*
