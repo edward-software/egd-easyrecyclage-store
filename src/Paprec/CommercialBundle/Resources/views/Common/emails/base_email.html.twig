@@ -132,17 +132,6 @@
             position: relative;
         }
 
-        .bullet {
-            width: 27px;
-            height: 27px;
-            background-color: #FF0000;
-            -webkit-border-radius: 50%;
-            -moz-border-radius: 50%;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.2em;
-        }
-
         .footer-demand {
             border: 1px solid{{ gray2 }};
             background-color: {{ gray3 }};
@@ -193,7 +182,7 @@
         <td bgcolor="{{ blue1 }}" style="display: block;">
 
             <!--[if (gte mso 9)|(IE)]>
-            <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
                 <tr>
                     <td align="center" valign="top" width="600">
             <![endif]-->
@@ -224,18 +213,29 @@
     <!-- CONTENT -->
     <tr>
         <td align="center">
+            <!--[if (gte mso 9)|(IE)]>
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="650" style="width:650px;">
+                <tr>
+                    <td align="center" valign="top" width="650">
+            <![endif]-->
             <table border="0" cellpadding="0" cellspacing="0" bgcolor="{{ white }}" align="center" width="100%"
                    style="max-width: 650px;" class="responsive-table">
 
                 <!-- Sub Header Merci pour votre demande  -->
                 <tr>
                     <td>
-                        <table class="responsive-table no-margin" border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
-                               style="max-width: 600px; height: 250px; margin-top: 50px; margin-bottom: 20px; text-align: center; font-family:CircularStd-Book, Arial, sans-serif; background: radial-gradient(circle, #55B7FB 0%, #2E95DD 100%); background-color:#2E95DD ;color: {{ white }};">
+                        <!--[if (gte mso 9)|(IE)]>
+                        <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+                        <![endif]-->
+                            <table class="responsive-table no-margin" border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
+                                   style="max-width: 600px; height: 250px; margin-top: 50px; margin-bottom: 20px; text-align: center; font-family:CircularStd-Book, Arial, sans-serif; background: radial-gradient(circle, #55B7FB 0%, #2E95DD 100%); background-color:#2E95DD ;color: {{ white }};">
 
-                            {% block title_header %}{% endblock %}
+                                {% block title_header %}{% endblock %}
 
+                            </table>
+                        <!--[if (gte mso 9)|(IE)]>
                         </table>
+                        <![endif]-->
                     </td>
                 </tr>
                 <!-- Main content  -->
@@ -260,12 +260,22 @@
                     </td>
                 </tr>#}
             </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
         </td>
     </tr>
 
     <!-- Copyright - message automatique -->
     <tr>
         <td style="padding: 15px;">
+            <!--[if (gte mso 9)|(IE)]>
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+                <tr>
+                    <td align="center" valign="top" width="600">
+            <![endif]-->
             <table class="responsive-table" border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
                    style="max-width: 600px; margin-top: 30px; margin-bottom: 45px; text-align: center; color: #8C8C8C; font-size: 0.8em;">
 
@@ -323,6 +333,11 @@
                     </td>
                 </tr>
             </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
         </td>
     </tr>
 </table>
