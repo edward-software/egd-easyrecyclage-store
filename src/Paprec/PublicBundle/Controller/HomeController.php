@@ -401,7 +401,9 @@ class HomeController extends Controller
                     }
                 }
                 $contactUs->setAttachedFiles($files);
-                rmdir($dirPath);
+                if (is_dir($dirPath)) {
+                    rmdir($dirPath);
+                }
             }
             $em->persist($contactUs);
             $em->flush();
@@ -409,14 +411,14 @@ class HomeController extends Controller
             $sendConfirmEmail = $contactUsManager->sendConfirmRequestEmail($contactUs);
             $sendNewRequestEmail = $contactUsManager->sendNewRequestEmail($contactUs);
 
-            $client = new \GuzzleHttp\Client();
+/*            $client = new \GuzzleHttp\Client();
             $uri = $this->getParameter('paprec_public_site_url') . '/?na=s';
             $response = $client->request('POST', $uri, [
                 'form_params' => [
                     'nr' => 'widget-minimal',
                     'ne' => $contactUs->getEmail()
                 ]
-            ]);
+            ]);*/
 
 
             if ($sendConfirmEmail && $sendNewRequestEmail) {
@@ -545,7 +547,8 @@ class HomeController extends Controller
             $files = scandir($dirName);
             if (count($files) < 3) {
                 rmdir($dirName);
-            }            exit;
+            }
+            exit;
         } catch (IOException $e) {
             return new JsonResponse(null, 500);
         }
