@@ -549,6 +549,77 @@ $(function () {
         reloadCart(true);
     }
 
+
+    /**
+     * GESTION DES DROPZONES
+     */
+    if ($('#dropzone').is('div')) {
+        $('#dropzone-label').on('click', function () {
+            $("#dropzone").click();
+        });
+
+        var acceptedFileTypes = "image/*, application/*, "; //dropzone requires this param be a comma separated list
+        var fileList = [];
+        var i = 0;
+        $("#dropzone").dropzone({
+            url: $('#dropzone').data('url'),
+            addRemoveLinks: true,
+            maxFiles: 5, //change limit as per your requirements
+            dictMaxFilesExceeded: "Maximum upload limit reached",
+            acceptedFiles: acceptedFileTypes,
+            parallelUploads: 1,
+            uploadMultiple: false,
+            dictInvalidFileType: "upload only JPG/PNG",
+            init: function () {
+
+                // Hack: Add the dropzone class to the element
+                $('#dropzone').addClass("dropzone");
+
+                this.on("sending", function (file, xhr, data) {
+                    var dir = $('#dropzone').data('dir');
+                    data.append("dir", dir);
+                });
+
+                this.on("success", function (file, response) {
+                    fileList[i] = {
+                        "serverFileName": response['filename'],
+                        "fileName": file.name,
+                        "fileId": i
+                    };
+                    $('#dropzone').data('dir', response['dir']);
+                    $('#dir-input').val(response['dir']);
+                    $('.dz-message').show();
+                    i += 1;
+                });
+                this.on("removedfile", function (file) {
+                    var rmvFile = "";
+                    for (var f = 0; f < fileList.length; f++) {
+                        if (fileList[f].fileName == file.name) {
+                            rmvFile = fileList[f].serverFileName;
+                        }
+                    }
+                    console.dir($('#dropzone').data('deleted'));
+
+                    if (rmvFile) {
+                        $.ajax({
+                            url: $('#dropzone').data('deleted'),
+                            type: "POST",
+                            data: {
+                                filename: rmvFile,
+                                dir: $('#dropzone').data('dir'),
+                                type: 'delete',
+                            },
+                        });
+                    }
+                });
+
+            },
+            removedFile: function (file) {
+                console.dir(file);
+            }
+        })
+    }
+
 })
 ;
 

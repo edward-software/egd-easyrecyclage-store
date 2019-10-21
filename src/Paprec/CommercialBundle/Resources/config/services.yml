@@ -60,6 +60,8 @@ parameters:
   paprec_commercial.di_quote_pdf_notice_directory: "%kernel.root_dir%/data/pdf/di/quote_notices"
   paprec_commercial.chantier_quote_pdf_notice_directory: "%kernel.root_dir%/data/pdf/chantier/quote_notices"
 
+  paprec_uploaded_files_dir: "%kernel.root_dir%/../web/uploads/gallery"
+
 
   paprec_commercial.chantier_quote_pdf_notices:
     - dechets.pdf

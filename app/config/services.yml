@@ -15,6 +15,8 @@ parameters:
         D3E: Mes déchets électriques et électroniques
         5FLUX: Mes déchets de bureau - 5 flux
 
+    paprec_uploader_dir:  "%kernel.root_dir%/../web/uploads/gallery"
+
 
 services:
     # default configuration for services in *this* file

@@ -21,7 +21,7 @@ class QuoteRequestNonCorporateShortType extends AbstractType
         $builder
             ->add('businessName')
             ->add('postalCode', HiddenType::class, array(
-                'error_bubbling'=>false
+                'error_bubbling' => false
             ))
             ->add('civility', ChoiceType::class, array(
                 'choices' => array(
@@ -29,7 +29,7 @@ class QuoteRequestNonCorporateShortType extends AbstractType
                     'Madame' => 'Mme',
                 ),
                 'choice_attr' => function () {
-                    return  ['class' => 'input__radio input__radio--short'];
+                    return ['class' => 'input__radio input__radio--short'];
                 },
                 'expanded' => true
             ))
@@ -42,10 +42,6 @@ class QuoteRequestNonCorporateShortType extends AbstractType
             ->add('function', TextType::class)
             ->add('need', TextareaType::class, array(
                 'attr' => array('cols' => '30', 'rows' => '10')
-            ))
-            ->add('attachedFiles', FileType::class, array(
-                'multiple' => true,
-                'data_class' => null
             ));
     }
 

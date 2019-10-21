@@ -27,26 +27,35 @@ class SubscriptionController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /**
+             * On récupère le dossier contenat les fichiers joints
+             *
+             */
+            $dir = $request->get('dirInput');
+
             $em = $this->getDoctrine()->getManager();
 
             $quoteRequestNonCorporate = $form->getData();
             $quoteRequestNonCorporate->setQuoteStatus('CREATED');
             $quoteRequestNonCorporate->setCustomerType('Groupe et Réseau');
 
-            $files = array();
-            foreach ($quoteRequestNonCorporate->getAttachedFiles() as $uploadedFile) {
-                if ($uploadedFile instanceof UploadedFile) {
-                    /**
-                     * On place le file uploadé dans le dossier web/files
-                     * et on ajoute le nom du fichier md5 dans le tableau $files
-                     */
-                    $uploadedFileName = md5(uniqid()) . '.' . $uploadedFile->guessExtension();
+            if ($dir) {
+                $dirPath = $this->getParameter('paprec_uploaded_files_dir') . '/' . $dir;
+                $filesUploaded = scandir($dirPath);
 
-                    $uploadedFile->move($this->getParameter('paprec_commercial.quote_request.files_path'), $uploadedFileName);
-                    $files[] = $uploadedFileName;
+                $files = array();
+                foreach ($filesUploaded as $uploadedFile) {
+                    if ($uploadedFile !== '.' && $uploadedFile !== '..') {
+                        if (!is_dir($this->getParameter('paprec_commercial.quote_request.files_path'))) {
+                            mkdir($this->getParameter('paprec_commercial.quote_request.files_path'), 0755, true);
+                        }
+                        rename($dirPath . '/' . $uploadedFile, $this->getParameter('paprec_commercial.quote_request.files_path') . '/' . $uploadedFile);
+                        $files[] = $uploadedFile;
+                    }
                 }
+                $quoteRequestNonCorporate->setAttachedFiles($files);
+                rmdir($dirPath);
             }
-            $quoteRequestNonCorporate->setAttachedFiles($files);
             $em->persist($quoteRequestNonCorporate);
             $em->flush();
 
@@ -93,26 +102,34 @@ class SubscriptionController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /**
+             * On récupère le dossier contenat les fichiers joints
+             */
+            $dir = $request->get('dirInput');
+
             $em = $this->getDoctrine()->getManager();
 
             $quoteRequestNonCorporate = $form->getData();
             $quoteRequestNonCorporate->setQuoteStatus('CREATED');
             $quoteRequestNonCorporate->setCustomerType('Collectivité');
 
-            $files = array();
-            foreach ($quoteRequestNonCorporate->getAttachedFiles() as $uploadedFile) {
-                if ($uploadedFile instanceof UploadedFile) {
-                    /**
-                     * On place le file uploadé dans le dossier web/files
-                     * et on ajoute le nom du fichier md5 dans le tableau $files
-                     */
-                    $uploadedFileName = md5(uniqid()) . '.' . $uploadedFile->guessExtension();
+            if ($dir) {
+                $dirPath = $this->getParameter('paprec_uploaded_files_dir') . '/' . $dir;
+                $filesUploaded = scandir($dirPath);
 
-                    $uploadedFile->move($this->getParameter('paprec_commercial.quote_request.files_path'), $uploadedFileName);
-                    $files[] = $uploadedFileName;
+                $files = array();
+                foreach ($filesUploaded as $uploadedFile) {
+                    if ($uploadedFile !== '.' && $uploadedFile !== '..') {
+                        if (!is_dir($this->getParameter('paprec_commercial.quote_request.files_path'))) {
+                            mkdir($this->getParameter('paprec_commercial.quote_request.files_path'), 0755, true);
+                        }
+                        rename($dirPath . '/' . $uploadedFile, $this->getParameter('paprec_commercial.quote_request.files_path') . '/' . $uploadedFile);
+                        $files[] = $uploadedFile;
+                    }
                 }
+                $quoteRequestNonCorporate->setAttachedFiles($files);
+                rmdir($dirPath);
             }
-            $quoteRequestNonCorporate->setAttachedFiles($files);
             $em->persist($quoteRequestNonCorporate);
             $em->flush();
 
@@ -158,26 +175,34 @@ class SubscriptionController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /**
+             * On récupère le dossier contenat les fichiers joints
+             */
+            $dir = $request->get('dirInput');
+
             $em = $this->getDoctrine()->getManager();
 
             $quoteRequestNonCorporate = $form->getData();
             $quoteRequestNonCorporate->setQuoteStatus('CREATED');
             $quoteRequestNonCorporate->setCustomerType('Particulier');
 
-            $files = array();
-            foreach ($quoteRequestNonCorporate->getAttachedFiles() as $uploadedFile) {
-                if ($uploadedFile instanceof UploadedFile) {
-                    /**
-                     * On place le file uploadé dans le dossier web/files
-                     * et on ajoute le nom du fichier md5 dans le tableau $files
-                     */
-                    $uploadedFileName = md5(uniqid()) . '.' . $uploadedFile->guessExtension();
+            if ($dir) {
+                $dirPath = $this->getParameter('paprec_uploaded_files_dir') . '/' . $dir;
+                $filesUploaded = scandir($dirPath);
 
-                    $uploadedFile->move($this->getParameter('paprec_commercial.quote_request.files_path'), $uploadedFileName);
-                    $files[] = $uploadedFileName;
+                $files = array();
+                foreach ($filesUploaded as $uploadedFile) {
+                    if ($uploadedFile !== '.' && $uploadedFile !== '..') {
+                        if (!is_dir($this->getParameter('paprec_commercial.quote_request.files_path'))) {
+                            mkdir($this->getParameter('paprec_commercial.quote_request.files_path'), 0755, true);
+                        }
+                        rename($dirPath . '/' . $uploadedFile, $this->getParameter('paprec_commercial.quote_request.files_path') . '/' . $uploadedFile);
+                        $files[] = $uploadedFile;
+                    }
                 }
+                $quoteRequestNonCorporate->setAttachedFiles($files);
+                rmdir($dirPath);
             }
-            $quoteRequestNonCorporate->setAttachedFiles($files);
             $em->persist($quoteRequestNonCorporate);
             $em->flush();
 

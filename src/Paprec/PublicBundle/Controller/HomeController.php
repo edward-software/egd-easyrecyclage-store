@@ -2,6 +2,7 @@
 
 namespace Paprec\PublicBundle\Controller;
 
+use Exception;
 use Paprec\CommercialBundle\Entity\CallBack;
 use Paprec\CommercialBundle\Entity\ContactUs;
 use Paprec\CommercialBundle\Entity\ProductChantierOrder;
@@ -16,7 +17,10 @@ use Paprec\CommercialBundle\Form\ContactUs\ContactUsShortType;
 use Paprec\CommercialBundle\Form\QuoteRequest\QuoteRequestNeedType;
 use Paprec\CommercialBundle\Form\QuoteRequest\QuoteRequestShortType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -353,6 +357,7 @@ class HomeController extends Controller
     {
         $contactUsManager = $this->get('paprec_commercial.contact_us_manager');
 
+
         $cart = null;
         if ($cartUuid) {
             $cartManager = $this->get('paprec.cart_manager');
@@ -364,6 +369,12 @@ class HomeController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            /**
+             * On récupère le dossier contenat les fichiers joints
+             *
+             */
+            $dir = $request->get('dirInput');
+
             $em = $this->getDoctrine()->getManager();
 
             $contactUs = $form->getData();
@@ -375,21 +386,23 @@ class HomeController extends Controller
                 $contactUs->setDivision($cart->getDivision());
                 $contactUs->setCartContent($cart->getContent());
             }
+            if ($dir) {
+                $dirPath = $this->getParameter('paprec_uploaded_files_dir') . '/' . $dir;
+                $filesUploaded = scandir($dirPath);
 
-            $files = array();
-            foreach ($contactUs->getAttachedFiles() as $uploadedFile) {
-                if ($uploadedFile instanceof UploadedFile) {
-                    /**
-                     * On place le file uploadé dans le dossier var/files/contactUs
-                     * et on ajoute le nom du fichier md5 dans le tableau $files
-                     */
-                    $uploadedFileName = md5(uniqid()) . '.' . $uploadedFile->guessExtension();
-
-                    $uploadedFile->move($this->getParameter('paprec_commercial.contact_us.files_path'), $uploadedFileName);
-                    $files[] = $uploadedFileName;
+                $files = array();
+                foreach ($filesUploaded as $uploadedFile) {
+                    if ($uploadedFile !== '.' && $uploadedFile !== '..') {
+                        if (!is_dir($this->getParameter('paprec_commercial.contact_us.files_path'))) {
+                            mkdir($this->getParameter('paprec_commercial.contact_us.files_path'), 0755, true);
+                        }
+                        rename($dirPath . '/' . $uploadedFile, $this->getParameter('paprec_commercial.contact_us.files_path') . '/' . $uploadedFile);
+                        $files[] = $uploadedFile;
+                    }
                 }
+                $contactUs->setAttachedFiles($files);
+                rmdir($dirPath);
             }
-            $contactUs->setAttachedFiles($files);
             $em->persist($contactUs);
             $em->flush();
 
@@ -506,6 +519,38 @@ class HomeController extends Controller
             'callBack' => $callBack,
             'cart' => $cart
         ));
+    }
+
+
+    /**
+     * Remove file from Uploader de OneUp et Dropzone
+     * @Route("/removeUploadedFile", name="paprec_public_home_remove_uploaded_file", condition="request.isXmlHttpRequest()")
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function removeUploadedFile(Request $request)
+    {
+        $dir = $request->get('dir');
+        $filename = $request->get('filename');
+
+        $fs = new Filesystem();
+        try {
+            $dirName = $this->getParameter('paprec_uploader_dir') . '/' . $dir;
+            $path = $this->getParameter('paprec_uploader_dir') . '/' . $dir . '/' . $filename;
+            $fs->remove($path);
+
+            /**
+             * Suppression du dossier s'il est vide
+             */
+            $files = scandir($dirName);
+            if (count($files) < 3) {
+                rmdir($dirName);
+            }            exit;
+        } catch (IOException $e) {
+            return new JsonResponse(null, 500);
+        }
+        return new JsonResponse(null, 200);
+
     }
 
 //

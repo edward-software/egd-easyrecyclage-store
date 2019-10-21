@@ -8,6 +8,7 @@ const moment = require('moment');
 global.moment = moment;
 
 import 'bootstrap';
+import 'dropzone';
 import 'jquery-ui/ui/widgets/datepicker';
 import 'jquery-ui/ui/i18n/datepicker-fr';
 import 'jquery-timepicker/jquery.timepicker';

@@ -44,10 +44,6 @@ class QuoteRequestNonCorporateGroupeType extends AbstractType
                 'attr' => array('cols' => '30', 'rows' => '10')
             ))
             ->add('locationsNumber', TextType::class)
-            ->add('attachedFiles', FileType::class, array(
-                'multiple' => true,
-                'data_class' => null
-            ))
             ->add('concernedRegion', TextType::class);
     }
 

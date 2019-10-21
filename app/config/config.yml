@@ -95,3 +95,10 @@ fos_user:
   from_email:
     address: "%paprec_email_sender%"
     sender_name: "%paprec_email_sender%"
+
+# OneUp File Uploader Configuration
+oneup_uploader:
+  mappings:
+    gallery:
+      frontend: dropzone
+      namer: oneup_uploader.namer.urlsafe

@@ -35,6 +35,7 @@
     "knplabs/knp-snappy-bundle": "^1.6",
     "liuggio/ExcelBundle": "^2.1",
     "monolog/monolog": "^1.23",
+    "oneup/uploader-bundle": "^2.1",
     "ramsey/uuid-doctrine": "^1.5",
     "sensio/distribution-bundle": "^5.0.19",
     "sensio/framework-extra-bundle": "^5.0.0",

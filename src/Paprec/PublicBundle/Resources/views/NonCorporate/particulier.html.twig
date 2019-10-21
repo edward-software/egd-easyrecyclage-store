@@ -120,12 +120,15 @@
             <div class="notice">{{ 'Public.Home.FileUploadNotice'|trans }}
             </div>
             <br>
-            <div id="listFiles" class="paprec-list-files">
-
+            <div data-url="{{ oneup_uploader_endpoint('gallery') }}"
+                 data-deleted="{{ path('paprec_public_home_remove_uploaded_file') }}"
+                 data-dir="null"
+                 id="dropzone"
+                 class="paprec-list-files">
             </div>
-            {{ form_label(form.attachedFiles, "TÉLÉCHARGER DES PIÈCES JOINTES OU DES PHOTOS", {'label_attr': {'class': 'button button--bordered'}}) }}
-            {{ form_widget(form.attachedFiles, {'attr': {'class': 'input-file'}}) }}
+            <input type="hidden" id="dir-input" name="dirInput">
 
+            <label id="dropzone-label" for="dropzone" class="button button--bordered">TÉLÉCHARGER DES PIÈCES JOINTES OU DES PHOTOS</label>
             <div class="clearfix"></div>
 
             <a href="javascript:void(0);" id="groupFormSubmitButton" class="button button--green button--darkblue">

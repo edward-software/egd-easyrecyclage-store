@@ -38,3 +38,8 @@ paprec_public:
     resource: "@PaprecPublicBundle/Controller/"
     type:     annotation
     prefix:   /devis
+
+# One Up File Uploader
+oneup_uploader:
+    resource: .
+    type: uploader

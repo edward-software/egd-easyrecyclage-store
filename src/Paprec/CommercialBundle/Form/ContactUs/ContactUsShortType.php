@@ -38,10 +38,6 @@ class ContactUsShortType extends AbstractType
             ->add('function', TextType::class)
             ->add('need', TextareaType::class, array(
                 'attr' => array('cols' => '30', 'rows' => '10')
-            ))
-            ->add('attachedFiles', FileType::class, array(
-                'multiple' => true,
-                'data_class' => null
             ));
     }
 
