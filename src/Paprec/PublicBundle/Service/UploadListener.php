@@ -10,7 +10,9 @@ namespace Paprec\PublicBundle\Service;
 
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Monolog\Logger;
 use Oneup\UploaderBundle\Event\PostPersistEvent;
+use Oneup\UploaderBundle\Event\PostUploadEvent;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -23,16 +25,23 @@ class UploadListener
     private $om;
 
     private $container;
+    private $logger;
 
     public function __construct(ObjectManager $om, ContainerInterface $container)
     {
         $this->om = $om;
         $this->container = $container;
+        $this->logger = $logger;
     }
 
     public function onUpload(PostPersistEvent $event)
     {
         try {
+            /**
+             * Nettoyage du dossier web/uploads/gallery
+             */
+            $this->removeOldDirs();
+
             /**
              * On récupère le dossier où enregistrer les fichiers
              * Si le dossier = 'null' alors on créé un nouveau dossier que l'on retournera
@@ -58,6 +67,52 @@ class UploadListener
             return $response;
         } catch (\Exception $e) {
 
+        }
+    }
+
+    /**
+     * Suppression des dossiers plus vieux de 1 jour
+     */
+    private function removeOldDirs()
+    {
+        $now = time();
+        $dirPath = $this->container->getParameter('paprec_uploaded_files_dir');
+
+        if (is_dir($dirPath)) {
+            $files = array_diff(scandir($dirPath), array('.', '..'));
+            if ($files && count($files)) {
+                foreach ($files as $file) {
+                    if (is_dir($dirPath . '/' . $file)) {
+                        if ($now - filectime($dirPath . '/' . $file) >= 60) { // si dernière date de modif > 60 sec
+                            $this->rmdir_recursive($dirPath . '/' . $file);
+                        }
+                    } else if (is_file($dirPath . '/' . $file)) {
+                        if ($now - filectime($dirPath . '/' . $file) >= 60) { // si dernière date de modif > 60 sec
+                            unlink($dirPath . '/' . $file);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private function rmdir_recursive($dir)
+    {
+        if (is_dir($dir)) {
+            $dir_content = scandir($dir);
+            if ($dir_content !== FALSE) {
+                foreach ($dir_content as $entry) {
+                    if (!in_array($entry, array('.', '..'))) {
+                        $entry = $dir . '/' . $entry;
+                        if (!is_dir($entry)) {
+                            unlink($entry);
+                        } else {
+                            $this->rmdir_recursive($entry);
+                        }
+                    }
+                }
+            }
+            rmdir($dir);
         }
     }
 }

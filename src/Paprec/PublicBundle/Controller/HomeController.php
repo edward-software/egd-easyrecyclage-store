@@ -391,13 +391,15 @@ class HomeController extends Controller
                 $filesUploaded = scandir($dirPath);
 
                 $files = array();
-                foreach ($filesUploaded as $uploadedFile) {
-                    if ($uploadedFile !== '.' && $uploadedFile !== '..') {
-                        if (!is_dir($this->getParameter('paprec_commercial.contact_us.files_path'))) {
-                            mkdir($this->getParameter('paprec_commercial.contact_us.files_path'), 0755, true);
+                if ($filesUploaded && count($filesUploaded)) {
+                    foreach ($filesUploaded as $uploadedFile) {
+                        if ($uploadedFile !== '.' && $uploadedFile !== '..') {
+                            if (!is_dir($this->getParameter('paprec_commercial.contact_us.files_path'))) {
+                                mkdir($this->getParameter('paprec_commercial.contact_us.files_path'), 0755, true);
+                            }
+                            rename($dirPath . '/' . $uploadedFile, $this->getParameter('paprec_commercial.contact_us.files_path') . '/' . $uploadedFile);
+                            $files[] = $uploadedFile;
                         }
-                        rename($dirPath . '/' . $uploadedFile, $this->getParameter('paprec_commercial.contact_us.files_path') . '/' . $uploadedFile);
-                        $files[] = $uploadedFile;
                     }
                 }
                 $contactUs->setAttachedFiles($files);
@@ -411,14 +413,14 @@ class HomeController extends Controller
             $sendConfirmEmail = $contactUsManager->sendConfirmRequestEmail($contactUs);
             $sendNewRequestEmail = $contactUsManager->sendNewRequestEmail($contactUs);
 
-/*            $client = new \GuzzleHttp\Client();
-            $uri = $this->getParameter('paprec_public_site_url') . '/?na=s';
-            $response = $client->request('POST', $uri, [
-                'form_params' => [
-                    'nr' => 'widget-minimal',
-                    'ne' => $contactUs->getEmail()
-                ]
-            ]);*/
+            /*            $client = new \GuzzleHttp\Client();
+                        $uri = $this->getParameter('paprec_public_site_url') . '/?na=s';
+                        $response = $client->request('POST', $uri, [
+                            'form_params' => [
+                                'nr' => 'widget-minimal',
+                                'ne' => $contactUs->getEmail()
+                            ]
+                        ]);*/
 
 
             if ($sendConfirmEmail && $sendNewRequestEmail) {
