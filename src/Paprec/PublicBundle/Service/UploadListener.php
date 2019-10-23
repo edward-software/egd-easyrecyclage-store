@@ -83,11 +83,11 @@ class UploadListener
             if ($files && count($files)) {
                 foreach ($files as $file) {
                     if (is_dir($dirPath . '/' . $file)) {
-                        if ($now - filectime($dirPath . '/' . $file) >= 60) { // si dernière date de modif > 60 sec
+                        if ($now - filectime($dirPath . '/' . $file) >= 600) { // si dernière date de modif > 600 sec
                             $this->rmdir_recursive($dirPath . '/' . $file);
                         }
                     } else if (is_file($dirPath . '/' . $file)) {
-                        if ($now - filectime($dirPath . '/' . $file) >= 60) { // si dernière date de modif > 60 sec
+                        if ($now - filectime($dirPath . '/' . $file) >= 600) { // si dernière date de modif > 600 sec
                             unlink($dirPath . '/' . $file);
                         }
                     }
