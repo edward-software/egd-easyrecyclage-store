@@ -6,18 +6,20 @@
                 {% if menu['children']|length > 0 %}
                     <ul class="sub-menu">
                         {% for submenu in menu['children'] %}
-                            <li class="menu-item menu-item-type-custom menu-item-object-custom {% if submenu['children']|length > 0 %}menu-item-has-children {% endif %}">
-                                <a href="{{ submenu['url'] }}">{{ submenu['title'] }}</a>
-                                {% if submenu['children']|length > 0 %}
-                                    <ul class="sub-menu">
-                                        {% for subsubmenu in submenu['children'] %}
-                                            <li>
-                                                <a href="{{ subsubmenu['url'] }}">{{ subsubmenu['title'] }}</a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                {% endif %}
-                            </li>
+                            {% if submenu['title'] != 'Image' %}
+                                <li class="menu-item menu-item-type-custom menu-item-object-custom {% if submenu['children']|length > 0 %}menu-item-has-children {% endif %}">
+                                    <a href="{{ submenu['url'] }}">{{ submenu['title'] }}</a>
+                                    {% if submenu['children']|length > 0 %}
+                                        <ul class="sub-menu">
+                                            {% for subsubmenu in submenu['children'] %}
+                                                <li>
+                                                    <a href="{{ subsubmenu['url'] }}">{{ subsubmenu['title'] }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 {% endif %}

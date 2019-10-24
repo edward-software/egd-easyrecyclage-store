@@ -59,37 +59,6 @@ class CommonController extends Controller
 
                 $headers = $bodyResponse;
 
-                /*if (isset($bodyResponse['items']) && is_array($bodyResponse['items']) && count($bodyResponse['items'])) {
-                    foreach ($bodyResponse['items'] as $item) {
-                        $headers[$item['ID']] = array(
-                            'id' => $item['ID'],
-                            'title' => $item['title'],
-                            'url' => $item['url'],
-                            'submenus' => array()
-                        );
-                        if ($item['child_items'] != null && count($item['child_items'])) {
-                            foreach ($item['child_items'] as $childItem) {
-                                $headers[$item['ID']]['submenus'][$childItem['ID']] = array(
-                                    'id' => $childItem['ID'],
-                                    'title' => $childItem['title'],
-                                    'url' => $childItem['url'],
-                                    'submenus' => array()
-                                );
-//                                if ($childItem['child_items'] !== null && count($childItem['child_items'])) {
-//                                    foreach ($childItem['child_items'] as $greatChildItem) {
-//                                        $headers[$item['ID']]['submenus'][$childItem['ID']]['submenus'][$greatChildItem['ID']] = array(
-//                                            'id' => $greatChildItem['ID'],
-//                                            'title' => $greatChildItem['title'],
-//                                            'url' => $greatChildItem['url']
-//                                        );
-//                                    }
-//
-//                                }
-                            }
-                        }
-                    }
-                }*/
-
                 if ($isMobile) {
                     return $this->render('@PaprecPublic/Menu/mobile/headersMenu.html.twig', array(
                         'items' => $headers
