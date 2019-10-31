@@ -13,7 +13,12 @@
 {% block title_header %}
     <tr>
         <td style="padding: 60px 80px;" class="mobile-padding">
-            <table class="" style="border-collapse:separate !important;" border="0" cellpadding="0"
+            <!--[if (gte mso 9)|(IE)]>
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;color: #ffffff; text-align: center;">
+                <tr>
+                    <td align="center" valign="top" width="600">
+            <![endif]-->
+            <table class="" style="border-collapse:separate !important;max-width:600px;color: #ffffff; text-align: center;" border="0" cellpadding="0"
                    cellspacing="0" width="100%" align="center">
                 <tr>
                     <td style="font-size: 2em;">Un nouveau devis</td>
@@ -27,6 +32,11 @@
                     </td>
                 </tr>
             </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
     </tr>
 {% endblock %}
 
@@ -35,9 +45,14 @@
 {% endblock %}#}
 
 {% block main_content %}
+    <!--[if (gte mso 9)|(IE)]>
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;text-align: center;">
+        <tr>
+            <td align="center" valign="top" width="600">
+    <![endif]-->
     <table class="newRequestEmailTable responsive-table" border="0" cellpadding="0" cellspacing="0" width="100%"
            align="center"
-           style="max-width: 600px; color: {{ gray1 }};font-size: 1em;">
+           style="max-width: 600px; color: {{ gray1 }};font-size: 1em;text-align: center;">
         <tr style="border-bottom: 1px solid {{ gray2 }};">
             <td style="margin-bottom: 10px; font-size: 1.2em;font-weight: bold;display: block;">
                 Détail du devis N° {{ productChantierQuote.id|formatId(6) }}
@@ -111,7 +126,17 @@
             <td style="margin: 40px 0 30px; font-weight: bold;font-size: 1.2em;">Composition du devis :</td>
         </tr>
     </table>
+    <!--[if (gte mso 9)|(IE)]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
 
+    <!--[if (gte mso 9)|(IE)]>
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+        <tr>
+            <td align="center" valign="top" width="600">
+    <![endif]-->
     <table class="responsive-table" border="0" cellpadding="0" cellspacing="0" width="100%"
            align="center"
            style="max-width: 600px; color: {{ gray1 }};font-size: 1em;">
@@ -133,12 +158,22 @@
 
         <tr style="margin-top: 15px;">
             <td colspan="3">
+                <!--[if (gte mso 9)|(IE)]>
+                <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+                    <tr>
+                        <td align="center" valign="top" width="600">
+                <![endif]-->
                 <table class="" border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
                        style="max-width: 600px;">
 
                     <tr>
                         <td>
                             {% for productChantierQuoteLine in productChantierQuote.productChantierQuoteLines %}
+                                <!--[if (gte mso 9)|(IE)]>
+                                <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+                                    <tr>
+                                        <td align="center" valign="top" width="600">
+                                <![endif]-->
                                 <table class="footer-demand" border="0" cellpadding="20" cellspacing="0" width="100%"
                                        align="center"
                                        style="max-width: 600px; margin-bottom: 15px !important;">
@@ -150,6 +185,11 @@
                                             {% endif %}
                                         </td>
                                         <td style="padding: 0;">
+                                            <!--[if (gte mso 9)|(IE)]>
+                                            <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+                                                <tr>
+                                                    <td align="center" valign="top" width="600">
+                                            <![endif]-->
                                             <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
                                                 <tr>
                                                     <td style="font-family: DIN Condensed, Arial, sans-serif;font-size: 30px;text-align: left;">
@@ -162,8 +202,18 @@
                                                     </td>
                                                 </tr>
                                             </table>
+                                            <!--[if (gte mso 9)|(IE)]>
+                                            </td>
+                                            </tr>
+                                            </table>
+                                            <![endif]-->
                                         </td>
                                         <td>
+                                            <!--[if (gte mso 9)|(IE)]>
+                                            <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+                                                <tr>
+                                                    <td align="center" valign="top" width="600">
+                                            <![endif]-->
                                             <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
                                                 <tr>
                                                     <td align="center" style="color:{{green1}};font-weight: normal;padding-bottom: 20px;">
@@ -179,14 +229,29 @@
                                                     </td>
                                                 </tr>
                                             </table>
+                                            <!--[if (gte mso 9)|(IE)]>
+                                            </td>
+                                            </tr>
+                                            </table>
+                                            <![endif]-->
                                         </td>
                                     </tr>
                                 </table>
+                                <!--[if (gte mso 9)|(IE)]>
+                                </td>
+                                </tr>
+                                </table>
+                                <![endif]-->
                             {% endfor %}
                         </td>
                     </tr>
 
                 </table>
+                <!--[if (gte mso 9)|(IE)]>
+                </td>
+                </tr>
+                </table>
+                <![endif]-->
             </td>
         </tr>
 
@@ -206,12 +271,22 @@
         </tr>
 
     </table>
+    <!--[if (gte mso 9)|(IE)]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
 
 {% endblock %}
 
 {% block footer %}
+    <!--[if (gte mso 9)|(IE)]>
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;text-align: center;">
+        <tr>
+            <td align="center" valign="top" width="600">
+    <![endif]-->
     <table class="footer-demand" border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
-           style="max-width: 600px;">
+           style="max-width: 600px;text-align: center;">
         <tr>
             <td style="padding-top: 25px;" align="center">
                 Merci de répondre à cette demande sous 48h
@@ -232,6 +307,11 @@
             </td>
         </tr>
     </table>
+    <!--[if (gte mso 9)|(IE)]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
 {% endblock %}
 
 {#

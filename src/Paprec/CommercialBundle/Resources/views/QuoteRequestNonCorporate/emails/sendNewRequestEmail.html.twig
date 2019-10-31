@@ -14,7 +14,12 @@
 {% block title_header %}
     <tr>
         <td style="padding: 60px 80px;" class="mobile-padding">
-            <table class="new-demand" style="border-collapse:separate !important;" border="0" cellpadding="0"
+            <!--[if (gte mso 9)|(IE)]>
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;color: #ffffff; text-align: center;">
+                <tr>
+                    <td align="center" valign="top" width="600">
+            <![endif]-->
+            <table class="new-demand" style="border-collapse:separate !important; max-width: 600px;color: #ffffff; text-align: center;" border="0" cellpadding="0"
                    cellspacing="0" width="100%" align="center">
                 <tr>
                     <td align="center" style="padding-bottom: 10px;">
@@ -36,6 +41,11 @@
                     </td>
                 </tr>
             </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
     </tr>
 
 {% endblock %}
@@ -45,9 +55,14 @@
 {% endblock %}#}
 
 {% block main_content %}
+    <!--[if (gte mso 9)|(IE)]>
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;text-align: center;">
+        <tr>
+            <td align="center" valign="top" width="600">
+    <![endif]-->
     <table class="newRequestEmailTable responsive-table" border="0" cellpadding="0" cellspacing="0" width="100%"
            align="center"
-           style="max-width: 600px; color: {{ gray1 }};font-size: 1em;">
+           style="max-width: 600px; color: {{ gray1 }};font-size: 1em;text-align: center;">
         <tr style="border-bottom: 1px solid {{ gray2 }};">
             <td style="margin-bottom: 10px; font-size: 1.2em;font-weight: bold;display: block;">
                 Détail de la demande N° {{ quoteRequestNonCorporate.id|formatId(6) }}
@@ -171,11 +186,21 @@
             </td>
         </tr>
     </table>
+    <!--[if (gte mso 9)|(IE)]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
 {% endblock %}
 
 {% block footer %}
+    <!--[if (gte mso 9)|(IE)]>
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;text-align: center;">
+        <tr>
+            <td align="center" valign="top" width="600">
+    <![endif]-->
     <table class="footer-demand" border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
-           style="max-width: 600px;">
+           style="max-width: 600px;text-align: center;">
         <tr>
             <td style="padding-top: 25px;" align="center">
                 Merci de répondre à cette demande sous 48h
@@ -196,6 +221,11 @@
             </td>
         </tr>
     </table>
+    <!--[if (gte mso 9)|(IE)]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
 {% endblock %}
 
 {#{% block sub_footer %}

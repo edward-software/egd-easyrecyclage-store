@@ -13,7 +13,12 @@
 {% block title_header %}
     <tr>
         <td style="padding: 60px 80px;" class="mobile-padding">
-            <table style="border-collapse:separate !important;" border="0" cellpadding="0"
+            <!--[if (gte mso 9)|(IE)]>
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;color: #ffffff; text-align: center;">
+                <tr>
+                    <td align="center" valign="top" width="600">
+            <![endif]-->
+            <table style="border-collapse:separate !important;max-width:600px;color: #ffffff; text-align: center;" border="0" cellpadding="0"
                    cellspacing="0" width="100%" align="center">
                 <tr>
                     <td style="font-size: 2em;">Merci</td>
@@ -22,11 +27,16 @@
                     <td style="font-size: 1.2em;">pour votre demande de devis</td>
                 </tr>
                 <tr>
-                    <td style="font-size: 1.2em; padding-top: 25px;">
+                    <td style="font-size: 1.2em; padding-top: 25px;text-align: center;">
                         <button class="btn btn-green">Devis au format PDF</button>
                     </td>
                 </tr>
             </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
     </tr>
 {% endblock %}
 
@@ -35,9 +45,14 @@
 {% endblock %}#}
 
 {% block main_content %}
+    <!--[if (gte mso 9)|(IE)]>
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;text-align: center;">
+        <tr>
+            <td align="center" valign="top" width="600">
+    <![endif]-->
     <table class="newRequestEmailTable responsive-table" border="0" cellpadding="0" cellspacing="0" width="100%"
            align="center"
-           style="max-width: 600px; color: {{ gray1 }};font-size: 1em;">
+           style="max-width: 600px; color: {{ gray1 }};font-size: 1em;text-align: center;">
         <tr style="border-bottom: 1px solid {{ gray2 }};">
             <td style="margin-bottom: 10px; font-size: 1.2em;font-weight: bold;display: block;">
                 Détail du devis N° {{ productDIQuote.id|formatId(6) }}
@@ -107,7 +122,18 @@
             <td style="margin: 40px 0 30px; font-weight: bold;font-size: 1.2em;">Composition du devis :</td>
         </tr>
     </table>
+    <!--[if (gte mso 9)|(IE)]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
 
+
+    <!--[if (gte mso 9)|(IE)]>
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+        <tr>
+            <td align="center" valign="top" width="600">
+    <![endif]-->
     <table class="responsive-table" border="0" cellpadding="0" cellspacing="0" width="100%"
            align="center"
            style="max-width: 600px; color: {{ gray1 }};font-size: 1em;">
@@ -129,12 +155,22 @@
 
         <tr style="margin-top: 15px;">
             <td colspan="3">
+                <!--[if (gte mso 9)|(IE)]>
+                <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+                    <tr>
+                        <td align="center" valign="top" width="600">
+                <![endif]-->
                 <table class="" border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
                        style="max-width: 600px;">
 
                     <tr>
                         <td>
                             {% for productDIQuoteLine in productDIQuote.productDIQuoteLines %}
+                                <!--[if (gte mso 9)|(IE)]>
+                                <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+                                    <tr>
+                                        <td align="center" valign="top" width="600">
+                                <![endif]-->
                                 <table class="footer-demand" border="0" cellpadding="20" cellspacing="0" width="100%"
                                        align="center"
                                        style="max-width: 600px; margin-bottom: 15px !important;">
@@ -178,11 +214,21 @@
                                         </td>
                                     </tr>
                                 </table>
+                                <!--[if (gte mso 9)|(IE)]>
+                                </td>
+                                </tr>
+                                </table>
+                                <![endif]-->
                             {% endfor %}
                         </td>
                     </tr>
 
                 </table>
+                <!--[if (gte mso 9)|(IE)]>
+                </td>
+                </tr>
+                </table>
+                <![endif]-->
             </td>
         </tr>
 
@@ -202,19 +248,34 @@
         </tr>
 
     </table>
+    <!--[if (gte mso 9)|(IE)]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
 
 {% endblock %}
 
 {% block footer %}
-<table class="responsive-table" border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
-       style="max-width: 92%;">
-    <tr style="padding: 5px">
-        <td style="border: 1px solid {{ green1 }}; border-left: 5px solid {{ green1 }};font-size: 1.2em; color: {{ green1 }};font-family: DIN Condensed, Arial, sans-serif;padding: 5px;">
-            L’agence en charge de votre demande vous recontactera sous 48h par e-mail ou téléphone afin de valider un devis.
-        </td>
-    </tr>
+    <!--[if (gte mso 9)|(IE)]>
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px; text-align: center;">
+        <tr>
+            <td align="center" valign="top" width="600">
+    <![endif]-->
+    <table class="responsive-table" border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
+           style="max-width: 92%;text-align: center;">
+        <tr style="padding: 5px">
+            <td style="border: 1px solid {{ green1 }}; border-left: 5px solid {{ green1 }};font-size: 1.2em; color: {{ green1 }};font-family: DIN Condensed, Arial, sans-serif;padding: 5px;">
+                L’agence en charge de votre demande vous recontactera sous 48h par e-mail ou téléphone afin de valider un devis.
+            </td>
+        </tr>
 
-</table>
+    </table>
+    <!--[if (gte mso 9)|(IE)]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
 {% endblock %}
 {#{% block sub_footer %}
     <tr>

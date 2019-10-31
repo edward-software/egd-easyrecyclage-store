@@ -11,7 +11,12 @@
 {% block title_header %}
     <tr>
         <td style="padding: 60px 80px;" class="mobile-padding">
-            <table style="border-collapse:separate !important;" border="0" cellpadding="0"
+            <!--[if (gte mso 9)|(IE)]>
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;color: #ffffff; text-align: center;">
+                <tr>
+                    <td align="center" valign="top" width="600">
+            <![endif]-->
+            <table style="border-collapse:separate !important;max-width:600px;color: #ffffff; text-align: center;" border="0" cellpadding="0"
                    cellspacing="0" width="100%" align="center">
                 <tr>
                     <td style="font-size: 2em;">Merci</td>
@@ -25,6 +30,11 @@
                     </td>
                 </tr>
             </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
     </tr>
 {% endblock %}
 
@@ -33,9 +43,14 @@
 {% endblock %}#}
 
 {% block main_content %}
+    <!--[if (gte mso 9)|(IE)]>
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px; text-align: center;">
+        <tr>
+            <td align="center" valign="top" width="600">
+    <![endif]-->
     <table id="mainContentTable" class="responsive-table" border="0" cellpadding="0" cellspacing="0" width="100%"
            align="center"
-           style="max-width: 600px; color: {{ gray1 }};font-size: 1em;">
+           style="max-width: 600px; color: {{ gray1 }};font-size: 1em;text-align: center;">
         <tr>
             <td style="padding-bottom: 10px; font-size: 1.2em;font-weight: bold;">
                 {{ productD3EOrder.civility }} {{ productD3EOrder.firstName }} {{ productD3EOrder.lastName }}
@@ -77,7 +92,12 @@
         </tr>
         <tr>
             <td>
-                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <!--[if (gte mso 9)|(IE)]>
+                <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px; text-align: center;">
+                    <tr>
+                        <td align="center" valign="top" width="600">
+                <![endif]-->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="text-align: center;">
                     <tr>
                         <td>
                             <a href="{{ paprec_public_site_url }}/catalogue" target="_blank">
@@ -89,12 +109,27 @@
                         </td>
                     </tr>
                 </table>
+                <!--[if (gte mso 9)|(IE)]>
+                </td>
+                </tr>
+                </table>
+                <![endif]-->
             </td>
         </tr>
     </table>
+    <!--[if (gte mso 9)|(IE)]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
 {% endblock %}
 
 {% block footer %}
+    <!--[if (gte mso 9)|(IE)]>
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+        <tr>
+            <td align="center" valign="top" width="600">
+    <![endif]-->
     <table class="responsive-table" border="0" cellpadding="20" cellspacing="0" width="100%"
            align="center"
            style="max-width: 600px; color: {{ white }}; background-color: {{ blue1 }};font-size: 1em;">
@@ -139,6 +174,11 @@
 
         </tr>
     </table>
+    <!--[if (gte mso 9)|(IE)]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
 {% endblock %}
 
 {#{% block sub_footer %}
