@@ -357,6 +357,8 @@ class HomeController extends Controller
     {
         $contactUsManager = $this->get('paprec_commercial.contact_us_manager');
 
+        $this->get('mailer')->getTransport()->start();
+        var_dump($this->get('mailer')->getTransport()->isStarted());
 
         $cart = null;
         if ($cartUuid) {
