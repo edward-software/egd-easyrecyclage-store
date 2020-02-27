@@ -142,7 +142,7 @@ class QuoteRequestNonCorporateController extends Controller
             ->setCellValue('R1', 'N° Kookabura')
             ->setCellValue('S1', 'Date création');
 
-        $phpExcelObject->getActiveSheet()->setTitle('Demandes de devis non entreprise');
+        $phpExcelObject->getActiveSheet()->setTitle('Devis non entreprise');
         $phpExcelObject->setActiveSheetIndex(0);
 
         $i = 2;
