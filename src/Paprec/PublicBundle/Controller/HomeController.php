@@ -2,16 +2,9 @@
 
 namespace Paprec\PublicBundle\Controller;
 
-use Exception;
 use Paprec\CommercialBundle\Entity\CallBack;
 use Paprec\CommercialBundle\Entity\ContactUs;
-use Paprec\CommercialBundle\Entity\ProductChantierOrder;
-use Paprec\CommercialBundle\Entity\ProductChantierQuote;
-use Paprec\CommercialBundle\Entity\ProductD3EOrder;
-use Paprec\CommercialBundle\Entity\ProductD3EQuote;
-use Paprec\CommercialBundle\Entity\ProductDIQuote;
 use Paprec\CommercialBundle\Entity\QuoteRequest;
-use Paprec\CommercialBundle\Entity\QuoteRequestNonCorporate;
 use Paprec\CommercialBundle\Form\CallBack\CallBackShortType;
 use Paprec\CommercialBundle\Form\ContactUs\ContactUsShortType;
 use Paprec\CommercialBundle\Form\QuoteRequest\QuoteRequestNeedType;
@@ -236,7 +229,8 @@ class HomeController extends Controller
                      */
                     $uploadedFileName = md5(uniqid()) . '.' . $uploadedFile->guessExtension();
 
-                    $uploadedFile->move($this->getParameter('paprec_commercial.quote_request.files_path'), $uploadedFileName);
+                    $uploadedFile->move($this->getParameter('paprec_commercial.quote_request.files_path'),
+                        $uploadedFileName);
                     $files[] = $uploadedFileName;
                 }
             }
@@ -302,7 +296,8 @@ class HomeController extends Controller
                      */
                     $uploadedFileName = md5(uniqid()) . '.' . $uploadedFile->guessExtension();
 
-                    $uploadedFile->move($this->getParameter('paprec_commercial.quote_request.files_path'), $uploadedFileName);
+                    $uploadedFile->move($this->getParameter('paprec_commercial.quote_request.files_path'),
+                        $uploadedFileName);
                     $files[] = $uploadedFileName;
                 }
             }
@@ -396,7 +391,8 @@ class HomeController extends Controller
                             if (!is_dir($this->getParameter('paprec_commercial.contact_us.files_path'))) {
                                 mkdir($this->getParameter('paprec_commercial.contact_us.files_path'), 0755, true);
                             }
-                            rename($dirPath . '/' . $uploadedFile, $this->getParameter('paprec_commercial.contact_us.files_path') . '/' . $uploadedFile);
+                            rename($dirPath . '/' . $uploadedFile,
+                                $this->getParameter('paprec_commercial.contact_us.files_path') . '/' . $uploadedFile);
                             $files[] = $uploadedFile;
                         }
                     }
@@ -457,6 +453,30 @@ class HomeController extends Controller
         ));
     }
 
+    /**
+     * Redirection vers Formulaire "Etre rappelé"
+     *
+     * @Route("/{division}/callBackForm", name="paprec_public_home_callBackForm_redirect")
+     * @param Request $request
+     * @param $division
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
+     */
+    public function redirectCallBackFormAction(Request $request, $division)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $cartManager = $this->get('paprec.cart_manager');
+
+        $cart = $cartManager->create(90);
+        $cart->setType('package');
+        $cart->setDivision($division);
+        $em->persist($cart);
+        $em->flush();
+
+        return $this->redirectToRoute('paprec_public_home_callBackForm', array(
+            'cartUuid' => $cart->getId()
+        ));
+    }
 
     /**
      * Formulaire "Etre rappelé"
