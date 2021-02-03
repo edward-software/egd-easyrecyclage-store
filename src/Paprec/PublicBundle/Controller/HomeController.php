@@ -494,6 +494,7 @@ class HomeController extends Controller
         $cart = $cartManager->get($cartUuid);
 
         $callBack = new CallBack();
+
         $form = $this->createForm(CallBackShortType::class, $callBack);
 
         $form->handleRequest($request);
@@ -504,6 +505,8 @@ class HomeController extends Controller
             $callBack = $form->getData();
             $callBack->setTreatmentStatus('CREATED');
             $callBack->setCart($cart);
+            $callBack->setPostalCode($cart->getPostalCode());
+            $callBack->setCity($cart->getCity());
 
             $em->persist($callBack);
             $em->flush();

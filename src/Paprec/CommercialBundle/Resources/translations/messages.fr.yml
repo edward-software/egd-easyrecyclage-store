@@ -517,6 +517,8 @@ Commercial:
     Email:                      Email
     Phone:                      Téléphone
     PhonePlaceholder:           Numéro de téléphone
+    PostalCode:                 Code postal
+    City:                       Ville
     FunctionPlaceholder:        Fonction (facultatif)
     Function:                   Fonction
     Division:                   Division

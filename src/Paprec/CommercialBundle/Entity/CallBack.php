@@ -3,8 +3,8 @@
 namespace Paprec\CommercialBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * CallBack
  *
@@ -98,6 +98,20 @@ class CallBack
      * )
      */
     private $phone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="postalCode", type="string", length=255, nullable=true)
+     */
+    private $postalCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     */
+    private $city;
 
     /**
      * @var string
@@ -366,6 +380,42 @@ class CallBack
     {
         $this->phone = $phone;
 
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * @param string $postalCode
+     * @return CallBack
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param string $city
+     * @return CallBack
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
         return $this;
     }
 

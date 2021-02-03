@@ -66,7 +66,7 @@ parameters:
   paprec_commercial.chantier_quote_pdf_notices:
     - dechets.pdf
     - detail.pdf
-    - cgps.pdf
+    - cgv.pdf
     - paprec_activities.pdf
 
   paprec_commercial.di_quote_pdf_notices:
